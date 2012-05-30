@@ -11,64 +11,67 @@
 <xsl:output method="xml" encoding="utf-8" indent="yes"/>
 
 <xsl:template match="/">
-  <tocs>
-    <toc>
+  <list>
+    <list type ="toc">
+      <head>Table of contents</head>
       <xsl:apply-templates select="//*:div[@type = 'section' or @type = 'chapter']"/>
-    </toc>
-    <figures>
+    </list>
+    <list type="figures">
+      <head>Figures</head>
       <xsl:apply-templates select="//*:figure"/>
-    </figures>
-    <handwrittens>
+    </list>
+    <list type="handwrittens">
+      <head>Handwritten figures</head>
       <xsl:apply-templates select="//*:handwritten"/>
-    </handwrittens>
-  </tocs>
+    </list>
+  </list>
 </xsl:template>
 
 <xsl:template match="*:figure">
   <xsl:variable name="page" select="count(./preceding::*:pb) + 1"/>
   <xsl:variable name="number" select="@number"/>
-  <figure>
-    <xsl:if test="not(empty($number))"><xsl:attribute name="number"><xsl:value-of select="$number"/></xsl:attribute></xsl:if>
-    <xsl:if test="not(empty($page))"><xsl:attribute name="page"><xsl:value-of select="$page"/></xsl:attribute></xsl:if>
+  <item>
+    <xsl:if test="not(empty($number))"><xsl:attribute name="n"><xsl:value-of select="$number"/></xsl:attribute></xsl:if>
     <xsl:apply-templates select="*:caption"/>
     <xsl:apply-templates select="*:description"/>
     <xsl:apply-templates select="*:variables"/>
-  </figure>
+    <xsl:if test="not(empty($page))"><ref><xsl:value-of select="$page"/></ref></xsl:if>
+  </item>
 </xsl:template>
 
-<xsl:template match="*:caption">
-  <caption><xsl:apply-templates/></caption>
+<xsl:template match="*:caption"><xsl:value-of select="' '"/>
+  <xsl:apply-templates/>
 </xsl:template>
 
 <xsl:template match="*:description">
-  <description><xsl:apply-templates/></description>
+  <xsl:apply-templates/><xsl:value-of select="' '"/>
 </xsl:template>
 
 <xsl:template match="*:variables">
-  <variables><xsl:apply-templates/></variables>
+  <xsl:apply-templates/><xsl:value-of select="' '"/>
 </xsl:template>
 
 <xsl:template match="*:handwritten">
   <xsl:variable name="page" select="count(./preceding::*:pb) + 1"/>
   <xsl:variable name="number" select="@number"/>
-  <handwritten>
-    <xsl:if test="not(empty($number))"><xsl:attribute name="number"><xsl:value-of select="$number"/></xsl:attribute></xsl:if>
-    <xsl:if test="not(empty($page))"><xsl:attribute name="page"><xsl:value-of select="$page"/></xsl:attribute></xsl:if>
-  </handwritten>
+  <item>
+    <xsl:if test="not(empty($number))"><xsl:attribute name="n"><xsl:value-of select="$number"/></xsl:attribute></xsl:if>
+    <xsl:if test="not(empty($page))"><ref><xsl:value-of select="$page"/></ref></xsl:if>
+  </item>
 </xsl:template>
 
 <xsl:template match="*:div">
   <xsl:variable name="level"><xsl:number level="multiple" count="*:div[@type = 'section' or @type = 'chapter']" format="1."/></xsl:variable>
   <xsl:variable name="page" select="count(./preceding::*:pb) + 1"/>
-  <entry>
-    <xsl:if test="not(empty($level))"><xsl:attribute name="level"><xsl:value-of select="$level"/></xsl:attribute></xsl:if>
-    <xsl:if test="not(empty($page))"><xsl:attribute name="page"><xsl:value-of select="$page"/></xsl:attribute></xsl:if>
+  <item>
+    <xsl:if test="not(empty($level))"><xsl:attribute name="n"><xsl:value-of select="$level"/></xsl:attribute></xsl:if>
     <xsl:apply-templates select="*:head"/>
-  </entry>
+    <xsl:if test="not(empty($page))"><ref><xsl:value-of select="$page"/></ref></xsl:if>
+  </item>
 </xsl:template>
 
 <xsl:template match="*:head">
-  <head><xsl:apply-templates/></head>
+  <xsl:apply-templates/><xsl:value-of select="' '"/>
 </xsl:template>
 
 </xsl:stylesheet>
