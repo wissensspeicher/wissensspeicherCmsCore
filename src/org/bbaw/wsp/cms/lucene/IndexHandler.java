@@ -644,6 +644,54 @@ public class IndexHandler {
     return morphBooleanQuery;
   }
   
+  public ArrayList<String> fetchTerms(String queryStr) throws ApplicationException {
+    ArrayList<String> terms = null;
+    String defaultQueryFieldName = "tokenOrig";
+    Analyzer defaultQueryAnalyzer = nodesFieldAnalyzers.get(defaultQueryFieldName);
+    try {
+      Query query = new QueryParser(Version.LUCENE_35, defaultQueryFieldName, defaultQueryAnalyzer).parse(queryStr);
+      terms = fetchTerms(query);
+    } catch (Exception e) {
+      throw new ApplicationException(e);
+    }
+    return terms;
+  }
+  
+  /**
+   * recursively fetch all terms of the query
+   * @param query
+   * @return
+   */
+  private ArrayList<String> fetchTerms(Query query) throws ApplicationException {
+    ArrayList<String> terms = new ArrayList<String>();
+    if (query instanceof TermQuery) {
+      TermQuery termQuery = (TermQuery) query;
+      String termQueryStr = termQuery.getTerm().text();
+      terms.add(termQueryStr);
+    } else if (query instanceof BooleanQuery) {
+      BooleanQuery booleanQuery = (BooleanQuery) query;
+      terms = fetchTerms(booleanQuery);
+    } else {
+      String queryStr = query.toString();
+      terms.add(queryStr); // all other cases: PrefixQuery, PhraseQuery, FuzzyQuery, TermRangeQuery, ...
+    }
+    return terms;
+  }
+  
+  private ArrayList<String> fetchTerms(BooleanQuery query) throws ApplicationException {
+    ArrayList<String> terms = new ArrayList<String>();
+    BooleanClause[] booleanClauses = query.getClauses();
+    for (int i=0; i<booleanClauses.length; i++) {
+      BooleanClause boolClause = booleanClauses[i];
+      Query q = boolClause.getQuery();
+      ArrayList<String> qTerms = fetchTerms(q);
+      BooleanClause.Occur occur = boolClause.getOccur();
+      if (occur == BooleanClause.Occur.SHOULD || occur == BooleanClause.Occur.MUST)
+        terms.addAll(qTerms);
+    }
+    return terms;
+  }
+  
   public ArrayList<String> fetchTerms(String queryStr, String language) throws ApplicationException {
     ArrayList<String> terms = null;
     String defaultQueryFieldName = "tokenOrig";
