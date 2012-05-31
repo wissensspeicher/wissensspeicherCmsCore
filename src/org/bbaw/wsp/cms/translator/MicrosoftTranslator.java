@@ -71,29 +71,17 @@ public class MicrosoftTranslator {
         return translatedText;
     }
 	
-	public String detectLanguageCode(String queryToDetect) throws Exception{
-	
-		//Detect returns a Language Enum representing the language code
-	    Language detectedLanguageCode = Detect.execute(queryToDetect);
-	    
-	    return detectedLanguageCode.toString();
+	public static String detectLanguageCode(String queryToDetect) throws Exception {
+    Detect.setKey(key);
+    Language detectedLanguageCode = Detect.execute(queryToDetect);
+    return detectedLanguageCode.toString();
 	}
 	 
-	public String detectLanguageName(String queryToDetect) throws Exception{
-		
-		Language detectedLanguageCode = Detect.execute(queryToDetect);
-		
-		//Examples:
-	    //Prints the Language name in English - "French"
-	    String detectedLanguageName = detectedLanguageCode.getName(Language.ENGLISH);
-	    
-	    //Prints the Language name in French - "Français"
-	    System.out.println(detectedLanguageCode.getName(Language.FRENCH));
-	    
-	    //Prints the Language name in German - "Französisch"
-	    System.out.println(detectedLanguageCode.getName(Language.GERMAN));
-	    
-	    return detectedLanguageName;
+	public static String detectLanguageName(String queryToDetect) throws Exception {
+    Detect.setKey(key);
+    Language detectedLanguageCode = Detect.execute(queryToDetect);
+    String detectedLanguageName = detectedLanguageCode.getName(Language.GERMAN);
+    return detectedLanguageName;
 	}
 	
 }
