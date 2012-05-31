@@ -431,10 +431,20 @@
 </xsl:template>
 
 <xsl:template match="*:hi" mode="text">
-  <span>
-    <xsl:attribute name="class"><xsl:value-of select="concat('highlight ', @type)"/></xsl:attribute>
-    <xsl:apply-templates mode="text"/>
-  </span>
+  <xsl:choose>
+    <xsl:when test="@type = 'elem'">
+      <div>
+        <xsl:attribute name="class"><xsl:value-of select="concat('highlight ', @type)"/></xsl:attribute>
+        <xsl:apply-templates mode="text"/>
+      </div>
+    </xsl:when>
+    <xsl:otherwise>
+      <span>
+        <xsl:attribute name="class"><xsl:value-of select="concat('highlight ', @type)"/></xsl:attribute>
+        <xsl:apply-templates mode="text"/>
+      </span>
+    </xsl:otherwise>
+  </xsl:choose>
 </xsl:template>
 
 </xsl:stylesheet>

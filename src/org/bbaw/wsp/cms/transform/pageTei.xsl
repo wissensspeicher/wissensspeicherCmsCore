@@ -211,7 +211,13 @@
 <!-- hi (highlighted)  -->
 <xsl:template match="*:hi" mode="text">
   <xsl:choose>
-    <xsl:when test="not(empty(@type))">
+    <xsl:when test="not(empty(@type)) and @type = 'elem'">
+      <div>
+        <xsl:attribute name="class"><xsl:value-of select="concat('highlight ', @type)"/></xsl:attribute>
+        <xsl:apply-templates mode="text"/>
+      </div>
+    </xsl:when>
+    <xsl:when test="not(empty(@type)) and @type != 'elem'">
       <span>
         <xsl:attribute name="class"><xsl:value-of select="concat('highlight ', @type)"/></xsl:attribute>
         <xsl:apply-templates mode="text"/>

@@ -43,6 +43,10 @@ import org.bbaw.wsp.cms.general.Constants;
 import org.bbaw.wsp.cms.scheduler.CmsDocOperation;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
+import de.mpg.mpiwg.berlin.mpdl.lt.dict.db.LexHandler;
+import de.mpg.mpiwg.berlin.mpdl.lt.morph.app.Form;
+import de.mpg.mpiwg.berlin.mpdl.lt.morph.app.Lemma;
+import de.mpg.mpiwg.berlin.mpdl.lt.text.norm.Normalizer;
 import de.mpg.mpiwg.berlin.mpdl.lt.text.tokenize.XmlTokenizer;
 import de.mpg.mpiwg.berlin.mpdl.lt.text.tokenize.XmlTokenizerContentHandler;
 import de.mpg.mpiwg.berlin.mpdl.util.StringUtils;
@@ -310,17 +314,17 @@ public class IndexHandler {
     }    
   }
   
-  public ArrayList<Document> queryDocuments(String fieldName, String queryStr) throws ApplicationException {
+  public ArrayList<Document> queryDocuments(String queryStr, String language) throws ApplicationException {
     ArrayList<Document> docs = null;
     IndexSearcher searcher = null;
     try {
       makeDocumentsSearcherManagerUpToDate();
       searcher = documentsSearcherManager.acquire();
-      Analyzer analyzer = documentsFieldAnalyzers.get(fieldName);
-      if (analyzer == null)
-        return null;
-      Query query = new QueryParser(Version.LUCENE_35, fieldName, analyzer).parse(queryStr);
-      TopDocs topDocs = searcher.search(query, 1000);
+      String defaultQueryFieldName = "tokenOrig";
+      Analyzer defaultQueryAnalyzer = nodesFieldAnalyzers.get(defaultQueryFieldName);
+      Query query = new QueryParser(Version.LUCENE_35, defaultQueryFieldName, defaultQueryAnalyzer).parse(queryStr);
+      Query morphQuery = buildMorphQuery(query, language);
+      TopDocs topDocs = searcher.search(morphQuery, 1000);
       topDocs.setMaxScore(1);
       if (topDocs != null) {
         if (docs == null)
@@ -346,24 +350,26 @@ public class IndexHandler {
     return docs;
   }
   
-  public ArrayList<Document> queryDocument(String docId, String fieldName, String queryStr) throws ApplicationException {
+  public ArrayList<Document> queryDocument(String docId, String queryStr) throws ApplicationException {
     ArrayList<Document> docs = null;
     IndexSearcher searcher = null;
+    MetadataRecord docMetadataRecord = getDocMetadata(docId);
     try {
       makeNodesSearcherManagerUpToDate();
       searcher = nodesSearcherManager.acquire();
       String fieldNameDocId = "docId";
       Analyzer analyzerDocId = nodesFieldAnalyzers.get(fieldNameDocId);
       Query queryDocId = new QueryParser(Version.LUCENE_35, fieldNameDocId, analyzerDocId).parse(docId);
-      Analyzer analyzerField = nodesFieldAnalyzers.get(fieldName);
-      if (analyzerField == null)
-        return null;
-      Query queryAttribute = new QueryParser(Version.LUCENE_35, fieldName, analyzerField).parse(queryStr);
-      BooleanQuery query = new BooleanQuery();
-      query.add(queryDocId, BooleanClause.Occur.MUST);
-      query.add(queryAttribute, BooleanClause.Occur.MUST);
+      String defaultQueryFieldName = "tokenOrig";
+      Analyzer defaultQueryAnalyzer = nodesFieldAnalyzers.get(defaultQueryFieldName);
+      Query query = new QueryParser(Version.LUCENE_35, defaultQueryFieldName, defaultQueryAnalyzer).parse(queryStr);
+      String language = docMetadataRecord.getLanguage();
+      Query morphQuery = buildMorphQuery(query, language);
+      BooleanQuery queryDoc = new BooleanQuery();
+      queryDoc.add(queryDocId, BooleanClause.Occur.MUST);
+      queryDoc.add(morphQuery, BooleanClause.Occur.MUST);
       Sort sortByPosition = new Sort(new SortField("position", SortField.INT));
-      TopDocs topDocs = searcher.search(query, 100000, sortByPosition);
+      TopDocs topDocs = searcher.search(queryDoc, 100000, sortByPosition);
       topDocs.setMaxScore(1);
       if (topDocs != null) {
         if (docs == null)
@@ -572,6 +578,148 @@ public class IndexHandler {
     }
   }
   
+  /**
+   * recursively build the morphological query
+   * @param query
+   * @return
+   */
+  private Query buildMorphQuery(Query query, String language) throws ApplicationException {
+    Query morphQuery = null;
+    if (query instanceof TermQuery) {
+      TermQuery termQuery = (TermQuery) query;
+      morphQuery = buildMorphQuery(termQuery, language);
+    } else if (query instanceof BooleanQuery) {
+      BooleanQuery booleanQuery = (BooleanQuery) query;
+      morphQuery = buildMorphQuery(booleanQuery, language);
+    } else {
+      morphQuery = query; // all other cases: PrefixQuery, PhraseQuery, FuzzyQuery, TermRangeQuery, ...
+    }
+    return morphQuery;
+  }
+  
+  private Query buildMorphQuery(TermQuery termQuery, String language) throws ApplicationException {
+    Query morphQuery = null;
+    String term = termQuery.getTerm().text();
+    String fieldName = termQuery.getTerm().field();
+    if (fieldName != null && fieldName.equals("tokenMorph")) {
+      LexHandler lexHandler = LexHandler.getInstance();
+      ArrayList<Lemma> lemmas = lexHandler.getLemmas(term, "form", language, Normalizer.DICTIONARY, true);  // TODO : language über den translator service holen
+      if (lemmas == null) {
+        // if no lemmas are found then do a query in tokenOrig  TODO should this really be done ?
+        Term termTokenOrig = new Term("tokenOrig", term);
+        TermQuery termQueryInTokenOrig = new TermQuery(termTokenOrig);
+        morphQuery = termQueryInTokenOrig;
+      } else {
+        if (lemmas.size() == 1) {
+          Lemma lemma = lemmas.get(0);
+          Term lemmaTerm = new Term(fieldName, lemma.getLemmaName());
+          morphQuery = new TermQuery(lemmaTerm);
+        } else {
+          BooleanQuery morphBooleanQuery = new BooleanQuery();
+          for (int i=0; i<lemmas.size(); i++) {
+            Lemma lemma = lemmas.get(i);
+            Term lemmaTerm = new Term(fieldName, lemma.getLemmaName());
+            TermQuery morphTermQuery = new TermQuery(lemmaTerm);
+            morphBooleanQuery.add(morphTermQuery, BooleanClause.Occur.SHOULD);
+          }
+          morphQuery = morphBooleanQuery;
+        }
+      }
+    } else {
+      morphQuery = termQuery;  // if it is not the morph field then do a normal query TODO ?? perhaps other fields should also be queried morphological e.g. title etc.
+    }
+    return morphQuery;
+  }
+
+  private Query buildMorphQuery(BooleanQuery query, String language) throws ApplicationException {
+    BooleanQuery morphBooleanQuery = new BooleanQuery();
+    BooleanClause[] booleanClauses = query.getClauses();
+    for (int i=0; i<booleanClauses.length; i++) {
+      BooleanClause boolClause = booleanClauses[i];
+      Query q = boolClause.getQuery();
+      Query morphQuery = buildMorphQuery(q, language);
+      BooleanClause.Occur occur = boolClause.getOccur();
+      morphBooleanQuery.add(morphQuery, occur);
+    }
+    return morphBooleanQuery;
+  }
+  
+  public ArrayList<String> fetchTerms(String queryStr, String language) throws ApplicationException {
+    ArrayList<String> terms = null;
+    String defaultQueryFieldName = "tokenOrig";
+    Analyzer defaultQueryAnalyzer = nodesFieldAnalyzers.get(defaultQueryFieldName);
+    try {
+      Query query = new QueryParser(Version.LUCENE_35, defaultQueryFieldName, defaultQueryAnalyzer).parse(queryStr);
+      terms = fetchTerms(query, language);
+    } catch (Exception e) {
+      throw new ApplicationException(e);
+    }
+    return terms;
+  }
+  
+  /**
+   * recursively fetch all terms of the query
+   * @param query
+   * @return
+   */
+  private ArrayList<String> fetchTerms(Query query, String language) throws ApplicationException {
+    ArrayList<String> terms = new ArrayList<String>();
+    if (query instanceof TermQuery) {
+      TermQuery termQuery = (TermQuery) query;
+      terms = fetchTerms(termQuery, language);
+    } else if (query instanceof BooleanQuery) {
+      BooleanQuery booleanQuery = (BooleanQuery) query;
+      terms = fetchTerms(booleanQuery, language);
+    } else {
+      String queryStr = query.toString();
+      terms.add(queryStr); // all other cases: PrefixQuery, PhraseQuery, FuzzyQuery, TermRangeQuery, ...
+    }
+    return terms;
+  }
+  
+  private ArrayList<String> fetchTerms(TermQuery termQuery, String language) throws ApplicationException {
+    if (language == null)
+      language = "eng";
+    ArrayList<String> terms = new ArrayList<String>();
+    Term termQueryTerm = termQuery.getTerm();
+    String term = termQuery.getTerm().text();
+    String fieldName = termQueryTerm.field();
+    if (fieldName != null && fieldName.equals("tokenMorph")) {
+      LexHandler lexHandler = LexHandler.getInstance();
+      ArrayList<Lemma> lemmas = lexHandler.getLemmas(term, "form", language, Normalizer.DICTIONARY, true);  // TODO : language über den translator service holen
+      if (lemmas == null) {
+        terms.add(term);
+      } else {
+        for (int i=0; i<lemmas.size(); i++) {
+          Lemma lemma = lemmas.get(i);
+          ArrayList<Form> forms = lemma.getFormsList();
+          for (int j=0; j<forms.size(); j++) {
+            Form form = forms.get(j);
+            String formName = form.getFormName();
+            terms.add(formName);
+          }
+        }
+      }
+    } else {
+      terms.add(term);
+    }
+    return terms;
+  }
+
+  private ArrayList<String> fetchTerms(BooleanQuery query, String language) throws ApplicationException {
+    ArrayList<String> terms = new ArrayList<String>();
+    BooleanClause[] booleanClauses = query.getClauses();
+    for (int i=0; i<booleanClauses.length; i++) {
+      BooleanClause boolClause = booleanClauses[i];
+      Query q = boolClause.getQuery();
+      ArrayList<String> qTerms = fetchTerms(q, language);
+      BooleanClause.Occur occur = boolClause.getOccur();
+      if (occur == BooleanClause.Occur.SHOULD || occur == BooleanClause.Occur.MUST)
+        terms.addAll(qTerms);
+    }
+    return terms;
+  }
+  
   private Document getDocument(String docId) throws ApplicationException {
     Document doc = null;
     IndexSearcher searcher = null;
@@ -612,7 +760,7 @@ public class IndexHandler {
       documentsFieldAnalyzers.put("docId", new KeywordAnalyzer());
       documentsFieldAnalyzers.put("identifier", new KeywordAnalyzer());
       documentsFieldAnalyzers.put("echoId", new KeywordAnalyzer());
-      documentsFieldAnalyzers.put("creator", new StandardAnalyzer(Version.LUCENE_35));
+      documentsFieldAnalyzers.put("author", new StandardAnalyzer(Version.LUCENE_35));
       documentsFieldAnalyzers.put("title", new StandardAnalyzer(Version.LUCENE_35));
       documentsFieldAnalyzers.put("language", new KeywordAnalyzer());
       documentsFieldAnalyzers.put("date", new KeywordAnalyzer());
@@ -727,18 +875,7 @@ public class IndexHandler {
       throw new ApplicationException(e);
     }
   }
-  private String escapeLuceneChars(String inputStr) {
-    String luceneCharsStr = "+-&|!(){}[]^~*?:\\";  // Lucene escape symbols
-    StringBuilder retStrBuilder = new StringBuilder();
-    for (int i=0; i<inputStr.length(); i++) {
-      char c = inputStr.charAt(i);
-      if (luceneCharsStr.contains(String.valueOf(c)))
-        retStrBuilder.append("\\");
-      retStrBuilder.append(c);
-    }
-    return retStrBuilder.toString();
-  }
-
+  
   private String toTokenizedXmlString(String xmlStr, String language) throws ApplicationException {
     String xmlPre = "<tokenized xmlns:xhtml=\"http://www.w3.org/1999/xhtml\" xmlns:mml=\"http://www.w3.org/1998/Math/MathML\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">";
     String xmlPost = "</tokenized>";
@@ -751,6 +888,18 @@ public class IndexHandler {
     xmlTokenizer.tokenize();
     String result = xmlTokenizer.getXmlResult();
     return result;
+  }
+
+  private String escapeLuceneChars(String inputStr) {
+    String luceneCharsStr = "+-&|!(){}[]^~*?:\\";  // Lucene escape symbols
+    StringBuilder retStrBuilder = new StringBuilder();
+    for (int i=0; i<inputStr.length(); i++) {
+      char c = inputStr.charAt(i);
+      if (luceneCharsStr.contains(String.valueOf(c)))
+        retStrBuilder.append("\\");
+      retStrBuilder.append(c);
+    }
+    return retStrBuilder.toString();
   }
 
   

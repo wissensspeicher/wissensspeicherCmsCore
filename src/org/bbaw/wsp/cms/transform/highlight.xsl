@@ -7,7 +7,7 @@
   <xsl:variable name="type" select="string(@type)"/>
   <xsl:choose>
     <xsl:when test="$type = 'elem'">
-      <span style="background-color:#D3D3D3"><xsl:apply-templates/></span>
+      <div style="background-color:#D3D3D3"><xsl:apply-templates/></div>
     </xsl:when>
     <xsl:when test="$type = 'hit'">
       <span style="background-color:#77DD77"><xsl:apply-templates/></span>

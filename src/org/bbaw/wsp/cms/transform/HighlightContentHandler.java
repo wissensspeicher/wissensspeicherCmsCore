@@ -1,5 +1,8 @@
 package org.bbaw.wsp.cms.transform;
 
+import java.util.ArrayList;
+
+import org.bbaw.wsp.cms.lucene.IndexHandler;
 import org.xml.sax.*;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
@@ -13,7 +16,9 @@ public class HighlightContentHandler implements ContentHandler {
   private boolean highlightElemMode = false;
   private int highlightElemModeOpenTags = 0;
   private String highlightQueryType = "orig";  // orig, reg, norm or morph
-  private String highlightQuery;  // lucene query string
+  private String highlightQuery;  // complex Lucene query
+  private String highlightQueryForms;  // highlight terms separated by a blank
+  private String language;
   private boolean highlightHitMode = false;
   private int highlightHitModeOpenTags = 0;
   private boolean firstPageBreakReachedMode = false;  // in a page fragment: if a page break element is surrounded by an element (e.g. "s") then this element should not increment the currentHighlightElemPos 
@@ -28,11 +33,15 @@ public class HighlightContentHandler implements ContentHandler {
     this.highlightElemPos = highlightElemPos;
   }
 
-  public HighlightContentHandler(String highlightElemName, int highlightElemPos, String highlightQueryType, String highlightQuery) throws ApplicationException {
+  public HighlightContentHandler(String highlightElemName, int highlightElemPos, String highlightQueryType, String highlightQuery, String language) throws ApplicationException {
     this.highlightElemName = highlightElemName;
     this.highlightElemPos = highlightElemPos;
     this.highlightQueryType = highlightQueryType;
     this.highlightQuery = highlightQuery;
+    this.language = language; 
+    IndexHandler indexHandler = IndexHandler.getInstance();
+    ArrayList<String> queryTerms = indexHandler.fetchTerms(highlightQuery, language); // all query terms in query (also morphological terms)
+    highlightQueryForms = toString(queryTerms);
   }
 
   public void setFirstPageBreakReachedMode(boolean firstPageBreakReachedMode) {
@@ -123,8 +132,20 @@ public class HighlightContentHandler implements ContentHandler {
       else if (highlightQueryType.equals("morph"))
         attrQName = "lemmas";
       String attrValue = getAttrValue(attrs, attrQName);
-      if (attrValue != null)
-        matched = attrValue.contains(highlightQuery);  // TODO parse Lucene query
+      if (attrValue != null) {
+        String[] forms = highlightQueryForms.split(" "); 
+        for (int i=0; i<forms.length; i++) {
+          if (! matched) {
+            String form = forms[i];
+            if (form.endsWith("*")) {  // TODO support middle wildcard queries: bla*bla bla?bla 
+              form = form.replace("*", "");
+              matched = attrValue.startsWith(form);
+            } else {
+              matched = attrValue.equals(form);  
+            }
+          }
+        }
+      }
       if ((highlightElemName == null && matched && highlightHitModeOpenTags == 0) || (highlightElemName != null && highlightElemMode && matched && highlightHitModeOpenTags == 0)) {
         highlightHitMode = true;
         write("<hi type=\"hit\">");
@@ -162,6 +183,18 @@ public class HighlightContentHandler implements ContentHandler {
     }
   }
 
+  private String toString(ArrayList<String> queryForms) {
+    String queryFormsStr = "";
+    for (int i=0; i<queryForms.size(); i++) {
+      String form = queryForms.get(i);
+      queryFormsStr = queryFormsStr + form + " ";
+    }
+    if (queryForms == null || queryForms.size() == 0)
+      return null;
+    else
+      return queryFormsStr.substring(0, queryFormsStr.length() -1); 
+  }
+  
   private void write(String outStr) throws SAXException {
     result.append(outStr);
   }

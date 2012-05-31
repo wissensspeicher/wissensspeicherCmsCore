@@ -65,7 +65,7 @@ public class DocumentHandler {
       String docIdentifier = docOperation.getDocIdentifier();
       String elementNames = docOperation.getElementNames();
       if (elementNames == null)
-        elementNames = "s head caption variables description";
+        elementNames = "div p s head caption variables description entry";  // entry: for lexicons
       String docDirName = getDocDir(docIdentifier);
       String docDestFileName = getDocFullFileName(docIdentifier); 
       URL srcUrl = null;
@@ -85,9 +85,9 @@ public class DocumentHandler {
       // parse validation on file
       XQueryEvaluator xQueryEvaluator = new XQueryEvaluator();
       XdmNode docNode = xQueryEvaluator.parse(srcUrl); // if it is not parseable an exception with a detail message is thrown 
-      String docType = getNodeType(docNode);  // archimedes, echo, TEI or html 
+      String docType = getNodeType(docNode);
       if (docType == null) {
-        docOperation.setErrorMessage("file type of: " + srcUrlStr + "is not supported (valid types are: TEI, echo, archimedes, html)");
+        docOperation.setErrorMessage("file type of: " + srcUrlStr + "is not supported");
         return;
       }
       // perform operation on file system
@@ -211,7 +211,7 @@ public class DocumentHandler {
       String title = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/info/title");
       if (title != null)
         title = StringUtils.deresolveXmlEntities(title);
-      String language = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/info/lang");
+      String language = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/info/lang[1]");
       if (language != null)
         language = StringUtils.deresolveXmlEntities(language);
       String yearStr = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/info/date");
@@ -272,7 +272,7 @@ public class DocumentHandler {
       String title = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:metadata/*:title");
       if (title != null)
         title = StringUtils.deresolveXmlEntities(title);
-      String language = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:metadata/*:language");
+      String language = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:metadata/*:language[1]");
       if (language != null)
         language = StringUtils.deresolveXmlEntities(language);
       String yearStr = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:metadata/*:date");
@@ -338,7 +338,7 @@ public class DocumentHandler {
       String title = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:titleStmt/*:title");
       if (title != null)
         title = StringUtils.deresolveXmlEntities(title);
-      String language = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/*:teiHeader/*:profileDesc/*:langUsage/*:language/@ident)");
+      String language = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/*:teiHeader/*:profileDesc/*:langUsage/*:language[1]/@ident)");
       if (language != null)
         language = StringUtils.deresolveXmlEntities(language);
       String yearStr = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:publicationStmt/*:date");
