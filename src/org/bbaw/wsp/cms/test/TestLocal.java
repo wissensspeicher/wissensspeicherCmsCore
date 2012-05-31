@@ -47,8 +47,9 @@ public class TestLocal {
       // File srcFile = new File("/Users/jwillenborg/mpdl/data/xml/documents/echo/la/Benedetti_1585/pages/page-13-morph.xml");
       // String page13 = FileUtils.readFileToString(srcFile, "utf-8");
       // test.highlight(page13, "s", 6, "reg", "relatiuum");
-      test.testCalls();
-      test.end();
+      test.queries();
+      // test.testCalls();
+      // test.end();
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -108,11 +109,10 @@ public class TestLocal {
     // indexer.deleteDocument(docIdBenedetti);
     Date end = new Date();
     System.out.println("Indexing end: : " + end.getTime());
-    String queryField = "tokenOrig";
-    String queryStr = "tempore";
-    System.out.println("Query: " + queryField + " contains: " + queryStr);
+    String queryStr = "tokenOrig:tempore";
+    System.out.println("Query: " + queryStr);
     // ArrayList<Document> docs = indexer.queryDocuments(queryField, queryStr);
-    ArrayList<Document> docs = indexer.queryDocument(docIdMonte, queryField, queryStr);
+    ArrayList<Document> docs = indexer.queryDocument(docIdMonte, queryStr);
     for (int i=0; i<docs.size(); i++) {
       Document doc = docs.get(i);
       Fieldable f = doc.getFieldable("docId");
@@ -203,11 +203,11 @@ public class TestLocal {
     }
   }
   
-  private String highlight(String xmlStr, String highlightElem, int highlightElemPos, String highlightQueryType, String highlightQuery) throws ApplicationException {
+  private String highlight(String xmlStr, String highlightElem, int highlightElemPos, String highlightQueryType, String highlightQuery, String language) throws ApplicationException {
     String result = null;
     try {
       xmlStr = normalizeWords(xmlStr);
-      HighlightContentHandler highlightContentHandler = new HighlightContentHandler(highlightElem, highlightElemPos, highlightQueryType, highlightQuery);
+      HighlightContentHandler highlightContentHandler = new HighlightContentHandler(highlightElem, highlightElemPos, highlightQueryType, highlightQuery, language);
       highlightContentHandler.setFirstPageBreakReachedMode(true);
       XMLReader xmlParser = new SAXParser();
       xmlParser.setContentHandler(highlightContentHandler);
@@ -221,5 +221,20 @@ public class TestLocal {
       throw new ApplicationException(e);
     }
     return result;
+  }
+  
+  private void queries() throws ApplicationException {
+    String docId = "/tei/de/Marie_1969-12-13.xml";
+    // String query = "mod_date:[20020101 TO 20030101]";
+    // String query = "tokenOrig:\"Haben beide\"~2";
+    // String query = "tokenOrig:Habe~";
+    // String query = "tokenOrig:\"Haben Sie beide\"";
+    // String query = "+tokenMorph:gebrauchen +tokenMorph:schmutzig";
+    // String query = "title:a*";
+    String query = "tokenMorph:gebrauchen AND tokenMorph:schmutzig";
+    // String query = "gebrauchen";
+    ArrayList<String> terms = indexer.fetchTerms(query, "de");
+    ArrayList<Document> docs = indexer.queryDocument(docId, query);
+	  String bla = "";
   }
 }
