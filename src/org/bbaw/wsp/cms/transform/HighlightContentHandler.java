@@ -164,7 +164,7 @@ public class HighlightContentHandler implements ContentHandler {
   }
 
   public void endElement(String uri, String localName, String name) throws SAXException {
-    write("</" + localName + ">");
+    write("</" + name + ">");
     // end highlight element at position
     if (highlightElemMode) {
       if (highlightElemModeOpenTags == 1) {
