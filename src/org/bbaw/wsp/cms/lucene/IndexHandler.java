@@ -817,8 +817,8 @@ public class IndexHandler {
       documentsFieldAnalyzers.put("tokenReg", new StandardAnalyzer(Version.LUCENE_35));
       documentsFieldAnalyzers.put("tokenNorm", new StandardAnalyzer(Version.LUCENE_35));
       documentsFieldAnalyzers.put("tokenMorph", new StandardAnalyzer(Version.LUCENE_35));
-      PerFieldAnalyzerWrapper perFieldAnalyzerWrapper = new PerFieldAnalyzerWrapper(new StandardAnalyzer(Version.LUCENE_35), documentsFieldAnalyzers);
-      IndexWriterConfig conf = new IndexWriterConfig(Version.LUCENE_35, perFieldAnalyzerWrapper);
+      documentsPerFieldAnalyzer = new PerFieldAnalyzerWrapper(new StandardAnalyzer(Version.LUCENE_35), documentsFieldAnalyzers);
+      IndexWriterConfig conf = new IndexWriterConfig(Version.LUCENE_35, documentsPerFieldAnalyzer);
       conf.setOpenMode(OpenMode.CREATE_OR_APPEND);
       FSDirectory fsDirectory = FSDirectory.open(luceneDocsDirectory);
       writer = new IndexWriter(fsDirectory, conf);
@@ -850,8 +850,8 @@ public class IndexHandler {
       nodesFieldAnalyzers.put("tokenReg", new StandardAnalyzer(Version.LUCENE_35));
       nodesFieldAnalyzers.put("tokenNorm", new StandardAnalyzer(Version.LUCENE_35));
       nodesFieldAnalyzers.put("tokenMorph", new StandardAnalyzer(Version.LUCENE_35));
-      PerFieldAnalyzerWrapper perFieldAnalyzerWrapper = new PerFieldAnalyzerWrapper(new StandardAnalyzer(Version.LUCENE_35), nodesFieldAnalyzers);
-      IndexWriterConfig conf = new IndexWriterConfig(Version.LUCENE_35, perFieldAnalyzerWrapper);
+      nodesPerFieldAnalyzer = new PerFieldAnalyzerWrapper(new StandardAnalyzer(Version.LUCENE_35), nodesFieldAnalyzers);
+      IndexWriterConfig conf = new IndexWriterConfig(Version.LUCENE_35, nodesPerFieldAnalyzer);
       conf.setOpenMode(OpenMode.CREATE_OR_APPEND);
       FSDirectory fsDirectory = FSDirectory.open(luceneNodesDirectory);
       writer = new IndexWriter(fsDirectory, conf);
