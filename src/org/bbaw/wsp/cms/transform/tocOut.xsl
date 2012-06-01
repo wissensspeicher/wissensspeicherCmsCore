@@ -13,7 +13,8 @@
   <xsl:choose>
     <xsl:when test="$type = 'toc'"><xsl:sequence select="//*:list[@type = 'toc']"/></xsl:when>
     <xsl:when test="$type = 'figures'"><xsl:sequence select="//*:list[@type = 'figures']"/></xsl:when>
-    <xsl:when test="$type = 'handwrittens'"><xsl:sequence select="//*:list[@type = 'handwrittens']"/></xsl:when>
+    <xsl:when test="$type = 'handwritten'"><xsl:sequence select="//*:list[@type = 'handwritten']"/></xsl:when>
+    <xsl:when test="$type = 'pages'"><xsl:sequence select="//*:list[@type = 'pages']"/></xsl:when>
     <xsl:otherwise></xsl:otherwise>
   </xsl:choose>
 </xsl:template>
