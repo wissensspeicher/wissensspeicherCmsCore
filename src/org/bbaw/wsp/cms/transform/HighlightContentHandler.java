@@ -18,7 +18,6 @@ public class HighlightContentHandler implements ContentHandler {
   private String highlightQueryType = "orig";  // orig, reg, norm or morph
   private String highlightQuery;  // complex Lucene query
   private String highlightQueryForms;  // highlight terms separated by a blank
-  private String language;
   private boolean highlightHitMode = false;
   private int highlightHitModeOpenTags = 0;
   private boolean firstPageBreakReachedMode = false;  // in a page fragment: if a page break element is surrounded by an element (e.g. "s") then this element should not increment the currentHighlightElemPos 
@@ -38,10 +37,11 @@ public class HighlightContentHandler implements ContentHandler {
     this.highlightElemPos = highlightElemPos;
     this.highlightQueryType = highlightQueryType;
     this.highlightQuery = highlightQuery;
-    this.language = language; 
-    IndexHandler indexHandler = IndexHandler.getInstance();
-    ArrayList<String> queryTerms = indexHandler.fetchTerms(highlightQuery, language); // all query terms in query (also morphological terms)
-    highlightQueryForms = toString(queryTerms);
+    if (highlightQuery != null) {
+      IndexHandler indexHandler = IndexHandler.getInstance();
+      ArrayList<String> queryTerms = indexHandler.fetchTerms(highlightQuery, language); // all query terms in query (also morphological terms)
+      highlightQueryForms = toString(queryTerms);
+    }
   }
 
   public void setFirstPageBreakReachedMode(boolean firstPageBreakReachedMode) {
