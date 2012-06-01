@@ -59,8 +59,8 @@ public class IndexHandler {
   private SearcherManager documentsSearcherManager;
   private SearcherManager nodesSearcherManager;
   private IndexReader documentsIndexReader;
-  private Map<String, Analyzer> documentsFieldAnalyzers;
-  private Map<String, Analyzer> nodesFieldAnalyzers;
+  private PerFieldAnalyzerWrapper documentsPerFieldAnalyzer;
+  private PerFieldAnalyzerWrapper nodesPerFieldAnalyzer;
   
   public static IndexHandler getInstance() throws ApplicationException {
     if (instance == null) {
@@ -321,8 +321,7 @@ public class IndexHandler {
       makeDocumentsSearcherManagerUpToDate();
       searcher = documentsSearcherManager.acquire();
       String defaultQueryFieldName = "tokenOrig";
-      Analyzer defaultQueryAnalyzer = nodesFieldAnalyzers.get(defaultQueryFieldName);
-      Query query = new QueryParser(Version.LUCENE_35, defaultQueryFieldName, defaultQueryAnalyzer).parse(queryStr);
+      Query query = new QueryParser(Version.LUCENE_35, defaultQueryFieldName, documentsPerFieldAnalyzer).parse(queryStr);
       Query morphQuery = buildMorphQuery(query, language);
       TopDocs topDocs = searcher.search(morphQuery, 1000);
       topDocs.setMaxScore(1);
@@ -358,11 +357,9 @@ public class IndexHandler {
       makeNodesSearcherManagerUpToDate();
       searcher = nodesSearcherManager.acquire();
       String fieldNameDocId = "docId";
-      Analyzer analyzerDocId = nodesFieldAnalyzers.get(fieldNameDocId);
-      Query queryDocId = new QueryParser(Version.LUCENE_35, fieldNameDocId, analyzerDocId).parse(docId);
+      Query queryDocId = new QueryParser(Version.LUCENE_35, fieldNameDocId, nodesPerFieldAnalyzer).parse(docId);
       String defaultQueryFieldName = "tokenOrig";
-      Analyzer defaultQueryAnalyzer = nodesFieldAnalyzers.get(defaultQueryFieldName);
-      Query query = new QueryParser(Version.LUCENE_35, defaultQueryFieldName, defaultQueryAnalyzer).parse(queryStr);
+      Query query = new QueryParser(Version.LUCENE_35, defaultQueryFieldName, nodesPerFieldAnalyzer).parse(queryStr);
       String language = docMetadataRecord.getLanguage();
       Query morphQuery = buildMorphQuery(query, language);
       BooleanQuery queryDoc = new BooleanQuery();
@@ -647,9 +644,8 @@ public class IndexHandler {
   public ArrayList<String> fetchTerms(String queryStr) throws ApplicationException {
     ArrayList<String> terms = null;
     String defaultQueryFieldName = "tokenOrig";
-    Analyzer defaultQueryAnalyzer = nodesFieldAnalyzers.get(defaultQueryFieldName);
     try {
-      Query query = new QueryParser(Version.LUCENE_35, defaultQueryFieldName, defaultQueryAnalyzer).parse(queryStr);
+      Query query = new QueryParser(Version.LUCENE_35, defaultQueryFieldName, nodesPerFieldAnalyzer).parse(queryStr);
       terms = fetchTerms(query);
     } catch (Exception e) {
       throw new ApplicationException(e);
@@ -695,9 +691,8 @@ public class IndexHandler {
   public ArrayList<String> fetchTerms(String queryStr, String language) throws ApplicationException {
     ArrayList<String> terms = null;
     String defaultQueryFieldName = "tokenOrig";
-    Analyzer defaultQueryAnalyzer = nodesFieldAnalyzers.get(defaultQueryFieldName);
     try {
-      Query query = new QueryParser(Version.LUCENE_35, defaultQueryFieldName, defaultQueryAnalyzer).parse(queryStr);
+      Query query = new QueryParser(Version.LUCENE_35, defaultQueryFieldName, nodesPerFieldAnalyzer).parse(queryStr);
       terms = fetchTerms(query, language);
     } catch (Exception e) {
       throw new ApplicationException(e);
@@ -775,8 +770,7 @@ public class IndexHandler {
       makeDocumentsSearcherManagerUpToDate();
       searcher = documentsSearcherManager.acquire();
       String fieldNameDocId = "docId";
-      Analyzer analyzerDocId = documentsFieldAnalyzers.get(fieldNameDocId);
-      Query queryDocId = new QueryParser(Version.LUCENE_35, fieldNameDocId, analyzerDocId).parse(docId);
+      Query queryDocId = new QueryParser(Version.LUCENE_35, fieldNameDocId, documentsPerFieldAnalyzer).parse(docId);
       TopDocs topDocs = searcher.search(queryDocId, 100000);
       topDocs.setMaxScore(1);
       if (topDocs != null && topDocs.scoreDocs != null && topDocs.scoreDocs.length > 0) {
@@ -804,7 +798,7 @@ public class IndexHandler {
     String luceneDocsDirectoryStr = Constants.getInstance().getLuceneDocumentsDir();
     File luceneDocsDirectory = new File(luceneDocsDirectoryStr);
     try {
-      documentsFieldAnalyzers = new HashMap<String, Analyzer>();
+      Map<String, Analyzer> documentsFieldAnalyzers = new HashMap<String, Analyzer>();
       documentsFieldAnalyzers.put("docId", new KeywordAnalyzer());
       documentsFieldAnalyzers.put("identifier", new KeywordAnalyzer());
       documentsFieldAnalyzers.put("echoId", new KeywordAnalyzer());
@@ -840,7 +834,7 @@ public class IndexHandler {
     String luceneNodesDirectoryStr = Constants.getInstance().getLuceneNodesDir();
     File luceneNodesDirectory = new File(luceneNodesDirectoryStr);
     try {
-      nodesFieldAnalyzers = new HashMap<String, Analyzer>();
+      Map<String, Analyzer> nodesFieldAnalyzers = new HashMap<String, Analyzer>();
       nodesFieldAnalyzers.put("docId", new KeywordAnalyzer());
       nodesFieldAnalyzers.put("identifier", new KeywordAnalyzer());
       nodesFieldAnalyzers.put("language", new KeywordAnalyzer());  // language (through xml:id): e.g. "lat"
