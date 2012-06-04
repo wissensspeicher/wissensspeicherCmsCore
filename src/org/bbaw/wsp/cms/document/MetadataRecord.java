@@ -4,13 +4,14 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class MetadataRecord {
-  private String docId;  // document identifier in index system, e.g. /echo/la/Benedetti_1585.xml
-  private String identifier;  // document identifier in documents metadata: e.g. /echo:echo/echo:metadata/dcterms:identifier  
-  private String echoId;  // document identifier in echo system: directory name, e.g. /permanent/library/163127KK  
+  private String docId;  // local id: document identifier in index system, e.g. /echo/la/Benedetti_1585.xml
+  private String identifier;  // local id: identifier field in documents metadata: e.g. /echo:echo/echo:metadata/dcterms:identifier  
+  private String uri;  // global id: document URI (uniform resource identifier), e.g. http://de.wikipedia.org/wiki/Ramones
   private String language;
   private String creator;  // author
   private String title;
-  private String description;
+  private String description;  // abstract etc.
+  private String subject;  // subject keywords from the title or description or content or subject lists (thesaurus etc.)
   private String publisher; // publisher with place: e.g. Springer, New York
   private String type; // mime type: e.g. text/xml  // TODO ist eigentlich das Feld "format" --> zus. instance variable "format" definieren
   private String rights; // e.g. open access
@@ -20,26 +21,8 @@ public class MetadataRecord {
   private String schemaName; // e.g. TEI, echo, html, or archimedes
   private Date lastModified;
   private int pageCount;
-  private String figuresXmlStr; // echo schema: list of figure elements as xml string 
-  private String notesXmlStr;   // echo schema: list of note elements as xml string
-  private String tocXmlStr;     // echo schema: table of content elements as xml string
+  private String echoId;  // document identifier in echo system: directory name, e.g. /permanent/library/163127KK  
  
-  public MetadataRecord() {
-    
-  }
-  
-  public MetadataRecord(String identifier, String language, String creator, String title, String description, String publisher, String type, String rights, Date date) {
-    this.identifier = identifier;
-    this.language = language;
-    this.creator = creator;
-    this.title = title;
-    this.description = description;
-    this.publisher = publisher;
-    this.type = type;
-    this.rights = rights;
-    this.date = date;
-  }
-  
   public String getDocId() {
     return docId;
   }
@@ -48,12 +31,12 @@ public class MetadataRecord {
     this.docId = docId;
   }
 
-  public String getEchoId() {
-    return echoId;
+  public String getUri() {
+    return uri;
   }
 
-  public void setEchoId(String echoId) {
-    this.echoId = echoId;
+  public void setUri(String uri) {
+    this.uri = uri;
   }
 
   public String getRights() {
@@ -131,6 +114,14 @@ public class MetadataRecord {
     this.description = description;
   }
 
+  public String getSubject() {
+    return subject;
+  }
+
+  public void setSubject(String subject) {
+    this.subject = subject;
+  }
+
   public String getIdentifier() {
     return identifier;
   }
@@ -179,29 +170,12 @@ public class MetadataRecord {
     this.lastModified = lastModified;
   }
 
-  public String getFiguresXmlStr() {
-    return figuresXmlStr;
+  public String getEchoId() {
+    return echoId;
   }
 
-  public void setFiguresXmlStr(String figuresXmlStr) {
-    this.figuresXmlStr = figuresXmlStr;
+  public void setEchoId(String echoId) {
+    this.echoId = echoId;
   }
 
-  public String getNotesXmlStr() {
-    return notesXmlStr;
-  }
-
-  public void setNotesXmlStr(String notesXmlStr) {
-    this.notesXmlStr = notesXmlStr;
-  }
-
-  public String getTocXmlStr() {
-    return tocXmlStr;
-  }
-
-  public void setTocXmlStr(String tocXmlStr) {
-    this.tocXmlStr = tocXmlStr;
-  }
-
-  
 }
