@@ -115,6 +115,7 @@ public class DocumentHandler {
       // Get metadata info of the xml document
       MetadataRecord mdRecord = new MetadataRecord();
       mdRecord.setDocId(docIdentifier);
+      mdRecord.setProjectIds(docOperation.getProjectIds());
       mdRecord.setType("text/xml");
       docOperation.setStatus("extract metadata of: " + srcUrlStr + " to CMS");
       mdRecord = getMetadataRecord(docDestFile, docType, mdRecord);

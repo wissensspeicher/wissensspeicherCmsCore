@@ -18,6 +18,7 @@ public class MetadataRecord {
   private Date date; // creation date, modification date, etc.
   private String license;  // e.g. http://echo.mpiwg-berlin.mpg.de/policy/oa_basics/declaration
   private String accessRights;  // e.g. free  
+  private String projectIds; // e.g. "collection1 collection7"
   private String schemaName; // e.g. TEI, echo, html, or archimedes
   private Date lastModified;
   private int pageCount;
@@ -120,6 +121,14 @@ public class MetadataRecord {
 
   public void setSubject(String subject) {
     this.subject = subject;
+  }
+
+  public String getProjectIds() {
+    return projectIds;
+  }
+
+  public void setProjectIds(String projectIds) {
+    this.projectIds = projectIds;
   }
 
   public String getIdentifier() {
