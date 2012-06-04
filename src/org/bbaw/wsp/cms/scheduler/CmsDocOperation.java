@@ -16,6 +16,7 @@ public class CmsDocOperation implements Comparable<CmsDocOperation> {
   private String srcUrl;   
   private String docIdentifier;
   private String elementNames; // element names which should be indexed (e.g. "s head, caption")
+  private String projectIds; // project ids to which this document belongs separated by blanks (e.g. "collection1 collection7")
   private MetadataRecord mdRecord;
   
   public CmsDocOperation(String name, String srcUrl, String uploadFileName, String docIdentifier) {
@@ -107,6 +108,14 @@ public class CmsDocOperation implements Comparable<CmsDocOperation> {
   
   public void setElementNames(String elementNames) {
     this.elementNames = elementNames;
+  }
+  
+  public String getProjectIds() {
+    return projectIds;
+  }
+  
+  public void setProjectIds(String projectIds) {
+    this.projectIds = projectIds;
   }
   
   public String getSrcUrl() {
