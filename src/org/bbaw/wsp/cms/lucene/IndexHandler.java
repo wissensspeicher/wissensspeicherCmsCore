@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.KeywordAnalyzer;
 import org.apache.lucene.analysis.PerFieldAnalyzerWrapper;
@@ -120,6 +121,11 @@ public class IndexHandler {
         Field echoIdField = new Field("echoId", echoId, Field.Store.YES, Field.Index.ANALYZED);
         doc.add(echoIdField);
       }
+      String uri = docOperation.getSrcUrl();
+      if (uri != null) {
+        Field uriField = new Field("uri", uri, Field.Store.YES, Field.Index.ANALYZED);
+        doc.add(uriField);
+      }
       if (mdRecord.getCreator() != null) {
         Field authorField = new Field("author", mdRecord.getCreator(), Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
         doc.add(authorField);
@@ -198,6 +204,12 @@ public class IndexHandler {
       doc.add(tokenNormField);
       doc.add(tokenMorphField);
       
+      // save original content of the doc file
+      File docFile = new File(docFileName);
+      String contentXml = FileUtils.readFileToString(docFile, "utf-8");
+      Field contentXmlField = new Field("xmlContent", contentXml, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
+      doc.add(contentXmlField);
+
       documentsIndexWriter.addDocument(doc);
 
       // add all elements with the specified names of the document to nodesIndex
@@ -248,12 +260,12 @@ public class IndexHandler {
           nodeDoc.add(nodeXpathField);
         }
         if (nodeXmlContent != null) {
-          Field nodeXmlContentField = new Field("xmlContent", nodeXmlContent, Field.Store.YES, Field.Index.NO);  // stored but not indexed
+          Field nodeXmlContentField = new Field("xmlContent", nodeXmlContent, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
           nodeDoc.add(nodeXmlContentField);
         }
         if (nodeXmlContent != null) {
           String nodeXmlContentTokenized = toTokenizedXmlString(nodeXmlContent, nodeLanguage);
-          Field nodeXmlContentTokenizedField = new Field("xmlContentTokenized", nodeXmlContentTokenized, Field.Store.YES, Field.Index.NO);  // stored but not indexed
+          Field nodeXmlContentTokenizedField = new Field("xmlContentTokenized", nodeXmlContentTokenized, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
           nodeDoc.add(nodeXmlContentTokenizedField);
         }
         if (nodeTokensOrig != null) {
@@ -817,6 +829,7 @@ public class IndexHandler {
       documentsFieldAnalyzers.put("tokenReg", new StandardAnalyzer(Version.LUCENE_35));
       documentsFieldAnalyzers.put("tokenNorm", new StandardAnalyzer(Version.LUCENE_35));
       documentsFieldAnalyzers.put("tokenMorph", new StandardAnalyzer(Version.LUCENE_35));
+      documentsFieldAnalyzers.put("xmlContent", new StandardAnalyzer(Version.LUCENE_35));
       documentsPerFieldAnalyzer = new PerFieldAnalyzerWrapper(new StandardAnalyzer(Version.LUCENE_35), documentsFieldAnalyzers);
       IndexWriterConfig conf = new IndexWriterConfig(Version.LUCENE_35, documentsPerFieldAnalyzer);
       conf.setOpenMode(OpenMode.CREATE_OR_APPEND);
@@ -850,6 +863,7 @@ public class IndexHandler {
       nodesFieldAnalyzers.put("tokenReg", new StandardAnalyzer(Version.LUCENE_35));
       nodesFieldAnalyzers.put("tokenNorm", new StandardAnalyzer(Version.LUCENE_35));
       nodesFieldAnalyzers.put("tokenMorph", new StandardAnalyzer(Version.LUCENE_35));
+      nodesFieldAnalyzers.put("xmlContent", new StandardAnalyzer(Version.LUCENE_35));
       nodesPerFieldAnalyzer = new PerFieldAnalyzerWrapper(new StandardAnalyzer(Version.LUCENE_35), nodesFieldAnalyzers);
       IndexWriterConfig conf = new IndexWriterConfig(Version.LUCENE_35, nodesPerFieldAnalyzer);
       conf.setOpenMode(OpenMode.CREATE_OR_APPEND);
