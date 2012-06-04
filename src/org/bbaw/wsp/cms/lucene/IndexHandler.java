@@ -413,6 +413,10 @@ public class IndexHandler {
       Fieldable identifierField = doc.getFieldable("identifier");
       if (identifierField != null)
         identifier = identifierField.stringValue();
+      String uri = null;
+      Fieldable uriField = doc.getFieldable("uri");
+      if (uriField != null)
+        uri = uriField.stringValue();
       String echoId = null;
       Fieldable echoIdField = doc.getFieldable("echoId");
       if (echoIdField != null)
@@ -471,6 +475,7 @@ public class IndexHandler {
       }
       mdRecord = new MetadataRecord();
       mdRecord.setDocId(docId);
+      mdRecord.setUri(uri);
       mdRecord.setIdentifier(identifier);
       mdRecord.setEchoId(echoId);
       mdRecord.setCreator(author);
