@@ -126,6 +126,11 @@ public class IndexHandler {
         Field uriField = new Field("uri", uri, Field.Store.YES, Field.Index.ANALYZED);
         doc.add(uriField);
       }
+      String projectIds = docOperation.getProjectIds();
+      if (projectIds != null) {
+        Field projectIdsField = new Field("projectIds", projectIds, Field.Store.YES, Field.Index.ANALYZED);
+        doc.add(projectIdsField);
+      }
       if (mdRecord.getCreator() != null) {
         Field authorField = new Field("author", mdRecord.getCreator(), Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
         doc.add(authorField);
@@ -417,6 +422,10 @@ public class IndexHandler {
       Fieldable uriField = doc.getFieldable("uri");
       if (uriField != null)
         uri = uriField.stringValue();
+      String projectIds = null;
+      Fieldable projectIdsField = doc.getFieldable("projectIds");
+      if (projectIdsField != null)
+        projectIds = projectIdsField.stringValue();
       String echoId = null;
       Fieldable echoIdField = doc.getFieldable("echoId");
       if (echoIdField != null)
@@ -477,6 +486,7 @@ public class IndexHandler {
       mdRecord.setDocId(docId);
       mdRecord.setUri(uri);
       mdRecord.setIdentifier(identifier);
+      mdRecord.setProjectIds(projectIds);
       mdRecord.setEchoId(echoId);
       mdRecord.setCreator(author);
       mdRecord.setTitle(title);
@@ -819,6 +829,8 @@ public class IndexHandler {
       documentsFieldAnalyzers.put("docId", new KeywordAnalyzer());
       documentsFieldAnalyzers.put("identifier", new KeywordAnalyzer());
       documentsFieldAnalyzers.put("echoId", new KeywordAnalyzer());
+      documentsFieldAnalyzers.put("uri", new KeywordAnalyzer());
+      documentsFieldAnalyzers.put("projectIds", new StandardAnalyzer(Version.LUCENE_35));
       documentsFieldAnalyzers.put("author", new StandardAnalyzer(Version.LUCENE_35));
       documentsFieldAnalyzers.put("title", new StandardAnalyzer(Version.LUCENE_35));
       documentsFieldAnalyzers.put("language", new KeywordAnalyzer());
