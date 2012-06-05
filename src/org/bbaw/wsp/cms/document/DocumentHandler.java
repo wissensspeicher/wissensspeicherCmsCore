@@ -4,9 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.util.Date;
 import java.util.Hashtable;
+import java.util.Iterator;
 
 import net.sf.saxon.s9api.Axis;
 import net.sf.saxon.s9api.QName;
@@ -41,24 +43,49 @@ public class DocumentHandler {
   
   public void doOperation(CmsDocOperation docOperation) throws ApplicationException{
     String operationName = docOperation.getName();  
-    if (operationName.equals("create") || operationName.equals("update")) {
-      createOrUpdate(docOperation);
+    if (operationName.equals("create")) {
+      create(docOperation);
     } else if (operationName.equals("delete")) {
       delete(docOperation);
-    } else if (operationName.equals("importAllDocumentsLocallyExist")) {
-      importAllDocumentsLocally();
+    } else if (operationName.equals("importDirectory")) {
+      importDirectory(docOperation);
     }
   }
   
-  private void importAllDocumentsLocally() throws ApplicationException {
-    System.out.println("Start of DocumentHandler. This operation could be time consuming because documents are indexed (normal indexing times are 10 seconds for a document) ...");
-    beginOperation();
-    // saveDocumentFiles();  // TODO
-    endOperation();
-    System.out.println("The DocumentHandler needed: " + (endOfOperation - beginOfOperation) + " ms" );
+  private void importDirectory(CmsDocOperation docOperation) throws ApplicationException {
+    try {
+      System.out.println("Start of DocumentHandler. This operation could be time consuming because documents are indexed (normal indexing times are 10 seconds for a document)");
+      beginOperation();
+      String localDocumentsUrlStr = docOperation.getSrcUrl(); // start directory: file:/a/local/directory
+      String projectIds = docOperation.getProjectIds();
+      File localDocumentsDir = new File(new URI(localDocumentsUrlStr));
+      boolean docDirExists = localDocumentsDir.exists();
+      if (! docDirExists) 
+        throw new ApplicationException("Document directory:" + localDocumentsUrlStr + " does not exists. Please use a directory that exists and perform the operation again.");
+      String[] fileExtensions = {"xml"};
+      Iterator<File> iterFiles = FileUtils.iterateFiles(localDocumentsDir, fileExtensions, true);
+      int i = 0 ;
+      while(iterFiles.hasNext()) {
+        i++;
+        File xmlFile = iterFiles.next();
+        String xmlFileStr = xmlFile.getPath();
+        int relativePos = (int) localDocumentsDir.getPath().length();
+        String docId = xmlFileStr.substring(relativePos);  // relative path name starting from localDocumentsDir, e.g. /tei/de/Test_1789.xml
+        String xmlFileUrlStr = xmlFile.toURI().toURL().toString();
+        CmsDocOperation createDocOperation = new CmsDocOperation("create", xmlFileUrlStr, null, docId);
+        createDocOperation.setProjectIds(projectIds);
+        doOperation(createDocOperation);
+        Date now = new Date();
+        System.out.println("Document " + i + ": " + docId + " successfully imported (" + now.toString() + ")");
+      }
+      endOperation();
+      System.out.println("The DocumentHandler needed: " + (endOfOperation - beginOfOperation) + " ms" );
+    } catch (Exception e) {
+      throw new ApplicationException(e);
+    }
   }
-  
-  private void createOrUpdate(CmsDocOperation docOperation) throws ApplicationException {
+      
+  private void create(CmsDocOperation docOperation) throws ApplicationException {
     try {
       String operationName = docOperation.getName();  
       String srcUrlStr = docOperation.getSrcUrl(); 
@@ -75,13 +102,6 @@ public class DocumentHandler {
         protocol = srcUrl.getProtocol();
       }
       File docDestFile = new File(docDestFileName);
-      boolean docExists = docDestFile.exists();
-      if (operationName.equals("create") && docExists) {
-        throw new ApplicationException("Document: " + docIdentifier + " already exists. Please use another name or perform the operation \"Update\" of that document.");
-      }
-      if (operationName.equals("update") && ! docExists) {
-        throw new ApplicationException("Document: " + docIdentifier + " does not exist. Please use a name that exists and perform the operation \"Update\" again or perform the operation \"Create\" of that document");
-      }
       // parse validation on file
       XQueryEvaluator xQueryEvaluator = new XQueryEvaluator();
       XdmNode docNode = xQueryEvaluator.parse(srcUrl); // if it is not parseable an exception with a detail message is thrown 
@@ -148,8 +168,6 @@ public class DocumentHandler {
       indexHandler.indexDocument(docOperation);
       
       // TODO: perform operation on version management system
-      // String luceneDocumentsDirectory = Constants.getInstance().getLuceneDocumentsDir();
-      // String luceneNodesDirectory = Constants.getInstance().getLuceneNodesDir();
     } catch (IOException e) {
       throw new ApplicationException(e);
     }
@@ -175,8 +193,6 @@ public class DocumentHandler {
     indexHandler.deleteDocument(docOperation);
       
     // TODO: perform operation on version management system
-    // String luceneDocumentsDirectory = Constants.getInstance().getLuceneDocumentsDir();
-    // String luceneNodesDirectory = Constants.getInstance().getLuceneNodesDir();
   }
   
   private MetadataRecord getMetadataRecord(File xmlFile, String schemaName, MetadataRecord mdRecord) throws ApplicationException {
@@ -220,8 +236,13 @@ public class DocumentHandler {
       if (yearStr != null && ! yearStr.equals("")) {
         yearStr = StringUtils.deresolveXmlEntities(yearStr);
         yearStr = new Util().toYearStr(yearStr);  // test if possible etc
-        if (yearStr != null)
-          date = new Util().toDate(yearStr + "-01-01T00:00:00.000Z");
+        if (yearStr != null) {
+          try {
+            date = new Util().toDate(yearStr + "-01-01T00:00:00.000Z");
+          } catch (Exception e) {
+            // nothing
+          }
+        }
       }
       String rights = "open access";
       String license = "http://echo.mpiwg-berlin.mpg.de/policy/oa_basics/declaration";
@@ -281,8 +302,13 @@ public class DocumentHandler {
       if (yearStr != null && ! yearStr.equals("")) {
         yearStr = StringUtils.deresolveXmlEntities(yearStr);
         yearStr = new Util().toYearStr(yearStr);  // test if possible etc
-        if (yearStr != null)
-          date = new Util().toDate(yearStr + "-01-01T00:00:00.000Z"); 
+        if (yearStr != null) {
+          try {
+            date = new Util().toDate(yearStr + "-01-01T00:00:00.000Z");
+          } catch (Exception e) {
+            // nothing
+          }
+        }
       }
       String rights = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:metadata/*:rights");
       if (rights != null)
@@ -347,8 +373,13 @@ public class DocumentHandler {
       if (yearStr != null && ! yearStr.equals("")) {
         yearStr = StringUtils.deresolveXmlEntities(yearStr);
         yearStr = new Util().toYearStr(yearStr);  // test if possible etc
-        if (yearStr != null)
-          date = new Util().toDate(yearStr + "-01-01T00:00:00.000Z");
+        if (yearStr != null) {
+          try {
+            date = new Util().toDate(yearStr + "-01-01T00:00:00.000Z");
+          } catch (Exception e) {
+            // nothing
+          }
+        }
       }
       String rights = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:publicationStmt/*:availability");
       if (rights == null)
@@ -396,8 +427,13 @@ public class DocumentHandler {
       if (yearStr != null && ! yearStr.equals("")) {
         yearStr = StringUtils.deresolveXmlEntities(yearStr);
         yearStr = new Util().toYearStr(yearStr);  // test if possible etc
-        if (yearStr != null)
-          date = new Util().toDate(yearStr + "-01-01T00:00:00.000Z");
+        if (yearStr != null) {
+          try {
+            date = new Util().toDate(yearStr + "-01-01T00:00:00.000Z");
+          } catch (Exception e) {
+            // nothing
+          }
+        }
       }
       String rights = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/meta[@name = 'DC.rights']/@content)");
       if (rights != null && ! rights.isEmpty())
