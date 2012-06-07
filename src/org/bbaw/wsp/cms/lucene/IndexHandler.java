@@ -9,7 +9,6 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
@@ -69,7 +68,6 @@ public class IndexHandler {
   private IndexReader documentsIndexReader;
   private PerFieldAnalyzerWrapper documentsPerFieldAnalyzer;
   private PerFieldAnalyzerWrapper nodesPerFieldAnalyzer;
-  private ArrayList<String> fragments;
 
   public static IndexHandler getInstance() throws ApplicationException {
     if (instance == null) {
@@ -341,8 +339,8 @@ public class IndexHandler {
     }
   }
 
-  public ArrayList<Document> queryDocuments(String queryStr, String language, int from, int to) throws ApplicationException {
-    ArrayList<Document> docs = null;
+  public ArrayList<org.bbaw.wsp.cms.document.Document> queryDocuments(String queryStr, String language, int from, int to, boolean withHitFragments) throws ApplicationException {
+    ArrayList<org.bbaw.wsp.cms.document.Document> docs = null;
     IndexSearcher searcher = null;
     try {
       makeDocumentsSearcherManagerUpToDate();
@@ -350,6 +348,8 @@ public class IndexHandler {
       String defaultQueryFieldName = "tokenOrig";
       Query query = new QueryParser(Version.LUCENE_35, defaultQueryFieldName, documentsPerFieldAnalyzer).parse(queryStr);
       Query morphQuery = buildMorphQuery(query, language);
+      SimpleHTMLFormatter htmlFormatter = new SimpleHTMLFormatter();
+      Highlighter highlighter = new Highlighter(htmlFormatter, new QueryScorer(query));
       TopDocs topDocs = searcher.search(morphQuery, 1000);
       topDocs.setMaxScore(1);
       int toTmp = to;
@@ -357,13 +357,29 @@ public class IndexHandler {
         toTmp = topDocs.scoreDocs.length;
       if (topDocs != null) {
         if (docs == null)
-          docs = new ArrayList<Document>();
+          docs = new ArrayList<org.bbaw.wsp.cms.document.Document>();
         for (int i = from; i < toTmp; i++) {
           int docID = topDocs.scoreDocs[i].doc;
-          Document doc = searcher.doc(docID);
+          Document luceneDoc = searcher.doc(docID);
+          org.bbaw.wsp.cms.document.Document doc = new org.bbaw.wsp.cms.document.Document(luceneDoc);
+          if (withHitFragments) {
+            ArrayList<String> hitFragments = new ArrayList<String>();
+            Fieldable docContentField = luceneDoc.getFieldable("xmlContent");
+            if (docContentField != null) {
+              String docContent = docContentField.stringValue();
+              TokenStream tokenStream = TokenSources.getAnyTokenStream(this.documentsIndexReader, docID, docContentField.name(), documentsPerFieldAnalyzer);
+              TextFragment[] textfragments = highlighter.getBestTextFragments(tokenStream, docContent, false, 10);
+              if (textfragments.length > 0) {
+                for (int j = 0; j < textfragments.length; j++) {
+                  hitFragments.add(ceckFragment(textfragments[j].toString()));
+                }
+              }
+            }
+            if (! hitFragments.isEmpty())
+              doc.setHitFragments(hitFragments);
+          }
           docs.add(doc);
         }
-        getHitFragments(query, topDocs, from, toTmp);
       }
     } catch (Exception e) {
       throw new ApplicationException(e);
@@ -1011,47 +1027,6 @@ public class IndexHandler {
     return retStrBuilder.toString();
   }
 
-  private List<String> getHitFragments(Query query, TopDocs docs, int from, int to) throws ApplicationException {
-    IndexSearcher searcher = null;
-    this.fragments = new ArrayList<String>();
-    try {
-      makeDocumentsSearcherManagerUpToDate();
-      searcher = documentsSearcherManager.acquire();
-      TextFragment[] textfragments = null;
-      SimpleHTMLFormatter htmlFormatter = new SimpleHTMLFormatter();
-      Highlighter highlighter = new Highlighter(htmlFormatter, new QueryScorer(query));
-      if (docs != null && docs.totalHits > 1) {
-        for (int i = from; i < to; i++) {
-          int id = docs.scoreDocs[i].doc;
-          Document doc = null;
-          doc = searcher.doc(id);
-          Fieldable docContentField = doc.getFieldable("xmlContent");
-          String docContent = null;
-          if (docContentField != null) {
-            docContent = docContentField.stringValue();
-            TokenStream tokenStream = TokenSources.getAnyTokenStream(this.documentsIndexReader, id, docContentField.name(), documentsPerFieldAnalyzer);
-            textfragments = highlighter.getBestTextFragments(tokenStream, docContent, false, 10);
-            if (textfragments.length > 0) {
-              for (int j = 0; j < textfragments.length; j++) {
-                this.fragments.add(ceckFragment(textfragments[j].toString()));
-              }
-            }
-          }
-        }
-      }
-      return fragments;
-    } catch (Exception e) {
-      throw new ApplicationException(e);
-    } finally {
-      try {
-        if (searcher != null)
-          documentsSearcherManager.release(searcher);
-      } catch (IOException e) {
-        // nothing
-      }
-    }
-  }
-
   /**
    * sorgt für sinnvolle satzanfänge
    * 
@@ -1070,10 +1045,6 @@ public class IndexHandler {
       // finds first occurence of a given string out.println("first index of point : "+StringUtils.indexOfAny(fragment, "."));
     }
     return fragment;
-  }
-
-  public ArrayList<String> getFragments() {
-    return this.fragments;
   }
 
 }
