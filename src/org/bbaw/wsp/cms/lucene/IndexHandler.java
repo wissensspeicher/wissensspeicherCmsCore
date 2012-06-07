@@ -113,7 +113,7 @@ public class IndexHandler {
       MetadataRecord mdRecord = docOperation.getMdRecord();
       String docIdentifier = docOperation.getDocIdentifier();
       DocumentHandler docHandler = new DocumentHandler();
-      String docFileName = docHandler.getDocFullFileName(docIdentifier);
+      String docFileName = docHandler.getDocFullFileName(docIdentifier) + ".upgrade";
       // add document to documentsIndex
       Document doc = new Document();
       String docId = mdRecord.getDocId();
@@ -352,15 +352,18 @@ public class IndexHandler {
       Query morphQuery = buildMorphQuery(query, language);
       TopDocs topDocs = searcher.search(morphQuery, 1000);
       topDocs.setMaxScore(1);
+      int toTmp = to;
+      if (topDocs.scoreDocs.length < to)
+        toTmp = topDocs.scoreDocs.length;
       if (topDocs != null) {
         if (docs == null)
           docs = new ArrayList<Document>();
-        for (int i = 0; i < topDocs.scoreDocs.length; i++) {
+        for (int i = from; i < toTmp; i++) {
           int docID = topDocs.scoreDocs[i].doc;
           Document doc = searcher.doc(docID);
           docs.add(doc);
         }
-        getHitFragments(query, topDocs, from, to);
+        getHitFragments(query, topDocs, from, toTmp);
       }
     } catch (Exception e) {
       throw new ApplicationException(e);
@@ -1013,15 +1016,12 @@ public class IndexHandler {
     this.fragments = new ArrayList<String>();
     try {
       makeDocumentsSearcherManagerUpToDate();
-
       searcher = documentsSearcherManager.acquire();
       TextFragment[] textfragments = null;
       SimpleHTMLFormatter htmlFormatter = new SimpleHTMLFormatter();
       Highlighter highlighter = new Highlighter(htmlFormatter, new QueryScorer(query));
       if (docs != null && docs.totalHits > 1) {
         for (int i = from; i < to; i++) {
-          // out.println("from : "+from + " | to : "+to);
-          // System.out.println("docs length : "+docs.scoreDocs.length);
           int id = docs.scoreDocs[i].doc;
           Document doc = null;
           doc = searcher.doc(id);
@@ -1029,12 +1029,11 @@ public class IndexHandler {
           String docContent = null;
           if (docContentField != null) {
             docContent = docContentField.stringValue();
-            // System.out.print("<docContent>" + docContent + "</docContent>");
             TokenStream tokenStream = TokenSources.getAnyTokenStream(this.documentsIndexReader, id, docContentField.name(), documentsPerFieldAnalyzer);
             textfragments = highlighter.getBestTextFragments(tokenStream, docContent, false, 10);
             if (textfragments.length > 0) {
               for (int j = 0; j < textfragments.length; j++) {
-                this.fragments.add(ceckFragment(textfragments[0].toString()));
+                this.fragments.add(ceckFragment(textfragments[j].toString()));
               }
             }
           }
