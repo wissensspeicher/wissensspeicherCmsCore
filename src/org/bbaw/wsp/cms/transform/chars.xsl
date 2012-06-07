@@ -4,7 +4,7 @@
 <xsl:output method="xml" encoding="utf-8"/>
 
 <xsl:template match="text()">
-  <xsl:sequence select="."/>
+  <xsl:sequence select="normalize-space(.)"/>
 </xsl:template>
 
 </xsl:stylesheet>
