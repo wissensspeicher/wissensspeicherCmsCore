@@ -48,6 +48,7 @@ import org.bbaw.wsp.cms.document.DocumentHandler;
 import org.bbaw.wsp.cms.document.MetadataRecord;
 import org.bbaw.wsp.cms.general.Constants;
 import org.bbaw.wsp.cms.scheduler.CmsDocOperation;
+import org.bbaw.wsp.cms.transform.XslResourceTransformer;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 import de.mpg.mpiwg.berlin.mpdl.lt.dict.db.LexHandler;
@@ -223,6 +224,12 @@ public class IndexHandler {
       Field contentXmlField = new Field("xmlContent", contentXml, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
       doc.add(contentXmlField);
 
+      // generate original chars content
+      XslResourceTransformer charsTransformer = new XslResourceTransformer("chars.xsl");
+      String content = charsTransformer.transform(docFileName);
+      Field contentField = new Field("content", content, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
+      doc.add(contentField);
+      
       documentsIndexWriter.addDocument(doc);
 
       // add all elements with the specified names of the document to nodesIndex
@@ -364,7 +371,7 @@ public class IndexHandler {
           org.bbaw.wsp.cms.document.Document doc = new org.bbaw.wsp.cms.document.Document(luceneDoc);
           if (withHitFragments) {
             ArrayList<String> hitFragments = new ArrayList<String>();
-            Fieldable docContentField = luceneDoc.getFieldable("xmlContent");
+            Fieldable docContentField = luceneDoc.getFieldable("content");
             if (docContentField != null) {
               String docContent = docContentField.stringValue();
               TokenStream tokenStream = TokenSources.getAnyTokenStream(this.documentsIndexReader, docID, docContentField.name(), documentsPerFieldAnalyzer);
