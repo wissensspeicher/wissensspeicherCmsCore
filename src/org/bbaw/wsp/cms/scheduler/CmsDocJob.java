@@ -25,13 +25,13 @@ public class CmsDocJob implements Job {
     try {
       docOperation.setStatus(STATUS_BEGIN);
       String operationName = docOperation.getName();   
-      if (operationName.equals("create") || operationName.equals("update")) {
+      if (operationName.equals("create")) {
         DocumentHandler docHandler = new DocumentHandler();
         docHandler.doOperation(docOperation);
       } else if (operationName.equals("delete")) {
         DocumentHandler docHandler = new DocumentHandler();
         docHandler.doOperation(docOperation);
-      } else if (operationName.equals("importAllDocumentsLocallyExist")) {
+      } else if (operationName.equals("importDirectory")) {
         DocumentHandler docHandler = new DocumentHandler();
         docHandler.doOperation(docOperation);
       }
