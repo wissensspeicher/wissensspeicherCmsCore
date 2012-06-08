@@ -9,6 +9,7 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
@@ -19,7 +20,9 @@ import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
+import org.apache.lucene.document.FieldSelector;
 import org.apache.lucene.document.Fieldable;
+import org.apache.lucene.document.SetBasedFieldSelector;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
@@ -45,6 +48,7 @@ import org.apache.lucene.search.highlight.TokenSources;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
 import org.bbaw.wsp.cms.document.DocumentHandler;
+import org.bbaw.wsp.cms.document.Hits;
 import org.bbaw.wsp.cms.document.MetadataRecord;
 import org.bbaw.wsp.cms.general.Constants;
 import org.bbaw.wsp.cms.scheduler.CmsDocOperation;
@@ -346,8 +350,8 @@ public class IndexHandler {
     }
   }
 
-  public ArrayList<org.bbaw.wsp.cms.document.Document> queryDocuments(String queryStr, String language, int from, int to, boolean withHitFragments) throws ApplicationException {
-    ArrayList<org.bbaw.wsp.cms.document.Document> docs = null;
+  public Hits queryDocuments(String queryStr, String language, int from, int to, boolean withHitFragments) throws ApplicationException {
+    Hits hits = null;
     IndexSearcher searcher = null;
     try {
       makeDocumentsSearcherManagerUpToDate();
@@ -362,13 +366,13 @@ public class IndexHandler {
       topDocs.setMaxScore(1);
       int toTmp = to;
       if (topDocs.scoreDocs.length < to)
-        toTmp = topDocs.scoreDocs.length;
+        toTmp = topDocs.scoreDocs.length - 1;
       if (topDocs != null) {
-        if (docs == null)
-          docs = new ArrayList<org.bbaw.wsp.cms.document.Document>();
-        for (int i = from; i < toTmp; i++) {
+        ArrayList<org.bbaw.wsp.cms.document.Document>  docs = new ArrayList<org.bbaw.wsp.cms.document.Document>();
+        for (int i=from; i<=toTmp; i++) {
           int docID = topDocs.scoreDocs[i].doc;
-          Document luceneDoc = searcher.doc(docID);
+          FieldSelector docFieldSelector = getDocFieldSelector();
+          Document luceneDoc = searcher.doc(docID, docFieldSelector);
           org.bbaw.wsp.cms.document.Document doc = new org.bbaw.wsp.cms.document.Document(luceneDoc);
           if (withHitFragments) {
             ArrayList<String> hitFragments = new ArrayList<String>();
@@ -378,7 +382,7 @@ public class IndexHandler {
               TokenStream tokenStream = TokenSources.getAnyTokenStream(this.documentsIndexReader, docID, docContentField.name(), documentsPerFieldAnalyzer);
               TextFragment[] textfragments = highlighter.getBestTextFragments(tokenStream, docContent, false, 10);
               if (textfragments.length > 0) {
-                for (int j = 0; j < textfragments.length; j++) {
+                for (int j=0; j<textfragments.length; j++) {
                   hitFragments.add(checkHitFragment(textfragments[j].toString()));
                 }
               }
@@ -387,6 +391,10 @@ public class IndexHandler {
               doc.setHitFragments(hitFragments);
           }
           docs.add(doc);
+        }
+        if (docs != null) {
+          hits = new Hits(docs, from, to);
+          hits.setSize(topDocs.scoreDocs.length);
         }
       }
     } catch (Exception e) {
@@ -401,11 +409,11 @@ public class IndexHandler {
     }
     // Do not use searcher after this!
     searcher = null;
-    return docs;
+    return hits;
   }
 
-  public ArrayList<Document> queryDocument(String docId, String queryStr) throws ApplicationException {
-    ArrayList<Document> docs = null;
+  public Hits queryDocument(String docId, String queryStr, int from, int to) throws ApplicationException {
+    Hits hits = null;
     IndexSearcher searcher = null;
     MetadataRecord docMetadataRecord = getDocMetadata(docId);
     try {
@@ -423,13 +431,21 @@ public class IndexHandler {
       Sort sortByPosition = new Sort(new SortField("position", SortField.INT));
       TopDocs topDocs = searcher.search(queryDoc, 100000, sortByPosition);
       topDocs.setMaxScore(1);
+      int toTmp = to;
+      if (topDocs.scoreDocs.length < to)
+        toTmp = topDocs.scoreDocs.length - 1;
       if (topDocs != null) {
-        if (docs == null)
-          docs = new ArrayList<Document>();
-        for (int i = 0; i < topDocs.scoreDocs.length; i++) {
+        ArrayList<org.bbaw.wsp.cms.document.Document>  docs = new ArrayList<org.bbaw.wsp.cms.document.Document>();
+        for (int i=from; i<=toTmp; i++) {
           int docID = topDocs.scoreDocs[i].doc;
-          Document doc = searcher.doc(docID);
+          FieldSelector nodeFieldSelector = getNodeFieldSelector();
+          Document luceneDoc = searcher.doc(docID, nodeFieldSelector);
+          org.bbaw.wsp.cms.document.Document doc = new org.bbaw.wsp.cms.document.Document(luceneDoc);
           docs.add(doc);
+        }
+        if (docs != null) {
+          hits = new Hits(docs, from, to);
+          hits.setSize(topDocs.scoreDocs.length);
         }
       }
       searcher.close();
@@ -445,7 +461,7 @@ public class IndexHandler {
     }
     // Do not use searcher after this!
     searcher = null;
-    return docs;
+    return hits;
   }
 
   public MetadataRecord getDocMetadata(String docId) throws ApplicationException {
@@ -852,7 +868,8 @@ public class IndexHandler {
       topDocs.setMaxScore(1);
       if (topDocs != null && topDocs.scoreDocs != null && topDocs.scoreDocs.length > 0) {
         int docID = topDocs.scoreDocs[0].doc;
-        doc = searcher.doc(docID);
+        FieldSelector docFieldSelector = getDocFieldSelector();
+        doc = searcher.doc(docID, docFieldSelector);
       }
       searcher.close();
     } catch (Exception e) {
@@ -888,8 +905,7 @@ public class IndexHandler {
       documentsFieldAnalyzers.put("rights", new KeywordAnalyzer());
       documentsFieldAnalyzers.put("license", new KeywordAnalyzer());
       documentsFieldAnalyzers.put("accessRights", new KeywordAnalyzer());
-      documentsFieldAnalyzers.put("type", new KeywordAnalyzer()); // e.g. mime
-      // type "text/xml"
+      documentsFieldAnalyzers.put("type", new KeywordAnalyzer()); // e.g. mime type "text/xml"
       documentsFieldAnalyzers.put("pageCount", new KeywordAnalyzer());
       documentsFieldAnalyzers.put("schemaName", new KeywordAnalyzer());
       documentsFieldAnalyzers.put("lastModified", new KeywordAnalyzer());
@@ -898,6 +914,7 @@ public class IndexHandler {
       documentsFieldAnalyzers.put("tokenNorm", new StandardAnalyzer(Version.LUCENE_35));
       documentsFieldAnalyzers.put("tokenMorph", new StandardAnalyzer(Version.LUCENE_35));
       documentsFieldAnalyzers.put("xmlContent", new StandardAnalyzer(Version.LUCENE_35));
+      documentsFieldAnalyzers.put("content", new StandardAnalyzer(Version.LUCENE_35));
       documentsPerFieldAnalyzer = new PerFieldAnalyzerWrapper(new StandardAnalyzer(Version.LUCENE_35), documentsFieldAnalyzers);
       IndexWriterConfig conf = new IndexWriterConfig(Version.LUCENE_35, documentsPerFieldAnalyzer);
       conf.setOpenMode(OpenMode.CREATE_OR_APPEND);
@@ -918,24 +935,15 @@ public class IndexHandler {
       Map<String, Analyzer> nodesFieldAnalyzers = new HashMap<String, Analyzer>();
       nodesFieldAnalyzers.put("docId", new KeywordAnalyzer());
       nodesFieldAnalyzers.put("identifier", new KeywordAnalyzer());
-      nodesFieldAnalyzers.put("language", new KeywordAnalyzer()); // language
-      // (through xml:id): e.g. "lat"
-      nodesFieldAnalyzers.put("pageNumber", new KeywordAnalyzer()); // page
-      // number (through element pb): e.g. "13"
-      nodesFieldAnalyzers.put("lineNumber", new KeywordAnalyzer()); // line
-      // number on the page (through element lb): e.g. "17"
-      nodesFieldAnalyzers.put("elementName", new KeywordAnalyzer()); // element
-      // name: e.g. "tei:s"
-      nodesFieldAnalyzers.put("elementPosition", new KeywordAnalyzer()); // position
-      // in parent node (in relation to other nodes of the same name): e.g. "5"
-      nodesFieldAnalyzers.put("elementAbsolutePosition", new KeywordAnalyzer()); // absolute
-      // position in document (in relation to other nodes of the same name): e.g. "213"
-      nodesFieldAnalyzers.put("elementPagePosition", new KeywordAnalyzer()); // position
-      // in relation to other nodes of the same name: e.g. "213"
-      nodesFieldAnalyzers.put("xmlId", new KeywordAnalyzer()); // xml id: e.g.
-      // "4711bla"
-      nodesFieldAnalyzers.put("xpath", new KeywordAnalyzer()); // xpath: e.g.
-      // "/echo[1]/text[1]/p[1]/s[5]"
+      nodesFieldAnalyzers.put("language", new KeywordAnalyzer()); // language (through xml:id): e.g. "lat"
+      nodesFieldAnalyzers.put("pageNumber", new KeywordAnalyzer()); // page number (through element pb): e.g. "13"
+      nodesFieldAnalyzers.put("lineNumber", new KeywordAnalyzer()); // line number on the page (through element lb): e.g. "17"
+      nodesFieldAnalyzers.put("elementName", new KeywordAnalyzer()); // element name: e.g. "tei:s"
+      nodesFieldAnalyzers.put("elementPosition", new KeywordAnalyzer()); // position in parent node (in relation to other nodes of the same name): e.g. "5"
+      nodesFieldAnalyzers.put("elementAbsolutePosition", new KeywordAnalyzer()); // absolute position in document (in relation to other nodes of the same name): e.g. "213"
+      nodesFieldAnalyzers.put("elementPagePosition", new KeywordAnalyzer()); // position in relation to other nodes of the same name: e.g. "213"
+      nodesFieldAnalyzers.put("xmlId", new KeywordAnalyzer()); // xml id: e.g. "4711bla"
+      nodesFieldAnalyzers.put("xpath", new KeywordAnalyzer()); // xpath: e.g. "/echo[1]/text[1]/p[1]/s[5]"
       nodesFieldAnalyzers.put("tokenOrig", new StandardAnalyzer(Version.LUCENE_35));
       nodesFieldAnalyzers.put("tokenReg", new StandardAnalyzer(Version.LUCENE_35));
       nodesFieldAnalyzers.put("tokenNorm", new StandardAnalyzer(Version.LUCENE_35));
@@ -953,6 +961,46 @@ public class IndexHandler {
     return writer;
   }
 
+  private FieldSelector getDocFieldSelector() {
+    HashSet<String> fields = new HashSet<String>();
+    fields.add("docId");
+    fields.add("identifier");
+    fields.add("echoId");
+    fields.add("uri");
+    fields.add("collectionNames");
+    fields.add("author");
+    fields.add("title");
+    fields.add("language");
+    fields.add("date");
+    fields.add("rights");
+    fields.add("license");
+    fields.add("type");
+    fields.add("pageCount");
+    fields.add("schemaName");
+    fields.add("lastModified");
+    fields.add("content");
+    FieldSelector fieldSelector = new SetBasedFieldSelector(fields, fields);
+    return fieldSelector;
+  }
+  
+  private FieldSelector getNodeFieldSelector() {
+    HashSet<String> fields = new HashSet<String>();
+    fields.add("docId");
+    fields.add("identifier");
+    fields.add("language");
+    fields.add("pageNumber");
+    fields.add("lineNumber");
+    fields.add("elementName");
+    fields.add("elementPosition");
+    fields.add("elementAbsolutePosition");
+    fields.add("elementPagePosition");
+    fields.add("xmlId");
+    fields.add("xpath");
+    fields.add("xmlContentTokenized");
+    FieldSelector fieldSelector = new SetBasedFieldSelector(fields, fields);
+    return fieldSelector;
+  }
+  
   private SearcherManager getNewSearcherManager(IndexWriter indexWriter) throws ApplicationException {
     SearcherManager searcherManager = null;
     try {
