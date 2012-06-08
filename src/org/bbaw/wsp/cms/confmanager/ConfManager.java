@@ -28,16 +28,19 @@ public class ConfManager {
   
     private PrintWriter out;
     private List<String> updateUrls;
-    private String projectUrl;
-    private List<String> ressourceLocations; 
+    private String collectionDataUrl;
+    private String collectionId;
+    private List<String> collectionUrls;
+    ConfManagerResultWrapper cmrw;
 
     public ConfManager(){
+      cmrw = new ConfManagerResultWrapper();
     }
     
     /**
      * checks if an update of a project is necessary by checking configuration file
      */
-    public void checkForChanges(){
+    private void checkForChangesInConfigurations(){
         System.out.println("---------------");
         System.out.println("checking configuration files...");
         
@@ -49,7 +52,7 @@ public class ConfManager {
         DocumentBuilder builder;
         try {
             File configFile = null;
-            //überprüft alle konf-dateien auf update und führt es bei bedarf aus
+            //ï¿½berprï¿½ft alle konf-dateien auf update und fï¿½hrt es bei bedarf aus
             for (String configXml : configsList) {
                 System.out.println("checking : "+configXml);
                 builder = docFactory.newDocumentBuilder();
@@ -64,21 +67,17 @@ public class ConfManager {
                     String updateValue = n.getTextContent();
                     if(updateValue.trim().equals("true")){
                         System.out.println("update tag is set on : "+updateValue);
-                        NodeList nodeli = document.getElementsByTagName("projectDataUrl");
-//                        TODO
-                        //NodeList nodeli = document.getElementsByTagName("projectId");
+                        NodeList nodeli = document.getElementsByTagName("collectionDataUrl");
                         
-                        NodeList nodelis = document.getElementsByTagName("name");
+                        NodeList nodelis = document.getElementsByTagName("collectionId");
                         //darf jeweils nur ein node enthalten sein
                         Node node = nodeli.item(0);
-                        Node nameNode= nodelis.item(0);
-                        String projectName = "";
+                        Node nameNode = nodelis.item(0);
                         if(!nameNode.getTextContent().equals("")){
-                            projectName = nameNode.getTextContent(); 
+                            this.collectionId = nameNode.getTextContent(); 
                         }
                         if(!node.getTextContent().trim().equals("")){
-                            this.projectUrl = node.getTextContent();
-                            getUrlsFromProjects();
+                            this.collectionDataUrl = node.getTextContent();
                             //flag auf false setzen durch serialisierung in xml
                             n.setTextContent("false");              
                             FileOutputStream os = new FileOutputStream(configFile);
@@ -99,24 +98,25 @@ public class ConfManager {
     }
     
     /**
-     *  der extractor holt alle projekt zugehörigen Urls 
+     *  der extractor holt alle projekt zugehï¿½rigen Urls 
      */
-    public void getUrlsFromProjects(){
+    private void extractUrlsFromCollections(){
         System.out.println("collecting urls of resources that need update");
         PathExtractor extractor = new PathExtractor();
-        this.ressourceLocations = extractor.initExtractor(this.projectUrl);
-        System.out.println("number of urls to update : "+ressourceLocations.size());
-        System.out.println("ressource location example: "+ressourceLocations.get(0));
+        this.collectionUrls = extractor.initExtractor(this.collectionDataUrl);
+        System.out.println("number of urls to update : "+collectionUrls.size());
+        System.out.println("ressource location example: "+collectionUrls.get(0));
     }
-    
-    
-    public List<String> getRessourceLocations() {
-        return ressourceLocations;
-    }
-
-    public void setOutStream(PrintWriter out) {
-        this.out = out;
-        System.out.println("setOutStream");
+   
+    public ConfManagerResultWrapper getCollectionInfos(){
+      ConfManagerResultWrapper cmrw = new ConfManagerResultWrapper(); 
+      checkForChangesInConfigurations();
+      extractUrlsFromCollections();
+      cmrw.setCollectionUrls(collectionUrls);
+      cmrw.setCollectionId(this.collectionId);
+      cmrw.setCollectionDataUrl(this.collectionDataUrl);
+      
+      return cmrw;
     }
     
 //  public void backup(){
