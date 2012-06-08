@@ -133,10 +133,10 @@ public class IndexHandler {
         Field uriField = new Field("uri", uri, Field.Store.YES, Field.Index.ANALYZED);
         doc.add(uriField);
       }
-      String projectIds = docOperation.getProjectIds();
-      if (projectIds != null) {
-        Field projectIdsField = new Field("projectIds", projectIds, Field.Store.YES, Field.Index.ANALYZED);
-        doc.add(projectIdsField);
+      String collectionNames = docOperation.getCollectionNames();
+      if (collectionNames != null) {
+        Field collectionNamesField = new Field("collectionNames", collectionNames, Field.Store.YES, Field.Index.ANALYZED);
+        doc.add(collectionNamesField);
       }
       if (mdRecord.getCreator() != null) {
         Field authorField = new Field("author", mdRecord.getCreator(), Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
@@ -355,8 +355,9 @@ public class IndexHandler {
       String defaultQueryFieldName = "tokenOrig";
       Query query = new QueryParser(Version.LUCENE_35, defaultQueryFieldName, documentsPerFieldAnalyzer).parse(queryStr);
       Query morphQuery = buildMorphQuery(query, language);
+      Query morphFormsQuery = buildMorphQuery(query, language, true);
       SimpleHTMLFormatter htmlFormatter = new SimpleHTMLFormatter();
-      Highlighter highlighter = new Highlighter(htmlFormatter, new QueryScorer(query));
+      Highlighter highlighter = new Highlighter(htmlFormatter, new QueryScorer(morphFormsQuery));
       TopDocs topDocs = searcher.search(morphQuery, 1000);
       topDocs.setMaxScore(1);
       int toTmp = to;
@@ -378,7 +379,7 @@ public class IndexHandler {
               TextFragment[] textfragments = highlighter.getBestTextFragments(tokenStream, docContent, false, 10);
               if (textfragments.length > 0) {
                 for (int j = 0; j < textfragments.length; j++) {
-                  hitFragments.add(ceckFragment(textfragments[j].toString()));
+                  hitFragments.add(checkHitFragment(textfragments[j].toString()));
                 }
               }
             }
@@ -459,10 +460,10 @@ public class IndexHandler {
       Fieldable uriField = doc.getFieldable("uri");
       if (uriField != null)
         uri = uriField.stringValue();
-      String projectIds = null;
-      Fieldable projectIdsField = doc.getFieldable("projectIds");
-      if (projectIdsField != null)
-        projectIds = projectIdsField.stringValue();
+      String collectionNames = null;
+      Fieldable collectionNamesField = doc.getFieldable("collectionNames");
+      if (collectionNamesField != null)
+        collectionNames = collectionNamesField.stringValue();
       String echoId = null;
       Fieldable echoIdField = doc.getFieldable("echoId");
       if (echoIdField != null)
@@ -524,7 +525,7 @@ public class IndexHandler {
       mdRecord.setDocId(docId);
       mdRecord.setUri(uri);
       mdRecord.setIdentifier(identifier);
-      mdRecord.setProjectIds(projectIds);
+      mdRecord.setCollectionNames(collectionNames);
       mdRecord.setEchoId(echoId);
       mdRecord.setCreator(author);
       mdRecord.setTitle(title);
@@ -640,28 +641,25 @@ public class IndexHandler {
     }
   }
 
-  /**
-   * recursively build the morphological query
-   * 
-   * @param query
-   * @return
-   */
   private Query buildMorphQuery(Query query, String language) throws ApplicationException {
+    return buildMorphQuery(query, language, false);
+  }
+
+  private Query buildMorphQuery(Query query, String language, boolean withAllForms) throws ApplicationException {
     Query morphQuery = null;
     if (query instanceof TermQuery) {
       TermQuery termQuery = (TermQuery) query;
-      morphQuery = buildMorphQuery(termQuery, language);
+      morphQuery = buildMorphQuery(termQuery, language, withAllForms);
     } else if (query instanceof BooleanQuery) {
       BooleanQuery booleanQuery = (BooleanQuery) query;
-      morphQuery = buildMorphQuery(booleanQuery, language);
+      morphQuery = buildMorphQuery(booleanQuery, language, withAllForms);
     } else {
-      morphQuery = query; // all other cases: PrefixQuery, PhraseQuery,
-      // FuzzyQuery, TermRangeQuery, ...
+      morphQuery = query; // all other cases: PrefixQuery, PhraseQuery, FuzzyQuery, TermRangeQuery, ...
     }
     return morphQuery;
   }
 
-  private Query buildMorphQuery(TermQuery termQuery, String language) throws ApplicationException {
+  private Query buildMorphQuery(TermQuery termQuery, String language, boolean withAllForms) throws ApplicationException {
     Query morphQuery = null;
     String term = termQuery.getTerm().text();
     String fieldName = termQuery.getTerm().field();
@@ -670,42 +668,45 @@ public class IndexHandler {
       ArrayList<Lemma> lemmas = lexHandler.getLemmas(term, "form", language, Normalizer.DICTIONARY, true);
       // TODO : language über den translator service holen
       if (lemmas == null) {
-        // if no lemmas are found then do a query in tokenOrig TODO should this
-        // really be done ?
+        // if no lemmas are found then do a query in tokenOrig TODO should this really be done ?
         Term termTokenOrig = new Term("tokenOrig", term);
         TermQuery termQueryInTokenOrig = new TermQuery(termTokenOrig);
         morphQuery = termQueryInTokenOrig;
       } else {
-        if (lemmas.size() == 1) {
-          Lemma lemma = lemmas.get(0);
-          Term lemmaTerm = new Term(fieldName, lemma.getLemmaName());
-          morphQuery = new TermQuery(lemmaTerm);
-        } else {
-          BooleanQuery morphBooleanQuery = new BooleanQuery();
-          for (int i = 0; i < lemmas.size(); i++) {
-            Lemma lemma = lemmas.get(i);
+        BooleanQuery morphBooleanQuery = new BooleanQuery();
+        for (int i = 0; i < lemmas.size(); i++) {
+          Lemma lemma = lemmas.get(i);
+          if (withAllForms) { // all word forms are put into the query as boolean or clauses: needed in fragments search when all forms should be highlighted
+            ArrayList<Form> forms = lemma.getFormsList();
+            for (int j=0; j<forms.size(); j++) {
+              Form form = forms.get(j);
+              Term formTerm = new Term(fieldName, form.getFormName());
+              TermQuery morphTermQuery = new TermQuery(formTerm);
+              morphBooleanQuery.add(morphTermQuery, BooleanClause.Occur.SHOULD);
+            }
+          } else {
             Term lemmaTerm = new Term(fieldName, lemma.getLemmaName());
             TermQuery morphTermQuery = new TermQuery(lemmaTerm);
             morphBooleanQuery.add(morphTermQuery, BooleanClause.Occur.SHOULD);
           }
-          morphQuery = morphBooleanQuery;
         }
+        morphQuery = morphBooleanQuery;
       }
     } else {
       morphQuery = termQuery; 
-      // if it is not the morph field then do a normalquery 
+      // if it is not the morph field then do a normal query 
       //TODO ?? perhaps other fields should also be queried morphological e.g. title etc.
     }
     return morphQuery;
   }
 
-  private Query buildMorphQuery(BooleanQuery query, String language) throws ApplicationException {
+  private Query buildMorphQuery(BooleanQuery query, String language, boolean withAllForms) throws ApplicationException {
     BooleanQuery morphBooleanQuery = new BooleanQuery();
     BooleanClause[] booleanClauses = query.getClauses();
     for (int i = 0; i < booleanClauses.length; i++) {
       BooleanClause boolClause = booleanClauses[i];
       Query q = boolClause.getQuery();
-      Query morphQuery = buildMorphQuery(q, language);
+      Query morphQuery = buildMorphQuery(q, language, withAllForms);
       BooleanClause.Occur occur = boolClause.getOccur();
       morphBooleanQuery.add(morphQuery, occur);
     }
@@ -879,7 +880,7 @@ public class IndexHandler {
       documentsFieldAnalyzers.put("identifier", new KeywordAnalyzer());
       documentsFieldAnalyzers.put("echoId", new KeywordAnalyzer());
       documentsFieldAnalyzers.put("uri", new KeywordAnalyzer());
-      documentsFieldAnalyzers.put("projectIds", new StandardAnalyzer(Version.LUCENE_35));
+      documentsFieldAnalyzers.put("collectionNames", new StandardAnalyzer(Version.LUCENE_35));
       documentsFieldAnalyzers.put("author", new StandardAnalyzer(Version.LUCENE_35));
       documentsFieldAnalyzers.put("title", new StandardAnalyzer(Version.LUCENE_35));
       documentsFieldAnalyzers.put("language", new KeywordAnalyzer());
@@ -1039,7 +1040,7 @@ public class IndexHandler {
    * 
    * @param fragment
    */
-  private String ceckFragment(String fragment) {
+  private String checkHitFragment(String fragment) {
     if (fragment.startsWith(".") 
         || fragment.startsWith(":") 
         || fragment.startsWith(",") 
