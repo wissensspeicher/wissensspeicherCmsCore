@@ -50,6 +50,7 @@ import org.apache.lucene.util.Version;
 import org.bbaw.wsp.cms.document.DocumentHandler;
 import org.bbaw.wsp.cms.document.Hits;
 import org.bbaw.wsp.cms.document.MetadataRecord;
+import org.bbaw.wsp.cms.document.Token;
 import org.bbaw.wsp.cms.general.Constants;
 import org.bbaw.wsp.cms.scheduler.CmsDocOperation;
 import org.bbaw.wsp.cms.transform.XslResourceTransformer;
@@ -365,7 +366,7 @@ public class IndexHandler {
       TopDocs topDocs = searcher.search(morphQuery, 1000);
       topDocs.setMaxScore(1);
       int toTmp = to;
-      if (topDocs.scoreDocs.length < to)
+      if (topDocs.scoreDocs.length <= to)
         toTmp = topDocs.scoreDocs.length - 1;
       if (topDocs != null) {
         ArrayList<org.bbaw.wsp.cms.document.Document>  docs = new ArrayList<org.bbaw.wsp.cms.document.Document>();
@@ -432,7 +433,7 @@ public class IndexHandler {
       TopDocs topDocs = searcher.search(queryDoc, 100000, sortByPosition);
       topDocs.setMaxScore(1);
       int toTmp = to;
-      if (topDocs.scoreDocs.length < to)
+      if (topDocs.scoreDocs.length <= to)
         toTmp = topDocs.scoreDocs.length - 1;
       if (topDocs != null) {
         ArrayList<org.bbaw.wsp.cms.document.Document>  docs = new ArrayList<org.bbaw.wsp.cms.document.Document>();
@@ -557,8 +558,8 @@ public class IndexHandler {
     return mdRecord;
   }
 
-  public ArrayList<Term> getTerms(String fieldName, String value, int count) throws ApplicationException {
-    ArrayList<Term> retTerms = null;
+  public ArrayList<Token> getToken(String fieldName, String value, int count) throws ApplicationException {
+    ArrayList<Token> retToken = null;
     int counter = 0;
     TermEnum terms = null;
     try {
@@ -568,10 +569,11 @@ public class IndexHandler {
       makeIndexReaderUpToDate();
       terms = documentsIndexReader.terms(term);
       while (terms != null && fieldName != null && fieldName.equals(terms.term().field()) && counter < count) {
-        if (retTerms == null)
-          retTerms = new ArrayList<Term>();
+        if (retToken == null)
+          retToken = new ArrayList<Token>();
         Term termContent = terms.term();
-        retTerms.add(termContent);
+        Token token = new Token(termContent);
+        retToken.add(token);
         counter++;
         if (!terms.next())
           break;
@@ -587,11 +589,11 @@ public class IndexHandler {
         }
       }
     }
-    return retTerms;
+    return retToken;
   }
 
-  public ArrayList<Term> getTerms(String docId, String fieldName, String value, int count) throws ApplicationException {
-    ArrayList<Term> retTerms = null;
+  public ArrayList<Token> getToken(String docId, String fieldName, String value, int count) throws ApplicationException {
+    ArrayList<Token> retToken = null;
     if (value == null)
       value = "";
     int counter = 0;
@@ -607,17 +609,21 @@ public class IndexHandler {
         TermFreqVector termFreqVector = documentsIndexReader.getTermFreqVector(docIdInt, fieldName);
         if (termFreqVector != null) {
           String[] terms = termFreqVector.getTerms();
+          int[] freqs = termFreqVector.getTermFrequencies();
           boolean success = false;
           if (terms != null) {
-            retTerms = new ArrayList<Term>();
+            retToken = new ArrayList<Token>();
             for (int i = 0; i < terms.length; i++) {
               String termStr = terms[i];
               if (termStr.startsWith(value))
                 success = true;
               if (success) {
                 counter++;
+                int freq = freqs[i];
                 Term t = new Term(fieldName, termStr);
-                retTerms.add(t);
+                Token tok = new Token(t);
+                tok.setFreq(freq);
+                retToken.add(tok);
               }
               if (counter >= count)
                 break;
@@ -637,7 +643,7 @@ public class IndexHandler {
     }
     // Do not use searcher after this!
     searcher = null;
-    return retTerms;
+    return retToken;
   }
 
   public void end() throws ApplicationException {
