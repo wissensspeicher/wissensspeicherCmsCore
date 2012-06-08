@@ -57,7 +57,7 @@ public class DocumentHandler {
       System.out.println("Start of DocumentHandler. This operation could be time consuming because documents are indexed (normal indexing times are 10 seconds for a document)");
       beginOperation();
       String localDocumentsUrlStr = docOperation.getSrcUrl(); // start directory: file:/a/local/directory
-      String projectIds = docOperation.getProjectIds();
+      String collectionNames = docOperation.getCollectionNames();
       File localDocumentsDir = new File(new URI(localDocumentsUrlStr));
       boolean docDirExists = localDocumentsDir.exists();
       if (! docDirExists) 
@@ -73,7 +73,7 @@ public class DocumentHandler {
         String docId = xmlFileStr.substring(relativePos);  // relative path name starting from localDocumentsDir, e.g. /tei/de/Test_1789.xml
         String xmlFileUrlStr = xmlFile.toURI().toURL().toString();
         CmsDocOperation createDocOperation = new CmsDocOperation("create", xmlFileUrlStr, null, docId);
-        createDocOperation.setProjectIds(projectIds);
+        createDocOperation.setCollectionNames(collectionNames);
         doOperation(createDocOperation);
         Date now = new Date();
         System.out.println("Document " + i + ": " + docId + " successfully imported (" + now.toString() + ")");
@@ -92,7 +92,7 @@ public class DocumentHandler {
       String docIdentifier = docOperation.getDocIdentifier();
       String elementNames = docOperation.getElementNames();
       if (elementNames == null)
-        elementNames = "div p s head caption variables description entry";  // entry: for lexicons
+        elementNames = "p s head caption variables description entry";  // entry: for lexicons
       String docDirName = getDocDir(docIdentifier);
       String docDestFileName = getDocFullFileName(docIdentifier); 
       URL srcUrl = null;
@@ -129,16 +129,16 @@ public class DocumentHandler {
       // generate toc file (toc, figure, handwritten)
       XslResourceTransformer tocTransformer = new XslResourceTransformer("toc.xsl");
       File tocFile = new File(docDirName + "/toc.xml");
-      String tocResult = tocTransformer.transform(docDestFileName);
+      String tocResult = tocTransformer.transform(docDestFileNameUpgrade);
       FileUtils.writeStringToFile(tocFile, tocResult, "utf-8");
 
       // Get metadata info of the xml document
       MetadataRecord mdRecord = new MetadataRecord();
       mdRecord.setDocId(docIdentifier);
-      mdRecord.setProjectIds(docOperation.getProjectIds());
+      mdRecord.setCollectionNames(docOperation.getCollectionNames());
       mdRecord.setType("text/xml");
       docOperation.setStatus("extract metadata of: " + srcUrlStr + " to CMS");
-      mdRecord = getMetadataRecord(docDestFile, docType, mdRecord);
+      mdRecord = getMetadataRecord(docDestFileUpgrade, docType, mdRecord);
 
       // save all pages as single xml files (untokenized and tokenized)
       docOperation.setStatus("extract page fragments of: " + srcUrlStr + " to CMS");
