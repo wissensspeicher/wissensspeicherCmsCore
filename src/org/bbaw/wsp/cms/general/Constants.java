@@ -45,4 +45,11 @@ public class Constants {
     else 
       return "no properties file";
   }
+
+  public String getConfDir() {
+    if (properties != null)
+      return properties.getProperty("confDir");
+    else 
+      return "no properties file";
+  }
 }
