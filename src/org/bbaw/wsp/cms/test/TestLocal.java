@@ -112,6 +112,7 @@ public class TestLocal {
     String queryStr = "tokenOrig:tempore";
     System.out.println("Query: " + queryStr);
     // ArrayList<Document> docs = indexer.queryDocuments(queryField, queryStr);
+    /*
     ArrayList<Document> docs = indexer.queryDocument(docIdMonte, queryStr);
     for (int i=0; i<docs.size(); i++) {
       Document doc = docs.get(i);
@@ -139,6 +140,7 @@ public class TestLocal {
       Term term = tokenTerms.get(i);
       System.out.print(term + ", ");
     }
+    */
     MorphologyCache.getInstance().end();
     LexHandler.getInstance().end();
   }
@@ -234,7 +236,7 @@ public class TestLocal {
     String query = "tokenMorph:gebrauchen AND tokenMorph:schmutzig";
     // String query = "gebrauchen";
     ArrayList<String> terms = indexer.fetchTerms(query, "de");
-    ArrayList<Document> docs = indexer.queryDocument(docId, query);
+    // ArrayList<Document> docs = indexer.queryDocument(docId, query);
 	  String bla = "";
   }
 }
