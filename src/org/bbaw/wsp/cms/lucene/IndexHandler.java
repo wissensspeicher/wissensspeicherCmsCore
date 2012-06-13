@@ -924,6 +924,7 @@ public class IndexHandler {
       documentsPerFieldAnalyzer = new PerFieldAnalyzerWrapper(new StandardAnalyzer(Version.LUCENE_35), documentsFieldAnalyzers);
       IndexWriterConfig conf = new IndexWriterConfig(Version.LUCENE_35, documentsPerFieldAnalyzer);
       conf.setOpenMode(OpenMode.CREATE_OR_APPEND);
+      conf.setRAMBufferSizeMB(300);  // 300 MB because some documents are big; 16 MB is default 
       FSDirectory fsDirectory = FSDirectory.open(luceneDocsDirectory);
       writer = new IndexWriter(fsDirectory, conf);
       writer.commit(); // when directory is empty this creates init files
@@ -958,6 +959,7 @@ public class IndexHandler {
       nodesPerFieldAnalyzer = new PerFieldAnalyzerWrapper(new StandardAnalyzer(Version.LUCENE_35), nodesFieldAnalyzers);
       IndexWriterConfig conf = new IndexWriterConfig(Version.LUCENE_35, nodesPerFieldAnalyzer);
       conf.setOpenMode(OpenMode.CREATE_OR_APPEND);
+      conf.setRAMBufferSizeMB(300);  // 300 MB because some documents are big; 16 MB is default 
       FSDirectory fsDirectory = FSDirectory.open(luceneNodesDirectory);
       writer = new IndexWriter(fsDirectory, conf);
       writer.commit();
@@ -1002,6 +1004,7 @@ public class IndexHandler {
     fields.add("elementPagePosition");
     fields.add("xmlId");
     fields.add("xpath");
+    fields.add("xmlContent");
     fields.add("xmlContentTokenized");
     FieldSelector fieldSelector = new SetBasedFieldSelector(fields, fields);
     return fieldSelector;
