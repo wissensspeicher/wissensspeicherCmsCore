@@ -90,9 +90,12 @@ public class DocumentHandler {
       String operationName = docOperation.getName();  
       String srcUrlStr = docOperation.getSrcUrl(); 
       String docIdentifier = docOperation.getDocIdentifier();
+      String mainLanguage = docOperation.getMainLanguage();
       String elementNames = docOperation.getElementNames();
-      if (elementNames == null)
-        elementNames = "persName placeName p s head";  // default
+      if (elementNames == null) {
+        String defaultElementNames = "persName placeName p s head";
+        docOperation.setElementNames(defaultElementNames); // default
+      }
       String docDirName = getDocDir(docIdentifier);
       String docDestFileName = getDocFullFileName(docIdentifier); 
       URL srcUrl = null;
@@ -139,7 +142,10 @@ public class DocumentHandler {
       mdRecord.setType("text/xml");
       docOperation.setStatus("extract metadata of: " + srcUrlStr + " to CMS");
       mdRecord = getMetadataRecord(docDestFileUpgrade, docType, mdRecord);
-
+      String mdRecordLanguage = mdRecord.getLanguage();
+      if (mdRecordLanguage == null && mainLanguage != null)
+        mdRecord.setLanguage(mainLanguage);
+        
       // save all pages as single xml files (untokenized and tokenized)
       docOperation.setStatus("extract page fragments of: " + srcUrlStr + " to CMS");
       File docDir = new File(docDirName + "/pages");
@@ -163,7 +169,6 @@ public class DocumentHandler {
       // perform operation on Lucene
       docOperation.setStatus(operationName + " document: " + docIdentifier + " in CMS");
       docOperation.setMdRecord(mdRecord);
-      docOperation.setElementNames(elementNames);
       IndexHandler indexHandler = IndexHandler.getInstance();
       indexHandler.indexDocument(docOperation);
       
@@ -366,6 +371,8 @@ public class DocumentHandler {
       if (title != null)
         title = StringUtils.deresolveXmlEntities(title);
       String language = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/*:teiHeader/*:profileDesc/*:langUsage/*:language[1]/@ident)");
+      if (language != null && language.isEmpty())
+        language = null;
       if (language != null)
         language = StringUtils.deresolveXmlEntities(language);
       String yearStr = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:publicationStmt/*:date");
@@ -420,6 +427,8 @@ public class DocumentHandler {
       if (title != null && ! title.isEmpty())
         title = StringUtils.deresolveXmlEntities(title);
       String language = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/meta[@name = 'DC.language']/@content)");
+      if (language != null && language.isEmpty())
+        language = null;
       if (language != null && ! language.isEmpty())
         language = StringUtils.deresolveXmlEntities(language);
       String yearStr = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/meta[@name = 'DC.date']/@content)");
@@ -488,11 +497,14 @@ public class DocumentHandler {
   
   public String getDocDir(String docId) {
     String documentsDirectory = Constants.getInstance().getDocumentsDir();
-    int index = docId.indexOf(".xml");
-    String subDocDir = docId.substring(0, index);
-    if (subDocDir.startsWith("/"))
-      subDocDir = subDocDir.substring(1);
-    String docDir = documentsDirectory + "/" + subDocDir;
+    String subDir = docId;
+    if (docId.endsWith(".xml")) {
+      int index = docId.lastIndexOf(".xml");
+      subDir = docId.substring(0, index);
+    }
+    if (! subDir.startsWith("/"))
+      subDir = "/" + subDir;
+    String docDir = documentsDirectory + subDir;
     return docDir;
   }
   
@@ -502,6 +514,8 @@ public class DocumentHandler {
     if (index != -1) {
       docFileName = docId.substring(index + 1);
     }
+    if (! docId.endsWith(".xml"))
+      docFileName = docFileName + ".xml";
     return docFileName;
   }
   
