@@ -115,12 +115,11 @@ public class IndexHandler {
     FileReader fr = null;
     try {
       MetadataRecord mdRecord = docOperation.getMdRecord();
-      String docIdentifier = docOperation.getDocIdentifier();
+      String docId = mdRecord.getDocId();
       DocumentHandler docHandler = new DocumentHandler();
-      String docFileName = docHandler.getDocFullFileName(docIdentifier) + ".upgrade";
+      String docFileName = docHandler.getDocFullFileName(docId) + ".upgrade";
       // add document to documentsIndex
       Document doc = new Document();
-      String docId = mdRecord.getDocId();
       Field docIdField = new Field("docId", docId, Field.Store.YES, Field.Index.ANALYZED);
       doc.add(docIdField);
       String identifier = mdRecord.getIdentifier();
@@ -238,7 +237,13 @@ public class IndexHandler {
       documentsIndexWriter.addDocument(doc);
 
       // add all elements with the specified names of the document to nodesIndex
-      String elementNames = docOperation.getElementNames();
+      String[] elementNamesArray = docOperation.getElementNames();
+      String elementNames = "";
+      for (int i = 0; i < elementNamesArray.length; i++) {
+        String elemName = elementNamesArray[i];
+        elementNames = elementNames + elemName + " ";
+      }
+      elementNames = elementNames.substring(0, elementNames.length() - 1);
       ArrayList<XmlTokenizerContentHandler.Element> elements = docXmlTokenizer.getElements(elementNames);
       for (int i = 0; i < elements.size(); i++) {
         XmlTokenizerContentHandler.Element element = elements.get(i);
@@ -417,6 +422,8 @@ public class IndexHandler {
     Hits hits = null;
     IndexSearcher searcher = null;
     MetadataRecord docMetadataRecord = getDocMetadata(docId);
+    if (docMetadataRecord == null)
+      return null;  // no document with that docId is in index
     try {
       makeNodesSearcherManagerUpToDate();
       searcher = nodesSearcherManager.acquire();
