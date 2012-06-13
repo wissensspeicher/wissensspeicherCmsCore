@@ -91,9 +91,9 @@ public class DocumentHandler {
       String srcUrlStr = docOperation.getSrcUrl(); 
       String docIdentifier = docOperation.getDocIdentifier();
       String mainLanguage = docOperation.getMainLanguage();
-      String elementNames = docOperation.getElementNames();
+      String[] elementNames = docOperation.getElementNames();
       if (elementNames == null) {
-        String defaultElementNames = "persName placeName p s head";
+        String[] defaultElementNames = {"persName", "placeName", "p", "s", "head"};
         docOperation.setElementNames(defaultElementNames); // default
       }
       String docDirName = getDocDir(docIdentifier);
