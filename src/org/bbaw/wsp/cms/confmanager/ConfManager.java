@@ -114,7 +114,7 @@ public class ConfManager {
                         this.fields = new ArrayList<String>();
                         for(int i =0;i<fieldNodes.getLength();i++){
                           if(!fieldNodes.item(i).getTextContent().equals("")){
-                            this.fields.add((fieldNodes.item(i).getTextContent()));
+//                            this.fields.add((fieldNodes.item(i).getTextContent()));
                           }
                         }
                         if(!langNode.getTextContent().equals("")){
