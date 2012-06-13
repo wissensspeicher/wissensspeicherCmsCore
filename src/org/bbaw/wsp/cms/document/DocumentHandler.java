@@ -92,7 +92,7 @@ public class DocumentHandler {
       String docIdentifier = docOperation.getDocIdentifier();
       String elementNames = docOperation.getElementNames();
       if (elementNames == null)
-        elementNames = "p s head caption variables description entry";  // entry: for lexicons
+        elementNames = "persName placeName p s head";  // default
       String docDirName = getDocDir(docIdentifier);
       String docDestFileName = getDocFullFileName(docIdentifier); 
       URL srcUrl = null;
