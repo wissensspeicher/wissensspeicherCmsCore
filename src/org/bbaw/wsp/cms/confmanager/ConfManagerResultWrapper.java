@@ -9,6 +9,8 @@ public class ConfManagerResultWrapper {
   private String collectionId;
   private String collectionName;
   private String collectiondataUrl;
+  private String mainLanguage;
+  private ArrayList<String> fields;
   private List<String> formats;
   private List<String> excludeField;
 
@@ -65,4 +67,20 @@ public class ConfManagerResultWrapper {
     this.excludeField = excludeField;
   }
   
+  public String getMainLanguage() {
+    return mainLanguage;
+  }
+
+  public void setMainLanguage(String mainLanguage) {
+    this.mainLanguage = mainLanguage;
+  }
+
+  public ArrayList<String> getFields() {
+    return fields;
+  }
+
+  public void setFields(ArrayList<String> fields) {
+    this.fields = fields;
+  }
+
 }

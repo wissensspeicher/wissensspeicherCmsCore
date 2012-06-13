@@ -13,6 +13,11 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
 
 import org.bbaw.wsp.cms.harvester.PathExtractor;
 import org.w3c.dom.Document;
@@ -32,6 +37,8 @@ public class ConfManager {
     private String collectionId;
     private List<String> collectionUrls;
     ConfManagerResultWrapper cmrw;
+    private String mainLanguage;
+    ArrayList<String> fields;
 
     public ConfManager(){
       cmrw = new ConfManagerResultWrapper();
@@ -39,8 +46,9 @@ public class ConfManager {
     
     /**
      * checks if an update of a project is necessary by checking configuration file
+     * @throws XPathExpressionException 
      */
-    private void checkForChangesInConfigurations(){
+    private void checkForChangesInConfigurations() throws XPathExpressionException{
         System.out.println("---------------");
         System.out.println("checking configuration files...");
         
@@ -49,7 +57,10 @@ public class ConfManager {
         List<String> configsList = ext.extractPathLocally(Constants.getInstance().getConfDir());
         System.out.println("Anzahl der konfugirationsdateien : "+configsList.size());
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+        //docFactory.setNamespaceAware(true);
         DocumentBuilder builder;
+
+        XPathFactory xPathFactory = XPathFactory.newInstance();
         try {
             File configFile = null;
             //�berpr�ft alle konf-dateien auf update und f�hrt es bei bedarf aus
@@ -59,14 +70,31 @@ public class ConfManager {
                 configFile = new File(configXml); 
                 Document document = builder.parse(configFile);
 
+                ///////////////////
+                XPath xPath = xPathFactory.newXPath();
+                XPathExpression expr = xPath.compile("//collection/collectionDataUrl/text()");
+                Object result = expr.evaluate(document, XPathConstants.NODESET);
+                NodeList nodes = (NodeList) result;
+                for (int i = 0; i < nodes.getLength(); i++) {
+                    System.out.println(" XPath nodes : "+nodes.item(i).getNodeValue());
+                }
+                ///////////////////
+                
                 NodeList nl = document.getElementsByTagName("update");
-
-                if(nl.getLength() == 1){
+                XPathExpression updateExpr = xPath.compile("//collection/update/text()");
+                Object updateResult = updateExpr.evaluate(document, XPathConstants.STRING);
+                String updateNode = (String) updateResult;
+                System.out.println("*************");
+                System.out.println("updateNodes : "+updateNode);
+                System.out.println("*************");
+                ///////////////////
+                
+                if(updateNode != null || updateNode.trim().equals("")){
                     this.updateUrls = new ArrayList<String>();
                     org.w3c.dom.Node n = nl.item(0);  
-                    String updateValue = n.getTextContent();
-                    if(updateValue.trim().equals("true")){
-                        System.out.println("update tag is set on : "+updateValue);
+//                    String updateValue = n.getTextContent();
+                    if(updateNode.trim().equals("true")){
+                        System.out.println("update tag is set on : "+updateNode);
                         NodeList nodeli = document.getElementsByTagName("collectionDataUrl");
                         
                         NodeList nodelis = document.getElementsByTagName("collectionId");
@@ -75,6 +103,22 @@ public class ConfManager {
                         Node nameNode = nodelis.item(0);
                         if(!nameNode.getTextContent().equals("")){
                             this.collectionId = nameNode.getTextContent(); 
+                        }
+                        NodeList nodeliste = document.getElementsByTagName("mainLanguage");
+                        //darf jeweils nur ein node enthalten sein
+                        Node langNode = nodeliste.item(0);
+                        if(!langNode.getTextContent().equals("")){
+                            this.mainLanguage = langNode.getTextContent(); 
+                        }
+                        NodeList fieldNodes = document.getElementsByTagName("fields");
+                        this.fields = new ArrayList<String>();
+                        for(int i =0;i<fieldNodes.getLength();i++){
+                          if(!fieldNodes.item(i).getTextContent().equals("")){
+                            this.fields.add((fieldNodes.item(i).getTextContent()));
+                          }
+                        }
+                        if(!langNode.getTextContent().equals("")){
+                            this.mainLanguage = langNode.getTextContent(); 
                         }
                         if(!node.getTextContent().trim().equals("")){
                             this.collectionDataUrl = node.getTextContent();
@@ -108,14 +152,15 @@ public class ConfManager {
         System.out.println("ressource location example: "+collectionUrls.get(0));
     }
    
-    public ConfManagerResultWrapper getCollectionInfos(){
+    public ConfManagerResultWrapper getCollectionInfos() throws XPathExpressionException{
       ConfManagerResultWrapper cmrw = new ConfManagerResultWrapper(); 
       checkForChangesInConfigurations();
       extractUrlsFromCollections();
       cmrw.setCollectionUrls(collectionUrls);
       cmrw.setCollectionId(this.collectionId);
+      cmrw.setMainLanguage(this.mainLanguage);
       cmrw.setCollectionDataUrl(this.collectionDataUrl);
-      
+      cmrw.setFields(this.fields);
       return cmrw;
     }
     
