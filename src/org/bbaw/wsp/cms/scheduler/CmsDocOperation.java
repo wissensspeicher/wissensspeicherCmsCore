@@ -15,7 +15,8 @@ public class CmsDocOperation implements Comparable<CmsDocOperation> {
   private String uploadFileName;
   private String srcUrl;   
   private String docIdentifier;
-  private String elementNames; // element names which should be indexed (e.g. "s head, caption")
+  private String mainLanguage;
+  private String elementNames; // element names which should be indexed (e.g. "s head")
   private String collectionNames; // collections to which this document belongs separated by blanks (e.g. "collection1 collection7")
   private MetadataRecord mdRecord;
   
@@ -92,6 +93,14 @@ public class CmsDocOperation implements Comparable<CmsDocOperation> {
 
   public void setErrorMessage(String errorMessage) {
     this.errorMessage = errorMessage;
+  }
+
+  public String getMainLanguage() {
+    return mainLanguage;
+  }
+
+  public void setMainLanguage(String mainLanguage) {
+    this.mainLanguage = mainLanguage;
   }
 
   public String getDocIdentifier() {
