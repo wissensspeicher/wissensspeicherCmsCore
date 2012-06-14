@@ -152,6 +152,14 @@ public class DocumentHandler {
       FileUtils.deleteQuietly(docDir);  // first delete pages directory
       Hashtable<Integer, StringBuilder> pageFragments = getFragments(docDestFileNameUpgrade, "pb");
       int pageCount = pageFragments.size();
+      if (pageCount == 0) {
+        // no pb element is found: then the whole document is the first page
+        String docXmlStr = FileUtils.readFileToString(docDestFileUpgrade, "utf-8");
+        docXmlStr = docXmlStr.replaceAll("<\\?xml.*?\\?>", "");  // remove the xml declaration if it exists
+        pageFragments = new Hashtable<Integer, StringBuilder>();
+        pageFragments.put(new Integer(1), new StringBuilder(docXmlStr));
+        pageCount = 1;
+      }
       for (int page=1; page<=pageCount; page++) {
         String fragment = pageFragments.get(new Integer(page)).toString();
         fragment = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" + fragment;
