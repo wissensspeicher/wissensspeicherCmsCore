@@ -196,6 +196,8 @@ public class IndexHandler {
       docXmlTokenizer.tokenize();
 
       int pageCount = docXmlTokenizer.getPageCount();
+      if (pageCount == 0)
+        pageCount = 1;  // each document at least has one page
       String pageCountStr = String.valueOf(pageCount);
       Field pageCountField = new Field("pageCount", pageCountStr, Field.Store.YES, Field.Index.ANALYZED);
       doc.add(pageCountField);
