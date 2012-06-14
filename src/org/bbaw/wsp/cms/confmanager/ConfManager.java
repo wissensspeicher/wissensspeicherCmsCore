@@ -110,11 +110,11 @@ public class ConfManager {
                         if(!langNode.getTextContent().equals("")){
                             this.mainLanguage = langNode.getTextContent(); 
                         }
-                        NodeList fieldNodes = document.getElementsByTagName("fields");
+                        NodeList fieldNodes = document.getElementsByTagName("field");
                         this.fields = new ArrayList<String>();
                         for(int i =0;i<fieldNodes.getLength();i++){
                           if(!fieldNodes.item(i).getTextContent().equals("")){
-//                            this.fields.add((fieldNodes.item(i).getTextContent()));
+                            this.fields.add((fieldNodes.item(i).getTextContent().trim()));
                           }
                         }
                         if(!langNode.getTextContent().equals("")){
