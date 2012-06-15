@@ -8,7 +8,7 @@ public class ConfManagerResultWrapper {
   private List<String> collectionUrls;
   private String collectionId;
   private String collectionName;
-  private String collectiondataUrl;
+  private String collectionDataUrl;
   private String mainLanguage;
   private ArrayList<String> fields;
   private List<String> formats;
@@ -16,7 +16,15 @@ public class ConfManagerResultWrapper {
 
   
   public ConfManagerResultWrapper(){
-    
+    System.out.println("new wrapper");
+    collectionUrls = new ArrayList<String>();
+    collectionId = "";
+    collectionName = "";
+    collectionDataUrl = "";
+    mainLanguage = "";
+    fields = new ArrayList<String>();
+    formats = new ArrayList<String>();
+    excludeField = new ArrayList<String>();
   }
   
   public List<String> getCollectionUrls() {
@@ -44,11 +52,11 @@ public class ConfManagerResultWrapper {
   }
 
   public String getCollectiondataUrl() {
-    return collectiondataUrl;
+    return collectionDataUrl;
   }
 
   public void setCollectionDataUrl(String collectiondataUrl) {
-    this.collectiondataUrl = collectiondataUrl;
+    this.collectionDataUrl = collectiondataUrl;
   }
 
   public List<String> getFormats() {
