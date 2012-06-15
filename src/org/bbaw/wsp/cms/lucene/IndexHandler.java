@@ -512,6 +512,9 @@ public class IndexHandler {
       Fieldable languageField = doc.getFieldable("language");
       if (languageField != null)
         language = languageField.stringValue();
+      else {
+        // TODO get language from conf manager by collectionName
+      }
       Date yearDate = null;
       Fieldable dateField = doc.getFieldable("date");
       if (dateField != null) {
@@ -702,7 +705,9 @@ public class IndexHandler {
     String term = termQuery.getTerm().text();
     if (fromLanguage == null) {
       language = MicrosoftTranslator.detectLanguageCode(term);
-    } 
+    } else {
+      language = fromLanguage;
+    }
     LexHandler lexHandler = LexHandler.getInstance();
     if (translate) {
       String toLang = "de";
