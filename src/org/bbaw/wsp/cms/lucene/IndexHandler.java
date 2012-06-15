@@ -54,6 +54,7 @@ import org.bbaw.wsp.cms.document.Token;
 import org.bbaw.wsp.cms.general.Constants;
 import org.bbaw.wsp.cms.scheduler.CmsDocOperation;
 import org.bbaw.wsp.cms.transform.XslResourceTransformer;
+import org.bbaw.wsp.cms.translator.MicrosoftTranslator;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 import de.mpg.mpiwg.berlin.mpdl.lt.dict.db.LexHandler;
@@ -358,7 +359,7 @@ public class IndexHandler {
     }
   }
 
-  public Hits queryDocuments(String queryStr, String language, int from, int to, boolean withHitFragments) throws ApplicationException {
+  public Hits queryDocuments(String queryStr, String language, int from, int to, boolean withHitFragments, boolean translate) throws ApplicationException {
     Hits hits = null;
     IndexSearcher searcher = null;
     try {
@@ -366,8 +367,8 @@ public class IndexHandler {
       searcher = documentsSearcherManager.acquire();
       String defaultQueryFieldName = "tokenOrig";
       Query query = new QueryParser(Version.LUCENE_35, defaultQueryFieldName, documentsPerFieldAnalyzer).parse(queryStr);
-      Query morphQuery = buildMorphQuery(query, language);
-      Query morphFormsQuery = buildMorphQuery(query, language, true);
+      Query morphQuery = buildMorphQuery(query, language, false, translate);
+      Query morphFormsQuery = buildMorphQuery(query, language, true, translate);
       SimpleHTMLFormatter htmlFormatter = new SimpleHTMLFormatter();
       Highlighter highlighter = new Highlighter(htmlFormatter, new QueryScorer(morphFormsQuery));
       TopDocs topDocs = searcher.search(morphQuery, 1000);
@@ -434,6 +435,11 @@ public class IndexHandler {
       String defaultQueryFieldName = "tokenOrig";
       Query query = new QueryParser(Version.LUCENE_35, defaultQueryFieldName, nodesPerFieldAnalyzer).parse(queryStr);
       String language = docMetadataRecord.getLanguage();
+      if (language == null || language.equals("")) {
+        String collectioNames = docMetadataRecord.getCollectionNames();
+        // TODO get language by confHandler: main language of collectionId
+        language = "deu"; // TODO
+      }
       Query morphQuery = buildMorphQuery(query, language);
       BooleanQuery queryDoc = new BooleanQuery();
       queryDoc.add(queryDocId, BooleanClause.Occur.MUST);
@@ -673,31 +679,40 @@ public class IndexHandler {
   }
 
   private Query buildMorphQuery(Query query, String language) throws ApplicationException {
-    return buildMorphQuery(query, language, false);
+    return buildMorphQuery(query, language, false, false);
   }
 
-  private Query buildMorphQuery(Query query, String language, boolean withAllForms) throws ApplicationException {
+  private Query buildMorphQuery(Query query, String language, boolean withAllForms, boolean translate) throws ApplicationException {
     Query morphQuery = null;
     if (query instanceof TermQuery) {
       TermQuery termQuery = (TermQuery) query;
-      morphQuery = buildMorphQuery(termQuery, language, withAllForms);
+      morphQuery = buildMorphQuery(termQuery, language, withAllForms, translate);
     } else if (query instanceof BooleanQuery) {
       BooleanQuery booleanQuery = (BooleanQuery) query;
-      morphQuery = buildMorphQuery(booleanQuery, language, withAllForms);
+      morphQuery = buildMorphQuery(booleanQuery, language, withAllForms, translate);
     } else {
       morphQuery = query; // all other cases: PrefixQuery, PhraseQuery, FuzzyQuery, TermRangeQuery, ...
     }
     return morphQuery;
   }
 
-  private Query buildMorphQuery(TermQuery termQuery, String language, boolean withAllForms) throws ApplicationException {
+  private Query buildMorphQuery(TermQuery termQuery, String fromLanguage, boolean withAllForms, boolean translate) throws ApplicationException {
     Query morphQuery = null;
+    String language = null;
     String term = termQuery.getTerm().text();
+    if (fromLanguage == null) {
+      language = MicrosoftTranslator.detectLanguageCode(term);
+    } 
+    LexHandler lexHandler = LexHandler.getInstance();
+    if (translate) {
+      String toLang = "de";
+      term = MicrosoftTranslator.translate(term, toLang);  // TODO what are the destination languages: only German ?
+      term = term.toLowerCase();
+      language = toLang;  // if a translation should be done then language should be toLang
+    }
     String fieldName = termQuery.getTerm().field();
     if (fieldName != null && fieldName.equals("tokenMorph")) {
-      LexHandler lexHandler = LexHandler.getInstance();
       ArrayList<Lemma> lemmas = lexHandler.getLemmas(term, "form", language, Normalizer.DICTIONARY, true);
-      // TODO : language über den translator service holen
       if (lemmas == null) {
         // if no lemmas are found then do a query in tokenOrig TODO should this really be done ?
         Term termTokenOrig = new Term("tokenOrig", term);
@@ -714,7 +729,7 @@ public class IndexHandler {
               Term formTerm = new Term(fieldName, form.getFormName());
               TermQuery morphTermQuery = new TermQuery(formTerm);
               morphBooleanQuery.add(morphTermQuery, BooleanClause.Occur.SHOULD);
-            }
+            } 
           } else {
             Term lemmaTerm = new Term(fieldName, lemma.getLemmaName());
             TermQuery morphTermQuery = new TermQuery(lemmaTerm);
@@ -724,20 +739,22 @@ public class IndexHandler {
         morphQuery = morphBooleanQuery;
       }
     } else {
-      morphQuery = termQuery; 
+      String queryField = termQuery.getTerm().field();
+      Term queryTerm = new Term(queryField, term);  // for translation mode: a new TermQuery has to be built with the translated term
+      morphQuery = new TermQuery(queryTerm); 
       // if it is not the morph field then do a normal query 
       //TODO ?? perhaps other fields should also be queried morphological e.g. title etc.
     }
     return morphQuery;
   }
 
-  private Query buildMorphQuery(BooleanQuery query, String language, boolean withAllForms) throws ApplicationException {
+  private Query buildMorphQuery(BooleanQuery query, String language, boolean withAllForms, boolean translate) throws ApplicationException {
     BooleanQuery morphBooleanQuery = new BooleanQuery();
     BooleanClause[] booleanClauses = query.getClauses();
     for (int i = 0; i < booleanClauses.length; i++) {
       BooleanClause boolClause = booleanClauses[i];
       Query q = boolClause.getQuery();
-      Query morphQuery = buildMorphQuery(q, language, withAllForms);
+      Query morphQuery = buildMorphQuery(q, language, withAllForms, translate);
       BooleanClause.Occur occur = boolClause.getOccur();
       morphBooleanQuery.add(morphQuery, occur);
     }
