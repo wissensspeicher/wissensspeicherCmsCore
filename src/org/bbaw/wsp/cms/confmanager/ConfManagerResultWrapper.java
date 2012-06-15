@@ -16,7 +16,6 @@ public class ConfManagerResultWrapper {
 
   
   public ConfManagerResultWrapper(){
-    System.out.println("new wrapper");
     collectionUrls = new ArrayList<String>();
     collectionId = "";
     collectionName = "";

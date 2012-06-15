@@ -78,21 +78,10 @@ public class ConfManager {
         
           // /////////////////
           XPath xPath = xPathFactory.newXPath();
-          XPathExpression expr = xPath.compile("//collection/collectionDataUrl/text()");
-          Object result = expr.evaluate(document, XPathConstants.NODESET);
-          NodeList nodes = (NodeList) result;
-          for (int i = 0; i < nodes.getLength(); i++) {
-            System.out.println(" XPath nodes : " + nodes.item(i).getNodeValue());
-          }
-          // /////////////////
-  
           NodeList nl = document.getElementsByTagName("update");
           XPathExpression updateExpr = xPath.compile("//collection/update/text()");
           Object updateResult = updateExpr.evaluate(document, XPathConstants.STRING);
           String updateNode = (String) updateResult;
-          System.out.println("*************");
-          System.out.println("updateNodes : " + updateNode);
-          System.out.println("*************");
           // /////////////////
   
           if (updateNode != null) {
@@ -109,24 +98,19 @@ public class ConfManager {
                 Node idNode = idlist.item(0);
                 if (!idNode.getTextContent().equals("")) {
                   cmrw.setCollectionId(idNode.getTextContent());
-//                  this.collectionId = idNode.getTextContent();
                 }
                 NodeList nodeliste = document.getElementsByTagName("mainLanguage");
                 // darf jeweils nur ein node enthalten sein
                 Node langNode = nodeliste.item(0);
                 if (!langNode.getTextContent().equals("")) {
                   cmrw.setMainLanguage(langNode.getTextContent());
-//                  this.mainLanguage = langNode.getTextContent();
-//                  System.out.println("mainLanguage : " + mainLanguage);
                 }
     
                 NodeList collNamelist = document.getElementsByTagName("name");
                 // darf jeweils nur ein node enthalten sein
                 Node nameNode = collNamelist.item(0);
                 if (!nameNode.getTextContent().equals("")) {
-//                  this.collectionName = nameNode.getTextContent();
                   cmrw.setCollectionName(nameNode.getTextContent());
-//                  System.out.println("collectionName : " + collectionName);
                 }
     
                 NodeList fieldNodes = document.getElementsByTagName("field");
@@ -138,12 +122,10 @@ public class ConfManager {
                   }
                 }
                 cmrw.setFields(fields);
-                System.out.println("fields added ");
 
                 NodeList nodeli = document.getElementsByTagName("collectionDataUrl");
                 Node node = nodeli.item(0);
                 if (!node.getTextContent().trim().equals("")) {
-//                  this.collectionDataUrl = node.getTextContent();
                   cmrw.setCollectionDataUrl(node.getTextContent());
                   extractUrlsFromCollections(node.getTextContent(), cmrw);
                   
@@ -154,13 +136,10 @@ public class ConfManager {
                   ser.serialize(document);
     
                 }
-                System.out.println("cmrw.setCollectionName(this.collectionName)");
-                System.out.println("cmrw.getCollectionName : "+cmrw.getCollectionName());
-                
                 wrapperContainer.put(idNode.getTextContent(), cmrw);
               }
             }else{
-              //create Dummy
+              // create Dummy
               cmrw = new ConfManagerResultWrapper();
               wrapperContainer.put("", cmrw);
             }
@@ -187,8 +166,6 @@ public class ConfManager {
     if(!collectionDataUrl.equals("")){
       PathExtractor extractor = new PathExtractor();
       List<String> collectionUrls = extractor.initExtractor(collectionDataUrl);
-      System.out.println("number of urls to update : " + collectionUrls.size());
-      System.out.println("ressource location example: " + collectionUrls.get(0));
       cmrw.setCollectionUrls(collectionUrls);
     }
   }
@@ -204,19 +181,4 @@ public class ConfManager {
   public HashMap<String, ConfManagerResultWrapper> getWrapperContainer() {
     return wrapperContainer;
   }
-
-  // public void backup(){
-  // //backups the index every time it's updated and deletes, if necessary, the
-  // oldest one
-  // IndexBackupManager backuper = IndexBackupManager.getInstace();
-  // backuper.backupindex();
-  // if(backuper.checkBackupCount() > 9){
-  // String fileName = backuper.getLeastModified();
-  // System.out.println("leastmodified : "+fileName);
-  // boolean delete = backuper.deleteDirectory(new
-  // File(WspProperties.INDEX_BACKUP + "/" + fileName));
-  // System.out.println("delete? : "+delete);
-  // }
-  // }
-
 }
