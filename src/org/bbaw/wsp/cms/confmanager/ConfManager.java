@@ -38,6 +38,11 @@ public class ConfManager {
 
   private ConfManager() {
     wrapperContainer = new HashMap<String, ConfManagerResultWrapper>();
+    try {
+      readConfigs();
+    } catch (XPathExpressionException e) {
+      e.printStackTrace();
+    }
   }
 
   public static ConfManager getInstance(){
@@ -173,12 +178,9 @@ public class ConfManager {
   public void readConfigs() throws XPathExpressionException {
     checkForChangesInConfigurations();
   }
-  
-  public ConfManagerResultWrapper getCollectionInfos(){
-    return this.cmrw;
-  }
 
-  public HashMap<String, ConfManagerResultWrapper> getWrapperContainer() {
-    return wrapperContainer;
+  public ConfManagerResultWrapper getResultWrapper(String collectionId) {
+    ConfManagerResultWrapper cmrw = wrapperContainer.get(collectionId);
+    return cmrw;
   }
 }
