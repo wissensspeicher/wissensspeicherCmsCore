@@ -2,12 +2,7 @@ package org.bbaw.wsp.cms.confmanager;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -24,7 +19,6 @@ import org.bbaw.wsp.cms.harvester.PathExtractor;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 import com.sun.org.apache.xml.internal.serialize.XMLSerializer;
 
@@ -57,7 +51,7 @@ public class ConfManager {
    * 
    * @throws XPathExpressionException
    */
-  private void checkForChangesInConfigurations() throws XPathExpressionException {
+  private void checkCollectionConfFiles() throws XPathExpressionException {
     System.out.println("---------------");
     System.out.println("checking configuration files...");
 
@@ -176,7 +170,7 @@ public class ConfManager {
   }
 
   public void readConfigs() throws XPathExpressionException {
-    checkForChangesInConfigurations();
+    checkCollectionConfFiles();
   }
 
   public ConfManagerResultWrapper getResultWrapper(String collectionId) {
