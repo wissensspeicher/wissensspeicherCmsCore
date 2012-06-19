@@ -33,6 +33,7 @@ public class CollectionReader {
 
   private CollectionReader() {
     wrapperContainer = new HashMap<String, ConfManagerResultWrapper>();
+    readConfFiles();
   }
 
   public static CollectionReader getInstance() {
@@ -41,7 +42,7 @@ public class CollectionReader {
     return collectionReader;
   }
 
-  public void readConfFiles(){
+  private void readConfFiles(){
     System.out.println("---------------");
     System.out.println("reading configuration files...");
 
