@@ -34,6 +34,7 @@ import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.PhraseQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.SearcherManager;
 import org.apache.lucene.search.Sort;
@@ -383,7 +384,7 @@ public class IndexHandler {
           FieldSelector docFieldSelector = getDocFieldSelector();
           Document luceneDoc = searcher.doc(docID, docFieldSelector);
           org.bbaw.wsp.cms.document.Document doc = new org.bbaw.wsp.cms.document.Document(luceneDoc);
-          if (withHitFragments) {
+          if (withHitFragments && ! (query instanceof PhraseQuery)) {
             ArrayList<String> hitFragments = new ArrayList<String>();
             Fieldable docContentField = luceneDoc.getFieldable("content");
             if (docContentField != null) {
@@ -709,13 +710,14 @@ public class IndexHandler {
       language = fromLanguage;
     }
     LexHandler lexHandler = LexHandler.getInstance();
+    String fieldName = termQuery.getTerm().field();
     if (translate) {
       String toLang = "de";
-      term = MicrosoftTranslator.translate(term, toLang);  // TODO what are the destination languages: only German ?
+      term = MicrosoftTranslator.translate(term, language, toLang);  // TODO what are the destination languages: only German ?
       term = term.toLowerCase();
       language = toLang;  // if a translation should be done then language should be toLang
     }
-    String fieldName = termQuery.getTerm().field();
+    ArrayList<String> queryTerms = new ArrayList<String>();
     if (fieldName != null && fieldName.equals("tokenMorph")) {
       ArrayList<Lemma> lemmas = lexHandler.getLemmas(term, "form", language, Normalizer.DICTIONARY, true);
       if (lemmas == null) {
