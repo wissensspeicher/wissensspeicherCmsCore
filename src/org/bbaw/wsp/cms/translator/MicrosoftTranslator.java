@@ -95,8 +95,9 @@ public class MicrosoftTranslator {
 	  String langCode = null;
 	  try {
       Detect.setKey(KEY);
-      Language detectedLanguageCode = Detect.execute(query);
-      langCode = detectedLanguageCode.toString();
+      Language detectedLanguage = Detect.execute(query);
+      if (detectedLanguage != null)
+        langCode = detectedLanguage.toString();
     } catch (Exception e) {
       throw new ApplicationException(e);
     }
@@ -108,7 +109,8 @@ public class MicrosoftTranslator {
     try {
       Detect.setKey(KEY);
       Language detectedLanguage = Detect.execute(query);
-      langName = detectedLanguage.getName(Language.GERMAN);
+      if (detectedLanguage != null)
+        langName = detectedLanguage.getName(Language.GERMAN);
     } catch (Exception e) {
       throw new ApplicationException(e);
     }
