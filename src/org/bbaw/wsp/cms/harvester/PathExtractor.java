@@ -17,17 +17,24 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+/**
+ * eXist-specific Crawler
+ * extracts the paths of Documents in a http manner
+ * 
+ * @author marco juergens
+ *
+ */
 public class PathExtractor {
 
   private List<String> ressourceLoc;
-  PrintWriter out;
+  String excludes;
 
   public PathExtractor() {
 
   }
 
-  public List<String> initExtractor(String startingUri) {
-
+  public List<String> initExtractor(String startingUri, String excludes) {
+    this.excludes = excludes;
     ressourceLoc = new ArrayList<String>();
     // parameter necessery, because it's recursive, thus changing the uri
     extractDocLocations(startingUri);
@@ -72,20 +79,22 @@ public class PathExtractor {
           }
           if (event == XMLStreamConstants.START_ELEMENT) {
             if ((reader.getAttributeValue(null, "name")) != null) {
-              if (!(reader.getAttributeValue(null, "name")).contains(".") && !(startUrl.endsWith(reader.getAttributeValue(null, "name")))) {
-                if (reader.getAttributeValue(null, "name").startsWith("/")) {
-                  client.getConnectionManager().closeExpiredConnections();
-                  extractDocLocations(startUrl + reader.getAttributeValue(null, "name"));
-                } else {
-                  client.getConnectionManager().closeExpiredConnections();
-                  if (!startUrl.endsWith("/")) {
-                    extractDocLocations(startUrl + "/" + reader.getAttributeValue(null, "name"));
-                  } else {
+              if (reader.getLocalName().equals("collection") && !(startUrl.endsWith(reader.getAttributeValue(null, "name")))) {
+                if(!(this.excludes.contains(reader.getAttributeValue(null, "name").toLowerCase()))){
+                  if (reader.getAttributeValue(null, "name").startsWith("/")) {
+                    client.getConnectionManager().closeExpiredConnections();
                     extractDocLocations(startUrl + reader.getAttributeValue(null, "name"));
+                  } else {
+                    client.getConnectionManager().closeExpiredConnections();
+                    if (!startUrl.endsWith("/")) {
+                      extractDocLocations(startUrl + "/" + reader.getAttributeValue(null, "name"));
+                    } else {
+                      extractDocLocations(startUrl + reader.getAttributeValue(null, "name"));
+                    }
                   }
                 }
               }
-              if (reader.getAttributeValue(null, "name").endsWith(".xml")) {
+              if (reader.getLocalName().equals("resource")) {
                 if (!startUrl.endsWith("/")) {
                   ressourceLoc.add(startUrl + "/" + reader.getAttributeValue(null, "name"));
                 } else {
@@ -95,7 +104,7 @@ public class PathExtractor {
             }
           }
           if (event == XMLStreamConstants.ATTRIBUTE) {
-            // System.out.println("tss "+reader.getLocalName());
+            // System.out.println("localName : "+reader.getLocalName());
           }
         }
       } catch (XMLStreamException e) {
