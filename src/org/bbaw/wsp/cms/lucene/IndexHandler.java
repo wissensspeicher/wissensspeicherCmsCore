@@ -48,6 +48,8 @@ import org.apache.lucene.search.highlight.TextFragment;
 import org.apache.lucene.search.highlight.TokenSources;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
+import org.bbaw.wsp.cms.confmanager.CollectionReader;
+import org.bbaw.wsp.cms.confmanager.ConfManagerResultWrapper;
 import org.bbaw.wsp.cms.document.DocumentHandler;
 import org.bbaw.wsp.cms.document.Hits;
 import org.bbaw.wsp.cms.document.MetadataRecord;
@@ -372,7 +374,7 @@ public class IndexHandler {
       Query morphFormsQuery = buildMorphQuery(query, language, true, translate);
       SimpleHTMLFormatter htmlFormatter = new SimpleHTMLFormatter();
       Highlighter highlighter = new Highlighter(htmlFormatter, new QueryScorer(morphFormsQuery));
-      TopDocs topDocs = searcher.search(morphQuery, 1000);
+      TopDocs topDocs = searcher.search(morphQuery, 10000);
       topDocs.setMaxScore(1);
       int toTmp = to;
       if (topDocs.scoreDocs.length <= to)
@@ -437,9 +439,15 @@ public class IndexHandler {
       Query query = new QueryParser(Version.LUCENE_35, defaultQueryFieldName, nodesPerFieldAnalyzer).parse(queryStr);
       String language = docMetadataRecord.getLanguage();
       if (language == null || language.equals("")) {
-        String collectioNames = docMetadataRecord.getCollectionNames();
-        // TODO get language by confHandler: main language of collectionId
-        language = "deu"; // TODO
+        String collectionNames = docMetadataRecord.getCollectionNames();
+        ConfManagerResultWrapper collectionInfo = CollectionReader.getInstance().getResultWrapper(collectionNames);
+        if (collectionInfo != null) {
+          String mainLang = collectionInfo.getMainLanguage();
+          if (mainLang != null)
+            language = mainLang;
+        } else {
+          language = "deu"; // default language
+        }
       }
       Query morphQuery = buildMorphQuery(query, language);
       BooleanQuery queryDoc = new BooleanQuery();
@@ -514,7 +522,14 @@ public class IndexHandler {
       if (languageField != null)
         language = languageField.stringValue();
       else {
-        // TODO get language from conf manager by collectionName
+        ConfManagerResultWrapper collectionInfo = CollectionReader.getInstance().getResultWrapper(collectionNames);
+        if (collectionInfo != null) {
+          String mainLang = collectionInfo.getMainLanguage();
+          if (mainLang != null)
+            language = mainLang;
+        } else {
+          language = "deu"; // default language
+        }
       }
       Date yearDate = null;
       Fieldable dateField = doc.getFieldable("date");
@@ -700,61 +715,110 @@ public class IndexHandler {
     return morphQuery;
   }
 
-  private Query buildMorphQuery(TermQuery termQuery, String fromLanguage, boolean withAllForms, boolean translate) throws ApplicationException {
-    Query morphQuery = null;
-    String language = null;
-    String term = termQuery.getTerm().text();
-    if (fromLanguage == null) {
-      language = MicrosoftTranslator.detectLanguageCode(term);
+  private Query buildMorphQuery(TermQuery inputTermQuery, String fromLang, boolean withAllForms, boolean translate) throws ApplicationException {
+    String[] toLanguages = {"deu", "eng", "fra"};  // TODO
+    String fromLanguage = null;
+    String inputTerm = inputTermQuery.getTerm().text();
+    if (fromLang == null) {
+      fromLanguage = MicrosoftTranslator.detectLanguageCode(inputTerm);
     } else {
-      language = fromLanguage;
+      fromLanguage = fromLang;
     }
     LexHandler lexHandler = LexHandler.getInstance();
-    String fieldName = termQuery.getTerm().field();
-    if (translate) {
-      String toLang = "de";
-      term = MicrosoftTranslator.translate(term, language, toLang);  // TODO what are the destination languages: only German ?
-      term = term.toLowerCase();
-      language = toLang;  // if a translation should be done then language should be toLang
-    }
-    ArrayList<String> queryTerms = new ArrayList<String>();
+    String fieldName = inputTermQuery.getTerm().field();
+    ArrayList<TermQuery> queryTerms = new ArrayList<TermQuery>();
     if (fieldName != null && fieldName.equals("tokenMorph")) {
-      ArrayList<Lemma> lemmas = lexHandler.getLemmas(term, "form", language, Normalizer.DICTIONARY, true);
-      if (lemmas == null) {
-        // if no lemmas are found then do a query in tokenOrig TODO should this really be done ?
-        Term termTokenOrig = new Term("tokenOrig", term);
-        TermQuery termQueryInTokenOrig = new TermQuery(termTokenOrig);
-        morphQuery = termQueryInTokenOrig;
+      ArrayList<Lemma> lemmas = lexHandler.getLemmas(inputTerm, "form", fromLanguage, Normalizer.DICTIONARY, true);
+      if (lemmas == null) {  // if no lemmas are found then do a query in tokenOrig TODO should this really be done ?
+        if (translate) {
+          String[] terms = {inputTerm};
+          ArrayList<String> translatedTerms = MicrosoftTranslator.translate(terms, fromLanguage, toLanguages);
+          for (int i=0; i<translatedTerms.size(); i++) {
+            String translatedTerm = translatedTerms.get(i);
+            Term translatedTermTokenOrig = new Term("tokenOrig", translatedTerm);
+            TermQuery translatedTermQueryInTokenOrig = new TermQuery(translatedTermTokenOrig);
+            queryTerms.add(translatedTermQueryInTokenOrig);
+          }
+        } else {
+          Term termTokenOrig = new Term("tokenOrig", inputTerm);
+          TermQuery termQueryInTokenOrig = new TermQuery(termTokenOrig);
+          queryTerms.add(termQueryInTokenOrig);
+        }
       } else {
-        BooleanQuery morphBooleanQuery = new BooleanQuery();
-        for (int i = 0; i < lemmas.size(); i++) {
-          Lemma lemma = lemmas.get(i);
-          if (withAllForms) { // all word forms are put into the query as boolean or clauses: needed in fragments search when all forms should be highlighted
-            ArrayList<Form> forms = lemma.getFormsList();
-            for (int j=0; j<forms.size(); j++) {
-              Form form = forms.get(j);
-              Term formTerm = new Term(fieldName, form.getFormName());
-              TermQuery morphTermQuery = new TermQuery(formTerm);
-              morphBooleanQuery.add(morphTermQuery, BooleanClause.Occur.SHOULD);
-            } 
-          } else {
-            Term lemmaTerm = new Term(fieldName, lemma.getLemmaName());
-            TermQuery morphTermQuery = new TermQuery(lemmaTerm);
-            morphBooleanQuery.add(morphTermQuery, BooleanClause.Occur.SHOULD);
+        if (translate) {
+          ArrayList<String> morphTerms = new ArrayList<String>();
+          for (int i=0; i<lemmas.size(); i++) {
+            Lemma lemma = lemmas.get(i);
+            if (withAllForms) { // all word forms are put into the query as boolean or clauses: needed in fragments search when all forms should be highlighted
+              ArrayList<Form> forms = lemma.getFormsList();
+              for (int j=0; j<forms.size(); j++) {
+                Form form = forms.get(j);
+                String formName = form.getFormName();
+                morphTerms.add(formName);
+              } 
+            } else {
+              String lemmaName = lemma.getLemmaName();
+              morphTerms.add(lemmaName);
+            }
+          }
+          String[] morphTermsArray = morphTerms.toArray(new String[morphTerms.size()]);
+          ArrayList<String> translatedMorphTerms = MicrosoftTranslator.translate(morphTermsArray, fromLanguage, toLanguages);
+          for (int i=0; i<translatedMorphTerms.size(); i++) {
+            String translatedMorphTermStr = translatedMorphTerms.get(i);
+            Term translatedMorphTerm = new Term(fieldName, translatedMorphTermStr);
+            TermQuery translatedMorphTermQuery = new TermQuery(translatedMorphTerm);
+            queryTerms.add(translatedMorphTermQuery);
+          }
+        } else {
+          for (int i = 0; i < lemmas.size(); i++) {
+            Lemma lemma = lemmas.get(i);
+            if (withAllForms) { // all word forms are put into the query as boolean or clauses: needed in fragments search when all forms should be highlighted
+              ArrayList<Form> forms = lemma.getFormsList();
+              for (int j=0; j<forms.size(); j++) {
+                Form form = forms.get(j);
+                Term formTerm = new Term(fieldName, form.getFormName());
+                TermQuery morphTermQuery = new TermQuery(formTerm);
+                queryTerms.add(morphTermQuery);
+              } 
+            } else {
+              Term lemmaTerm = new Term(fieldName, lemma.getLemmaName());
+              TermQuery morphTermQuery = new TermQuery(lemmaTerm);
+              queryTerms.add(morphTermQuery);
+            }
           }
         }
-        morphQuery = morphBooleanQuery;
       }
     } else {
-      String queryField = termQuery.getTerm().field();
-      Term queryTerm = new Term(queryField, term);  // for translation mode: a new TermQuery has to be built with the translated term
-      morphQuery = new TermQuery(queryTerm); 
       // if it is not the morph field then do a normal query 
+      if (translate) {
+        String inputTermQueryField = inputTermQuery.getTerm().field();
+        String inputTermQueryStr = inputTermQuery.getTerm().text();
+        String[] terms = {inputTermQueryStr};
+        ArrayList<String> translatedTerms = MicrosoftTranslator.translate(terms, fromLanguage, toLanguages);
+        for (int i=0; i<translatedTerms.size(); i++) {
+          String translatedTerm = translatedTerms.get(i);
+          Term translatedTermTokenOrig = new Term(inputTermQueryField, translatedTerm);
+          TermQuery translatedTermQueryInTokenOrig = new TermQuery(translatedTermTokenOrig);
+          queryTerms.add(translatedTermQueryInTokenOrig);
+        }
+      } else {
+        queryTerms.add(inputTermQuery);
+      }
       //TODO ?? perhaps other fields should also be queried morphological e.g. title etc.
     }
-    return morphQuery;
+    Query retQuery = buildBooleanShouldQuery(queryTerms);
+    return retQuery;
   }
 
+  private Query buildBooleanShouldQuery(ArrayList<TermQuery> queryTerms) throws ApplicationException {
+    BooleanQuery retBooleanQuery = new BooleanQuery();
+    for (int i = 0; i < queryTerms.size(); i++) {
+      TermQuery termQuery = queryTerms.get(i);
+      retBooleanQuery.add(termQuery, BooleanClause.Occur.SHOULD);
+    }
+    return retBooleanQuery;
+  }
+  
   private Query buildMorphQuery(BooleanQuery query, String language, boolean withAllForms, boolean translate) throws ApplicationException {
     BooleanQuery morphBooleanQuery = new BooleanQuery();
     BooleanClause[] booleanClauses = query.getClauses();
