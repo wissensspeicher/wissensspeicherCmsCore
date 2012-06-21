@@ -31,7 +31,7 @@ public class ConfManager {
   private ConfManager() {
     wrapperContainer = new HashMap<String, ConfManagerResultWrapper>();
     try {
-      readConfigs();
+      checkCollectionConfFiles();
     } catch (XPathExpressionException e) {
       e.printStackTrace();
     }
@@ -91,10 +91,17 @@ public class ConfManager {
             }
             cmrw.setFields(fields);
           }
-          String collectionDataUrl = xQueryEvaluator.evaluateAsString(srcUrl, "//collectionDataUrl/text()");
+          String collectionDataUrl = xQueryEvaluator.evaluateAsString(srcUrl, "//specifyUrl/collectionDataUrl/text()");
           if (collectionDataUrl != null) {
             cmrw.setCollectionDataUrl(collectionDataUrl);
-            extractUrlsFromCollections(collectionDataUrl, cmrw);
+            String excludesStr = xQueryEvaluator.evaluateAsStringValueJoined(srcUrl, "//specifyUrl/exclude");
+            if(collectionDataUrl.endsWith("/"))
+              extractUrlsFromCollections(collectionDataUrl, cmrw, excludesStr);
+            else{
+              List<String> collectionUrls = new ArrayList<String>();
+              collectionUrls.add(collectionDataUrl);
+              cmrw.setCollectionUrls(collectionUrls);
+            }
             // flag im Konfigurations-File auf false setzen durch serialisierung in das File
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = docFactory.newDocumentBuilder();
@@ -117,17 +124,13 @@ public class ConfManager {
   /**
    * der Extractor holt alle Projekt zugehoerigen Urls
    */
-  private void extractUrlsFromCollections(String collectionDataUrl, ConfManagerResultWrapper cmrw) {
+  private void extractUrlsFromCollections(String collectionDataUrl, ConfManagerResultWrapper cmrw, String excludesStr) {
     System.out.println("collecting urls of resources that need update...");
     if(!collectionDataUrl.equals("")){
       PathExtractor extractor = new PathExtractor();
-      List<String> collectionUrls = extractor.initExtractor(collectionDataUrl);
+      List<String> collectionUrls = extractor.initExtractor(collectionDataUrl, excludesStr);
       cmrw.setCollectionUrls(collectionUrls);
     }
-  }
-
-  public void readConfigs() throws XPathExpressionException {
-    checkCollectionConfFiles();
   }
 
   public ConfManagerResultWrapper getResultWrapper(String collectionId) {
