@@ -1,5 +1,7 @@
 package org.bbaw.wsp.cms.translator;
 
+import java.util.ArrayList;
+
 import com.memetix.mst.language.Language;
 import com.memetix.mst.translate.Translate;
 import com.memetix.mst.detect.Detect;
@@ -27,6 +29,7 @@ public class MicrosoftTranslator {
       String langId = de.mpg.mpiwg.berlin.mpdl.lt.general.Language.getInstance().getLanguageId(toLanguageStr);  // e.g. "de" is delivered from "deu"
       Language toLanguage = Language.fromString(langId);
       translation = Translate.execute(query, toLanguage);
+      translation = translation.toLowerCase();
 	  } catch (Exception e) {
 	    throw new ApplicationException(e);
 	  }
@@ -46,12 +49,26 @@ public class MicrosoftTranslator {
       Language fromLanguage = Language.fromString(fromLangId);
       Language toLanguage = Language.fromString(toLangId);
       translation = Translate.execute(query, fromLanguage, toLanguage);
+      translation = translation.toLowerCase();
     } catch (Exception e) {
       throw new ApplicationException(e);
     }
     return translation;
   }
 
+  public static ArrayList<String> translate(String[] query, String fromLanguageStr, String[] toLanguagesStr) throws ApplicationException {
+    ArrayList<String> translations = new ArrayList<String>();
+    for (int i=0; i<toLanguagesStr.length; i++) {
+      String toLanguageStr = toLanguagesStr[i];
+      String[] translationsArray = translate(query, fromLanguageStr, toLanguageStr);
+      for (int j=0; j<translationsArray.length; j++) {
+        String translation = translationsArray[j];
+        translations.add(translation);
+      }
+    }
+    return translations;
+  }
+  
   public static String[] translate(String[] query, String fromLanguageStr, String toLanguageStr) throws ApplicationException {
     if (fromLanguageStr == null)
       throw new ApplicationException("MicrosoftTranslator: toLanguageStr is null");
@@ -65,6 +82,9 @@ public class MicrosoftTranslator {
       Language fromLanguage = Language.fromString(fromLangId);
       Language toLanguage = Language.fromString(toLangId);
       translation = Translate.execute(query, fromLanguage, toLanguage);
+      for (int i=0; i<translation.length; i++) {
+        translation[i] = translation[i].toLowerCase();
+      }
     } catch (Exception e) {
       throw new ApplicationException(e);
     }
@@ -95,42 +115,4 @@ public class MicrosoftTranslator {
     return langName;
 	}
 	
-	
-	// TODO
-  public static String[] translateQuery(String[] queryToTranslate) throws Exception {
-    // Set the API key once per JVM. It is set statically and applies to all services
-    Translate.setKey(KEY);
-    
- // From AUTO_DETECT -> German 
-    System.out.println("queryToTranslate : "+queryToTranslate);
-    String[] translatedText = Translate.execute(queryToTranslate, Language.GERMAN);
-    System.out.println("queryToTranslate AUTO_DETECT -> German : ");
-    for (String string : translatedText) {
-      System.out.print(string);
-      System.out.print(" ");
-}
-    System.out.println();
-    
-    
-    // From AUTO_DETECT -> French 
-//    translatedText = Translate.execute("Bonjour", Language.FRENCH, Language.ENGLISH);
-    String[] ranslatedText = Translate.execute(queryToTranslate, Language.FRENCH);
-    System.out.println("queryToTranslate AUTO_DETECT -> French : ");
-    for (String string : ranslatedText) {
-      System.out.print(string);
-      System.out.print(" ");
-}
-    System.out.println();
-   
-    // English AUTO_DETECT -> Arabic
-    String[] anslatedText = Translate.execute(queryToTranslate, Language.ARABIC);
-    System.out.println("queryToTranslate AUTO_DETECT -> Arabic : ");
-    for (String string : anslatedText) {
-      System.out.print(string);
-      System.out.print(" ");
-}
-    System.out.println();
-    return translatedText;
-}
-
 }
