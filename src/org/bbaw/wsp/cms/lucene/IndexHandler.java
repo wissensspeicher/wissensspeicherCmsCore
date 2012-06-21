@@ -33,13 +33,16 @@ import org.apache.lucene.index.TermFreqVector;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.FuzzyQuery;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.PhraseQuery;
+import org.apache.lucene.search.PrefixQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.SearcherManager;
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.SortField;
 import org.apache.lucene.search.TermQuery;
+import org.apache.lucene.search.TermRangeQuery;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.highlight.Highlighter;
 import org.apache.lucene.search.highlight.QueryScorer;
@@ -371,9 +374,13 @@ public class IndexHandler {
       String defaultQueryFieldName = "tokenOrig";
       Query query = new QueryParser(Version.LUCENE_35, defaultQueryFieldName, documentsPerFieldAnalyzer).parse(queryStr);
       Query morphQuery = buildMorphQuery(query, language, false, translate);
-      Query morphFormsQuery = buildMorphQuery(query, language, true, translate);
+      Query highlighterQuery = buildMorphQuery(query, language, true, translate);
+      if (query instanceof PhraseQuery || query instanceof PrefixQuery || query instanceof FuzzyQuery || query instanceof TermRangeQuery) {
+        highlighterQuery = query;  // TODO wenn sie rekursiv enthalten sind 
+      }
       SimpleHTMLFormatter htmlFormatter = new SimpleHTMLFormatter();
-      Highlighter highlighter = new Highlighter(htmlFormatter, new QueryScorer(morphFormsQuery));
+      QueryScorer queryScorer = new QueryScorer(highlighterQuery);
+      Highlighter highlighter = new Highlighter(htmlFormatter, queryScorer);
       TopDocs topDocs = searcher.search(morphQuery, 10000);
       topDocs.setMaxScore(1);
       int toTmp = to;
@@ -386,7 +393,7 @@ public class IndexHandler {
           FieldSelector docFieldSelector = getDocFieldSelector();
           Document luceneDoc = searcher.doc(docID, docFieldSelector);
           org.bbaw.wsp.cms.document.Document doc = new org.bbaw.wsp.cms.document.Document(luceneDoc);
-          if (withHitFragments && ! (query instanceof PhraseQuery)) {
+          if (withHitFragments) {
             ArrayList<String> hitFragments = new ArrayList<String>();
             Fieldable docContentField = luceneDoc.getFieldable("content");
             if (docContentField != null) {
@@ -720,7 +727,9 @@ public class IndexHandler {
     String fromLanguage = null;
     String inputTerm = inputTermQuery.getTerm().text();
     if (fromLang == null) {
-      fromLanguage = MicrosoftTranslator.detectLanguageCode(inputTerm);
+      String detectedLang = MicrosoftTranslator.detectLanguageCode(inputTerm);
+      if (detectedLang != null)
+        fromLanguage = detectedLang;
     } else {
       fromLanguage = fromLang;
     }
