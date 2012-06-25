@@ -49,6 +49,7 @@ import org.apache.lucene.search.highlight.QueryScorer;
 import org.apache.lucene.search.highlight.SimpleHTMLFormatter;
 import org.apache.lucene.search.highlight.TextFragment;
 import org.apache.lucene.search.highlight.TokenSources;
+import org.apache.lucene.search.similar.MoreLikeThis;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
 import org.bbaw.wsp.cms.confmanager.CollectionReader;
@@ -999,6 +1000,58 @@ public class IndexHandler {
     return doc;
   }
 
+  // TODO test this function
+  private ArrayList<Document> moreLikeThis(String docId) throws ApplicationException {
+    ArrayList<Document> docs = null;
+    IndexSearcher searcher1 = null;
+    IndexSearcher searcher2 = null;
+    try {
+      makeDocumentsSearcherManagerUpToDate();
+      searcher1 = documentsSearcherManager.acquire();
+      String fieldNameDocId = "docId";
+      Query queryDocId = new QueryParser(Version.LUCENE_35, fieldNameDocId, documentsPerFieldAnalyzer).parse(docId);
+      TopDocs topDocs = searcher1.search(queryDocId, 100000);
+      topDocs.setMaxScore(1);
+      int docID = -1;
+      if (topDocs != null && topDocs.scoreDocs != null && topDocs.scoreDocs.length > 0) {
+        docID = topDocs.scoreDocs[0].doc;
+      }
+      makeDocumentsSearcherManagerUpToDate();
+      searcher2 = documentsSearcherManager.acquire();
+      MoreLikeThis mlt = new MoreLikeThis(documentsIndexReader);  // TODO documentsIndexReader is ok ?
+      mlt.setFieldNames(new String[]{"title"});  // similarity function works against these fields
+      mlt.setMinWordLen(2);
+      mlt.setBoost(true);
+      Query queryMoreLikeThis = mlt.like(docID);
+      TopDocs moreLikeThisDocs = searcher2.search(queryMoreLikeThis, 1000);
+      moreLikeThisDocs.setMaxScore(1);
+      if (moreLikeThisDocs != null) {
+        if (docs == null)
+          docs = new ArrayList<Document>();
+        for (int i=0; i<moreLikeThisDocs.scoreDocs.length; i++) {
+          int docIdent = topDocs.scoreDocs[i].doc;
+          Document doc = searcher2.doc(docIdent);
+          docs.add(doc);
+        }
+      }
+    } catch (Exception e) {
+      throw new ApplicationException(e);
+    } finally {
+      try {
+        if (searcher1 != null)
+          documentsSearcherManager.release(searcher1);
+        if (searcher2 != null)
+          documentsSearcherManager.release(searcher2);
+      } catch (IOException e) {
+        // nothing
+      }
+    }
+    // Do not use searcher after this!
+    searcher1 = null;
+    searcher2 = null;
+    return docs;
+  }
+  
   private IndexWriter getDocumentsWriter() throws ApplicationException {
     IndexWriter writer = null;
     String luceneDocsDirectoryStr = Constants.getInstance().getLuceneDocumentsDir();
