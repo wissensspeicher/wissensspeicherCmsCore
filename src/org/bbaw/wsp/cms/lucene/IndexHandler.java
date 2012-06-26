@@ -400,7 +400,7 @@ public class IndexHandler {
             if (docContentField != null) {
               String docContent = docContentField.stringValue();
               TokenStream tokenStream = TokenSources.getAnyTokenStream(this.documentsIndexReader, docID, docContentField.name(), documentsPerFieldAnalyzer);
-              TextFragment[] textfragments = highlighter.getBestTextFragments(tokenStream, docContent, false, 10);
+              TextFragment[] textfragments = highlighter.getBestTextFragments(tokenStream, docContent, true, 10);
               if (textfragments.length > 0) {
                 for (int j=0; j<textfragments.length; j++) {
                   hitFragments.add(checkHitFragment(textfragments[j].toString()));
