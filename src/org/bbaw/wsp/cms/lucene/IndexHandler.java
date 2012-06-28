@@ -400,7 +400,7 @@ public class IndexHandler {
             if (docContentField != null) {
               String docContent = docContentField.stringValue();
               TokenStream tokenStream = TokenSources.getAnyTokenStream(this.documentsIndexReader, docID, docContentField.name(), documentsPerFieldAnalyzer);
-              TextFragment[] textfragments = highlighter.getBestTextFragments(tokenStream, docContent, true, 10);
+              TextFragment[] textfragments = highlighter.getBestTextFragments(tokenStream, docContent, true, 3);
               if (textfragments.length > 0) {
                 for (int j=0; j<textfragments.length; j++) {
                   hitFragments.add(checkHitFragment(textfragments[j].toString()));
@@ -1000,9 +1000,9 @@ public class IndexHandler {
     return doc;
   }
 
-  // TODO test this function
-  private ArrayList<Document> moreLikeThis(String docId) throws ApplicationException {
-    ArrayList<Document> docs = null;
+  public Hits moreLikeThis(String docId, int from, int to) throws ApplicationException {
+    Hits hits = null;
+    ArrayList<org.bbaw.wsp.cms.document.Document>  wspDocs = null;
     IndexSearcher searcher1 = null;
     IndexSearcher searcher2 = null;
     try {
@@ -1019,20 +1019,25 @@ public class IndexHandler {
       makeDocumentsSearcherManagerUpToDate();
       searcher2 = documentsSearcherManager.acquire();
       MoreLikeThis mlt = new MoreLikeThis(documentsIndexReader);  // TODO documentsIndexReader is ok ?
-      mlt.setFieldNames(new String[]{"title"});  // similarity function works against these fields
+      mlt.setFieldNames(new String[]{"content"});  // similarity function works against these fields
       mlt.setMinWordLen(2);
       mlt.setBoost(true);
       Query queryMoreLikeThis = mlt.like(docID);
-      TopDocs moreLikeThisDocs = searcher2.search(queryMoreLikeThis, 1000);
-      moreLikeThisDocs.setMaxScore(1);
-      if (moreLikeThisDocs != null) {
-        if (docs == null)
-          docs = new ArrayList<Document>();
+      TopDocs moreLikeThisDocs = searcher2.search(queryMoreLikeThis, 10);
+      moreLikeThisDocs.setMaxScore(10);
+      if (moreLikeThisDocs != null) { 
+        if (wspDocs == null)
+          wspDocs = new ArrayList<org.bbaw.wsp.cms.document.Document>();
         for (int i=0; i<moreLikeThisDocs.scoreDocs.length; i++) {
-          int docIdent = topDocs.scoreDocs[i].doc;
-          Document doc = searcher2.doc(docIdent);
-          docs.add(doc);
+          int docIdent = moreLikeThisDocs.scoreDocs[i].doc;
+          Document luceneDoc = searcher2.doc(docIdent);
+          org.bbaw.wsp.cms.document.Document wspDoc = new org.bbaw.wsp.cms.document.Document(luceneDoc);
+          wspDocs.add(wspDoc);
         }
+      }
+      if (wspDocs != null) {
+        hits = new Hits(wspDocs, from, to);
+        hits.setSize(moreLikeThisDocs.scoreDocs.length);
       }
     } catch (Exception e) {
       throw new ApplicationException(e);
@@ -1049,7 +1054,8 @@ public class IndexHandler {
     // Do not use searcher after this!
     searcher1 = null;
     searcher2 = null;
-    return docs;
+    
+    return hits;
   }
   
   private IndexWriter getDocumentsWriter() throws ApplicationException {
