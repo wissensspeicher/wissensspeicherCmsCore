@@ -35,6 +35,7 @@ import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.FuzzyQuery;
 import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.MatchAllDocsQuery;
 import org.apache.lucene.search.PhraseQuery;
 import org.apache.lucene.search.PrefixQuery;
 import org.apache.lucene.search.Query;
@@ -373,7 +374,13 @@ public class IndexHandler {
       makeDocumentsSearcherManagerUpToDate();
       searcher = documentsSearcherManager.acquire();
       String defaultQueryFieldName = "tokenOrig";
-      Query query = new QueryParser(Version.LUCENE_35, defaultQueryFieldName, documentsPerFieldAnalyzer).parse(queryStr);
+      QueryParser queryParser = new QueryParser(Version.LUCENE_35, defaultQueryFieldName, documentsPerFieldAnalyzer);
+      Query query = null;
+      if (queryStr.equals("*")) {
+        query = new MatchAllDocsQuery();
+      } else {
+        query = queryParser.parse(queryStr);
+      }
       Query morphQuery = buildMorphQuery(query, language, false, translate);
       Query highlighterQuery = buildMorphQuery(query, language, true, translate);
       if (query instanceof PhraseQuery || query instanceof PrefixQuery || query instanceof FuzzyQuery || query instanceof TermRangeQuery) {
