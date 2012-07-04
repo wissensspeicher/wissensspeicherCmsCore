@@ -109,6 +109,7 @@ public class DocumentHandler {
       XQueryEvaluator xQueryEvaluator = new XQueryEvaluator();
       XdmNode docNode = xQueryEvaluator.parse(srcUrl); // if it is not parseable an exception with a detail message is thrown 
       String docType = getNodeType(docNode);
+      docType = docType.trim();
       if (docType == null) {
         docOperation.setErrorMessage("file type of: " + srcUrlStr + "is not supported");
         return;
@@ -222,6 +223,8 @@ public class DocumentHandler {
         mdRecord = getMetadataRecordTei(xQueryEvaluator, srcUrl, mdRecord);
       else if (schemaName.equals("html"))
         mdRecord = getMetadataRecordHtml(xQueryEvaluator, srcUrl, mdRecord);
+      else
+        mdRecord.setSchemaName("diverse"); // all other cases: set docType to schemaName
     } catch (MalformedURLException e) {
       throw new ApplicationException(e);
     }
