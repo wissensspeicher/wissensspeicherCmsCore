@@ -154,18 +154,36 @@ public class IndexHandler {
       if (mdRecord.getCreator() != null) {
         Field authorField = new Field("author", mdRecord.getCreator(), Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
         doc.add(authorField);
+        Field authorFieldSorted = new Field("authorSorted", mdRecord.getCreator(), Field.Store.YES, Field.Index.NOT_ANALYZED);
+        doc.add(authorFieldSorted);
       }
       if (mdRecord.getTitle() != null) {
         Field titleField = new Field("title", mdRecord.getTitle(), Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
         doc.add(titleField);
+        Field titleFieldSorted = new Field("titleSorted", mdRecord.getTitle(), Field.Store.YES, Field.Index.NOT_ANALYZED);
+        doc.add(titleFieldSorted);
       }
       if (mdRecord.getLanguage() != null) {
         Field languageField = new Field("language", mdRecord.getLanguage(), Field.Store.YES, Field.Index.ANALYZED);
         doc.add(languageField);
+        Field languageFieldSorted = new Field("languageSorted", mdRecord.getLanguage(), Field.Store.YES, Field.Index.NOT_ANALYZED);
+        doc.add(languageFieldSorted);
+      }
+      if (mdRecord.getPublisher() != null) {
+        Field publisherField = new Field("publisher", mdRecord.getPublisher(), Field.Store.YES, Field.Index.ANALYZED);
+        doc.add(publisherField);
+        Field publisherFieldSorted = new Field("publisherSorted", mdRecord.getPublisher(), Field.Store.YES, Field.Index.NOT_ANALYZED);
+        doc.add(publisherFieldSorted);
       }
       if (mdRecord.getYear() != null) {
         Field dateField = new Field("date", mdRecord.getYear(), Field.Store.YES, Field.Index.ANALYZED);
         doc.add(dateField);
+        Field dateFieldSorted = new Field("dateSorted", mdRecord.getYear(), Field.Store.YES, Field.Index.NOT_ANALYZED);
+        doc.add(dateFieldSorted);
+      }
+      if (mdRecord.getSubject() != null) {
+        Field subjectField = new Field("subject", mdRecord.getSubject(), Field.Store.YES, Field.Index.ANALYZED);
+        doc.add(subjectField);
       }
       if (mdRecord.getRights() != null) {
         Field rightsField = new Field("rights", mdRecord.getRights(), Field.Store.YES, Field.Index.ANALYZED);
@@ -184,10 +202,16 @@ public class IndexHandler {
         String xsDateStr = new Util().toXsDate(lastModified);
         Field lastModifiedField = new Field("lastModified", xsDateStr, Field.Store.YES, Field.Index.ANALYZED);
         doc.add(lastModifiedField);
+        long time = lastModified.getTime();
+        String timeStr = String.valueOf(time);
+        Field lastModifiedFieldSorted = new Field("lastModifiedSorted", timeStr, Field.Store.YES, Field.Index.NOT_ANALYZED);
+        doc.add(lastModifiedFieldSorted);
       }
       if (mdRecord.getSchemaName() != null) {
         Field schemaField = new Field("schemaName", mdRecord.getSchemaName(), Field.Store.YES, Field.Index.ANALYZED);
         doc.add(schemaField);
+        Field schemaFieldSorted = new Field("schemaNameSorted", mdRecord.getSchemaName(), Field.Store.YES, Field.Index.NOT_ANALYZED);
+        doc.add(schemaFieldSorted);
       }
 
       String language = mdRecord.getLanguage();
@@ -266,9 +290,10 @@ public class IndexHandler {
         String nodePageNumber = String.valueOf(element.pageNumber);
         String nodeLineNumber = String.valueOf(element.lineNumber);
         String nodeElementName = String.valueOf(element.name);
-        String nodeElementPosition = String.valueOf(element.elemPosition);
+        String nodeElementDocPosition = String.valueOf(element.docPosition);
         String nodeElementAbsolutePosition = String.valueOf(element.position);
         String nodeElementPagePosition = String.valueOf(element.pagePosition);
+        String nodeElementPosition = String.valueOf(element.elemPosition);
         String nodeXmlId = element.xmlId;
         String nodeXpath = element.xpath;
         String nodeXmlContent = element.toXmlString();
@@ -286,12 +311,16 @@ public class IndexHandler {
         nodeDoc.add(nodeLineNumberField);
         Field nodeElementNameField = new Field("elementName", nodeElementName, Field.Store.YES, Field.Index.ANALYZED);
         nodeDoc.add(nodeElementNameField);
-        Field nodeElementPositionField = new Field("elementPosition", nodeElementPosition, Field.Store.YES, Field.Index.ANALYZED);
-        nodeDoc.add(nodeElementPositionField);
+        Field nodeElementDocPositionField = new Field("elementDocPosition", nodeElementDocPosition, Field.Store.YES, Field.Index.ANALYZED);
+        nodeDoc.add(nodeElementDocPositionField);
+        Field nodeElementDocPositionFieldSorted = new Field("elementDocPositionSorted", nodeElementDocPosition, Field.Store.YES, Field.Index.NOT_ANALYZED);
+        nodeDoc.add(nodeElementDocPositionFieldSorted);
         Field nodeElementAbsolutePositionField = new Field("elementAbsolutePosition", nodeElementAbsolutePosition, Field.Store.YES, Field.Index.ANALYZED);
         nodeDoc.add(nodeElementAbsolutePositionField);
         Field nodeElementPagePositionField = new Field("elementPagePosition", nodeElementPagePosition, Field.Store.YES, Field.Index.ANALYZED);
         nodeDoc.add(nodeElementPagePositionField);
+        Field nodeElementPositionField = new Field("elementPosition", nodeElementPosition, Field.Store.YES, Field.Index.ANALYZED);
+        nodeDoc.add(nodeElementPositionField);
         if (nodeXmlId != null) {
           Field nodeXmlIdField = new Field("xmlId", nodeXmlId, Field.Store.YES, Field.Index.ANALYZED);
           nodeDoc.add(nodeXmlIdField);
@@ -367,7 +396,7 @@ public class IndexHandler {
     }
   }
 
-  public Hits queryDocuments(String queryStr, String language, int from, int to, boolean withHitFragments, boolean translate) throws ApplicationException {
+  public Hits queryDocuments(String queryStr, String[] sortFieldNames, String language, int from, int to, boolean withHitFragments, boolean translate) throws ApplicationException {
     Hits hits = null;
     IndexSearcher searcher = null;
     try {
@@ -389,15 +418,21 @@ public class IndexHandler {
       SimpleHTMLFormatter htmlFormatter = new SimpleHTMLFormatter();
       QueryScorer queryScorer = new QueryScorer(highlighterQuery);
       Highlighter highlighter = new Highlighter(htmlFormatter, queryScorer);
-      TopDocs topDocs = searcher.search(morphQuery, 10000);
-      topDocs.setMaxScore(1);
+      TopDocs resultDocs = null;
+      if (sortFieldNames != null) {
+        Sort sort = buildSort(sortFieldNames, "doc");  // build sort criteria 
+        resultDocs = searcher.search(morphQuery, 10000, sort);
+      } else {
+        resultDocs = searcher.search(morphQuery, 10000);
+      }
+      resultDocs.setMaxScore(1);
       int toTmp = to;
-      if (topDocs.scoreDocs.length <= to)
-        toTmp = topDocs.scoreDocs.length - 1;
-      if (topDocs != null) {
+      if (resultDocs.scoreDocs.length <= to)
+        toTmp = resultDocs.scoreDocs.length - 1;
+      if (resultDocs != null) {
         ArrayList<org.bbaw.wsp.cms.document.Document>  docs = new ArrayList<org.bbaw.wsp.cms.document.Document>();
         for (int i=from; i<=toTmp; i++) {
-          int docID = topDocs.scoreDocs[i].doc;
+          int docID = resultDocs.scoreDocs[i].doc;
           FieldSelector docFieldSelector = getDocFieldSelector();
           Document luceneDoc = searcher.doc(docID, docFieldSelector);
           org.bbaw.wsp.cms.document.Document doc = new org.bbaw.wsp.cms.document.Document(luceneDoc);
@@ -421,7 +456,8 @@ public class IndexHandler {
         }
         if (docs != null) {
           hits = new Hits(docs, from, to);
-          hits.setSize(topDocs.scoreDocs.length);
+          hits.setSize(resultDocs.scoreDocs.length);
+          hits.setQuery(morphQuery);
         }
       }
     } catch (Exception e) {
@@ -1079,7 +1115,9 @@ public class IndexHandler {
       documentsFieldAnalyzers.put("author", new StandardAnalyzer(Version.LUCENE_35));
       documentsFieldAnalyzers.put("title", new StandardAnalyzer(Version.LUCENE_35));
       documentsFieldAnalyzers.put("language", new KeywordAnalyzer());
+      documentsFieldAnalyzers.put("publisher", new KeywordAnalyzer());
       documentsFieldAnalyzers.put("date", new KeywordAnalyzer());
+      documentsFieldAnalyzers.put("subject", new KeywordAnalyzer());
       documentsFieldAnalyzers.put("rights", new KeywordAnalyzer());
       documentsFieldAnalyzers.put("license", new KeywordAnalyzer());
       documentsFieldAnalyzers.put("accessRights", new KeywordAnalyzer());
@@ -1118,6 +1156,7 @@ public class IndexHandler {
       nodesFieldAnalyzers.put("pageNumber", new KeywordAnalyzer()); // page number (through element pb): e.g. "13"
       nodesFieldAnalyzers.put("lineNumber", new KeywordAnalyzer()); // line number on the page (through element lb): e.g. "17"
       nodesFieldAnalyzers.put("elementName", new KeywordAnalyzer()); // element name: e.g. "tei:s"
+      nodesFieldAnalyzers.put("elementDocPosition", new KeywordAnalyzer()); // absolute position of element in document: e.g. "4711"
       nodesFieldAnalyzers.put("elementPosition", new KeywordAnalyzer()); // position in parent node (in relation to other nodes of the same name): e.g. "5"
       nodesFieldAnalyzers.put("elementAbsolutePosition", new KeywordAnalyzer()); // absolute position in document (in relation to other nodes of the same name): e.g. "213"
       nodesFieldAnalyzers.put("elementPagePosition", new KeywordAnalyzer()); // position in relation to other nodes of the same name: e.g. "213"
@@ -1141,6 +1180,55 @@ public class IndexHandler {
     return writer;
   }
 
+  private Sort buildSort(String[] sortFieldNames, String type) {
+    Sort sort = new Sort();
+    ArrayList<SortField> sortFields = new ArrayList<SortField>();
+    for (int i=0; i<sortFieldNames.length; i++) {
+      String sortFieldName = sortFieldNames[i];
+      int sortFieldType = getDocSortFieldType(sortFieldName);
+      if (type.equals("node"))
+        sortFieldType = getNodeSortFieldType(sortFieldName);
+      String realSortFieldName = getDocSortFieldName(sortFieldName);
+      SortField sortField = new SortField(realSortFieldName, sortFieldType);
+      sortFields.add(sortField);
+    }
+    if (sortFieldNames.length == 1) {
+      SortField sortField1 = sortFields.get(0);
+      sort.setSort(sortField1);
+    } else if (sortFieldNames.length == 2) {
+      SortField sortField1 = sortFields.get(0);
+      SortField sortField2 = sortFields.get(1);
+      sort.setSort(sortField1, sortField2);
+    } else if (sortFieldNames.length == 2) {
+      SortField sortField1 = sortFields.get(0);
+      SortField sortField2 = sortFields.get(1);
+      SortField sortField3 = sortFields.get(2);
+      sort.setSort(sortField1, sortField2, sortField3);
+    }
+    return sort;
+  }
+
+  private String getDocSortFieldName(String fieldName) {
+    String sortFieldName = fieldName + "Sorted";
+    if (fieldName.equals("docId"))
+      sortFieldName = fieldName;
+    return sortFieldName;
+  }
+
+  private int getDocSortFieldType(String fieldName) {
+    int type = SortField.STRING;
+    if (fieldName.equals("lastModified"))
+      type = SortField.LONG;
+    return type;
+  }
+  
+  private int getNodeSortFieldType(String fieldName) {
+    int type = SortField.STRING;
+    if (fieldName.equals("pageNumber") || fieldName.equals("lineNumber") || fieldName.equals("elementDocPosition")) 
+      type = SortField.INT;
+    return type;
+  }
+
   private FieldSelector getDocFieldSelector() {
     HashSet<String> fields = new HashSet<String>();
     fields.add("docId");
@@ -1151,7 +1239,9 @@ public class IndexHandler {
     fields.add("author");
     fields.add("title");
     fields.add("language");
+    fields.add("publisher");
     fields.add("date");
+    fields.add("subject");
     fields.add("rights");
     fields.add("license");
     fields.add("type");
@@ -1171,6 +1261,7 @@ public class IndexHandler {
     fields.add("pageNumber");
     fields.add("lineNumber");
     fields.add("elementName");
+    fields.add("elementDocPosition");
     fields.add("elementPosition");
     fields.add("elementAbsolutePosition");
     fields.add("elementPagePosition");
