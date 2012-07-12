@@ -74,9 +74,14 @@ public class DocumentHandler {
         String xmlFileUrlStr = xmlFile.toURI().toURL().toString();
         CmsDocOperation createDocOperation = new CmsDocOperation("create", xmlFileUrlStr, null, docId);
         createDocOperation.setCollectionNames(collectionNames);
-        doOperation(createDocOperation);
-        Date now = new Date();
-        System.out.println("Document " + i + ": " + docId + " successfully imported (" + now.toString() + ")");
+        try {
+          doOperation(createDocOperation);
+          Date now = new Date();
+          System.out.println("Document " + i + ": " + docId + " successfully imported (" + now.toString() + ")");
+        } catch (Exception e) {
+          System.out.println("Document " + i + ": " + docId + " has problems:");
+          e.printStackTrace();
+        }
       }
       endOperation();
       System.out.println("The DocumentHandler needed: " + (endOfOperation - beginOfOperation) + " ms" );
@@ -235,7 +240,7 @@ public class DocumentHandler {
   private MetadataRecord getMetadataRecordArch(XQueryEvaluator xQueryEvaluator, URL srcUrl, MetadataRecord mdRecord) throws ApplicationException {
     String metadataXmlStr = xQueryEvaluator.evaluateAsString(srcUrl, "/archimedes//info");
     if (metadataXmlStr != null) {
-      String identifier = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/info/cvs_file");
+      String identifier = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/info/locator");
       if (identifier != null)
         identifier = StringUtils.deresolveXmlEntities(identifier);
       String creator = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/info/author");
@@ -247,6 +252,9 @@ public class DocumentHandler {
       String language = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/info/lang[1]");
       if (language != null)
         language = StringUtils.deresolveXmlEntities(language);
+      String place = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/info/place");
+      if (place != null)
+        place = StringUtils.deresolveXmlEntities(place);
       String yearStr = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/info/date");
       Date date = null; 
       if (yearStr != null && ! yearStr.equals("")) {
@@ -286,6 +294,7 @@ public class DocumentHandler {
       mdRecord.setLanguage(language);
       mdRecord.setCreator(creator);
       mdRecord.setTitle(title);
+      mdRecord.setPublisher(place);
       mdRecord.setRights(rights);
       mdRecord.setDate(date);
       mdRecord.setLicense(license);
@@ -386,6 +395,9 @@ public class DocumentHandler {
         language = null;
       if (language != null)
         language = StringUtils.deresolveXmlEntities(language);
+      String place = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:publicationStmt/*:pubPlace");
+      if (place != null)
+        place = StringUtils.deresolveXmlEntities(place);
       String yearStr = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:publicationStmt/*:date");
       Date date = null; 
       if (yearStr != null && ! yearStr.equals("")) {
@@ -399,6 +411,9 @@ public class DocumentHandler {
           }
         }
       }
+      String subject = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/*:teiHeader/*:profileDesc/*:textClass/*:keywords/*:term)");
+      if (subject != null)
+        subject = StringUtils.deresolveXmlEntities(subject);
       String rights = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:publicationStmt/*:availability");
       if (rights == null)
         rights = "open access";
@@ -413,8 +428,10 @@ public class DocumentHandler {
       mdRecord.setLanguage(language);
       mdRecord.setCreator(creator);
       mdRecord.setTitle(title);
+      mdRecord.setPublisher(place);
       mdRecord.setRights(rights);
       mdRecord.setDate(date);
+      mdRecord.setSubject(subject);
       mdRecord.setLicense(license);
       mdRecord.setAccessRights(accessRights);
     }
@@ -442,6 +459,9 @@ public class DocumentHandler {
         language = null;
       if (language != null && ! language.isEmpty())
         language = StringUtils.deresolveXmlEntities(language);
+      String publisher = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/meta[@name = 'DC.publisher']/@content)");
+      if (publisher != null)
+        publisher = StringUtils.deresolveXmlEntities(publisher);
       String yearStr = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/meta[@name = 'DC.date']/@content)");
       Date date = null; 
       if (yearStr != null && ! yearStr.equals("")) {
@@ -455,6 +475,9 @@ public class DocumentHandler {
           }
         }
       }
+      String subject = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/meta[@name = 'DC.subject']/@content)");
+      if (subject != null)
+        subject = StringUtils.deresolveXmlEntities(subject);
       String rights = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/meta[@name = 'DC.rights']/@content)");
       if (rights != null && ! rights.isEmpty())
         rights = StringUtils.deresolveXmlEntities(rights);
@@ -469,8 +492,10 @@ public class DocumentHandler {
       mdRecord.setLanguage(language);
       mdRecord.setCreator(creator);
       mdRecord.setTitle(title);
+      mdRecord.setPublisher(publisher);
       mdRecord.setRights(rights);
       mdRecord.setDate(date);
+      mdRecord.setSubject(subject);
       mdRecord.setLicense(license);
       mdRecord.setAccessRights(accessRights);
     }
