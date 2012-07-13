@@ -24,6 +24,14 @@
       <head>Handwritten figures</head>
       <xsl:apply-templates select="//*:handwritten"/>
     </list>
+    <list type="persons">
+      <head>Persons</head>
+      <xsl:apply-templates select="//*:persName"/>
+    </list>
+    <list type="places">
+      <head>Places</head>
+      <xsl:apply-templates select="//*:placeName"/>
+    </list>
     <list type="pages">
       <head>Pages</head>
       <xsl:apply-templates select="//*:pb"/>
@@ -61,6 +69,32 @@
   <item>
     <xsl:if test="not(empty($number))"><xsl:attribute name="n"><xsl:value-of select="$number"/></xsl:attribute></xsl:if>
     <xsl:if test="not(empty($page))"><ref><xsl:value-of select="$page"/></ref></xsl:if>
+  </item>
+</xsl:template>
+
+<xsl:template match="*:persName">
+  <xsl:variable name="name" select="@name"/>
+  <xsl:variable name="nymRef" select="@nymRef"/>
+  <xsl:variable name="value" select="string-join(text(), ' ')"/>
+  <item>
+    <xsl:choose>
+      <xsl:when test="not(empty($name))"><xsl:value-of select="normalize-space(replace($name, '&lt;|&gt;', ''))"/></xsl:when>
+      <xsl:when test="not(empty($nymRef))"><xsl:value-of select="normalize-space(replace($nymRef, '&lt;|&gt;', ''))"/></xsl:when> 
+      <xsl:when test="not(empty($value))"><xsl:value-of select="normalize-space(replace($value, '&lt;|&gt;', ''))"/></xsl:when>
+      <xsl:otherwise></xsl:otherwise>
+    </xsl:choose>
+  </item>
+</xsl:template>
+
+<xsl:template match="*:placeName">
+  <xsl:variable name="name" select="@name"/>
+  <xsl:variable name="value" select="string-join(text(), ' ')"/>
+  <item>
+    <xsl:choose>
+      <xsl:when test="not(empty($name))"><xsl:value-of select="normalize-space(replace($name, '\[|\]', ''))"/></xsl:when>
+      <xsl:when test="not(empty($value))"><xsl:value-of select="normalize-space(replace($value, '\[|\]', ''))"/></xsl:when>
+      <xsl:otherwise></xsl:otherwise>
+    </xsl:choose>
   </item>
 </xsl:template>
 
