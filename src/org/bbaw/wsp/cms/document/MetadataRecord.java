@@ -22,6 +22,8 @@ public class MetadataRecord {
   private String schemaName; // e.g. TEI, echo, html, or archimedes
   private Date lastModified;
   private int pageCount;
+  private String persons; 
+  private String places; 
   private String echoId;  // document identifier in echo system: directory name, e.g. /permanent/library/163127KK  
  
   public String getDocId() {
@@ -177,6 +179,22 @@ public class MetadataRecord {
 
   public void setLastModified(Date lastModified) {
     this.lastModified = lastModified;
+  }
+
+  public String getPersons() {
+    return persons;
+  }
+
+  public void setPersons(String persons) {
+    this.persons = persons;
+  }
+
+  public String getPlaces() {
+    return places;
+  }
+
+  public void setPlaces(String places) {
+    this.places = places;
   }
 
   public String getEchoId() {
