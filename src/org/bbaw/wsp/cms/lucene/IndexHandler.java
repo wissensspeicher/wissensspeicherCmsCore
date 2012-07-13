@@ -213,6 +213,14 @@ public class IndexHandler {
         Field schemaFieldSorted = new Field("schemaNameSorted", mdRecord.getSchemaName(), Field.Store.YES, Field.Index.NOT_ANALYZED);
         doc.add(schemaFieldSorted);
       }
+      if (mdRecord.getPersons() != null) {
+        Field personsField = new Field("persons", mdRecord.getPersons(), Field.Store.YES, Field.Index.ANALYZED);
+        doc.add(personsField);
+      }
+      if (mdRecord.getPlaces() != null) {
+        Field placesField = new Field("places", mdRecord.getPlaces(), Field.Store.YES, Field.Index.ANALYZED);
+        doc.add(placesField);
+      }
 
       String language = mdRecord.getLanguage();
       InputStreamReader docFileReader = new InputStreamReader(new FileInputStream(docFileName), "utf-8");
@@ -1248,6 +1256,8 @@ public class IndexHandler {
     fields.add("pageCount");
     fields.add("schemaName");
     fields.add("lastModified");
+    fields.add("persons");
+    fields.add("places");
     fields.add("content");
     FieldSelector fieldSelector = new SetBasedFieldSelector(fields, fields);
     return fieldSelector;
