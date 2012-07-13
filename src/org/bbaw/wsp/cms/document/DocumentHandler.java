@@ -135,19 +135,23 @@ public class DocumentHandler {
       String result = replaceAnchorTransformer.transform(docDestFileUrlStr);
       FileUtils.writeStringToFile(docDestFileUpgrade, result, "utf-8");
       
-      // generate toc file (toc, figure, handwritten)
+      // generate toc file (toc, figure, handwritten, persons, places, pages)
       XslResourceTransformer tocTransformer = new XslResourceTransformer("toc.xsl");
       File tocFile = new File(docDirName + "/toc.xml");
       String tocResult = tocTransformer.transform(docDestFileNameUpgrade);
       FileUtils.writeStringToFile(tocFile, tocResult, "utf-8");
+      String persons = getPersons(tocResult, xQueryEvaluator);  // TODO eliminate duplicates
+      String places = getPlaces(tocResult, xQueryEvaluator);  // TODO eliminate duplicates
 
-      // Get metadata info of the xml document
+      // Get metadata info out of the xml document
       MetadataRecord mdRecord = new MetadataRecord();
       mdRecord.setDocId(docIdentifier);
       mdRecord.setCollectionNames(docOperation.getCollectionNames());
       mdRecord.setType("text/xml");
+      mdRecord.setPersons(persons);
+      mdRecord.setPlaces(places);
       docOperation.setStatus("extract metadata of: " + srcUrlStr + " to CMS");
-      mdRecord = getMetadataRecord(docDestFileUpgrade, docType, mdRecord);
+      mdRecord = getMetadataRecord(docDestFileUpgrade, docType, mdRecord, xQueryEvaluator);
       String mdRecordLanguage = mdRecord.getLanguage();
       if (mdRecordLanguage == null && mainLanguage != null)
         mdRecord.setLanguage(mainLanguage);
@@ -214,12 +218,11 @@ public class DocumentHandler {
     // TODO: perform operation on version management system
   }
   
-  private MetadataRecord getMetadataRecord(File xmlFile, String schemaName, MetadataRecord mdRecord) throws ApplicationException {
+  private MetadataRecord getMetadataRecord(File xmlFile, String schemaName, MetadataRecord mdRecord, XQueryEvaluator xQueryEvaluator) throws ApplicationException {
     if (schemaName == null)
       return mdRecord;
     try {
       URL srcUrl = xmlFile.toURI().toURL();
-      XQueryEvaluator xQueryEvaluator = new XQueryEvaluator();
       if (schemaName.equals("archimedes"))
         mdRecord = getMetadataRecordArch(xQueryEvaluator, srcUrl, mdRecord);
       else if (schemaName.equals("echo"))
@@ -506,6 +509,16 @@ public class DocumentHandler {
     return mdRecord;
   }
 
+  private String getPersons(String tocString, XQueryEvaluator xQueryEvaluator) throws ApplicationException {
+    String persons = xQueryEvaluator.evaluateAsStringValueJoined(tocString, "/list/list[@type='persons']/item", "###");
+    return persons;
+  }
+  
+  private String getPlaces(String tocString, XQueryEvaluator xQueryEvaluator) throws ApplicationException {
+    String places = xQueryEvaluator.evaluateAsStringValueJoined(tocString, "/list/list[@type='places']/item", "###");
+    return places;
+  }
+  
   private String getNodeType(XdmNode node) {
     String nodeType = null;
     XdmSequenceIterator iter = node.axisIterator(Axis.CHILD);
