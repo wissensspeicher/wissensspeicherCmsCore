@@ -154,25 +154,37 @@ public class IndexHandler {
       if (mdRecord.getCreator() != null) {
         Field authorField = new Field("author", mdRecord.getCreator(), Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
         doc.add(authorField);
-        Field authorFieldSorted = new Field("authorSorted", mdRecord.getCreator(), Field.Store.YES, Field.Index.NOT_ANALYZED);
+        String authorStr = mdRecord.getCreator();
+        if (authorStr != null)
+          authorStr = authorStr.toLowerCase();  // so that sorting is lower case
+        Field authorFieldSorted = new Field("authorSorted", authorStr, Field.Store.YES, Field.Index.NOT_ANALYZED);
         doc.add(authorFieldSorted);
       }
       if (mdRecord.getTitle() != null) {
         Field titleField = new Field("title", mdRecord.getTitle(), Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
         doc.add(titleField);
-        Field titleFieldSorted = new Field("titleSorted", mdRecord.getTitle(), Field.Store.YES, Field.Index.NOT_ANALYZED);
+        String titleStr = mdRecord.getTitle();
+        if (titleStr != null)
+          titleStr = titleStr.toLowerCase();  // so that sorting is lower case
+        Field titleFieldSorted = new Field("titleSorted", titleStr, Field.Store.YES, Field.Index.NOT_ANALYZED);
         doc.add(titleFieldSorted);
       }
       if (mdRecord.getLanguage() != null) {
         Field languageField = new Field("language", mdRecord.getLanguage(), Field.Store.YES, Field.Index.ANALYZED);
         doc.add(languageField);
-        Field languageFieldSorted = new Field("languageSorted", mdRecord.getLanguage(), Field.Store.YES, Field.Index.NOT_ANALYZED);
+        String langStr = mdRecord.getLanguage();
+        if (langStr != null)
+          langStr = langStr.toLowerCase();  // so that sorting is lower case
+        Field languageFieldSorted = new Field("languageSorted", langStr, Field.Store.YES, Field.Index.NOT_ANALYZED);
         doc.add(languageFieldSorted);
       }
       if (mdRecord.getPublisher() != null) {
         Field publisherField = new Field("publisher", mdRecord.getPublisher(), Field.Store.YES, Field.Index.ANALYZED);
         doc.add(publisherField);
-        Field publisherFieldSorted = new Field("publisherSorted", mdRecord.getPublisher(), Field.Store.YES, Field.Index.NOT_ANALYZED);
+        String publisherStr = mdRecord.getPublisher();
+        if (publisherStr != null)
+          publisherStr = publisherStr.toLowerCase();  // so that sorting is lower case
+        Field publisherFieldSorted = new Field("publisherSorted", publisherStr, Field.Store.YES, Field.Index.NOT_ANALYZED);
         doc.add(publisherFieldSorted);
       }
       if (mdRecord.getYear() != null) {
@@ -210,7 +222,10 @@ public class IndexHandler {
       if (mdRecord.getSchemaName() != null) {
         Field schemaField = new Field("schemaName", mdRecord.getSchemaName(), Field.Store.YES, Field.Index.ANALYZED);
         doc.add(schemaField);
-        Field schemaFieldSorted = new Field("schemaNameSorted", mdRecord.getSchemaName(), Field.Store.YES, Field.Index.NOT_ANALYZED);
+        String schemaStr = mdRecord.getSchemaName();
+        if (schemaStr != null)
+          schemaStr = schemaStr.toLowerCase();  // so that sorting is lower case
+        Field schemaFieldSorted = new Field("schemaNameSorted", schemaStr, Field.Store.YES, Field.Index.NOT_ANALYZED);
         doc.add(schemaFieldSorted);
       }
       if (mdRecord.getPersons() != null) {
@@ -1115,23 +1130,23 @@ public class IndexHandler {
     File luceneDocsDirectory = new File(luceneDocsDirectoryStr);
     try {
       Map<String, Analyzer> documentsFieldAnalyzers = new HashMap<String, Analyzer>();
-      documentsFieldAnalyzers.put("docId", new KeywordAnalyzer());
-      documentsFieldAnalyzers.put("identifier", new KeywordAnalyzer());
-      documentsFieldAnalyzers.put("echoId", new KeywordAnalyzer());
-      documentsFieldAnalyzers.put("uri", new KeywordAnalyzer());
+      documentsFieldAnalyzers.put("docId", new StandardAnalyzer(Version.LUCENE_35));
+      documentsFieldAnalyzers.put("identifier", new StandardAnalyzer(Version.LUCENE_35));
+      documentsFieldAnalyzers.put("echoId", new StandardAnalyzer(Version.LUCENE_35));
+      documentsFieldAnalyzers.put("uri", new StandardAnalyzer(Version.LUCENE_35));
       documentsFieldAnalyzers.put("collectionNames", new StandardAnalyzer(Version.LUCENE_35));
       documentsFieldAnalyzers.put("author", new StandardAnalyzer(Version.LUCENE_35));
       documentsFieldAnalyzers.put("title", new StandardAnalyzer(Version.LUCENE_35));
-      documentsFieldAnalyzers.put("language", new KeywordAnalyzer());
-      documentsFieldAnalyzers.put("publisher", new KeywordAnalyzer());
-      documentsFieldAnalyzers.put("date", new KeywordAnalyzer());
-      documentsFieldAnalyzers.put("subject", new KeywordAnalyzer());
-      documentsFieldAnalyzers.put("rights", new KeywordAnalyzer());
-      documentsFieldAnalyzers.put("license", new KeywordAnalyzer());
-      documentsFieldAnalyzers.put("accessRights", new KeywordAnalyzer());
+      documentsFieldAnalyzers.put("language", new StandardAnalyzer(Version.LUCENE_35));
+      documentsFieldAnalyzers.put("publisher", new StandardAnalyzer(Version.LUCENE_35));
+      documentsFieldAnalyzers.put("date", new StandardAnalyzer(Version.LUCENE_35));
+      documentsFieldAnalyzers.put("subject", new StandardAnalyzer(Version.LUCENE_35));
+      documentsFieldAnalyzers.put("rights", new StandardAnalyzer(Version.LUCENE_35));
+      documentsFieldAnalyzers.put("license", new StandardAnalyzer(Version.LUCENE_35));
+      documentsFieldAnalyzers.put("accessRights", new StandardAnalyzer(Version.LUCENE_35));
       documentsFieldAnalyzers.put("type", new KeywordAnalyzer()); // e.g. mime type "text/xml"
       documentsFieldAnalyzers.put("pageCount", new KeywordAnalyzer());
-      documentsFieldAnalyzers.put("schemaName", new KeywordAnalyzer());
+      documentsFieldAnalyzers.put("schemaName", new StandardAnalyzer(Version.LUCENE_35));
       documentsFieldAnalyzers.put("lastModified", new KeywordAnalyzer());
       documentsFieldAnalyzers.put("tokenOrig", new StandardAnalyzer(Version.LUCENE_35));
       documentsFieldAnalyzers.put("tokenReg", new StandardAnalyzer(Version.LUCENE_35));
@@ -1158,9 +1173,8 @@ public class IndexHandler {
     File luceneNodesDirectory = new File(luceneNodesDirectoryStr);
     try {
       Map<String, Analyzer> nodesFieldAnalyzers = new HashMap<String, Analyzer>();
-      nodesFieldAnalyzers.put("docId", new KeywordAnalyzer());
-      nodesFieldAnalyzers.put("identifier", new KeywordAnalyzer());
-      nodesFieldAnalyzers.put("language", new KeywordAnalyzer()); // language (through xml:id): e.g. "lat"
+      nodesFieldAnalyzers.put("docId", new StandardAnalyzer(Version.LUCENE_35));
+      nodesFieldAnalyzers.put("language", new StandardAnalyzer(Version.LUCENE_35)); // language (through xml:id): e.g. "lat"
       nodesFieldAnalyzers.put("pageNumber", new KeywordAnalyzer()); // page number (through element pb): e.g. "13"
       nodesFieldAnalyzers.put("lineNumber", new KeywordAnalyzer()); // line number on the page (through element lb): e.g. "17"
       nodesFieldAnalyzers.put("elementName", new KeywordAnalyzer()); // element name: e.g. "tei:s"
@@ -1266,7 +1280,6 @@ public class IndexHandler {
   private FieldSelector getNodeFieldSelector() {
     HashSet<String> fields = new HashSet<String>();
     fields.add("docId");
-    fields.add("identifier");
     fields.add("language");
     fields.add("pageNumber");
     fields.add("lineNumber");
