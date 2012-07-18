@@ -54,7 +54,7 @@ import org.apache.lucene.search.similar.MoreLikeThis;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
 import org.bbaw.wsp.cms.confmanager.CollectionReader;
-import org.bbaw.wsp.cms.confmanager.ConfManagerResultWrapper;
+import org.bbaw.wsp.cms.confmanager.Collection;
 import org.bbaw.wsp.cms.document.DocumentHandler;
 import org.bbaw.wsp.cms.document.Hits;
 import org.bbaw.wsp.cms.document.MetadataRecord;
@@ -514,9 +514,9 @@ public class IndexHandler {
       String language = docMetadataRecord.getLanguage();
       if (language == null || language.equals("")) {
         String collectionNames = docMetadataRecord.getCollectionNames();
-        ConfManagerResultWrapper collectionInfo = CollectionReader.getInstance().getResultWrapper(collectionNames);
-        if (collectionInfo != null) {
-          String mainLang = collectionInfo.getMainLanguage();
+        Collection collection = CollectionReader.getInstance().getResultWrapper(collectionNames);
+        if (collection != null) {
+          String mainLang = collection.getMainLanguage();
           if (mainLang != null)
             language = mainLang;
         } else {
@@ -596,9 +596,9 @@ public class IndexHandler {
       if (languageField != null)
         language = languageField.stringValue();
       else {
-        ConfManagerResultWrapper collectionInfo = CollectionReader.getInstance().getResultWrapper(collectionNames);
-        if (collectionInfo != null) {
-          String mainLang = collectionInfo.getMainLanguage();
+        Collection collection = CollectionReader.getInstance().getResultWrapper(collectionNames);
+        if (collection != null) {
+          String mainLang = collection.getMainLanguage();
           if (mainLang != null)
             language = mainLang;
         } else {
