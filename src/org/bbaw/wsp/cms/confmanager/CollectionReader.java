@@ -13,12 +13,12 @@ import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 import de.mpg.mpiwg.berlin.mpdl.xml.xquery.XQueryEvaluator;
 
 public class CollectionReader {
-  private Collection cmrw;
-  private HashMap<String, Collection> wrapperContainer;
+  private Collection collection;
+  private HashMap<String, Collection> collectionContainer;
   private static CollectionReader collectionReader;
 
   private CollectionReader() throws ApplicationException {
-    wrapperContainer = new HashMap<String, Collection>();
+    collectionContainer = new HashMap<String, Collection>();
     readConfFiles();
   }
 
@@ -38,22 +38,22 @@ public class CollectionReader {
         configFile = new File(configXml);
         XQueryEvaluator xQueryEvaluator = new XQueryEvaluator();
         URL srcUrl = configFile.toURI().toURL();
-        cmrw = new Collection();
+        collection = new Collection();
         String collectionId = xQueryEvaluator.evaluateAsString(srcUrl, "/wsp/collection/collectionId/text()");
         if(collectionId != null) {
-          cmrw.setCollectionId(collectionId);
+          collection.setId(collectionId);
         }
         String mainLanguage = xQueryEvaluator.evaluateAsString(srcUrl, "/wsp/collection/mainLanguage/text()");
         if(mainLanguage != null) {
-          cmrw.setMainLanguage(mainLanguage);
+          collection.setMainLanguage(mainLanguage);
         }
         String collectionName = xQueryEvaluator.evaluateAsString(srcUrl, "/wsp/collection/name/text()");
         if(collectionName != null) {
-          cmrw.setCollectionName(collectionName);
+          collection.setName(collectionName);
         }
         String collectionDataUrl = xQueryEvaluator.evaluateAsString(srcUrl, "/wsp/collection/collectionDataUrl/text()");
         if(collectionDataUrl != null) {
-          cmrw.setCollectionDataUrl(collectionDataUrl);
+          collection.setDataUrl(collectionDataUrl);
         }
         String fieldsStr = xQueryEvaluator.evaluateAsStringValueJoined(srcUrl, "/wsp/collection/fields/field", "###");
         ArrayList<String> fieldsArrayList = new ArrayList<String>();
@@ -65,7 +65,7 @@ public class CollectionReader {
               fieldsArrayList.add(field);
           }
         }
-        cmrw.setFields(fieldsArrayList);
+        collection.setFields(fieldsArrayList);
         String[] registerFieldNames = {"persName", "placeName", "zoolName"};
         for (int i=0; i<registerFieldNames.length; i++) {
           String registerFieldName = registerFieldNames[i];
@@ -78,19 +78,19 @@ public class CollectionReader {
               if (! registerDocId.isEmpty())
                 registerDocIdsArrayList.add(registerDocId);
             }
-            cmrw.setRegister(registerFieldName, registerDocIdsArrayList);
+            collection.setRegister(registerFieldName, registerDocIdsArrayList);
           }
         }
-        wrapperContainer.put(cmrw.getCollectionId(), cmrw);
+        collectionContainer.put(collection.getId(), collection);
       }
     } catch (Exception e) {
       throw new ApplicationException(e);
     }
   }
 
-  public Collection getResultWrapper(String collectionId) {
-    Collection cmrw = wrapperContainer.get(collectionId);
-    return cmrw;
+  public Collection getCollection(String collectionId) {
+    Collection collection = collectionContainer.get(collectionId);
+    return collection;
   }
 
 }

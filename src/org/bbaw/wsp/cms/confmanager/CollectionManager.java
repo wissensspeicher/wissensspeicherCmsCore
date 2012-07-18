@@ -23,15 +23,14 @@ import org.w3c.dom.NodeList;
 import com.sun.org.apache.xml.internal.serialize.XMLSerializer;
 
 public class CollectionManager {
-
-  Collection cmrw;
-  private HashMap<String, Collection> wrapperContainer;
+  private Collection collection;
+  private HashMap<String, Collection> collectionContainer;
   private static CollectionManager confManager;
 
   private CollectionManager() {
-    wrapperContainer = new HashMap<String, Collection>();
+    collectionContainer = new HashMap<String, Collection>();
     try {
-      checkCollectionConfFiles();
+      checkConfFiles();
     } catch (XPathExpressionException e) {
       e.printStackTrace();
     }
@@ -49,7 +48,7 @@ public class CollectionManager {
    * 
    * @throws XPathExpressionException
    */
-  private void checkCollectionConfFiles() throws XPathExpressionException {
+  private void checkConfFiles() throws XPathExpressionException {
     System.out.println("---------------");
     System.out.println("checking configuration files...");
     // holt alle Konfiguratiuonsdateien aus dem konf-Ordner
@@ -67,18 +66,18 @@ public class CollectionManager {
         String update = xQueryEvaluator.evaluateAsString(srcUrl, "//collection/update/text()");
         if (update != null && update.equals("true")) {
           System.out.println("update tag is set on : " + update);
-          cmrw = new Collection();
-          String collectionId = xQueryEvaluator.evaluateAsString(srcUrl, "//collectionId/text()");
-          if (collectionId != null) {
-            cmrw.setCollectionId(collectionId);
+          collection = new Collection();
+          String id = xQueryEvaluator.evaluateAsString(srcUrl, "//collectionId/text()");
+          if (id != null) {
+            collection.setId(id);
           }
           String mainLanguage = xQueryEvaluator.evaluateAsString(srcUrl, "//mainLanguage/text()");
           if (mainLanguage != null) {
-            cmrw.setMainLanguage(mainLanguage);
+            collection.setMainLanguage(mainLanguage);
           }
           String name = xQueryEvaluator.evaluateAsString(srcUrl, "//name/text()");
           if (name != null) {
-            cmrw.setCollectionName(name);
+            collection.setName(name);
           }
           String fieldsStr = xQueryEvaluator.evaluateAsStringValueJoined(srcUrl, "//field");
           ArrayList<String> fields = new ArrayList<String>();
@@ -89,18 +88,18 @@ public class CollectionManager {
               String field = fieldsArray[i];
               fields.add(field);
             }
-            cmrw.setFields(fields);
+            collection.setFields(fields);
           }
           String collectionDataUrl = xQueryEvaluator.evaluateAsString(srcUrl, "//specifyUrl/collectionDataUrl/text()");
           if (collectionDataUrl != null) {
-            cmrw.setCollectionDataUrl(collectionDataUrl);
+            collection.setDataUrl(collectionDataUrl);
             String excludesStr = xQueryEvaluator.evaluateAsStringValueJoined(srcUrl, "//specifyUrl/exclude");
             if(collectionDataUrl.endsWith("/"))
-              extractUrlsFromCollections(collectionDataUrl, cmrw, excludesStr);
+              extractUrlsFromCollections(collectionDataUrl, collection, excludesStr);
             else{
               List<String> collectionUrls = new ArrayList<String>();
               collectionUrls.add(collectionDataUrl);
-              cmrw.setCollectionUrls(collectionUrls);
+              collection.setUrls(collectionUrls);
             }
             // flag im Konfigurations-File auf false setzen durch serialisierung in das File
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -113,7 +112,7 @@ public class CollectionManager {
             XMLSerializer ser = new XMLSerializer(os, null);
             ser.serialize(configFileDocument);  //  Vorsicht: wenn es auf true ist: es wird alles neu indexiert
           }
-          wrapperContainer.put(collectionId, cmrw);
+          collectionContainer.put(id, collection);
         }
       }
     } catch(Exception e) {
@@ -124,17 +123,17 @@ public class CollectionManager {
   /**
    * der Extractor holt alle Projekt zugehoerigen Urls
    */
-  private void extractUrlsFromCollections(String collectionDataUrl, Collection cmrw, String excludesStr) {
+  private void extractUrlsFromCollections(String collectionDataUrl, Collection collection, String excludesStr) {
     System.out.println("collecting urls of resources that need update...");
     if(!collectionDataUrl.equals("")){
       PathExtractor extractor = new PathExtractor();
       List<String> collectionUrls = extractor.initExtractor(collectionDataUrl, excludesStr);
-      cmrw.setCollectionUrls(collectionUrls);
+      collection.setUrls(collectionUrls);
     }
   }
 
-  public Collection getResultWrapper(String collectionId) {
-    Collection cmrw = wrapperContainer.get(collectionId);
-    return cmrw;
+  public Collection getCollection(String collectionId) {
+    Collection collection = collectionContainer.get(collectionId);
+    return collection;
   }
 }

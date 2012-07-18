@@ -27,36 +27,36 @@ public class Collection {
     registers = new HashMap<String, ArrayList<String>>();
   }
   
-  public List<String> getCollectionUrls() {
+  public List<String> getUrls() {
     return urls;
   }
 
-  public String getCollectionId() {
+  public String getId() {
     return id;
   }
 
-  public String getCollectionName() {
+  public String getName() {
     return name;
   }
 
-  public void setCollectionId(String collectionId) {
-    this.id = collectionId;
+  public void setId(String id) {
+    this.id = id;
   }
   
-  public void setCollectionUrls(List<String> collectionUrls){
-    this.urls = collectionUrls;
+  public void setUrls(List<String> urls){
+    this.urls = urls;
   }
 
-  public void setCollectionName(String collectionName) {
-    this.name = collectionName;
+  public void setName(String name) {
+    this.name = name;
   }
 
   public String getCollectiondataUrl() {
     return dataUrl;
   }
 
-  public void setCollectionDataUrl(String collectiondataUrl) {
-    this.dataUrl = collectiondataUrl;
+  public void setDataUrl(String dataUrl) {
+    this.dataUrl = dataUrl;
   }
 
   public List<String> getFormats() {
