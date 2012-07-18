@@ -22,14 +22,14 @@ import org.w3c.dom.NodeList;
 
 import com.sun.org.apache.xml.internal.serialize.XMLSerializer;
 
-public class ConfManager {
+public class CollectionManager {
 
-  ConfManagerResultWrapper cmrw;
-  private HashMap<String, ConfManagerResultWrapper> wrapperContainer;
-  private static ConfManager confManager;
+  Collection cmrw;
+  private HashMap<String, Collection> wrapperContainer;
+  private static CollectionManager confManager;
 
-  private ConfManager() {
-    wrapperContainer = new HashMap<String, ConfManagerResultWrapper>();
+  private CollectionManager() {
+    wrapperContainer = new HashMap<String, Collection>();
     try {
       checkCollectionConfFiles();
     } catch (XPathExpressionException e) {
@@ -37,9 +37,9 @@ public class ConfManager {
     }
   }
 
-  public static ConfManager getInstance(){
+  public static CollectionManager getInstance(){
     if(confManager == null)
-      confManager = new ConfManager();
+      confManager = new CollectionManager();
     return confManager;
   }
   
@@ -67,7 +67,7 @@ public class ConfManager {
         String update = xQueryEvaluator.evaluateAsString(srcUrl, "//collection/update/text()");
         if (update != null && update.equals("true")) {
           System.out.println("update tag is set on : " + update);
-          cmrw = new ConfManagerResultWrapper();
+          cmrw = new Collection();
           String collectionId = xQueryEvaluator.evaluateAsString(srcUrl, "//collectionId/text()");
           if (collectionId != null) {
             cmrw.setCollectionId(collectionId);
@@ -124,7 +124,7 @@ public class ConfManager {
   /**
    * der Extractor holt alle Projekt zugehoerigen Urls
    */
-  private void extractUrlsFromCollections(String collectionDataUrl, ConfManagerResultWrapper cmrw, String excludesStr) {
+  private void extractUrlsFromCollections(String collectionDataUrl, Collection cmrw, String excludesStr) {
     System.out.println("collecting urls of resources that need update...");
     if(!collectionDataUrl.equals("")){
       PathExtractor extractor = new PathExtractor();
@@ -133,8 +133,8 @@ public class ConfManager {
     }
   }
 
-  public ConfManagerResultWrapper getResultWrapper(String collectionId) {
-    ConfManagerResultWrapper cmrw = wrapperContainer.get(collectionId);
+  public Collection getResultWrapper(String collectionId) {
+    Collection cmrw = wrapperContainer.get(collectionId);
     return cmrw;
   }
 }

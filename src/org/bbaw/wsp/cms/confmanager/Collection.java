@@ -1,61 +1,62 @@
 package org.bbaw.wsp.cms.confmanager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-public class ConfManagerResultWrapper {
-
-  private List<String> collectionUrls;
-  private String collectionId;
-  private String collectionName;
-  private String collectionDataUrl;
+public class Collection {
+  private List<String> urls;
+  private String id;
+  private String name;
+  private String dataUrl;
   private String mainLanguage;
   private ArrayList<String> fields;
   private List<String> formats;
   private List<String> excludeField;
-
+  private HashMap<String, ArrayList<String>> registers;
   
-  public ConfManagerResultWrapper(){
-    collectionUrls = new ArrayList<String>();
-    collectionId = "";
-    collectionName = "";
-    collectionDataUrl = "";
+  public Collection(){
+    urls = new ArrayList<String>();
+    id = "";
+    name = "";
+    dataUrl = "";
     mainLanguage = "";
     fields = new ArrayList<String>();
     formats = new ArrayList<String>();
     excludeField = new ArrayList<String>();
+    registers = new HashMap<String, ArrayList<String>>();
   }
   
   public List<String> getCollectionUrls() {
-    return collectionUrls;
+    return urls;
   }
 
   public String getCollectionId() {
-    return collectionId;
+    return id;
   }
 
   public String getCollectionName() {
-    return collectionName;
+    return name;
   }
 
-  public void setCollectionId(String collectionId){
-    this.collectionId = collectionId;
+  public void setCollectionId(String collectionId) {
+    this.id = collectionId;
   }
   
   public void setCollectionUrls(List<String> collectionUrls){
-    this.collectionUrls = collectionUrls;
+    this.urls = collectionUrls;
   }
 
   public void setCollectionName(String collectionName) {
-    this.collectionName = collectionName;
+    this.name = collectionName;
   }
 
   public String getCollectiondataUrl() {
-    return collectionDataUrl;
+    return dataUrl;
   }
 
   public void setCollectionDataUrl(String collectiondataUrl) {
-    this.collectionDataUrl = collectiondataUrl;
+    this.dataUrl = collectiondataUrl;
   }
 
   public List<String> getFormats() {
@@ -88,6 +89,25 @@ public class ConfManagerResultWrapper {
 
   public void setFields(ArrayList<String> fields) {
     this.fields = fields;
+  }
+
+  public void setRegister(String registerName, ArrayList<String> entries) {
+    registers.put(registerName, entries);
+  }
+  
+  public ArrayList<String> getRegisterEntries(String registerName) {
+    return registers.get(registerName);
+  }
+
+  public String getRegisterLink(String registerName, String registerEntryKey) {
+    String retRegLink = null;
+    ArrayList<String> regs = registers.get(registerName);
+    String reg = null;
+    if (regs != null && regs.size() >= 1) {
+      reg = regs.get(0);
+      retRegLink = "/wspCmsWebApp/query/QueryDocument?docId=" + reg + "&query=elementName:" + registerName; // TODO
+    }
+    return retRegLink;
   }
 
 }
