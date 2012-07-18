@@ -514,7 +514,7 @@ public class IndexHandler {
       String language = docMetadataRecord.getLanguage();
       if (language == null || language.equals("")) {
         String collectionNames = docMetadataRecord.getCollectionNames();
-        Collection collection = CollectionReader.getInstance().getResultWrapper(collectionNames);
+        Collection collection = CollectionReader.getInstance().getCollection(collectionNames);
         if (collection != null) {
           String mainLang = collection.getMainLanguage();
           if (mainLang != null)
@@ -596,7 +596,7 @@ public class IndexHandler {
       if (languageField != null)
         language = languageField.stringValue();
       else {
-        Collection collection = CollectionReader.getInstance().getResultWrapper(collectionNames);
+        Collection collection = CollectionReader.getInstance().getCollection(collectionNames);
         if (collection != null) {
           String mainLang = collection.getMainLanguage();
           if (mainLang != null)
