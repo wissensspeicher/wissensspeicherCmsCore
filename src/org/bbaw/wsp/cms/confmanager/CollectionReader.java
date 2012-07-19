@@ -39,7 +39,7 @@ public class CollectionReader {
         XQueryEvaluator xQueryEvaluator = new XQueryEvaluator();
         URL srcUrl = configFile.toURI().toURL();
         collection = new Collection();
-        String collectionId = xQueryEvaluator.evaluateAsString(srcUrl, "/wsp/collection/collectionId/text()");
+        String collectionId = xQueryEvaluator.evaluateAsString(srcUrl, "/wsp/collection/id/text()");
         if(collectionId != null) {
           collection.setId(collectionId);
         }
@@ -51,7 +51,7 @@ public class CollectionReader {
         if(collectionName != null) {
           collection.setName(collectionName);
         }
-        String collectionDataUrl = xQueryEvaluator.evaluateAsString(srcUrl, "/wsp/collection/collectionDataUrl/text()");
+        String collectionDataUrl = xQueryEvaluator.evaluateAsString(srcUrl, "/wsp/collection/url/dataUrl/text()");
         if(collectionDataUrl != null) {
           collection.setDataUrl(collectionDataUrl);
         }

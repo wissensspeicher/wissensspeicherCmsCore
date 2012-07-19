@@ -63,23 +63,23 @@ public class CollectionManager {
         XQueryEvaluator xQueryEvaluator = new XQueryEvaluator();
         configFile = new File(configXml);
         URL srcUrl = configFile.toURI().toURL();
-        String update = xQueryEvaluator.evaluateAsString(srcUrl, "//collection/update/text()");
+        String update = xQueryEvaluator.evaluateAsString(srcUrl, "/wsp/collection/update/text()");
         if (update != null && update.equals("true")) {
           System.out.println("update tag is set on : " + update);
           collection = new Collection();
-          String id = xQueryEvaluator.evaluateAsString(srcUrl, "//collectionId/text()");
+          String id = xQueryEvaluator.evaluateAsString(srcUrl, "/wsp/collection/id/text()");
           if (id != null) {
             collection.setId(id);
           }
-          String mainLanguage = xQueryEvaluator.evaluateAsString(srcUrl, "//mainLanguage/text()");
+          String mainLanguage = xQueryEvaluator.evaluateAsString(srcUrl, "/wsp/collection/mainLanguage/text()");
           if (mainLanguage != null) {
             collection.setMainLanguage(mainLanguage);
           }
-          String name = xQueryEvaluator.evaluateAsString(srcUrl, "//name/text()");
+          String name = xQueryEvaluator.evaluateAsString(srcUrl, "/wsp/collection/name/text()");
           if (name != null) {
             collection.setName(name);
           }
-          String fieldsStr = xQueryEvaluator.evaluateAsStringValueJoined(srcUrl, "//field");
+          String fieldsStr = xQueryEvaluator.evaluateAsStringValueJoined(srcUrl, "/wsp/collection//field");
           ArrayList<String> fields = new ArrayList<String>();
           if (fields != null) {
             fieldsStr = fieldsStr.trim();
@@ -90,13 +90,13 @@ public class CollectionManager {
             }
             collection.setFields(fields);
           }
-          String collectionDataUrl = xQueryEvaluator.evaluateAsString(srcUrl, "//specifyUrl/collectionDataUrl/text()");
+          String collectionDataUrl = xQueryEvaluator.evaluateAsString(srcUrl, "/wsp/collection/url/dataUrl/text()");
           if (collectionDataUrl != null) {
             collection.setDataUrl(collectionDataUrl);
-            String excludesStr = xQueryEvaluator.evaluateAsStringValueJoined(srcUrl, "//specifyUrl/exclude");
+            String excludesStr = xQueryEvaluator.evaluateAsStringValueJoined(srcUrl, "/wsp/collection/url/exclude");
             if(collectionDataUrl.endsWith("/"))
               extractUrlsFromCollections(collectionDataUrl, collection, excludesStr);
-            else{
+            else {
               List<String> collectionUrls = new ArrayList<String>();
               collectionUrls.add(collectionDataUrl);
               collection.setUrls(collectionUrls);
