@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.commons.httpclient.URIException;
+import org.apache.commons.httpclient.util.URIUtil;
+
+import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
+
 public class Collection {
   private List<String> urls;
   private String id;
@@ -99,13 +104,29 @@ public class Collection {
     return registers.get(registerName);
   }
 
-  public String getRegisterLink(String registerName, String registerEntryKey) {
+  public String getRegisterLink(String registerName, String registerValue) throws ApplicationException {
     String retRegLink = null;
     ArrayList<String> regs = registers.get(registerName);
     String reg = null;
     if (regs != null && regs.size() >= 1) {
-      reg = regs.get(0);
-      retRegLink = "/wspCmsWebApp/query/QueryDocument?docId=" + reg + "&query=elementName:" + registerName; // TODO
+      reg = regs.get(0);  // get first one
+      String valueQuery = "";
+      if (registerValue != null && ! registerValue.isEmpty()) {
+        valueQuery = valueQuery + "+tokenOrig:(";
+        String[] registerValueTerms = registerValue.split(" ");
+        for (int i=0; i<registerValueTerms.length; i++) {
+          String term = registerValueTerms[i];
+          valueQuery = valueQuery + " +" + term;
+        }
+        valueQuery = valueQuery + ")";
+      }
+      String query = "+elementName:" + registerName + " " + valueQuery;
+      try {
+        query = URIUtil.encodePath(query, "utf-8");
+      } catch (URIException e) {
+        throw new ApplicationException(e);
+      }
+      retRegLink = "/wspCmsWebApp/query/QueryDocument?docId=" + reg + "&query=" + query;
     }
     return retRegLink;
   }
