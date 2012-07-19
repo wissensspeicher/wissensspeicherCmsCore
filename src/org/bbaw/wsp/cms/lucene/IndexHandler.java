@@ -131,6 +131,9 @@ public class IndexHandler {
       Document doc = new Document();
       Field docIdField = new Field("docId", docId, Field.Store.YES, Field.Index.ANALYZED);
       doc.add(docIdField);
+      String docIdSortedStr = docId.toLowerCase();  // so that sorting is lower case
+      Field docIdFieldSorted = new Field("docIdSorted", docIdSortedStr, Field.Store.YES, Field.Index.NOT_ANALYZED); 
+      doc.add(docIdFieldSorted);
       String identifier = mdRecord.getIdentifier();
       if (identifier != null) {
         Field identifierField = new Field("identifier", identifier, Field.Store.YES, Field.Index.ANALYZED);
@@ -1130,10 +1133,10 @@ public class IndexHandler {
     File luceneDocsDirectory = new File(luceneDocsDirectoryStr);
     try {
       Map<String, Analyzer> documentsFieldAnalyzers = new HashMap<String, Analyzer>();
-      documentsFieldAnalyzers.put("docId", new StandardAnalyzer(Version.LUCENE_35));
-      documentsFieldAnalyzers.put("identifier", new StandardAnalyzer(Version.LUCENE_35));
-      documentsFieldAnalyzers.put("echoId", new StandardAnalyzer(Version.LUCENE_35));
-      documentsFieldAnalyzers.put("uri", new StandardAnalyzer(Version.LUCENE_35));
+      documentsFieldAnalyzers.put("docId", new KeywordAnalyzer());
+      documentsFieldAnalyzers.put("identifier", new KeywordAnalyzer()); 
+      documentsFieldAnalyzers.put("echoId", new KeywordAnalyzer());
+      documentsFieldAnalyzers.put("uri", new KeywordAnalyzer());
       documentsFieldAnalyzers.put("collectionNames", new StandardAnalyzer(Version.LUCENE_35));
       documentsFieldAnalyzers.put("author", new StandardAnalyzer(Version.LUCENE_35));
       documentsFieldAnalyzers.put("title", new StandardAnalyzer(Version.LUCENE_35));
@@ -1173,7 +1176,7 @@ public class IndexHandler {
     File luceneNodesDirectory = new File(luceneNodesDirectoryStr);
     try {
       Map<String, Analyzer> nodesFieldAnalyzers = new HashMap<String, Analyzer>();
-      nodesFieldAnalyzers.put("docId", new StandardAnalyzer(Version.LUCENE_35));
+      nodesFieldAnalyzers.put("docId", new KeywordAnalyzer());
       nodesFieldAnalyzers.put("language", new StandardAnalyzer(Version.LUCENE_35)); // language (through xml:id): e.g. "lat"
       nodesFieldAnalyzers.put("pageNumber", new KeywordAnalyzer()); // page number (through element pb): e.g. "13"
       nodesFieldAnalyzers.put("lineNumber", new KeywordAnalyzer()); // line number on the page (through element lb): e.g. "17"
@@ -1232,8 +1235,6 @@ public class IndexHandler {
 
   private String getDocSortFieldName(String fieldName) {
     String sortFieldName = fieldName + "Sorted";
-    if (fieldName.equals("docId"))
-      sortFieldName = fieldName;
     return sortFieldName;
   }
 
