@@ -2,7 +2,6 @@ package org.bbaw.wsp.cms.harvester;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,9 +24,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
  *
  */
 public class PathExtractor {
-
   private List<String> ressourceLoc;
-  String excludes;
+  private String excludes;
 
   public PathExtractor() {
 
@@ -69,7 +67,6 @@ public class PathExtractor {
       } catch (IOException e1) {
         e1.printStackTrace();
       }
-
       try {
         while (true) {
           int event = reader.next();
@@ -78,27 +75,30 @@ public class PathExtractor {
             break;
           }
           if (event == XMLStreamConstants.START_ELEMENT) {
-            if ((reader.getAttributeValue(null, "name")) != null) {
-              if (reader.getLocalName().equals("collection") && !(startUrl.endsWith(reader.getAttributeValue(null, "name")))) {
-                if(!(this.excludes.contains(reader.getAttributeValue(null, "name").toLowerCase()))){
-                  if (reader.getAttributeValue(null, "name").startsWith("/")) {
+            String nameAttributeValue = reader.getAttributeValue(null, "name");
+            if ((nameAttributeValue) != null) {
+              if (reader.getLocalName().equals("collection") && !(startUrl.endsWith(nameAttributeValue))) {
+                if (! isNameExcluded(nameAttributeValue.toLowerCase())) {
+                  if (nameAttributeValue.startsWith("/")) {
                     client.getConnectionManager().closeExpiredConnections();
-                    extractDocLocations(startUrl + reader.getAttributeValue(null, "name"));
+                    extractDocLocations(startUrl + nameAttributeValue);
                   } else {
                     client.getConnectionManager().closeExpiredConnections();
-                    if (!startUrl.endsWith("/")) {
-                      extractDocLocations(startUrl + "/" + reader.getAttributeValue(null, "name"));
+                    if (! startUrl.endsWith("/")) {
+                      extractDocLocations(startUrl + "/" + nameAttributeValue);
                     } else {
-                      extractDocLocations(startUrl + reader.getAttributeValue(null, "name"));
+                      extractDocLocations(startUrl + nameAttributeValue);
                     }
                   }
                 }
               }
               if (reader.getLocalName().equals("resource")) {
-                if (!startUrl.endsWith("/")) {
-                  ressourceLoc.add(startUrl + "/" + reader.getAttributeValue(null, "name"));
-                } else {
-                  ressourceLoc.add(startUrl + reader.getAttributeValue(null, "name"));
+                String url = startUrl + "/" + nameAttributeValue;
+                if (startUrl.endsWith("/"))
+                  url = startUrl + nameAttributeValue;
+                boolean startUrlIsExcluded = isExcluded(url); // if exclude contains a full file name e.g. verzeichnisse/personenkorrektur.xml
+                if (! startUrlIsExcluded) {
+                  ressourceLoc.add(url);
                 }
               }
             }
@@ -113,6 +113,32 @@ public class PathExtractor {
     }
   }
 
+  private boolean isExcluded(String url) {
+    boolean isExcluded = false;
+    if (excludes != null && url != null) {
+      String[] exludeArrayStr = excludes.split(" ");
+      for (int i=0; i<exludeArrayStr.length; i++) {
+        String exclude = exludeArrayStr[i];
+        if (url.endsWith(exclude))
+          return true;
+      }
+    }
+    return isExcluded;
+  }
+  
+  private boolean isNameExcluded(String name) {
+    boolean isExcluded = false;
+    if (excludes != null && name != null) {
+      String[] exludeArrayStr = excludes.split(" ");
+      for (int i=0; i<exludeArrayStr.length; i++) {
+        String exclude = exludeArrayStr[i];
+        if (name.equals(exclude))
+          return true;
+      }
+    }
+    return isExcluded;
+  }
+
   /**
    * extrahiert ebenso wie extractDocLocations(String startUri) Pfade, tut dies
    * aber local und nicht über HTTP
@@ -121,7 +147,6 @@ public class PathExtractor {
    */
   public List<String> extractPathLocally(String startUrl) {
     List<String> pathList = new ArrayList<String>();
-
     // home verzeichnis pfad über system variable
     // String loc = System.getenv("HOME")+"/wsp/configs";
     // out.println("hom variable + conf datei : "+loc);
@@ -142,5 +167,4 @@ public class PathExtractor {
     }
     return pathList;
   }
-
 }
