@@ -2,8 +2,11 @@ package org.bbaw.wsp.cms.document;
 
 import java.util.ArrayList;
 
+import org.apache.lucene.search.Query;
+
 public class Hits {
   private ArrayList<Document> hits;
+  private Query query;
   private int from;
   private int to;
   private int size = 0;
@@ -20,6 +23,14 @@ public class Hits {
 
   public void setSize(int size) {
     this.size = size;
+  }
+
+  public Query getQuery() {
+    return query;
+  }
+
+  public void setQuery(Query query) {
+    this.query = query;
   }
 
   public ArrayList<Document> getHits() {
