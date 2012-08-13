@@ -129,6 +129,8 @@
     <xsl:attribute name="n"><xsl:value-of select="$page"/></xsl:attribute>
     <xsl:if test="not(empty(@o))"><xsl:attribute name="o"><xsl:value-of select="@o"/></xsl:attribute></xsl:if>
     <xsl:if test="not(empty(@o-norm))"><xsl:attribute name="o-norm"><xsl:value-of select="@o-norm"/></xsl:attribute></xsl:if>
+    <xsl:if test="not(empty(@file))"><xsl:attribute name="file"><xsl:value-of select="@file"/></xsl:attribute></xsl:if>
+    <xsl:if test="not(empty(@facs))"><xsl:attribute name="file"><xsl:value-of select="@facs"/></xsl:attribute></xsl:if>
   </item>
 </xsl:template>
 
