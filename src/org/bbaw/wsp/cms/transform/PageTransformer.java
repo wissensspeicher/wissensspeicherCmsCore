@@ -33,6 +33,7 @@ public class PageTransformer {
   private XsltTransformer pageEchoTransformer;
   private XsltTransformer pageArchimedesTransformer;
   private XsltTransformer pageXhtmlTransformer;
+  private XsltTransformer pageXmlTransformer;
   
   public PageTransformer() throws ApplicationException {
     init();
@@ -58,6 +59,10 @@ public class PageTransformer {
       xslStreamSource = new StreamSource(getFragmentXslUrl.openStream());
       xsltExecutable = xsltCompiler.compile(xslStreamSource);
       pageXhtmlTransformer = xsltExecutable.load();
+      getFragmentXslUrl = PageTransformer.class.getResource("pageXml.xsl");
+      xslStreamSource = new StreamSource(getFragmentXslUrl.openStream());
+      xsltExecutable = xsltCompiler.compile(xslStreamSource);
+      pageXmlTransformer = xsltExecutable.load();
     } catch (SaxonApiException e) {
       throw new ApplicationException(e);
     } catch (IOException e) {
@@ -65,20 +70,22 @@ public class PageTransformer {
     }
   }
   
-  public String transform(String inputStr, MetadataRecord mdRecord, String mode, String page, String normMethod) throws ApplicationException {
+  public String transform(String inputStr, MetadataRecord mdRecord, String mode, String page, String normMethod, String outputFormat) throws ApplicationException {
     String pageFragment = null;
     String docId = mdRecord.getDocId();
     String schemaName = mdRecord.getSchemaName();
     try {
       XsltTransformer transformer = null;
-      if (schemaName != null && schemaName.equals("tei"))
+      if (schemaName != null && schemaName.equals("tei") && outputFormat.equals("html"))
         transformer = pageTeiTransformer;
-      else if (schemaName != null && schemaName.equals("echo"))
+      else if (schemaName != null && schemaName.equals("echo") && outputFormat.equals("html"))
         transformer = pageEchoTransformer;
-      else if (schemaName != null && schemaName.equals("archimedes"))
+      else if (schemaName != null && schemaName.equals("archimedes") && outputFormat.equals("html"))
         transformer = pageArchimedesTransformer;
-      else if (schemaName != null && schemaName.equals("xhtml"))
+      else if (schemaName != null && schemaName.equals("xhtml") && outputFormat.equals("html"))
         transformer = pageXhtmlTransformer;
+      else if (outputFormat.equals("xmlDisplay"))
+        transformer = pageXmlTransformer;
       else
         transformer = pageTeiTransformer;
       StringReader inputStrReader = new StringReader(inputStr);
