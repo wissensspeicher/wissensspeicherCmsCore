@@ -22,11 +22,13 @@
 	<classpathentry kind="lib" path="lib/httpcore-4.1.2.jar"/>
 	<classpathentry kind="lib" path="lib/microsoft-translator-java-api-0.4.jar"/>
 	<classpathentry kind="lib" path="lib/json_simple-1.1.jar"/>
-	<classpathentry kind="lib" path="lib/lucene-highlighter-3.5.0.jar">
+	<classpathentry kind="lib" path="lib/lucene-highlighter-3.5.0.jar" sourcepath="lib/lucene-highlighter-3.5.0-javadoc.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="jar:platform:/resource/wspCmsCore/lib/lucene-highlighter-3.5.0-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/commons-codec-1.5.jar"/>
+	<classpathentry kind="lib" path="lib/lucene-memory-3.5.0.jar"/>
+	<classpathentry kind="lib" path="lib/lucene-queries-3.5.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
