@@ -5,26 +5,40 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.RandomAccessFile;
 import java.io.StringReader;
+import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Hashtable;
+import java.util.List;
 
+import org.apache.commons.httpclient.URIException;
+import org.apache.commons.httpclient.util.URIUtil;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Fieldable;
 import org.apache.lucene.index.Term;
+import org.bbaw.wsp.cms.collections.Collection;
+import org.bbaw.wsp.cms.collections.CollectionManager;
+import org.bbaw.wsp.cms.collections.CollectionReader;
 import org.bbaw.wsp.cms.document.DocumentHandler;
+import org.bbaw.wsp.cms.document.Hits;
 import org.bbaw.wsp.cms.lucene.IndexHandler;
 import org.bbaw.wsp.cms.scheduler.CmsDocOperation;
 import org.bbaw.wsp.cms.transform.GetFragmentsContentHandler;
 import org.bbaw.wsp.cms.transform.HighlightContentHandler;
+import org.bbaw.wsp.cms.translator.GlosbeTranslator;
+import org.bbaw.wsp.cms.translator.MicrosoftTranslator;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
+import com.memetix.mst.language.Language;
+import com.sun.jndi.toolkit.url.Uri;
 import com.sun.org.apache.xerces.internal.parsers.SAXParser;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
@@ -47,9 +61,13 @@ public class TestLocal {
       // File srcFile = new File("/Users/jwillenborg/mpdl/data/xml/documents/echo/la/Benedetti_1585/pages/page-13-morph.xml");
       // String page13 = FileUtils.readFileToString(srcFile, "utf-8");
       // test.highlight(page13, "s", 6, "reg", "relatiuum");
-      test.queries();
+      // test.queries();
+      // test.translator2();
+      // test.testCollectionReader();
+      test.createAllDocuments();
       // test.testCalls();
-      // test.end();
+      // test.bla();
+      test.end();
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -63,6 +81,25 @@ public class TestLocal {
     indexer.end();
   }
 
+  private void bla() {
+     String blabla = "huhu###haha###";
+     String[] places = blabla.split("xxx");
+     String bla = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<html><bla></bla></html>";
+     bla = bla.replaceAll("<\\?xml.*?\\?>", "");
+     bla = "<persName name=\"Friedrich Wilhelm III.\">König</persName>";
+     bla = bla.replaceAll("<persName name=\"(.+)\".*>", "$1");
+     bla = "<persName name=\"Friedrich Wilhelm III.\">König</persName>";
+     bla = bla.replaceAll("<persName.*?>(.*)</persName>", "$1");
+     String b = "";
+     String url = "http://bla.com/test?bla bla";
+     try {
+       String encodedUri = URIUtil.encodeQuery(url, "utf-8");
+       String c = "";
+     } catch (Exception e) {
+       e.printStackTrace();
+     }
+  }
+  
   private void testXml() throws ApplicationException {
     try {
       File srcFile = new File("/Users/jwillenborg/mpdl/data/xml/documents/tei/de/dt-ptolemaeus-tei-merge2.xml");
@@ -76,43 +113,79 @@ public class TestLocal {
       e.printStackTrace();
     }
   }
+  private void testCollectionReader() throws ApplicationException {
+    CollectionReader confReader =  CollectionReader.getInstance();
+    Collection registres = confReader.getCollection("registres");
+    CollectionReader collReader = CollectionReader.getInstance();
+    Collection avh = collReader.getCollection("AvH");
+    String bla = "";
+  }
+  
+  private void createAllDocuments() throws ApplicationException {
+    CollectionManager collectionManager =  CollectionManager.getInstance();
+    // collectionManager.updateCollections();
+    // collectionManager.updateCollection("test", true);
+    // collectionManager.updateCollection("AvH", true);
+    // collectionManager.updateCollection("registres", true);
+    // collectionManager.updateCollection("mes", true);
+    // collectionManager.updateCollection("MEGA", true);
+    collectionManager.updateCollection("IG", true);
+  }
   
   private void testCalls() throws ApplicationException {
     Date before = new Date();
     System.out.println("Indexing start: " + before.getTime());
-    String docIdGoerz = "/tei/de/dt-ptolemaeus-tei-merge2.xml";
-    String docSrcUrlStr = "http://mpdl-system.mpiwg-berlin.mpg.de/mpdl/getDoc?doc=" + docIdGoerz;
     DocumentHandler docHandler = new DocumentHandler();
-    CmsDocOperation docOperation = new CmsDocOperation("update", docSrcUrlStr, null, docIdGoerz);
+    
+    String docIdAvhNew = "/test/Dok280E18xml.xml";
+    String docSrcUrlStr = "http://telota.bbaw.de:8085/exist/rest/db/AvHBriefedition/Briefe/Dok280E18xml.xml";
+    CmsDocOperation docOperation = new CmsDocOperation("create", docSrcUrlStr, null, docIdAvhNew);
+    docOperation.setCollectionNames("test");
+    docOperation.setMainLanguage("deu");
+    String[] elemNames = {"p", "s", "head"};
+    docOperation.setElementNames(elemNames);
+    // docHandler.doOperation(docOperation);
+    
+    String docIdMega = "/mega/docs/MEGA_A2_B001-01_ETX.xml";
+    docSrcUrlStr = "http://telota.bbaw.de:8085/exist/rest/db/mega/docs/MEGA_A2_B001-01_ETX.xml";
+    docOperation = new CmsDocOperation("create", docSrcUrlStr, null, docIdMega);
+    docOperation.setCollectionNames("mega");
+    docOperation.setMainLanguage("deu");
+    docOperation.setElementNames(elemNames);
+    // docHandler.doOperation(docOperation);
+    
+    String docIdGoerz = "/tei/de/dt-ptolemaeus-tei-merge2.xml";
+    docSrcUrlStr = "http://mpdl-system.mpiwg-berlin.mpg.de/mpdl/getDoc?doc=" + docIdGoerz;
+    docOperation = new CmsDocOperation("create", docSrcUrlStr, null, docIdGoerz);
     // docHandler.doOperation(docOperation);
     String docIdBenedetti = "/echo/la/Benedetti_1585.xml";
     docSrcUrlStr = "http://mpdl-system.mpiwg-berlin.mpg.de/mpdl/getDoc?doc=" + docIdBenedetti;
-    docHandler = new DocumentHandler();
-    docOperation = new CmsDocOperation("update", docSrcUrlStr, null, docIdBenedetti);
+    docOperation = new CmsDocOperation("create", docSrcUrlStr, null, docIdBenedetti);
     // docHandler.doOperation(docOperation);
     String docIdAdams = "/echo/de/Adams_1785_S7ECRGW8.xml";
     docSrcUrlStr = "http://mpdl-system.mpiwg-berlin.mpg.de/mpdl/getDoc?doc=" + docIdAdams;
-    docHandler = new DocumentHandler();
-    docOperation = new CmsDocOperation("update", docSrcUrlStr, null, docIdAdams);
+    docOperation = new CmsDocOperation("create", docSrcUrlStr, null, docIdAdams);
     // docHandler.doOperation(docOperation);
     String docIdMonte = "/archimedes/la/monte_mecha_036_la_1577.xml";
     docSrcUrlStr = "http://mpdl-system.mpiwg-berlin.mpg.de/mpdl/getDoc?doc=" + docIdMonte;
-    docHandler = new DocumentHandler();
-    docOperation = new CmsDocOperation("update", docSrcUrlStr, null, docIdMonte);
+    docOperation = new CmsDocOperation("create", docSrcUrlStr, null, docIdMonte);
     // docHandler.doOperation(docOperation);
     String docIdEinstein = "/diverse/de/Einst_Antwo_de_1912.xml";
     docSrcUrlStr = "http://mpdl-system.mpiwg-berlin.mpg.de:30060/mpdl/getDoc?doc=" + docIdEinstein;
-    docHandler = new DocumentHandler();
-    docOperation = new CmsDocOperation("update", docSrcUrlStr, null, docIdEinstein);
+    docOperation = new CmsDocOperation("create", docSrcUrlStr, null, docIdEinstein);
+    // docHandler.doOperation(docOperation);
+    String docIdAvh = "/tei/de/Dok280E18xml.xml";
+    docSrcUrlStr = "http://telota.bbaw.de:8085/exist/rest/db/AvHBriefedition/Briefe/Dok280E18xml.xml";
+    docOperation = new CmsDocOperation("create", docSrcUrlStr, null, docIdAvh);
     // docHandler.doOperation(docOperation);
     // indexer.deleteDocument(docIdGoerz);
     // indexer.deleteDocument(docIdBenedetti);
+    /*
     Date end = new Date();
     System.out.println("Indexing end: : " + end.getTime());
     String queryStr = "tokenOrig:tempore";
     System.out.println("Query: " + queryStr);
     // ArrayList<Document> docs = indexer.queryDocuments(queryField, queryStr);
-    /*
     ArrayList<Document> docs = indexer.queryDocument(docIdMonte, queryStr);
     for (int i=0; i<docs.size(); i++) {
       Document doc = docs.get(i);
@@ -225,18 +298,63 @@ public class TestLocal {
     return result;
   }
   
+  private void translator() throws ApplicationException {
+    try {
+      Language lang = Language.fromString("de");
+      String languageCode = MicrosoftTranslator.detectLanguageName("café car");
+      String bla = "";
+    } catch (Exception e) {
+      throw new ApplicationException(e);
+    }
+  }
+  
+  private void translator2() throws ApplicationException {
+    try {
+      String[] query = {"haus", "moor"};
+      String[] translations = GlosbeTranslator.getInstance().translate(query, "deu", "eng");
+      String[] translations2 = GlosbeTranslator.getInstance().translate(query, "deu", "fra");
+      String lang = GlosbeTranslator.getInstance().detectLanguageCode("haus");
+      lang = GlosbeTranslator.getInstance().detectLanguageCode("house");
+      lang = GlosbeTranslator.getInstance().detectLanguageCode("maison");
+      lang = GlosbeTranslator.getInstance().detectLanguageCode("ZZZZZZZZ");
+      String bla = "";
+    } catch (Exception e) {
+      throw new ApplicationException(e);
+    }
+  }
+
   private void queries() throws ApplicationException {
-    String docId = "/tei/de/Marie_1969-12-13.xml";
+    Hits docsss = indexer.queryDocuments("tokenMorph:haus", null, "eng", 1, 10, true, true);
+    String docId = "/mega/docs/MEGA_A2_B001-01_ETX.xml";
     // String query = "mod_date:[20020101 TO 20030101]";
     // String query = "tokenOrig:\"Haben beide\"~2";
     // String query = "tokenOrig:Habe~";
     // String query = "tokenOrig:\"Haben Sie beide\"";
     // String query = "+tokenMorph:gebrauchen +tokenMorph:schmutzig";
     // String query = "title:a*";
-    String query = "tokenMorph:gebrauchen AND tokenMorph:schmutzig";
-    // String query = "gebrauchen";
-    ArrayList<String> terms = indexer.fetchTerms(query, "de");
-    // ArrayList<Document> docs = indexer.queryDocument(docId, query);
-	  String bla = "";
+    // String query = "tokenMorph:gebrauchen AND tokenMorph:schmutzig";
+    String query = "tokenMorph:wird";
+    // Hits docsss = indexer.queryDocuments("tokenOrig:\"politischen Oekonomie\"", null, 1, 10, false, false);
+    // Hits docsss = indexer.queryDocuments("tokenMorph:wird", null, 1, 10, true, false);
+    Hits persHits = indexer.queryDocument("/mes/mes/data/MzE_7_2.xml", "elementName:persName", 0, 100);
+    ArrayList<org.bbaw.wsp.cms.document.Document> namesList = persHits.getHits();
+    for (org.bbaw.wsp.cms.document.Document nameDoc : namesList) {
+      Fieldable docPersNameField = nameDoc.getFieldable("xmlContent");
+      String docPersName = docPersNameField.stringValue();
+      docPersName = docPersName.replaceAll("\\n", "");
+      String persNameAttribute = docPersName; 
+      if(persNameAttribute.contains("persName nymRef"))
+        persNameAttribute = docPersName.replaceAll("<persName nymRef=\"(.+?)\".+?</persName>", "$1");
+      if(persNameAttribute.contains("persName name="))
+        persNameAttribute = docPersName.replaceAll("<persName name=\"(.+?)\".+?</persName>", "$1");
+      if(persNameAttribute.contains("persName key="))
+        persNameAttribute = docPersName.replaceAll("<persName.*?>(.*?)</persName>", "$1");
+      persNameAttribute = persNameAttribute.replaceAll("<persName.*?>(.*?)</persName>", "$1");
+      persNameAttribute = persNameAttribute.trim();
+    }    
+    // ArrayList<String> terms = indexer.fetchTerms(query, "de");
+    Hits docs = indexer.queryDocument(docId, query, 1, 1000);
+    // docs = indexer.queryDocument("/tei/de/Dok280E18xml.xml", "+elementName:persName +tokenOrig:alexander", 0, 1000);
+    String bla = "";
   }
 }
