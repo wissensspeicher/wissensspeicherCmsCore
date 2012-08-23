@@ -66,21 +66,6 @@ public class CollectionReader {
           }
         }
         collection.setFields(fieldsArrayList);
-        String[] registerFieldNames = {"persName", "placeName", "zoolName"};
-        for (int i=0; i<registerFieldNames.length; i++) {
-          String registerFieldName = registerFieldNames[i];
-          String registerDocIdsStr = xQueryEvaluator.evaluateAsStringValueJoined(srcUrl, "/wsp/collection/registers/register[@name = '" + registerFieldName + "']", "###");
-          ArrayList<String> registerDocIdsArrayList = new ArrayList<String>();
-          if(registerDocIdsStr != null) {
-            String[] registerDocIds = registerDocIdsStr.split("###");
-            for (int j=0; j<registerDocIds.length; j++) {
-              String registerDocId = registerDocIds[j].trim();
-              if (! registerDocId.isEmpty())
-                registerDocIdsArrayList.add(registerDocId);
-            }
-            collection.setRegister(registerFieldName, registerDocIdsArrayList);
-          }
-        }
         collectionContainer.put(collection.getId(), collection);
       }
     } catch (Exception e) {
