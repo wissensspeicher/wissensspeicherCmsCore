@@ -53,8 +53,8 @@ import org.apache.lucene.search.highlight.TokenSources;
 import org.apache.lucene.search.similar.MoreLikeThis;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
-import org.bbaw.wsp.cms.confmanager.CollectionReader;
-import org.bbaw.wsp.cms.confmanager.Collection;
+import org.bbaw.wsp.cms.collections.Collection;
+import org.bbaw.wsp.cms.collections.CollectionReader;
 import org.bbaw.wsp.cms.document.DocumentHandler;
 import org.bbaw.wsp.cms.document.Hits;
 import org.bbaw.wsp.cms.document.MetadataRecord;
@@ -522,9 +522,7 @@ public class IndexHandler {
           String mainLang = collection.getMainLanguage();
           if (mainLang != null)
             language = mainLang;
-        } else {
-          language = "deu"; // default language
-        }
+        } 
       }
       Query morphQuery = buildMorphQuery(query, language);
       BooleanQuery queryDoc = new BooleanQuery();
@@ -604,9 +602,7 @@ public class IndexHandler {
           String mainLang = collection.getMainLanguage();
           if (mainLang != null)
             language = mainLang;
-        } else {
-          language = "deu"; // default language
-        }
+        } 
       }
       Date yearDate = null;
       Fieldable dateField = doc.getFieldable("date");
@@ -796,7 +792,7 @@ public class IndexHandler {
     String[] toLanguages = {"deu", "eng", "fra"};  // TODO
     String fromLanguage = null;
     String inputTerm = inputTermQuery.getTerm().text();
-    if (fromLang == null) {
+    if (fromLang == null || fromLang.isEmpty()) {
       String detectedLang = MicrosoftTranslator.detectLanguageCode(inputTerm);
       if (detectedLang != null)
         fromLanguage = detectedLang;
