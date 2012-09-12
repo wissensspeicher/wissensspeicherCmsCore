@@ -55,7 +55,7 @@ import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
 import org.bbaw.wsp.cms.collections.Collection;
 import org.bbaw.wsp.cms.collections.CollectionReader;
-import org.bbaw.wsp.cms.document.DocumentHandler;
+import org.bbaw.wsp.cms.dochandler.DocumentHandler;
 import org.bbaw.wsp.cms.document.Hits;
 import org.bbaw.wsp.cms.document.MetadataRecord;
 import org.bbaw.wsp.cms.document.Token;
