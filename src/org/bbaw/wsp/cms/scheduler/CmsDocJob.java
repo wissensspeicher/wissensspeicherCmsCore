@@ -4,7 +4,7 @@ import java.util.Date;
 
 import java.util.logging.Logger;
 
-import org.bbaw.wsp.cms.document.DocumentHandler;
+import org.bbaw.wsp.cms.dochandler.DocumentHandler;
 import org.quartz.Job;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
