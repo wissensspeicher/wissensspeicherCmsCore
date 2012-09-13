@@ -25,7 +25,7 @@ import org.apache.lucene.index.Term;
 import org.bbaw.wsp.cms.collections.Collection;
 import org.bbaw.wsp.cms.collections.CollectionManager;
 import org.bbaw.wsp.cms.collections.CollectionReader;
-import org.bbaw.wsp.cms.document.DocumentHandler;
+import org.bbaw.wsp.cms.dochandler.DocumentHandler;
 import org.bbaw.wsp.cms.document.Hits;
 import org.bbaw.wsp.cms.lucene.IndexHandler;
 import org.bbaw.wsp.cms.scheduler.CmsDocOperation;
@@ -64,7 +64,7 @@ public class TestLocal {
       // test.queries();
       // test.translator2();
       // test.testCollectionReader();
-      test.createAllDocuments();
+      // test.createAllDocuments();
       // test.testCalls();
       // test.bla();
       test.end();
