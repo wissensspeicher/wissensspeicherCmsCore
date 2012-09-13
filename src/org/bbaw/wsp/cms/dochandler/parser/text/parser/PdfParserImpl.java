@@ -72,7 +72,7 @@ public class PdfParserImpl extends ResourceParser {
         PDFTextStripper stripper = new PDFTextStripper();
         stripper.setStartPage(i);
         stripper.setEndPage(i);
-        text += "[page=" + i + "]\n" + stripper.getText(document);
+        text = stripper.getText(document);;
         pagesTexts.add(text);
       }
 
@@ -85,45 +85,6 @@ public class PdfParserImpl extends ResourceParser {
       throw new ApplicationException("Problem while parsing file " + uri + "  -- exception: " + e.getMessage() + "\n");
     }
 
-  }
-
-  /**
-   * Parse a pdf-document and return a list that contains the fulltext for the
-   * page.
-   * 
-   * @return a list of Strings that map the page number to the fulltext or null
-   *         if the resource can't get opened. * @throws
-   *         IllegalArgumentException if the uri is null or empty
-   * @throws ApplicationException
-   * @throws IllegalStateException
-   *           if the {@link ISaveStrategy} wasn't set before.
-   */
-  public Object parsePages(final String startUri, final String uri) throws ApplicationException {
-    if (uri == null || uri.isEmpty()) {
-      throw new IllegalArgumentException("The value for the parameter parser in the method parsePages() in PdfParserImpl mustn't be empty.");
-    }
-    if (this.saveStrategy == null) {
-      throw new IllegalStateException("You must define a saveStategy before calling the parse()-method in ResourceParser.");
-    }
-    try {
-      PDDocument document;
-      InputStream input = this.resourceReader.read(uri);
-      document = PDDocument.load(input);
-      List<String> pagesTexts = new ArrayList<String>();
-      String text = "";
-
-      for (int i = 1; i <= document.getNumberOfPages(); i++) {
-        PDFTextStripper stripper = new PDFTextStripper();
-        stripper.setStartPage(i);
-        stripper.setEndPage(i);
-        text = stripper.getText(document);
-        pagesTexts.add(text);
-      }
-
-      return this.saveStrategy.generateDocumentModel(uri, uri, pagesTexts);
-    } catch (IOException e) {
-      throw new ApplicationException("Problem while parsing file " + uri + "  -- exception: " + e.getMessage() + "\n");
-    }
   }
 
 }
