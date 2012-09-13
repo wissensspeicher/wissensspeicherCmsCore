@@ -150,32 +150,36 @@ public class EdocIndexMetadataFetcherTool {
   /**
    * Check if the file is an index.html file to an eDoc.
    * 
+   * LastChange: Performance optimation - check URI before reading from input stream
+   * 
    * @param uri
    *          - the URL as string to the index.html file.
    * @return true if the index.html file belongs to an eDoc.
    * @throws ApplicationException
    *           if the stream couldn't get opened.
    */
-  public static boolean isEDocIndex(String uri) throws ApplicationException {
-    InputStream in = reader.read(uri);
+  public static boolean isEDocIndex(final String uri) throws ApplicationException {
+    if((uri.contains("edoc.bbaw.de") || uri.endsWith(".html")) && !uri.endsWith(".pdf")) {
+      InputStream in = reader.read(uri);
 
-    if (in != null) {
-      Scanner scanner = new Scanner(in);
-      scanner.useDelimiter("\n");
-      StringBuilder builder = new StringBuilder();
-      while (scanner.hasNext()) {
-        builder.append(scanner.next());
-      }
-      String content = builder.toString();
-      Pattern p = Pattern.compile("(?i)<META NAME=\"(.*?)\" CONTENT=\"(.*?)\">(?i)");
-      for (Matcher m = p.matcher(content); m.find();) {
-        String tag = m.group(1);
-        String value = m.group(2);
-        if (tag.equals("DC.Identifier") && value.contains("edoc.bbaw.de/")) {
-          return true;
+      if (in != null) {
+        Scanner scanner = new Scanner(in);
+        scanner.useDelimiter("\n");
+        StringBuilder builder = new StringBuilder();
+        while (scanner.hasNext()) {
+          builder.append(scanner.next());
         }
-      }
-    }
+        String content = builder.toString();
+        Pattern p = Pattern.compile("(?i)<META NAME=\"(.*?)\" CONTENT=\"(.*?)\">(?i)");
+        for (Matcher m = p.matcher(content); m.find();) {
+          String tag = m.group(1);
+          String value = m.group(2);
+          if (tag.equals("DC.Identifier") && value.contains("edoc.bbaw.de/")) {
+            return true;
+          }
+        }
+      }    
+    }    
     return false;
   }
 
