@@ -34,9 +34,8 @@ public class PathExtractor {
   public List<String> initExtractor(String startingUri, String excludes) {
     this.excludes = excludes;
     ressourceLoc = new ArrayList<String>();
-    // parameter necessery, because it's recursive, thus changing the uri
+    // parameter necessary, because it's recursive, thus changing the uri
     extractDocLocations(startingUri);
-    System.out.println("extracing resource locations done.");
     return this.ressourceLoc;
   }
 
