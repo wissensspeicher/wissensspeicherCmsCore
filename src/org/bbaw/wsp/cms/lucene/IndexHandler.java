@@ -56,6 +56,8 @@ import org.apache.lucene.util.Version;
 import org.bbaw.wsp.cms.collections.Collection;
 import org.bbaw.wsp.cms.collections.CollectionReader;
 import org.bbaw.wsp.cms.dochandler.DocumentHandler;
+import org.bbaw.wsp.cms.dochandler.parser.document.IDocument;
+import org.bbaw.wsp.cms.dochandler.parser.text.parser.DocumentParser;
 import org.bbaw.wsp.cms.document.Hits;
 import org.bbaw.wsp.cms.document.MetadataRecord;
 import org.bbaw.wsp.cms.document.Token;
@@ -126,7 +128,6 @@ public class IndexHandler {
       MetadataRecord mdRecord = docOperation.getMdRecord();
       String docId = mdRecord.getDocId();
       DocumentHandler docHandler = new DocumentHandler();
-      String docFileName = docHandler.getDocFullFileName(docId) + ".upgrade";
       // add document to documentsIndex
       Document doc = new Document();
       Field docIdField = new Field("docId", docId, Field.Store.YES, Field.Index.ANALYZED);
@@ -138,11 +139,6 @@ public class IndexHandler {
       if (identifier != null) {
         Field identifierField = new Field("identifier", identifier, Field.Store.YES, Field.Index.ANALYZED);
         doc.add(identifierField);
-      }
-      String echoId = mdRecord.getEchoId();
-      if (echoId != null) {
-        Field echoIdField = new Field("echoId", echoId, Field.Store.YES, Field.Index.ANALYZED);
-        doc.add(echoIdField);
       }
       String uri = docOperation.getSrcUrl();
       if (uri != null) {
@@ -241,147 +237,195 @@ public class IndexHandler {
       }
 
       String language = mdRecord.getLanguage();
-      InputStreamReader docFileReader = new InputStreamReader(new FileInputStream(docFileName), "utf-8");
-      // to guarantee that utf-8 is used (if not done, it does not work on Tomcat which has another default charset)
-      XmlTokenizer docXmlTokenizer = new XmlTokenizer(docFileReader);
-      docXmlTokenizer.setDocIdentifier(docId);
-      docXmlTokenizer.setLanguage(language);
-      docXmlTokenizer.setOutputFormat("string");
-      String[] outputOptionsWithLemmas = { "withLemmas" }; // so all tokens are
-      // fetched with lemmas (costs performance)
-      docXmlTokenizer.setOutputOptions(outputOptionsWithLemmas);
-      String[] normFunctionNone = { "none" };
-      docXmlTokenizer.setNormFunctions(normFunctionNone);
-      docXmlTokenizer.tokenize();
+      boolean docIsXml = docHandler.isDocXml(docId);
 
-      int pageCount = docXmlTokenizer.getPageCount();
-      if (pageCount == 0)
-        pageCount = 1;  // each document at least has one page
-      String pageCountStr = String.valueOf(pageCount);
-      Field pageCountField = new Field("pageCount", pageCountStr, Field.Store.YES, Field.Index.ANALYZED);
-      doc.add(pageCountField);
+      // fill the fulltext fields
+      String docTokensOrig = null;
+      String docTokensReg = null;
+      String docTokensNorm = null;
+      String docTokensMorph = null;
+      String pageCountStr = null;
+      String docFileName = docHandler.getDocFullFileName(docId);
+      XmlTokenizer docXmlTokenizer = null;
+      if (docIsXml) {
+        docFileName = docHandler.getDocFullFileName(docId) + ".upgrade";
+        InputStreamReader docFileReader = new InputStreamReader(new FileInputStream(docFileName), "utf-8");
+        // to guarantee that utf-8 is used (if not done, it does not work on Tomcat which has another default charset)
+        docXmlTokenizer = new XmlTokenizer(docFileReader);
+        docXmlTokenizer.setDocIdentifier(docId);
+        docXmlTokenizer.setLanguage(language);
+        docXmlTokenizer.setOutputFormat("string");
+        String[] outputOptionsWithLemmas = { "withLemmas" }; // so all tokens are
+        // fetched with lemmas (costs performance)
+        docXmlTokenizer.setOutputOptions(outputOptionsWithLemmas);
+        String[] normFunctionNone = { "none" };
+        docXmlTokenizer.setNormFunctions(normFunctionNone);
+        docXmlTokenizer.tokenize();
+  
+        int pageCount = docXmlTokenizer.getPageCount();
+        if (pageCount == 0)
+          pageCount = 1;  // each document at least has one page
+        pageCountStr = String.valueOf(pageCount);
+  
+        String[] outputOptionsEmpty = {};
+        docXmlTokenizer.setOutputOptions(outputOptionsEmpty); 
+        // must be set to null so that the normalization function works
+        docTokensOrig = docXmlTokenizer.getStringResult();
+        String[] normFunctionReg = { "reg" };
+        docXmlTokenizer.setNormFunctions(normFunctionReg);
+        docTokensReg = docXmlTokenizer.getStringResult();
+        String[] normFunctionNorm = { "norm" };
+        docXmlTokenizer.setNormFunctions(normFunctionNorm);
+        docTokensNorm = docXmlTokenizer.getStringResult();
+        docXmlTokenizer.setOutputOptions(outputOptionsWithLemmas);
+        docTokensMorph = docXmlTokenizer.getStringResult();
+      } else {
+        DocumentParser tikaParser = new DocumentParser();
+        IDocument tikaDoc = tikaParser.parse(docFileName);
+        docTokensOrig = tikaDoc.getTextOrig();
+        MetadataRecord tikaMDRecord = tikaDoc.getMetadata();
+        int pageCount = tikaMDRecord.getPageCount();
+        pageCountStr = String.valueOf(pageCount);
+        mdRecord.setPageCount(pageCount);
+        String mdRecordLanguage = mdRecord.getLanguage();
+        String mainLanguage = docOperation.getMainLanguage();
+        if (mdRecordLanguage == null && mainLanguage != null)
+          mdRecord.setLanguage(mainLanguage);
+        // TODO 
+        docTokensReg = "";
+        docTokensNorm = "";
+        docTokensMorph = "";
+      }
+      if (pageCountStr != null) {
+        Field pageCountField = new Field("pageCount", pageCountStr, Field.Store.YES, Field.Index.ANALYZED);
+        doc.add(pageCountField);
+      }
+      if (docTokensOrig != null) {
+        Field tokenOrigField = new Field("tokenOrig", docTokensOrig, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
+        doc.add(tokenOrigField);
+      }
+      if (docTokensReg != null) {
+        Field tokenRegField = new Field("tokenReg", docTokensReg, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
+        doc.add(tokenRegField);
+      }
+      if (docTokensNorm != null) {
+        Field tokenNormField = new Field("tokenNorm", docTokensNorm, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
+        doc.add(tokenNormField);
+      }
+      if (docTokensMorph != null) {
+        Field tokenMorphField = new Field("tokenMorph", docTokensMorph, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
+        doc.add(tokenMorphField);
+      }
+      String contentXml = null;
+      String content = null;
+      if (docIsXml) {
+        // save original content of the doc file
+        File docFile = new File(docFileName);
+        contentXml = FileUtils.readFileToString(docFile, "utf-8");
+        // generate original chars content
+        XslResourceTransformer charsTransformer = new XslResourceTransformer("chars.xsl");
+        content = charsTransformer.transform(docFileName);
+      } else {
+        content = docTokensOrig;
+      }
+      if (contentXml != null) {
+        Field contentXmlField = new Field("xmlContent", contentXml, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
+        doc.add(contentXmlField);
+      }
+      if (content != null) {
+        Field contentField = new Field("content", content, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
+        doc.add(contentField);
+      }
 
-      String[] outputOptionsEmpty = {};
-      docXmlTokenizer.setOutputOptions(outputOptionsEmpty); 
-      // must be set to null so that the normalization function works
-      String docTokensOrig = docXmlTokenizer.getStringResult();
-      String[] normFunctionReg = { "reg" };
-      docXmlTokenizer.setNormFunctions(normFunctionReg);
-      String docTokensReg = docXmlTokenizer.getStringResult();
-      String[] normFunctionNorm = { "norm" };
-      docXmlTokenizer.setNormFunctions(normFunctionNorm);
-      String docTokensNorm = docXmlTokenizer.getStringResult();
-      docXmlTokenizer.setOutputOptions(outputOptionsWithLemmas);
-      String docTokensMorph = docXmlTokenizer.getStringResult();
-
-      Field tokenOrigField = new Field("tokenOrig", docTokensOrig, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
-      Field tokenRegField = new Field("tokenReg", docTokensReg, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
-      Field tokenNormField = new Field("tokenNorm", docTokensNorm, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
-      Field tokenMorphField = new Field("tokenMorph", docTokensMorph, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
-      doc.add(tokenOrigField);
-      doc.add(tokenRegField);
-      doc.add(tokenNormField);
-      doc.add(tokenMorphField);
-
-      // save original content of the doc file
-      File docFile = new File(docFileName);
-      String contentXml = FileUtils.readFileToString(docFile, "utf-8");
-      Field contentXmlField = new Field("xmlContent", contentXml, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
-      doc.add(contentXmlField);
-
-      // generate original chars content
-      XslResourceTransformer charsTransformer = new XslResourceTransformer("chars.xsl");
-      String content = charsTransformer.transform(docFileName);
-      Field contentField = new Field("content", content, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
-      doc.add(contentField);
-      
       documentsIndexWriter.addDocument(doc);
 
-      // add all elements with the specified names of the document to nodesIndex
-      String[] elementNamesArray = docOperation.getElementNames();
-      String elementNames = "";
-      for (int i = 0; i < elementNamesArray.length; i++) {
-        String elemName = elementNamesArray[i];
-        elementNames = elementNames + elemName + " ";
-      }
-      elementNames = elementNames.substring(0, elementNames.length() - 1);
-      ArrayList<XmlTokenizerContentHandler.Element> elements = docXmlTokenizer.getElements(elementNames);
-      for (int i = 0; i < elements.size(); i++) {
-        XmlTokenizerContentHandler.Element element = elements.get(i);
-        Document nodeDoc = new Document();
-        nodeDoc.add(docIdField);
-        String nodeLanguage = element.lang;
-        if (nodeLanguage == null)
-          nodeLanguage = language;
-        String nodePageNumber = String.valueOf(element.pageNumber);
-        String nodeLineNumber = String.valueOf(element.lineNumber);
-        String nodeElementName = String.valueOf(element.name);
-        String nodeElementDocPosition = String.valueOf(element.docPosition);
-        String nodeElementAbsolutePosition = String.valueOf(element.position);
-        String nodeElementPagePosition = String.valueOf(element.pagePosition);
-        String nodeElementPosition = String.valueOf(element.elemPosition);
-        String nodeXmlId = element.xmlId;
-        String nodeXpath = element.xpath;
-        String nodeXmlContent = element.toXmlString();
-        String nodeTokensOrig = element.getTokensStr("orig");
-        String nodeTokensReg = element.getTokensStr("reg");
-        String nodeTokensNorm = element.getTokensStr("norm");
-        String nodeTokensMorph = element.getTokensStr("morph");
-        if (nodeLanguage != null) {
-          Field nodeLanguageField = new Field("language", nodeLanguage, Field.Store.YES, Field.Index.ANALYZED);
-          nodeDoc.add(nodeLanguageField);
+      if (docIsXml) {
+        // add all elements with the specified names of the document to nodesIndex
+        String[] elementNamesArray = docOperation.getElementNames();
+        String elementNames = "";
+        for (int i = 0; i < elementNamesArray.length; i++) {
+          String elemName = elementNamesArray[i];
+          elementNames = elementNames + elemName + " ";
         }
-        Field nodePageNumberField = new Field("pageNumber", nodePageNumber, Field.Store.YES, Field.Index.ANALYZED);
-        nodeDoc.add(nodePageNumberField);
-        Field nodeLineNumberField = new Field("lineNumber", nodeLineNumber, Field.Store.YES, Field.Index.ANALYZED);
-        nodeDoc.add(nodeLineNumberField);
-        Field nodeElementNameField = new Field("elementName", nodeElementName, Field.Store.YES, Field.Index.ANALYZED);
-        nodeDoc.add(nodeElementNameField);
-        Field nodeElementDocPositionField = new Field("elementDocPosition", nodeElementDocPosition, Field.Store.YES, Field.Index.ANALYZED);
-        nodeDoc.add(nodeElementDocPositionField);
-        Field nodeElementDocPositionFieldSorted = new Field("elementDocPositionSorted", nodeElementDocPosition, Field.Store.YES, Field.Index.NOT_ANALYZED);
-        nodeDoc.add(nodeElementDocPositionFieldSorted);
-        Field nodeElementAbsolutePositionField = new Field("elementAbsolutePosition", nodeElementAbsolutePosition, Field.Store.YES, Field.Index.ANALYZED);
-        nodeDoc.add(nodeElementAbsolutePositionField);
-        Field nodeElementPagePositionField = new Field("elementPagePosition", nodeElementPagePosition, Field.Store.YES, Field.Index.ANALYZED);
-        nodeDoc.add(nodeElementPagePositionField);
-        Field nodeElementPositionField = new Field("elementPosition", nodeElementPosition, Field.Store.YES, Field.Index.ANALYZED);
-        nodeDoc.add(nodeElementPositionField);
-        if (nodeXmlId != null) {
-          Field nodeXmlIdField = new Field("xmlId", nodeXmlId, Field.Store.YES, Field.Index.ANALYZED);
-          nodeDoc.add(nodeXmlIdField);
+        elementNames = elementNames.substring(0, elementNames.length() - 1);
+        ArrayList<XmlTokenizerContentHandler.Element> elements = docXmlTokenizer.getElements(elementNames);
+        for (int i = 0; i < elements.size(); i++) {
+          XmlTokenizerContentHandler.Element element = elements.get(i);
+          Document nodeDoc = new Document();
+          nodeDoc.add(docIdField);
+          String nodeLanguage = element.lang;
+          if (nodeLanguage == null)
+            nodeLanguage = language;
+          String nodePageNumber = String.valueOf(element.pageNumber);
+          String nodeLineNumber = String.valueOf(element.lineNumber);
+          String nodeElementName = String.valueOf(element.name);
+          String nodeElementDocPosition = String.valueOf(element.docPosition);
+          String nodeElementAbsolutePosition = String.valueOf(element.position);
+          String nodeElementPagePosition = String.valueOf(element.pagePosition);
+          String nodeElementPosition = String.valueOf(element.elemPosition);
+          String nodeXmlId = element.xmlId;
+          String nodeXpath = element.xpath;
+          String nodeXmlContent = element.toXmlString();
+          String nodeTokensOrig = element.getTokensStr("orig");
+          String nodeTokensReg = element.getTokensStr("reg");
+          String nodeTokensNorm = element.getTokensStr("norm");
+          String nodeTokensMorph = element.getTokensStr("morph");
+          if (nodeLanguage != null) {
+            Field nodeLanguageField = new Field("language", nodeLanguage, Field.Store.YES, Field.Index.ANALYZED);
+            nodeDoc.add(nodeLanguageField);
+          }
+          Field nodePageNumberField = new Field("pageNumber", nodePageNumber, Field.Store.YES, Field.Index.ANALYZED);
+          nodeDoc.add(nodePageNumberField);
+          Field nodeLineNumberField = new Field("lineNumber", nodeLineNumber, Field.Store.YES, Field.Index.ANALYZED);
+          nodeDoc.add(nodeLineNumberField);
+          Field nodeElementNameField = new Field("elementName", nodeElementName, Field.Store.YES, Field.Index.ANALYZED);
+          nodeDoc.add(nodeElementNameField);
+          Field nodeElementDocPositionField = new Field("elementDocPosition", nodeElementDocPosition, Field.Store.YES, Field.Index.ANALYZED);
+          nodeDoc.add(nodeElementDocPositionField);
+          Field nodeElementDocPositionFieldSorted = new Field("elementDocPositionSorted", nodeElementDocPosition, Field.Store.YES, Field.Index.NOT_ANALYZED);
+          nodeDoc.add(nodeElementDocPositionFieldSorted);
+          Field nodeElementAbsolutePositionField = new Field("elementAbsolutePosition", nodeElementAbsolutePosition, Field.Store.YES, Field.Index.ANALYZED);
+          nodeDoc.add(nodeElementAbsolutePositionField);
+          Field nodeElementPagePositionField = new Field("elementPagePosition", nodeElementPagePosition, Field.Store.YES, Field.Index.ANALYZED);
+          nodeDoc.add(nodeElementPagePositionField);
+          Field nodeElementPositionField = new Field("elementPosition", nodeElementPosition, Field.Store.YES, Field.Index.ANALYZED);
+          nodeDoc.add(nodeElementPositionField);
+          if (nodeXmlId != null) {
+            Field nodeXmlIdField = new Field("xmlId", nodeXmlId, Field.Store.YES, Field.Index.ANALYZED);
+            nodeDoc.add(nodeXmlIdField);
+          }
+          if (nodeXpath != null) {
+            Field nodeXpathField = new Field("xpath", nodeXpath, Field.Store.YES, Field.Index.ANALYZED);
+            nodeDoc.add(nodeXpathField);
+          }
+          if (nodeXmlContent != null) {
+            Field nodeXmlContentField = new Field("xmlContent", nodeXmlContent, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
+            nodeDoc.add(nodeXmlContentField);
+          }
+          if (nodeXmlContent != null) {
+            String nodeXmlContentTokenized = toTokenizedXmlString(nodeXmlContent, nodeLanguage);
+            Field nodeXmlContentTokenizedField = new Field("xmlContentTokenized", nodeXmlContentTokenized, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
+            nodeDoc.add(nodeXmlContentTokenizedField);
+          }
+          if (nodeTokensOrig != null) {
+            Field nodeTokenOrigField = new Field("tokenOrig", nodeTokensOrig, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
+            nodeDoc.add(nodeTokenOrigField);
+          }
+          if (nodeTokensReg != null) {
+            Field nodeTokenRegField = new Field("tokenReg", nodeTokensReg, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
+            nodeDoc.add(nodeTokenRegField);
+          }
+          if (nodeTokensNorm != null) {
+            Field nodeTokenNormField = new Field("tokenNorm", nodeTokensNorm, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
+            nodeDoc.add(nodeTokenNormField);
+          }
+          if (nodeTokensMorph != null) {
+            Field nodeTokenMorphField = new Field("tokenMorph", nodeTokensMorph, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
+            nodeDoc.add(nodeTokenMorphField);
+          }
+  
+          nodesIndexWriter.addDocument(nodeDoc);
         }
-        if (nodeXpath != null) {
-          Field nodeXpathField = new Field("xpath", nodeXpath, Field.Store.YES, Field.Index.ANALYZED);
-          nodeDoc.add(nodeXpathField);
-        }
-        if (nodeXmlContent != null) {
-          Field nodeXmlContentField = new Field("xmlContent", nodeXmlContent, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
-          nodeDoc.add(nodeXmlContentField);
-        }
-        if (nodeXmlContent != null) {
-          String nodeXmlContentTokenized = toTokenizedXmlString(nodeXmlContent, nodeLanguage);
-          Field nodeXmlContentTokenizedField = new Field("xmlContentTokenized", nodeXmlContentTokenized, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
-          nodeDoc.add(nodeXmlContentTokenizedField);
-        }
-        if (nodeTokensOrig != null) {
-          Field nodeTokenOrigField = new Field("tokenOrig", nodeTokensOrig, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
-          nodeDoc.add(nodeTokenOrigField);
-        }
-        if (nodeTokensReg != null) {
-          Field nodeTokenRegField = new Field("tokenReg", nodeTokensReg, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
-          nodeDoc.add(nodeTokenRegField);
-        }
-        if (nodeTokensNorm != null) {
-          Field nodeTokenNormField = new Field("tokenNorm", nodeTokensNorm, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
-          nodeDoc.add(nodeTokenNormField);
-        }
-        if (nodeTokensMorph != null) {
-          Field nodeTokenMorphField = new Field("tokenMorph", nodeTokensMorph, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
-          nodeDoc.add(nodeTokenMorphField);
-        }
-
-        nodesIndexWriter.addDocument(nodeDoc);
       }
     } catch (Exception e) {
       throw new ApplicationException(e);
@@ -580,10 +624,6 @@ public class IndexHandler {
       Fieldable collectionNamesField = doc.getFieldable("collectionNames");
       if (collectionNamesField != null)
         collectionNames = collectionNamesField.stringValue();
-      String echoId = null;
-      Fieldable echoIdField = doc.getFieldable("echoId");
-      if (echoIdField != null)
-        echoId = echoIdField.stringValue();
       String author = null;
       Fieldable authorField = doc.getFieldable("author");
       if (authorField != null)
@@ -650,7 +690,6 @@ public class IndexHandler {
       mdRecord.setUri(uri);
       mdRecord.setIdentifier(identifier);
       mdRecord.setCollectionNames(collectionNames);
-      mdRecord.setEchoId(echoId);
       mdRecord.setCreator(author);
       mdRecord.setTitle(title);
       mdRecord.setDate(yearDate);
@@ -1131,7 +1170,6 @@ public class IndexHandler {
       Map<String, Analyzer> documentsFieldAnalyzers = new HashMap<String, Analyzer>();
       documentsFieldAnalyzers.put("docId", new KeywordAnalyzer());
       documentsFieldAnalyzers.put("identifier", new KeywordAnalyzer()); 
-      documentsFieldAnalyzers.put("echoId", new KeywordAnalyzer());
       documentsFieldAnalyzers.put("uri", new KeywordAnalyzer());
       documentsFieldAnalyzers.put("collectionNames", new StandardAnalyzer(Version.LUCENE_35));
       documentsFieldAnalyzers.put("author", new StandardAnalyzer(Version.LUCENE_35));
@@ -1252,7 +1290,6 @@ public class IndexHandler {
     HashSet<String> fields = new HashSet<String>();
     fields.add("docId");
     fields.add("identifier");
-    fields.add("echoId");
     fields.add("uri");
     fields.add("collectionNames");
     fields.add("author");
