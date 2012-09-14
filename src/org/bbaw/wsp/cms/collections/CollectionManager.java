@@ -7,6 +7,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -23,6 +24,7 @@ import org.w3c.dom.NodeList;
 import com.sun.org.apache.xml.internal.serialize.XMLSerializer;
 
 public class CollectionManager {
+  private static Logger LOGGER = Logger.getLogger(CollectionManager.class.getName());
   private CollectionReader collectionReader;  // has the collection infos of the configuration files
   private int counter = 0;
   private static CollectionManager confManager;
@@ -114,7 +116,7 @@ public class CollectionManager {
         String docId = "/" + collection.getId() + uriPath;
         counter++;
         Date now = new Date();
-        System.out.println(counter + ". " + now.toString() + " Collection: " + collection.getId() + ": Create: " + docId);
+        LOGGER.info(counter + ". " + now.toString() + " Collection: " + collection.getId() + ": Create: " + docId);
         CmsDocOperation docOp = new CmsDocOperation("create", docUrl, null, docId);
         String collectionId = collection.getId();
         docOp.setCollectionNames(collectionId);
