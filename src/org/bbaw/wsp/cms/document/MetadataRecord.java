@@ -26,7 +26,6 @@ public class MetadataRecord {
   private int pageCount;
   private String persons;
   private String places;
-  private String echoId; // document identifier in echo system: directory name, e.g. /permanent/library/163127KK
   private String urn; // e.g. the KOBV urn, e.g. urn:nbn:de:kobv:b4360-10020
   private String documentType; // e.g. the KOBV "Dokumentenart"
   private String isbn; // e.g. the KOBV ISBN
@@ -269,16 +268,8 @@ public class MetadataRecord {
     this.places = places;
   }
 
-  public String getEchoId() {
-    return echoId;
-  }
-
-  public void setEchoId(String echoId) {
-    this.echoId = echoId;
-  }
-
   @Override
   public String toString() {
-    return "MetadataRecord [docId=" + docId + ", identifier=" + identifier + ", uri=" + uri + ", language=" + language + ", creator=" + creator + ", title=" + title + ", description=" + description + ", subject=" + subject + ", ddc=" + ddc + ", swd=" + swd + ", publisher=" + publisher + ", type=" + type + ", rights=" + rights + ", date=" + date + ", license=" + license + ", accessRights=" + accessRights + ", collectionNames=" + collectionNames + ", schemaName=" + schemaName + ", lastModified=" + lastModified + ", pageCount=" + pageCount + ", persons=" + persons + ", places=" + places + ", echoId=" + echoId + ", urn=" + urn + ", documentType=" + documentType + ", isbn=" + isbn + ", creationDate=" + creationDate + ", publishingDate=" + publishingDate + "]";
+    return "MetadataRecord [docId=" + docId + ", identifier=" + identifier + ", uri=" + uri + ", language=" + language + ", creator=" + creator + ", title=" + title + ", description=" + description + ", subject=" + subject + ", ddc=" + ddc + ", swd=" + swd + ", publisher=" + publisher + ", type=" + type + ", rights=" + rights + ", date=" + date + ", license=" + license + ", accessRights=" + accessRights + ", collectionNames=" + collectionNames + ", schemaName=" + schemaName + ", lastModified=" + lastModified + ", pageCount=" + pageCount + ", persons=" + persons + ", places=" + places + ", urn=" + urn + ", documentType=" + documentType + ", isbn=" + isbn + ", creationDate=" + creationDate + ", publishingDate=" + publishingDate + "]";
   }
 }
