@@ -3,6 +3,7 @@
  */
 package org.bbaw.wsp.cms.dochandler.parser.document;
 
+import org.bbaw.wsp.cms.dochandler.parser.text.parser.ResourceParser;
 import org.bbaw.wsp.cms.document.MetadataRecord;
 
 /**
@@ -85,4 +86,11 @@ public class GeneralDocument implements IDocument {
     this.metadata = metadata;
   }
 
+  /**
+   * Set the textOrig. This is necessary if the sub classes of {@link ResourceParser} need to change an recieved fulltext.
+   * @param textOrig
+   */
+  public void setTextOrig(final String textOrig) {
+    this.textOrig = textOrig;
+  }
 }
