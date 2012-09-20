@@ -68,13 +68,15 @@ public class PdfParserImpl extends ResourceParser {
       List<String> pagesTexts = new ArrayList<String>();
       String text = "";
 
-      for (int i = 1; i <= document.getNumberOfPages(); i++) {
-        PDFTextStripper stripper = new PDFTextStripper();
+      PDFTextStripper stripper = new PDFTextStripper();
+      for (int i = 1; i <= document.getNumberOfPages(); i++) {        
         stripper.setStartPage(i);
         stripper.setEndPage(i);
         text = stripper.getText(document);;
-        pagesTexts.add(text);
+        pagesTexts.add(text);       
       }
+      
+      document.close();
 
       input.close();
       PdfDocument doc = (PdfDocument) this.saveStrategy.generateDocumentModel(uri, uri, pagesTexts);
