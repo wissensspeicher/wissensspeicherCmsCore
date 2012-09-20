@@ -2,13 +2,15 @@ package org.bbaw.wsp.cms.dochandler.parser.text.parser;
 
 import java.io.InputStream;
 
-import org.bbaw.wsp.cms.dochandler.parser.text.reader.IResourceReader;
-import org.bbaw.wsp.cms.dochandler.parser.text.reader.ResourceReaderImpl;
-import org.xml.sax.ContentHandler;
-import org.apache.tika.parser.Parser;
-import org.apache.tika.sax.BodyContentHandler;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.parser.ParseContext;
+import org.apache.tika.parser.Parser;
+import org.apache.tika.sax.BodyContentHandler;
+import org.bbaw.wsp.cms.dochandler.parser.document.GeneralDocument;
+import org.bbaw.wsp.cms.dochandler.parser.text.reader.IResourceReader;
+import org.bbaw.wsp.cms.dochandler.parser.text.reader.ResourceReaderImpl;
+import org.bbaw.wsp.cms.document.MetadataRecord;
+import org.xml.sax.ContentHandler;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 
@@ -79,9 +81,32 @@ public abstract class ResourceParser {
       input.close();
       textHandler.endDocument();
 
-      return this.saveStrategy.generateDocumentModel(uri, uri, textHandler.toString());
+      final MetadataRecord mdRecord = new MetadataRecord();
+      this.matchMetadata(metadata, mdRecord);
+      final GeneralDocument doc = (GeneralDocument) this.saveStrategy.generateDocumentModel(uri, uri, textHandler.toString());
+     
+      doc.setMetadata(mdRecord);
+
+      return doc;
     } catch (Exception e) {
       throw new ApplicationException("Problem while parsing file " + uri + "  -- exception: " + e.getMessage() + "\n");
     }
+  }
+
+  /**
+   * Match the extracted metadata from TIKA to the {@link MetadataRecord}.
+   * @param metadata the {@link Metadata} of TIKA.
+   * @param mdRecord the {@link MetadataRecord}.
+   */
+  private void matchMetadata(Metadata metadata, MetadataRecord mdRecord) {
+    @SuppressWarnings("deprecation")
+    final String pageCount = metadata.get(Metadata.PAGE_COUNT);
+    if(pageCount != null) {
+      mdRecord.setPageCount(Integer.parseInt(pageCount));
+    }      
+    final String type = metadata.get(Metadata.CONTENT_TYPE);
+    if(type != null) {
+      mdRecord.setType(type);
+    }             
   }
 }
