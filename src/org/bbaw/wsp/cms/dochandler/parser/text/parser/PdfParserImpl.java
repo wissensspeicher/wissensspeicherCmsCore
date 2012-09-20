@@ -76,6 +76,7 @@ public class PdfParserImpl extends ResourceParser {
         pagesTexts.add(text);
       }
 
+      input.close();
       PdfDocument doc = (PdfDocument) this.saveStrategy.generateDocumentModel(uri, uri, pagesTexts);
       doc.setMetadata(new MetadataRecord()); // Set the standard metadata (page
                                              // count, mimetype,...)
