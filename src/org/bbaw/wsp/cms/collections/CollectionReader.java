@@ -72,9 +72,22 @@ public class CollectionReader {
         if(collectionName != null) {
           collection.setName(collectionName);
         }
-        String collectionDataUrl = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/url/dataUrl/text()");
-        if(collectionDataUrl != null) {
-          collection.setDataUrl(collectionDataUrl);
+        String collectionDataUrlStr = xQueryEvaluator.evaluateAsStringValueJoined(configFileUrl, "/wsp/collection/url/dataUrl", " ");
+        if(collectionDataUrlStr != null) {
+          String[] collectionDataUrl = collectionDataUrlStr.split(" ");
+          collection.setDataUrls(collectionDataUrl);
+        }
+        String collectionDataUrlPrefix = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/url/dataUrlPrefix/text()");
+        if(collectionDataUrlPrefix != null) {
+          collection.setDataUrlPrefix(collectionDataUrlPrefix);
+        }
+        String metadataUrl = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/metadata/url/text()");
+        if(metadataUrl != null) {
+          collection.setMetadataUrl(metadataUrl);
+        }
+        String metadataFormat = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/metadata/format/text()");
+        if(metadataFormat != null) {
+          collection.setMetadataFormat(metadataFormat);
         }
         String fieldsStr = xQueryEvaluator.evaluateAsStringValueJoined(configFileUrl, "/wsp/collection/fields/field", "###");
         ArrayList<String> fieldsArrayList = new ArrayList<String>();
