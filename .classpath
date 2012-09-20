@@ -33,5 +33,8 @@
 	<classpathentry kind="lib" path="lib/tika-core-1.2.jar"/>
 	<classpathentry kind="lib" path="lib/tika-parsers-1.2.jar"/>
 	<classpathentry kind="lib" path="lib/pdfbox-1.7.1.jar"/>
+	<classpathentry kind="lib" path="lib/fontbox-1.7.1.jar"/>
+	<classpathentry kind="lib" path="lib/tagsoup-1.2.1.jar"/>
+	<classpathentry kind="lib" path="lib/bcprov-jdk15on-147.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
