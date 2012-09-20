@@ -83,17 +83,19 @@ public class CollectionManager {
   private void updateCollection(Collection collection, boolean forceUpdate) throws ApplicationException {
     boolean isUpdateNecessary = collection.isUpdateNecessary();
     if (isUpdateNecessary || forceUpdate) {
-      String collectionDataUrl = collection.getDataUrl();
+      String[] collectionDataUrls = collection.getDataUrls();
       String excludesStr = collection.getExcludesStr();
-      List<String> collectionDocumentUrls = null;
-      if (collectionDataUrl.endsWith("/")) {
-        collectionDocumentUrls = extractDocumentUrls(collectionDataUrl, excludesStr);
-        collection.setDocumentUrls(collectionDocumentUrls);
-      } else {
-        collectionDocumentUrls = new ArrayList<String>();
-        collectionDocumentUrls.add(collectionDataUrl);
-        collection.setDocumentUrls(collectionDocumentUrls);
+      List<String> collectionDocumentUrls = new ArrayList<String>();
+      for (int i=0; i<collectionDataUrls.length; i++) {
+        String url = collectionDataUrls[i];
+        if (url.endsWith("/")) {
+          List<String> collectionDocumentUrlsTemp = extractDocumentUrls(url, excludesStr);
+          collectionDocumentUrls.addAll(collectionDocumentUrlsTemp);
+        } else {
+          collectionDocumentUrls.add(url);
+        }
       }
+      collection.setDocumentUrls(collectionDocumentUrls);
       addDocuments(collection); 
       String configFileName = collection.getConfigFileName();
       File configFile = new File(configFileName);
@@ -108,7 +110,9 @@ public class CollectionManager {
       for (int i=0; i<documentUrls.size(); i++) {
         URL uri = new URL(documentUrls.get(i));
         String uriPath = uri.getPath();
-        String prefix = "/exist/rest/db";
+        String prefix = collection.getDataUrlPrefix();
+        if (prefix == null)
+          prefix = "/exist/rest/db";
         if(uriPath.startsWith(prefix)){
           uriPath = uriPath.substring(prefix.length());
         }
