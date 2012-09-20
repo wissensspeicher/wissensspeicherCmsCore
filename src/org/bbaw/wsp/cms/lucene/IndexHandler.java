@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.lucene.analysis.Analyzer;
@@ -78,6 +79,7 @@ import de.mpg.mpiwg.berlin.mpdl.util.Util;
 
 public class IndexHandler {
   private static IndexHandler instance;
+  private static Logger LOGGER = Logger.getLogger(IndexHandler.class.getName());
   private IndexWriter documentsIndexWriter;
   private IndexWriter nodesIndexWriter;
   private SearcherManager documentsSearcherManager;
@@ -167,15 +169,6 @@ public class IndexHandler {
           titleStr = titleStr.toLowerCase();  // so that sorting is lower case
         Field titleFieldSorted = new Field("titleSorted", titleStr, Field.Store.YES, Field.Index.NOT_ANALYZED);
         doc.add(titleFieldSorted);
-      }
-      if (mdRecord.getLanguage() != null) {
-        Field languageField = new Field("language", mdRecord.getLanguage(), Field.Store.YES, Field.Index.ANALYZED);
-        doc.add(languageField);
-        String langStr = mdRecord.getLanguage();
-        if (langStr != null)
-          langStr = langStr.toLowerCase();  // so that sorting is lower case
-        Field languageFieldSorted = new Field("languageSorted", langStr, Field.Store.YES, Field.Index.NOT_ANALYZED);
-        doc.add(languageFieldSorted);
       }
       if (mdRecord.getPublisher() != null) {
         Field publisherField = new Field("publisher", mdRecord.getPublisher(), Field.Store.YES, Field.Index.ANALYZED);
@@ -281,12 +274,18 @@ public class IndexHandler {
         docTokensMorph = docXmlTokenizer.getStringResult();
       } else {
         DocumentParser tikaParser = new DocumentParser();
-        IDocument tikaDoc = tikaParser.parse(docFileName);
-        docTokensOrig = tikaDoc.getTextOrig();
-        MetadataRecord tikaMDRecord = tikaDoc.getMetadata();
-        int pageCount = tikaMDRecord.getPageCount();
-        pageCountStr = String.valueOf(pageCount);
-        mdRecord.setPageCount(pageCount);
+        try {
+          IDocument tikaDoc = tikaParser.parse(docFileName);
+          docTokensOrig = tikaDoc.getTextOrig();
+          MetadataRecord tikaMDRecord = tikaDoc.getMetadata();
+          if (tikaMDRecord != null) {
+            int pageCount = tikaMDRecord.getPageCount();
+            pageCountStr = String.valueOf(pageCount);
+            mdRecord.setPageCount(pageCount);
+          }
+        } catch (ApplicationException e) {
+          LOGGER.severe(e.getLocalizedMessage());
+        }
         String mdRecordLanguage = mdRecord.getLanguage();
         String mainLanguage = docOperation.getMainLanguage();
         if (mdRecordLanguage == null && mainLanguage != null)
@@ -295,6 +294,15 @@ public class IndexHandler {
         docTokensReg = "";
         docTokensNorm = "";
         docTokensMorph = "";
+      }
+      if (mdRecord.getLanguage() != null) {
+        Field languageField = new Field("language", mdRecord.getLanguage(), Field.Store.YES, Field.Index.ANALYZED);
+        doc.add(languageField);
+        String langStr = mdRecord.getLanguage();
+        if (langStr != null)
+          langStr = langStr.toLowerCase();  // so that sorting is lower case
+        Field languageFieldSorted = new Field("languageSorted", langStr, Field.Store.YES, Field.Index.NOT_ANALYZED);
+        doc.add(languageFieldSorted);
       }
       if (pageCountStr != null) {
         Field pageCountField = new Field("pageCount", pageCountStr, Field.Store.YES, Field.Index.ANALYZED);
