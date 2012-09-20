@@ -6,7 +6,10 @@ import java.util.List;
 public class Collection {
   private String id;
   private String name;
-  private String dataUrl;  // url of data (starting url)
+  private String[] dataUrls;  // url of data (starting url)
+  private String dataUrlPrefix;  // prefix of url which is not relevant as id 
+  private String metadataUrl;  // metadata url for fetching records
+  private String metadataFormat;  // metadata file name e.g. index.html
   private String excludesStr; // excludes below dataUrl separated by a blank
   private String mainLanguage;
   private ArrayList<String> fields;
@@ -19,7 +22,7 @@ public class Collection {
   public Collection() {
     id = "";
     name = "";
-    dataUrl = "";
+    dataUrls = null;
     excludesStr = "";
     mainLanguage = "";
     fields = new ArrayList<String>();
@@ -54,12 +57,36 @@ public class Collection {
     this.name = name;
   }
 
-  public String getDataUrl() {
-    return dataUrl;
+  public String[] getDataUrls() {
+    return dataUrls;
   }
 
-  public void setDataUrl(String dataUrl) {
-    this.dataUrl = dataUrl;
+  public void setDataUrls(String[] dataUrls) {
+    this.dataUrls = dataUrls;
+  }
+
+  public String getDataUrlPrefix() {
+    return dataUrlPrefix;
+  }
+
+  public void setDataUrlPrefix(String dataUrlPrefix) {
+    this.dataUrlPrefix = dataUrlPrefix;
+  }
+
+  public String getMetadataUrl() {
+    return metadataUrl;
+  }
+
+  public void setMetadataUrl(String metadataUrl) {
+    this.metadataUrl = metadataUrl;
+  }
+
+  public String getMetadataFormat() {
+    return metadataFormat;
+  }
+
+  public void setMetadataFormat(String metadataFormat) {
+    this.metadataFormat = metadataFormat;
   }
 
   public String getExcludesStr() {
