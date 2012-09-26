@@ -1,10 +1,7 @@
 package org.bbaw.wsp.cms.lucene;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,7 +10,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.KeywordAnalyzer;
 import org.apache.lucene.analysis.PerFieldAnalyzerWrapper;
@@ -57,14 +53,11 @@ import org.apache.lucene.util.Version;
 import org.bbaw.wsp.cms.collections.Collection;
 import org.bbaw.wsp.cms.collections.CollectionReader;
 import org.bbaw.wsp.cms.dochandler.DocumentHandler;
-import org.bbaw.wsp.cms.dochandler.parser.document.IDocument;
-import org.bbaw.wsp.cms.dochandler.parser.text.parser.DocumentParser;
 import org.bbaw.wsp.cms.document.Hits;
 import org.bbaw.wsp.cms.document.MetadataRecord;
 import org.bbaw.wsp.cms.document.Token;
 import org.bbaw.wsp.cms.general.Constants;
 import org.bbaw.wsp.cms.scheduler.CmsDocOperation;
-import org.bbaw.wsp.cms.transform.XslResourceTransformer;
 import org.bbaw.wsp.cms.translator.MicrosoftTranslator;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
@@ -125,11 +118,9 @@ public class IndexHandler {
   }
 
   private void indexDocumentLocal(CmsDocOperation docOperation) throws ApplicationException {
-    FileReader fr = null;
     try {
       MetadataRecord mdRecord = docOperation.getMdRecord();
       String docId = mdRecord.getDocId();
-      DocumentHandler docHandler = new DocumentHandler();
       // add document to documentsIndex
       Document doc = new Document();
       Field docIdField = new Field("docId", docId, Field.Store.YES, Field.Index.ANALYZED);
@@ -228,74 +219,8 @@ public class IndexHandler {
         Field placesField = new Field("places", mdRecord.getPlaces(), Field.Store.YES, Field.Index.ANALYZED);
         doc.add(placesField);
       }
-
       String language = mdRecord.getLanguage();
-      boolean docIsXml = docHandler.isDocXml(docId);
-
-      // fill the fulltext fields
-      String docTokensOrig = null;
-      String docTokensReg = null;
-      String docTokensNorm = null;
-      String docTokensMorph = null;
-      String pageCountStr = null;
-      String docFileName = docHandler.getDocFullFileName(docId);
-      XmlTokenizer docXmlTokenizer = null;
-      if (docIsXml) {
-        docFileName = docHandler.getDocFullFileName(docId) + ".upgrade";
-        InputStreamReader docFileReader = new InputStreamReader(new FileInputStream(docFileName), "utf-8");
-        // to guarantee that utf-8 is used (if not done, it does not work on Tomcat which has another default charset)
-        docXmlTokenizer = new XmlTokenizer(docFileReader);
-        docXmlTokenizer.setDocIdentifier(docId);
-        docXmlTokenizer.setLanguage(language);
-        docXmlTokenizer.setOutputFormat("string");
-        String[] outputOptionsWithLemmas = { "withLemmas" }; // so all tokens are
-        // fetched with lemmas (costs performance)
-        docXmlTokenizer.setOutputOptions(outputOptionsWithLemmas);
-        String[] normFunctionNone = { "none" };
-        docXmlTokenizer.setNormFunctions(normFunctionNone);
-        docXmlTokenizer.tokenize();
-  
-        int pageCount = docXmlTokenizer.getPageCount();
-        if (pageCount == 0)
-          pageCount = 1;  // each document at least has one page
-        pageCountStr = String.valueOf(pageCount);
-  
-        String[] outputOptionsEmpty = {};
-        docXmlTokenizer.setOutputOptions(outputOptionsEmpty); 
-        // must be set to null so that the normalization function works
-        docTokensOrig = docXmlTokenizer.getStringResult();
-        String[] normFunctionReg = { "reg" };
-        docXmlTokenizer.setNormFunctions(normFunctionReg);
-        docTokensReg = docXmlTokenizer.getStringResult();
-        String[] normFunctionNorm = { "norm" };
-        docXmlTokenizer.setNormFunctions(normFunctionNorm);
-        docTokensNorm = docXmlTokenizer.getStringResult();
-        docXmlTokenizer.setOutputOptions(outputOptionsWithLemmas);
-        docTokensMorph = docXmlTokenizer.getStringResult();
-      } else {
-        DocumentParser tikaParser = new DocumentParser();
-        try {
-          IDocument tikaDoc = tikaParser.parse(docFileName);
-          docTokensOrig = tikaDoc.getTextOrig();
-          MetadataRecord tikaMDRecord = tikaDoc.getMetadata();
-          if (tikaMDRecord != null) {
-            int pageCount = tikaMDRecord.getPageCount();
-            pageCountStr = String.valueOf(pageCount);
-            mdRecord.setPageCount(pageCount);
-          }
-        } catch (ApplicationException e) {
-          LOGGER.severe(e.getLocalizedMessage());
-        }
-        String mdRecordLanguage = mdRecord.getLanguage();
-        String mainLanguage = docOperation.getMainLanguage();
-        if (mdRecordLanguage == null && mainLanguage != null)
-          mdRecord.setLanguage(mainLanguage);
-        // TODO 
-        docTokensReg = "";
-        docTokensNorm = "";
-        docTokensMorph = "";
-      }
-      if (mdRecord.getLanguage() != null) {
+      if (language != null) {
         Field languageField = new Field("language", mdRecord.getLanguage(), Field.Store.YES, Field.Index.ANALYZED);
         doc.add(languageField);
         String langStr = mdRecord.getLanguage();
@@ -304,42 +229,38 @@ public class IndexHandler {
         Field languageFieldSorted = new Field("languageSorted", langStr, Field.Store.YES, Field.Index.NOT_ANALYZED);
         doc.add(languageFieldSorted);
       }
-      if (pageCountStr != null) {
+      int pageCount = mdRecord.getPageCount();
+      if (pageCount != -1) {
+        String pageCountStr = String.valueOf(pageCount);
         Field pageCountField = new Field("pageCount", pageCountStr, Field.Store.YES, Field.Index.ANALYZED);
         doc.add(pageCountField);
       }
+      String docTokensOrig = mdRecord.getTokenOrig();
       if (docTokensOrig != null) {
         Field tokenOrigField = new Field("tokenOrig", docTokensOrig, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
         doc.add(tokenOrigField);
       }
+      String docTokensReg = mdRecord.getTokenReg();
       if (docTokensReg != null) {
         Field tokenRegField = new Field("tokenReg", docTokensReg, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
         doc.add(tokenRegField);
       }
+      String docTokensNorm = mdRecord.getTokenNorm();
       if (docTokensNorm != null) {
         Field tokenNormField = new Field("tokenNorm", docTokensNorm, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
         doc.add(tokenNormField);
       }
+      String docTokensMorph = mdRecord.getTokenMorph();
       if (docTokensMorph != null) {
         Field tokenMorphField = new Field("tokenMorph", docTokensMorph, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
         doc.add(tokenMorphField);
       }
-      String contentXml = null;
-      String content = null;
-      if (docIsXml) {
-        // save original content of the doc file
-        File docFile = new File(docFileName);
-        contentXml = FileUtils.readFileToString(docFile, "utf-8");
-        // generate original chars content
-        XslResourceTransformer charsTransformer = new XslResourceTransformer("chars.xsl");
-        content = charsTransformer.transform(docFileName);
-      } else {
-        content = docTokensOrig;
-      }
+      String contentXml = mdRecord.getContentXml();
       if (contentXml != null) {
         Field contentXmlField = new Field("xmlContent", contentXml, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
         doc.add(contentXmlField);
       }
+      String content = mdRecord.getContent();
       if (content != null) {
         Field contentField = new Field("content", content, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
         doc.add(contentField);
@@ -347,18 +268,13 @@ public class IndexHandler {
 
       documentsIndexWriter.addDocument(doc);
 
+      DocumentHandler docHandler = new DocumentHandler();
+      boolean docIsXml = docHandler.isDocXml(docId);
       if (docIsXml) {
         // add all elements with the specified names of the document to nodesIndex
-        String[] elementNamesArray = docOperation.getElementNames();
-        String elementNames = "";
-        for (int i = 0; i < elementNamesArray.length; i++) {
-          String elemName = elementNamesArray[i];
-          elementNames = elementNames + elemName + " ";
-        }
-        elementNames = elementNames.substring(0, elementNames.length() - 1);
-        ArrayList<XmlTokenizerContentHandler.Element> elements = docXmlTokenizer.getElements(elementNames);
-        for (int i = 0; i < elements.size(); i++) {
-          XmlTokenizerContentHandler.Element element = elements.get(i);
+        ArrayList<XmlTokenizerContentHandler.Element> xmlElements = mdRecord.getXmlElements();
+        for (int i = 0; i < xmlElements.size(); i++) {
+          XmlTokenizerContentHandler.Element element = xmlElements.get(i);
           Document nodeDoc = new Document();
           nodeDoc.add(docIdField);
           String nodeLanguage = element.lang;
@@ -437,13 +353,6 @@ public class IndexHandler {
       }
     } catch (Exception e) {
       throw new ApplicationException(e);
-    } finally {
-      try {
-        if (fr != null)
-          fr.close();
-      } catch (Exception e) {
-        // nothing
-      }
     }
   }
 
