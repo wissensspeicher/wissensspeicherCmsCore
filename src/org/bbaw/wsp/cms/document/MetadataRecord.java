@@ -1,7 +1,10 @@
 package org.bbaw.wsp.cms.document;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+
+import de.mpg.mpiwg.berlin.mpdl.lt.text.tokenize.XmlTokenizerContentHandler;
 
 public class MetadataRecord {
   private String docId; // local id: document identifier in index system, e.g. /echo/la/Benedetti_1585.xml
@@ -20,17 +23,24 @@ public class MetadataRecord {
   private Date date; // creation date, modification date, etc.
   private String license; // e.g. http://echo.mpiwg-berlin.mpg.de/policy/oa_basics/declaration
   private String accessRights; // e.g. free
-  private String collectionNames; // e.g. "collection1 collection7"
-  private String schemaName; // e.g. TEI, echo, html, or archimedes
-  private Date lastModified;
-  private int pageCount;
-  private String persons;
-  private String places;
   private String urn; // e.g. the KOBV urn, e.g. urn:nbn:de:kobv:b4360-10020
   private String documentType; // e.g. the KOBV "Dokumentenart"
   private String isbn; // e.g. the KOBV ISBN
   private Date creationDate; // e.g. the KOBV "Erstellungsjahr"
   private Date publishingDate; // e.g. the KOBV "Publikationsdatum"
+  private String collectionNames; // e.g. "edoc"
+  private String tokenOrig; // original fulltext token of the documents fulltext
+  private String tokenReg; // regularized fulltext token of the documents fulltext
+  private String tokenNorm; // normalized fulltext token of the documents fulltext
+  private String tokenMorph; // morphological fulltext token of the documents fulltext
+  private String contentXml; // original xml content of the documents file
+  private String content; // original text content of the documents file (without xml tags)
+  private ArrayList<XmlTokenizerContentHandler.Element> xmlElements;  // elements of the xml documents
+  private String schemaName; // e.g. TEI, echo, html, or archimedes
+  private Date lastModified;
+  private int pageCount;
+  private String persons;
+  private String places;
   private String realDocUrl; // e.g. the URL to the eDoc (not the index.html)
 
   public String getRealDocUrl() {
@@ -234,6 +244,63 @@ public class MetadataRecord {
 
   public void setType(String type) {
     this.type = type;
+  }
+
+  public String getTokenOrig() {
+    return tokenOrig;
+  }
+
+  public void setTokenOrig(String tokenOrig) {
+    this.tokenOrig = tokenOrig;
+  }
+
+  public String getTokenReg() {
+    return tokenReg;
+  }
+
+  public void setTokenReg(String tokenReg) {
+    this.tokenReg = tokenReg;
+  }
+
+  public String getTokenNorm() {
+    return tokenNorm;
+  }
+
+  public void setTokenNorm(String tokenNorm) {
+    this.tokenNorm = tokenNorm;
+  }
+
+  public String getTokenMorph() {
+    return tokenMorph;
+  }
+
+  public void setTokenMorph(String tokenMorph) {
+    this.tokenMorph = tokenMorph;
+  }
+
+  public String getContentXml() {
+    return contentXml;
+  }
+
+  public void setContentXml(String contentXml) {
+    this.contentXml = contentXml;
+  }
+
+  public String getContent() {
+    return content;
+  }
+
+  public void setContent(String content) {
+    this.content = content;
+  }
+
+  public ArrayList<XmlTokenizerContentHandler.Element> getXmlElements() {
+    return xmlElements;
+  }
+
+  public void setXmlElements(
+      ArrayList<XmlTokenizerContentHandler.Element> xmlElements) {
+    this.xmlElements = xmlElements;
   }
 
   public String getSchemaName() {
