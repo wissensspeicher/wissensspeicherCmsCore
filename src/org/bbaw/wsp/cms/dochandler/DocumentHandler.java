@@ -1,13 +1,16 @@
 package org.bbaw.wsp.cms.dochandler;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.net.FileNameMap;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -20,6 +23,8 @@ import net.sf.saxon.s9api.XdmNodeKind;
 import net.sf.saxon.s9api.XdmSequenceIterator;
 
 import org.apache.commons.io.FileUtils;
+import org.bbaw.wsp.cms.dochandler.parser.document.IDocument;
+import org.bbaw.wsp.cms.dochandler.parser.text.parser.DocumentParser;
 import org.bbaw.wsp.cms.document.MetadataRecord;
 import org.bbaw.wsp.cms.general.Constants;
 import org.bbaw.wsp.cms.lucene.IndexHandler;
@@ -33,7 +38,11 @@ import org.xml.sax.XMLReader;
 import com.sun.org.apache.xerces.internal.parsers.SAXParser;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
+import de.mpg.mpiwg.berlin.mpdl.lt.morph.app.MorphologyCache;
+import de.mpg.mpiwg.berlin.mpdl.lt.text.tokenize.Token;
+import de.mpg.mpiwg.berlin.mpdl.lt.text.tokenize.Tokenizer;
 import de.mpg.mpiwg.berlin.mpdl.lt.text.tokenize.XmlTokenizer;
+import de.mpg.mpiwg.berlin.mpdl.lt.text.tokenize.XmlTokenizerContentHandler;
 import de.mpg.mpiwg.berlin.mpdl.util.StringUtils;
 import de.mpg.mpiwg.berlin.mpdl.util.Util;
 import de.mpg.mpiwg.berlin.mpdl.xml.xquery.XQueryEvaluator;
@@ -194,9 +203,11 @@ public class DocumentHandler {
           FileUtils.writeStringToFile(docPageTokenizedFile, tokenizedXmlStr, "utf-8");
         }
       } 
+      docOperation.setMdRecord(mdRecord);
+      // build the documents fulltext fields
+      buildFulltextFields(docOperation);
       // perform operation on Lucene
       docOperation.setStatus(operationName + " document: " + docIdentifier + " in CMS");
-      docOperation.setMdRecord(mdRecord);
       IndexHandler indexHandler = IndexHandler.getInstance();
       indexHandler.indexDocument(docOperation);
     } catch (IOException e) {
@@ -222,6 +233,107 @@ public class DocumentHandler {
     // perform operation on Lucene
     IndexHandler indexHandler = IndexHandler.getInstance();
     indexHandler.deleteDocument(docOperation);
+  }
+  
+  private void buildFulltextFields(CmsDocOperation docOperation) throws ApplicationException {
+    try {
+      MetadataRecord mdRecord = docOperation.getMdRecord();
+      String docId = mdRecord.getDocId();
+      String language = mdRecord.getLanguage();
+      boolean docIsXml = isDocXml(docId);
+      String docTokensOrig = null;
+      String docTokensNorm = null;
+      String docTokensMorph = null;
+      String contentXml = null;
+      String content = null;
+      String docFileName = getDocFullFileName(docId);
+      XmlTokenizer docXmlTokenizer = null;
+      if (docIsXml) {
+        docFileName = getDocFullFileName(docId) + ".upgrade";
+        InputStreamReader docFileReader = new InputStreamReader(new FileInputStream(docFileName), "utf-8");
+        // to guarantee that utf-8 is used (if not done, it does not work on Tomcat which has another default charset)
+        docXmlTokenizer = new XmlTokenizer(docFileReader);
+        docXmlTokenizer.setDocIdentifier(docId);
+        docXmlTokenizer.setLanguage(language);
+        docXmlTokenizer.setOutputFormat("string");
+        String[] outputOptionsWithLemmas = { "withLemmas" }; // so all tokens are
+        // fetched with lemmas (costs performance)
+        docXmlTokenizer.setOutputOptions(outputOptionsWithLemmas);
+        String[] normFunctionNone = { "none" };
+        docXmlTokenizer.setNormFunctions(normFunctionNone);
+        docXmlTokenizer.tokenize();
+  
+        int pageCount = docXmlTokenizer.getPageCount();
+        if (pageCount <= 0)
+          pageCount = 1;  // each document at least has one page
+  
+        String[] outputOptionsEmpty = {};
+        docXmlTokenizer.setOutputOptions(outputOptionsEmpty); 
+        // must be set to null so that the normalization function works
+        docTokensOrig = docXmlTokenizer.getStringResult();
+        String[] normFunctionNorm = { "norm" };
+        docXmlTokenizer.setNormFunctions(normFunctionNorm);
+        docTokensNorm = docXmlTokenizer.getStringResult();
+        docXmlTokenizer.setOutputOptions(outputOptionsWithLemmas);
+        docTokensMorph = docXmlTokenizer.getStringResult();
+        // fetch original xml content of the documents file
+        File docFile = new File(docFileName);
+        contentXml = FileUtils.readFileToString(docFile, "utf-8");
+        // fetch original content of the documents file (without xml tags)
+        XslResourceTransformer charsTransformer = new XslResourceTransformer("chars.xsl");
+        content = charsTransformer.transform(docFileName);
+        // get elements from xml tokenizer 
+        String[] elementNamesArray = docOperation.getElementNames();
+        String elementNames = "";
+        for (int i = 0; i < elementNamesArray.length; i++) {
+          String elemName = elementNamesArray[i];
+          elementNames = elementNames + elemName + " ";
+        }
+        elementNames = elementNames.substring(0, elementNames.length() - 1);
+        ArrayList<XmlTokenizerContentHandler.Element> xmlElements = docXmlTokenizer.getElements(elementNames);
+        // fill mdRecord
+        mdRecord.setTokenOrig(docTokensOrig);
+        mdRecord.setTokenNorm(docTokensNorm);
+        mdRecord.setTokenMorph(docTokensMorph);
+        mdRecord.setContentXml(contentXml);
+        mdRecord.setContent(content);
+        mdRecord.setXmlElements(xmlElements);
+        mdRecord.setPageCount(pageCount);
+      } else {
+        DocumentParser tikaParser = new DocumentParser();
+        try {
+          IDocument tikaDoc = tikaParser.parse(docFileName);
+          docTokensOrig = tikaDoc.getTextOrig();
+          MetadataRecord tikaMDRecord = tikaDoc.getMetadata();
+          if (tikaMDRecord != null) {
+            int pageCount = tikaMDRecord.getPageCount();
+            if (pageCount <= 0)
+              pageCount = 1;  // each document at least has one page
+            mdRecord.setPageCount(pageCount);
+          }
+        } catch (ApplicationException e) {
+          LOGGER.severe(e.getLocalizedMessage());
+        }
+        String mdRecordLanguage = mdRecord.getLanguage();
+        String mainLanguage = docOperation.getMainLanguage();
+        if (mdRecordLanguage == null && mainLanguage != null)
+          mdRecord.setLanguage(mainLanguage);
+        String lang = mdRecord.getLanguage();
+        DocumentTokenizer docTokenizer = DocumentTokenizer.getInstance();
+        String[] normFunctions = {"norm"};
+        ArrayList<Token> normTokens = docTokenizer.getToken(docTokensOrig, lang, normFunctions);
+        docTokensNorm = docTokenizer.buildStr(normTokens, lang, "norm");
+        docTokensMorph = docTokenizer.buildStr(normTokens, lang, "morph");
+        content = docTokensOrig;  // content is the same as docTokensOrig
+        // fill mdRecord
+        mdRecord.setTokenOrig(docTokensOrig);
+        mdRecord.setTokenNorm(docTokensNorm);
+        mdRecord.setTokenMorph(docTokensMorph);
+        mdRecord.setContent(content);
+      }
+    } catch (Exception e) {
+      throw new ApplicationException(e);
+    }
   }
   
   private MetadataRecord getMetadataRecord(File xmlFile, String schemaName, MetadataRecord mdRecord, XQueryEvaluator xQueryEvaluator) throws ApplicationException {
