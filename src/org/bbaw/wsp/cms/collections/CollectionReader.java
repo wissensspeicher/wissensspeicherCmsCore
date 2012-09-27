@@ -72,6 +72,19 @@ public class CollectionReader {
         if(collectionName != null) {
           collection.setName(collectionName);
         }
+        String metadataUrlStr = xQueryEvaluator.evaluateAsStringValueJoined(configFileUrl, "/wsp/collection/metadata/url");
+        if(metadataUrlStr != null) {
+          String[] metadataUrls = metadataUrlStr.split(" ");
+          collection.setMetadataUrls(metadataUrls);
+        }
+        String metadataUrlPrefix = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/metadata/urlPrefix/text()");
+        if(metadataUrlPrefix != null) {
+          collection.setMetadataUrlPrefix(metadataUrlPrefix);
+        }
+        String metadataUrlType = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/metadata/urlType/text()");
+        if(metadataUrlType != null) {
+          collection.setMetadataUrlType(metadataUrlType);
+        }
         String collectionDataUrlStr = xQueryEvaluator.evaluateAsStringValueJoined(configFileUrl, "/wsp/collection/url/dataUrl", " ");
         if(collectionDataUrlStr != null) {
           String[] collectionDataUrl = collectionDataUrlStr.split(" ");
@@ -80,14 +93,6 @@ public class CollectionReader {
         String collectionDataUrlPrefix = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/url/dataUrlPrefix/text()");
         if(collectionDataUrlPrefix != null) {
           collection.setDataUrlPrefix(collectionDataUrlPrefix);
-        }
-        String metadataUrl = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/metadata/url/text()");
-        if(metadataUrl != null) {
-          collection.setMetadataUrl(metadataUrl);
-        }
-        String metadataFormat = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/metadata/format/text()");
-        if(metadataFormat != null) {
-          collection.setMetadataFormat(metadataFormat);
         }
         String fieldsStr = xQueryEvaluator.evaluateAsStringValueJoined(configFileUrl, "/wsp/collection/fields/field", "###");
         ArrayList<String> fieldsArrayList = new ArrayList<String>();
