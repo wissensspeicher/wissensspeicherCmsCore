@@ -7,13 +7,11 @@ import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.net.FileNameMap;
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.logging.Logger;
 
 import net.sf.saxon.s9api.Axis;
@@ -38,9 +36,7 @@ import org.xml.sax.XMLReader;
 import com.sun.org.apache.xerces.internal.parsers.SAXParser;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
-import de.mpg.mpiwg.berlin.mpdl.lt.morph.app.MorphologyCache;
 import de.mpg.mpiwg.berlin.mpdl.lt.text.tokenize.Token;
-import de.mpg.mpiwg.berlin.mpdl.lt.text.tokenize.Tokenizer;
 import de.mpg.mpiwg.berlin.mpdl.lt.text.tokenize.XmlTokenizer;
 import de.mpg.mpiwg.berlin.mpdl.lt.text.tokenize.XmlTokenizerContentHandler;
 import de.mpg.mpiwg.berlin.mpdl.util.StringUtils;
@@ -52,8 +48,6 @@ import de.mpg.mpiwg.berlin.mpdl.xml.xquery.XQueryEvaluator;
  */
 public class DocumentHandler {
   private static Logger LOGGER = Logger.getLogger(DocumentHandler.class.getName());
-  private long beginOfOperation;
-  private long endOfOperation;
   
   public void doOperation(CmsDocOperation docOperation) throws ApplicationException{
     String operationName = docOperation.getName();  
@@ -61,63 +55,23 @@ public class DocumentHandler {
       create(docOperation);
     } else if (operationName.equals("delete")) {
       delete(docOperation);
-    } else if (operationName.equals("importDirectory")) {
-      importDirectory(docOperation);
     }
   }
   
-  private void importDirectory(CmsDocOperation docOperation) throws ApplicationException {
-    try {
-      LOGGER.info("Start of DocumentHandler. This operation could be time consuming because documents are indexed (normal indexing times are 10 seconds for a document)");
-      beginOperation();
-      String localDocumentsUrlStr = docOperation.getSrcUrl(); // start directory: file:/a/local/directory
-      String collectionNames = docOperation.getCollectionNames();
-      File localDocumentsDir = new File(new URI(localDocumentsUrlStr));
-      boolean docDirExists = localDocumentsDir.exists();
-      if (! docDirExists) 
-        throw new ApplicationException("Document directory:" + localDocumentsUrlStr + " does not exists. Please use a directory that exists and perform the operation again.");
-      String[] fileExtensions = {"xml"};
-      Iterator<File> iterFiles = FileUtils.iterateFiles(localDocumentsDir, fileExtensions, true);
-      int i = 0 ;
-      while(iterFiles.hasNext()) {
-        i++;
-        File xmlFile = iterFiles.next();
-        String xmlFileStr = xmlFile.getPath();
-        int relativePos = (int) localDocumentsDir.getPath().length();
-        String docId = xmlFileStr.substring(relativePos);  // relative path name starting from localDocumentsDir, e.g. /tei/de/Test_1789.xml
-        String xmlFileUrlStr = xmlFile.toURI().toURL().toString();
-        CmsDocOperation createDocOperation = new CmsDocOperation("create", xmlFileUrlStr, null, docId);
-        createDocOperation.setCollectionNames(collectionNames);
-        try {
-          doOperation(createDocOperation);
-          Date now = new Date();
-          LOGGER.info("Document " + i + ": " + docId + " successfully imported (" + now.toString() + ")");
-        } catch (Exception e) {
-          LOGGER.info("Document " + i + ": " + docId + " has problems:");
-          e.printStackTrace();
-        }
-      }
-      endOperation();
-      LOGGER.info("The DocumentHandler needed: " + (endOfOperation - beginOfOperation) + " ms" );
-    } catch (Exception e) {
-      throw new ApplicationException(e);
-    }
-  }
-      
   private void create(CmsDocOperation docOperation) throws ApplicationException {
     try {
       String operationName = docOperation.getName();  
       String srcUrlStr = docOperation.getSrcUrl(); 
-      String docIdentifier = docOperation.getDocIdentifier();
+      String docId = docOperation.getDocIdentifier();
       String mainLanguage = docOperation.getMainLanguage();
       String[] elementNames = docOperation.getElementNames();
       if (elementNames == null) {
         String[] defaultElementNames = {"persName", "placeName", "p", "s", "head"};
         docOperation.setElementNames(defaultElementNames); // default
       }
-      String docDirName = getDocDir(docIdentifier);
-      String docDestFileName = getDocFullFileName(docIdentifier); 
-      boolean docIsXml = isDocXml(docIdentifier); 
+      String docDirName = getDocDir(docId);
+      String docDestFileName = getDocFullFileName(docId); 
+      boolean docIsXml = isDocXml(docId); 
       URL srcUrl = null;
       String protocol = null;
       if (srcUrlStr != null && ! srcUrlStr.equals("empty")) {
@@ -132,11 +86,9 @@ public class DocumentHandler {
         docOperation.setStatus("download file from: " + srcUrlStr + " to CMS");
       }
       FileUtils.copyURLToFile(srcUrl, docDestFile, 100000, 100000);
-      MetadataRecord mdRecord = new MetadataRecord();
-      mdRecord.setDocId(docIdentifier);
-      mdRecord.setCollectionNames(docOperation.getCollectionNames());
+      MetadataRecord mdRecord = docOperation.getMdRecord();
       mdRecord.setLastModified(new Date());
-      String mimeType = getMimeType(docIdentifier);
+      String mimeType = getMimeType(docId);
       mdRecord.setType(mimeType);
       // document is of type XML
       if (docIsXml) {
@@ -203,11 +155,10 @@ public class DocumentHandler {
           FileUtils.writeStringToFile(docPageTokenizedFile, tokenizedXmlStr, "utf-8");
         }
       } 
-      docOperation.setMdRecord(mdRecord);
       // build the documents fulltext fields
       buildFulltextFields(docOperation);
       // perform operation on Lucene
-      docOperation.setStatus(operationName + " document: " + docIdentifier + " in CMS");
+      docOperation.setStatus(operationName + " document: " + docId + " in CMS");
       IndexHandler indexHandler = IndexHandler.getInstance();
       indexHandler.indexDocument(docOperation);
     } catch (IOException e) {
@@ -611,12 +562,4 @@ public class DocumentHandler {
     return retStr;
   }
   
-  private void beginOperation() {
-    beginOfOperation = new Date().getTime();
-  }
-
-  private void endOperation() {
-    endOfOperation = new Date().getTime();
-  }
-
 }
