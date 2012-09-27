@@ -6,10 +6,11 @@ import java.util.List;
 public class Collection {
   private String id;
   private String name;
-  private String[] dataUrls;  // url of data (starting url)
+  private String[] dataUrls;  // urls of data (could also be starting url)
   private String dataUrlPrefix;  // prefix of url which is not relevant as id 
-  private String metadataUrl;  // metadata url for fetching records
-  private String metadataFormat;  // metadata file name e.g. index.html
+  private String[] metadataUrls;  // metadata urls for fetching records
+  private String metadataUrlPrefix;  // prefix of metadataUrl which is not relevant as id
+  private String metadataUrlType;  // metadata url type e.g. "single" (url delivers single metadata record) or "many" (url delivers many metadata records)
   private String excludesStr; // excludes below dataUrl separated by a blank
   private String mainLanguage;
   private ArrayList<String> fields;
@@ -73,20 +74,28 @@ public class Collection {
     this.dataUrlPrefix = dataUrlPrefix;
   }
 
-  public String getMetadataUrl() {
-    return metadataUrl;
+  public String[] getMetadataUrls() {
+    return metadataUrls;
   }
 
-  public void setMetadataUrl(String metadataUrl) {
-    this.metadataUrl = metadataUrl;
+  public void setMetadataUrls(String[] metadataUrls) {
+    this.metadataUrls = metadataUrls;
   }
 
-  public String getMetadataFormat() {
-    return metadataFormat;
+  public String getMetadataUrlPrefix() {
+    return metadataUrlPrefix;
   }
 
-  public void setMetadataFormat(String metadataFormat) {
-    this.metadataFormat = metadataFormat;
+  public void setMetadataUrlPrefix(String metadataUrlPrefix) {
+    this.metadataUrlPrefix = metadataUrlPrefix;
+  }
+
+  public String getMetadataUrlType() {
+    return metadataUrlType;
+  }
+
+  public void setMetadataUrlType(String metadataUrlType) {
+    this.metadataUrlType = metadataUrlType;
   }
 
   public String getExcludesStr() {
