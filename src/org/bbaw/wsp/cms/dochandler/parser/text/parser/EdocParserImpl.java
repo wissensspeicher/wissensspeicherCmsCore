@@ -60,7 +60,7 @@ public class EdocParserImpl extends HtmlParserImpl {
 
       if (eDocUrl != null) {
         // Parse eDoc
-        System.out.println("eDocUrl: " + eDocUrl);
+        // System.out.println("eDocUrl: " + eDocUrl);
         final Object parsedEDoc = PdfParserImpl.getInstance().parse(startUri, eDocUrl);
         if (parsedEDoc instanceof PdfDocument) {
           final PdfDocument parsedPDF = (PdfDocument) parsedEDoc;
