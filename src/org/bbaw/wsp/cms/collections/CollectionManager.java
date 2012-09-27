@@ -13,6 +13,10 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.bbaw.wsp.cms.dochandler.DocumentHandler;
+import org.bbaw.wsp.cms.dochandler.parser.document.IDocument;
+import org.bbaw.wsp.cms.dochandler.parser.text.parser.DocumentParser;
+import org.bbaw.wsp.cms.dochandler.parser.text.parser.EdocIndexMetadataFetcherTool;
+import org.bbaw.wsp.cms.document.MetadataRecord;
 import org.bbaw.wsp.cms.scheduler.CmsDocOperation;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
@@ -85,17 +89,19 @@ public class CollectionManager {
     if (isUpdateNecessary || forceUpdate) {
       String[] collectionDataUrls = collection.getDataUrls();
       String excludesStr = collection.getExcludesStr();
-      List<String> collectionDocumentUrls = new ArrayList<String>();
-      for (int i=0; i<collectionDataUrls.length; i++) {
-        String url = collectionDataUrls[i];
-        if (url.endsWith("/")) {
-          List<String> collectionDocumentUrlsTemp = extractDocumentUrls(url, excludesStr);
-          collectionDocumentUrls.addAll(collectionDocumentUrlsTemp);
-        } else {
-          collectionDocumentUrls.add(url);
+      if (collectionDataUrls != null) {
+        List<String> collectionDocumentUrls = new ArrayList<String>();
+        for (int i=0; i<collectionDataUrls.length; i++) {
+          String url = collectionDataUrls[i];
+          if (url.endsWith("/")) {
+            List<String> collectionDocumentUrlsTemp = extractDocumentUrls(url, excludesStr);
+            collectionDocumentUrls.addAll(collectionDocumentUrlsTemp);
+          } else {
+            collectionDocumentUrls.add(url);
+          }
         }
+        collection.setDocumentUrls(collectionDocumentUrls);
       }
-      collection.setDocumentUrls(collectionDocumentUrls);
       addDocuments(collection); 
       String configFileName = collection.getConfigFileName();
       File configFile = new File(configFileName);
@@ -105,45 +111,93 @@ public class CollectionManager {
   
   private void addDocuments(Collection collection) throws ApplicationException {
     DocumentHandler docHandler = new DocumentHandler();
-    try {
-      List<String> documentUrls = collection.getDocumentUrls();
-      for (int i=0; i<documentUrls.size(); i++) {
-        URL uri = new URL(documentUrls.get(i));
-        String uriPath = uri.getPath();
-        String prefix = collection.getDataUrlPrefix();
-        if (prefix == null)
-          prefix = "/exist/rest/db";
-        if(uriPath.startsWith(prefix)){
-          uriPath = uriPath.substring(prefix.length());
-        }
-        String docUrl = documentUrls.get(i);
-        String docId = "/" + collection.getId() + uriPath;
-        counter++;
-        Date now = new Date();
-        LOGGER.info(counter + ". " + now.toString() + " Collection: " + collection.getId() + ": Create: " + docId);
-        CmsDocOperation docOp = new CmsDocOperation("create", docUrl, null, docId);
-        String collectionId = collection.getId();
-        docOp.setCollectionNames(collectionId);
-        ArrayList<String> fields = collection.getFields();
+    ArrayList<MetadataRecord> mdRecords = getMetadataRecords(collection);
+    for (int i=0; i<mdRecords.size(); i++) {
+      MetadataRecord mdRecord = mdRecords.get(i);
+      String docUrl = mdRecord.getUri();
+      String docId = mdRecord.getDocId();
+      String collectionId = mdRecord.getCollectionNames();
+      counter++;
+      Date now = new Date();
+      LOGGER.info(counter + ". " + now.toString() + " Collection: " + collectionId + ": Create: " + docId);
+      CmsDocOperation docOp = new CmsDocOperation("create", docUrl, null, docId);
+      docOp.setMdRecord(mdRecord);
+      ArrayList<String> fields = collection.getFields();
+      if (fields != null) {
         String[] fieldsArray = new String[fields.size()];
         for (int j=0;j<fields.size();j++) {
           String f = fields.get(j);
           fieldsArray[j] = f;
         }
         docOp.setElementNames(fieldsArray);
-        String mainLanguage = collection.getMainLanguage();
-        docOp.setMainLanguage(mainLanguage);
-        try {
-          docHandler.doOperation(docOp);
-        } catch (Exception e) {
-          e.printStackTrace();
+      }
+      String mainLanguage = collection.getMainLanguage();
+      docOp.setMainLanguage(mainLanguage);
+      try {
+        docHandler.doOperation(docOp);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
+  }
+
+  private ArrayList<MetadataRecord> getMetadataRecords(Collection collection) throws ApplicationException {
+    ArrayList<MetadataRecord> mdRecords = null;
+    try {
+      String collectionId = collection.getId();
+      String dataUrlPrefix = collection.getDataUrlPrefix();
+      String metadataUrlPrefix = collection.getMetadataUrlPrefix();
+      List<String> documentUrls = collection.getDocumentUrls();
+      String[] metadataUrls = collection.getMetadataUrls();
+      if (metadataUrls != null) {
+        mdRecords = new ArrayList<MetadataRecord>();
+        for (int i=0; i<metadataUrls.length; i++) {
+          String metadataUrl = metadataUrls[i];
+          MetadataRecord tikaMdRecord = new MetadataRecord();
+          EdocIndexMetadataFetcherTool.fetchHtmlDirectly(metadataUrl, tikaMdRecord);
+          String httpEdocUrl = tikaMdRecord.getRealDocUrl();
+          if (httpEdocUrl != null) {
+            String docIdTmp = httpEdocUrl.replaceAll(metadataUrlPrefix, "");
+            String docId = "/" + collectionId + docIdTmp;
+            tikaMdRecord.setDocId(docId);
+            String fileEdocUrl = "file:" + dataUrlPrefix + docIdTmp;
+            tikaMdRecord.setUri(fileEdocUrl);
+            tikaMdRecord.setCollectionNames(collectionId);
+            String mainLanguage = collection.getMainLanguage();
+            tikaMdRecord.setLanguage(mainLanguage);
+            tikaMdRecord.setSchemaName(null);
+            mdRecords.add(tikaMdRecord);
+          } else {
+            LOGGER.severe("Fetching metadata failed for: " + metadataUrl + " (no url in index.html found)");
+          }
+        }
+      }
+      if (metadataUrls == null && documentUrls != null) {
+        mdRecords = new ArrayList<MetadataRecord>();
+        for (int i=0; i<documentUrls.size(); i++) {
+          MetadataRecord mdRecord = new MetadataRecord();
+          String docUrl = documentUrls.get(i);
+          URL uri = new URL(docUrl);
+          String uriPath = uri.getPath();
+          String prefix = collection.getDataUrlPrefix();
+          if (prefix == null)
+            prefix = "/exist/rest/db";
+          if(uriPath.startsWith(prefix)){
+            uriPath = uriPath.substring(prefix.length());
+          }
+          String docId = "/" + collectionId + uriPath;
+          mdRecord.setDocId(docId);
+          mdRecord.setUri(docUrl);
+          mdRecord.setCollectionNames(collectionId);
+          mdRecords.add(mdRecord);
         }
       }
     } catch (MalformedURLException e) {
       throw new ApplicationException(e);
     }
+    return mdRecords;
   }
-
+  
   private void setUpdate(File configFile, boolean update) throws ApplicationException {
     try {
       // flag im Konfigurations-File auf false setzen durch Serialisierung in das File
