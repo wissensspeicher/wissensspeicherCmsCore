@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -133,12 +134,14 @@ public class IndexHandler {
         Field identifierField = new Field("identifier", identifier, Field.Store.YES, Field.Index.ANALYZED);
         doc.add(identifierField);
       }
-      String uri = docOperation.getSrcUrl();
+      String uri = mdRecord.getUri();
+      if (uri == null)
+        uri = docOperation.getSrcUrl();
       if (uri != null) {
         Field uriField = new Field("uri", uri, Field.Store.YES, Field.Index.ANALYZED);
         doc.add(uriField);
       }
-      String collectionNames = docOperation.getCollectionNames();
+      String collectionNames = mdRecord.getCollectionNames();
       if (collectionNames != null) {
         Field collectionNamesField = new Field("collectionNames", collectionNames, Field.Store.YES, Field.Index.ANALYZED);
         doc.add(collectionNamesField);
@@ -170,10 +173,20 @@ public class IndexHandler {
         Field publisherFieldSorted = new Field("publisherSorted", publisherStr, Field.Store.YES, Field.Index.NOT_ANALYZED);
         doc.add(publisherFieldSorted);
       }
-      if (mdRecord.getYear() != null) {
-        Field dateField = new Field("date", mdRecord.getYear(), Field.Store.YES, Field.Index.ANALYZED);
+      String yearStr = mdRecord.getYear();
+      if (yearStr == null) {
+        Date pubDate = mdRecord.getPublishingDate();
+        if (pubDate != null) {
+          Calendar cal = Calendar.getInstance();
+          cal.setTime(pubDate);
+          int year = cal.get(Calendar.YEAR);
+          yearStr = String.valueOf(year);
+        }
+      }
+      if (yearStr != null) {
+        Field dateField = new Field("date", yearStr, Field.Store.YES, Field.Index.ANALYZED);
         doc.add(dateField);
-        Field dateFieldSorted = new Field("dateSorted", mdRecord.getYear(), Field.Store.YES, Field.Index.NOT_ANALYZED);
+        Field dateFieldSorted = new Field("dateSorted", yearStr, Field.Store.YES, Field.Index.NOT_ANALYZED);
         doc.add(dateFieldSorted);
       }
       if (mdRecord.getSubject() != null) {
