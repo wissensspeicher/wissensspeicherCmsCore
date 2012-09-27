@@ -103,7 +103,7 @@ public class EdocIndexMetadataFetcherTool {
           Matcher mLink = pLink.matcher(key);
           mLink.find();
           mdRecord.setRealDocUrl(mLink.group(1));
-          System.out.println(mLink.group(1));
+          // System.out.println(mLink.group(1));
         } else if (key.contains("Freie Schlagwörter")) {
           mdRecord.setSubject(value);
         } else if (key.contains("DDC-Sachgruppe")) {
@@ -161,7 +161,6 @@ public class EdocIndexMetadataFetcherTool {
   public static boolean isEDocIndex(final String uri) throws ApplicationException {
     if((uri.contains("edoc.bbaw.de") || uri.endsWith(".html")) && !uri.endsWith(".pdf")) {
       InputStream in = reader.read(uri);
-
       if (in != null) {
         Scanner scanner = new Scanner(in);
         scanner.useDelimiter("\n");
