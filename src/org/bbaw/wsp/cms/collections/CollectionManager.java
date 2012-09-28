@@ -13,8 +13,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.bbaw.wsp.cms.dochandler.DocumentHandler;
-import org.bbaw.wsp.cms.dochandler.parser.document.IDocument;
-import org.bbaw.wsp.cms.dochandler.parser.text.parser.DocumentParser;
 import org.bbaw.wsp.cms.dochandler.parser.text.parser.EdocIndexMetadataFetcherTool;
 import org.bbaw.wsp.cms.document.MetadataRecord;
 import org.bbaw.wsp.cms.scheduler.CmsDocOperation;
@@ -94,6 +92,7 @@ public class CollectionManager {
         for (int i=0; i<collectionDataUrls.length; i++) {
           String url = collectionDataUrls[i];
           if (url.endsWith("/")) {
+            url = url.substring(0, url.length() - 1);
             List<String> collectionDocumentUrlsTemp = extractDocumentUrls(url, excludesStr);
             collectionDocumentUrls.addAll(collectionDocumentUrlsTemp);
           } else {
@@ -149,27 +148,41 @@ public class CollectionManager {
       String metadataUrlPrefix = collection.getMetadataUrlPrefix();
       List<String> documentUrls = collection.getDocumentUrls();
       String[] metadataUrls = collection.getMetadataUrls();
+      String metadataUrlType = collection.getMetadataUrlType();  // single or many
       if (metadataUrls != null) {
-        mdRecords = new ArrayList<MetadataRecord>();
-        for (int i=0; i<metadataUrls.length; i++) {
-          String metadataUrl = metadataUrls[i];
-          MetadataRecord tikaMdRecord = new MetadataRecord();
-          EdocIndexMetadataFetcherTool.fetchHtmlDirectly(metadataUrl, tikaMdRecord);
-          String httpEdocUrl = tikaMdRecord.getRealDocUrl();
-          if (httpEdocUrl != null) {
-            String docIdTmp = httpEdocUrl.replaceAll(metadataUrlPrefix, "");
-            String docId = "/" + collectionId + docIdTmp;
-            tikaMdRecord.setDocId(docId);
-            String fileEdocUrl = "file:" + dataUrlPrefix + docIdTmp;
-            tikaMdRecord.setUri(fileEdocUrl);
-            tikaMdRecord.setCollectionNames(collectionId);
-            String mainLanguage = collection.getMainLanguage();
-            tikaMdRecord.setLanguage(mainLanguage);
-            tikaMdRecord.setSchemaName(null);
-            mdRecords.add(tikaMdRecord);
-          } else {
-            LOGGER.severe("Fetching metadata failed for: " + metadataUrl + " (no url in index.html found)");
+        if (metadataUrlType != null && metadataUrlType.equals("single")) {
+          mdRecords = new ArrayList<MetadataRecord>();
+          for (int i=0; i<metadataUrls.length; i++) {
+            String metadataUrl = metadataUrls[i];
+            MetadataRecord mdRecord = new MetadataRecord();
+            String uri = null;
+            String docId = null;
+            if (collectionId.equals("edoc")) {
+              EdocIndexMetadataFetcherTool.fetchHtmlDirectly(metadataUrl, mdRecord);
+              String httpEdocUrl = mdRecord.getRealDocUrl();
+              if (httpEdocUrl != null) {             
+                String docIdTmp = httpEdocUrl.replaceAll(metadataUrlPrefix, "");
+                docId = "/" + collectionId + docIdTmp;
+                String fileEdocUrl = "file:" + dataUrlPrefix + docIdTmp;
+                uri = fileEdocUrl;
+              } else {
+                LOGGER.severe("Fetching metadata failed for: " + metadataUrl + " (no url in index.html found)");
+              }
+            } else {
+              // TODO
+            }
+            if (docId != null && uri != null) {
+              mdRecord.setDocId(docId);
+              mdRecord.setUri(uri);
+              mdRecord.setCollectionNames(collectionId);
+              String mainLanguage = collection.getMainLanguage();
+              mdRecord.setLanguage(mainLanguage);
+              mdRecord.setSchemaName(null);
+              mdRecords.add(mdRecord);
+            }
           }
+        } else {
+          // TODO
         }
       }
       if (metadataUrls == null && documentUrls != null) {
