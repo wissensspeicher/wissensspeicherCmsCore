@@ -3,6 +3,7 @@ package org.bbaw.wsp.cms.document;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Hashtable;
 
 import de.mpg.mpiwg.berlin.mpdl.lt.text.tokenize.XmlTokenizerContentHandler;
 
@@ -10,6 +11,7 @@ public class MetadataRecord {
   private String docId; // local id: document identifier in index system, e.g. /echo/la/Benedetti_1585.xml
   private String identifier; // local id: identifier field in documents metadata: e.g. /echo:echo/echo:metadata/dcterms:identifier
   private String uri; // global id: document URI (uniform resource identifier), e.g. http://de.wikipedia.org/wiki/Ramones
+  private String webUri; // web url, e.g. "http://telota.bbaw.de/ig/IG I3 501"
   private String language;
   private String creator; // author
   private String title;
@@ -41,6 +43,7 @@ public class MetadataRecord {
   private int pageCount;
   private String persons;
   private String places;
+  private Hashtable<String, XQuery> xQueries; // dynamic xQueries of xml documents (with name, code, result)
   private String realDocUrl; // e.g. the URL to the eDoc (not the index.html)
 
   public String getRealDocUrl() {
@@ -333,6 +336,22 @@ public class MetadataRecord {
 
   public void setPlaces(String places) {
     this.places = places;
+  }
+
+  public String getWebUri() {
+    return webUri;
+  }
+
+  public void setWebUri(String webUri) {
+    this.webUri = webUri;
+  }
+
+  public Hashtable<String, XQuery> getxQueries() {
+    return xQueries;
+  }
+
+  public void setxQueries(Hashtable<String, XQuery> xQueries) {
+    this.xQueries = xQueries;
   }
 
   @Override
