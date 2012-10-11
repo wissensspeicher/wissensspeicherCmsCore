@@ -23,7 +23,7 @@
 <xsl:variable name="dictionaryServiceName" select="'http://mpdl-service.mpiwg-berlin.mpg.de/mpiwg-mpdl-lt-web/lt/GetDictionaryEntries'"/>
 
 <xsl:template match="*:TEI">
-  <xsl:apply-templates mode="text"/>
+  <xsl:apply-templates select="*:text" mode="text"/>
 </xsl:template>
 
 <xsl:template match="*:expan|*:emph|*:q|*:quote|*:reg|*:num" mode="text">
@@ -492,10 +492,6 @@
   <span class="s">
     <xsl:apply-templates mode="text"/>
   </span>
-</xsl:template>
-
-<xsl:template match="text()" mode="text">
-  <xsl:value-of select="."/>
 </xsl:template>
 
 </xsl:stylesheet>
