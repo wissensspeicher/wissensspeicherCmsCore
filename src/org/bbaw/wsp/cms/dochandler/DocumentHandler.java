@@ -10,7 +10,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.logging.Logger;
 
@@ -24,6 +26,7 @@ import org.apache.commons.io.FileUtils;
 import org.bbaw.wsp.cms.dochandler.parser.document.IDocument;
 import org.bbaw.wsp.cms.dochandler.parser.text.parser.DocumentParser;
 import org.bbaw.wsp.cms.document.MetadataRecord;
+import org.bbaw.wsp.cms.document.XQuery;
 import org.bbaw.wsp.cms.general.Constants;
 import org.bbaw.wsp.cms.lucene.IndexHandler;
 import org.bbaw.wsp.cms.scheduler.CmsDocOperation;
@@ -298,12 +301,32 @@ public class DocumentHandler {
         mdRecord = getMetadataRecordHtml(xQueryEvaluator, srcUrl, mdRecord);
       else
         mdRecord.setSchemaName(schemaName); // all other cases: set docType to schemaName
+      evaluateXQueries(xQueryEvaluator, srcUrl, mdRecord);
     } catch (MalformedURLException e) {
       throw new ApplicationException(e);
     }
     return mdRecord;
   }
 
+  private MetadataRecord evaluateXQueries(XQueryEvaluator xQueryEvaluator, URL srcUrl, MetadataRecord mdRecord) {
+    Hashtable<String, XQuery> xqueriesHashtable = mdRecord.getxQueries();
+    if (xqueriesHashtable != null) {
+      Enumeration<String> keys = xqueriesHashtable.keys();
+      while (keys != null && keys.hasMoreElements()) {
+        String key = keys.nextElement();
+        XQuery xQuery = xqueriesHashtable.get(key);
+        String xQueryCode = xQuery.getCode();
+        try {
+          String xQueryResult = xQueryEvaluator.evaluateAsString(srcUrl, xQueryCode);
+          xQuery.setResult(xQueryResult);
+        } catch (Exception e) {
+          // nothing
+        }
+      }
+    }
+    return mdRecord;
+  }
+  
   private MetadataRecord getMetadataRecordTei(XQueryEvaluator xQueryEvaluator, URL srcUrl, MetadataRecord mdRecord) throws ApplicationException {
     String metadataXmlStr = xQueryEvaluator.evaluateAsString(srcUrl, "/*:TEI/*:teiHeader");
     if (metadataXmlStr != null) {
