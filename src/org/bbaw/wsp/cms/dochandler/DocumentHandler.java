@@ -346,8 +346,10 @@ public class DocumentHandler {
       String language = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/*:teiHeader/*:profileDesc/*:langUsage/*:language[1]/@ident)");
       if (language != null && language.isEmpty())
         language = null;
-      if (language != null)
+      if (language != null) {
         language = StringUtils.deresolveXmlEntities(language);
+        language = Language.getInstance().getISO639Code(language);
+      }
       String place = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:publicationStmt/*:pubPlace");
       if (place != null)
         place = StringUtils.deresolveXmlEntities(place);
@@ -409,8 +411,10 @@ public class DocumentHandler {
       String language = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/meta[@name = 'DC.language']/@content)");
       if (language != null && language.isEmpty())
         language = null;
-      if (language != null && ! language.isEmpty())
+      if (language != null && ! language.isEmpty()) {
         language = StringUtils.deresolveXmlEntities(language);
+        language = Language.getInstance().getISO639Code(language);
+      }
       String publisher = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/meta[@name = 'DC.publisher']/@content)");
       if (publisher != null)
         publisher = StringUtils.deresolveXmlEntities(publisher);
