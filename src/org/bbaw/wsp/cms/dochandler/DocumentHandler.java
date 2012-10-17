@@ -39,6 +39,7 @@ import org.xml.sax.XMLReader;
 import com.sun.org.apache.xerces.internal.parsers.SAXParser;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
+import de.mpg.mpiwg.berlin.mpdl.lt.general.Language;
 import de.mpg.mpiwg.berlin.mpdl.lt.text.tokenize.Token;
 import de.mpg.mpiwg.berlin.mpdl.lt.text.tokenize.XmlTokenizer;
 import de.mpg.mpiwg.berlin.mpdl.lt.text.tokenize.XmlTokenizerContentHandler;
@@ -127,6 +128,9 @@ public class DocumentHandler {
         docOperation.setStatus("extract metadata of: " + srcUrlStr + " to CMS");
         mdRecord = getMetadataRecord(docDestFileUpgrade, docType, mdRecord, xQueryEvaluator);
         String mdRecordLanguage = mdRecord.getLanguage();
+        String langId = Language.getInstance().getLanguageId(mdRecordLanguage); // test if language code is supported
+        if (langId == null)
+          mdRecordLanguage = null;
         if (mdRecordLanguage == null && mainLanguage != null)
           mdRecord.setLanguage(mainLanguage);
           
