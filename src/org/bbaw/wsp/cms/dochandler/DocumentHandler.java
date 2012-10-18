@@ -119,8 +119,8 @@ public class DocumentHandler {
         File tocFile = new File(docDirName + "/toc.xml");
         String tocResult = tocTransformer.transform(docDestFileNameUpgrade);
         FileUtils.writeStringToFile(tocFile, tocResult, "utf-8");
-        String persons = getPersons(tocResult, xQueryEvaluator);  // TODO eliminate duplicates
-        String places = getPlaces(tocResult, xQueryEvaluator);  // TODO eliminate duplicates
+        String persons = getPersons(tocResult, xQueryEvaluator); 
+        String places = getPlaces(tocResult, xQueryEvaluator);
   
         // Get metadata info out of the xml document
         mdRecord.setPersons(persons);
@@ -462,12 +462,12 @@ public class DocumentHandler {
   }
 
   private String getPersons(String tocString, XQueryEvaluator xQueryEvaluator) throws ApplicationException {
-    String persons = xQueryEvaluator.evaluateAsStringValueJoined(tocString, "/list/list[@type='persons']/item", "###");
+    String persons = xQueryEvaluator.evaluateAsStringValueJoined(tocString, "/list/list[@type='persons']/item[not(. = preceding::item)]", "###"); // [not(. = preceding::item)] removes duplicates
     return persons;
   }
   
   private String getPlaces(String tocString, XQueryEvaluator xQueryEvaluator) throws ApplicationException {
-    String places = xQueryEvaluator.evaluateAsStringValueJoined(tocString, "/list/list[@type='places']/item", "###");
+    String places = xQueryEvaluator.evaluateAsStringValueJoined(tocString, "/list/list[@type='places']/item[not(. = preceding::item)]", "###"); 
     return places;
   }
   
