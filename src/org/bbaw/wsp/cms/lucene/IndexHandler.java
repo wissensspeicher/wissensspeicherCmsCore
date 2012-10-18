@@ -636,6 +636,16 @@ public class IndexHandler {
         String pageCountStr = pageCountField.stringValue();
         pageCount = Integer.valueOf(pageCountStr);
       }
+      String personsStr = null;
+      Fieldable personsField = doc.getFieldable("persons");
+      if (personsField != null) {
+        personsStr = personsField.stringValue();
+      }
+      String placesStr = null;
+      Fieldable placesField = doc.getFieldable("places");
+      if (personsField != null) {
+        placesStr = placesField.stringValue();
+      }
       String schemaName = null;
       Fieldable schemaNameField = doc.getFieldable("schemaName");
       if (schemaNameField != null)
@@ -660,6 +670,8 @@ public class IndexHandler {
       mdRecord.setRights(rights);
       mdRecord.setAccessRights(accessRights);
       mdRecord.setPageCount(pageCount);
+      mdRecord.setPersons(personsStr);
+      mdRecord.setPlaces(placesStr);
       mdRecord.setSchemaName(schemaName);
       mdRecord.setLastModified(lastModified);
     }
