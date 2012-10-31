@@ -225,11 +225,44 @@
 
 <!-- hi (highlighted)  -->
 <xsl:template match="*:hi" mode="text">
-  <span>
-    <xsl:attribute name="class"><xsl:value-of select="@rend"/></xsl:attribute>
-    <xsl:apply-templates mode="text"/>
-  </span>
-</xsl:template>
+  <xsl:choose>
+    <xsl:when test="not(empty(@type)) and @type = 'elem'">
+      <div>
+        <xsl:if test="not(empty(@xml:id))"><xsl:attribute name="id"><xsl:value-of select="@xml:id"/></xsl:attribute></xsl:if>
+        <xsl:attribute name="class"><xsl:value-of select="concat('highlight ', @type)"/></xsl:attribute>
+        <xsl:apply-templates mode="text"/>
+      </div>
+    </xsl:when>
+    <xsl:when test="not(empty(@type)) and @type != 'elem'">
+      <span>
+        <xsl:if test="not(empty(@xml:id))"><xsl:attribute name="id"><xsl:value-of select="@xml:id"/></xsl:attribute></xsl:if>
+        <xsl:attribute name="class"><xsl:value-of select="concat('highlight ', @type)"/></xsl:attribute>
+        <xsl:apply-templates mode="text"/>
+      </span>
+   </xsl:when>
+   <xsl:when test="@rend = 'initial'">
+     <span>
+       <xsl:if test="not(empty(@xml:id))"><xsl:attribute name="id"><xsl:value-of select="@xml:id"/></xsl:attribute></xsl:if>
+       <xsl:attribute name="class"><xsl:value-of select="'initial'"/></xsl:attribute>
+       <xsl:apply-templates mode="text"/>
+     </span>
+   </xsl:when>
+   <xsl:when test="@rend = 'bold'">
+     <span>
+       <xsl:if test="not(empty(@xml:id))"><xsl:attribute name="id"><xsl:value-of select="@xml:id"/></xsl:attribute></xsl:if>
+       <xsl:attribute name="class"><xsl:value-of select="'bf'"/></xsl:attribute>
+       <xsl:apply-templates mode="text"/>
+     </span>
+   </xsl:when>
+   <xsl:otherwise>
+     <span>
+       <xsl:if test="not(empty(@xml:id))"><xsl:attribute name="id"><xsl:value-of select="@xml:id"/></xsl:attribute></xsl:if>
+       <xsl:attribute name="class"><xsl:value-of select="@rend"/></xsl:attribute>
+       <xsl:apply-templates mode="text"/>
+     </span>
+   </xsl:otherwise>
+  </xsl:choose>
+</xsl:template> 
 
 <!-- name (of type: place, person, ...)   -->
 <xsl:template match="*:name" mode="text">
