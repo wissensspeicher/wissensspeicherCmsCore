@@ -27,6 +27,7 @@ public class PageTransformer {
   private XsltCompiler xsltCompiler;
   private XsltTransformer pageTeiTransformer;
   private XsltTransformer pageXhtmlTransformer;
+  private XsltTransformer pageDiverseTransformer;
   private XsltTransformer pageXmlTransformer;
   
   public PageTransformer() throws ApplicationException {
@@ -45,6 +46,10 @@ public class PageTransformer {
       xslStreamSource = new StreamSource(getFragmentXslUrl.openStream());
       xsltExecutable = xsltCompiler.compile(xslStreamSource);
       pageXhtmlTransformer = xsltExecutable.load();
+      getFragmentXslUrl = PageTransformer.class.getResource("pageDiverse.xsl");
+      xslStreamSource = new StreamSource(getFragmentXslUrl.openStream());
+      xsltExecutable = xsltCompiler.compile(xslStreamSource);
+      pageDiverseTransformer = xsltExecutable.load();
       getFragmentXslUrl = PageTransformer.class.getResource("pageXml.xsl");
       xslStreamSource = new StreamSource(getFragmentXslUrl.openStream());
       xsltExecutable = xsltCompiler.compile(xslStreamSource);
@@ -69,7 +74,7 @@ public class PageTransformer {
       else if (outputFormat.equals("xmlDisplay"))
         transformer = pageXmlTransformer;
       else
-        transformer = pageTeiTransformer;
+        transformer = pageDiverseTransformer;
       StringReader inputStrReader = new StringReader(inputStr);
       StreamSource xmlDoc = new StreamSource(inputStrReader);
       Serializer serializer = new Serializer();
