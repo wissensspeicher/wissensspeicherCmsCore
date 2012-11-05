@@ -40,6 +40,8 @@ public class EdocIndexMetadataFetcherTool {
    *          - the basic Url as String
    * @param mdRecord
    *          - the {@link MetadataRecord} to fill
+   *          
+   * Last change: bugfixed the publishingDate 
    * @return the complete {@link MetadataRecord}
    * @throws ApplicationException
    */
@@ -118,7 +120,7 @@ public class EdocIndexMetadataFetcherTool {
           final int year = Integer.parseInt(value.substring(value.lastIndexOf(".") + 1));
 
           Calendar cal = new GregorianCalendar();
-          cal.set(year, month, day);
+          cal.set(year, month-1, day); // bugfixed: month is 0 based!          
           mdRecord.setPublishingDate(cal.getTime());
         } else if (key.contains("ISBN")) {
           mdRecord.setIsbn(value);
@@ -215,5 +217,24 @@ public class EdocIndexMetadataFetcherTool {
         return false;
       }
     }
+  }
+
+  /**
+   * Fetch the eDoc's id as it's stored on the file system.
+   * This id can be used for an OAI/ORE aggregation for example.
+   * @param eDocUrl {@link String} the URL to the eDoc. This will be parsed for the id.
+   * @return {@link Integer} the docID or -1 if the ID couldn'T be parsed.
+   * @throws ApplicationException 
+   */
+  public static int getDocId(final String eDocUrl) throws ApplicationException {
+    if(eDocUrl == null || eDocUrl.isEmpty()) {
+      throw new ApplicationException("The value for the eDocUrl in getDocId mustn't be null or empty.");
+    }
+      Pattern p = Pattern.compile(".*/(.*?)/pdf/.*");
+      Matcher m = p.matcher(eDocUrl);
+      if(m.find()) {
+        return Integer.parseInt(m.group(1));
+      }
+      return -1;
   }
 }

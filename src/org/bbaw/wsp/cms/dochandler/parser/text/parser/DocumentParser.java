@@ -85,9 +85,9 @@ public class DocumentParser {
   public IDocument parse(final String url) throws ApplicationException {
     ResourceParser parser = null;
 
-    if (EdocIndexMetadataFetcherTool.isEDocIndex(url)) {
+    if (EdocIndexMetadataFetcherTool.isEDocIndex(url)) {      
       parser = EdocParserImpl.getInstance();
-    } else if (getExtension(url).equals(EXT_PDF)) {
+    } else if (getExtension(url).equals(EXT_PDF)) {     
       parser = PdfParserImpl.getInstance();
     } else if (getExtension(url).equals(EXT_DOC)) {
       parser = DocParserImpl.getInstance();
