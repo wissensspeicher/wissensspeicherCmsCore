@@ -1,4 +1,4 @@
-package org.bbaw.wsp.cms.mdsystem.metadata.general;
+package org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager;
 
 import java.io.File;
 import java.io.FileOutputStream;
