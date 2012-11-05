@@ -3,8 +3,8 @@ package org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager;
 import java.util.Map;
 import java.util.Set;
 
-import org.bbaw.wsp.cms.mdsystem.metadata.factory.MetadataParserFactory;
-import org.bbaw.wsp.cms.mdsystem.metadata.parser.RdfMetadataParser;
+import org.bbaw.wsp.cms.mdsystem.metadata.general.extractor.RdfMetadataExtractor;
+import org.bbaw.wsp.cms.mdsystem.metadata.parser.factory.MetadataParserFactory;
 import org.openjena.riot.Lang;
 import org.openjena.riot.RiotLoader;
 
@@ -155,7 +155,7 @@ public class RdfHandler {
 
 	public String scanID(final String file) {
 		try {
-			RdfMetadataParser fac = MetadataParserFactory.newRdfMetadataParser(file);
+			RdfMetadataExtractor fac = MetadataParserFactory.newRdfMetadataParser(file);
 			String test = fac.getRdfAboutValue();
 			return test;
 
