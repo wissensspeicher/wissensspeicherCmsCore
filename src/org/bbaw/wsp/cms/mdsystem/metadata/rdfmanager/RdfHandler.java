@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.bbaw.wsp.cms.mdsystem.metadata.general.extractor.RdfMetadataExtractor;
-import org.bbaw.wsp.cms.mdsystem.metadata.parser.factory.MetadataParserFactory;
+import org.bbaw.wsp.cms.mdsystem.metadata.general.extractor.factory.MetadataExtractorFactory;
 import org.openjena.riot.Lang;
 import org.openjena.riot.RiotLoader;
 
@@ -155,7 +155,7 @@ public class RdfHandler {
 
 	public String scanID(final String file) {
 		try {
-			RdfMetadataExtractor fac = MetadataParserFactory.newRdfMetadataParser(file);
+			RdfMetadataExtractor fac = MetadataExtractorFactory.newRdfMetadataParser(file);
 			String test = fac.getRdfAboutValue();
 			return test;
 
