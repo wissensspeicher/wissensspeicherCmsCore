@@ -45,6 +45,7 @@ public class MetadataRecord {
   private String places;
   private Hashtable<String, XQuery> xQueries; // dynamic xQueries of xml documents (with name, code, result)
   private String realDocUrl; // e.g. the URL to the eDoc (not the index.html)
+  private String inPublication; // e.g. the KOBV publication (in: ...)
 
   public String getRealDocUrl() {
     return realDocUrl;
@@ -354,6 +355,14 @@ public class MetadataRecord {
     this.xQueries = xQueries;
   }
 
+  public String getInPublication() {
+    return inPublication;
+  }
+
+  public void setInPublication(String inPublication) {
+    this.inPublication = inPublication;
+  }
+  
   @Override
   public String toString() {
     return "MetadataRecord [docId=" + docId + ", identifier=" + identifier + ", uri=" + uri + ", language=" + language + ", creator=" + creator + ", title=" + title + ", description=" + description + ", subject=" + subject + ", ddc=" + ddc + ", swd=" + swd + ", publisher=" + publisher + ", type=" + type + ", rights=" + rights + ", date=" + date + ", license=" + license + ", accessRights=" + accessRights + ", collectionNames=" + collectionNames + ", schemaName=" + schemaName + ", lastModified=" + lastModified + ", pageCount=" + pageCount + ", persons=" + persons + ", places=" + places + ", urn=" + urn + ", documentType=" + documentType + ", isbn=" + isbn + ", creationDate=" + creationDate + ", publishingDate=" + publishingDate + "]";
