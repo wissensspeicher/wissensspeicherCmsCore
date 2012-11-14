@@ -643,7 +643,7 @@ public class IndexHandler {
       }
       String placesStr = null;
       Fieldable placesField = doc.getFieldable("places");
-      if (personsField != null) {
+      if (placesField != null) {
         placesStr = placesField.stringValue();
       }
       String schemaName = null;
