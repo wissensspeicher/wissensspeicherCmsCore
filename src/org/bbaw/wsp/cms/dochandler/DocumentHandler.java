@@ -335,27 +335,27 @@ public class DocumentHandler {
     if (metadataXmlStr != null) {
       String identifier = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:publicationStmt/*:idno");
       if (identifier != null)
-        identifier = StringUtils.deresolveXmlEntities(identifier);
+        identifier = StringUtils.deresolveXmlEntities(identifier.trim());
       String creator = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:titleStmt/*:author");
       if (creator != null)
-        creator = StringUtils.deresolveXmlEntities(creator);
+        creator = StringUtils.deresolveXmlEntities(creator.trim());
       String title = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:titleStmt/*:title");
       if (title != null)
-        title = StringUtils.deresolveXmlEntities(title);
+        title = StringUtils.deresolveXmlEntities(title.trim());
       String language = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/*:teiHeader/*:profileDesc/*:langUsage/*:language[1]/@ident)");
       if (language != null && language.isEmpty())
         language = null;
       if (language != null) {
-        language = StringUtils.deresolveXmlEntities(language);
+        language = StringUtils.deresolveXmlEntities(language.trim());
         language = Language.getInstance().getISO639Code(language);
       }
       String place = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:publicationStmt/*:pubPlace");
       if (place != null)
-        place = StringUtils.deresolveXmlEntities(place);
+        place = StringUtils.deresolveXmlEntities(place.trim());
       String yearStr = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:publicationStmt/*:date");
       Date date = null; 
       if (yearStr != null && ! yearStr.equals("")) {
-        yearStr = StringUtils.deresolveXmlEntities(yearStr);
+        yearStr = StringUtils.deresolveXmlEntities(yearStr.trim());
         yearStr = new Util().toYearStr(yearStr);  // test if possible etc
         if (yearStr != null) {
           try {
@@ -365,18 +365,18 @@ public class DocumentHandler {
           }
         }
       }
-      String subject = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/*:teiHeader/*:profileDesc/*:textClass/*:keywords/*:term)");
+      String subject = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:profileDesc/*:textClass/*:keywords/*:term");
       if (subject != null)
-        subject = StringUtils.deresolveXmlEntities(subject);
+        subject = StringUtils.deresolveXmlEntities(subject.trim());
       String rights = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:publicationStmt/*:availability");
       if (rights == null)
         rights = "open access";
-      rights = StringUtils.deresolveXmlEntities(rights);
+      rights = StringUtils.deresolveXmlEntities(rights.trim());
       String license = "http://echo.mpiwg-berlin.mpg.de/policy/oa_basics/declaration";
       String accessRights = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/*:teiHeader/*:fileDesc/*:publicationStmt/*:availability/@status)");
       if (accessRights == null) 
         accessRights = "free";
-      accessRights = StringUtils.deresolveXmlEntities(accessRights);
+      accessRights = StringUtils.deresolveXmlEntities(accessRights.trim());
       mdRecord.setIdentifier(identifier);
       mdRecord.setLanguage(language);
       mdRecord.setCreator(creator);
@@ -400,27 +400,27 @@ public class DocumentHandler {
     if (metadataXmlStr != null) {
       String identifier = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/meta[@name = 'DC.identifier']/@content)");
       if (identifier != null && ! identifier.isEmpty())
-        identifier = StringUtils.deresolveXmlEntities(identifier);
+        identifier = StringUtils.deresolveXmlEntities(identifier.trim());
       String creator = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/meta[@name = 'DC.creator']/@content)");
       if (creator != null && ! creator.isEmpty())
-        creator = StringUtils.deresolveXmlEntities(creator);
+        creator = StringUtils.deresolveXmlEntities(creator.trim());
       String title = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/meta[@name = 'DC.title']/@content)");
       if (title != null && ! title.isEmpty())
-        title = StringUtils.deresolveXmlEntities(title);
+        title = StringUtils.deresolveXmlEntities(title.trim());
       String language = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/meta[@name = 'DC.language']/@content)");
       if (language != null && language.isEmpty())
         language = null;
       if (language != null && ! language.isEmpty()) {
-        language = StringUtils.deresolveXmlEntities(language);
+        language = StringUtils.deresolveXmlEntities(language.trim());
         language = Language.getInstance().getISO639Code(language);
       }
       String publisher = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/meta[@name = 'DC.publisher']/@content)");
       if (publisher != null)
-        publisher = StringUtils.deresolveXmlEntities(publisher);
+        publisher = StringUtils.deresolveXmlEntities(publisher.trim());
       String yearStr = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/meta[@name = 'DC.date']/@content)");
       Date date = null; 
       if (yearStr != null && ! yearStr.equals("")) {
-        yearStr = StringUtils.deresolveXmlEntities(yearStr);
+        yearStr = StringUtils.deresolveXmlEntities(yearStr.trim());
         yearStr = new Util().toYearStr(yearStr);  // test if possible etc
         if (yearStr != null) {
           try {
@@ -432,16 +432,16 @@ public class DocumentHandler {
       }
       String subject = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/meta[@name = 'DC.subject']/@content)");
       if (subject != null)
-        subject = StringUtils.deresolveXmlEntities(subject);
+        subject = StringUtils.deresolveXmlEntities(subject.trim());
       String rights = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/meta[@name = 'DC.rights']/@content)");
       if (rights != null && ! rights.isEmpty())
-        rights = StringUtils.deresolveXmlEntities(rights);
+        rights = StringUtils.deresolveXmlEntities(rights.trim());
       String license = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/meta[@name = 'DC.license']/@content)");
       if (license != null && ! license.isEmpty())
-        license = StringUtils.deresolveXmlEntities(license);
+        license = StringUtils.deresolveXmlEntities(license.trim());
       String accessRights = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/meta[@name = 'DC.accessRights']/@content)");
       if (accessRights != null && ! accessRights.isEmpty())
-        accessRights = StringUtils.deresolveXmlEntities(accessRights);
+        accessRights = StringUtils.deresolveXmlEntities(accessRights.trim());
       mdRecord.setIdentifier(identifier);
       mdRecord.setLanguage(language);
       mdRecord.setCreator(creator);
