@@ -36,10 +36,13 @@ public class RdfMetadataExtractor extends MetadataExtractor {
    * 
    * @return {@link String} the attribute's value (the uri of the described
    *         resource)
+   * @throws ApplicationException if the rdf:about isn't tagged
    */
-  public String getRdfAboutValue() {
+  public String getRdfAboutValue() throws ApplicationException {
     String erg = (String) buildXPath("//rdf:Description[1]/@rdf:about", false); // First
-                                                                             // node
+    if(erg.equals("")) {
+      throw new ApplicationException("No attribute rdf:about found. This is required for the authentification of the document!");
+    }                                                                         // node
     return erg;
   }
   
@@ -47,9 +50,13 @@ public class RdfMetadataExtractor extends MetadataExtractor {
    * Build path to the xml:base attribute. The first matching attribute will be returned.
    * @return {@link String} the xml:base attribute's value (the uri of the described
    *         resource)
+   * @throws ApplicationException if the xml:base isn't tagged
    */
-  public String getXmlBaseValue() {
+  public String getXmlBaseValue() throws ApplicationException {
     String erg = (String) buildXPath("//*/@xml:base", false); 
+    if(erg.equals("")) {
+      throw new ApplicationException("No attribute xml:base found. This is required for the authentification of the document!");
+    }
     return erg;
   }
 
