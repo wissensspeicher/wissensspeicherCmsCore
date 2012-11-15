@@ -150,21 +150,19 @@ public class RdfHandler {
 	* takes a file and scans it for the about id
 	*
 	* @param file
-	* @return String as like as ID of the file
+	* @return String as like as ID of the file or null if the document couldn't be identificated. 
 	*/
 
 	public String scanID(final String file) {
 		try {
 			RdfMetadataExtractor fac = MetadataExtractorFactory.newRdfMetadataParser(file);
-			String test = fac.getRdfAboutValue();
-			return test;
-
+			String identifier = fac.getXmlBaseValue();
+			System.out.println("Identified document: "+identifier);
+			return identifier;
 		} catch (ApplicationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Couldn't identify document: "+file+" - "+e.getMessage());
+			return null;
 		}
-
-		return null;
 	}
 	
 	public void readQuadsViaRiot(String filename, DatasetGraph dataset, Lang lang, String baseURI){
