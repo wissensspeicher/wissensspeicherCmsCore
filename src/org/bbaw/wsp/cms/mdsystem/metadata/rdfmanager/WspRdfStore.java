@@ -28,7 +28,7 @@ public class WspRdfStore {
 	}
 	
 	public void createStore(){
-    	System.out.println("cretae Store");
+    	System.out.println("create Store");
 //    	Location loc = new Location(directory);
 //    	StoreConnection sc = StoreConnection.make(loc);
 //    	GraphTDB graphTdb = sc.begin(ReadWrite.WRITE).getDefaultGraphTDB();
