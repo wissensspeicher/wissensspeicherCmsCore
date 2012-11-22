@@ -508,7 +508,7 @@ public class DocumentHandler {
     return isXml;
   }
 
-  private String getMimeType(String docId) {
+  public String getMimeType(String docId) {
     String mimeType = null;
     String fileName = getDocFileName(docId);
     if (fileName != null) {
