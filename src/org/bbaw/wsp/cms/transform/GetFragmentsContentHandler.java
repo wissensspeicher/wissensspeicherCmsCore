@@ -66,9 +66,10 @@ public class GetFragmentsContentHandler implements ContentHandler {
   }
 
   public void startPrefixMapping(String prefix, String uri) throws SAXException {
-    xmlnsString += "xmlns:" + prefix + "=\"" + uri + "\" ";
     if (prefix != null && prefix.equals(""))  
-      xmlnsString = "xmlns" + "=\"" + uri + "\" ";
+      xmlnsString = "xmlns" + prefix + "=\"" + uri + "\" ";
+    else
+      xmlnsString += "xmlns:" + prefix + "=\"" + uri + "\" ";
   }
   
   public void endPrefixMapping(String prefix) throws SAXException {
