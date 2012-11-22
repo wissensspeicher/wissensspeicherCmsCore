@@ -237,6 +237,10 @@ public class IndexHandler {
         Field schemaFieldSorted = new Field("schemaNameSorted", schemaStr, Field.Store.YES, Field.Index.NOT_ANALYZED);
         doc.add(schemaFieldSorted);
       }
+      if (mdRecord.getType() != null) {
+        Field typeField = new Field("type", mdRecord.getType(), Field.Store.YES, Field.Index.ANALYZED);
+        doc.add(typeField);
+      }
       if (mdRecord.getPersons() != null) {
         Field personsField = new Field("persons", mdRecord.getPersons(), Field.Store.YES, Field.Index.ANALYZED);
         doc.add(personsField);
@@ -292,9 +296,9 @@ public class IndexHandler {
         doc.add(contentField);
       }
       // save the webUrl field  
+      String webUri = mdRecord.getWebUri();
       Hashtable<String, XQuery> xqueriesHashtable = mdRecord.getxQueries();
-      if (xqueriesHashtable != null) {
-        String webUri = null;
+      if (webUri!= null && xqueriesHashtable != null) {
         Enumeration<String> keys = xqueriesHashtable.keys();
         if (keys != null && keys.hasMoreElements()) {
           XQuery xQueryWebId = xqueriesHashtable.get("webId");
@@ -310,10 +314,10 @@ public class IndexHandler {
             }
           }
         }
-        if (webUri != null) {
-          Field webUriField = new Field("webUri", webUri, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
-          doc.add(webUriField);
-        }
+      }
+      if (webUri != null) {
+        Field webUriField = new Field("webUri", webUri, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
+        doc.add(webUriField);
       }
 
       // TODO facet
@@ -661,6 +665,10 @@ public class IndexHandler {
         String pageCountStr = pageCountField.stringValue();
         pageCount = Integer.valueOf(pageCountStr);
       }
+      String type = null;
+      Fieldable typeField = doc.getFieldable("type");
+      if (typeField != null)
+        type = typeField.stringValue();
       String personsStr = null;
       Fieldable personsField = doc.getFieldable("persons");
       if (personsField != null) {
@@ -695,6 +703,7 @@ public class IndexHandler {
       mdRecord.setRights(rights);
       mdRecord.setAccessRights(accessRights);
       mdRecord.setPageCount(pageCount);
+      mdRecord.setType(type);
       mdRecord.setPersons(personsStr);
       mdRecord.setPlaces(placesStr);
       mdRecord.setSchemaName(schemaName);
