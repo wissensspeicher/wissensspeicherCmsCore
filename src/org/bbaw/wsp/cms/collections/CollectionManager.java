@@ -158,8 +158,9 @@ public class CollectionManager {
           for (int i=0; i<metadataUrls.length; i++) {
             String metadataUrl = metadataUrls[i];
             MetadataRecord mdRecord = new MetadataRecord();
-            String uri = null;
             String docId = null;
+            String uri = null;
+            String webUri = null;
             if (collectionId.equals("edoc")) {
               EdocIndexMetadataFetcherTool.fetchHtmlDirectly(metadataUrl, mdRecord);
               String httpEdocUrl = mdRecord.getRealDocUrl();
@@ -168,6 +169,7 @@ public class CollectionManager {
                 docId = "/" + collectionId + docIdTmp;
                 String fileEdocUrl = "file:" + dataUrlPrefix + docIdTmp;
                 uri = fileEdocUrl;
+                webUri = metadataUrlPrefix + docIdTmp;
               } else {
                 LOGGER.severe("Fetching metadata failed for: " + metadataUrl + " (no url in index.html found)");
               }
@@ -177,6 +179,7 @@ public class CollectionManager {
             if (docId != null && uri != null) {
               mdRecord.setDocId(docId);
               mdRecord.setUri(uri);
+              mdRecord.setWebUri(webUri);
               mdRecord.setCollectionNames(collectionId);
               String mainLanguage = collection.getMainLanguage();
               mdRecord.setLanguage(mainLanguage);
