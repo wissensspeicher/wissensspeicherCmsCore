@@ -24,7 +24,7 @@ public class JenaMain {
 	 */
 	static final String oreTestBriefe = "/home/juergens/WspEtc/rdfData/Briefe.rdf";
 	static final String oreTestSaschas = "/home/juergens/WspEtc/rdfData/AvH-Briefwechsel-Ehrenberg-sascha.rdf";
-	static final String oreBiblio = "/home/juergens/WspEtc/rdfData/AvHBiblio.rdf";
+//	static final String oreBiblio = "/home/juergens/WspEtc/rdfData/AvHBiblio.rdf";
 	static final String oreBiblioNeu = "/home/juergens/WspEtc/rdfData/BiblioNeu.rdf";
 	
     private Model model;
@@ -54,10 +54,11 @@ public class JenaMain {
      * call methods from here
      */
     private void doYourWork(){
-//    	createNamedModelsFromOreSets("/home/juergens/WspEtc/rdfData/eDocToRdfTest");
+//    	createNamedModelsFromOreSets("/home/juergens/WspEtc/rdfData/ModsToRdfTest");
+//    	createNewModelFromSingleOre(oreBiblioNeu);
     	getAllNamedModelsInDataset();
     	
-    	model.close();
+//    	model.close();
 		dataset.close();
     }
     
@@ -71,7 +72,7 @@ public class JenaMain {
     	wspStore.openDataset();
     	Model freshModel = wspStore.getFreshModel();
     	Model model = manager.fillModelFromFile(freshModel, location);
-    	String rdfAbout = manager.scanID(oreBiblioNeu);
+    	String rdfAbout = manager.scanID(location);
     	wspStore.addNamedModelToWspStore(rdfAbout, model); 
     	wspStore.closeDataset();
     	
