@@ -321,6 +321,8 @@ public class DocumentHandler {
         String xQueryCode = xQuery.getCode();
         try {
           String xQueryResult = xQueryEvaluator.evaluateAsString(srcUrl, xQueryCode);
+          if (xQueryResult != null)
+            xQueryResult = xQueryResult.trim();
           xQuery.setResult(xQueryResult);
         } catch (Exception e) {
           // nothing
