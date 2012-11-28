@@ -435,6 +435,9 @@ public class DocumentHandler {
       String subject = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/meta[@name = 'DC.subject']/@content)");
       if (subject != null)
         subject = StringUtils.deresolveXmlEntities(subject.trim());
+      String description = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/meta[@name = 'DC.description']/@content)");
+      if (description != null)
+        description = StringUtils.deresolveXmlEntities(description.trim());
       String rights = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/meta[@name = 'DC.rights']/@content)");
       if (rights != null && ! rights.isEmpty())
         rights = StringUtils.deresolveXmlEntities(rights.trim());
@@ -452,6 +455,7 @@ public class DocumentHandler {
       mdRecord.setRights(rights);
       mdRecord.setDate(date);
       mdRecord.setSubject(subject);
+      mdRecord.setDescription(description);
       mdRecord.setLicense(license);
       mdRecord.setAccessRights(accessRights);
     }
