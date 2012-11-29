@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:mods="http://www.loc.gov/mods/v3" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns:ore="http://www.openarchives.org/ore/terms/" xmlns:dc="http://purl.org/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:edm="http://www.europeana.eu/schemas/edm/" xmlns:xi="http://www.w3.org/2001/XInclude">
+<xsl:stylesheet version="2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:mods="http://www.loc.gov/mods/v3" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns:ore="http://www.openarchives.org/ore/terms/" xmlns:dc="http://purl.org/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:edm="http://www.europeana.eu/schemas/edm/" xmlns:xi="http://www.w3.org/2001/XInclude">
 	<xsl:output method="xml" version="1.0" encoding="UTF-8" indent="yes" />
+	<!-- parameters -->
+	<xsl:param name="aggrId" select="--undefined--"/>
 	<!-- global variables -->
+	<xsl:variable name="aggregationUri" as="xsd:anyURI" select="concat('http://wsp.bbaw.de/mods/',$aggrId,'/aggregation') cast as xsd:anyURI" />
 	<xsl:variable name="newline"><xsl:text>
 	</xsl:text>
 	</xsl:variable>
@@ -9,7 +12,7 @@
 		<xsl:variable name="modsUrl" select="//mods:url/text()" />
 		<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:ore="http://www.openarchives.org/ore/terms/" xmlns:dc="http://purl.org/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:edm="http://www.europeana.eu/schemas/edm/" xmlns:xi="http://www.w3.org/2001/XInclude">
 			<rdf:Description xml:base="{$modsUrl}" rdf:about="{$modsUrl}">				
-				<ore:describes rdf:resource="--gedachte Aggregation--" />
+				<ore:describes rdf:resource="{$aggregationUri}" />
 				<rdf:type rdf:resource="http://www.openarchives.org/ore/terms/ResourceMap"/>
 				<dc:creator rdf:parseType="Resource">
 					<foaf:name>Wissensspeicher</foaf:name>
@@ -21,12 +24,12 @@
 				<dc:rights/>
 				<dcterms:rights rdf:resource="http://creativecommons.org/licenses/by-nc/2.5/"/>
 			</rdf:Description>
-			<rdf:Description rdf:about="--gedachte Aggregation--">
+			<rdf:Description rdf:about="{$aggregationUri}">
 				<ore:describedBy rdf:resource="{$modsUrl}"/>
 				<rdf:type rdf:resource="http://www.openarchives.org/ore/terms/Aggregation"/>
 				<xsl:variable name="modsTitle" select="//mods:title/text()" />
 				<dc:title><xsl:value-of select="$modsTitle" /></dc:title>
-				<!--mods:personal für quelltext -->
+				<!--mods:personal fï¿½r quelltext -->
 				<xsl:apply-templates select="*/mods:name[@type='personal']" />
 				<!-- Aggregated Resources -->
 				<!-- hier kommen die aggregations hin -->
@@ -69,7 +72,7 @@
 						<rdf:value><!-- nicht ausgezeichnet--></rdf:value>
 					</dcterms:W3CDTF>
 				</dc:modified>
-				<dc:extent><!-- nicht ausgezeichnet z.B.: ca. 7345 Titeleinträge--></dc:extent>
+				<dc:extent><!-- nicht ausgezeichnet z.B.: ca. 7345 Titeleintrï¿½ge--></dc:extent>
 				<xsl:variable name="modsAbstract" select="//mods:abstract/text()" />
 				<dc:abstract><xsl:value-of select="$modsAbstract" /></dc:abstract>					
 				<!-- vorerst SWD -->
@@ -86,7 +89,7 @@
 				<xsl:variable name="allDdc" select="//mods:classification[@authority='DDC']" />
 				<xsl:variable name="modsDdc" select="$allDdc[1]/text()" />							
 				<dcterms:DDC rdf:value="{$modsDdc}" />					
-				<!-- mods:personal für digitale adaption-->
+				<!-- mods:personal fï¿½r digitale adaption-->
 				<xsl:apply-templates select="//mods:subject/mods:name[@type='personal']" />			
 			</rdf:Description>
 			<rdf:Description rdf:about="">

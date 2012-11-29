@@ -16,10 +16,7 @@
 				<ore:describedBy rdf:resource="%%resource_identifier%%"/>
 				<rdf:type rdf:resource="http://www.openarchives.org/ore/terms/Aggregation"/>			
 				<dc:title>%%dc_title%%</dc:title>	
-				<dc:creator rdf:parseType="Resource">
-					<foaf:givenName>%%given_name%%</foaf:givenName>
-					<foaf:familyName>%%family_name%%</foaf:familyName>					
-				</dc:creator>			
+				%%creator%%		
 				<!-- Aggregated Resources -->
 				<!-- hier kommen die aggregations hin -->
 				<!-- Administrative Elemente -->			
