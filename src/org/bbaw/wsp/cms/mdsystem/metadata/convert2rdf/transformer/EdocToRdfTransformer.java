@@ -29,7 +29,7 @@ public class EdocToRdfTransformer extends ToRdfTransformer {
   /**
    * Specify the RDF template here.
    */
-  private static final String RDF_TEMPLATE_URL = "C:/Dokumente und Einstellungen/wsp-shk1/Eigene Dateien/ParserTest/XSLTTest/templates/eDocToRdfTemplate.xml";
+  private static final String RDF_TEMPLATE_URL = "config/convert2rdf/eDocToRdfTemplate.xml";
   /**
    * The prefix of the aggregation name is it is stored in the quad.
    */
@@ -80,14 +80,13 @@ public class EdocToRdfTransformer extends ToRdfTransformer {
       buffer.flush();
       buffer.close();
     } catch ( IOException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
+      throw new ApplicationException("Couldn't generated a valid output file. "+e.getMessage());
     }
     
    // check validation    
     File f = new File(outputUrl);
     if(!this.checkValidation(f.getAbsolutePath())) {
-      System.out.println("the generated output file - "+f+" isn't XML valid. Please check the file!");
+      System.err.println("WARNING: the generated output file - "+f+" isn't XML valid. Please check the file!");
     }
     else
     {
@@ -99,7 +98,7 @@ public class EdocToRdfTransformer extends ToRdfTransformer {
   private HashMap<String, String> createMap(final MetadataRecord mdRecord) throws ApplicationException {
     HashMap<String, String> eDocPlaceholderMap = new HashMap<String, String>();
 
-    eDocPlaceholderMap.put("%%aggregation_uri%%", AGGREGATION_NAME_PREFIX+EdocIndexMetadataFetcherTool.getDocId(mdRecord.getRealDocUrl())+"/aggregation");
+    eDocPlaceholderMap.put("%%aggregation_uri%%", AGGREGATION_NAME_PREFIX+EdocIndexMetadataFetcherTool.getDocYear(mdRecord.getRealDocUrl())+"/"+EdocIndexMetadataFetcherTool.getDocId(mdRecord.getRealDocUrl())+"/aggregation");
     eDocPlaceholderMap.put("%%creator_name%%", ToRdfTransformer.TRANSFORMER_CREATOR_NAME);
     eDocPlaceholderMap.put("%%creator_url%%", ToRdfTransformer.TRANSFORMER_CREATOR_URL);
     String uri = mdRecord.getRealDocUrl();
@@ -115,7 +114,7 @@ public class EdocToRdfTransformer extends ToRdfTransformer {
     
     String title = mdRecord.getTitle();
     if (title == null) {
-      uri = "";
+      title = "";
     }
     eDocPlaceholderMap.put("%%dc_title%%", title);
 
@@ -149,9 +148,7 @@ public class EdocToRdfTransformer extends ToRdfTransformer {
     }
     eDocPlaceholderMap.put("%%publisher%%", publisher);
     String language = mdRecord.getLanguage();
-    if (language.equals("Deutsch")) {
-      language = "deu";
-    }
+    language = this.convertToLanguageTerm(language);   
     eDocPlaceholderMap.put("%%language%%", language);
    
     eDocPlaceholderMap.put("%%mime_type%%", PdfDocument.MIME_TYPE);
@@ -196,25 +193,28 @@ public class EdocToRdfTransformer extends ToRdfTransformer {
     String creator = mdRecord.getCreator();
     if (creator == null) {
       creator = "";
+    }    
+    try {     
+      StringBuilder creatorsInTemplates = new StringBuilder();
+      if(creator.contains(";")) // more than one creator
+        {         
+          String[] creators = creator.split(";");          
+          for (String c : creators) {     
+            // split to given and family name
+            String creatorBlock = this.generatedDcCreatorBlock(c);
+            creatorsInTemplates.append(creatorBlock);
+          }         
+        }
+      else {
+        String creatorBlock = this.generatedDcCreatorBlock(creator);
+        creatorsInTemplates.append(creatorBlock);
+      }
+      creator = creatorsInTemplates.toString();
     }
-    // split to given and family name
-    try {
-      String givenName = creator.substring(creator.indexOf(",")+1).trim();
-      eDocPlaceholderMap.put("%%given_name%%", givenName);
-      
-    }
-    catch(StringIndexOutOfBoundsException e) {
-      eDocPlaceholderMap.put("%%given_name%%", "");
-    }
-    try {
-      String familyName = creator.substring(0, creator.indexOf(",")).trim();     
-      eDocPlaceholderMap.put("%%family_name%%", familyName);      
-    }
-    catch(StringIndexOutOfBoundsException e) {
-      eDocPlaceholderMap.put("%%family_name%%", "");
-    }
-    
-    
+     catch (StringIndexOutOfBoundsException e) {
+      creator = "";
+    }   
+    eDocPlaceholderMap.put("%%creator%%", creator);
     
     String ddc = mdRecord.getDdc();
     if (ddc == null) {
@@ -233,6 +233,38 @@ public class EdocToRdfTransformer extends ToRdfTransformer {
     
 
     return eDocPlaceholderMap;
+  }
+
+  /**
+   * Convert an input string to a language term. 
+   * This language terms follows the ISO iso639-3 specification.
+   * @param language
+   * @return the iso639-3 value or the original language if not determined.
+   */
+  private String convertToLanguageTerm(String language) {
+    if (language.equals("Deutsch")) {
+      language = "deu";
+    }
+    else if (language.equals("Franz&ouml;sisch")) {
+      language = "fra";
+    }
+    return language;
+  }
+
+  /**
+   * Construct a dc:creator block with a foaf:givenName and foaf:familyName by giving a string from the {@link MetadataRecord}.
+   * @param c the String containing one single creator.
+   * @return the constructed string.
+   */
+  private String generatedDcCreatorBlock(String c) {
+    StringBuilder creatorsInTemplates = new StringBuilder();
+    creatorsInTemplates.append("\n\t\t\t\t<dc:creator rdf:parseType=\"Resource\">");
+    String givenName = c.substring(c.indexOf(",")+1).trim();
+    String familyName = c.substring(0, c.indexOf(",")).trim(); 
+    creatorsInTemplates.append("\n\t\t\t\t\t<foaf:givenName>"+givenName+"</foaf:givenName>");
+    creatorsInTemplates.append("\n\t\t\t\t\t<foaf:familyName>"+familyName+"</foaf:familyName>");
+    creatorsInTemplates.append("\n\t\t\t\t</dc:creator>");
+    return creatorsInTemplates.toString();
   }
 
 }
