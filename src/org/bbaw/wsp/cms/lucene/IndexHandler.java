@@ -206,6 +206,14 @@ public class IndexHandler {
         Field subjectField = new Field("subject", mdRecord.getSubject(), Field.Store.YES, Field.Index.ANALYZED);
         doc.add(subjectField);
       }
+      if (mdRecord.getSwd() != null) {
+        Field swdField = new Field("swd", mdRecord.getSwd(), Field.Store.YES, Field.Index.ANALYZED);
+        doc.add(swdField);
+      }
+      if (mdRecord.getDdc() != null) {
+        Field ddcField = new Field("ddc", mdRecord.getDdc(), Field.Store.YES, Field.Index.ANALYZED);
+        doc.add(ddcField);
+      }
       if (mdRecord.getRights() != null) {
         Field rightsField = new Field("rights", mdRecord.getRights(), Field.Store.YES, Field.Index.ANALYZED);
         doc.add(rightsField);
@@ -647,6 +655,18 @@ public class IndexHandler {
           }
         }
       }
+      String subject = null;
+      Fieldable subjectField = doc.getFieldable("subject");
+      if (subjectField != null)
+        subject = subjectField.stringValue();
+      String swd = null;
+      Fieldable swdField = doc.getFieldable("swd");
+      if (swdField != null)
+        swd = swdField.stringValue();
+      String ddc = null;
+      Fieldable ddcField = doc.getFieldable("ddc");
+      if (ddcField != null)
+        ddc = ddcField.stringValue();
       String rights = null;
       Fieldable rightsField = doc.getFieldable("rights");
       if (rightsField != null)
@@ -699,6 +719,9 @@ public class IndexHandler {
       mdRecord.setTitle(title);
       mdRecord.setDate(yearDate);
       mdRecord.setLanguage(language);
+      mdRecord.setSubject(subject);
+      mdRecord.setSwd(swd);
+      mdRecord.setDdc(ddc);
       mdRecord.setLicense(license);
       mdRecord.setRights(rights);
       mdRecord.setAccessRights(accessRights);
@@ -1190,6 +1213,8 @@ public class IndexHandler {
       documentsFieldAnalyzers.put("publisher", new StandardAnalyzer(Version.LUCENE_35));
       documentsFieldAnalyzers.put("date", new StandardAnalyzer(Version.LUCENE_35));
       documentsFieldAnalyzers.put("subject", new StandardAnalyzer(Version.LUCENE_35));
+      documentsFieldAnalyzers.put("swd", new StandardAnalyzer(Version.LUCENE_35));
+      documentsFieldAnalyzers.put("ddc", new StandardAnalyzer(Version.LUCENE_35));
       documentsFieldAnalyzers.put("rights", new StandardAnalyzer(Version.LUCENE_35));
       documentsFieldAnalyzers.put("license", new StandardAnalyzer(Version.LUCENE_35));
       documentsFieldAnalyzers.put("accessRights", new StandardAnalyzer(Version.LUCENE_35));
@@ -1311,6 +1336,8 @@ public class IndexHandler {
     fields.add("publisher");
     fields.add("date");
     fields.add("subject");
+    fields.add("swd");
+    fields.add("ddc");
     fields.add("rights");
     fields.add("license");
     fields.add("type");
