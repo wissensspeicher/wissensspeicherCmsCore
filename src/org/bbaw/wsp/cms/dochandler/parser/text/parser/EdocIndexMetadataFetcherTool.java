@@ -75,10 +75,10 @@ public class EdocIndexMetadataFetcherTool {
           mdRecord.setCreationDate(cal.getTime());
         } else if (tag.equals("DC.Title")) {
           mdRecord.setTitle(content);
-        } else if (tag.equals("DC.Creator")) {
+        } else if (tag.equals("DC.Creator")) { 
           if (creatorBuilder.toString().length() == 0) {
             creatorBuilder.append(content);
-          } else {
+          } else { // more creators are separated by ';'
             creatorBuilder.append(" ; " + content);
           }
           mdRecord.setCreator(creatorBuilder.toString());
@@ -237,4 +237,23 @@ public class EdocIndexMetadataFetcherTool {
       }
       return -1;
   }
+
+  /**
+   * Fetch the edoc's year. This is used in the aggregation name for example. 
+   * @param realDocUrl
+   * @return the year as it's stored in edoc server or null if it couldn't be parsed.
+   * @throws ApplicationException 
+   */
+  public static String getDocYear(String eDocUrl) throws ApplicationException {
+    if(eDocUrl == null || eDocUrl.isEmpty()) {
+      throw new ApplicationException("The value for the eDocUrl in getDocYear mustn't be null or empty.");
+    }
+      Pattern p = Pattern.compile(".*/(.*?)/(.*?)/pdf/.*");
+      Matcher m = p.matcher(eDocUrl);
+      if(m.find()) {
+        return m.group(1);      
+      }
+    return null;
+   }
+  
 }
