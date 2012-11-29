@@ -164,12 +164,18 @@ public class CollectionManager {
             if (collectionId.equals("edoc")) {
               EdocIndexMetadataFetcherTool.fetchHtmlDirectly(metadataUrl, mdRecord);
               String httpEdocUrl = mdRecord.getRealDocUrl();
+              String uriEdoc = mdRecord.getUri();  // e.g.: http://edoc.bbaw.de/volltexte/2009/1070/
               if (httpEdocUrl != null) {             
                 String docIdTmp = httpEdocUrl.replaceAll(metadataUrlPrefix, "");
                 docId = "/" + collectionId + docIdTmp;
                 String fileEdocUrl = "file:" + dataUrlPrefix + docIdTmp;
                 uri = fileEdocUrl;
-                webUri = metadataUrlPrefix + docIdTmp;
+                if (uriEdoc == null) {
+                  String edocId = docIdTmp.replaceAll("pdf/.*$", "");
+                  webUri = metadataUrlPrefix + edocId;
+                } else { 
+                  webUri = uriEdoc;
+                }
               } else {
                 LOGGER.severe("Fetching metadata failed for: " + metadataUrl + " (no url in index.html found)");
               }
