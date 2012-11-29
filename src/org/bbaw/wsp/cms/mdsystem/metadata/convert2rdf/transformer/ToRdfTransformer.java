@@ -11,8 +11,11 @@ import javax.xml.transform.sax.SAXSource;
 import javax.xml.transform.stream.StreamSource;
 
 import net.sf.saxon.s9api.Processor;
+import net.sf.saxon.s9api.QName;
 import net.sf.saxon.s9api.SaxonApiException;
 import net.sf.saxon.s9api.Serializer;
+import net.sf.saxon.s9api.XdmAtomicValue;
+import net.sf.saxon.s9api.XdmValue;
 import net.sf.saxon.s9api.XsltCompiler;
 import net.sf.saxon.s9api.XsltExecutable;
 import net.sf.saxon.s9api.XsltTransformer;
@@ -47,6 +50,8 @@ public abstract class ToRdfTransformer {
 
   public static final String TRANSFORMER_CREATOR_URL = "http://wsp.bbaw.de";
 
+  private static final String STYLESHEET_PARAM_ID = "aggrId";
+
   private String xslInput;
 
   private String transformMode;
@@ -54,6 +59,8 @@ public abstract class ToRdfTransformer {
   protected ResourceReaderImpl resourceReader;
 
   protected ResourceWriter resourceWriter;
+
+  public Integer aggrId;
 
   /**
    * Create a new instance.
@@ -129,10 +136,17 @@ public abstract class ToRdfTransformer {
       serializer.setOutputProperty(Serializer.Property.METHOD, "xml");
       serializer.setOutputStream(xmlOutput);
 
-      // Do transformation
+      // Do transformation      
       XsltTransformer transformer = executable.load();
+      // use an id for the aggregation if it was specified
+      if(this.aggrId != null) {
+        System.out.println("Trying to set parameter");
+        XdmValue item = new XdmAtomicValue(this.aggrId + "");
+        
+        transformer.setParameter(new QName(STYLESHEET_PARAM_ID), item );
+      }
       transformer.setSource(inputSource);
-      transformer.setDestination(serializer);
+      transformer.setDestination(serializer);      
       transformer.transform();
     } catch (SaxonApiException e) {
       throw new ApplicationException("Problem while transforming -- " + e.getMessage());
