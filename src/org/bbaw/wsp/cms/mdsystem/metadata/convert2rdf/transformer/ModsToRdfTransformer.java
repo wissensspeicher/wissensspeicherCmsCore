@@ -32,6 +32,14 @@ public class ModsToRdfTransformer extends ToRdfTransformer implements IXsltTrans
     return instance;
   }
   
+  /**
+   * Set the aggregation id. This will be set to the xslt transformation.
+   * @param id
+   */
+  public void setAggregationId(final int id) {
+    super.aggrId = id; 
+  }
+  
  
   
 }
