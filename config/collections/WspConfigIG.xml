@@ -13,7 +13,7 @@
       <exclude>users</exclude>
       <exclude>backup</exclude>
     </url>
-    <languages>deu, grc</languages>
+    <languages>ger, grc</languages>
     <mainLanguage>grc</mainLanguage>
     <formats>
       <format>xml</format>

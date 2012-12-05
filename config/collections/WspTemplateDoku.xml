@@ -28,8 +28,8 @@ Beispiel:
       <exclude>users</exclude>
       <exclude>backup</exclude>
     </url>
-    <languages>deu</languages>
-    <mainLanguage>deu</mainLanguage>
+    <languages>ger</languages>
+    <mainLanguage>ger</mainLanguage>
     Spezifiziert die Formate in denen die Ressourcen des Vorhabens angelegt sind
     <formats>
       <format>xml</format>

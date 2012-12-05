@@ -17,7 +17,7 @@
       <exclude>verzeichnisse/personenkorrektur.xml</exclude>
       <exclude>verzeichnisse/Personenverzeichnis2.xml</exclude>
     </url>
-    <languages>deu, fra</languages>
+    <languages>ger, fra</languages>
     <mainLanguage>fra</mainLanguage>
     <formats>
       <format>xml</format>

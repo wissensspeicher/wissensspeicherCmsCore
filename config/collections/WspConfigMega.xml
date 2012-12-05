@@ -21,8 +21,8 @@
 
       <webBaseUrl>http://telota.bbaw.de/mega</webBaseUrl>
     </url>
-    <languages>deu</languages>
-    <mainLanguage>deu</mainLanguage>
+    <languages>ger</languages>
+    <mainLanguage>ger</mainLanguage>
     <formats>
       <format>xml</format>
     </formats>

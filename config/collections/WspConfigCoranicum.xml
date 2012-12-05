@@ -22,8 +22,8 @@
       <exclude>Kommentar/Kommentar.xsd</exclude>
       <exclude>Textstruktur/Textstruktur.xsd</exclude>
     </url>
-    <languages>deu, ara</languages>
-    <mainLanguage>deu</mainLanguage>
+    <languages>ger, ara</languages>
+    <mainLanguage>ger</mainLanguage>
     <formats>
       <format>xml</format>
     </formats>

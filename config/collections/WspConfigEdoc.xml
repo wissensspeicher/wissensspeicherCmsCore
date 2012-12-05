@@ -1950,8 +1950,8 @@
       <urlPrefix>http://edoc.bbaw.de/volltexte</urlPrefix>
       <urlType>single</urlType>
     </metadata>
-    <languages>deu</languages>
-    <mainLanguage>deu</mainLanguage>
+    <languages>ger</languages>
+    <mainLanguage>ger</mainLanguage>
     <formats>
       <format>pdf</format>
       <format>html</format>
@@ -1961,4 +1961,3 @@
     <update>false</update>
   </collection>    
 </wsp>
-

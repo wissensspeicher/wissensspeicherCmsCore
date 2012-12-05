@@ -12,8 +12,8 @@
       <exclude>users</exclude>
       <exclude>backup</exclude>
     </url>
-    <languages>deu, ell</languages>
-    <mainLanguage>deu</mainLanguage>
+    <languages>ger, ell</languages>
+    <mainLanguage>ger</mainLanguage>
     <formats>
       <format>xml</format>
     </formats>
