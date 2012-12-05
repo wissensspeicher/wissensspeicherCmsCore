@@ -351,9 +351,24 @@ public class DocumentHandler {
         language = StringUtils.deresolveXmlEntities(language.trim());
         language = Language.getInstance().getISO639Code(language);
       }
+      String publisher = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:publicationStmt/*:publisher", ", ");
+      if (publisher != null)
+        publisher = StringUtils.deresolveXmlEntities(publisher.trim());
       String place = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:publicationStmt/*:pubPlace");
       if (place != null)
         place = StringUtils.deresolveXmlEntities(place.trim());
+      String publisherStr = null;
+      boolean publisherEndsWithComma = false;
+      if (publisher != null)
+        publisherEndsWithComma = publisher.lastIndexOf(",") == publisher.length() - 1;
+      if (publisher == null && place != null)
+        publisherStr = place;
+      else if (publisher != null && place == null)
+        publisherStr = publisher;
+      else if (publisher != null && place != null && publisherEndsWithComma)
+        publisherStr = publisher + " " + place;
+      else if (publisher != null && place != null && ! publisherEndsWithComma)
+        publisherStr = publisher + ", " + place;
       String yearStr = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:publicationStmt/*:date");
       Date date = null; 
       if (yearStr != null && ! yearStr.equals("")) {
@@ -383,7 +398,7 @@ public class DocumentHandler {
       mdRecord.setLanguage(language);
       mdRecord.setCreator(creator);
       mdRecord.setTitle(title);
-      mdRecord.setPublisher(place);
+      mdRecord.setPublisher(publisherStr);
       mdRecord.setRights(rights);
       mdRecord.setDate(date);
       mdRecord.setSubject(subject);
