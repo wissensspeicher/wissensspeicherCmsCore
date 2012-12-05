@@ -202,6 +202,10 @@ public class IndexHandler {
         Field dateFieldSorted = new Field("dateSorted", yearStr, Field.Store.YES, Field.Index.NOT_ANALYZED);
         doc.add(dateFieldSorted);
       }
+      if (mdRecord.getDescription() != null) {
+        Field descriptionField = new Field("description", mdRecord.getDescription(), Field.Store.YES, Field.Index.ANALYZED);
+        doc.add(descriptionField);
+      }
       if (mdRecord.getSubject() != null) {
         Field subjectField = new Field("subject", mdRecord.getSubject(), Field.Store.YES, Field.Index.ANALYZED);
         doc.add(subjectField);
@@ -655,6 +659,10 @@ public class IndexHandler {
           }
         }
       }
+      String description = null;
+      Fieldable descriptionField = doc.getFieldable("description");
+      if (descriptionField != null)
+        description = descriptionField.stringValue();
       String subject = null;
       Fieldable subjectField = doc.getFieldable("subject");
       if (subjectField != null)
@@ -719,6 +727,7 @@ public class IndexHandler {
       mdRecord.setTitle(title);
       mdRecord.setDate(yearDate);
       mdRecord.setLanguage(language);
+      mdRecord.setDescription(description);
       mdRecord.setSubject(subject);
       mdRecord.setSwd(swd);
       mdRecord.setDdc(ddc);
@@ -1212,6 +1221,7 @@ public class IndexHandler {
       documentsFieldAnalyzers.put("language", new StandardAnalyzer(Version.LUCENE_35));
       documentsFieldAnalyzers.put("publisher", new StandardAnalyzer(Version.LUCENE_35));
       documentsFieldAnalyzers.put("date", new StandardAnalyzer(Version.LUCENE_35));
+      documentsFieldAnalyzers.put("description", new StandardAnalyzer(Version.LUCENE_35));
       documentsFieldAnalyzers.put("subject", new StandardAnalyzer(Version.LUCENE_35));
       documentsFieldAnalyzers.put("swd", new StandardAnalyzer(Version.LUCENE_35));
       documentsFieldAnalyzers.put("ddc", new StandardAnalyzer(Version.LUCENE_35));
@@ -1335,6 +1345,7 @@ public class IndexHandler {
     fields.add("language");
     fields.add("publisher");
     fields.add("date");
+    fields.add("description");
     fields.add("subject");
     fields.add("swd");
     fields.add("ddc");
