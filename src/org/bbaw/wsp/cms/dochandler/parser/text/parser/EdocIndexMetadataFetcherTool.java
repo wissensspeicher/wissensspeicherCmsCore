@@ -135,7 +135,6 @@ public class EdocIndexMetadataFetcherTool {
           mLink.find();
           mdRecord.setRealDocUrl(mLink.group(1));
         } else if (key.contains("SWD-Schlagwörter")) { // only german subjects
-          System.out.println("SWD-Schlag: " + value);
           mdRecord.setSubject(value);
         } else if (key.contains("DDC-Sachgruppe")) {
           mdRecord.setDdc(value);
@@ -162,8 +161,7 @@ public class EdocIndexMetadataFetcherTool {
           String collections = mColl.group(1);
 
           mdRecord.setCollectionNames(collections);
-        } else if (key.contains("Kurzfassung auf Deutsch") && value != null && mdRecord.getDescription() != null) {
-          System.out.println("setting desc-.....");
+        } else if (key.contains("Kurzfassung auf Deutsch") && value != null && mdRecord.getDescription() != null) {        
           mdRecord.setDescription(value);
         }
       }
