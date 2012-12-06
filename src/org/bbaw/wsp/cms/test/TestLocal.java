@@ -3,6 +3,7 @@ package org.bbaw.wsp.cms.test;
 import java.util.Date;
 
 import org.bbaw.wsp.cms.lucene.IndexHandler;
+import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.JenaMain;
 import org.bbaw.wsp.cms.scheduler.CmsDocOperation;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
@@ -14,7 +15,9 @@ public class TestLocal {
 
   public static void main(String[] args) throws ApplicationException {
     try {
-      TestLocal test = new TestLocal();
+    	
+    	
+     // TestLocal test = new TestLocal();
       // test.init();
       // test.createAllDocuments();
       // test.testCalls();

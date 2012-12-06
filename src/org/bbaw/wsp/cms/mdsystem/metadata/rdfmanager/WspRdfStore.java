@@ -15,7 +15,7 @@ import com.hp.hpl.jena.tdb.store.DatasetGraphTDB;
 
 public class WspRdfStore {
 
-	final String directory = "/home/juergens/wspTripleStore";
+	private String directory = "";
 	private Dataset dataset;
 	private Model defaultModel; 
 	private InfModel rdfsModel;
@@ -23,8 +23,8 @@ public class WspRdfStore {
 	private List<String> modelList;
 	DatasetGraphTDB dsdt;
 	
-	public WspRdfStore(){
-		
+	public WspRdfStore(String pathtoSave){
+		directory = pathtoSave;
 	}
 	
 	public void createStore(){
