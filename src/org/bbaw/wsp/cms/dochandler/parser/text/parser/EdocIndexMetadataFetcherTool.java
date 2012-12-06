@@ -42,6 +42,8 @@ public class EdocIndexMetadataFetcherTool {
    *          - the {@link MetadataRecord} to fill
    *          
    * Last change: bugfixed the publishingDate 
+   * 06.06.2012 several changes
+   * 
    * @return the complete {@link MetadataRecord}
    * @throws ApplicationException
    */
@@ -63,6 +65,12 @@ public class EdocIndexMetadataFetcherTool {
       for (Matcher m = p.matcher(line); m.find();) {
         String tag = m.group(1);
         String content = m.group(2);
+        
+        // set content to null if no results
+        if(content.trim().equals("")) {
+           content = null;
+        }
+        
         if (tag.equals("DC.Date.Creation_of_intellectual_content")) { // creation
                                                                       // date
           Calendar cal = new GregorianCalendar();
@@ -83,7 +91,7 @@ public class EdocIndexMetadataFetcherTool {
           }
           mdRecord.setCreator(creatorBuilder.toString());
         } else if (tag.equals("DC.Subject")) {
-          mdRecord.setSwd(content); // DC.Subject follows the
+          mdRecord.setSubject(content); // DC.Subject follows the
                                     // Schlagwortnormdatei
         } else if (tag.equals("DC.Description")) {
           mdRecord.setDescription(content);
@@ -96,17 +104,42 @@ public class EdocIndexMetadataFetcherTool {
         }
       }
 
+     
+      // hard-code "deutsche schlagwörter" to SWD
+      Pattern pGermanSubjects = Pattern.compile("(?i)<TD class=\"frontdoor\" valign=\"top\">(.*?)</TD>");
+      boolean matchNext = false;
+      for ( Matcher m = pGermanSubjects.matcher(line); m.find(); ){
+        System.out.println("german subjects: "+m.group(1));
+        if(matchNext) {
+          System.out.println("Schlagwörter: "+m.group(1));
+          mdRecord.setSwd(m.group(1));
+          break;
+        } 
+        else if(m.group(1).contains("Freie Schlagwörter (Deutsch")) {
+          matchNext = true;
+        }
+      }
+//      String te = pGermanSubjects.matcher(line).group(1);
+//      System.out.println(te);
+      
       Pattern p2 = Pattern.compile("(?i)<TD class=\"frontdoor\" valign=\"top\"><B>(.*?)</B></TD>.*?<TD class=\"frontdoor\" valign=\"top\">(.*?)</TD><");
       for (Matcher m = p2.matcher(line); m.find();) {
         String key = m.group(1);
         String value = m.group(2).trim();
+        
+        // set content to null if no results
+        if(value.trim().equals("")) {
+           value = null;
+        }
+//        System.out.println(m.group(2));
+//        System.out.println(key);
         if (key.contains("pdf-Format")) {
           Pattern pLink = Pattern.compile("(?i)<a href=\"(.*?)(\".*?)\">.*?</a>");
           Matcher mLink = pLink.matcher(key);
           mLink.find();
           mdRecord.setRealDocUrl(mLink.group(1));
           // System.out.println(mLink.group(1));
-        } else if (key.contains("Freie Schlagwörter")) {
+        } else if (key.contains("Freie Schlagwörter (Deutsch)")) { // only german subjects
           mdRecord.setSubject(value);
         } else if (key.contains("DDC-Sachgruppe")) {
           mdRecord.setDdc(value);
@@ -133,6 +166,9 @@ public class EdocIndexMetadataFetcherTool {
           String collections = mColl.group(1);
 
           mdRecord.setCollectionNames(collections);
+        } else if (key.contains("Kurzfassung auf Deutsch") && value != null && mdRecord.getDescription() != null) {         
+            System.out.println("setting desc-.....");
+            mdRecord.setDescription(value);       
         }
       }
       // Bugfix: Institut

@@ -29,11 +29,11 @@ public class DocumentParserTest {
   public static void main(String[] args) throws UnsupportedEncodingException, ApplicationException {
     DocumentParser parser = new DocumentParser();
 
-    // testEDoc(parser);
+     testEDoc(parser);
 //    testPdf(parser);
     // testEDocHttp(parser);
     // allFormatTest(parser);
-    testEulerDocs(parser);
+//    testEulerDocs(parser);
   }
 
   /*
