@@ -8,43 +8,43 @@ import java.util.Hashtable;
 import de.mpg.mpiwg.berlin.mpdl.lt.text.tokenize.XmlTokenizerContentHandler;
 
 public class MetadataRecord {
-  private String docId; // local id: document identifier in index system, e.g. /echo/la/Benedetti_1585.xml
-  private String identifier; // local id: identifier field in documents metadata: e.g. /echo:echo/echo:metadata/dcterms:identifier
-  private String uri; // global id: document URI (uniform resource identifier), e.g. http://de.wikipedia.org/wiki/Ramones
-  private String webUri; // web url, e.g. "http://telota.bbaw.de/ig/IG I3 501" or "http://edoc.bbaw.de/volltexte/2011/1769/"
+  private String docId; // local id: resource identifier in index system, e.g. "/edoc/2011/1591/pdf/08_VI.Dokumente.pdf"
+  private String identifier; // local id: identifier field in resource metadata: e.g. <meta name="DC.identifier" content="47114711">
+  private String uri; // global id: resource URI (uniform resource identifier), e.g. http://de.wikipedia.org/wiki/Ramones
+  private String webUri; // global web url, e.g. "http://telota.bbaw.de/ig/IG I3 501" or "http://edoc.bbaw.de/volltexte/2011/1769/"
   private String collectionNames; // project name(s), e.g. "edoc" or "ig"
-  private String schemaName; // e.g. TEI, html, quran etc.
-  private String language;  // language ISO 639 with 3 characters, e.g. "ger" or "eng"
-  private String creator; // author
-  private String title;  // title
+  private String schemaName; // schema name of resource, e.g. TEI, html, quran etc.
+  private String language;  // language: ISO 639-3 with 3 characters, e.g. "ger" or "eng"
+  private String creator; // author(s) of resource
+  private String title;  // title(s) of resource
+  private String publisher; // publisher with place: e.g. Springer, New York
+  private Date date; // publication date, e.g. 1958
   private String description; // description, abstract etc.
   private String subject; // free subject keywords
   private String ddc; // subject keywords from DDC (Dewey Decimal Classification), e.g. "Philosophie"
   private String swd; // subject keywords from SWD (Schlagwortnormdatei), normally separated by commas
-  private String publisher; // publisher with place: e.g. Springer, New York
+  private String persons;  // main persons in resource (e.g. as list in xml format)
+  private String places;  // main places in resource (e.g. as list in xml format)
   private String type; // mime type: e.g. text/xml 
   private String rights; // rights string, e.g. open access
-  private Date date; // publication date, e.g. 1958
-  private Date lastModified;  // last modification date of record in index
-  private String license; // license string, e.g. http://echo.mpiwg-berlin.mpg.de/policy/oa_basics/declaration
+  private String license; // license string, e.g. "CC-BY-SA"
   private String accessRights; // access rights string, e.g. free
+  private Date lastModified;  // last modification date in index system
+  private int pageCount; // number of pages
   private String urn; // uniform resource name, e.g. the KOBV urn, e.g. urn:nbn:de:kobv:b4360-10020
   private String documentType; // e.g. the KOBV "Dokumentenart"
   private String isbn; // isbn, e.g. the KOBV ISBN
   private Date creationDate; // e.g. the KOBV "Erstellungsjahr"
   private Date publishingDate; // e.g. the KOBV "Publikationsdatum"
   private String inPublication; // e.g. the KOBV publication (in: ...)
-  private String tokenOrig; // original fulltext token of the documents fulltext
-  private String tokenReg; // regularized fulltext token of the documents fulltext
-  private String tokenNorm; // normalized fulltext token of the documents fulltext
-  private String tokenMorph; // morphological fulltext token of the documents fulltext
-  private String contentXml; // original xml content of the documents file
-  private String content; // original text content of the documents file (without xml tags)
-  private ArrayList<XmlTokenizerContentHandler.Element> xmlElements;  // elements of the xml documents
-  private int pageCount; // number of pages
-  private String persons;  // main persons in resource (e.g. as list in xml format)
-  private String places;  // main places in resource (e.g. as list in xml format)
-  private Hashtable<String, XQuery> xQueries; // dynamic xQueries of xml documents (with name, code, result)
+  private String tokenOrig; // original fulltext tokens of resource
+  private String tokenReg; // regularized fulltext tokens of resource
+  private String tokenNorm; // normalized fulltext tokens of resource
+  private String tokenMorph; // morphological fulltext tokens of resource
+  private String contentXml; // original xml content of the resources file
+  private String content; // original text content of the resources file (without xml tags)
+  private ArrayList<XmlTokenizerContentHandler.Element> xmlElements;  // xml elements of resource
+  private Hashtable<String, XQuery> xQueries; // dynamic xQueries of xml resources (with name, code, result)
   private String realDocUrl; // e.g. the URL to the eDoc (not the index.html)
 
   public String getRealDocUrl() {
