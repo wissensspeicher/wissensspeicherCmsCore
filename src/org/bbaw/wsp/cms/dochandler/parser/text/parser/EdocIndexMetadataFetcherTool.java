@@ -40,9 +40,9 @@ public class EdocIndexMetadataFetcherTool {
    *          - the basic Url as String
    * @param mdRecord
    *          - the {@link MetadataRecord} to fill
-   *          
-   * Last change: bugfixed the publishingDate 
-   * 06.06.2012 several changes
+   * 
+   *          Last change: bugfixed the publishingDate 06.06.2012 several
+   *          changes
    * 
    * @return the complete {@link MetadataRecord}
    * @throws ApplicationException
@@ -65,12 +65,12 @@ public class EdocIndexMetadataFetcherTool {
       for (Matcher m = p.matcher(line); m.find();) {
         String tag = m.group(1);
         String content = m.group(2);
-        
+
         // set content to null if no results
-        if(content.trim().equals("")) {
-           content = null;
+        if (content.trim().equals("")) {
+          content = null;
         }
-        
+
         if (tag.equals("DC.Date.Creation_of_intellectual_content")) { // creation
                                                                       // date
           Calendar cal = new GregorianCalendar();
@@ -83,7 +83,7 @@ public class EdocIndexMetadataFetcherTool {
           mdRecord.setCreationDate(cal.getTime());
         } else if (tag.equals("DC.Title")) {
           mdRecord.setTitle(content);
-        } else if (tag.equals("DC.Creator")) { 
+        } else if (tag.equals("DC.Creator")) {
           if (creatorBuilder.toString().length() == 0) {
             creatorBuilder.append(content);
           } else { // more creators are separated by ';'
@@ -92,7 +92,7 @@ public class EdocIndexMetadataFetcherTool {
           mdRecord.setCreator(creatorBuilder.toString());
         } else if (tag.equals("DC.Subject")) {
           mdRecord.setSubject(content); // DC.Subject follows the
-                                    // Schlagwortnormdatei
+          // Schlagwortnormdatei
         } else if (tag.equals("DC.Description")) {
           mdRecord.setDescription(content);
         } else if (tag.equals("DC.Identifier")) {
@@ -104,42 +104,38 @@ public class EdocIndexMetadataFetcherTool {
         }
       }
 
-     
       // hard-code "deutsche schlagwörter" to SWD
-      Pattern pGermanSubjects = Pattern.compile("(?i)<TD class=\"frontdoor\" valign=\"top\">(.*?)</TD>");
+      Pattern pGermanSubjects = Pattern.compile("(?i)<TD class=\"frontdoor\" valign=\"top\".*?>(.*?)</TD>");
       boolean matchNext = false;
-      for ( Matcher m = pGermanSubjects.matcher(line); m.find(); ){
-        System.out.println("german subjects: "+m.group(1));
-        if(matchNext) {
-          System.out.println("Schlagwörter: "+m.group(1));
+      for (Matcher m = pGermanSubjects.matcher(line); m.find();) {
+        if (matchNext) {
           mdRecord.setSwd(m.group(1));
           break;
-        } 
-        else if(m.group(1).contains("Freie Schlagwörter (Deutsch")) {
+        } else if (m.group(1).contains("SWD-Schlagwörter")) { // higher priority
+                                                              // than Freie
+                                                              // Schlagwörter...
+          matchNext = true;
+        } else if (m.group(1).contains("Freie Schlagwörter (Deutsch")) {
           matchNext = true;
         }
       }
-//      String te = pGermanSubjects.matcher(line).group(1);
-//      System.out.println(te);
-      
+
       Pattern p2 = Pattern.compile("(?i)<TD class=\"frontdoor\" valign=\"top\"><B>(.*?)</B></TD>.*?<TD class=\"frontdoor\" valign=\"top\">(.*?)</TD><");
       for (Matcher m = p2.matcher(line); m.find();) {
         String key = m.group(1);
         String value = m.group(2).trim();
-        
+
         // set content to null if no results
-        if(value.trim().equals("")) {
-           value = null;
+        if (value.trim().equals("")) {
+          value = null;
         }
-//        System.out.println(m.group(2));
-//        System.out.println(key);
         if (key.contains("pdf-Format")) {
           Pattern pLink = Pattern.compile("(?i)<a href=\"(.*?)(\".*?)\">.*?</a>");
           Matcher mLink = pLink.matcher(key);
           mLink.find();
           mdRecord.setRealDocUrl(mLink.group(1));
-          // System.out.println(mLink.group(1));
-        } else if (key.contains("Freie Schlagwörter (Deutsch)")) { // only german subjects
+        } else if (key.contains("SWD-Schlagwörter")) { // only german subjects
+          System.out.println("SWD-Schlag: " + value);
           mdRecord.setSubject(value);
         } else if (key.contains("DDC-Sachgruppe")) {
           mdRecord.setDdc(value);
@@ -153,7 +149,7 @@ public class EdocIndexMetadataFetcherTool {
           final int year = Integer.parseInt(value.substring(value.lastIndexOf(".") + 1));
 
           Calendar cal = new GregorianCalendar();
-          cal.set(year, month-1, day); // bugfixed: month is 0 based!          
+          cal.set(year, month - 1, day); // bugfixed: month is 0 based!
           mdRecord.setPublishingDate(cal.getTime());
         } else if (key.contains("ISBN")) {
           mdRecord.setIsbn(value);
@@ -166,9 +162,9 @@ public class EdocIndexMetadataFetcherTool {
           String collections = mColl.group(1);
 
           mdRecord.setCollectionNames(collections);
-        } else if (key.contains("Kurzfassung auf Deutsch") && value != null && mdRecord.getDescription() != null) {         
-            System.out.println("setting desc-.....");
-            mdRecord.setDescription(value);       
+        } else if (key.contains("Kurzfassung auf Deutsch") && value != null && mdRecord.getDescription() != null) {
+          System.out.println("setting desc-.....");
+          mdRecord.setDescription(value);
         }
       }
       // Bugfix: Institut
@@ -188,7 +184,8 @@ public class EdocIndexMetadataFetcherTool {
   /**
    * Check if the file is an index.html file to an eDoc.
    * 
-   * LastChange: Performance optimation - check URI before reading from input stream
+   * LastChange: Performance optimation - check URI before reading from input
+   * stream
    * 
    * @param uri
    *          - the URL as string to the index.html file.
@@ -197,7 +194,7 @@ public class EdocIndexMetadataFetcherTool {
    *           if the stream couldn't get opened.
    */
   public static boolean isEDocIndex(final String uri) throws ApplicationException {
-    if((uri.contains("edoc.bbaw.de") || uri.endsWith(".html")) && !uri.endsWith(".pdf")) {
+    if ((uri.contains("edoc.bbaw.de") || uri.endsWith(".html")) && !uri.endsWith(".pdf")) {
       InputStream in = reader.read(uri);
       if (in != null) {
         Scanner scanner = new Scanner(in);
@@ -215,8 +212,8 @@ public class EdocIndexMetadataFetcherTool {
             return true;
           }
         }
-      }    
-    }    
+      }
+    }
     return false;
   }
 
@@ -256,40 +253,45 @@ public class EdocIndexMetadataFetcherTool {
   }
 
   /**
-   * Fetch the eDoc's id as it's stored on the file system.
-   * This id can be used for an OAI/ORE aggregation for example.
-   * @param eDocUrl {@link String} the URL to the eDoc. This will be parsed for the id.
+   * Fetch the eDoc's id as it's stored on the file system. This id can be used
+   * for an OAI/ORE aggregation for example.
+   * 
+   * @param eDocUrl
+   *          {@link String} the URL to the eDoc. This will be parsed for the
+   *          id.
    * @return {@link Integer} the docID or -1 if the ID couldn'T be parsed.
-   * @throws ApplicationException 
+   * @throws ApplicationException
    */
   public static int getDocId(final String eDocUrl) throws ApplicationException {
-    if(eDocUrl == null || eDocUrl.isEmpty()) {
+    if (eDocUrl == null || eDocUrl.isEmpty()) {
       throw new ApplicationException("The value for the eDocUrl in getDocId mustn't be null or empty.");
     }
-      Pattern p = Pattern.compile(".*/(.*?)/pdf/.*");
-      Matcher m = p.matcher(eDocUrl);
-      if(m.find()) {
-        return Integer.parseInt(m.group(1));
-      }
-      return -1;
+    Pattern p = Pattern.compile(".*/(.*?)/pdf/.*");
+    Matcher m = p.matcher(eDocUrl);
+    if (m.find()) {
+      return Integer.parseInt(m.group(1));
+    }
+    return -1;
   }
 
   /**
-   * Fetch the edoc's year. This is used in the aggregation name for example. 
+   * Fetch the edoc's year. This is used in the aggregation name for example.
+   * 
    * @param realDocUrl
-   * @return the year as it's stored in edoc server or null if it couldn't be parsed.
-   * @throws ApplicationException 
+   * @return the year as it's stored in edoc server or null if it couldn't be
+   *         parsed.
+   * @throws ApplicationException
    */
   public static String getDocYear(String eDocUrl) throws ApplicationException {
-    if(eDocUrl == null || eDocUrl.isEmpty()) {
+    if (eDocUrl == null || eDocUrl.isEmpty()) {
       throw new ApplicationException("The value for the eDocUrl in getDocYear mustn't be null or empty.");
     }
-      Pattern p = Pattern.compile(".*/(.*?)/(.*?)/pdf/.*");
-      Matcher m = p.matcher(eDocUrl);
-      if(m.find()) {
-        return m.group(1);      
-      }
+    Pattern p = Pattern.compile(".*/(.*?)/(.*?)/pdf/.*");
+    Matcher m = p.matcher(eDocUrl);
+    if (m.find()) {
+      return m.group(1);
+    }
     return null;
-   }
-  
+  }
+
 }
