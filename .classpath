@@ -42,8 +42,7 @@
 	<classpathentry kind="lib" path="lib/jena-iri-0.9.3.jar"/>
 	<classpathentry kind="lib" path="lib/jena-tdb-0.9.3.jar"/>
 	<classpathentry kind="lib" path="lib/lucene-facet-3.5.0.jar"/>
-	<classpathentry kind="lib" path="lib/slf4j-api-1.6.4.jar"/>
-	<classpathentry kind="lib" path="lib/slf4j-log4j12-1.6.4.jar"/>
-	<classpathentry kind="lib" path="lib/fuseki-server.jar"/>
+	<classpathentry kind="lib" path="lib/lucene-highlighter-3.5.0-javadoc.jar"/>
+	<classpathentry kind="lib" path="lib/jena-fuseki-client.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
