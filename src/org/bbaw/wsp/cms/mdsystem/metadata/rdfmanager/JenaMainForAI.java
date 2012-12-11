@@ -1,11 +1,16 @@
 package org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -33,8 +38,8 @@ public class JenaMainForAI {
 	private RdfHandler manager;
 	private WspRdfStore wspStore;
 	private Dataset dataset;
-	private String srcD;
-	private String desF;
+	private String source;
+	private String destination;
 
 	/**
 	 * needs to be instantiated from outside e.g.
@@ -44,14 +49,28 @@ public class JenaMainForAI {
 	 * @param srcD
 	 */
 	public JenaMainForAI(String srcD, String desF) {
-		this.srcD = srcD;
-		this.desF = desF;
+		this.source = srcD;
+		this.destination = desF;
 	}
 
-	public void initStore() {
-		wspStore = new WspRdfStore(desF);
-		wspStore.createStore();
-		wspStore.createModelFactory();
+	public void initStore(Boolean newSet) throws ClassNotFoundException,
+			IOException {
+		if (newSet) {
+			String[] array = destination.split("[/]+");
+			String temp = "";
+			for (int i = 0; i < array.length - 1; ++i) {
+				temp += "/" + array[i];
+			}
+
+			temp = temp.substring(1);
+			wspStore = new WspRdfStore(temp);
+			wspStore.createStore();
+			wspStore.createModelFactory();
+		} else {
+			loadWspStore();
+			wspStore.createStore();
+			wspStore.createModelFactory();
+		}
 		// removeAll() performed?
 		dataset = wspStore.getDataset();
 		manager = new RdfHandler();
@@ -59,21 +78,56 @@ public class JenaMainForAI {
 		doYourWork();
 	}
 
+	private void loadWspStore() throws IOException, ClassNotFoundException {
+
+		FileInputStream input = new FileInputStream(destination);
+		ObjectInputStream ois = new ObjectInputStream(input);
+		wspStore = (WspRdfStore) ois.readObject();
+
+		ois.close();
+
+	}
+
+	/**
+	 * saves WspStore to give File
+	 * 
+	 * @throws IOException
+	 */
+	private void saveWspStore() throws IOException {
+		OutputStream fos = null;
+
+		try {
+			fos = new FileOutputStream(destination);
+			ObjectOutputStream o = new ObjectOutputStream(fos);
+			o.writeObject(wspStore);
+			o.flush();
+		} catch (IOException e) {
+			System.err.println(e);
+		} finally {
+
+			fos.close();
+
+		}
+	}
+
 	/**
 	 * call methods from here
+	 * 
+	 * @throws IOException
 	 */
-	private void doYourWork() {
+	private void doYourWork() throws IOException {
 		// createNamedModelsFromOreSets("/home/juergens/WspEtc/rdfData/ModsToRdfTest");
-		if (new File(srcD).isDirectory()) {
-			createDatasetFromSet(srcD);
+		if (new File(source).isDirectory()) {
+			createDatasetFromSet(source);
 		} else
-			createNewModelFromSingleOre(srcD);
+			createNewModelFromSingleOre(source);
 		// getAllNamedModelsInDataset();
 
 		// queryPerSparqlSelect();
 		// createNamedModelsFromOreSets(MODS);
 		// model.close();
 		// dataset.close();
+		saveWspStore();
 	}
 
 	/**
@@ -86,7 +140,7 @@ public class JenaMainForAI {
 		wspStore.openDataset();
 		Model freshModel = wspStore.getFreshModel();
 		Model model = manager.fillModelFromFile(freshModel, file);
-		String rdfAbout = checkifValid(manager.scanID(file),file);
+		String rdfAbout = checkifValid(manager.scanID(file), file);
 
 		wspStore.addNamedModelToWspStore(rdfAbout, model);
 
@@ -101,7 +155,7 @@ public class JenaMainForAI {
 	 * @param titel
 	 * @return
 	 */
-	private String checkifValid(String result,String filename) {
+	private String checkifValid(String result, String filename) {
 		if (result == null) {
 
 			File file = new File(filename);
@@ -131,7 +185,7 @@ public class JenaMainForAI {
 		for (String string : data) {
 			Model freshsModel = wspStore.getFreshModel();
 			Model m = manager.fillModelFromFile(freshsModel, string);
-			String modsRdfAbout = checkifValid(manager.scanID(string),string);
+			String modsRdfAbout = checkifValid(manager.scanID(string), string);
 			wspStore.addNamedModelToWspStore(modsRdfAbout, m);
 
 		}
@@ -171,7 +225,7 @@ public class JenaMainForAI {
 		for (String string : pathList) {
 			Model freshsModel = wspStore.getFreshModel();
 			Model m = manager.fillModelFromFile(freshsModel, string);
-			String modsRdfAbout = checkifValid(manager.scanID(location),string);
+			String modsRdfAbout = checkifValid(manager.scanID(location), string);
 			wspStore.addNamedModelToWspStore(modsRdfAbout, m);
 
 		}

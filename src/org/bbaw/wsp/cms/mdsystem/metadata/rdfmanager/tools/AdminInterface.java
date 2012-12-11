@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import javax.swing.JButton;
@@ -43,7 +44,8 @@ public class AdminInterface extends JFrame {
 	private Label des;
 	private String srcD;
 	private String desF;
-	private JCheckBox folder;
+	private JCheckBox folderScr;
+	private JCheckBox createDataset;
 	private TextArea textArea;
 
 	/**
@@ -68,16 +70,16 @@ public class AdminInterface extends JFrame {
 		panel.setLayout(new GridLayout(7, 1));
 		btn_src = new JButton("Choose Source Data");
 		src = new Label("no Source Data selected");
-		btn_des = new JButton("Choose Destination Folder");
-		des = new Label("no Destination Folder selected");
+		btn_des = new JButton("Choose Destination");
+		des = new Label("no Destination selected");
 		btn_go = new JButton("Start");
 
 		addButtonListener(btn_src);
 		addButtonListener(btn_go);
 		addButtonListener(btn_des);
 
-		panel.add(folder = new JCheckBox("Choose a source Folder"));
-
+		panel.add(folderScr = new JCheckBox("Choose a source Folder"));
+		panel.add(createDataset = new JCheckBox("Create a new Dataset"));
 		panel.add(btn_src);
 		panel.add(src);
 		panel.add(btn_des);
@@ -105,21 +107,20 @@ public class AdminInterface extends JFrame {
 
 			public void actionPerformed(ActionEvent ev) {
 				if (ev.getActionCommand().equals("Choose Source Data")) {
-					if (folder.isSelected())
-						srcD = fileChooser(false);
+					if (folderScr.isSelected())
+						srcD = fileChooser(false, false);
 					else
-						srcD = fileChooser(true);
+						srcD = fileChooser(true, false);
 					if (srcD == null) {
 						src.setText("no Source Folder selected");
 					} else
 						src.setText(srcD);
 
-				} else if (ev.getActionCommand().equals(
-						"Choose Destination Folder")) {
+				} else if (ev.getActionCommand().equals("Choose Destination")) {
 
-					desF = fileChooser(false);
+					desF = fileChooser(true, true);
 					if (desF == null) {
-						des.setText("no Destination Folder selected");
+						des.setText("no Destination selected");
 					} else
 						des.setText(desF);
 
@@ -163,8 +164,8 @@ public class AdminInterface extends JFrame {
 		});
 	}
 
-	private void execution() {
-		new JenaMainForAI(srcD, desF).initStore();
+	private void execution() throws ClassNotFoundException, IOException {
+		new JenaMainForAI(srcD, desF).initStore(createDataset.isSelected());
 	}
 
 	// /**
@@ -232,19 +233,75 @@ public class AdminInterface extends JFrame {
 	 * 
 	 * @return
 	 */
-	private String fileChooser(boolean singeldata) {
+	private String fileChooser(boolean singeldata, boolean aboutSet) {
 		JFileChooser chooser = new JFileChooser();
+		int returnVal = 0;
+		Boolean save = false;
 		// Note: source for ExampleFileFilter can be found in
-		if (!singeldata)
+		if (!singeldata) {
 			chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
-		int returnVal = chooser.showOpenDialog(chooser);
+		}
 
+		if (aboutSet) {
+			chooser.setFileFilter(new DataFilterStore());
+		} else
+			chooser.setFileFilter(new DataFilterFile());
+
+		if (createDataset.isSelected() && aboutSet) {
+			returnVal = chooser.showSaveDialog(chooser);
+			save = true;
+		} else {
+			returnVal = chooser.showOpenDialog(chooser);
+			save = false;
+		}
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			String file = chooser.getSelectedFile().getAbsolutePath();
 
-			return chooser.getSelectedFile().getAbsolutePath();
+			if (save) {
+				if (!file.toLowerCase().endsWith(".store")) {
+					file += ".store";
+				}
+			}
+			return file;
+
 		}
 		return null;
+	}
+
+	class DataFilterFile extends javax.swing.filechooser.FileFilter {
+		public String getDescription() {
+			return ".nt, .ttl, .rdf";
+		}
+
+		public boolean accept(File file) {
+			if (file.isDirectory())
+				return true;
+			else if (file.getName().toLowerCase().endsWith(".nt"))
+				return true;
+			else if (file.getName().toLowerCase().endsWith(".ttl"))
+				return true;
+			else if (file.getName().toLowerCase().endsWith(".rdf"))
+				return true;
+			else
+				return false;
+		}
+	}
+
+	class DataFilterStore extends javax.swing.filechooser.FileFilter {
+		public String getDescription() {
+			return ".store";
+		}
+
+		public boolean accept(File file) {
+			if (file.isDirectory())
+				return true;
+			else if (file.getName().toLowerCase().endsWith(".store"))
+				return true;
+
+			else
+				return false;
+		}
 	}
 
 	/**
