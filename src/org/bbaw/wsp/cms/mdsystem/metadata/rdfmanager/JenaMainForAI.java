@@ -171,7 +171,7 @@ public class JenaMainForAI {
 		for (String string : pathList) {
 			Model freshsModel = wspStore.getFreshModel();
 			Model m = manager.fillModelFromFile(freshsModel, string);
-			String modsRdfAbout = checkifValid(manager.scanID(location));
+			String modsRdfAbout = checkifValid(manager.scanID(location),string);
 			wspStore.addNamedModelToWspStore(modsRdfAbout, m);
 
 		}
