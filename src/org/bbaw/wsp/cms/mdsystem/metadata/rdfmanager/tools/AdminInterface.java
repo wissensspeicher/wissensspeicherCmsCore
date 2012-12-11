@@ -19,6 +19,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.JenaMain;
+import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.JenaMainForAI;
 
 public class AdminInterface extends JFrame {
 
@@ -41,7 +42,7 @@ public class AdminInterface extends JFrame {
 	private Label des;
 	private String srcD;
 	private String desF;
-	private JenaMain jenatester;
+	
 	private TextArea textArea;
 	
 
@@ -159,7 +160,7 @@ public class AdminInterface extends JFrame {
 	}
 
 	private void execution() {
-		new JenaMain(srcD, desF).initStore();
+		new JenaMainForAI(srcD, desF).initStore();
 	}
 
 	// /**

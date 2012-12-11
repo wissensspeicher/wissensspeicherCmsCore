@@ -23,6 +23,10 @@ public class WspRdfStore {
 	private List<String> modelList;
 	DatasetGraphTDB dsdt;
 	
+	/**
+	 * Give here the path to the Store
+	 * @param pathtoSave
+	 */
 	public WspRdfStore(String pathtoSave){
 		directory = pathtoSave;
 	}
