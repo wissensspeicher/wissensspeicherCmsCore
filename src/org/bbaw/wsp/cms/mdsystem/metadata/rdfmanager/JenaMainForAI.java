@@ -98,6 +98,7 @@ public class JenaMainForAI {
 
 		try {
 			fos = new FileOutputStream(destination);
+			@SuppressWarnings("resource")
 			ObjectOutputStream o = new ObjectOutputStream(fos);
 			o.writeObject(wspStore);
 			o.flush();

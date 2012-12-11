@@ -86,7 +86,7 @@ public class AdminInterface extends JFrame {
 		panel.add(des);
 		panel.add(btn_go);
 
-		textArea = new TextArea("Welcome\n");
+		textArea = new TextArea("Welcome,\n");
 
 		Panel mainPanel = new Panel();
 		mainPanel.setLayout(new GridLayout(1, 2));
@@ -94,7 +94,24 @@ public class AdminInterface extends JFrame {
 		mainPanel.add(new Panel().add(textArea));
 
 		getContentPane().add(mainPanel);
+		giveInstruct();
+	}
 
+	private void giveInstruct() {
+		println("Short instruction about main features: \n" + "\n"
+				+ "The two Checkboxes:\n"
+				+ "1. is used to choose a whole folder \n "
+				+ "where all possible data will be selected \n"
+				+ "2. is used to create a new dataset, \n"
+				+ "to do so there will open a save \n"
+				+ "dialog in \"Choose Destination\" option\n\n"
+				+ "NEVER SAVE A NEW ONE IN A FOLDER \n"
+				+ "WHERE ALREADY A \".store\" EXISTS! \n\n"
+				+ "if none of the Checkboxes is selected \n"
+
+				+ "the default is:\n"
+				+ "choose 1 file to add to an existing dataset." + "\n"
+				+ "Good luck" + "");
 	}
 
 	/**
@@ -259,6 +276,7 @@ public class AdminInterface extends JFrame {
 			String file = chooser.getSelectedFile().getAbsolutePath();
 
 			if (save) {
+
 				if (!file.toLowerCase().endsWith(".store")) {
 					file += ".store";
 				}
