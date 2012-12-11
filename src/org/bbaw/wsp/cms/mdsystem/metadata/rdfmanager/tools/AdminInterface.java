@@ -328,6 +328,7 @@ public class AdminInterface extends JFrame {
 	 * @param cmd
 	 * @param cwd
 	 */
+	@SuppressWarnings("unused")
 	private void bash(String cmd, File cwd) {
 		if (System.getProperty("os.name").startsWith("Windows")) {
 			println("only works with Unix-shell!");
