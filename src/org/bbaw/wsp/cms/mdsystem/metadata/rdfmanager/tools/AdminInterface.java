@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 
@@ -42,9 +43,8 @@ public class AdminInterface extends JFrame {
 	private Label des;
 	private String srcD;
 	private String desF;
-	
+	private JCheckBox folder;
 	private TextArea textArea;
-	
 
 	/**
 	 * Opens a new Frame
@@ -75,13 +75,14 @@ public class AdminInterface extends JFrame {
 		addButtonListener(btn_src);
 		addButtonListener(btn_go);
 		addButtonListener(btn_des);
+
+		panel.add(folder = new JCheckBox("Choose a source Folder"));
+
 		panel.add(btn_src);
 		panel.add(src);
 		panel.add(btn_des);
 		panel.add(des);
 		panel.add(btn_go);
-
-		
 
 		textArea = new TextArea("Welcome\n");
 
@@ -104,7 +105,10 @@ public class AdminInterface extends JFrame {
 
 			public void actionPerformed(ActionEvent ev) {
 				if (ev.getActionCommand().equals("Choose Source Data")) {
-					srcD = fileChooser(true);
+					if (folder.isSelected())
+						srcD = fileChooser(false);
+					else
+						srcD = fileChooser(true);
 					if (srcD == null) {
 						src.setText("no Source Folder selected");
 					} else
@@ -148,9 +152,9 @@ public class AdminInterface extends JFrame {
 					try {
 						execution();
 						println("finished!");
-						
+
 					} catch (Exception e) {
-						println(e.toString());
+						println(e.getMessage());
 					}
 
 				}
