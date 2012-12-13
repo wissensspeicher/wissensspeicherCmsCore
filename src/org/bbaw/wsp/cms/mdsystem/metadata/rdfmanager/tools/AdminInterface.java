@@ -169,6 +169,13 @@ public class AdminInterface extends JFrame {
 		});
 	}
 
+	/**
+	 * Calls the JenaMain gives params source destination and the information if
+	 * new Set has to be created
+	 * 
+	 * @throws ClassNotFoundException
+	 * @throws IOException
+	 */
 	private void execution() throws ClassNotFoundException, IOException {
 		new JenaMainForAI(srcD, desF).initStore(createNewSet);
 		createNewSet = false;
@@ -239,8 +246,10 @@ public class AdminInterface extends JFrame {
 
 				if (!file.toLowerCase().endsWith(".store")) {
 					file += ".store";
+
 				}
 			}
+
 			return file;
 
 		}
