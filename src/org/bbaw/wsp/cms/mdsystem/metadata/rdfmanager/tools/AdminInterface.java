@@ -78,7 +78,7 @@ public class AdminInterface extends JFrame {
 		addButtonListener(btn_des);
 
 		panel.add(folderScr = new JCheckBox("Choose a source Folder"));
-		panel.add(createDataset = new JCheckBox("Create a new Dataset"));
+		panel.add(createDataset = new JCheckBox("Create a Dataset new Location"));
 		panel.add(btn_src);
 		panel.add(src);
 		panel.add(btn_des);

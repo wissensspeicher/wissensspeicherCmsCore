@@ -2,7 +2,6 @@ package org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -10,16 +9,19 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.WspRdfStore;
-import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.RdfHandler;
-
-import com.hp.hpl.jena.rdf.model.*;
-import com.hp.hpl.jena.query.*;
+import com.hp.hpl.jena.query.Dataset;
+import com.hp.hpl.jena.query.QueryExecution;
+import com.hp.hpl.jena.query.QueryExecutionFactory;
+import com.hp.hpl.jena.query.ResultSet;
+import com.hp.hpl.jena.query.ResultSetFormatter;
+import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.ReifiedStatement;
+import com.hp.hpl.jena.rdf.model.Statement;
+import com.hp.hpl.jena.rdf.model.StmtIterator;
 
 public class JenaMainForAI {
 
@@ -38,8 +40,8 @@ public class JenaMainForAI {
 	private RdfHandler manager;
 	private WspRdfStore wspStore;
 	private Dataset dataset;
-	private String source;
-	private String destination;
+	private final String source;
+	private final String destination;
 
 	/**
 	 * needs to be instantiated from outside e.g.
@@ -76,14 +78,19 @@ public class JenaMainForAI {
 			}
 
 			wspStore = new WspRdfStore(temp);
-			wspStore.createStore();
-			wspStore.createModelFactory();
+
 		} else {
 			loadWspStore();
+		}
+		try {
 			wspStore.createStore();
-			wspStore.createModelFactory();
+
+		} catch (Exception e) {
+			System.out.println("Store already in use");
+
 		}
 		// removeAll() performed?
+		wspStore.createModelFactory();
 		dataset = wspStore.getDataset();
 		manager = new RdfHandler();
 
@@ -141,6 +148,7 @@ public class JenaMainForAI {
 		// model.close();
 		// dataset.close();
 		saveWspStore();
+
 	}
 
 	/**
