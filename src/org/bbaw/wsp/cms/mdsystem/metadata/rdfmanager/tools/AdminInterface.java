@@ -26,7 +26,8 @@ import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.JenaMainForAI;
 public class AdminInterface extends JFrame {
 
 	/**
-	 * Marco Seidler (shk2) tool for creation of PNGs based to given RDFs
+	 * Marco Seidler (shk2) tool for creation or appending of one or more rdf
+	 * ttl nt file at on time
 	 */
 	private static final long serialVersionUID = 5952164735517923589L;
 
