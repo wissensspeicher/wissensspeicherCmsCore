@@ -124,9 +124,10 @@ public class AdminInterface extends JFrame {
 
 			public void actionPerformed(ActionEvent ev) {
 				if (ev.getActionCommand().equals("Choose Source Data")) {
-					if (folderScr.isSelected())
+					if (folderScr.isSelected()) {
 						srcD = fileChooser(false, false);
-					else
+						scanforRDF(srcD);
+					} else
 						srcD = fileChooser(true, false);
 					if (srcD == null) {
 						src.setText("no Source Folder selected");
@@ -187,15 +188,18 @@ public class AdminInterface extends JFrame {
 	 * @param str
 	 * @return
 	 */
-	@SuppressWarnings("unused")
+
 	private ArrayList<File> scanforRDF(String str) {
 
 		File dir = new File(str);
 		ArrayList<File> liste = new ArrayList<File>();
+		println("\nValid Files in the Folder:\n");
 		for (File f : dir.listFiles()) {
-			if (f.getName().toLowerCase().endsWith(".rdf"))
+			if (f.getName().toLowerCase().endsWith(".rdf")
+					|| f.getName().toLowerCase().endsWith(".ttl")
+					|| f.getName().toLowerCase().endsWith(".nt"))
 				liste.add(f);
-			println(f.getName());
+			println(" - " + f.getName());
 
 		}
 
