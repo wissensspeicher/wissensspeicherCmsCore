@@ -12,15 +12,12 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
-import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.JenaMain;
 import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.JenaMainForAI;
 
 public class AdminInterface extends JFrame {
@@ -48,6 +45,7 @@ public class AdminInterface extends JFrame {
 	private JCheckBox folderScr;
 	private JCheckBox createDataset;
 	private TextArea textArea;
+	private boolean createNewSet;
 
 	/**
 	 * Opens a new Frame
@@ -116,7 +114,8 @@ public class AdminInterface extends JFrame {
 	}
 
 	/**
-	 * buttonlistener for buttons
+	 * buttonlistener for buttons also exceptionhandling when wrong data are
+	 * given
 	 * 
 	 * @param b
 	 */
@@ -171,7 +170,8 @@ public class AdminInterface extends JFrame {
 	}
 
 	private void execution() throws ClassNotFoundException, IOException {
-		new JenaMainForAI(srcD, desF).initStore(createDataset.isSelected());
+		new JenaMainForAI(srcD, desF).initStore(createNewSet);
+		createNewSet = false;
 	}
 
 	/**
@@ -225,6 +225,7 @@ public class AdminInterface extends JFrame {
 			chooser.setFileFilter(new DataFilterFile());
 
 		if (createDataset.isSelected() && aboutSet) {
+			createNewSet = createDataset.isSelected();
 			returnVal = chooser.showSaveDialog(chooser);
 			save = true;
 		} else {
@@ -254,10 +255,12 @@ public class AdminInterface extends JFrame {
 	 * 
 	 */
 	class DataFilterFile extends javax.swing.filechooser.FileFilter {
+		@Override
 		public String getDescription() {
 			return ".nt, .ttl, .rdf";
 		}
 
+		@Override
 		public boolean accept(File file) {
 			if (file.isDirectory())
 				return true;
@@ -280,10 +283,12 @@ public class AdminInterface extends JFrame {
 	 * 
 	 */
 	class DataFilterStore extends javax.swing.filechooser.FileFilter {
+		@Override
 		public String getDescription() {
 			return ".store";
 		}
 
+		@Override
 		public boolean accept(File file) {
 			if (file.isDirectory())
 				return true;
