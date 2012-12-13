@@ -56,13 +56,25 @@ public class JenaMainForAI {
 	public void initStore(Boolean newSet) throws ClassNotFoundException,
 			IOException {
 		if (newSet) {
-			String[] array = destination.split("[/]+");
 			String temp = "";
-			for (int i = 0; i < array.length - 1; ++i) {
-				temp += "/" + array[i];
+			if (System.getProperty("os.name").startsWith("Windows")) {
+
+				String[] array = destination.split("[\\]+");
+				for (int i = 0; i < array.length - 1; ++i) {
+					temp += "\\" + array[i];
+				}
+				temp = temp.substring(1);
+
+			} else {
+				String[] array = destination.split("[/]+");
+
+				for (int i = 0; i < array.length - 1; ++i) {
+					temp += "/" + array[i];
+
+				}
+				temp = temp.substring(1);
 			}
 
-			temp = temp.substring(1);
 			wspStore = new WspRdfStore(temp);
 			wspStore.createStore();
 			wspStore.createModelFactory();

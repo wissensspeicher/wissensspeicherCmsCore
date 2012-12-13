@@ -152,18 +152,6 @@ public class AdminInterface extends JFrame {
 						return;
 					}
 
-					// ArrayList<File> liste = new ArrayList<File>();
-					// liste = scanforRDF(srcF);
-					// if (liste.isEmpty()) {
-					// println("There are no RDF files in directory");
-					// return;
-					// }
-					// if (liste.size() == 1) {
-					// println("There is one RDF element.");
-					// } else
-					// println("There are " + liste.size() + " RDF elements.");
-					// println("Started!");
-					// execution(liste);
 					println("Choosen Data: " + srcD);
 					println("Choosen Destination" + desF);
 
@@ -185,43 +173,13 @@ public class AdminInterface extends JFrame {
 		new JenaMainForAI(srcD, desF).initStore(createDataset.isSelected());
 	}
 
-	// /**
-	// * Main function calls teststore and bash
-	// *
-	// * @param col
-	// */
-	// private void execution(ArrayList<File> col) {
-	//
-	// String dot;
-	// println("Choosed accuracy = " + slider.getValue());
-	//
-	// for (File file : col) {
-	// try {
-	//
-	// dot = jenatester.testStore(file, desF, slider.getValue());
-	//
-	// String cmd = "dot -Tpng " + dot + " -o "
-	// + dot.substring(0, dot.length() - 4) + ".png";
-	// // String cmd = "dot -Tpng Briefe2.dot -o "
-	// // + dot.substring(0, dot.length() - 4) + ".png";
-	// bash(cmd, new File(desF));
-	//
-	// println("Graph created for " + file.getName());
-	//
-	// } catch (Exception e) {
-	// println("Error occurred, continues..");
-	//
-	// }
-	// }
-	//
-	// }
-
 	/**
 	 * Seperates the files with ending RDF
 	 * 
 	 * @param str
 	 * @return
 	 */
+	@SuppressWarnings("unused")
 	private ArrayList<File> scanforRDF(String str) {
 
 		File dir = new File(str);
@@ -287,6 +245,13 @@ public class AdminInterface extends JFrame {
 		return null;
 	}
 
+	/**
+	 * Creates the Filefilter for filechooser, in this case it filters for .nt
+	 * .ttl .rdf types
+	 * 
+	 * @author shk2
+	 * 
+	 */
 	class DataFilterFile extends javax.swing.filechooser.FileFilter {
 		public String getDescription() {
 			return ".nt, .ttl, .rdf";
@@ -306,6 +271,13 @@ public class AdminInterface extends JFrame {
 		}
 	}
 
+	/**
+	 * Creates the Filefilter for filechooser, in this case it filters for
+	 * .store types
+	 * 
+	 * @author shk2
+	 * 
+	 */
 	class DataFilterStore extends javax.swing.filechooser.FileFilter {
 		public String getDescription() {
 			return ".store";
