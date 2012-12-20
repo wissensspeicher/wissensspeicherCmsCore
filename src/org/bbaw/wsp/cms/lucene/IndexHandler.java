@@ -345,82 +345,84 @@ public class IndexHandler {
       if (docIsXml) {
         // add all elements with the specified names of the document to nodesIndex
         ArrayList<XmlTokenizerContentHandler.Element> xmlElements = mdRecord.getXmlElements();
-        for (int i = 0; i < xmlElements.size(); i++) {
-          XmlTokenizerContentHandler.Element element = xmlElements.get(i);
-          Document nodeDoc = new Document();
-          nodeDoc.add(docIdField);
-          String nodeLanguage = element.lang;
-          if (nodeLanguage == null)
-            nodeLanguage = language;
-          String nodePageNumber = String.valueOf(element.pageNumber);
-          String nodeLineNumber = String.valueOf(element.lineNumber);
-          String nodeElementName = String.valueOf(element.name);
-          String nodeElementDocPosition = String.valueOf(element.docPosition);
-          String nodeElementAbsolutePosition = String.valueOf(element.position);
-          String nodeElementPagePosition = String.valueOf(element.pagePosition);
-          String nodeElementPosition = String.valueOf(element.elemPosition);
-          String nodeXmlId = element.xmlId;
-          String nodeXpath = element.xpath;
-          String nodeXmlContent = element.toXmlString();
-          String nodeTokensOrig = element.getTokensStr("orig");
-          String nodeTokensReg = element.getTokensStr("reg");
-          String nodeTokensNorm = element.getTokensStr("norm");
-          String nodeTokensMorph = element.getTokensStr("morph");
-          if (nodeLanguage != null) {
-            Field nodeLanguageField = new Field("language", nodeLanguage, Field.Store.YES, Field.Index.ANALYZED);
-            nodeDoc.add(nodeLanguageField);
+        if (xmlElements != null) {
+          for (int i = 0; i < xmlElements.size(); i++) {
+            XmlTokenizerContentHandler.Element element = xmlElements.get(i);
+            Document nodeDoc = new Document();
+            nodeDoc.add(docIdField);
+            String nodeLanguage = element.lang;
+            if (nodeLanguage == null)
+              nodeLanguage = language;
+            String nodePageNumber = String.valueOf(element.pageNumber);
+            String nodeLineNumber = String.valueOf(element.lineNumber);
+            String nodeElementName = String.valueOf(element.name);
+            String nodeElementDocPosition = String.valueOf(element.docPosition);
+            String nodeElementAbsolutePosition = String.valueOf(element.position);
+            String nodeElementPagePosition = String.valueOf(element.pagePosition);
+            String nodeElementPosition = String.valueOf(element.elemPosition);
+            String nodeXmlId = element.xmlId;
+            String nodeXpath = element.xpath;
+            String nodeXmlContent = element.toXmlString();
+            String nodeTokensOrig = element.getTokensStr("orig");
+            String nodeTokensReg = element.getTokensStr("reg");
+            String nodeTokensNorm = element.getTokensStr("norm");
+            String nodeTokensMorph = element.getTokensStr("morph");
+            if (nodeLanguage != null) {
+              Field nodeLanguageField = new Field("language", nodeLanguage, Field.Store.YES, Field.Index.ANALYZED);
+              nodeDoc.add(nodeLanguageField);
+            }
+            Field nodePageNumberField = new Field("pageNumber", nodePageNumber, Field.Store.YES, Field.Index.ANALYZED);
+            nodeDoc.add(nodePageNumberField);
+            Field nodeLineNumberField = new Field("lineNumber", nodeLineNumber, Field.Store.YES, Field.Index.ANALYZED);
+            nodeDoc.add(nodeLineNumberField);
+            Field nodeElementNameField = new Field("elementName", nodeElementName, Field.Store.YES, Field.Index.ANALYZED);
+            nodeDoc.add(nodeElementNameField);
+            Field nodeElementDocPositionField = new Field("elementDocPosition", nodeElementDocPosition, Field.Store.YES, Field.Index.ANALYZED);
+            nodeDoc.add(nodeElementDocPositionField);
+            Field nodeElementDocPositionFieldSorted = new Field("elementDocPositionSorted", nodeElementDocPosition, Field.Store.YES, Field.Index.NOT_ANALYZED);
+            nodeDoc.add(nodeElementDocPositionFieldSorted);
+            Field nodeElementAbsolutePositionField = new Field("elementAbsolutePosition", nodeElementAbsolutePosition, Field.Store.YES, Field.Index.ANALYZED);
+            nodeDoc.add(nodeElementAbsolutePositionField);
+            Field nodeElementPagePositionField = new Field("elementPagePosition", nodeElementPagePosition, Field.Store.YES, Field.Index.ANALYZED);
+            nodeDoc.add(nodeElementPagePositionField);
+            Field nodeElementPositionField = new Field("elementPosition", nodeElementPosition, Field.Store.YES, Field.Index.ANALYZED);
+            nodeDoc.add(nodeElementPositionField);
+            if (nodeXmlId != null) {
+              Field nodeXmlIdField = new Field("xmlId", nodeXmlId, Field.Store.YES, Field.Index.ANALYZED);
+              nodeDoc.add(nodeXmlIdField);
+            }
+            if (nodeXpath != null) {
+              Field nodeXpathField = new Field("xpath", nodeXpath, Field.Store.YES, Field.Index.ANALYZED);
+              nodeDoc.add(nodeXpathField);
+            }
+            if (nodeXmlContent != null) {
+              Field nodeXmlContentField = new Field("xmlContent", nodeXmlContent, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
+              nodeDoc.add(nodeXmlContentField);
+            }
+            if (nodeXmlContent != null) {
+              String nodeXmlContentTokenized = toTokenizedXmlString(nodeXmlContent, nodeLanguage);
+              Field nodeXmlContentTokenizedField = new Field("xmlContentTokenized", nodeXmlContentTokenized, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
+              nodeDoc.add(nodeXmlContentTokenizedField);
+            }
+            if (nodeTokensOrig != null) {
+              Field nodeTokenOrigField = new Field("tokenOrig", nodeTokensOrig, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
+              nodeDoc.add(nodeTokenOrigField);
+            }
+            if (nodeTokensReg != null) {
+              Field nodeTokenRegField = new Field("tokenReg", nodeTokensReg, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
+              nodeDoc.add(nodeTokenRegField);
+            }
+            if (nodeTokensNorm != null) {
+              Field nodeTokenNormField = new Field("tokenNorm", nodeTokensNorm, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
+              nodeDoc.add(nodeTokenNormField);
+            }
+            if (nodeTokensMorph != null) {
+              Field nodeTokenMorphField = new Field("tokenMorph", nodeTokensMorph, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
+              nodeDoc.add(nodeTokenMorphField);
+            }
+    
+            nodesIndexWriter.addDocument(nodeDoc);
           }
-          Field nodePageNumberField = new Field("pageNumber", nodePageNumber, Field.Store.YES, Field.Index.ANALYZED);
-          nodeDoc.add(nodePageNumberField);
-          Field nodeLineNumberField = new Field("lineNumber", nodeLineNumber, Field.Store.YES, Field.Index.ANALYZED);
-          nodeDoc.add(nodeLineNumberField);
-          Field nodeElementNameField = new Field("elementName", nodeElementName, Field.Store.YES, Field.Index.ANALYZED);
-          nodeDoc.add(nodeElementNameField);
-          Field nodeElementDocPositionField = new Field("elementDocPosition", nodeElementDocPosition, Field.Store.YES, Field.Index.ANALYZED);
-          nodeDoc.add(nodeElementDocPositionField);
-          Field nodeElementDocPositionFieldSorted = new Field("elementDocPositionSorted", nodeElementDocPosition, Field.Store.YES, Field.Index.NOT_ANALYZED);
-          nodeDoc.add(nodeElementDocPositionFieldSorted);
-          Field nodeElementAbsolutePositionField = new Field("elementAbsolutePosition", nodeElementAbsolutePosition, Field.Store.YES, Field.Index.ANALYZED);
-          nodeDoc.add(nodeElementAbsolutePositionField);
-          Field nodeElementPagePositionField = new Field("elementPagePosition", nodeElementPagePosition, Field.Store.YES, Field.Index.ANALYZED);
-          nodeDoc.add(nodeElementPagePositionField);
-          Field nodeElementPositionField = new Field("elementPosition", nodeElementPosition, Field.Store.YES, Field.Index.ANALYZED);
-          nodeDoc.add(nodeElementPositionField);
-          if (nodeXmlId != null) {
-            Field nodeXmlIdField = new Field("xmlId", nodeXmlId, Field.Store.YES, Field.Index.ANALYZED);
-            nodeDoc.add(nodeXmlIdField);
-          }
-          if (nodeXpath != null) {
-            Field nodeXpathField = new Field("xpath", nodeXpath, Field.Store.YES, Field.Index.ANALYZED);
-            nodeDoc.add(nodeXpathField);
-          }
-          if (nodeXmlContent != null) {
-            Field nodeXmlContentField = new Field("xmlContent", nodeXmlContent, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
-            nodeDoc.add(nodeXmlContentField);
-          }
-          if (nodeXmlContent != null) {
-            String nodeXmlContentTokenized = toTokenizedXmlString(nodeXmlContent, nodeLanguage);
-            Field nodeXmlContentTokenizedField = new Field("xmlContentTokenized", nodeXmlContentTokenized, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
-            nodeDoc.add(nodeXmlContentTokenizedField);
-          }
-          if (nodeTokensOrig != null) {
-            Field nodeTokenOrigField = new Field("tokenOrig", nodeTokensOrig, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
-            nodeDoc.add(nodeTokenOrigField);
-          }
-          if (nodeTokensReg != null) {
-            Field nodeTokenRegField = new Field("tokenReg", nodeTokensReg, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
-            nodeDoc.add(nodeTokenRegField);
-          }
-          if (nodeTokensNorm != null) {
-            Field nodeTokenNormField = new Field("tokenNorm", nodeTokensNorm, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
-            nodeDoc.add(nodeTokenNormField);
-          }
-          if (nodeTokensMorph != null) {
-            Field nodeTokenMorphField = new Field("tokenMorph", nodeTokensMorph, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
-            nodeDoc.add(nodeTokenMorphField);
-          }
-  
-          nodesIndexWriter.addDocument(nodeDoc);
         }
       }
     } catch (Exception e) {
