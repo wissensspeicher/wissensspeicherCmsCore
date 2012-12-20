@@ -93,18 +93,22 @@ public class DocumentHandler {
       mdRecord.setLastModified(new Date());
       String mimeType = getMimeType(docId);
       mdRecord.setType(mimeType);
-      // document is of type XML
+      String docType = null;
+      XQueryEvaluator xQueryEvaluator = null;
       if (docIsXml) {
         // parse validation on file
-        XQueryEvaluator xQueryEvaluator = new XQueryEvaluator();
+        xQueryEvaluator = new XQueryEvaluator();
         XdmNode docNode = xQueryEvaluator.parse(srcUrl); // if it is not parseable an exception with a detail message is thrown 
-        String docType = getNodeType(docNode);
+        docType = getNodeType(docNode);
         docType = docType.trim();
-        if (docType == null) {
-          FileUtils.deleteQuietly(docDestFile);
-          docOperation.setErrorMessage("file type of: " + srcUrlStr + "is not supported");
-          return;
-        }
+      }
+      if (docType == null) {
+        FileUtils.deleteQuietly(docDestFile);
+        docOperation.setErrorMessage("file type of: " + srcUrlStr + "is not supported");
+        return;
+      }
+      // document is xml fulltext document: is of type XML and not mets
+      if (docIsXml && ! docType.equals("mets")) {
         // replace anchor in echo documents and also add the number attribute to figures
         String docDestFileNameUpgrade = docDestFileName + ".upgrade";
         File docDestFileUpgrade = new File(docDestFileNameUpgrade);
@@ -160,9 +164,18 @@ public class DocumentHandler {
           File docPageTokenizedFile = new File(docPageTokenizedFileName);
           FileUtils.writeStringToFile(docPageTokenizedFile, tokenizedXmlStr, "utf-8");
         }
+      } else if (docIsXml && docType.equals("mets")) {
+        mdRecord = getMetadataRecord(docDestFile, docType, mdRecord, xQueryEvaluator);
+        String mdRecordLanguage = mdRecord.getLanguage();
+        String langId = Language.getInstance().getLanguageId(mdRecordLanguage); // test if language code is supported
+        if (langId == null)
+          mdRecordLanguage = null;
+        if (mdRecordLanguage == null && mainLanguage != null)
+          mdRecord.setLanguage(mainLanguage);
       } 
       // build the documents fulltext fields
-      buildFulltextFields(docOperation);
+      if (! docType.equals("mets"))
+        buildFulltextFields(docOperation);
       // perform operation on Lucene
       docOperation.setStatus(operationName + " document: " + docId + " in CMS");
       IndexHandler indexHandler = IndexHandler.getInstance();
@@ -300,6 +313,8 @@ public class DocumentHandler {
       URL srcUrl = xmlFile.toURI().toURL();
       if (schemaName.equals("TEI"))
         mdRecord = getMetadataRecordTei(xQueryEvaluator, srcUrl, mdRecord);
+      else if (schemaName.equals("mets"))
+        mdRecord = getMetadataRecordMets(xQueryEvaluator, srcUrl, mdRecord);
       else if (schemaName.equals("html"))
         mdRecord = getMetadataRecordHtml(xQueryEvaluator, srcUrl, mdRecord);
       else
@@ -409,6 +424,88 @@ public class DocumentHandler {
     int pageCount = Integer.valueOf(pageCountStr);
     mdRecord.setPageCount(pageCount);
     mdRecord.setSchemaName("TEI");
+    return mdRecord;
+  }
+
+  private MetadataRecord getMetadataRecordMets(XQueryEvaluator xQueryEvaluator, URL srcUrl, MetadataRecord mdRecord) throws ApplicationException {
+    String metadataXmlStrDmd = xQueryEvaluator.evaluateAsString(srcUrl, "/*:mets/*:dmdSec");
+    String metadataXmlStrAmd = xQueryEvaluator.evaluateAsString(srcUrl, "/*:mets/*:amdSec");
+    if (metadataXmlStrDmd != null) {
+      String identifier = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStrDmd, "string(/*:dmdSec/@ID)");
+      if (identifier != null)
+        identifier = StringUtils.deresolveXmlEntities(identifier.trim());
+      String webUri = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStrAmd, "/*:amdSec/*:digiprovMD/*:mdWrap/*:xmlData/*:links/*:presentation");
+      if (webUri != null)
+        webUri = StringUtils.deresolveXmlEntities(webUri.trim());
+      String creator = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStrDmd, "/*:dmdSec/*:mdWrap/*:xmlData/*:mods/*:name");
+      if (creator != null)
+        creator = StringUtils.deresolveXmlEntities(creator.trim());
+      String title = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStrDmd, "/*:dmdSec/*:mdWrap/*:xmlData/*:mods/*:titleInfo");
+      if (title != null)
+        title = StringUtils.deresolveXmlEntities(title.trim());
+      String language = null;  // TODO
+      // String language = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStrDmd, "string(/*:teiHeader/*:profileDesc/*:langUsage/*:language[1]/@ident)");
+      // if (language != null && language.isEmpty())
+      //   language = null;
+      // if (language != null) {
+      //   language = StringUtils.deresolveXmlEntities(language.trim());
+      //   language = Language.getInstance().getISO639Code(language);
+      // }
+      String publisher = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStrAmd, "/*:amdSec/*:rightsMD/*:mdWrap/*:xmlData/*:rights/*:owner", ", ");
+      if (publisher != null)
+        publisher = StringUtils.deresolveXmlEntities(publisher.trim());
+      String place = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStrDmd, "/*:dmdSec/*:mdWrap/*:xmlData/*:mods/*:originInfo/*:place/*:placeTerm", ", ");
+      if (place != null)
+        place = StringUtils.deresolveXmlEntities(place.trim());
+      String publisherStr = null;
+      boolean publisherEndsWithComma = false;
+      if (publisher != null)
+        publisherEndsWithComma = publisher.lastIndexOf(",") == publisher.length() - 1;
+      if (publisher == null && place != null)
+        publisherStr = place;
+      else if (publisher != null && place == null)
+        publisherStr = publisher;
+      else if (publisher != null && place != null && publisherEndsWithComma)
+        publisherStr = publisher + " " + place;
+      else if (publisher != null && place != null && ! publisherEndsWithComma)
+        publisherStr = publisher + ", " + place;
+      String yearStr = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStrDmd, "/*:dmdSec/*:mdWrap/*:xmlData/*:mods/*:originInfo/*:dateIssued");
+      Date date = null; 
+      if (yearStr != null && ! yearStr.equals("")) {
+        yearStr = StringUtils.deresolveXmlEntities(yearStr.trim());
+        yearStr = new Util().toYearStr(yearStr);  // test if possible etc
+        if (yearStr != null) {
+          try {
+            date = new Util().toDate(yearStr + "-01-01T00:00:00.000Z");
+          } catch (Exception e) {
+            // nothing
+          }
+        }
+      }
+      String subject = null;  // TODO
+      // String subject = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStrDmd, "/*:teiHeader/*:profileDesc/*:textClass/*:keywords/*:term");
+      // if (subject != null)
+      //   subject = StringUtils.deresolveXmlEntities(subject.trim());
+      String rightsOwner = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStrAmd, "/*:amdSec/*:rightsMD/*:mdWrap/*:xmlData/*:rights/*:owner");
+      String rightsOwnerUrl = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStrAmd, "/*:amdSec/*:rightsMD/*:mdWrap/*:xmlData/*:rights/*:ownerSiteURL");
+      String rights = null;
+      if (rightsOwner != null)
+        rights = StringUtils.deresolveXmlEntities(rightsOwner.trim());
+      if (rightsOwner != null && rightsOwnerUrl != null)
+        rights = rights + ", " + StringUtils.deresolveXmlEntities(rightsOwnerUrl.trim());
+      else if (rightsOwner == null && rightsOwnerUrl != null)
+        rights = StringUtils.deresolveXmlEntities(rightsOwnerUrl.trim());
+      mdRecord.setIdentifier(identifier);
+      mdRecord.setWebUri(webUri);
+      mdRecord.setLanguage(language);
+      mdRecord.setCreator(creator);
+      mdRecord.setTitle(title);
+      mdRecord.setPublisher(publisherStr);
+      mdRecord.setRights(rights);
+      mdRecord.setDate(date);
+      mdRecord.setSubject(subject);
+    }
+    mdRecord.setSchemaName("mets");
     return mdRecord;
   }
 
