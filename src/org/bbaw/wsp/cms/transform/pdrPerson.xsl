@@ -15,8 +15,8 @@
 
 <xsl:template match="/">
   <xsl:if test="not(empty($hits))">
-    <span class="query">Person knowledge about: <xsl:value-of select="$query"/></span>
-    <span class="about">[This is PDR service]<a href="http://pdr.bbaw.de"><img src="../images/info.png" width="18" height="18" border="0" alt="Info PDR"/></a></span>
+    <span class="query">Persons</span>
+    <span class="about">[Supported by PDR]<a href="http://pdr.bbaw.de"><img src="../images/info.png" width="18" height="18" border="0" alt="Info PDR"/></a></span>
     <p></p>
     <div class="hits">
       <xsl:apply-templates select="$hits"/>
@@ -33,14 +33,20 @@
   <xsl:variable name="dateOfDeath" select="person/dateOfDeath[normalize-space() != '']"/>
   <xsl:variable name="placeOfDeath" select="person/placeOfDeath[normalize-space() != '']"/>
   <xsl:variable name="description" select="person/description[normalize-space() != '']"/>
+  <xsl:variable name="gender" select="person/gender[normalize-space() != '']"/>
+  <xsl:variable name="yearOfActivity" select="person/yearOfActivity[normalize-space() != '']"/>
+  <xsl:variable name="countryOfActivity" select="person/countryOfActivity[normalize-space() != '']"/>
   <xsl:variable name="wikiUrl" select="person/reference/@url[normalize-space() != '']"/>
   <xsl:variable name="furtherProviders" select="identifiers"/>
   <xsl:variable name="pndUrl" select="identifiers/personId[@provider = 'PeEnDe']/@url[normalize-space() != '']"/>
   <xsl:variable name="gndUrl" select="identifiers/personId[@provider = 'GND']/@url[normalize-space() != '']"/>
   <xsl:variable name="lccnUrl" select="identifiers/personId[@provider = 'LCCN']/@url[normalize-space() != '']"/>
   <xsl:variable name="viafUrl" select="identifiers/personId[@provider = 'VIAF']/@url[normalize-space() != '']"/>
-  <div class="person">
-    <div class="name"><xsl:value-of select="$name"/></div>
+  <div class="person"> 
+    <div class="name">
+      <img src="../images/person.png" width="18" height="18" border="0" alt="Person"/>
+      <xsl:value-of select="$name"/>
+    </div>
     <xsl:if test="not(empty($otherNames))"><div class="otherNames"><xsl:value-of select="$otherNames"/></div></xsl:if>
     <xsl:if test="not(empty($description))"><div class="description"><xsl:value-of select="$description"/></div></xsl:if>
     <xsl:if test="not(empty($dateOfBirth))">
@@ -59,7 +65,11 @@
         </xsl:if>
       </div>
     </xsl:if>
-    <xsl:if test="not(empty($wikiUrl))"><div class="wikiUrl"><a class="url" href="{$wikiUrl}"><xsl:value-of select="$wikiUrl"/></a></div></xsl:if>
+    <xsl:if test="not(empty($wikiUrl))">
+      <div class="wikiUrl">
+        <a class="url" href="{$wikiUrl}"><xsl:value-of select="$wikiUrl"/></a>
+      </div>
+    </xsl:if>
     <xsl:if test="not(empty($furtherProviders))">
       <ul class="furtherProviders">
         <xsl:if test="not(empty($pndUrl))"><li class="provider"><a class="url" href="{$pndUrl}"><xsl:value-of select="$pndUrl"/></a></li></xsl:if>
