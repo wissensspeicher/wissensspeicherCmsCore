@@ -10,11 +10,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.lucene.index.IndexReader;
 import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.WspRdfStore;
 import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.RdfHandler;
 
 import com.hp.hpl.jena.rdf.model.*;
 import com.hp.hpl.jena.query.* ;
+
+import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 
 
 public class JenaMain {
@@ -27,12 +30,13 @@ public class JenaMain {
 //	static final String oreBiblio = "/home/juergens/WspEtc/rdfData/AvHBiblio.rdf";
 	static final String oreBiblioNeu = "/home/juergens/WspEtc/rdfData/BiblioNeu.rdf";
   private static final String EDOC = "C:/Dokumente und Einstellungen/wsp-shk1/Eigene Dateien/Development/ParserTest/XSLTTest/outputs/v2_29_11_2012/eDocs";
+  private static final String EDOC_1 = "C:/Dokumente und Einstellungen/wsp-shk1/Eigene Dateien/Development/ParserTest/XSLTTest/outputs/v2_29_11_2012/eDocs/30.rdf";
   private static final String MODS = "C:/Dokumente und Einstellungen/wsp-shk1/Eigene Dateien/Development/ParserTest/XSLTTest/outputs/v2_29_11_2012/mods";
 	
     private Model model;
-	private RdfHandler manager;
-	private WspRdfStore wspStore;
-	private Dataset dataset; 
+	protected RdfHandler manager;
+	protected WspRdfStore wspStore;
+	protected Dataset dataset; 
 	
 	/**
 	 * needs to be instantiated from outside e.g. org.bbaw.wsp.cms.test.TestLocal
@@ -41,8 +45,8 @@ public class JenaMain {
     	
     }
     
-    public void initStore(){
-    	wspStore = new WspRdfStore("store");
+    public void initStore() throws ApplicationException{
+    	wspStore = new WspRdfStore("C:/Dokumente und Einstellungen/wsp-shk1/Eigene Dateien/Development/Apache Jena/store");
     	wspStore.createStore();
     	wspStore.createModelFactory();
     	//removeAll() performed?
@@ -60,12 +64,19 @@ public class JenaMain {
 //    	createNewModelFromSingleOre(oreBiblioNeu);
 //    	getAllNamedModelsInDataset();
 //    	createNamedModelsFromOreSets(EDOC);
-    	createNamedModelsFromOreSets(MODS);
+//    	createNamedModelsFromOreSets(MODS);
+//    	createNewModelFromSingleOre(EDOC_1);
 //    	model.close();
 //		dataset.close();
+    	printIndex();
     }
     
-    /**
+    private void printIndex() {
+		IndexReader reader = wspStore.getIndexStore().getCurrentIndex().getLuceneReader();
+		
+	}
+
+	/**
      * creates single namedmodel from code
      * this should later be done by fuseki over http 
      * 
@@ -108,7 +119,7 @@ public class JenaMain {
     /**
      * simply prints all named Models in a dataset
      */
-    private void getAllNamedModelsInDataset(){
+    protected void getAllNamedModelsInDataset(){
 		wspStore.openDataset();
 		Iterator<String> ite = dataset.listNames();
 		while(ite.hasNext()){
@@ -280,5 +291,49 @@ public class JenaMain {
 	    }
 	    return pathList;
 	  }
+	
+	/**
+	 * Perform a select query.
+	 * @param queryString
+	 * @return the {@link QueryExecution} instance.
+	 */
+	public QueryExecution performQuery(String queryString) {
+		Query query = QueryFactory.create(queryString);
+		
+		wspStore.openDataset();
+		QueryExecution qExec = QueryExecutionFactory.create(query, dataset);
+		ResultSetFormatter.out(System.out, qExec.execSelect(), query);
+		wspStore.closeDataset();
+		return qExec;
+	}
+	
+	/**
+	 * Perform a select query.
+	 * @param queryString
+	 * @param m the {@link Model} which will be queried
+	 * @return the {@link QueryExecution} instance.
+	 */
+	public QueryExecution performQuery(String queryString, Model m) {
+		Query query = QueryFactory.create(queryString);
+		
+		wspStore.openDataset();
+		QueryExecution qExec = QueryExecutionFactory.create(query, m);
+		ResultSetFormatter.out(System.out, qExec.execSelect(), query);
+		wspStore.closeDataset();
+		return qExec;
+	}
+	
+	
+	public void makeDefaultGraphUnion() {
+		Model unionModel = returnUnionModel(); 
+		dataset.setDefaultModel(unionModel);
+	}
+	
+	public Model returnUnionModel() {
+		wspStore.openDataset();
+		Model m= dataset.getNamedModel("urn:x-arq:UnionGraph"); 
+		wspStore.closeDataset();
+		return m;
+	}
 	
 }
