@@ -38,7 +38,7 @@ public class JenaMainForAI {
 
 	private Model model;
 	private RdfHandler manager;
-	private WspRdfStore wspStore;
+	private WspRdfStoreForAi wspStore;
 	private Dataset dataset;
 	private final String source;
 	private final String destination;
@@ -77,31 +77,36 @@ public class JenaMainForAI {
 				temp = temp.substring(1);
 			}
 
-			wspStore = new WspRdfStore(temp);
+			wspStore = new WspRdfStoreForAi(temp);
 
 		} else {
+
 			loadWspStore();
+
 		}
 		try {
+
 			wspStore.createStore();
 
 		} catch (Exception e) {
 			System.out.println("Store already in use");
-
+			System.out.println(e.getMessage());
 		}
+
 		// removeAll() performed?
 		wspStore.createModelFactory();
 		dataset = wspStore.getDataset();
 		manager = new RdfHandler();
 
 		doYourWork();
+
 	}
 
 	private void loadWspStore() throws IOException, ClassNotFoundException {
 
 		FileInputStream input = new FileInputStream(destination);
 		ObjectInputStream ois = new ObjectInputStream(input);
-		wspStore = (WspRdfStore) ois.readObject();
+		wspStore = (WspRdfStoreForAi) ois.readObject();
 
 		ois.close();
 
@@ -148,6 +153,9 @@ public class JenaMainForAI {
 		// model.close();
 		// dataset.close();
 		saveWspStore();
+		// dataset.close();
+		// wspStore.closeDataset();
+		wspStore.closeDataset();
 
 	}
 
@@ -164,8 +172,6 @@ public class JenaMainForAI {
 		String rdfAbout = checkifValid(manager.scanID(file), file);
 
 		wspStore.addNamedModelToWspStore(rdfAbout, model);
-
-		wspStore.closeDataset();
 
 	}
 

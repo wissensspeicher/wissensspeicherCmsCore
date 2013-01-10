@@ -12,10 +12,9 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.ModelMaker;
 import com.hp.hpl.jena.tdb.TDB;
 import com.hp.hpl.jena.tdb.TDBFactory;
-import com.hp.hpl.jena.tdb.store.DatasetGraphTDB;
 
 @SuppressWarnings("serial")
-public class WspRdfStore implements Serializable {
+public class WspRdfStoreForAi implements Serializable {
 
 	private String directory = "";
 	private transient Dataset dataset;
@@ -23,14 +22,13 @@ public class WspRdfStore implements Serializable {
 	private InfModel rdfsModel;
 	private transient ModelMaker modelmaker;
 	private List<String> modelList;
-	private DatasetGraphTDB dsdt;
 
 	/**
 	 * Give here the path to the Store
 	 * 
 	 * @param pathtoSave
 	 */
-	public WspRdfStore(String pathtoSave) {
+	public WspRdfStoreForAi(String pathtoSave) {
 		directory = pathtoSave;
 	}
 
@@ -44,7 +42,8 @@ public class WspRdfStore implements Serializable {
 		// dataset = dsdt.toDataset();
 		dataset = TDBFactory.createDataset(directory);
 
-		defaultModel = dataset.getDefaultModel();
+		// defaultModel = dataset.getDefaultModel();
+
 		// defaultModel.removeAll();
 		modelList = new ArrayList<String>();
 		TDB.getContext().set(TDB.symUnionDefaultGraph, true);
@@ -80,6 +79,7 @@ public class WspRdfStore implements Serializable {
 	}
 
 	public void closeDataset() {
+
 		dataset.commit();
 		dataset.end();
 	}

@@ -178,8 +178,11 @@ public class AdminInterface extends JFrame {
 	 * @throws IOException
 	 */
 	private void execution() throws ClassNotFoundException, IOException {
-		new JenaMainForAI(srcD, desF).initStore(createNewSet);
+
+		new JenaMainForAI(srcD, desF).initStore(createDataset.isSelected());
+
 		createNewSet = false;
+		createDataset.setSelected(false);
 	}
 
 	/**
