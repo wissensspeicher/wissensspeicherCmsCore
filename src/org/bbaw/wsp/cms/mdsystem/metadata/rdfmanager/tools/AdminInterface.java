@@ -67,7 +67,7 @@ public class AdminInterface extends JFrame {
 
 		Panel panel = new Panel();
 		panel.setLayout(new GridLayout(7, 1));
-		btn_src = new JButton("Choose Source Data");
+		btn_src = new JButton("Choose Metadata");
 		src = new Label("no Source Data selected");
 		btn_des = new JButton("Choose Destination");
 		des = new Label("no Destination selected");
@@ -123,7 +123,7 @@ public class AdminInterface extends JFrame {
 		b.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent ev) {
-				if (ev.getActionCommand().equals("Choose Source Data")) {
+				if (ev.getActionCommand().equals("Choose Metadata")) {
 					if (folderScr.isSelected()) {
 						srcD = fileChooser(false, false);
 						scanforRDF(srcD);

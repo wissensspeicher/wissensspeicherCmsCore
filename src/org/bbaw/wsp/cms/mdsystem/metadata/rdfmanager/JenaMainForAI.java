@@ -55,53 +55,109 @@ public class JenaMainForAI {
 		this.destination = desF;
 	}
 
-	public void initStore(Boolean newSet) throws ClassNotFoundException,
+	/**
+	 * Contains all the main functionality features
+	 * 
+	 * @param newSet
+	 * @throws ClassNotFoundException
+	 * @throws IOException
+	 */
+	public void initStore(final Boolean newSet) throws ClassNotFoundException,
 			IOException {
-		if (newSet) {
-			String temp = "";
-			if (System.getProperty("os.name").startsWith("Windows")) {
 
-				String[] array = destination.split("[\\]+");
-				for (int i = 0; i < array.length - 1; ++i) {
-					temp += "\\" + array[i];
+		// inital Thread creates Store/Dataset/RDFManager
+		final Thread initial = new Thread() {
+			@Override
+			public void run() {
+				if (newSet) {
+					String temp = "";
+					if (System.getProperty("os.name").startsWith("Windows")) {
+
+						String[] array = destination.split("[\\]+");
+						for (int i = 0; i < array.length - 1; ++i) {
+							temp += "\\" + array[i];
+						}
+						temp = temp.substring(1);
+
+					} else {
+						String[] array = destination.split("[/]+");
+
+						for (int i = 0; i < array.length - 1; ++i) {
+							temp += "/" + array[i];
+
+						}
+						temp = temp.substring(1);
+					}
+
+					wspStore = new WspRdfStoreForAi(temp);
+
+				} else {
+
+					try {
+						loadWspStore();
+					} catch (ClassNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+
 				}
-				temp = temp.substring(1);
+				try {
 
-			} else {
-				String[] array = destination.split("[/]+");
+					wspStore.createStore();
 
-				for (int i = 0; i < array.length - 1; ++i) {
-					temp += "/" + array[i];
-
+				} catch (Exception e) {
+					System.out.println("Store already in use");
+					System.out.println(e.getMessage());
 				}
-				temp = temp.substring(1);
+
+				wspStore.createModelFactory();
+				dataset = wspStore.getDataset();
+				manager = new RdfHandler();
+
 			}
 
-			wspStore = new WspRdfStoreForAi(temp);
+		};
 
-		} else {
+		initial.run();
+		// Thread add one ore more files to a Dataset
+		Thread editStore = new Thread() {
+			@Override
+			public void run() {
+				try {
+					initial.join();
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				if (new File(source).isDirectory()) {
+					createDatasetFromSet(source);
+				} else
+					createNewModelFromSingleOre(source);
 
-			loadWspStore();
+				try {
+					saveStorePath();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				wspStore.closeDataset();
+			}
 
-		}
-		try {
+		};
+		editStore.run();
 
-			wspStore.createStore();
-
-		} catch (Exception e) {
-			System.out.println("Store already in use");
-			System.out.println(e.getMessage());
-		}
-
-		// removeAll() performed?
-		wspStore.createModelFactory();
-		dataset = wspStore.getDataset();
-		manager = new RdfHandler();
-
-		doYourWork();
-
+		// doYourWork();
 	}
 
+	/**
+	 * Loads a .store data uses chosen folder as Triplestore
+	 * 
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
 	private void loadWspStore() throws IOException, ClassNotFoundException {
 
 		FileInputStream input = new FileInputStream(destination);
@@ -117,7 +173,7 @@ public class JenaMainForAI {
 	 * 
 	 * @throws IOException
 	 */
-	private void saveWspStore() throws IOException {
+	private void saveStorePath() throws IOException {
 		OutputStream fos = null;
 
 		try {
@@ -152,7 +208,7 @@ public class JenaMainForAI {
 		// createNamedModelsFromOreSets(MODS);
 		// model.close();
 		// dataset.close();
-		saveWspStore();
+		saveStorePath();
 		// dataset.close();
 		// wspStore.closeDataset();
 		wspStore.closeDataset();
