@@ -183,6 +183,11 @@ public class JenaMainForAI {
 		return liste;
 	}
 
+	/**
+	 * Removes the given named model from the dataset of the given location
+	 * 
+	 * @param name
+	 */
 	public void removeModel(String name) {
 
 		try {
