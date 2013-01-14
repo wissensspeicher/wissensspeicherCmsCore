@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 
@@ -39,6 +40,8 @@ public class AdminInterface extends JFrame {
 	private Label src;
 
 	private JButton btn_des;
+	private JButton load_set_btn;
+	private JButton remove_btn;
 	private Label des;
 	private String srcD;
 	private String desF;
@@ -46,13 +49,15 @@ public class AdminInterface extends JFrame {
 	private JCheckBox createDataset;
 	private TextArea textArea;
 	private boolean createNewSet;
+	private final JComboBox<String> combobox = new JComboBox<String>();
+	private String namedGraph = "";
 
 	/**
 	 * Opens a new Frame
 	 */
 	public AdminInterface() {
 		super("Admin Interface");
-		setSize(600, 300);
+		setSize(900, 300);
 		setLocation(300, 300);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
@@ -72,10 +77,21 @@ public class AdminInterface extends JFrame {
 		btn_des = new JButton("Choose Destination");
 		des = new Label("no Destination selected");
 		btn_go = new JButton("Start");
+		load_set_btn = new JButton("Load Models");
+		remove_btn = new JButton("Remove");
+		combobox.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				namedGraph = (String) combobox.getSelectedItem();
+
+			}
+		});
 
 		addButtonListener(btn_src);
 		addButtonListener(btn_go);
 		addButtonListener(btn_des);
+		addButtonListener(remove_btn);
+		addButtonListener(load_set_btn);
 
 		panel.add(folderScr = new JCheckBox("Choose a source Folder"));
 		panel.add(createDataset = new JCheckBox("Create a Dataset new Location"));
@@ -87,10 +103,21 @@ public class AdminInterface extends JFrame {
 
 		textArea = new TextArea("Welcome,\n");
 
+		Panel removePanel = new Panel();
+		removePanel.setLayout(new GridLayout(7, 1));
+		removePanel.add(new Label("Remove Area"));
+		removePanel.add(new Label("Load all Named Models from destination"));
+		removePanel.add(load_set_btn);
+		removePanel.add(combobox);
+		removePanel.add(new Label(""));
+		removePanel.add(new Label(""));
+		removePanel.add(remove_btn);
+
 		Panel mainPanel = new Panel();
-		mainPanel.setLayout(new GridLayout(1, 2));
+		mainPanel.setLayout(new GridLayout(1, 3));
 		mainPanel.add(panel);
 		mainPanel.add(new Panel().add(textArea));
+		mainPanel.add(removePanel);
 
 		getContentPane().add(mainPanel);
 		giveInstruct();
@@ -142,7 +169,38 @@ public class AdminInterface extends JFrame {
 					} else
 						des.setText(desF);
 
-				} else if (ev.getActionCommand().equals("Start")) {
+				} else if (ev.getActionCommand().equals("Load Models")) {
+					if (desF == null) {
+						println("no source choosed!");
+						return;
+					}
+					for (String s : new JenaMainForAI(" ", desF).getModels()) {
+
+						combobox.addItem(s);
+
+					}
+					combobox.showPopup();
+
+					println("Loaded all named Graphes from " + desF);
+					namedGraph = combobox.getItemAt(0);
+
+				} else if (ev.getActionCommand().equals("Remove")) {
+					if (desF == null) {
+						println("no source choosed!");
+						return;
+					}
+					JenaMainForAI jMain = new JenaMainForAI(" ", desF);
+					jMain.removeModel(namedGraph);
+					println(namedGraph + " successfully removed.");
+					println("Index will refresh now.");
+					combobox.removeAllItems();
+					for (String s : jMain.getModels()) {
+						combobox.addItem(s);
+					}
+
+				}
+
+				else if (ev.getActionCommand().equals("Start")) {
 
 					if (srcD == null) {
 						println("no source choosed!");

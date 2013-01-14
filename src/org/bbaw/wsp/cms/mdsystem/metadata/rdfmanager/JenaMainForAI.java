@@ -51,6 +51,7 @@ public class JenaMainForAI {
 	 * @param srcD
 	 */
 	public JenaMainForAI(String srcD, String desF) {
+
 		this.source = srcD;
 		this.destination = desF;
 	}
@@ -123,7 +124,7 @@ public class JenaMainForAI {
 
 		initial.run();
 		// Thread add one ore more files to a Dataset
-		Thread editStore = new Thread() {
+		final Thread editStore = new Thread() {
 			@Override
 			public void run() {
 				try {
@@ -149,7 +150,56 @@ public class JenaMainForAI {
 		};
 		editStore.run();
 
-		// doYourWork();
+	}
+
+	/**
+	 * Gets all named Graphs of the Dataset an returns them as arraylist
+	 * 
+	 * @return
+	 */
+	public ArrayList<String> getModels() {
+
+		ArrayList<String> liste = new ArrayList<String>();
+
+		try {
+			loadWspStore();
+			wspStore.createStore();
+			wspStore.createModelFactory();
+			dataset = wspStore.getDataset();
+
+			Iterator<String> it = dataset.listNames();
+
+			while (it.hasNext()) {
+				liste.add(it.next());
+
+			}
+
+		} catch (ClassNotFoundException e) {
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return liste;
+	}
+
+	public void removeModel(String name) {
+
+		try {
+			loadWspStore();
+			wspStore.createStore();
+			wspStore.createModelFactory();
+			dataset = wspStore.getDataset();
+			dataset.removeNamedModel(name);
+
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 	/**
