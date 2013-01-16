@@ -1,7 +1,5 @@
 package org.bbaw.wsp.cms.document;
 
-import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
-
 public class Person {
   private String surname;
   private String forename;
@@ -34,16 +32,4 @@ public class Person {
     this.forename = forename;
   }
   
-  public String buildPdrQuery() throws ApplicationException {
-    String pdrQueryString = "n=";
-    String surnameEncoded = surname.replaceAll(" ", "%2B");
-    // surnameEncoded = URIUtil.encodeQuery(surnameEncoded);
-    pdrQueryString = pdrQueryString + surnameEncoded;
-    if (forename != null) {
-      String forenameEncoded = forename.replaceAll(" ", "%2B");
-      // forenameEncoded = URIUtil.encodeQuery(forenameEncoded);
-      pdrQueryString = pdrQueryString + "&on=" + forenameEncoded;
-    }
-    return pdrQueryString;
-  }
 }
