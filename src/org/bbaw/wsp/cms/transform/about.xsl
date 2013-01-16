@@ -151,10 +151,12 @@
   </xsl:if>
   <xsl:if test="$type = 'person'">
     <xsl:variable name="pdrHits" select="//*:match"/>
-    <div class="pdr">
-      <span class="h2"><xsl:value-of select="'PDR'"/></span>
-      <xsl:apply-templates select="$pdrHits"/>
-    </div>
+    <xsl:if test="not(empty($pdrHits))">
+      <div class="pdr">
+        <span class="h2"><xsl:value-of select="'PDR'"/></span>
+        <xsl:apply-templates select="$pdrHits"/>
+      </div>
+    </xsl:if>
   </xsl:if>
   <xsl:if test="$type = 'place' and ($language = 'el' or $language = 'la')">
     <div class="pleiades">
