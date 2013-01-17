@@ -1,7 +1,9 @@
 package org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager;
 
 import java.io.Serializable;
+import java.util.Iterator;
 
+import org.apache.jena.larq.HitLARQ;
 import org.apache.jena.larq.IndexBuilderString;
 import org.apache.jena.larq.IndexLARQ;
 import org.apache.jena.larq.LARQ;
@@ -22,9 +24,9 @@ import com.hp.hpl.jena.rdf.model.Model;
 
 public class StoreIndex implements Serializable {
 	/**
-	 * 
+	 * Define the Index Save Location here. 
+	 * Should be defined relative to the project.
 	 */
-	private static final long serialVersionUID = 1L;
 	private static final String LARQ_DIR = "save/larqindex";
 	public IndexBuilderString larqBuilder;
 	
@@ -67,5 +69,23 @@ public class StoreIndex implements Serializable {
 	public void commitIndex() {
 		larqBuilder.closeWriter();		
 		LARQ.setDefaultIndex(getCurrentIndex());
+	}
+	
+	/**
+	 * Perform a direct query on the FulltextIndex.
+	 * @param queryString
+	 */
+	public void readIndex(String queryString) {
+		System.out.println("LARQ query: "+queryString);
+		Iterator<HitLARQ>  results = getCurrentIndex().search(queryString);
+		while(results.hasNext()) {
+			HitLARQ doc = results.next();
+			System.out.println("-----------");
+			System.out.println("DocId: "+doc.getLuceneDocId());
+			System.out.println("Node: "+doc.getNode().toString());
+			System.out.println("Score: "+doc.getScore());
+			System.out.println("-----------");
+		}
+		System.out.println("finished lucene search");
 	}
 }

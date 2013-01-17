@@ -16,15 +16,27 @@
  * limitations under the License.
  */
 
-package larq.cmdline;
+package org.apache.jena.larq.pfunction;
 
-import arq.cmdline.CmdARQ;
+import org.apache.jena.larq.IndexLARQ;
+import org.apache.jena.larq.LARQ;
+import org.apache.jena.larq.LuceneSearch;
 
-public abstract class CmdLARQ extends CmdARQ
+import com.hp.hpl.jena.sparql.engine.ExecutionContext ;
+
+/** Property function to search the default Lucene index (which is 
+ *  the one set by {@link LARQ#setDefaultIndex(IndexLARQ) })
+ */
+
+public class textMatch extends LuceneSearch
 {
-    protected CmdLARQ(String[] argv)
-    {
-        super(argv) ;
-    }
+    private IndexLARQ index = null ;
 
+    @Override
+    protected IndexLARQ getIndex(ExecutionContext execCxt)
+    { 
+        if ( index == null )
+            index = LARQ.getDefaultIndex(execCxt.getContext()) ;
+        return index ; 
+    }
 }

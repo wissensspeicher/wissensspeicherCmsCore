@@ -34,6 +34,7 @@ import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 public class RdfHandler {
 
 	
+	
 	/**
 	 * 
 	 * @param store

@@ -68,11 +68,11 @@ public class JenaMain {
 //    	createNewModelFromSingleOre(EDOC_1);
 //    	model.close();
 //		dataset.close();
-    	printIndex();
+//    	printIndex();
     }
     
     private void printIndex() {
-		IndexReader reader = wspStore.getIndexStore().getCurrentIndex().getLuceneReader();
+		wspStore.getIndexStore().readIndex("+Humboldt");
 		
 	}
 
@@ -334,6 +334,25 @@ public class JenaMain {
 		Model m= dataset.getNamedModel("urn:x-arq:UnionGraph"); 
 		wspStore.closeDataset();
 		return m;
+	}
+
+	public StoreIndex getIndexStore() {
+		return wspStore.getIndexStore();		
+	}
+	
+	/**
+	 * @return the {@link RdfHandler}
+	 */
+	public RdfHandler getManager() {
+		return manager;
+	}
+	
+	/**
+	 * Return the number of triples of all named graphs (the union of all graphes in the dataset)
+	 * @return
+	 */
+	public long getNumberOfTriples() {
+		return returnUnionModel().size();
 	}
 	
 }
