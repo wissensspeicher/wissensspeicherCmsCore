@@ -44,7 +44,7 @@ public class WspRdfStore implements Serializable {
 	private InfModel rdfsModel;
 	private transient ModelMaker modelmaker;
 	private List<String> modelList;
-	private DatasetGraphTDB dsdt;
+	
 	/**
 	 * The global (persistent) store index.
 	 */
@@ -142,6 +142,17 @@ public class WspRdfStore implements Serializable {
 		}
 	}
 
+	public Model getNamedModel(String name){
+		if (this.dataset.getNamedModel(name) == null) {
+			try {
+				throw new Exception("desired Model doesn't exist.");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return this.dataset.getNamedModel(name);
+	}
+	
 	public void openDataset() {
 		dataset.begin(ReadWrite.WRITE);
 	}
