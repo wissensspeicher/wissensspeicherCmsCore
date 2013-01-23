@@ -1,6 +1,6 @@
 <!DOCTYPE project>
 <project name="wspCmsCore" default="compile" basedir="../">
-  <description>mpiwg-mpdl-cms</description>
+  <description>wspCmsCore</description>
   <!-- global properties -->
   <property name="src" location="src"/>
   <property name="lib" location="lib"/>
