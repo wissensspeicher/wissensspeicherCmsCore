@@ -27,6 +27,13 @@ import com.hp.hpl.jena.tdb.store.DatasetGraphTDB;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 
+/**
+ * This class represents the RDF-Store itself 
+ * 
+ * @author marco juergens
+ * @author sascha feldmann
+ * @author marco seidler
+ */
 @SuppressWarnings("serial")
 public class WspRdfStore implements Serializable {
 
@@ -62,24 +69,10 @@ public class WspRdfStore implements Serializable {
 
 	public void createStore() throws ApplicationException {
 		System.out.println("create Store");
-		// Location loc = new Location(directory);
-		// StoreConnection sc = StoreConnection.make(loc);
-		// GraphTDB graphTdb = sc.begin(ReadWrite.WRITE).getDefaultGraphTDB();
-		// dataset = sc.begin(ReadWrite.WRITE).toDataset();
-		// dsdt = sc.getBaseDataset();
-		// dataset = dsdt.toDataset();
 		dataset = TDBFactory.createDataset(directory);
-
 		defaultModel = dataset.getDefaultModel();
-		// defaultModel.removeAll();
 		modelList = new ArrayList<String>();
 		TDB.getContext().set(TDB.symUnionDefaultGraph, true);
-		// System.out.println("namedModel : ");
-		// StmtIterator iter = namedModel.listStatements();
-		// while (iter.hasNext()) {
-		// System.out.println("    " + iter.nextStatement());
-		// }
-		// model.removeAll();
 //		loadIndexStore();
 		indexStore = new StoreIndex();
 	}
