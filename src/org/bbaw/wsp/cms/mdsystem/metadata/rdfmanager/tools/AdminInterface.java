@@ -49,7 +49,7 @@ public class AdminInterface extends JFrame {
 	private JCheckBox createDataset;
 	private TextArea textArea;
 	private boolean createNewSet;
-	private final JComboBox<String> combobox = new JComboBox<String>();
+	private final JComboBox combobox = new JComboBox();
 	private String namedGraph = "";
 
 	/**
@@ -182,7 +182,7 @@ public class AdminInterface extends JFrame {
 					combobox.showPopup();
 
 					println("Loaded all named Graphes from " + desF);
-					namedGraph = combobox.getItemAt(0);
+					namedGraph = (String) combobox.getItemAt(0);
 
 				} else if (ev.getActionCommand().equals("Remove")) {
 					if (desF == null) {
