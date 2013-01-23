@@ -102,7 +102,7 @@ public class RdfHandler {
 	
 	/**
 	 * 
-	 * @param store
+	 * @param model
 	 * @return
 	 */
 	public String getAllTriples(Model model) {
@@ -125,7 +125,7 @@ public class RdfHandler {
 	
 	/**
 	 * INSERT
-	 * @param store
+	 * @param dataset
 	 * @param queryString
 	 */
 	public void performUpdate(Dataset dataset, String queryString){
@@ -164,7 +164,8 @@ public class RdfHandler {
 	
 	/**
 	 * fill Graph
-	 * @param store
+	 * @param model
+	 * @param loc
 	 */
 	public Model fillModelFromFile(Model model, String loc){
 		Model moodel = FileManager.get().readModel(model, loc);
