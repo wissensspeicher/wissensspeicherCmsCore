@@ -36,7 +36,7 @@ public class JenaMain {
 	private static final String MODS = "C:/Dokumente und Einstellungen/wsp-shk1/Eigene Dateien/Development/ParserTest/XSLTTest/outputs/v2_29_11_2012/mods";
 	
     private Model model;
-	protected RdfHandler manager;
+	protected RdfHandler rdfHandler;
 	protected WspRdfStore wspStore;
 	protected Dataset dataset; 
 	
@@ -48,11 +48,11 @@ public class JenaMain {
     }
     
     public void initStore() throws ApplicationException{
-    	wspStore = new WspRdfStore("C:/Dokumente und Einstellungen/wsp-shk1/Eigene Dateien/Development/Apache Jena/store");
+    	wspStore = new WspRdfStore("/home/juergens/wspTripleStore");
     	wspStore.createStore();
     	wspStore.createModelFactory();
     	dataset = wspStore.getDataset();
-    	manager = new RdfHandler();
+    	rdfHandler = new RdfHandler();
     	
     	doYourWork();
     }
@@ -64,6 +64,13 @@ public class JenaMain {
 //    	createNamedModelsFromOreSets("/home/juergens/WspEtc/rdfData/ModsToRdfTest");
 //    	createNewModelFromSingleOre(oreBiblioNeu);
 //    	getAllNamedModelsInDataset();
+//    	wspStore.openDataset();
+//    	Model model = wspStore.getNamedModel("http://edoc.bbaw.de/volltexte/2010/1347/pdf/13_brown.pdf");
+//    	rdfHandler.deleteByJenaApi(model, "http://wsp.bbaw.de/wspMetadata", "http://purl.org/dc/terms/abstract", "knowledge browsing");
+//    	rdfHandler.updateByJenaApi(model, "http://wsp.bbaw.de/wspMetadata", "http://purl.org/dc/terms/abstract", "knowledge browsing");
+//    	wspStore.closeDataset();
+//    	listAllStatementsbyJena("http://edoc.bbaw.de/volltexte/2010/1347/pdf/13_brown.pdf");
+    	
 //    	createNamedModelsFromOreSets(EDOC);
 //    	createNamedModelsFromOreSets(MODS);
 //    	createNewModelFromSingleOre(EDOC_1);
@@ -84,8 +91,8 @@ public class JenaMain {
     private void createNewModelFromSingleOre(String location){
     	wspStore.openDataset();
     	Model freshModel = wspStore.getFreshModel();
-    	Model model = manager.fillModelFromFile(freshModel, location);
-    	String rdfAbout = manager.scanID(location);
+    	Model model = rdfHandler.fillModelFromFile(freshModel, location);
+    	String rdfAbout = rdfHandler.scanID(location);
     	wspStore.addNamedModelToWspStore(rdfAbout, model); 
     	wspStore.closeDataset();
     }
@@ -102,8 +109,8 @@ public class JenaMain {
 		wspStore.openDataset();
 		for (String string : pathList) {
 			Model freshsModel = wspStore.getFreshModel();
-	    	Model m = manager.fillModelFromFile(freshsModel, string);
-	    	String modsRdfAbout = manager.scanID(string);
+	    	Model m = rdfHandler.fillModelFromFile(freshsModel, string);
+	    	String modsRdfAbout = rdfHandler.scanID(string);
 	    	if(modsRdfAbout != null ) {
 	    	  wspStore.addNamedModelToWspStore(modsRdfAbout, m); 	
 	    	}
@@ -126,19 +133,44 @@ public class JenaMain {
     }
 
     /**
-     * get all statements by sparql SELECT from a single named Graph
+     * list all statements of the default model
+     * same as queryAllBySelect() but without Sparql
      */
-    private void queryAllTriplesBySparql(Model model){
-        wspStore.openDataset();
-        //select all FROM
-        QueryExecution quecExec = QueryExecutionFactory.create(
-        		"SELECT * FROM NAMED <"+model+"> WHERE { ?s ?p ?o }", dataset) ;
-        ResultSet resu = quecExec.execSelect() ;
-        try {
-            ResultSetFormatter.out(resu) ;
-        } finally { quecExec.close() ; }
-        wspStore.closeDataset();
-    }
+	private void listAllStatementsbyJena(){
+        try{
+			wspStore.openDataset();
+	        Model defModel = dataset.getDefaultModel();
+	        StmtIterator erator = defModel.listStatements();
+	        while(erator.hasNext()){
+	        	Statement st = erator.next();
+	        	System.out.println("st : "+st);
+	        }
+	        wspStore.closeDataset();
+        
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+	}
+    
+    /**
+     * list all statements of a named model
+     * same as queryAllBySelect() but without Sparql
+     * @param model
+     */
+	private void listAllStatementsbyJena(String model){
+		try{
+	        wspStore.openDataset();
+	        Model briefe = dataset.getNamedModel(model);
+	        StmtIterator erator = briefe.listStatements();
+	        while(erator.hasNext()){
+	        	Statement st = erator.next();
+	        	System.out.println("st : "+st);
+	        }
+	        wspStore.closeDataset();
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+	}
     
     /**
      * TODO
@@ -155,13 +187,13 @@ public class JenaMain {
     }
     
     /**
-     * list all statements of the defaultmodel
+     * list all statements of the amodel
      * same as queryAllBySelect() but without Sparql
      */
 	private void queryAllStatementsFromJenaCode(){
 		try{
 			wspStore.openDataset();
-	        Model briefe = dataset.getNamedModel("http://wsp.bbaw.de/oreTestBriefe");
+	        Model briefe = dataset.getNamedModel("http://edoc.bbaw.de/volltexte/2010/1347/pdf/13_brown.pdf");
 	        StmtIterator erator = briefe.listStatements();
 	        while(erator.hasNext()){
 	        	Statement st = erator.next();
@@ -252,7 +284,7 @@ public class JenaMain {
 	 * @return the {@link RdfHandler}
 	 */
 	public RdfHandler getManager() {
-		return manager;
+		return rdfHandler;
 	}
 	
 	/**
