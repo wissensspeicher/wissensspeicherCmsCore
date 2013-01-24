@@ -130,10 +130,20 @@ public class JenaMainForAI {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				String modelName = checkifValid(manager.scanID(source), source);
 				if (new File(source).isDirectory()) {
 					createDatasetFromSet(source);
 				} else
-					createNewModelFromSingleOre(source);
+					// Update NameModel by delete from dataset and adding the
+					// new one
+					for (String name : getModels()) {
+						if (name.equals(modelName)) {
+							removeModel(modelName);
+
+						}
+					}
+
+				createNewModelFromSingleOre(source);
 
 				try {
 					saveStorePath();

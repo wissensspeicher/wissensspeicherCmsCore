@@ -52,7 +52,7 @@ public class AdminInterface extends JFrame {
 	private JCheckBox createDataset;
 	private TextArea textArea;
 	private boolean createNewSet;
-	private final JComboBox<String> combobox = new JComboBox<String>();
+	private final JComboBox combobox = new JComboBox();
 	private String namedGraph = "";
 	private final JenaMainForAI jenaMain = new JenaMainForAI();
 
@@ -150,7 +150,9 @@ public class AdminInterface extends JFrame {
 				+ "choose 1 file to add to an existing dataset." + "\n\n"
 				+ "Load Models lists all NamedModel which are\n"
 				+ "currently in the choosen Dataset.\n\n"
-				+ "Remove deletes the choosen NamedModel\nfrom Dataset.");
+				+ "Remove deletes the choosen NamedModel\nfrom Dataset."
+				+ "\nIf there already is a Metadata with the given name,\n"
+				+ "it will be replaced by the one version");
 	}
 
 	/**
@@ -203,7 +205,7 @@ public class AdminInterface extends JFrame {
 					combobox.showPopup();
 
 					println("Loaded all named Graphes from " + desF);
-					namedGraph = combobox.getItemAt(0);
+					namedGraph = (String) combobox.getItemAt(0);
 
 				} else if (ev.getActionCommand().equals(REMOVE_BUTTON)) {
 					if (desF == null) {
@@ -264,7 +266,7 @@ public class AdminInterface extends JFrame {
 	public boolean checkAlreadyinList(String name) {
 
 		for (int i = 0; i < combobox.getItemCount(); ++i) {
-			String temp = combobox.getItemAt(i);
+			String temp = (String) combobox.getItemAt(i);
 			if (temp.equals(name))
 				return false;
 		}
