@@ -14,12 +14,13 @@ import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
  * 
  * @author Sascha Feldmann (wsp-shk1)
  * 
- *         Last change: 05.11.2012 - integration to wspcms
+ *         Last change: 05.11.2012 - integration to wspcms 24.01.2013 - closed
+ *         scanner
  * 
  */
 public class TemplateMapper {
   private static IResourceReader reader = new ResourceReaderImpl();
-  private String templateUrl;
+  private final String templateUrl;
   private String mappedTemplate;
 
   /**
@@ -35,7 +36,7 @@ public class TemplateMapper {
       throw new ApplicationException("The value for the templateUrl musn't be null or empty.");
     }
     this.templateUrl = templateUrl;
-    this.mappedTemplate = "";
+    mappedTemplate = "";
   }
 
   /**
@@ -48,25 +49,27 @@ public class TemplateMapper {
    *           if the input stream for the template is not valid / available.
    */
   public void mapPlaceholder(final HashMap<String, String> placeholderMap) throws ApplicationException {
-    InputStream in = reader.read(this.templateUrl);
-    Scanner scanner = new Scanner(in);
+    final InputStream in = reader.read(templateUrl);
+    final Scanner scanner = new Scanner(in);
     scanner.useDelimiter("\n");
-    StringBuilder builder = new StringBuilder();
+    final StringBuilder builder = new StringBuilder();
     while (scanner.hasNext()) {
       builder.append(scanner.next() + "\n");
     }
+    scanner.close();
     String templateString = builder.toString();
 
-    for (String placeholder : placeholderMap.keySet()) {
+    for (final String placeholder : placeholderMap.keySet()) {
       System.out.println("replacing " + placeholder + "by " + placeholderMap.get(placeholder));
-      if (placeholderMap.get(placeholder).isEmpty()) { // print warning when a value is empty
+      if (placeholderMap.get(placeholder).isEmpty()) { // print warning when a
+        // value is empty
         System.err.println("WARNING: placeholder" + placeholder + " is empty");
       }
 
       templateString = templateString.replaceAll(placeholder, placeholderMap.get(placeholder));
     }
     System.out.println("Mapped template");
-    this.mappedTemplate = templateString;
+    mappedTemplate = templateString;
   }
 
   /**
@@ -76,6 +79,6 @@ public class TemplateMapper {
    *         map method wasn't called.
    */
   public String getMappedTemplate() {
-    return this.mappedTemplate;
+    return mappedTemplate;
   }
 }
