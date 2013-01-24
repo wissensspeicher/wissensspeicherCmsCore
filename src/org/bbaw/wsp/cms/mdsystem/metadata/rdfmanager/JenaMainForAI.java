@@ -40,20 +40,16 @@ public class JenaMainForAI {
 	private RdfHandler manager;
 	private WspRdfStoreForAi wspStore;
 	private Dataset dataset;
-	private final String source;
-	private final String destination;
+	private String source;
+	private String destination;
 
 	/**
 	 * needs to be instantiated from outside e.g.
 	 * org.bbaw.wsp.cms.test.TestLocal
 	 * 
-	 * @param desF
-	 * @param srcD
 	 */
-	public JenaMainForAI(String srcD, String desF) {
+	public JenaMainForAI() {
 
-		this.source = srcD;
-		this.destination = desF;
 	}
 
 	/**
@@ -123,6 +119,7 @@ public class JenaMainForAI {
 		};
 
 		initial.run();
+
 		// Thread add one ore more files to a Dataset
 		final Thread editStore = new Thread() {
 			@Override
@@ -158,27 +155,37 @@ public class JenaMainForAI {
 	 * @return
 	 */
 	public ArrayList<String> getModels() {
+		final ArrayList<String> liste = new ArrayList<String>();
 
-		ArrayList<String> liste = new ArrayList<String>();
+		Thread mainAction = new Thread() {
+			@Override
+			public void run() {
 
-		try {
-			loadWspStore();
-			wspStore.createStore();
-			wspStore.createModelFactory();
-			dataset = wspStore.getDataset();
+				try {
+					// closeAll.join();
+					loadWspStore();
+					wspStore.createStore();
+					wspStore.createModelFactory();
+					dataset = wspStore.getDataset();
 
-			Iterator<String> it = dataset.listNames();
+					wspStore.openDataset();
+					Iterator<String> it = dataset.listNames();
 
-			while (it.hasNext()) {
-				liste.add(it.next());
+					while (it.hasNext()) {
+						liste.add(it.next());
+
+					}
+					wspStore.closeDataset();
+
+				} catch (ClassNotFoundException e) {
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
 			}
-
-		} catch (ClassNotFoundException e) {
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		};
+		mainAction.run();
 
 		return liste;
 	}
@@ -195,7 +202,9 @@ public class JenaMainForAI {
 			wspStore.createStore();
 			wspStore.createModelFactory();
 			dataset = wspStore.getDataset();
+			wspStore.openDataset();
 			dataset.removeNamedModel(name);
+			wspStore.closeDataset();
 
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -557,6 +566,22 @@ public class JenaMainForAI {
 			}
 		}
 		return pathList;
+	}
+
+	public String getSource() {
+		return source;
+	}
+
+	public void setSource(String source) {
+		this.source = source;
+	}
+
+	public String getDestination() {
+		return destination;
+	}
+
+	public void setDestination(String destination) {
+		this.destination = destination;
 	}
 
 }

@@ -18,14 +18,17 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.JenaMainForAI;
 
 public class AdminInterface extends JFrame {
 
 	/**
-	 * Marco Seidler (shk2) tool for creation or appending of one or more rdf
-	 * ttl nt file at on time
+	 * Marco Seidler (shk2) tool for creation or appending a
+	 * Dataset/Triplestore, with one or more rdf ttl nt file at the same time,
+	 * also available is checking of already existing models and removing of
+	 * models
 	 */
 	private static final long serialVersionUID = 5952164735517923589L;
 
@@ -49,8 +52,16 @@ public class AdminInterface extends JFrame {
 	private JCheckBox createDataset;
 	private TextArea textArea;
 	private boolean createNewSet;
-	private final JComboBox combobox = new JComboBox();
+	private final JComboBox<String> combobox = new JComboBox<String>();
 	private String namedGraph = "";
+	private final JenaMainForAI jenaMain = new JenaMainForAI();
+
+	// ButtonsNames for distinction
+	private static final String SOURCE_BUTTON = "Choose Metadata";
+	private static final String DESTINATION_BUTTON = "Choose Destination";
+	private static final String START_BUTTON = "Add to Triplestore";
+	private static final String LOAD_NAMEDMODELLS_BUTTON = "Load Models";
+	private static final String REMOVE_BUTTON = "Remove";
 
 	/**
 	 * Opens a new Frame
@@ -65,20 +76,21 @@ public class AdminInterface extends JFrame {
 	}
 
 	/**
-	 * Creates the Elements of GUI add value change listener on slider
+	 * Creates the Elements of GUI, adds Buttons with Buttonlistener and Labels,
+	 * also adds value change listener on slider
 	 */
 	private void initalisation() {
 		setLayout(new BorderLayout(5, 5));
 
 		Panel panel = new Panel();
 		panel.setLayout(new GridLayout(7, 1));
-		btn_src = new JButton("Choose Metadata");
+		btn_src = new JButton(SOURCE_BUTTON);
 		src = new Label("no Source Data selected");
-		btn_des = new JButton("Choose Destination");
+		btn_des = new JButton(DESTINATION_BUTTON);
 		des = new Label("no Destination selected");
-		btn_go = new JButton("Start");
-		load_set_btn = new JButton("Load Models");
-		remove_btn = new JButton("Remove");
+		btn_go = new JButton(START_BUTTON);
+		load_set_btn = new JButton(LOAD_NAMEDMODELLS_BUTTON);
+		remove_btn = new JButton(REMOVE_BUTTON);
 		combobox.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
@@ -133,16 +145,17 @@ public class AdminInterface extends JFrame {
 				+ "dialog in \"Choose Destination\" option\n\n"
 				+ "NEVER SAVE A NEW ONE IN A FOLDER \n"
 				+ "WHERE ALREADY A \".store\" EXISTS! \n\n"
-				+ "if none of the Checkboxes is selected \n"
-
+				+ "If none of the Checkboxes is selected \n"
 				+ "the default is:\n"
-				+ "choose 1 file to add to an existing dataset." + "\n"
-				+ "Good luck" + "");
+				+ "choose 1 file to add to an existing dataset." + "\n\n"
+				+ "Load Models lists all NamedModel which are\n"
+				+ "currently in the choosen Dataset.\n\n"
+				+ "Remove deletes the choosen NamedModel\nfrom Dataset.");
 	}
 
 	/**
-	 * buttonlistener for buttons also exceptionhandling when wrong data are
-	 * given
+	 * buttonlistener executes all the main Events differenced by which Button
+	 * where pressed. Also exceptionhandling when wrong data are given
 	 * 
 	 * @param b
 	 */
@@ -150,7 +163,7 @@ public class AdminInterface extends JFrame {
 		b.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent ev) {
-				if (ev.getActionCommand().equals("Choose Metadata")) {
+				if (ev.getActionCommand().equals(SOURCE_BUTTON)) {
 					if (folderScr.isSelected()) {
 						srcD = fileChooser(false, false);
 						scanforRDF(srcD);
@@ -161,7 +174,7 @@ public class AdminInterface extends JFrame {
 					} else
 						src.setText(srcD);
 
-				} else if (ev.getActionCommand().equals("Choose Destination")) {
+				} else if (ev.getActionCommand().equals(DESTINATION_BUTTON)) {
 
 					desF = fileChooser(true, true);
 					if (desF == null) {
@@ -169,38 +182,50 @@ public class AdminInterface extends JFrame {
 					} else
 						des.setText(desF);
 
-				} else if (ev.getActionCommand().equals("Load Models")) {
+				} else if (ev.getActionCommand().equals(
+						LOAD_NAMEDMODELLS_BUTTON)) {
 					if (desF == null) {
 						println("no source choosed!");
 						return;
 					}
-					for (String s : new JenaMainForAI(" ", desF).getModels()) {
-
-						combobox.addItem(s);
+					jenaMain.setDestination(desF);
+					ArrayList<String> models = jenaMain.getModels();
+					if (models.isEmpty()) {
+						println("There are no models in the choosen Dataset\n"
+								+ desF);
+						return;
+					}
+					for (String s : models) {
+						if (checkAlreadyinList(s))
+							combobox.addItem(s);
 
 					}
 					combobox.showPopup();
 
 					println("Loaded all named Graphes from " + desF);
-					namedGraph = (String) combobox.getItemAt(0);
+					namedGraph = combobox.getItemAt(0);
 
-				} else if (ev.getActionCommand().equals("Remove")) {
+				} else if (ev.getActionCommand().equals(REMOVE_BUTTON)) {
 					if (desF == null) {
 						println("no source choosed!");
 						return;
+					} else if (combobox.getItemCount() == 0) {
+						println("No Models available");
+						return;
 					}
-					JenaMainForAI jMain = new JenaMainForAI(" ", desF);
-					jMain.removeModel(namedGraph);
+					// JenaMainForAI jMain = new JenaMainForAI(" ", desF);
+					jenaMain.setDestination(desF);
+					jenaMain.removeModel(namedGraph);
 					println(namedGraph + " successfully removed.");
 					println("Index will refresh now.");
 					combobox.removeAllItems();
-					for (String s : jMain.getModels()) {
+					for (String s : jenaMain.getModels()) {
 						combobox.addItem(s);
 					}
 
 				}
 
-				else if (ev.getActionCommand().equals("Start")) {
+				else if (ev.getActionCommand().equals(START_BUTTON)) {
 
 					if (srcD == null) {
 						println("no source choosed!");
@@ -220,12 +245,31 @@ public class AdminInterface extends JFrame {
 
 					} catch (Exception e) {
 						println(e.getMessage());
+						errorMessage(e.getMessage());
 					}
 
 				}
 
 			}
 		});
+	}
+
+	/**
+	 * Checks if there already is a Item with the given name in the Checkbox, if
+	 * thats the case return = false;
+	 * 
+	 * @param name
+	 * @return
+	 */
+	public boolean checkAlreadyinList(String name) {
+
+		for (int i = 0; i < combobox.getItemCount(); ++i) {
+			String temp = combobox.getItemAt(i);
+			if (temp.equals(name))
+				return false;
+		}
+
+		return true;
 	}
 
 	/**
@@ -237,14 +281,16 @@ public class AdminInterface extends JFrame {
 	 */
 	private void execution() throws ClassNotFoundException, IOException {
 
-		new JenaMainForAI(srcD, desF).initStore(createDataset.isSelected());
+		jenaMain.setSource(srcD);
+		jenaMain.setDestination(desF);
+		jenaMain.initStore(createDataset.isSelected());
 
 		createNewSet = false;
 		createDataset.setSelected(false);
 	}
 
 	/**
-	 * Seperates the files with ending RDF
+	 * Separates the files with ending rdf,ttl,nt returns a list of valid items
 	 * 
 	 * @param str
 	 * @return
@@ -277,7 +323,9 @@ public class AdminInterface extends JFrame {
 	}
 
 	/**
-	 * Is used to Choose the folder and returns the folder path
+	 * Is used to Choose the folder or a file, differenced by given Parameter.
+	 * returns the folder/file-path or null if nothing where chosen or the
+	 * Dialog was aborted
 	 * 
 	 * @return
 	 */
@@ -319,6 +367,16 @@ public class AdminInterface extends JFrame {
 
 		}
 		return null;
+	}
+
+	/**
+	 * Show the user a given ErrorMessage
+	 * 
+	 * @param message
+	 */
+	private void errorMessage(final String message) {
+		JOptionPane.showMessageDialog(this, message, "Error",
+				JOptionPane.ERROR_MESSAGE);
 	}
 
 	/**
