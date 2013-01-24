@@ -82,6 +82,7 @@ public class WspRdfStoreForAi implements Serializable {
 
 		dataset.commit();
 		dataset.end();
+		modelmaker.close();
 	}
 
 	public Model getMergedModelofAllGraphs() {
