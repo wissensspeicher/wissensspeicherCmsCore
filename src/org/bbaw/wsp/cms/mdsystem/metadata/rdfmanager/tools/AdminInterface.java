@@ -153,7 +153,7 @@ public class AdminInterface extends JFrame {
 				+ "Load Models lists all NamedModel which are\n"
 				+ "currently in the choosen Dataset.\n\n"
 				+ "Remove deletes the choosen NamedModel\nfrom Dataset."
-				+ "\n\nIf there already is a Metadata with equal\nname,"
+				+ "\n\nIf there already is a NamedModel with equal\nname,"
 				+ "it will be replaced by the newer version");
 	}
 
