@@ -51,7 +51,9 @@ public class AdminInterface extends JFrame {
 	private JCheckBox folderScr;
 	private JCheckBox createDataset;
 	private TextArea textArea;
+	@SuppressWarnings("unused")
 	private boolean createNewSet;
+	@SuppressWarnings("rawtypes")
 	private final JComboBox combobox = new JComboBox();
 	private String namedGraph = "";
 	private final JenaMainForAI jenaMain = new JenaMainForAI();
@@ -164,6 +166,7 @@ public class AdminInterface extends JFrame {
 	private void addButtonListener(JButton b) {
 		b.addActionListener(new ActionListener() {
 
+			@SuppressWarnings("unchecked")
 			public void actionPerformed(ActionEvent ev) {
 				if (ev.getActionCommand().equals(SOURCE_BUTTON)) {
 					if (folderScr.isSelected()) {
