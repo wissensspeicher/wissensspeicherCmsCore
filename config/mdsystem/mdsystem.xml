@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mdsystem>
+	<converter>
+		<templates>		
+			<eDoc>
+				<templatePath>config/convert2rdf/eDocToRdfTemplate.xml</templatePath>
+			</eDoc>
+		</templates>
+		<xslt>
+			<mods>
+				<stylesheetPath>config/convert2rdf/modstordf.xsl</stylesheetPath>
+			</mods>
+			<mets>
+				<stylesheetPath>config/convert2rdf/metstordf.xsl</stylesheetPath>
+			</mets>
+		</xslt>
+	</converter>
+	<rdfmanager>
+		<tripleStore>
+			<datasetPath>save/store</datasetPath>
+			<larqIndexPath>save/larqindex</larqIndexPath>
+		</tripleStore>
+	</rdfmanager>
+</mdsystem>

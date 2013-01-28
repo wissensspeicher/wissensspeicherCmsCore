@@ -50,11 +50,24 @@ public abstract class ToRdfTransformer {
 
   public static final String TRANSFORMER_CREATOR_URL = "http://wsp.bbaw.de";
 
+  /**
+   * Parameter name in all XSLT stylesheets for the aggregation id,
+   */
   private static final String STYLESHEET_PARAM_ID = "aggrId";
+  /**
+   * Parameter name in all XSLT stylesheets for the creator of the resulting
+   * OAI/ORE (Wissensspeicher),
+   */
+  private static final String STYLESHEET_PARAM_CREATOR_NAME = "resourceCreatorName";
+  /**
+   * Parameter name in all XSLT stylesheets for the creator's page (URL) of the
+   * resulting OAI/ORE (Wissensspeicher),
+   */
+  private static final String STYLESHEET_PARAM_CREATOR_PAGE = "resourceCreatorPage";
 
   private String xslInput;
 
-  private String transformMode;
+  private final String transformMode;
 
   protected ResourceReaderImpl resourceReader;
 
@@ -64,47 +77,51 @@ public abstract class ToRdfTransformer {
 
   /**
    * Create a new instance.
-   * @param transformMode - the mode of the transformer (XSLT transformation or hard-coded conversion).
-   * @throws ApplicationException if the entered mode isn't valid.
+   * 
+   * @param transformMode
+   *          - the mode of the transformer (XSLT transformation or hard-coded
+   *          conversion).
+   * @throws ApplicationException
+   *           if the entered mode isn't valid.
    */
   public ToRdfTransformer(final String transformMode) throws ApplicationException {
-    if(!transformMode.equals(MODE_DIRECT) && !transformMode.equals(MODE_XSLT)) {
+    if (!transformMode.equals(MODE_DIRECT) && !transformMode.equals(MODE_XSLT)) {
       throw new ApplicationException("The mode isn't available in ToRdfTransformer.");
     }
     this.transformMode = transformMode;
-    this.resourceReader = new ResourceReaderImpl();
-    this.resourceWriter = new ResourceWriter();
+    resourceReader = new ResourceReaderImpl();
+    resourceWriter = new ResourceWriter();
   }
-  
+
   /**
-   * Do an transformation job. 
-   * The kind of job (XSLT transformation or direct parsing) depends on the subclass. 
-   * @param inputUrl - the url of the resource to be transformed.
+   * Do an transformation job. The kind of job (XSLT transformation or direct
+   * parsing) depends on the subclass.
+   * 
+   * @param inputUrl
+   *          - the url of the resource to be transformed.
    * @throws ApplicationException
    */
   public void doTransformation(final String inputUrl, final String outputUrl) throws ApplicationException {
     if (inputUrl == null || inputUrl.isEmpty()) {
       throw new ApplicationException("The value for the parameter inputUrl in ToRdfTransformer.doTransformation() mustn't be null or empty!");
     }
-    
-    final InputStream inputFileStream = this.resourceReader.read(inputUrl);   
-    
-    
-    if(this.transformMode.equals(MODE_XSLT)) {
-      if(this.getXslInput() == null) {
+
+    final InputStream inputFileStream = resourceReader.read(inputUrl);
+
+    if (transformMode.equals(MODE_XSLT)) {
+      if (getXslInput() == null) {
         throw new ApplicationException("You must specify an XSLT stylesheet before transforming in XSLT mode!");
       }
-      final InputStream xslInput = this.resourceReader.read(this.getXslInput());
-      
-      final OutputStream xmlOutput = this.resourceWriter.write(outputUrl);
-      this.transform(inputFileStream, xslInput, xmlOutput );
-    }
-    else if(this.transformMode.equals(MODE_DIRECT)) {
+      final InputStream xslInput = resourceReader.read(getXslInput());
+
+      final OutputStream xmlOutput = resourceWriter.write(outputUrl);
+      transform(inputFileStream, xslInput, xmlOutput);
+    } else if (transformMode.equals(MODE_DIRECT)) {
       // Do a direct transformation - this is specified by the subclass
     }
-        
+
   }
-  
+
   /*
    * (non-Javadoc)
    * 
@@ -118,15 +135,15 @@ public abstract class ToRdfTransformer {
     }
 
     try {
-      XMLReader xmlReader = XMLReaderFactory.createXMLReader();
+      final XMLReader xmlReader = XMLReaderFactory.createXMLReader();
       // Xslt file
-      Source xsltSource = new SAXSource(xmlReader, new InputSource(xslStylesheet));
+      final Source xsltSource = new SAXSource(xmlReader, new InputSource(xslStylesheet));
 
-      Processor processor = new Processor(false);
-      XsltCompiler compiler = processor.newXsltCompiler();
+      final Processor processor = new Processor(false);
+      final XsltCompiler compiler = processor.newXsltCompiler();
       compiler.setErrorListener(SaxonCompilerErrorListener.getInstance());
 
-      XsltExecutable executable = compiler.compile(xsltSource);
+      final XsltExecutable executable = compiler.compile(xsltSource);
 
       // Input file
       final StreamSource inputSource = new StreamSource(xmlInput);
@@ -136,40 +153,48 @@ public abstract class ToRdfTransformer {
       serializer.setOutputProperty(Serializer.Property.METHOD, "xml");
       serializer.setOutputStream(xmlOutput);
 
-      // Do transformation      
-      XsltTransformer transformer = executable.load();
+      // Do transformation
+      final XsltTransformer transformer = executable.load();
       // use an id for the aggregation if it was specified
-      if(this.aggrId != null) {
-        System.out.println("Trying to set parameter");
-        XdmValue item = new XdmAtomicValue(this.aggrId + "");
-        
-        transformer.setParameter(new QName(STYLESHEET_PARAM_ID), item );
+      if (aggrId != null) {
+        final XdmValue item = new XdmAtomicValue(aggrId + "");
+
+        transformer.setParameter(new QName(STYLESHEET_PARAM_ID), item);
       }
+      transformer.setParameter(new QName(STYLESHEET_PARAM_CREATOR_NAME), new XdmAtomicValue(TRANSFORMER_CREATOR_NAME));
+      transformer.setParameter(new QName(STYLESHEET_PARAM_CREATOR_PAGE), new XdmAtomicValue(TRANSFORMER_CREATOR_URL));
       transformer.setSource(inputSource);
-      transformer.setDestination(serializer);      
+      transformer.setDestination(serializer);
       transformer.transform();
-    } catch (SaxonApiException e) {
-      throw new ApplicationException("Problem while transforming -- " + e.getMessage());
-    } catch (SAXException e) {
-      throw new ApplicationException("Problem while transforming -- " + e.getMessage());
-    }    
+    } catch (final SaxonApiException e) {
+      // throw new ApplicationException("Problem while transforming -- " +
+      // e.getMessage());
+      e.printStackTrace();
+    } catch (final SAXException e) {
+      // throw new ApplicationException("Problem while transforming -- " +
+      // e.getMessage());
+      e.printStackTrace();
+    }
   }
 
   /**
    * Check if an file is XML valid.
-   * @param xmlOutput - the url as String.
-   * @return 
-   * @throws ApplicationException if the source isn't available.
+   * 
+   * @param xmlOutput
+   *          - the url as String.
+   * @return
+   * @throws ApplicationException
+   *           if the source isn't available.
    */
   public boolean checkValidation(final String xmlOutput) throws ApplicationException {
     return XmlValidator.isValid(xmlOutput);
   }
-  
+
   public String getXslInput() {
     return xslInput;
   }
 
-  public void setXslInput(String xslInput) {
+  public void setXslInput(final String xslInput) {
     this.xslInput = xslInput;
   }
 }

@@ -8,23 +8,22 @@ import org.bbaw.wsp.cms.mdsystem.util.MdystemConfigReader;
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 
 /**
- * Instances of this (singleton) class transform mods files of the old WSP to
- * OAI/ORE files.
+ * Instances of this (singleton) class transform mets files to OAI/ORE files.
  * 
  * @author Sascha Feldmann (wsp-shk1)
- * @date 08.10.12
+ * @date 17.01.13
  * 
  */
-public class ModsToRdfTransformer extends ToRdfTransformer implements IXsltTransformable {
+public class MetsToRdfTransformer extends ToRdfTransformer implements IXsltTransformable {
   /**
-   * The standard XSLT template for mods to rdf transformations. Use
+   * The standard XSLT template for mets to rdf transformations. Use
    * setXslInput() if you prefer another template.
    */
-  public static final String PATH_XSLT_TEMPLATE = MdystemConfigReader.getInstance().getConfig().getModsStylesheetPath();
+  public static final String PATH_XSLT_TEMPLATE = MdystemConfigReader.getInstance().getConfig().getMetsStylesheetPath();
 
-  private static ModsToRdfTransformer instance;
+  private static MetsToRdfTransformer instance;
 
-  private ModsToRdfTransformer() throws ApplicationException {
+  private MetsToRdfTransformer() throws ApplicationException {
     super(ToRdfTransformer.MODE_XSLT); // this is an XSLT transformer
     setXslInput(PATH_XSLT_TEMPLATE);
   }
@@ -35,9 +34,9 @@ public class ModsToRdfTransformer extends ToRdfTransformer implements IXsltTrans
    * @throws ApplicationException
    *           if the mode wasn't specified correctly.
    */
-  public static ModsToRdfTransformer getInstance() throws ApplicationException {
+  public static MetsToRdfTransformer getInstance() throws ApplicationException {
     if (instance == null) {
-      return new ModsToRdfTransformer();
+      return new MetsToRdfTransformer();
     }
     return instance;
   }

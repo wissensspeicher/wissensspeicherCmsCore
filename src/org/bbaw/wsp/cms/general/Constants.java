@@ -18,8 +18,8 @@ public class Constants {
     }
     return instance;
   }
-  
-  public static Constants getInstance(String applicationDirectory) {
+
+  public static Constants getInstance(final String applicationDirectory) {
     if (instance == null) {
       instance = new Constants();
       instance.applicationDirectory = applicationDirectory;
@@ -27,21 +27,22 @@ public class Constants {
     }
     return instance;
   }
-  
+
   private void init() {
     File configDir = new File("./config");
-    if (applicationDirectory != null)
+    if (applicationDirectory != null) {
       configDir = new File(applicationDirectory + "/config");
+    }
     configDirectory = configDir.getAbsolutePath();
     if (configDir.exists()) {
-      File coreConstantsPropFile = new File(configDirectory + "/core/constants.properties"); 
+      final File coreConstantsPropFile = new File(configDirectory + "/core/constants.properties");
       if (coreConstantsPropFile.exists()) {
         try {
-          FileInputStream in = new FileInputStream(coreConstantsPropFile);
+          final FileInputStream in = new FileInputStream(coreConstantsPropFile);
           properties = new Properties();
           properties.load(in);
           System.out.println("CMS core property file: " + coreConstantsPropFile.getAbsolutePath() + " loaded");
-        } catch (IOException e) {
+        } catch (final IOException e) {
           e.printStackTrace();
         }
       } else {
@@ -51,36 +52,56 @@ public class Constants {
       System.out.println("Application configuration directory: " + configDirectory + " not found");
     }
   }
-  
+
   public String getDocumentsDir() {
-    if (properties != null)
+    if (properties != null) {
       return properties.getProperty("documentsDir");
-    else 
+    } else {
       return "no properties file";
+    }
   }
 
   public String getLuceneDocumentsDir() {
-    if (properties != null)
+    if (properties != null) {
       return properties.getProperty("luceneDocumentsDir");
-    else 
+    } else {
       return "no properties file";
+    }
   }
 
   public String getLuceneNodesDir() {
-    if (properties != null)
+    if (properties != null) {
       return properties.getProperty("luceneNodesDir");
-    else 
+    } else {
       return "no properties file";
+    }
   }
 
   public String getLuceneTaxonomyDir() {
-    if (properties != null)
+    if (properties != null) {
       return properties.getProperty("luceneTaxonomyDir");
-    else 
+    } else {
       return "no properties file";
+    }
   }
 
   public String getCollectionConfDir() {
     return configDirectory + "/collections";
+  }
+
+  /**
+   * 
+   * @return the dir to the mdsystem.xml
+   */
+  public String getMdsystemConfDir() {
+    return configDirectory + "/mdsystem";
+  }
+
+  /**
+   * @return the path to the mdsystem.xml
+   * @return
+   */
+  public String getMdsystemConfFile() {
+    return getMdsystemConfDir() + "/mdsystem.xml";
   }
 }

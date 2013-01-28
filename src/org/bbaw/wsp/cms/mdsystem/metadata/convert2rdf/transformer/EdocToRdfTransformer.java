@@ -14,6 +14,7 @@ import org.bbaw.wsp.cms.dochandler.parser.document.PdfDocument;
 import org.bbaw.wsp.cms.dochandler.parser.text.parser.EdocIndexMetadataFetcherTool;
 import org.bbaw.wsp.cms.document.MetadataRecord;
 import org.bbaw.wsp.cms.mdsystem.metadata.convert2rdf.util.TemplateMapper;
+import org.bbaw.wsp.cms.mdsystem.util.MdystemConfigReader;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 
@@ -29,7 +30,7 @@ public class EdocToRdfTransformer extends ToRdfTransformer {
   /**
    * Specify the RDF template here.
    */
-  private static final String RDF_TEMPLATE_URL = "config/convert2rdf/eDocToRdfTemplate.xml";
+  private static final String RDF_TEMPLATE_URL = MdystemConfigReader.getInstance().getConfig().geteDocTemplatePath();
   /**
    * The prefix of the aggregation name is it is stored in the quad.
    */
@@ -60,45 +61,43 @@ public class EdocToRdfTransformer extends ToRdfTransformer {
    * bbaw.wsp.parser.metadata.transformer.ToRdfTransformer#doTransformation(
    * java.lang.String, java.lang.String)
    */
+  @Override
   public void doTransformation(final String inputUrl, final String outputUrl) throws ApplicationException {
     super.doTransformation(inputUrl, outputUrl);
-    MetadataRecord mdRecord = new MetadataRecord();
+    final MetadataRecord mdRecord = new MetadataRecord();
     EdocIndexMetadataFetcherTool.fetchHtmlDirectly(inputUrl, mdRecord);
 
     // map here
     System.out.println("Processing transformation from eDoc to RDF...");
-    TemplateMapper mapper = new TemplateMapper(RDF_TEMPLATE_URL);
-    HashMap<String, String> eDocMap = createMap(mdRecord);
+    final TemplateMapper mapper = new TemplateMapper(RDF_TEMPLATE_URL);
+    final HashMap<String, String> eDocMap = createMap(mdRecord);
     System.out.println("Mapping template...");
     mapper.mapPlaceholder(eDocMap);
-   
-   
+
     try {
-      FileWriter writer = new FileWriter(new File(outputUrl));
-      BufferedWriter buffer = new BufferedWriter(writer);
+      final FileWriter writer = new FileWriter(new File(outputUrl));
+      final BufferedWriter buffer = new BufferedWriter(writer);
       buffer.write(mapper.getMappedTemplate());
       buffer.flush();
       buffer.close();
-    } catch ( IOException e) {
-      throw new ApplicationException("Couldn't generated a valid output file. "+e.getMessage());
+    } catch (final IOException e) {
+      throw new ApplicationException("Couldn't generated a valid output file. " + e.getMessage());
     }
-    
-   // check validation    
-    File f = new File(outputUrl);
-    if(!this.checkValidation(f.getAbsolutePath())) {
-      System.err.println("WARNING: the generated output file - "+f+" isn't XML valid. Please check the file!");
+
+    // check validation
+    final File f = new File(outputUrl);
+    if (!checkValidation(f.getAbsolutePath())) {
+      System.err.println("WARNING: the generated output file - " + f + " isn't XML valid. Please check the file!");
+    } else {
+      System.out.println("The generated output file - " + f + " is xml valid!");
     }
-    else
-    {
-      System.out.println("The generated output file - "+f+" is xml valid!");
-    }
-    
+
   }
 
   private HashMap<String, String> createMap(final MetadataRecord mdRecord) throws ApplicationException {
-    HashMap<String, String> eDocPlaceholderMap = new HashMap<String, String>();
+    final HashMap<String, String> eDocPlaceholderMap = new HashMap<String, String>();
 
-    eDocPlaceholderMap.put("%%aggregation_uri%%", AGGREGATION_NAME_PREFIX+EdocIndexMetadataFetcherTool.getDocYear(mdRecord.getRealDocUrl())+"/"+EdocIndexMetadataFetcherTool.getDocId(mdRecord.getRealDocUrl())+"/aggregation");
+    eDocPlaceholderMap.put("%%aggregation_uri%%", AGGREGATION_NAME_PREFIX + EdocIndexMetadataFetcherTool.getDocYear(mdRecord.getRealDocUrl()) + "/" + EdocIndexMetadataFetcherTool.getDocId(mdRecord.getRealDocUrl()) + "/aggregation");
     eDocPlaceholderMap.put("%%creator_name%%", ToRdfTransformer.TRANSFORMER_CREATOR_NAME);
     eDocPlaceholderMap.put("%%creator_url%%", ToRdfTransformer.TRANSFORMER_CREATOR_URL);
     String uri = mdRecord.getRealDocUrl();
@@ -111,18 +110,18 @@ public class EdocToRdfTransformer extends ToRdfTransformer {
       urn = "";
     }
     eDocPlaceholderMap.put("%%resource_urn_identifier%%", urn);
-    
+
     String title = mdRecord.getTitle();
     if (title == null) {
       title = "";
     }
     eDocPlaceholderMap.put("%%dc_title%%", title);
 
-    Date actual = new Date();
-    String actualDate = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.CANADA_FRENCH).format(actual);
+    final Date actual = new Date();
+    final String actualDate = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.CANADA_FRENCH).format(actual);
     eDocPlaceholderMap.put("%%actual_date%%", actualDate);
 
-    Date dateCreated = mdRecord.getCreationDate();
+    final Date dateCreated = mdRecord.getCreationDate();
     String dateCreatedString = "";
     if (dateCreated == null) {
       dateCreatedString = "";
@@ -132,7 +131,7 @@ public class EdocToRdfTransformer extends ToRdfTransformer {
     }
     eDocPlaceholderMap.put("%%date_created%%", dateCreatedString);
 
-    Date dateIssued = mdRecord.getPublishingDate();
+    final Date dateIssued = mdRecord.getPublishingDate();
     System.out.println("date published: " + dateIssued);
     String dateIssuedString = "";
     if (dateIssued == null) {
@@ -148,9 +147,9 @@ public class EdocToRdfTransformer extends ToRdfTransformer {
     }
     eDocPlaceholderMap.put("%%publisher%%", publisher);
     String language = mdRecord.getLanguage();
-    language = this.convertToLanguageTerm(language);   
+    language = convertToLanguageTerm(language);
     eDocPlaceholderMap.put("%%language%%", language);
-   
+
     eDocPlaceholderMap.put("%%mime_type%%", PdfDocument.MIME_TYPE);
     String description = mdRecord.getDescription();
     if (description == null) {
@@ -159,110 +158,110 @@ public class EdocToRdfTransformer extends ToRdfTransformer {
     eDocPlaceholderMap.put("%%dc_description%%", description);
 
     // Map SWD subjects and other subjects
-    String subject = mdRecord.getSwd();  // swd
+    String subject = mdRecord.getSwd(); // swd
     String subString = "";
     if (subject == null) {
       subject = "";
     } else {
       subString = "";
-      String[] subjects = subject.split(",");
-      for (String sub : subjects) {
+      final String[] subjects = subject.split(",");
+      for (final String sub : subjects) {
         if (!sub.trim().isEmpty()) {
-          subString += "<dc:subject>"+sub+"</dc:subject>\n\t\t\t\t";
+          subString += "<dc:subject>" + sub + "</dc:subject>\n\t\t\t\t";
         }
       }
     }
-    String freeWords = mdRecord.getSubject(); // freie schlagwörter
+    final String freeWords = mdRecord.getSubject(); // freie schlagwörter
     if (freeWords != null) {
-      String[] swds = freeWords.split(",");
-      for (String sub : swds) {
-        if(!sub.trim().isEmpty()) {
-          subString += "\t\t\t<dc:subject>"+sub+"</dc:subject>\n\t\t\t\t";
+      final String[] swds = freeWords.split(",");
+      for (final String sub : swds) {
+        if (!sub.trim().isEmpty()) {
+          subString += "\t\t\t<dc:subject>" + sub + "</dc:subject>\n\t\t\t\t";
         }
       }
     }
 
     eDocPlaceholderMap.put("%%subjects%%", subString);
-    
+
     String documentType = mdRecord.getDocumentType();
     if (documentType == null) {
       documentType = "";
     }
     eDocPlaceholderMap.put("%%document_type%%", documentType);
-    
+
     String creator = mdRecord.getCreator();
     if (creator == null) {
       creator = "";
-    }    
-    try {     
-      StringBuilder creatorsInTemplates = new StringBuilder();
-      if(creator.contains(";")) // more than one creator
-        {         
-          String[] creators = creator.split(";");          
-          for (String c : creators) {     
-            // split to given and family name
-            String creatorBlock = this.generatedDcCreatorBlock(c);
-            creatorsInTemplates.append(creatorBlock);
-          }         
+    }
+    try {
+      final StringBuilder creatorsInTemplates = new StringBuilder();
+      if (creator.contains(";")) // more than one creator
+      {
+        final String[] creators = creator.split(";");
+        for (final String c : creators) {
+          // split to given and family name
+          final String creatorBlock = generatedDcCreatorBlock(c);
+          creatorsInTemplates.append(creatorBlock);
         }
-      else {
-        String creatorBlock = this.generatedDcCreatorBlock(creator);
+      } else {
+        final String creatorBlock = generatedDcCreatorBlock(creator);
         creatorsInTemplates.append(creatorBlock);
       }
       creator = creatorsInTemplates.toString();
-    }
-     catch (StringIndexOutOfBoundsException e) {
+    } catch (final StringIndexOutOfBoundsException e) {
       creator = "";
-    }   
+    }
     eDocPlaceholderMap.put("%%creator%%", creator);
-    
+
     String ddc = mdRecord.getDdc();
     if (ddc == null) {
       ddc = "";
     }
     eDocPlaceholderMap.put("%%ddc%%", ddc);
-    
-    String numberPages = mdRecord.getPageCount()+"";    
+
+    final String numberPages = mdRecord.getPageCount() + "";
     eDocPlaceholderMap.put("%%number_pages%%", numberPages);
-    
+
     String source = mdRecord.getInPublication();
     if (source == null) {
-     source = "";
+      source = "";
     }
     eDocPlaceholderMap.put("%%source%%", source);
-    
 
     return eDocPlaceholderMap;
   }
 
   /**
-   * Convert an input string to a language term. 
-   * This language terms follows the ISO iso639-3 specification.
+   * Convert an input string to a language term. This language terms follows the
+   * ISO iso639-3 specification.
+   * 
    * @param language
    * @return the iso639-3 value or the original language if not determined.
    */
   private String convertToLanguageTerm(String language) {
     if (language.equals("Deutsch")) {
       language = "deu";
-    }
-    else if (language.equals("Franz&ouml;sisch")) {
+    } else if (language.equals("Franz&ouml;sisch")) {
       language = "fra";
     }
     return language;
   }
 
   /**
-   * Construct a dc:creator block with a foaf:givenName and foaf:familyName by giving a string from the {@link MetadataRecord}.
-   * @param c the String containing one single creator.
+   * Construct a dc:creator block with a foaf:givenName and foaf:familyName by
+   * giving a string from the {@link MetadataRecord}.
+   * 
+   * @param c
+   *          the String containing one single creator.
    * @return the constructed string.
    */
-  private String generatedDcCreatorBlock(String c) {
-    StringBuilder creatorsInTemplates = new StringBuilder();
+  private String generatedDcCreatorBlock(final String c) {
+    final StringBuilder creatorsInTemplates = new StringBuilder();
     creatorsInTemplates.append("\n\t\t\t\t<dc:creator rdf:parseType=\"Resource\">");
-    String givenName = c.substring(c.indexOf(",")+1).trim();
-    String familyName = c.substring(0, c.indexOf(",")).trim(); 
-    creatorsInTemplates.append("\n\t\t\t\t\t<foaf:givenName>"+givenName+"</foaf:givenName>");
-    creatorsInTemplates.append("\n\t\t\t\t\t<foaf:familyName>"+familyName+"</foaf:familyName>");
+    final String givenName = c.substring(c.indexOf(",") + 1).trim();
+    final String familyName = c.substring(0, c.indexOf(",")).trim();
+    creatorsInTemplates.append("\n\t\t\t\t\t<foaf:givenName>" + givenName + "</foaf:givenName>");
+    creatorsInTemplates.append("\n\t\t\t\t\t<foaf:familyName>" + familyName + "</foaf:familyName>");
     creatorsInTemplates.append("\n\t\t\t\t</dc:creator>");
     return creatorsInTemplates.toString();
   }
