@@ -42,6 +42,7 @@ public class JenaMainForAI {
 	private Dataset dataset;
 	private String source;
 	private String destination;
+	protected String modelName;
 
 	/**
 	 * needs to be instantiated from outside e.g.
@@ -122,6 +123,7 @@ public class JenaMainForAI {
 
 		// Thread add one ore more files to a Dataset
 		final Thread editStore = new Thread() {
+
 			@Override
 			public void run() {
 				try {
@@ -130,10 +132,10 @@ public class JenaMainForAI {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				String modelName = checkifValid(manager.scanID(source), source);
+				modelName = checkifValid(manager.scanID(source), source);
 				if (new File(source).isDirectory()) {
 					createDatasetFromSet(source);
-				} else
+				} else {
 					// Update NameModel by delete from dataset and adding the
 					// new one
 					for (String name : getModels()) {
@@ -143,8 +145,8 @@ public class JenaMainForAI {
 						}
 					}
 
-				createNewModelFromSingleOre(source);
-
+					createNewModelFromSingleOre(source);
+				}
 				try {
 					saveStorePath();
 				} catch (IOException e) {
@@ -299,9 +301,10 @@ public class JenaMainForAI {
 		wspStore.openDataset();
 		Model freshModel = wspStore.getFreshModel();
 		Model model = manager.fillModelFromFile(freshModel, file);
-		String rdfAbout = checkifValid(manager.scanID(file), file);
+		// function is used in initstore() - result = modelName
+		// String rdfAbout = checkifValid(manager.scanID(file), file);
 
-		wspStore.addNamedModelToWspStore(rdfAbout, model);
+		wspStore.addNamedModelToWspStore(modelName, model);
 
 	}
 
