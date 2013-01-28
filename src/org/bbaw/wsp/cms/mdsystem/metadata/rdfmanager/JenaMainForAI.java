@@ -301,6 +301,7 @@ public class JenaMainForAI {
 		wspStore.openDataset();
 		Model freshModel = wspStore.getFreshModel();
 		Model model = manager.fillModelFromFile(freshModel, file);
+		// function is used in initstore() - result = modelName
 		// String rdfAbout = checkifValid(manager.scanID(file), file);
 
 		wspStore.addNamedModelToWspStore(modelName, model);
