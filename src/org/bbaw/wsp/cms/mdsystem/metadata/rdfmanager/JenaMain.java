@@ -54,8 +54,8 @@ public class JenaMain {
   }
 
   public void initStore() throws ApplicationException {
-    wspStore = new WspRdfStore(datasetPath);
-    wspStore.createStore();
+    wspStore = WspRdfStore.getInstance();
+    wspStore.createStore(datasetPath);
     wspStore.createModelFactory();
     dataset = wspStore.getDataset();
     rdfHandler = new RdfHandler();
@@ -69,16 +69,15 @@ public class JenaMain {
   private void doYourWork() {
     // createNamedModelsFromOreSets("/home/juergens/WspEtc/rdfData/ModsToRdfTest");
     // createNewModelFromSingleOre(oreBiblioNeu);
-    // getAllNamedModelsInDataset();
+     getAllNamedModelsInDataset();
     // wspStore.openDataset();
-    // Model model =
     // wspStore.getNamedModel("http://edoc.bbaw.de/volltexte/2010/1347/pdf/13_brown.pdf");
     // rdfHandler.deleteByJenaApi(model, "http://wsp.bbaw.de/wspMetadata",
     // "http://purl.org/dc/terms/abstract", "knowledge browsing");
     // rdfHandler.updateByJenaApi(model, "http://wsp.bbaw.de/wspMetadata",
     // "http://purl.org/dc/terms/abstract", "knowledge browsing");
     // wspStore.closeDataset();
-    // listAllStatementsbyJena("http://edoc.bbaw.de/volltexte/2010/1347/pdf/13_brown.pdf");
+//     listAllStatementsbyJena("http://edoc.bbaw.de/volltexte/2010/1347/pdf/13_brown.pdf");
 
     createNamedModelsFromOreSets(EDOC);
     // createNamedModelsFromOreSets(MODS);
