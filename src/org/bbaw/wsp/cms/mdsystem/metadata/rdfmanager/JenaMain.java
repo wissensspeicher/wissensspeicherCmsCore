@@ -42,6 +42,10 @@ public class JenaMain {
   protected WspRdfStore wspStore;
   protected Dataset dataset;
 
+  public Dataset getDataset() {
+    return dataset;
+  }
+
   /**
    * needs to be instantiated from outside e.g. org.bbaw.wsp.cms.test.TestLocal
    */
