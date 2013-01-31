@@ -31,6 +31,8 @@ public class WspRdfStore implements Serializable {
   private InfModel rdfsModel;
   private transient ModelMaker modelmaker;
   private List<String> modelList;
+  private static WspRdfStore wspRdfStore;
+  
 
   /**
    * The global (persistent) store index.
@@ -42,30 +44,42 @@ public class WspRdfStore implements Serializable {
    * @return {@link StoreIndex}
    */
   public StoreIndex getIndexStore() {
-    return indexStore;
+	  return indexStore;
   }
 
   /**
-   * Give here the path to the Store
-   * 
-   * @param pathtoSave
+   * Konstruktor
    */
-  public WspRdfStore(final String pathtoSave) {
-    directory = pathtoSave;
+  private WspRdfStore() {
+  }
+  
+  /**
+   * Singleton
+   */
+  public static WspRdfStore getInstance(){
+	  if(wspRdfStore == null)
+		  wspRdfStore = new WspRdfStore();
+	  return wspRdfStore;
   }
 
-  public void createStore() throws ApplicationException {
+  /**
+   * create the store directory ect...
+   * @param pathtoSave
+   * @throws ApplicationException
+   */
+  public void createStore(final String pathtoSave) throws ApplicationException {
     System.out.println("create Store");
-    dataset = TDBFactory.createDataset(directory);
-    defaultModel = dataset.getDefaultModel();
-    modelList = new ArrayList<String>();
+    this.directory = pathtoSave;
+    this.dataset = TDBFactory.createDataset(directory);
+    this.defaultModel = dataset.getDefaultModel();
+    this.modelList = new ArrayList<String>();
     TDB.getContext().set(TDB.symUnionDefaultGraph, true);
     //		loadIndexStore();
-    indexStore = new StoreIndex();
+    this.indexStore = new StoreIndex();
   }
 
   public void createModelFactory() {
-    modelmaker = ModelFactory.createMemModelMaker();
+    this.modelmaker = ModelFactory.createMemModelMaker();
   }
 
   /**
@@ -81,10 +95,10 @@ public class WspRdfStore implements Serializable {
   }
 
   public void addNamedModelToWspStore(final String name, final Model model) {
-    if (!dataset.containsNamedModel(name)) {
+	 if (!this.dataset.containsNamedModel(name)) {
       if (model != null) {
-        dataset.addNamedModel(name, model);
-        modelList.add(name);
+        this.dataset.addNamedModel(name, model);
+        this.modelList.add(name);
       }
     }
   }
