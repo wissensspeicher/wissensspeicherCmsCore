@@ -2,6 +2,11 @@ package org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager;
 
 import java.util.ArrayList;
 
+import org.bbaw.wsp.cms.mdsystem.metadata.general.extractor.RdfMetadataExtractor;
+import org.bbaw.wsp.cms.mdsystem.metadata.general.extractor.factory.MetadataExtractorFactory;
+
+import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
+
 /**
  * 
  * This class identifies a concept (URI) in the metadata stored in Jena TDB
@@ -11,21 +16,16 @@ import java.util.ArrayList;
  */
 public class ConceptIdentifier {
 
-	public static void main(String[] args) {
-		final String path = new String(
-				"/home/shk2/src/export_normdata_130128.rdf");
-		RdfHandler handler = new RdfHandler();
+	//Datengrundlage: wsp.normdata
+	final String path = new String("/home/juergens/wspEtc/rdfData/wspNormdata/export_normdata.rdf");
+	ArrayList<String> result;
+	
+	public void initIdentifying(String query){
 		// ConceptIdentifier identifier = new ConceptIdentifier();
-		ArrayList<String> result = handler.scanForElement(path, "Humboldt");
-		// ArrayList<String> formatedResults = new ArrayList<String>();
-		// for (int i = 0; i < result.size(); ++i) {
-		//
-		// formatedResults.add(identifier.format(result.get(i),
-		// result.get(++i)));
-		//
-		// }
+		this.result = new ArrayList<String>();
+		this.result = scanForElement(path, query);
 
-		for (String string : result) {
+		for (String string : this.result) {
 			System.out.println(string);
 		}
 
@@ -38,6 +38,24 @@ public class ConceptIdentifier {
 		return elementArray[elementArray.length - 1] + " - "
 				+ typeArray[typeArray.length - 1];
 	}
+	
+	
+	private ArrayList<String> scanForElement(final String file,	final String element) {
+		try {
+			RdfMetadataExtractor fac = MetadataExtractorFactory.newRdfMetadataParser(file);
+			ArrayList<String> resultList = fac.getElement(element);
+			// System.out.println("Identified document: " + identifier);
+			return resultList;
+		} catch (ApplicationException e) {
+			System.out.println("Couldn't identify document: " + file + " - "+ e.getMessage());
+			return null;
+		}
+	}
+	
+	public ArrayList<String> getResultList(){
+		return this.result;
+	}
+	
 	/**
 	 * offene fragen: was sind die wichtigsten konzepte? dazu gehören: person,
 	 * vorhaben, ort . weitere? evtl nur suche in wsp.normdata.rdf
