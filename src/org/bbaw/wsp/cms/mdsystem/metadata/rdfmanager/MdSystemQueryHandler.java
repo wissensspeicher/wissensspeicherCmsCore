@@ -1,5 +1,9 @@
 package org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+
 /**
  * handles the JSON-query sent from the GUI and delegates to @SparqlAdapter and @ConceptIdentifier
  * 
@@ -9,17 +13,43 @@ package org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager;
 
 public class MdSystemQueryHandler {
 
+	private ConceptIdentifier identifier;
+	private SparqlAdapter sparqlAdapter;
+	
 	public MdSystemQueryHandler(){
-		
-		init();
-		
+		init();	
 	}
 
 	private void init() {
 		WspRdfStore store = WspRdfStore.getInstance();
-		SparqlAdapter sparqlAdapter = new SparqlAdapter(store.getDataset());		
+		sparqlAdapter = new SparqlAdapter(store.getDataset());
+		this.identifier = new ConceptIdentifier();
+	}
+
+
+	public void receiveQueryFromGui(String query){
+		 ArrayList<String> resList = getConcept(query);
+		 if(!resList.isEmpty()){
+			 //wenn vorhaben identifiziert wurde
+			 try {
+				sparqlAdapter.buildSparqlQuery(new URL(resList.get(1)), resList.get(0));
+			} catch (MalformedURLException e) {
+				e.printStackTrace();
+			}
+		 }
+		 else{
+			 sparqlAdapter.buildSparqlQuery(query);
+		 }
+		 
 	}
 	
+	
+	public ArrayList<String> getConcept(String query){
+		//TODO : Unterscheidung zwischen einem und mehreren Strings in der Query
+		identifier.initIdentifying(query);
+		return identifier.getResultList();
+		
+	}
 	
 	
 	
