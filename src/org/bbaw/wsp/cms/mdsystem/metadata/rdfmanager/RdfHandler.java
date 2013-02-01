@@ -204,20 +204,7 @@ public class RdfHandler {
 		}
 	}
 
-	public ArrayList<String> scanForElement(final String file,
-			final String element) {
-		try {
-			RdfMetadataExtractor fac = MetadataExtractorFactory
-					.newRdfMetadataParser(file);
-			ArrayList<String> result = fac.getElement(element);
-			// System.out.println("Identified document: " + identifier);
-			return result;
-		} catch (ApplicationException e) {
-			System.out.println("Couldn't identify document: " + file + " - "
-					+ e.getMessage());
-			return null;
-		}
-	}
+	
 
 	public void readQuadsViaRiot(String filename, DatasetGraph dataset,
 			Lang lang, String baseURI) {
