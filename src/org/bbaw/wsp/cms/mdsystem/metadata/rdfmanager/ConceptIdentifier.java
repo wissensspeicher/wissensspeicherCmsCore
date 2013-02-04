@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.bbaw.wsp.cms.mdsystem.metadata.general.extractor.RdfMetadataExtractor;
 import org.bbaw.wsp.cms.mdsystem.metadata.general.extractor.factory.MetadataExtractorFactory;
+import org.bbaw.wsp.cms.mdsystem.util.MdystemConfigReader;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 
@@ -17,7 +18,7 @@ import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 public class ConceptIdentifier {
 
 	//Datengrundlage: wsp.normdata
-	final String path = new String("/home/juergens/wspEtc/rdfData/wspNormdata/export_normdata.rdf");
+	final String path = new String(MdystemConfigReader.getInstance().getConfig().getNormdataPath());
 	ArrayList<String> result;
 	
 	public void initIdentifying(String query){
