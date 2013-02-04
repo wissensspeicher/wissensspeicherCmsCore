@@ -49,4 +49,11 @@ public interface IMdsystemConfigRecord {
    * @return the path to the larq index.
    */
   public String getLarqIndexPath();
+
+  /**
+   * Used by the ConceptIdentifier
+   * 
+   * @return the path to the wsp normdata file
+   */
+  public String getNormdataPath();
 }
