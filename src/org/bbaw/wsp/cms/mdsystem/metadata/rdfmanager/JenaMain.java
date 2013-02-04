@@ -60,7 +60,7 @@ public class JenaMain {
     dataset = wspStore.getDataset();
     rdfHandler = new RdfHandler();
 
-    doYourWork();
+    // doYourWork();
   }
 
   /**
@@ -69,7 +69,7 @@ public class JenaMain {
   private void doYourWork() {
     // createNamedModelsFromOreSets("/home/juergens/WspEtc/rdfData/ModsToRdfTest");
     // createNewModelFromSingleOre(oreBiblioNeu);
-     getAllNamedModelsInDataset();
+    // getAllNamedModelsInDataset();
     // wspStore.openDataset();
     // wspStore.getNamedModel("http://edoc.bbaw.de/volltexte/2010/1347/pdf/13_brown.pdf");
     // rdfHandler.deleteByJenaApi(model, "http://wsp.bbaw.de/wspMetadata",
@@ -77,8 +77,8 @@ public class JenaMain {
     // rdfHandler.updateByJenaApi(model, "http://wsp.bbaw.de/wspMetadata",
     // "http://purl.org/dc/terms/abstract", "knowledge browsing");
     // wspStore.closeDataset();
-//     listAllStatementsbyJena("http://edoc.bbaw.de/volltexte/2010/1347/pdf/13_brown.pdf");
-
+    // listAllStatementsbyJena("http://edoc.bbaw.de/volltexte/2010/1347/pdf/13_brown.pdf");
+    wspStore.setForce(true);
     createNamedModelsFromOreSets(EDOC);
     // createNamedModelsFromOreSets(MODS);
     // createNewModelFromSingleOre(EDOC_1);
@@ -106,7 +106,13 @@ public class JenaMain {
       System.out.println("File path: " + string);
       final String modsRdfAbout = rdfHandler.scanID(string);
       if (modsRdfAbout != null) {
-        wspStore.addNamedModelToWspStore(modsRdfAbout, m);
+        try {
+          wspStore.addNamedModelToWspStore(modsRdfAbout, m);
+          System.out.println(modsRdfAbout + " successfully added.");
+        } catch (ApplicationException e) {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
+        }
       }
     }
 
@@ -192,7 +198,9 @@ public class JenaMain {
 
   public void makeDefaultGraphUnion() {
     final Model unionModel = returnUnionModel();
+    wspStore.openDataset();
     dataset.setDefaultModel(unionModel);
+    wspStore.closeDataset();
   }
 
   public Model returnUnionModel() {
