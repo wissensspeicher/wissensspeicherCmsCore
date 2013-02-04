@@ -13,6 +13,11 @@ public class MdsystemConfigRecord implements IMdsystemConfigRecord {
   private String metsStylesheetPath;
   private String datasetPath;
   private String larqIndexPath;
+  private String normdataPath;
+
+  public void setNormdataPath(String normdataPath) {
+    this.normdataPath = normdataPath;
+  }
 
   @Override
   public String geteDocTemplatePath() {
@@ -61,7 +66,7 @@ public class MdsystemConfigRecord implements IMdsystemConfigRecord {
 
   @Override
   public String toString() {
-    return "MdsystemConfigRecord [eDocTemplatePath=" + eDocTemplatePath + ", modsStylesheetPath=" + modsStylesheetPath + ", metsStylesheetPath=" + metsStylesheetPath + ", datasetPath=" + datasetPath + ", larqIndexPath=" + larqIndexPath + "]";
+    return "MdsystemConfigRecord [eDocTemplatePath=" + eDocTemplatePath + ", modsStylesheetPath=" + modsStylesheetPath + ", metsStylesheetPath=" + metsStylesheetPath + ", datasetPath=" + datasetPath + ", larqIndexPath=" + larqIndexPath + ", normdataPath=" + normdataPath + "]";
   }
 
   @Override
@@ -124,6 +129,16 @@ public class MdsystemConfigRecord implements IMdsystemConfigRecord {
       return false;
     }
     return true;
+  }
+
+  @Override
+  /*
+   * (non-Javadoc)
+   * 
+   * @see org.bbaw.wsp.cms.mdsystem.util.IMdsystemConfigRecord#getNormdataPath()
+   */
+  public String getNormdataPath() {
+    return this.normdataPath;
   }
 
 }
