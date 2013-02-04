@@ -1,8 +1,10 @@
-package org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager;
+package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+
+import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.WspRdfStore;
 
 /**
  * handles the JSON-query sent from the GUI and delegates to @SparqlAdapter and @ConceptIdentifier
@@ -52,10 +54,10 @@ public class MdSystemQueryHandler {
 	}
 	
 	
-	public getSparqlHits(){
-		HitRecordContainer hits = sparqlAdapter.getHitRecordContainer();
-	}
-	
+//	public getSparqlHits(){
+//		HitRecordContainer hits = sparqlAdapter.getHitRecordContainer();
+//	}
+//	
 	
 	/**
 	 * offene Fragen: 
