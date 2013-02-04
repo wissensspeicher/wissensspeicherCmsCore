@@ -33,7 +33,7 @@ public class MdystemConfigReader {
 
   public static MdystemConfigReader getInstance() {
     if (instance == null) {
-      return new MdystemConfigReader();
+      instance = new MdystemConfigReader();
     }
     return instance;
   }

@@ -24,7 +24,8 @@ public interface ISparqlAdapter {
   void buildSparqlQuery(String literal);
 
   /**
-   * Build a sparql query from only one literal.
+   * Build a sparql query from only one literal. Here, the pf:textmatch method
+   * is used.
    * 
    * @param namedGraphUrl
    *          the {@link URL} of the named graph to be queried.
@@ -41,6 +42,11 @@ public interface ISparqlAdapter {
    * @param object
    */
   void buildSparqlQuery(URL subject, URL predicate, String object);
+
+  /**
+   * "Das ganz normale Pattern" :) auf einem Named Graphen
+   */
+  void buildSparqlQuery(URL namedGraphUrl, URL subject, URL predicate, String object);
 
   /**
    * Verwandte Konzepte finden --> wie? z.B. eine Aussage der Form: Subjekt ist
