@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mdsystem>
+	<general>
+		<normdataFile>config/mdsystem/wspnormdata.rdf</normdataFile>
+	</general>
 	<converter>
 		<templates>		
 			<eDoc>

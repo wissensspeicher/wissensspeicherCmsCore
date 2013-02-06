@@ -1,4 +1,4 @@
-package org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager;
+package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler;
 
 import java.util.ArrayList;
 

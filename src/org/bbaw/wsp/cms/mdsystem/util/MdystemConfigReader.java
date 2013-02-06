@@ -33,7 +33,7 @@ public class MdystemConfigReader {
 
   public static MdystemConfigReader getInstance() {
     if (instance == null) {
-      return new MdystemConfigReader();
+      instance = new MdystemConfigReader();
     }
     return instance;
   }
@@ -69,6 +69,9 @@ public class MdystemConfigReader {
 
       final String larqIndexPath = evaluator.evaluateAsString(configFileUrl, "/mdsystem/rdfmanager/tripleStore/larqIndexPath/text()");
       record.setLarqIndexPath(larqIndexPath);
+
+      final String normdataPath = evaluator.evaluateAsString(configFileUrl, "/mdsystem/general/normdataFile/text()");
+      record.setNormdataPath(normdataPath);
     } catch (final MalformedURLException e) {
       // TODO Auto-generated catch block
       e.printStackTrace();

@@ -54,13 +54,13 @@ public class JenaMain {
   }
 
   public void initStore() throws ApplicationException {
-    wspStore = new WspRdfStore(datasetPath);
-    wspStore.createStore();
+    wspStore = WspRdfStore.getInstance();
+    wspStore.createStore(datasetPath);
     wspStore.createModelFactory();
     dataset = wspStore.getDataset();
     rdfHandler = new RdfHandler();
 
-    doYourWork();
+    // doYourWork();
   }
 
   /**
@@ -71,7 +71,6 @@ public class JenaMain {
     // createNewModelFromSingleOre(oreBiblioNeu);
     // getAllNamedModelsInDataset();
     // wspStore.openDataset();
-    // Model model =
     // wspStore.getNamedModel("http://edoc.bbaw.de/volltexte/2010/1347/pdf/13_brown.pdf");
     // rdfHandler.deleteByJenaApi(model, "http://wsp.bbaw.de/wspMetadata",
     // "http://purl.org/dc/terms/abstract", "knowledge browsing");
@@ -79,7 +78,7 @@ public class JenaMain {
     // "http://purl.org/dc/terms/abstract", "knowledge browsing");
     // wspStore.closeDataset();
     // listAllStatementsbyJena("http://edoc.bbaw.de/volltexte/2010/1347/pdf/13_brown.pdf");
-
+    wspStore.setForce(true);
     createNamedModelsFromOreSets(EDOC);
     // createNamedModelsFromOreSets(MODS);
     // createNewModelFromSingleOre(EDOC_1);
@@ -107,7 +106,13 @@ public class JenaMain {
       System.out.println("File path: " + string);
       final String modsRdfAbout = rdfHandler.scanID(string);
       if (modsRdfAbout != null) {
-        wspStore.addNamedModelToWspStore(modsRdfAbout, m);
+        try {
+          wspStore.addNamedModelToWspStore(modsRdfAbout, m);
+          System.out.println(modsRdfAbout + " successfully added.");
+        } catch (ApplicationException e) {
+          // TODO Auto-generated catch block
+          e.printStackTrace();
+        }
       }
     }
 
@@ -193,7 +198,9 @@ public class JenaMain {
 
   public void makeDefaultGraphUnion() {
     final Model unionModel = returnUnionModel();
+    wspStore.openDataset();
     dataset.setDefaultModel(unionModel);
+    wspStore.closeDataset();
   }
 
   public Model returnUnionModel() {

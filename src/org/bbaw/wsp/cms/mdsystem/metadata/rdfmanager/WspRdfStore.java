@@ -31,11 +31,14 @@ public class WspRdfStore implements Serializable {
   private InfModel rdfsModel;
   private transient ModelMaker modelmaker;
   private List<String> modelList;
+  private static WspRdfStore wspRdfStore;
+  private boolean force;
 
   /**
    * The global (persistent) store index.
    */
   private StoreIndex indexStore;
+  private Model freshModel;
 
   /**
    * 
@@ -46,26 +49,39 @@ public class WspRdfStore implements Serializable {
   }
 
   /**
-   * Give here the path to the Store
-   * 
-   * @param pathtoSave
+   * Konstruktor
    */
-  public WspRdfStore(final String pathtoSave) {
-    directory = pathtoSave;
+  private WspRdfStore() {
   }
 
-  public void createStore() throws ApplicationException {
+  /**
+   * Singleton
+   */
+  public static WspRdfStore getInstance() {
+    if (wspRdfStore == null)
+      wspRdfStore = new WspRdfStore();
+    return wspRdfStore;
+  }
+
+  /**
+   * create the store directory ect...
+   * 
+   * @param pathtoSave
+   * @throws ApplicationException
+   */
+  public void createStore(final String pathtoSave) throws ApplicationException {
     System.out.println("create Store");
-    dataset = TDBFactory.createDataset(directory);
-    defaultModel = dataset.getDefaultModel();
-    modelList = new ArrayList<String>();
+    this.directory = pathtoSave;
+    this.dataset = TDBFactory.createDataset(directory);
+    this.defaultModel = dataset.getDefaultModel();
+    this.modelList = new ArrayList<String>();
     TDB.getContext().set(TDB.symUnionDefaultGraph, true);
-    //		loadIndexStore();
-    indexStore = new StoreIndex();
+    // loadIndexStore();
+    this.indexStore = new StoreIndex();
   }
 
   public void createModelFactory() {
-    modelmaker = ModelFactory.createMemModelMaker();
+    this.modelmaker = ModelFactory.createMemModelMaker();
   }
 
   /**
@@ -74,22 +90,36 @@ public class WspRdfStore implements Serializable {
    * @return
    */
   public Model getFreshModel() {
-    final Model model = modelmaker.createFreshModel();
+    freshModel = modelmaker.createFreshModel();
+
     // Let the LARQ Index Builder react on changes of the fresh model
-    model.register(indexStore.getLarqBuilder());
-    return model;
+    freshModel.register(indexStore.getLarqBuilder());
+    return freshModel;
   }
 
-  public void addNamedModelToWspStore(final String name, final Model model) {
-    if (!dataset.containsNamedModel(name)) {
+  /**
+   * Add a named model to the store. If you want to force the operation although
+   * a named model already exists under that name, use the setForce() method.
+   * 
+   * @param name
+   *          identifier of the model
+   * @param model
+   * @throws ApplicationException
+   *           if a model already exists and set force mode isn't enabled.
+   */
+  public void addNamedModelToWspStore(final String name, final Model model) throws ApplicationException {
+    if (this.force || !this.dataset.containsNamedModel(name)) {
       if (model != null) {
-        dataset.addNamedModel(name, model);
-        modelList.add(name);
+        this.dataset.addNamedModel(name, model);
+        this.modelList.add(name);
+        // this.indexStore.addModelToIndex(model);
       }
+    } else {
+      throw new ApplicationException("You're not allowed to add a named model which already exists. If you want to force that, use setForce() method on the store.");
     }
   }
 
-  public Model getNamedModel(final String name){
+  public Model getNamedModel(final String name) {
     if (dataset.getNamedModel(name) == null) {
       try {
         throw new Exception("desired Model doesn't exist.");
@@ -109,9 +139,10 @@ public class WspRdfStore implements Serializable {
    */
   public void closeDataset() {
     indexStore.commitIndex();
+    // freshModel.unregister(indexStore.getLarqBuilder());
     dataset.commit();
     dataset.end();
-    //		persistIndexStore();
+    // persistIndexStore();
   }
 
   public Model getMergedModelofAllGraphs() {
@@ -134,8 +165,7 @@ public class WspRdfStore implements Serializable {
   }
 
   public String getTripleCountOfDefaultModel() {
-    return "Default Graph contains: " + defaultModel.size()
-        + " triples";
+    return "Default Graph contains: " + defaultModel.size() + " triples";
   }
 
   /**
@@ -143,9 +173,28 @@ public class WspRdfStore implements Serializable {
    * automaticly.
    * 
    * @param model
-   *            - the {@link Model} for which the index is created.
+   *          - the {@link Model} for which the index is created.
    */
   public void createIndexFromModel(final Model model) {
     indexStore.addModelToIndex(model);
+  }
+
+  /**
+   * 
+   * @return the force flag (true if the force mode is enabled).
+   */
+  public boolean isForce() {
+    return force;
+  }
+
+  /**
+   * Set the force mode, e.g. to allow a client to add a named model which
+   * already exists in the dataset.
+   * 
+   * @param force
+   *          set to true if you want to enable force.
+   */
+  public void setForce(boolean force) {
+    this.force = force;
   }
 }

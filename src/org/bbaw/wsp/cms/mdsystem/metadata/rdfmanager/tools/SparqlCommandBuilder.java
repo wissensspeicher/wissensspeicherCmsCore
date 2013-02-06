@@ -38,7 +38,7 @@ public enum SparqlCommandBuilder {
     case SELECT_NAMED:
       return "SELECT " + toSelect + " FROM NAMED <" + graphName + "> { " + graphPattern + "}";
     case SELECT_USING_INDEX:
-      return "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n" + "SELECT " + toSelect + " { ?s pf:textMatch '" + graphPattern + "' }";
+      return "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n" + "SELECT " + toSelect + " { ?o pf:textMatch '" + graphPattern + "'. ?s ?p ?o. }";
     case SELECT_NAMED_USING_INDEX:
       return "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n" + "SELECT " + toSelect + " FROM NAMED <" + graphName + "> { ?s pf:textMatch '" + graphPattern + "' }";
     default:

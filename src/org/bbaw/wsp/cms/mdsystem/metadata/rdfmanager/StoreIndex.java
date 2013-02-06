@@ -9,6 +9,8 @@ import org.apache.jena.larq.LARQ;
 import org.bbaw.wsp.cms.mdsystem.util.MdystemConfigReader;
 
 import com.hp.hpl.jena.rdf.model.Model;
+import com.hp.hpl.jena.rdf.model.Statement;
+import com.hp.hpl.jena.rdf.model.StmtIterator;
 
 /**
  * This class encapsulates the larq index to make it persistent.
@@ -48,7 +50,11 @@ public class StoreIndex {
    * @param m
    */
   public void addModelToIndex(final Model m) {
-    larqBuilder.indexStatements(m.listStatements());
+    // larqBuilder.indexStatements(m.listStatements());
+    while (m.listStatements().hasNext()) {
+      Statement s = m.listStatements().next();
+      larqBuilder.indexStatement(s);
+    }
     commitIndex();
   }
 
