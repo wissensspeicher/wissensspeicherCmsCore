@@ -51,7 +51,7 @@ public class MdSystemQueryHandler {
   }
 
   public void getSparqlHits() {
-    HitRecordContainer hits = sparqlAdapter.getHitRecordContainer();
+    // HitRecordContainer hits = sparqlAdapter.getHitRecordContainer();
   }
 
   /**
