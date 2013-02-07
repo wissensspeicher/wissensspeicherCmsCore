@@ -63,7 +63,7 @@ public class RdfMetadataExtractor extends MetadataExtractor {
 
 			String temp = queryExecute("//rdf:Description[" + i + "]/*");
 
-			if (temp.contains(element)) {
+			if (temp.contains(element) || temp.toLowerCase().contains(element)) {
 				QueryTarget target = new QueryTarget();
 
 				String query = "//rdf:Description[" + i + "]/@rdf:about";
