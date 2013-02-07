@@ -60,9 +60,10 @@ public class RdfMetadataExtractor extends MetadataExtractor {
 
 		int count = Integer.parseInt(number);
 		for (int i = 1; i <= count; ++i) {
-			// String temp = queryExecute("//rdf:Description[" + i
-			// + "]/@rdf:about");
-			if (checkIfUsefull(i, element)) {
+
+			String temp = queryExecute("//rdf:Description[" + i + "]/*");
+
+			if (temp.contains(element)) {
 				QueryTarget target = new QueryTarget();
 
 				String query = "//rdf:Description[" + i + "]/@rdf:about";
