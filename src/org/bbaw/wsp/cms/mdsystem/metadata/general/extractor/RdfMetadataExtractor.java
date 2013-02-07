@@ -1,6 +1,5 @@
 package org.bbaw.wsp.cms.mdsystem.metadata.general.extractor;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
@@ -53,31 +52,16 @@ public class RdfMetadataExtractor extends MetadataExtractor {
 		return erg;
 	}
 
-	public ArrayList<String> getElement(String element)
-			throws ApplicationException {
+	public void getElements(String element) throws ApplicationException {
 
-		ArrayList<String> result = new ArrayList<String>();
+		String number = (String) buildXPath("count(//rdf:Description)", false);
 
-		String about = (String) buildXPath("//rdf:Description/@rdf:about",
-				false); // First
-		String[] temp = about.split("[ ]+");
+		int count = Integer.parseInt(number);
+		System.out.println(count);
 
-		for (int i = 0; i < temp.length; ++i) {
+		// result.add((String) buildXPath("//rdf:Description[" + (i + 1)
+		// + "]/rdf:type/@rdf:resource", false)); // First
 
-			if (temp[i].contains(element)) {
-				result.add(temp[i]);
-				result.add((String) buildXPath("//rdf:Description[" + (i + 1)
-						+ "]/rdf:type/@rdf:resource", false)); // First
-
-			}
-
-		}
-
-		if (result.isEmpty()) {
-			throw new ApplicationException(
-					"No attribute rdf:about found. This is required for the authentification of the document!");
-		} // node
-		return result;
 	}
 
 	/**

@@ -17,17 +17,18 @@ import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
  */
 public class ConceptIdentifier {
 
-	//Datengrundlage: wsp.normdata
-	final String path = new String(MdystemConfigReader.getInstance().getConfig().getNormdataPath());
-	ArrayList<String> result;
-	
-	public void initIdentifying(String query){
+	// Datengrundlage: wsp.normdata
+	final String path = new String(MdystemConfigReader.getInstance()
+			.getConfig().getNormdataPath());
+	ArrayList<QueryTarget> result;
+
+	public void initIdentifying(String query) {
 		// ConceptIdentifier identifier = new ConceptIdentifier();
-		this.result = new ArrayList<String>();
+		this.result = new ArrayList<QueryTarget>();
 		this.result = scanForElement(path, query);
 
-		for (String string : this.result) {
-			System.out.println(string);
+		for (QueryTarget target : this.result) {
+			System.out.println(target);
 		}
 
 	}
@@ -39,24 +40,29 @@ public class ConceptIdentifier {
 		return elementArray[elementArray.length - 1] + " - "
 				+ typeArray[typeArray.length - 1];
 	}
-	
-	
-	private ArrayList<String> scanForElement(final String file,	final String element) {
+
+	private ArrayList<QueryTarget> scanForElement(final String file,
+			final String element) {
 		try {
-			RdfMetadataExtractor fac = MetadataExtractorFactory.newRdfMetadataParser(file);
-			ArrayList<String> resultList = fac.getElement(element);
+			RdfMetadataExtractor fac = MetadataExtractorFactory
+					.newRdfMetadataParser(file);
+			fac.getElements(element);
+			ArrayList<QueryTarget> resultList = QueryLibary.getInstance()
+					.getAllElements();
+
 			// System.out.println("Identified document: " + identifier);
 			return resultList;
 		} catch (ApplicationException e) {
-			System.out.println("Couldn't identify document: " + file + " - "+ e.getMessage());
+			System.out.println("Couldn't identify document: " + file + " - "
+					+ e.getMessage());
 			return null;
 		}
 	}
-	
-	public ArrayList<String> getResultList(){
+
+	public ArrayList<QueryTarget> getResultList() {
 		return this.result;
 	}
-	
+
 	/**
 	 * offene fragen: was sind die wichtigsten konzepte? dazu gehören: person,
 	 * vorhaben, ort . weitere? evtl nur suche in wsp.normdata.rdf
