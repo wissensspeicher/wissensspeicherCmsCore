@@ -1,7 +1,9 @@
 package org.bbaw.wsp.cms.mdsystem.metadata.general.extractor;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+
+import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.QueryTarget;
+import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.SearchMethode;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 
@@ -12,7 +14,10 @@ import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
  * @author Sascha Feldmann (wsp-shk1)
  * @date 25.10.2012
  * 
- *       Last change: 08.11.2012 - added getXmlBaseValue()-method to extract the
+ *       change: 08.11.2012 - added getXmlBaseValue()-method to extract the Last
+ *       change: 07.01.2013 - new Methode added for scanning Strings in
+ *       Documents.
+ * 
  *       first matching xml base attribut (which contains the real URL)
  */
 public class RdfMetadataExtractor extends MetadataExtractor {
@@ -53,31 +58,267 @@ public class RdfMetadataExtractor extends MetadataExtractor {
 		return erg;
 	}
 
-	public ArrayList<String> getElement(String element)
+	/**
+	 * Allows to search in the given document. Methode creates QueryTargets -
+	 * Elements which contains the given String somewhere
+	 * 
+	 * @param element
+	 * @throws ApplicationException
+	 */
+	public void getElements(String element, int strategie)
 			throws ApplicationException {
 
-		ArrayList<String> result = new ArrayList<String>();
+		String[] elements = element.toLowerCase().split("[ ]+");
 
-		String about = (String) buildXPath("//rdf:Description/@rdf:about",
-				false); // First
-		String[] temp = about.split("[ ]+");
+		String number = (String) buildXPath("count(//rdf:Description)", false);
 
-		for (int i = 0; i < temp.length; ++i) {
+		int count = Integer.parseInt(number);
+		for (int i = 1; i <= count; ++i) {
 
-			if (temp[i].contains(element)) {
-				result.add(temp[i]);
-				result.add((String) buildXPath("//rdf:Description[" + (i + 1)
-						+ "]/rdf:type/@rdf:resource", false)); // First
+			String temp = queryExecute("//rdf:Description[" + i + "]/*");
 
+			if (checkIfContains(elements, temp.toLowerCase(), strategie)) {
+				QueryTarget target = new QueryTarget();
+
+				String query = "//rdf:Description[" + i + "]/@rdf:about";
+				addToTarget("Description", queryExecute(query), target);
+
+				query = "//rdf:Description[" + i
+						+ "]/owl:versionInfo/@rdf:datatype";
+				addToTarget("versionInfo", queryExecute(query), target);
+
+				query = "//rdf:Description[" + i + "]/rdf:type/@rdf:resource";
+				addToTarget("type", queryExecute(query), target);
+
+				query = "//rdf:Description[" + i
+						+ "]/owl:imports/@rdf:resource";
+				addToTarget("imports", queryExecute(query), target);
+
+				query = "//rdf:Description[" + i
+						+ "]/dcterms:isPartOf/@rdf:resource";
+				addToTarget("isPartOf", queryExecute(query), target);
+
+				query = "//rdf:Description[" + i
+						+ "]/dc:description/@rdf:datatype";
+				addToTarget("description", queryExecute(query), target);
+
+				query = "//rdf:Description[" + i + "]/rdfs:label/@rdf:datatype";
+				addToTarget("label", queryExecute(query), target);
+
+				query = "//rdf:Description[" + i
+						+ "]/gnd:languageCode/@rdf:datatype";
+				addToTarget("languageCode", queryExecute(query), target);
+
+				query = "//rdf:Description[" + i
+						+ "]/foaf:familyName/@rdf:datatype";
+				addToTarget("familyName", queryExecute(query), target);
+
+				query = "//rdf:Description[" + i + "]/foaf:mbox/@rdf:datatype";
+				addToTarget("mbox", queryExecute(query), target);
+
+				query = "//rdf:Description[" + i
+						+ "]/foaf:givenName/@rdf:datatype";
+				addToTarget("givenName", queryExecute(query), target);
+
+				query = "//rdf:Description[" + i + "]/foaf:title/@rdf:datatype";
+				addToTarget("title", queryExecute(query), target);
+
+				query = "//rdf:Description[" + i + "]/@gnd:functionOrRole";
+				addToTarget("functionOrRole", queryExecute(query), target);
+
+				query = "//rdf:Description[" + i + "]/@gnd:definition";
+				addToTarget("definition", queryExecute(query), target);
+
+				query = "//rdf:Description[" + i
+						+ "]/foaf:status/@rdf:datatype";
+				addToTarget("status", queryExecute(query), target);
+
+				query = "//rdf:Description[" + i
+						+ "]/dc:coverage/@rdf:resource";
+				addToTarget("coverage", queryExecute(query), target);
+
+				query = "//rdf:Description[" + i + "]/gnd:topic/@rdf:datatype";
+				addToTarget("topic", queryExecute(query), target);
+
+				query = "//rdf:Description[" + i
+						+ "]/foaf:homepage/@rdf:resource";
+				addToTarget("homepage", queryExecute(query), target);
+
+				query = "//rdf:Description[" + i
+						+ "]/dcterms:valid/@rdf:datatype";
+				addToTarget("valid", queryExecute(query), target);
+
+				query = "//rdf:Description[" + i + "]/foaf:name/@rdf:datatype";
+				addToTarget("name", queryExecute(query), target);
+
+				query = "//rdf:Description[" + i
+						+ "]/dc:contributor/@rdf:resource";
+				addToTarget("contributor", queryExecute(query), target);
+
+				query = "//rdf:Description[" + i + "]/foaf:nick/@rdf:datatype";
+				addToTarget("nick", queryExecute(query), target);
+
+				query = "//rdf:Description[" + i
+						+ "]/dcterms:isReplacedBy/@rdf:resource";
+				addToTarget("isReplacedBy", queryExecute(query), target);
+
+				query = "//rdf:Description[" + i
+						+ "]/gnd:gndIdentifier/@rdf:datatype";
+				addToTarget("gndIdentifier", queryExecute(query), target);
+
+				query = "//rdf:Description[" + i
+						+ "]/gnd:relatedCorporateBody/@rdf:resource";
+				addToTarget("relatedCorporateBody", queryExecute(query), target);
+
+				query = "//rdf:Description[" + i
+						+ "]/gnd:contributingCorporateBody/@rdf:resource";
+				addToTarget("contributingCorporateBody", queryExecute(query),
+						target);
+
+				query = "//rdf:Description[" + i
+						+ "]/dcterms:temporal/@rdf:datatype";
+				addToTarget("temporal", queryExecute(query), target);
+
+				query = "//rdf:Description[" + i
+						+ "]/dcterms:requires/@rdf:resource";
+				addToTarget("requires", queryExecute(query), target);
+
+				query = "//rdf:Description[" + i
+						+ "]/foaf:fundedBy/@rdf:resource";
+				addToTarget("fundedBy", queryExecute(query), target);
 			}
-
 		}
 
-		if (result.isEmpty()) {
-			throw new ApplicationException(
-					"No attribute rdf:about found. This is required for the authentification of the document!");
-		} // node
-		return result;
+	}
+
+	/**
+	 * Checks an Description of given Search-Strings. returns true if found
+	 * 
+	 * @param elements
+	 * @param temp
+	 * @param strategie
+	 * @return
+	 */
+	private Boolean checkIfContains(String[] elements, String temp,
+			int strategie) {
+
+		switch (elements.length) {
+		case 0:
+			throw new IllegalArgumentException("Not a vaild search string.");
+		case 1:
+			if (temp.contains(elements[0]))
+				return true;
+			break;
+		case 2:
+			if (strategie == SearchMethode.METHODE_AND) {
+				if (temp.contains(elements[0]) && temp.contains(elements[1]))
+					return true;
+
+			} else if (temp.contains(elements[0]) || temp.contains(elements[1]))
+				return true;
+			break;
+
+		default:
+			if (strategie == SearchMethode.METHODE_AND) {
+				if (temp.contains(elements[0]) && temp.contains(elements[1])
+						&& temp.contains(elements[2]))
+					return true;
+			} else if (temp.contains(elements[0]) || temp.contains(elements[1])
+					|| temp.contains(elements[2]))
+				return true;
+			break;
+
+		}
+		return false;
+	}
+
+	/**
+	 * is used to add given elements to given Querytarget instance, also checks
+	 * for empty Queryresults
+	 * 
+	 * @param key
+	 * @param query
+	 * @param target
+	 */
+	private void addToTarget(String key, String query, QueryTarget target) {
+		if (query != null && !query.equals(""))
+			target.addToMap(key, query);
+	}
+
+	/**
+	 * Executes the given command in xslt returns the result as String
+	 * 
+	 * @param query
+	 * @return
+	 */
+	private String queryExecute(String query) {
+		return (String) buildXPath(query, false);
+	}
+
+	@SuppressWarnings("unused")
+	private Boolean checkIfUsefull(int i, String element) {
+
+		String temp = "";
+		temp += queryExecute("//rdf:Description[" + i + "]/@rdf:about");
+
+		temp += queryExecute("//rdf:Description[" + i
+				+ "]/owl:versionInfo/@rdf:datatype");
+		temp += queryExecute("//rdf:Description[" + i
+				+ "]/rdf:type/@rdf:resource");
+		temp += queryExecute("//rdf:Description[" + i
+				+ "]/owl:imports/@rdf:resource");
+		temp += queryExecute("//rdf:Description[" + i
+				+ "]/dcterms:isPartOf/@rdf:resource");
+		temp += queryExecute("//rdf:Description[" + i
+				+ "]/dc:description/@rdf:datatype");
+		temp += queryExecute("//rdf:Description[" + i
+				+ "]/rdfs:label/@rdf:datatype");
+		temp += queryExecute("//rdf:Description[" + i
+				+ "]/gnd:languageCode/@rdf:datatype");
+		temp += queryExecute("//rdf:Description[" + i
+				+ "]/foaf:familyName/@rdf:datatype");
+		temp += queryExecute("//rdf:Description[" + i
+				+ "]/foaf:mbox/@rdf:datatype");
+		temp += queryExecute("//rdf:Description[" + i
+				+ "]/foaf:mbox/@rdf:datatype");
+		temp += queryExecute("//rdf:Description[" + i
+				+ "]/foaf:givenName/@rdf:datatype");
+		temp += queryExecute("//rdf:Description[" + i
+				+ "]/foaf:title/@rdf:datatype");
+		temp += queryExecute("//rdf:Description[" + i + "]/@gnd:functionOrRole");
+		temp += queryExecute("//rdf:Description[" + i + "]/@gnd:definition");
+		temp += queryExecute("//rdf:Description[" + i
+				+ "]/foaf:status/@rdf:datatype");
+		temp += queryExecute("//rdf:Description[" + i
+				+ "]/dc:coverage/@rdf:resource");
+		temp += queryExecute("//rdf:Description[" + i
+				+ "]/gnd:topic/@rdf:datatype");
+		temp += queryExecute("//rdf:Description[" + i
+				+ "]/foaf:homepage/@rdf:resource");
+		temp += queryExecute("//rdf:Description[" + i
+				+ "]/dcterms:valid/@rdf:datatype");
+		temp += queryExecute("//rdf:Description[" + i
+				+ "]/foaf:name/@rdf:datatype");
+		temp += queryExecute("//rdf:Description[" + i
+				+ "]/dc:contributor/@rdf:resource");
+		temp += queryExecute("//rdf:Description[" + i
+				+ "]/foaf:nick/@rdf:datatype");
+		temp += queryExecute("//rdf:Description[" + i
+				+ "]/dcterms:isReplacedBy/@rdf:resource");
+		temp += queryExecute("//rdf:Description[" + i
+				+ "]/gnd:gndIdentifier/@rdf:datatype");
+		temp += queryExecute("//rdf:Description[" + i
+				+ "]/gnd:relatedCorporateBody/@rdf:resource");
+		temp += queryExecute("//rdf:Description[" + i
+				+ "]/gnd:contributingCorporateBody/@rdf:resource");
+		temp += queryExecute("//rdf:Description[" + i
+				+ "]/dcterms:temporal/@rdf:datatype");
+		temp += queryExecute("//rdf:Description[" + i
+				+ "]/dcterms:requires/@rdf:resource");
+		temp += queryExecute("//rdf:Description[" + i
+				+ "]/foaf:fundedBy/@rdf:resource");
+
+		return temp.contains(element);
 	}
 
 	/**

@@ -17,21 +17,23 @@ import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
  */
 public class ConceptIdentifier {
 
-	//Datengrundlage: wsp.normdata
-	final String path = new String(MdystemConfigReader.getInstance().getConfig().getNormdataPath());
-	ArrayList<String> result;
-	
-	public void initIdentifying(String query){
-		// ConceptIdentifier identifier = new ConceptIdentifier();
-		this.result = new ArrayList<String>();
-		this.result = scanForElement(path, query);
+	// Datengrundlage: wsp.normdata
+	final String path = new String(MdystemConfigReader.getInstance()
+			.getConfig().getNormdataPath());
+	ArrayList<QueryTarget> result;
 
-		for (String string : this.result) {
-			System.out.println(string);
+	public void initIdentifying(String query, int methode) {
+		// ConceptIdentifier identifier = new ConceptIdentifier();
+		this.result = new ArrayList<QueryTarget>();
+		this.result = scanForElement(path, query, methode);
+
+		for (QueryTarget target : this.result) {
+			System.out.println(target);
 		}
 
 	}
 
+	@SuppressWarnings("unused")
 	private String format(final String element, final String type) {
 		String[] elementArray = element.split("[#]+");
 		String[] typeArray = type.split("[/]+");
@@ -39,24 +41,38 @@ public class ConceptIdentifier {
 		return elementArray[elementArray.length - 1] + " - "
 				+ typeArray[typeArray.length - 1];
 	}
-	
-	
-	private ArrayList<String> scanForElement(final String file,	final String element) {
+
+	/**
+	 * get a source file and a search string, returns a list of @QueryTarget
+	 * which contains the string
+	 * 
+	 * @param file
+	 * @param element
+	 * @return
+	 */
+	private ArrayList<QueryTarget> scanForElement(final String file,
+			final String element, int methode) {
 		try {
-			RdfMetadataExtractor fac = MetadataExtractorFactory.newRdfMetadataParser(file);
-			ArrayList<String> resultList = fac.getElement(element);
+			RdfMetadataExtractor fac = MetadataExtractorFactory
+					.newRdfMetadataParser(file);
+			fac.getElements(element, methode);
+			ArrayList<QueryTarget> resultList = QueryLibary.getInstance()
+					.getAllElements();
+
 			// System.out.println("Identified document: " + identifier);
 			return resultList;
 		} catch (ApplicationException e) {
-			System.out.println("Couldn't identify document: " + file + " - "+ e.getMessage());
+			System.out.println("Couldn't identify document: " + file + " - "
+					+ e.getMessage());
 			return null;
 		}
 	}
-	
-	public ArrayList<String> getResultList(){
+
+	public ArrayList<QueryTarget> getResultList() {
+		// easier QueryLibary.getInstance().getAllElements();
 		return this.result;
 	}
-	
+
 	/**
 	 * offene fragen: was sind die wichtigsten konzepte? dazu gehören: person,
 	 * vorhaben, ort . weitere? evtl nur suche in wsp.normdata.rdf
