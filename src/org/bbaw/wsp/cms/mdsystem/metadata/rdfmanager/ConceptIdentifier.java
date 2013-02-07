@@ -22,10 +22,10 @@ public class ConceptIdentifier {
 			.getConfig().getNormdataPath());
 	ArrayList<QueryTarget> result;
 
-	public void initIdentifying(String query) {
+	public void initIdentifying(String query, int methode) {
 		// ConceptIdentifier identifier = new ConceptIdentifier();
 		this.result = new ArrayList<QueryTarget>();
-		this.result = scanForElement(path, query);
+		this.result = scanForElement(path, query, methode);
 
 		for (QueryTarget target : this.result) {
 			System.out.println(target);
@@ -51,11 +51,11 @@ public class ConceptIdentifier {
 	 * @return
 	 */
 	private ArrayList<QueryTarget> scanForElement(final String file,
-			final String element) {
+			final String element, int methode) {
 		try {
 			RdfMetadataExtractor fac = MetadataExtractorFactory
 					.newRdfMetadataParser(file);
-			fac.getElements(element);
+			fac.getElements(element, methode);
 			ArrayList<QueryTarget> resultList = QueryLibary.getInstance()
 					.getAllElements();
 

@@ -3,6 +3,7 @@ package org.bbaw.wsp.cms.mdsystem.metadata.general.extractor;
 import java.util.HashMap;
 
 import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.QueryTarget;
+import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.SearchMethode;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 
@@ -64,7 +65,10 @@ public class RdfMetadataExtractor extends MetadataExtractor {
 	 * @param element
 	 * @throws ApplicationException
 	 */
-	public void getElements(String element) throws ApplicationException {
+	public void getElements(String element, int strategie)
+			throws ApplicationException {
+
+		String[] elements = element.toLowerCase().split("[ ]+");
 
 		String number = (String) buildXPath("count(//rdf:Description)", false);
 
@@ -73,7 +77,7 @@ public class RdfMetadataExtractor extends MetadataExtractor {
 
 			String temp = queryExecute("//rdf:Description[" + i + "]/*");
 
-			if (temp.contains(element) || temp.toLowerCase().contains(element)) {
+			if (checkIfContains(elements, temp.toLowerCase(), strategie)) {
 				QueryTarget target = new QueryTarget();
 
 				String query = "//rdf:Description[" + i + "]/@rdf:about";
@@ -185,6 +189,47 @@ public class RdfMetadataExtractor extends MetadataExtractor {
 			}
 		}
 
+	}
+
+	/**
+	 * Checks an Description of given Search-Strings. returns true if found
+	 * 
+	 * @param elements
+	 * @param temp
+	 * @param strategie
+	 * @return
+	 */
+	private Boolean checkIfContains(String[] elements, String temp,
+			int strategie) {
+
+		switch (elements.length) {
+		case 0:
+			throw new IllegalArgumentException("Not a vaild search string.");
+		case 1:
+			if (temp.contains(elements[0]))
+				return true;
+			break;
+		case 2:
+			if (strategie == SearchMethode.METHODE_AND) {
+				if (temp.contains(elements[0]) && temp.contains(elements[1]))
+					return true;
+
+			} else if (temp.contains(elements[0]) || temp.contains(elements[1]))
+				return true;
+			break;
+
+		default:
+			if (strategie == SearchMethode.METHODE_AND) {
+				if (temp.contains(elements[0]) && temp.contains(elements[1])
+						&& temp.contains(elements[2]))
+					return true;
+			} else if (temp.contains(elements[0]) || temp.contains(elements[1])
+					|| temp.contains(elements[2]))
+				return true;
+			break;
+
+		}
+		return false;
 	}
 
 	/**

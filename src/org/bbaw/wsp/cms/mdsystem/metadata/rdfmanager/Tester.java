@@ -8,7 +8,8 @@ public class Tester {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		new ConceptIdentifier().initIdentifying("Humboldt");
+		new ConceptIdentifier().initIdentifying("Humboldt nix hallo",
+				SearchMethode.METHODE_OR);
 
 	}
 
