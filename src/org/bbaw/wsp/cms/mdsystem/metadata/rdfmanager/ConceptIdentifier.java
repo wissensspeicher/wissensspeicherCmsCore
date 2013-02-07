@@ -33,6 +33,7 @@ public class ConceptIdentifier {
 
 	}
 
+	@SuppressWarnings("unused")
 	private String format(final String element, final String type) {
 		String[] elementArray = element.split("[#]+");
 		String[] typeArray = type.split("[/]+");
@@ -41,6 +42,14 @@ public class ConceptIdentifier {
 				+ typeArray[typeArray.length - 1];
 	}
 
+	/**
+	 * get a source file and a search string, returns a list of @QueryTarget
+	 * which contains the string
+	 * 
+	 * @param file
+	 * @param element
+	 * @return
+	 */
 	private ArrayList<QueryTarget> scanForElement(final String file,
 			final String element) {
 		try {
@@ -60,6 +69,7 @@ public class ConceptIdentifier {
 	}
 
 	public ArrayList<QueryTarget> getResultList() {
+		// easier QueryLibary.getInstance().getAllElements();
 		return this.result;
 	}
 

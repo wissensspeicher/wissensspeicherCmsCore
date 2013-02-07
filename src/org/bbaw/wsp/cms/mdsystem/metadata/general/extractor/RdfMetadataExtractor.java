@@ -13,7 +13,10 @@ import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
  * @author Sascha Feldmann (wsp-shk1)
  * @date 25.10.2012
  * 
- *       Last change: 08.11.2012 - added getXmlBaseValue()-method to extract the
+ *       change: 08.11.2012 - added getXmlBaseValue()-method to extract the Last
+ *       change: 07.01.2013 - new Methode added for scanning Strings in
+ *       Documents.
+ * 
  *       first matching xml base attribut (which contains the real URL)
  */
 public class RdfMetadataExtractor extends MetadataExtractor {
@@ -54,6 +57,13 @@ public class RdfMetadataExtractor extends MetadataExtractor {
 		return erg;
 	}
 
+	/**
+	 * Allows to search in the given document. Methode creates QueryTargets -
+	 * Elements which contains the given String somewhere
+	 * 
+	 * @param element
+	 * @throws ApplicationException
+	 */
 	public void getElements(String element) throws ApplicationException {
 
 		String number = (String) buildXPath("count(//rdf:Description)", false);
@@ -177,15 +187,30 @@ public class RdfMetadataExtractor extends MetadataExtractor {
 
 	}
 
+	/**
+	 * is used to add given elements to given Querytarget instance, also checks
+	 * for empty Queryresults
+	 * 
+	 * @param key
+	 * @param query
+	 * @param target
+	 */
 	private void addToTarget(String key, String query, QueryTarget target) {
 		if (query != null && !query.equals(""))
 			target.addToMap(key, query);
 	}
 
+	/**
+	 * Executes the given command in xslt returns the result as String
+	 * 
+	 * @param query
+	 * @return
+	 */
 	private String queryExecute(String query) {
 		return (String) buildXPath(query, false);
 	}
 
+	@SuppressWarnings("unused")
 	private Boolean checkIfUsefull(int i, String element) {
 
 		String temp = "";
