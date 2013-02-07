@@ -52,7 +52,7 @@ public class StoreIndex {
   public void addModelToIndex(final Model m) {
     // larqBuilder.indexStatements(m.listStatements());
     while (m.listStatements().hasNext()) {
-      Statement s = m.listStatements().next();
+      final Statement s = m.listStatements().next();
       larqBuilder.indexStatement(s);
     }
     commitIndex();
@@ -71,6 +71,7 @@ public class StoreIndex {
    */
   public void commitIndex() {
     larqBuilder.closeWriter();
+    System.out.println("StoreIndex: setting current index");
     LARQ.setDefaultIndex(getCurrentIndex());
   }
 

@@ -58,8 +58,9 @@ public class WspRdfStore implements Serializable {
    * Singleton
    */
   public static WspRdfStore getInstance() {
-    if (wspRdfStore == null)
+    if (wspRdfStore == null) {
       wspRdfStore = new WspRdfStore();
+    }
     return wspRdfStore;
   }
 
@@ -71,17 +72,17 @@ public class WspRdfStore implements Serializable {
    */
   public void createStore(final String pathtoSave) throws ApplicationException {
     System.out.println("create Store");
-    this.directory = pathtoSave;
-    this.dataset = TDBFactory.createDataset(directory);
-    this.defaultModel = dataset.getDefaultModel();
-    this.modelList = new ArrayList<String>();
-    TDB.getContext().set(TDB.symUnionDefaultGraph, true);
+    directory = pathtoSave;
+    dataset = TDBFactory.createDataset(directory);
+    defaultModel = dataset.getDefaultModel();
+    modelList = new ArrayList<String>();
+    // TDB.getContext().set(TDB.symUnionDefaultGraph, true);
     // loadIndexStore();
-    this.indexStore = new StoreIndex();
+    indexStore = new StoreIndex();
   }
 
   public void createModelFactory() {
-    this.modelmaker = ModelFactory.createMemModelMaker();
+    modelmaker = ModelFactory.createMemModelMaker();
   }
 
   /**
@@ -108,10 +109,10 @@ public class WspRdfStore implements Serializable {
    *           if a model already exists and set force mode isn't enabled.
    */
   public void addNamedModelToWspStore(final String name, final Model model) throws ApplicationException {
-    if (this.force || !this.dataset.containsNamedModel(name)) {
+    if (force || !dataset.containsNamedModel(name)) {
       if (model != null) {
-        this.dataset.addNamedModel(name, model);
-        this.modelList.add(name);
+        dataset.addNamedModel(name, model);
+        modelList.add(name);
         // this.indexStore.addModelToIndex(model);
       }
     } else {
@@ -194,7 +195,7 @@ public class WspRdfStore implements Serializable {
    * @param force
    *          set to true if you want to enable force.
    */
-  public void setForce(boolean force) {
+  public void setForce(final boolean force) {
     this.force = force;
   }
 }

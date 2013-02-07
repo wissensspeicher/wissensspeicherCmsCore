@@ -109,7 +109,7 @@ public class JenaMain {
         try {
           wspStore.addNamedModelToWspStore(modsRdfAbout, m);
           System.out.println(modsRdfAbout + " successfully added.");
-        } catch (ApplicationException e) {
+        } catch (final ApplicationException e) {
           // TODO Auto-generated catch block
           e.printStackTrace();
         }
@@ -196,6 +196,8 @@ public class JenaMain {
     return qExec;
   }
 
+  @Deprecated
+  /**forbidden!!!**/
   public void makeDefaultGraphUnion() {
     final Model unionModel = returnUnionModel();
     wspStore.openDataset();
