@@ -30,11 +30,11 @@ public class MdSystemQueryHandler {
 
 
 	public void receiveQueryFromGui(String query){
-		 ArrayList<String> resList = getConcept(query);
+		 ArrayList<QueryTarget> resList = getConcept(query);
 		 if(!resList.isEmpty()){
 			 //wenn vorhaben identifiziert wurde
 			 try {
-				sparqlAdapter.buildSparqlQuery(new URL(resList.get(1)), resList.get(0));
+				sparqlAdapter.buildSparqlQuery(new URL(resList.get(0).toString()), resList.get(1).toString());
 			} catch (MalformedURLException e) {
 				e.printStackTrace();
 			}
@@ -46,9 +46,8 @@ public class MdSystemQueryHandler {
 	}
 	
 	
-	public ArrayList<String> getConcept(String query){
-		//TODO : Unterscheidung zwischen einem und mehreren Strings in der Query
-		identifier.initIdentifying(query);
+	public ArrayList<QueryTarget> getConcept(String query){
+		identifier.initIdentifying(query, ConceptIdentfierSearchMode.METHODE_OR);
 		return identifier.getResultList();
 		
 	}
