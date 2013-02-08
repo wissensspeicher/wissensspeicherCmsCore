@@ -6,7 +6,6 @@ import java.util.Map;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.HitRecordContainer;
-import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.ISparqlAdapter;
 import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.RdfHandler;
 import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.fuseki.FusekiClient;
 import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.tools.SparqlCommandBuilder;

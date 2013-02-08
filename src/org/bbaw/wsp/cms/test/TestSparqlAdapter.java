@@ -5,8 +5,8 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.ISparqlAdapter;
 import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter.IQueryStrategy;
+import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter.ISparqlAdapter;
 import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter.QueryUsingFuseki;
 import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter.QueryUsingJena;
 import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter.SparqlAdapter;

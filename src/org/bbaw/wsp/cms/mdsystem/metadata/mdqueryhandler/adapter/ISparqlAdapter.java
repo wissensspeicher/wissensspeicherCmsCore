@@ -1,11 +1,10 @@
 /**
  * 
  */
-package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler;
+package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter;
 
 import java.net.URL;
 
-import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter.SparqlAdapter;
 
 
 /**
