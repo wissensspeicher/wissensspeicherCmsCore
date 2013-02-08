@@ -7,8 +7,9 @@ import java.util.Map;
 
 import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter.IQueryStrategy;
 import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter.ISparqlAdapter;
-import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter.QueryUsingFuseki;
-import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter.QueryUsingJena;
+import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter.QueryStrategyFuseki;
+import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter.QueryStrategyHandler;
+import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter.QueryStrategyJena;
 import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter.SparqlAdapter;
 import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.JenaMain;
 import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.RdfHandler;
@@ -45,7 +46,7 @@ public class TestSparqlAdapter {
     URL fusekiDatasetUrl;
     try {
       fusekiDatasetUrl = new URL("http://localhost:3030/ds");
-      final IQueryStrategy<ResultSet> strategy = new QueryUsingFuseki(fusekiDatasetUrl);
+      final IQueryStrategy<ResultSet> strategy = new QueryStrategyFuseki(fusekiDatasetUrl);
       final ISparqlAdapter adapter = new SparqlAdapter<ResultSet>(strategy);
       return adapter;
     } catch (final MalformedURLException e) {
@@ -62,7 +63,7 @@ public class TestSparqlAdapter {
       jenamain.initStore();
       final RdfHandler handler = new RdfHandler();
       final Dataset dataset = jenamain.getDataset();
-      final IQueryStrategy<Map<URL, ResultSet>> queryStrategy = new QueryUsingJena(handler, dataset);
+      final IQueryStrategy<Map<URL, ResultSet>> queryStrategy = new QueryStrategyJena(handler, dataset);
       final ISparqlAdapter adapter = new SparqlAdapter<>(queryStrategy);
       return adapter;
     } catch (final ApplicationException e) {
@@ -74,4 +75,21 @@ public class TestSparqlAdapter {
 
   }
 
+  public static ISparqlAdapter useRdfHandler() {
+    final JenaMain jenamain = new JenaMain();
+
+    try {
+      jenamain.initStore();
+      final RdfHandler handler = new RdfHandler();
+      final Dataset dataset = jenamain.getDataset();
+      final IQueryStrategy<ResultSet> queryStrategy = new QueryStrategyHandler(handler, dataset);
+      final ISparqlAdapter adapter = new SparqlAdapter<>(queryStrategy);
+      return adapter;
+    } catch (final ApplicationException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+      return null;
+    }
+
+  }
 }

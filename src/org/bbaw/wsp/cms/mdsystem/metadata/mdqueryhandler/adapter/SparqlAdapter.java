@@ -33,6 +33,7 @@ import com.hp.hpl.jena.tdb.TDB;
  */
 public class SparqlAdapter<T> implements ISparqlAdapter {
   private final IQueryStrategy<T> queryStrategy;
+  private final HitRecordContainer hitRecordContainer;
 
   /**
    * Create a new SparqlAdapter.
@@ -41,6 +42,7 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
    */
   public SparqlAdapter(final IQueryStrategy<T> queryStrategy) {
     this.queryStrategy = queryStrategy;
+    hitRecordContainer = new HitRecordContainer();
   }
 
   @Override
@@ -77,7 +79,7 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
       while (realResults.hasNext()) {
         final QuerySolution solution = realResults.next();
         System.out.println("Named Graph: " + solution.getResource("g"));
-        System.out.println("o: " + solution.getLiteral("o"));
+        // System.out.println("o: " + solution.getLiteral("o"));
       }
     } else if (results instanceof HashMap<?, ?>) {
 

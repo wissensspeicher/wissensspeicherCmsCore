@@ -76,7 +76,7 @@ public class WspRdfStore implements Serializable {
     dataset = TDBFactory.createDataset(directory);
     defaultModel = dataset.getDefaultModel();
     modelList = new ArrayList<String>();
-    // TDB.getContext().set(TDB.symUnionDefaultGraph, true);
+    TDB.getContext().set(TDB.symUnionDefaultGraph, true);
     // loadIndexStore();
     indexStore = new StoreIndex();
   }

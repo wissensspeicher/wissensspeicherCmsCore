@@ -17,7 +17,7 @@ import com.hp.hpl.jena.query.ResultSet;
  * @since 08.02.2013
  * 
  */
-public class QueryUsingJena implements IQueryStrategy<Map<URL, ResultSet>> {
+public class QueryStrategyJena implements IQueryStrategy<Map<URL, ResultSet>> {
 
   private final RdfHandler rdfhandler;
   private final Dataset dataset;
@@ -30,7 +30,7 @@ public class QueryUsingJena implements IQueryStrategy<Map<URL, ResultSet>> {
    * @param dataset
    *          the {@link Dataset} on which the query shall be performed.
    */
-  public QueryUsingJena(final RdfHandler handler, final Dataset dataset) {
+  public QueryStrategyJena(final RdfHandler handler, final Dataset dataset) {
     rdfhandler = handler;
     this.dataset = dataset;
   }
