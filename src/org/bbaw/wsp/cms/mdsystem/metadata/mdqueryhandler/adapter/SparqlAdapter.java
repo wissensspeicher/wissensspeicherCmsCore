@@ -1,10 +1,14 @@
-package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler;
+package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter;
 
 import java.net.URL;
+import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.lucene.analysis.Analyzer;
 import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.HitRecordContainer;
+import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.ISparqlAdapter;
 import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.RdfHandler;
+import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.fuseki.FusekiClient;
 import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.tools.SparqlCommandBuilder;
 
 import com.hp.hpl.jena.query.Dataset;
@@ -25,32 +29,19 @@ import com.hp.hpl.jena.tdb.TDB;
  * and the @RdfHandler. It combines Strings to valid Sparql queries
  * 
  * @author marco juergens
+ * @param <T>
  * 
  */
-public class SparqlAdapter implements ISparqlAdapter {
-  private final RdfHandler handler;
-  private final Dataset dataset;
-  private HitRecordContainer hitRecordContainer;
+public class SparqlAdapter<T> implements ISparqlAdapter {
+  private final IQueryStrategy<T> queryStrategy;
 
   /**
    * Create a new SparqlAdapter.
-   */
-  public SparqlAdapter(final Dataset dataset) {
-    handler = new RdfHandler();
-    this.dataset = dataset;
-  }
-
-  /**
-   * Delegate a single query.
    * 
-   * @param query
-   * @return
+   * @param <T>
    */
-  private ResultSet delegateQuery(final String query) {
-    final QueryExecution ex = handler.selectSomething(query, dataset);
-    ex.getContext().set(TDB.symUnionDefaultGraph, true);
-    final ResultSet results = ex.execSelect();
-    return results;
+  public SparqlAdapter(final IQueryStrategy<T> queryStrategy) {
+    this.queryStrategy = queryStrategy;
   }
 
   @Override
@@ -62,20 +53,9 @@ public class SparqlAdapter implements ISparqlAdapter {
    * (java.lang.String)
    */
   public void buildSparqlQuery(final String literal) {
-    // dataset.begin(ReadWrite.READ);
+    final T results = queryStrategy.queryLiteral(literal);
 
-    final String query = SparqlCommandBuilder.SELECT_USING_INDEX.getSelectQueryString("*", null, literal);
-    System.out.println("Builded query " + query);
-    final Map<URL, ResultSet> resultMap = handler.queryAllNamedModels(dataset, query);
-    for (final URL graphUrl : resultMap.keySet()) {
-      System.out.println("Result for " + graphUrl);
-      final ResultSet results = resultMap.get(graphUrl);
-
-      while (results.hasNext()) {
-        final QuerySolution solution = results.next();
-        System.out.println("o: " + solution.getLiteral("o"));
-      }
-    }
+    this.handleResults(results);
 
     // final Query q = Que ryFactory.create(query);
     // System.out.println("Builded query " + query);
@@ -84,6 +64,26 @@ public class SparqlAdapter implements ISparqlAdapter {
     // qExec.getContext().set(TDB.symUnionDefaultGraph, true);
     // // qExec.execSelect().nextSolution().
     // ResultSetFormatter.out(System.out, qExec.execSelect(), q);
+  }
+
+  /**
+   * Handle results of an {@link IQueryStrategy} depending on the return type.
+   * 
+   * @param results
+   *          a generic type.
+   */
+  private void handleResults(final T results) {
+    if (results instanceof ResultSet) {
+      final ResultSet realResults = (ResultSet) results;
+      while (realResults.hasNext()) {
+        final QuerySolution solution = realResults.next();
+        System.out.println("Named Graph: " + solution.getResource("g"));
+        System.out.println("o: " + solution.getLiteral("o"));
+      }
+    } else if (results instanceof HashMap<?, ?>) {
+
+    }
+
   }
 
   @Override

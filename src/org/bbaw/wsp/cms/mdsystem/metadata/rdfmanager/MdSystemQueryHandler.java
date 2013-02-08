@@ -5,7 +5,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.HitRecordContainer;
-import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.SparqlAdapter;
+import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter.SparqlAdapter;
 
 /**
  * handles the JSON-query sent from the GUI and delegates to @SparqlAdapter and @ConceptIdentifier

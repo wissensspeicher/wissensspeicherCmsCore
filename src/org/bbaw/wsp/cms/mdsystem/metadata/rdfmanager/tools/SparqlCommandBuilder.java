@@ -10,7 +10,7 @@ package org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.tools;
  *       Last change: 15.11.2012 -> select queries added
  */
 public enum SparqlCommandBuilder {
-  CLEAR_DATASET, CLEAR_GRAPH, CLEAR_DEFAULT, SELECT_DEFAULT, SELECT_NAMED, SELECT_USING_INDEX, SELECT_NAMED_USING_INDEX;
+  CLEAR_DATASET, CLEAR_GRAPH, CLEAR_DEFAULT, SELECT_DEFAULT, SELECT_NAMED, SELECT_USING_INDEX, SELECT_NAMED_USING_INDEX, SELECT_USING_INDEX_AND_NAMED_GRAPH;
 
   /**
    * @return the spaql command as {@link String}.
@@ -44,6 +44,8 @@ public enum SparqlCommandBuilder {
       return "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n" + "SELECT " + toSelect + " { ?o pf:textMatch '" + graphPattern + "'}";
     case SELECT_NAMED_USING_INDEX:
       return "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n" + "SELECT " + toSelect + " FROM NAMED <" + graphName + "> { ?s pf:textMatch '" + graphPattern + "' }";
+    case SELECT_USING_INDEX_AND_NAMED_GRAPH:
+      return "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n" + "SELECT " + toSelect + " { GRAPH ?g { ?o pf:textMatch '" + graphPattern + "'} }";
     default:
       return "";
     }

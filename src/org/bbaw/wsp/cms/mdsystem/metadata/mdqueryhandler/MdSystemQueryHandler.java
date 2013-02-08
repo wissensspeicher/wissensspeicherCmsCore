@@ -4,6 +4,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
+import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter.SparqlAdapter;
 import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.WspRdfStore;
 
 /**

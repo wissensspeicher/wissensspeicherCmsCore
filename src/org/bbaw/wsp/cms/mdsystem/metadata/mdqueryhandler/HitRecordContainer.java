@@ -8,6 +8,8 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 
+import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter.SparqlAdapter;
+
 /**
  * This class holds all {@link IHitRecord} instances which result from a single
  * (literal) query with the {@link SparqlAdapter}.

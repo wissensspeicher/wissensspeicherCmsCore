@@ -5,6 +5,8 @@ package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler;
 
 import java.net.URL;
 
+import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter.SparqlAdapter;
+
 
 /**
  * Adapter interface which is used to communicate with the {@link SparqlAdapter}
