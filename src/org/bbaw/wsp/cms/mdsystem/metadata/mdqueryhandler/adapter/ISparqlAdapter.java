@@ -6,7 +6,6 @@ package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter;
 import java.net.URL;
 
 
-
 /**
  * Adapter interface which is used to communicate with the {@link SparqlAdapter}
  * .
@@ -22,8 +21,9 @@ public interface ISparqlAdapter {
    * 
    * @param literal
    *          the literal String.
+   * @return
    */
-  void buildSparqlQuery(String literal);
+  HitGraphContainer buildSparqlQuery(String literal);
 
   /**
    * Build a sparql query from only one literal. Here, the pf:textmatch method

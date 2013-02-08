@@ -1,11 +1,12 @@
 package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter;
 
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.lucene.analysis.Analyzer;
-import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.HitRecordContainer;
 import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.RdfHandler;
 import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.fuseki.FusekiClient;
 import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.tools.SparqlCommandBuilder;
@@ -33,7 +34,7 @@ import com.hp.hpl.jena.tdb.TDB;
  */
 public class SparqlAdapter<T> implements ISparqlAdapter {
   private final IQueryStrategy<T> queryStrategy;
-  private final HitRecordContainer hitRecordContainer;
+  private final HitGraphContainer hitRecordContainer;
 
   /**
    * Create a new SparqlAdapter.
@@ -42,7 +43,7 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
    */
   public SparqlAdapter(final IQueryStrategy<T> queryStrategy) {
     this.queryStrategy = queryStrategy;
-    hitRecordContainer = new HitRecordContainer();
+    hitRecordContainer = new HitGraphContainer();
   }
 
   @Override
@@ -53,10 +54,10 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
    * org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.ISparqlAdapter#buildSparqlQuery
    * (java.lang.String)
    */
-  public void buildSparqlQuery(final String literal) {
+  public HitGraphContainer buildSparqlQuery(final String literal) {
     final T results = queryStrategy.queryLiteral(literal);
 
-    this.handleResults(results);
+    return this.handleLiteralResults(results);
 
     // final Query q = Que ryFactory.create(query);
     // System.out.println("Builded query " + query);
@@ -73,17 +74,51 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
    * @param results
    *          a generic type.
    */
-  private void handleResults(final T results) {
+  private HitGraphContainer handleLiteralResults(final T results) {
+    final HitGraphContainer container = new HitGraphContainer(new Date()); // result
+                                                                           // container
     if (results instanceof ResultSet) {
       final ResultSet realResults = (ResultSet) results;
       while (realResults.hasNext()) {
         final QuerySolution solution = realResults.next();
-        System.out.println("Named Graph: " + solution.getResource("g"));
+        try {
+          final URL graphUrl = new URL(solution.getResource("g").getURI());
+          final HitGraph hitGraph;
+          if (!container.contains(graphUrl)) {
+            hitGraph = new HitGraph(graphUrl);
+            container.addHitRecord(graphUrl, hitGraph);
+          } else {
+            hitGraph = container.getHitGraph(graphUrl);
+          }
+          URL subject = null;
+          if (solution.getResource("s") != null) {
+            subject = new URL(solution.getResource("s").getURI());
+          }
+          URL predicate = null;
+          if (solution.getResource("p") != null) {
+            predicate = new URL(solution.getResource("p").getURI());
+          }
+          String literal = null;
+          if (solution.getLiteral("lit") != null) {
+            literal = solution.getLiteral("lit").toString();
+          }
+          double score = 0;
+          if (solution.getLiteral("score") != null) {
+            score = solution.getLiteral("score").getDouble();
+          }
+          final HitStatement statement = new HitStatement(subject, predicate, literal, score);
+          hitGraph.addStatement(statement);
+
+        } catch (final MalformedURLException e) {
+          System.err.println("SparQlAdapter: not a valid URL (should be one): " + e.getMessage());
+        }
         // System.out.println("o: " + solution.getLiteral("o"));
       }
     } else if (results instanceof HashMap<?, ?>) {
 
     }
+
+    return container;
 
   }
 

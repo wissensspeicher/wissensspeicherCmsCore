@@ -1,14 +1,12 @@
 /**
  * 
  */
-package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler;
+package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter;
 
 import java.net.URL;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
-
-import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter.SparqlAdapter;
 
 /**
  * This class holds all {@link IHitRecord} instances which result from a single
@@ -18,12 +16,11 @@ import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter.SparqlAdapter;
  * @since 04.02.2013
  * 
  */
-public class HitRecordContainer {
-  private HashMap<URL, IHitRecord> recordMap;
+public class HitGraphContainer extends HashMap<URL, HitGraph> {
   private Date resultTime;
 
-  public HitRecordContainer() {
-    recordMap = new HashMap<URL, IHitRecord>();
+  public HitGraphContainer() {
+
   }
 
   /**
@@ -40,7 +37,7 @@ public class HitRecordContainer {
    * @param resultTime
    *          a {@link Date}
    */
-  public HitRecordContainer(final Date resultTime) {
+  public HitGraphContainer(final Date resultTime) {
     this.resultTime = resultTime;
   }
 
@@ -51,8 +48,8 @@ public class HitRecordContainer {
    * @param namedGraphUrl
    * @return
    */
-  public IHitRecord getHitRecord(final URL namedGraphUrl) {
-    return recordMap.get(namedGraphUrl);
+  public HitGraph getHitGraph(final URL namedGraphUrl) {
+    return get(namedGraphUrl);
   }
 
   /**
@@ -61,8 +58,8 @@ public class HitRecordContainer {
    * 
    * @return
    */
-  public Collection<IHitRecord> getAllHits() {
-    return recordMap.values();
+  public Collection<HitGraph> getAllHits() {
+    return values();
   }
 
   /**
@@ -72,7 +69,21 @@ public class HitRecordContainer {
    * @param graphUrl
    * @param graphRecord
    */
-  public void addHitRecord(final URL graphUrl, final IHitRecord graphRecord) {
-    recordMap.put(graphUrl, graphRecord);
+  public void addHitRecord(final URL graphUrl, final HitGraph graphRecord) {
+    put(graphUrl, graphRecord);
+  }
+
+  public boolean contains(final URL graphUrl) {
+    return containsKey(graphUrl);
+  }
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see java.lang.Object#toString()
+   */
+  @Override
+  public String toString() {
+    return super.toString() + "\n " + "[resultTime=" + resultTime + "]";
   }
 }

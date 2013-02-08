@@ -1,6 +1,6 @@
-package org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager;
+package org.bbaw.wsp.cms.test;
 
-public class Tester {
+public class TestConceptIdentifier {
 
 	/**
 	 * TestClass
