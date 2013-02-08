@@ -2,8 +2,9 @@ package org.bbaw.wsp.cms.mdsystem.metadata.general.extractor;
 
 import java.util.HashMap;
 
-import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.QueryTarget;
-import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.SearchMethode;
+import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.ConceptIdentfierSearchMode;
+import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.QueryTarget;
+
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 
@@ -210,7 +211,7 @@ public class RdfMetadataExtractor extends MetadataExtractor {
 				return true;
 			break;
 		case 2:
-			if (strategie == SearchMethode.METHODE_AND) {
+			if (strategie == ConceptIdentfierSearchMode.METHODE_AND) {
 				if (temp.contains(elements[0]) && temp.contains(elements[1]))
 					return true;
 
@@ -219,7 +220,7 @@ public class RdfMetadataExtractor extends MetadataExtractor {
 			break;
 
 		default:
-			if (strategie == SearchMethode.METHODE_AND) {
+			if (strategie == ConceptIdentfierSearchMode.METHODE_AND) {
 				if (temp.contains(elements[0]) && temp.contains(elements[1])
 						&& temp.contains(elements[2]))
 					return true;
