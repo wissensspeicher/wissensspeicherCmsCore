@@ -18,7 +18,8 @@ import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 public class ConceptIdentifier {
 
 	// Datengrundlage: wsp.normdata
-	final String path = new String(MdystemConfigReader.getInstance().getConfig().getNormdataPath());
+	final String path = new String(MdystemConfigReader.getInstance()
+			.getConfig().getNormdataPath());
 	ArrayList<QueryTarget> results;
 
 	public void initIdentifying(String query, int methode) {
@@ -26,9 +27,9 @@ public class ConceptIdentifier {
 		this.results = new ArrayList<QueryTarget>();
 		this.results = scanForElement(path, query, methode);
 
-//		for (QueryTarget target : this.result) {
-//			System.out.println(target);
-//		}
+		for (QueryTarget target : this.results) {
+			System.out.println(target);
+		}
 
 	}
 
@@ -49,16 +50,19 @@ public class ConceptIdentifier {
 	 * @param element
 	 * @return
 	 */
-	private ArrayList<QueryTarget> scanForElement(final String file, final String element, int methode) {
+	private ArrayList<QueryTarget> scanForElement(final String file,
+			final String element, int methode) {
 		try {
-			RdfMetadataExtractor extractor = MetadataExtractorFactory.newRdfMetadataParser(file);
+			RdfMetadataExtractor extractor = MetadataExtractorFactory
+					.newRdfMetadataParser(file);
 			extractor.searchElements(element, methode);
 			ArrayList<QueryTarget> resultList = extractor.getResultList();
 
 			// System.out.println("Identified document: " + identifier);
 			return resultList;
 		} catch (ApplicationException e) {
-			System.out.println("Couldn't identify document: " + file + " - "+ e.getMessage());
+			System.out.println("Couldn't identify document: " + file + " - "
+					+ e.getMessage());
 			return null;
 		}
 	}
