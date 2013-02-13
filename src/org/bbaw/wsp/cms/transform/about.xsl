@@ -63,8 +63,12 @@
 <xsl:variable name="depictions" select="//*:depiction/@*:resource"/>
 <xsl:variable name="dbpediaSubjectsEvalStr" select="concat('//*:Description[@*:about = ''', $dbPediaResourceName, ''']/*:subject/@*:resource')"/>
 <xsl:variable name="dbpediaSubjects" select="saxon:evaluate($dbpediaSubjectsEvalStr)" xmlns:saxon="http://saxon.sf.net/"/>
+<xsl:variable name="dbpediaIsSubjectsEvalStr" select="concat('//*:Description/*:subject[@*:resource = ''', $dbPediaResourceName, ''']/../@*:about')"/>
+<xsl:variable name="dbpediaIsSubjects" select="saxon:evaluate($dbpediaIsSubjectsEvalStr)" xmlns:saxon="http://saxon.sf.net/"/>
 <xsl:variable name="dbpediaBroaderTermsEvalStr" select="concat('//*:Description[@*:about = ''', $dbPediaResourceName, ''']/*:broader/@*:resource')"/>
 <xsl:variable name="dbpediaBroaderTerms" select="saxon:evaluate($dbpediaBroaderTermsEvalStr)" xmlns:saxon="http://saxon.sf.net/"/>
+<xsl:variable name="dbpediaNarrowerTermsEvalStr" select="concat('//*:Description/*:broader[@*:resource = ''', $dbPediaResourceName, ''']/../@*:about')"/>
+<xsl:variable name="dbpediaNarrowerTerms" select="saxon:evaluate($dbpediaNarrowerTermsEvalStr)" xmlns:saxon="http://saxon.sf.net/"/>
 <xsl:variable name="dbpediaRelatedTermsEvalStr" select="concat('//*:Description[@*:about = ''', $dbPediaResourceName, ''']/*:related/@*:resource')"/>
 <xsl:variable name="dbpediaRelatedTerms" select="saxon:evaluate($dbpediaRelatedTermsEvalStr)" xmlns:saxon="http://saxon.sf.net/"/>
 <xsl:variable name="wikiUrls" select="//*:isPrimaryTopicOf/@*:resource"/>
@@ -161,11 +165,39 @@
           </ul>
         </div>
       </xsl:if>
+      <xsl:if test="not(empty($dbpediaIsSubjects))">
+        <div class="subjects">
+          <span class="bold"><xsl:value-of select="'Subject of: '"/></span>
+          <ul class="urls">
+            <xsl:for-each select="$dbpediaIsSubjects">
+              <xsl:variable name="subject" select="wsp:substringAfterLastMatch(., '/')"/>
+              <xsl:variable name="url" select="concat($baseUrl, '/query/About?query=', $subject, '&amp;type=category', '&amp;language=', $language)"/>
+              <li class="url">
+                <a class="url" href="{$url}"><xsl:value-of select="$subject"/></a>
+              </li>
+            </xsl:for-each>
+          </ul>
+        </div>
+      </xsl:if>
       <xsl:if test="not(empty($dbpediaBroaderTerms))">
         <div class="broaderTerms">
           <span class="bold"><xsl:value-of select="'Broader terms: '"/></span>
           <ul class="urls">
             <xsl:for-each select="$dbpediaBroaderTerms">
+              <xsl:variable name="subject" select="wsp:substringAfterLastMatch(., '/')"/>
+              <xsl:variable name="url" select="concat($baseUrl, '/query/About?query=', $subject, '&amp;type=category', '&amp;language=', $language)"/>
+              <li class="url">
+                <a class="url" href="{$url}"><xsl:value-of select="$subject"/></a>
+              </li>
+            </xsl:for-each>
+          </ul>
+        </div>
+      </xsl:if>
+      <xsl:if test="not(empty($dbpediaNarrowerTerms))">
+        <div class="broaderTerms">
+          <span class="bold"><xsl:value-of select="'Narrower terms: '"/></span>
+          <ul class="urls">
+            <xsl:for-each select="$dbpediaNarrowerTerms">
               <xsl:variable name="subject" select="wsp:substringAfterLastMatch(., '/')"/>
               <xsl:variable name="url" select="concat($baseUrl, '/query/About?query=', $subject, '&amp;type=category', '&amp;language=', $language)"/>
               <li class="url">
