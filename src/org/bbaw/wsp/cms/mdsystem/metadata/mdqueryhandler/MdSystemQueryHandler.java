@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Set;
 
 import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter.ISparqlAdapter;
 import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter.SparqlAdapter;
@@ -42,7 +43,7 @@ public class MdSystemQueryHandler {
       e.printStackTrace();
     }
     // sparqlAdapter = new SparqlAdapter(store.getDataset());
-    String query = "marx";
+    String query = "Wissenschaftsforschung";
     ArrayList<QueryTarget> concepts = getConcept(query);
     createJson(query, concepts, true);
   }
@@ -77,17 +78,18 @@ public class MdSystemQueryHandler {
       JSONObject jsonWrapper = null;
       if(conceptSearch){
           for (int i=0; i<concepts.size(); i++) {
-              System.out.println("results.get(i) : "+concepts.get(i).getFieldNames());
-              System.out.println("getType() : "+concepts.get(i).getType());
-              Field[] fields = concepts.get(i).getFieldNames();
+              System.out.println("**************");
+              System.out.println("results.get(i) : "+concepts.get(i));
+              System.out.println("getSet() : "+concepts.get(i).getAllMDFields());
+              Set<String> keys = concepts.get(i).getAllMDFields();
               JSONArray jsonInnerArray = new JSONArray();
-              for (Field field : fields) {
-                  if(!concepts.get(i).getFieldValue(field.getName()).equals("")){
-                      jsonWrapper = new JSONObject();
-                      jsonWrapper.put(field.getName(), concepts.get(i).getFieldValue(field.getName()));
-                      jsonInnerArray.add(jsonWrapper);
-                  }
+              for (String s : keys) {
+                  System.out.println("concepts.get(i).getValue(s) : "+concepts.get(i).getValue(s));
+                  jsonWrapper = new JSONObject();
+                  jsonWrapper.put(s, concepts.get(i).getValue(s));
+                  jsonInnerArray.add(jsonWrapper);
               }
+              System.out.println("*******************");
               jsonOuterArray.add(jsonInnerArray);
           }
       }
