@@ -23,8 +23,8 @@ import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
  */
 public class RdfMetadataExtractor extends MetadataExtractor {
 
-    ArrayList<QueryTarget> targetList;
-    
+	ArrayList<QueryTarget> targetList;
+
 	/**
 	 * Create a new ModsMetadataParser instance.
 	 * 
@@ -36,7 +36,9 @@ public class RdfMetadataExtractor extends MetadataExtractor {
 	 *             if the uri is null, empty or doesn't refer to an existing
 	 *             file.
 	 */
-	public RdfMetadataExtractor(final String uri,final HashMap<String, String> namespaces) throws ApplicationException {
+	public RdfMetadataExtractor(final String uri,
+			final HashMap<String, String> namespaces)
+			throws ApplicationException {
 		super(uri, namespaces);
 		targetList = new ArrayList<QueryTarget>();
 	}
@@ -67,12 +69,13 @@ public class RdfMetadataExtractor extends MetadataExtractor {
 	 * @param element
 	 * @throws ApplicationException
 	 */
-	public void searchElements(String element, int strategie) throws ApplicationException {
+	public void searchElements(String element, int strategie)
+			throws ApplicationException {
 
 		String[] elements = element.toLowerCase().split("[ ]+");
 
 		String number = (String) buildXPath("count(//rdf:Description)", false);
-		
+
 		int count = Integer.parseInt(number);
 		for (int i = 1; i <= count; ++i) {
 
@@ -233,14 +236,14 @@ public class RdfMetadataExtractor extends MetadataExtractor {
 	 */
 	private void addToTarget(String key, String value, QueryTarget target) {
 		if (value != null && !value.equals(""))
-	        target.setField(key, value);
-//			target.addToMap(key, query);
+
+			target.addToMap(key, value);
 	}
 
-	public ArrayList<QueryTarget> getResultList(){
-	    return this.targetList;
+	public ArrayList<QueryTarget> getResultList() {
+		return this.targetList;
 	}
-	
+
 	/**
 	 * Executes the given command in xslt returns the result as String
 	 * 
