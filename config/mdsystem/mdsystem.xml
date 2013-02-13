@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mdsystem>
 	<general>
-		<normdataFile>/home/shk2/src/export_normdata_130128.rdf</normdataFile>
+		<normdataFile>config/mdsystem/export_normdata_clean_130112.rdf</normdataFile>
 	</general>
 	<converter>
 		<templates>		
@@ -20,7 +20,7 @@
 	</converter>
 	<rdfmanager>
 		<tripleStore>
-			<datasetPath>save/store</datasetPath>
+			<datasetPath>save/wspRdfStore</datasetPath>
 			<larqIndexPath>save/larqindex</larqIndexPath>
 		</tripleStore>
 	</rdfmanager>

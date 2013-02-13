@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter.HitGraph;
 import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter.HitGraphContainer;
 import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter.IQueryStrategy;
 import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter.ISparqlAdapter;
@@ -30,10 +31,15 @@ import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 public class TestSparqlAdapter {
 
   public static void main(final String[] args) throws ApplicationException, MalformedURLException {
-
+	  
     final ISparqlAdapter adapter = useFuseki();
-    final HitGraphContainer resultContainer = adapter.buildSparqlQuery("+Humboldt");
-    System.out.println(resultContainer);
+    final HitGraphContainer resultContainer = adapter.buildSparqlQuery("+marx");
+    System.out.println("resultContainer.size() : "+resultContainer.size());
+    for (HitGraph hitGraph : resultContainer.getAllHits()) {
+        System.out.println("hitGraph : "+hitGraph);
+    }
+//    System.out.println("result container : "+resultContainer.getAllHits());
+    
     // adapter.buildSparqlQuery(new
     // URL("http://edoc.bbaw.de/volltexte/2006/1/pdf/29kstnGPLz2IM.pdf"),
     // "+ein");

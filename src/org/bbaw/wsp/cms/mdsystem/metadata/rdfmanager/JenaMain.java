@@ -60,14 +60,14 @@ public class JenaMain {
     dataset = wspStore.getDataset();
     rdfHandler = new RdfHandler();
 
-    // doYourWork();
+//     doYourWork();
   }
 
   /**
    * call methods from here
    */
   private void doYourWork() {
-    // createNamedModelsFromOreSets("/home/juergens/WspEtc/rdfData/ModsToRdfTest");
+     createNamedModelsFromOreSets("/home/juergens/wspEtc/rdfData/v2_29_11_2012/mods");
     // createNewModelFromSingleOre(oreBiblioNeu);
     // getAllNamedModelsInDataset();
     // wspStore.openDataset();
@@ -116,8 +116,8 @@ public class JenaMain {
       }
     }
 
-    // System.out.println("set read in time elapsed : "
-    // + (System.currentTimeMillis() - start) / 1000);
+     System.out.println("set read in time elapsed : "
+     + (System.currentTimeMillis() - start) / 1000);
     wspStore.closeDataset();
   }
 

@@ -77,23 +77,24 @@ public class TestFreeTextSearchOnWspStore {
     System.out.println("Staring REGEX query...");
     System.out.println("Start time:  " + System.currentTimeMillis());
     System.out.println("\n\n");
-    long regExTime = doRegexQuery();
+//    long regExTime = doRegexQuery();
     System.out.println("Staring LUCENE query...");
     System.out.println("Start time:  " + System.currentTimeMillis());
     System.out.println("\n\n");
-    long luceneTime = doLuceneQuery();
+//    long luceneTime = doLuceneQuery();
     System.out.println("\n\n");
     long directIndexTime = doDirectIndexSearch();
 
-    System.out.println("Time for regEx-function: " + regExTime + "ms");
-    System.out.println("Time for lucene-function: " + luceneTime + "ms");
+//    System.out.println("Time for regEx-function: " + regExTime + "ms");
+//    System.out.println("Time for lucene-function: " + luceneTime + "ms");
     System.out.println("Time for direct lucene-search: " + directIndexTime + "ms");
     System.out.println("\n");
-    System.out.println("Difference between lucene and regEx: " + (luceneTime - regExTime) + "ms");
+//    System.out.println("Difference between lucene and regEx: " + (luceneTime - regExTime) + "ms");
 
   }
 
   private long doDirectIndexSearch() {
+	  System.out.println("direktsearch");
     long startTime = System.currentTimeMillis();
     String query = "+Humboldt";
     main.getIndexStore().readIndex(query);

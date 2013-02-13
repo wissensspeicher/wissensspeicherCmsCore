@@ -1,9 +1,9 @@
-package org.bbaw.wsp.cms.test;
+package org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager;
 
 import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.ConceptIdentfierSearchMode;
 import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.ConceptIdentifier;
 
-public class TestConceptIdentifier {
+public class Tester {
 
 	/**
 	 * TestClass
@@ -11,7 +11,7 @@ public class TestConceptIdentifier {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		new ConceptIdentifier().initIdentifying("Humboldt nix hallo",
+		new ConceptIdentifier().initIdentifying("Karl Marx",
 				ConceptIdentfierSearchMode.METHODE_OR);
 
 	}

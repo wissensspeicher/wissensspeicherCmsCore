@@ -18,18 +18,17 @@ import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 public class ConceptIdentifier {
 
 	// Datengrundlage: wsp.normdata
-	final String path = new String(MdystemConfigReader.getInstance()
-			.getConfig().getNormdataPath());
-	ArrayList<QueryTarget> result;
+	final String path = new String(MdystemConfigReader.getInstance().getConfig().getNormdataPath());
+	ArrayList<QueryTarget> results;
 
 	public void initIdentifying(String query, int methode) {
 		// ConceptIdentifier identifier = new ConceptIdentifier();
-		this.result = new ArrayList<QueryTarget>();
-		this.result = scanForElement(path, query, methode);
+		this.results = new ArrayList<QueryTarget>();
+		this.results = scanForElement(path, query, methode);
 
-		for (QueryTarget target : this.result) {
-			System.out.println(target);
-		}
+//		for (QueryTarget target : this.result) {
+//			System.out.println(target);
+//		}
 
 	}
 
@@ -50,27 +49,23 @@ public class ConceptIdentifier {
 	 * @param element
 	 * @return
 	 */
-	private ArrayList<QueryTarget> scanForElement(final String file,
-			final String element, int methode) {
+	private ArrayList<QueryTarget> scanForElement(final String file, final String element, int methode) {
 		try {
-			RdfMetadataExtractor fac = MetadataExtractorFactory
-					.newRdfMetadataParser(file);
-			fac.getElements(element, methode);
-			ArrayList<QueryTarget> resultList = QueryLibary.getInstance()
-					.getAllElements();
+			RdfMetadataExtractor extractor = MetadataExtractorFactory.newRdfMetadataParser(file);
+			extractor.searchElements(element, methode);
+			ArrayList<QueryTarget> resultList = extractor.getResultList();
 
 			// System.out.println("Identified document: " + identifier);
 			return resultList;
 		} catch (ApplicationException e) {
-			System.out.println("Couldn't identify document: " + file + " - "
-					+ e.getMessage());
+			System.out.println("Couldn't identify document: " + file + " - "+ e.getMessage());
 			return null;
 		}
 	}
 
 	public ArrayList<QueryTarget> getResultList() {
 		// easier QueryLibary.getInstance().getAllElements();
-		return this.result;
+		return this.results;
 	}
 
 	/**

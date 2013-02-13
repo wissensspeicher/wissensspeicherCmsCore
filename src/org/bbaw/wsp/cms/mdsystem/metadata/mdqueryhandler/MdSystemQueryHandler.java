@@ -1,5 +1,6 @@
 package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler;
 
+import java.lang.reflect.Field;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -8,6 +9,10 @@ import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter.ISparqlAdapter;
 import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter.SparqlAdapter;
 import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter.SparqlAdapterFactory;
 import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.WspRdfStore;
+import org.bbaw.wsp.cms.mdsystem.util.WspJsonEncoder;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 
 /**
  * handles the JSON-query sent from the GUI and delegates to @SparqlAdapter and @ConceptIdentifier
@@ -37,7 +42,9 @@ public class MdSystemQueryHandler {
       e.printStackTrace();
     }
     // sparqlAdapter = new SparqlAdapter(store.getDataset());
-
+    String query = "marx";
+    ArrayList<QueryTarget> concepts = getConcept(query);
+    createJson(query, concepts, true);
   }
 
   public void receiveQueryFromGui(final String query) {
@@ -57,10 +64,38 @@ public class MdSystemQueryHandler {
 
   public ArrayList<QueryTarget> getConcept(final String query) {
     identifier.initIdentifying(query, ConceptIdentfierSearchMode.METHODE_OR);
-    return identifier.getResultList();
-
+    ArrayList<QueryTarget> results = identifier.getResultList();
+    return results;
   }
 
+  public void createJson(String query, ArrayList<QueryTarget> concepts, boolean conceptSearch){
+      WspJsonEncoder jsonEncoder = WspJsonEncoder.getInstance();
+      jsonEncoder.clear();
+      jsonEncoder.putStrings("searchTerm", query);
+      jsonEncoder.putStrings("numberOfHits", String.valueOf(concepts.size()));
+      JSONArray jsonOuterArray = new JSONArray();
+      JSONObject jsonWrapper = null;
+      if(conceptSearch){
+          for (int i=0; i<concepts.size(); i++) {
+              System.out.println("results.get(i) : "+concepts.get(i).getFieldNames());
+              System.out.println("getType() : "+concepts.get(i).getType());
+              Field[] fields = concepts.get(i).getFieldNames();
+              JSONArray jsonInnerArray = new JSONArray();
+              for (Field field : fields) {
+                  if(!concepts.get(i).getFieldValue(field.getName()).equals("")){
+                      jsonWrapper = new JSONObject();
+                      jsonWrapper.put(field.getName(), concepts.get(i).getFieldValue(field.getName()));
+                      jsonInnerArray.add(jsonWrapper);
+                  }
+              }
+              jsonOuterArray.add(jsonInnerArray);
+          }
+      }
+      jsonEncoder.putJsonObj("mdHits", jsonOuterArray);
+
+      System.out.println(JSONValue.toJSONString(jsonEncoder.getJsonObject()));
+  }
+  
   // public getSparqlHits(){
   // HitRecordContainer hits = sparqlAdapter.getHitRecordContainer();
   // }

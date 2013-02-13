@@ -1,10 +1,10 @@
 package org.bbaw.wsp.cms.mdsystem.metadata.general.extractor;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.ConceptIdentfierSearchMode;
 import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.QueryTarget;
-
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 
@@ -23,6 +23,8 @@ import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
  */
 public class RdfMetadataExtractor extends MetadataExtractor {
 
+    ArrayList<QueryTarget> targetList;
+    
 	/**
 	 * Create a new ModsMetadataParser instance.
 	 * 
@@ -34,10 +36,9 @@ public class RdfMetadataExtractor extends MetadataExtractor {
 	 *             if the uri is null, empty or doesn't refer to an existing
 	 *             file.
 	 */
-	public RdfMetadataExtractor(final String uri,
-			final HashMap<String, String> namespaces)
-			throws ApplicationException {
+	public RdfMetadataExtractor(final String uri,final HashMap<String, String> namespaces) throws ApplicationException {
 		super(uri, namespaces);
+		targetList = new ArrayList<QueryTarget>();
 	}
 
 	/**
@@ -66,13 +67,12 @@ public class RdfMetadataExtractor extends MetadataExtractor {
 	 * @param element
 	 * @throws ApplicationException
 	 */
-	public void getElements(String element, int strategie)
-			throws ApplicationException {
+	public void searchElements(String element, int strategie) throws ApplicationException {
 
 		String[] elements = element.toLowerCase().split("[ ]+");
 
 		String number = (String) buildXPath("count(//rdf:Description)", false);
-
+		
 		int count = Integer.parseInt(number);
 		for (int i = 1; i <= count; ++i) {
 
@@ -80,17 +80,15 @@ public class RdfMetadataExtractor extends MetadataExtractor {
 
 			if (checkIfContains(elements, temp.toLowerCase(), strategie)) {
 				QueryTarget target = new QueryTarget();
+				targetList.add(target);
 
 				String query = "//rdf:Description[" + i + "]/@rdf:about";
 				addToTarget("Description", queryExecute(query), target);
 
-				query = "//rdf:Description[" + i
-						+ "]/owl:versionInfo/@rdf:datatype";
-				addToTarget("versionInfo", queryExecute(query), target);
-
 				query = "//rdf:Description[" + i + "]/rdf:type/@rdf:resource";
 				addToTarget("type", queryExecute(query), target);
 
+				// vllt nicht wichtig
 				query = "//rdf:Description[" + i
 						+ "]/owl:imports/@rdf:resource";
 				addToTarget("imports", queryExecute(query), target);
@@ -99,72 +97,65 @@ public class RdfMetadataExtractor extends MetadataExtractor {
 						+ "]/dcterms:isPartOf/@rdf:resource";
 				addToTarget("isPartOf", queryExecute(query), target);
 
-				query = "//rdf:Description[" + i
-						+ "]/dc:description/@rdf:datatype";
+				query = "//rdf:Description[" + i + "]/dc:description";
 				addToTarget("description", queryExecute(query), target);
 
-				query = "//rdf:Description[" + i + "]/rdfs:label/@rdf:datatype";
+				query = "//rdf:Description[" + i + "]/rdfs:label";
 				addToTarget("label", queryExecute(query), target);
 
-				query = "//rdf:Description[" + i
-						+ "]/gnd:languageCode/@rdf:datatype";
+				query = "//rdf:Description[" + i + "]/gnd:languageCode";
 				addToTarget("languageCode", queryExecute(query), target);
 
-				query = "//rdf:Description[" + i
-						+ "]/foaf:familyName/@rdf:datatype";
+				query = "//rdf:Description[" + i + "]/foaf:familyName";
 				addToTarget("familyName", queryExecute(query), target);
 
-				query = "//rdf:Description[" + i + "]/foaf:mbox/@rdf:datatype";
+				query = "//rdf:Description[" + i + "]/foaf:mbox";
 				addToTarget("mbox", queryExecute(query), target);
 
-				query = "//rdf:Description[" + i
-						+ "]/foaf:givenName/@rdf:datatype";
+				query = "//rdf:Description[" + i + "]/foaf:givenName";
 				addToTarget("givenName", queryExecute(query), target);
 
-				query = "//rdf:Description[" + i + "]/foaf:title/@rdf:datatype";
+				query = "//rdf:Description[" + i + "]/foaf:title";
 				addToTarget("title", queryExecute(query), target);
 
-				query = "//rdf:Description[" + i + "]/@gnd:functionOrRole";
+				query = "//rdf:Description[" + i + "]/gnd:functionOrRole";
 				addToTarget("functionOrRole", queryExecute(query), target);
 
-				query = "//rdf:Description[" + i + "]/@gnd:definition";
+				query = "//rdf:Description[" + i + "]/gnd:definition";
 				addToTarget("definition", queryExecute(query), target);
 
-				query = "//rdf:Description[" + i
-						+ "]/foaf:status/@rdf:datatype";
+				query = "//rdf:Description[" + i + "]/foaf:status";
 				addToTarget("status", queryExecute(query), target);
 
 				query = "//rdf:Description[" + i
 						+ "]/dc:coverage/@rdf:resource";
 				addToTarget("coverage", queryExecute(query), target);
 
-				query = "//rdf:Description[" + i + "]/gnd:topic/@rdf:datatype";
+				query = "//rdf:Description[" + i + "]/gnd:topic";
 				addToTarget("topic", queryExecute(query), target);
 
 				query = "//rdf:Description[" + i
 						+ "]/foaf:homepage/@rdf:resource";
 				addToTarget("homepage", queryExecute(query), target);
 
-				query = "//rdf:Description[" + i
-						+ "]/dcterms:valid/@rdf:datatype";
+				query = "//rdf:Description[" + i + "]/dcterms:valid";
 				addToTarget("valid", queryExecute(query), target);
 
-				query = "//rdf:Description[" + i + "]/foaf:name/@rdf:datatype";
+				query = "//rdf:Description[" + i + "]/foaf:name";
 				addToTarget("name", queryExecute(query), target);
 
 				query = "//rdf:Description[" + i
 						+ "]/dc:contributor/@rdf:resource";
 				addToTarget("contributor", queryExecute(query), target);
 
-				query = "//rdf:Description[" + i + "]/foaf:nick/@rdf:datatype";
+				query = "//rdf:Description[" + i + "]/foaf:nick";
 				addToTarget("nick", queryExecute(query), target);
 
 				query = "//rdf:Description[" + i
 						+ "]/dcterms:isReplacedBy/@rdf:resource";
 				addToTarget("isReplacedBy", queryExecute(query), target);
 
-				query = "//rdf:Description[" + i
-						+ "]/gnd:gndIdentifier/@rdf:datatype";
+				query = "//rdf:Description[" + i + "]/gnd:gndIdentifier";
 				addToTarget("gndIdentifier", queryExecute(query), target);
 
 				query = "//rdf:Description[" + i
@@ -176,8 +167,7 @@ public class RdfMetadataExtractor extends MetadataExtractor {
 				addToTarget("contributingCorporateBody", queryExecute(query),
 						target);
 
-				query = "//rdf:Description[" + i
-						+ "]/dcterms:temporal/@rdf:datatype";
+				query = "//rdf:Description[" + i + "]/dcterms:temporal";
 				addToTarget("temporal", queryExecute(query), target);
 
 				query = "//rdf:Description[" + i
@@ -238,14 +228,19 @@ public class RdfMetadataExtractor extends MetadataExtractor {
 	 * for empty Queryresults
 	 * 
 	 * @param key
-	 * @param query
+	 * @param value
 	 * @param target
 	 */
-	private void addToTarget(String key, String query, QueryTarget target) {
-		if (query != null && !query.equals(""))
-			target.addToMap(key, query);
+	private void addToTarget(String key, String value, QueryTarget target) {
+		if (value != null && !value.equals(""))
+	        target.setField(key, value);
+//			target.addToMap(key, query);
 	}
 
+	public ArrayList<QueryTarget> getResultList(){
+	    return this.targetList;
+	}
+	
 	/**
 	 * Executes the given command in xslt returns the result as String
 	 * 

@@ -10,11 +10,11 @@ import java.util.ArrayList;
  */
 public class QueryLibary {
 
-	private final ArrayList<QueryTarget> liste = new ArrayList<QueryTarget>();
+	private final ArrayList<QueryTarget> list = new ArrayList<QueryTarget>();
 	private static QueryLibary instance;
 
 	private QueryLibary() {
-		liste.clear();
+		list.clear();
 	}
 
 	/**
@@ -35,7 +35,7 @@ public class QueryLibary {
 	 */
 	public void addToList(QueryTarget target) {
 		if (target != null) {
-			liste.add(target);
+			list.add(target);
 		}
 	}
 
@@ -44,8 +44,8 @@ public class QueryLibary {
 	 * 
 	 * @return
 	 */
-	public ArrayList<QueryTarget> getAllElements() {
-		return liste;
+	public ArrayList<QueryTarget> getQueryTargetList() {
+		return list;
 
 	}
 
@@ -53,7 +53,7 @@ public class QueryLibary {
 	 * Clears the list of Elements, should be used before a new query
 	 */
 	public void ClearElements() {
-		liste.clear();
+		list.clear();
 	}
 
 }

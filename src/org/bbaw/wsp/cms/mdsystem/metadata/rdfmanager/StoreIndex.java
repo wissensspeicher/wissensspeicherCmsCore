@@ -83,6 +83,7 @@ public class StoreIndex {
   public void readIndex(final String queryString) {
     System.out.println("LARQ query: " + queryString);
     final Iterator<HitLARQ> results = getCurrentIndex().search(queryString);
+    System.out.println("results : "+results.hasNext());
     while (results.hasNext()) {
       final HitLARQ doc = results.next();
       System.out.println("-----------");

@@ -56,7 +56,7 @@ public interface ISparqlAdapter {
    * anderen Objekt. [Evtl: das andere Objekt wiederrum ist mit einem weiteren
    * Objekt verbunden]
    * 
-   * Dann wird evtl. das Objekt der "Stufe" 2 oder 3 zurückgeliefert.
+   * Dann wird evtl. das Objekt der "Stufe" 2 oder 3 zurueckgeliefert.
    */
   String findRelatedConcepts(URL subject);
 }

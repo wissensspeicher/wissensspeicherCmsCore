@@ -90,9 +90,9 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
           } else {
             hitGraph = container.getHitGraph(graphUrl);
           }
-          URL subject = null;
+          String subject = null;
           if (solution.getResource("s") != null) {
-            subject = new URL(solution.getResource("s").getURI());
+            subject = solution.getResource("s").toString();
           }
           URL predicate = null;
           if (solution.getResource("p") != null) {

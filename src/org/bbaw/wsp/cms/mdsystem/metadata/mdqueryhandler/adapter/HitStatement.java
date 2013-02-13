@@ -15,7 +15,7 @@ import java.net.URL;
  */
 public class HitStatement {
 
-  private final URL subject;
+  private final String subject;
   private final URL predicate;
   private final String literal;
   private final double score;
@@ -31,7 +31,7 @@ public class HitStatement {
    * @param score
    *          a {@link Double}
    */
-  public HitStatement(final URL subject, final URL predicate, final String literal, final double score) {
+  public HitStatement(final String subject, final URL predicate, final String literal, final double score) {
     this.subject = subject;
     this.predicate = predicate;
     this.literal = literal;
@@ -41,7 +41,7 @@ public class HitStatement {
   /**
    * @return the subject
    */
-  public URL getSubject() {
+  public String getSubject() {
     return subject;
   }
 
