@@ -2,7 +2,7 @@
 <wsp>
   <collection>     
     <id>cmg</id>
-    <name>cmg</name>
+    <name>Corpus Medicorum Graecorum/ Latinorum</name>
     <url>
       <dataUrlPrefix>/home/joey/dataWsp/documentsExtern/cmg</dataUrlPrefix>
       <dataUrl>file:/home/joey/dataWsp/documentsExtern/cmg/cmg_06_02_02.xml</dataUrl>

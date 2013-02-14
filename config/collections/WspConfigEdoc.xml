@@ -2,7 +2,7 @@
 <wsp>
   <collection>     
     <id>edoc</id>
-    <name>edoc</name>
+    <name>Elektronischer Dokumentenserver</name>
     <url>
       <dataUrlPrefix>/home/joey/dataWsp/documentsExtern/edoc</dataUrlPrefix>
     </url>

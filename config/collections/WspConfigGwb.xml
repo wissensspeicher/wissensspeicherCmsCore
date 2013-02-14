@@ -1,13 +1,14 @@
 <?xml version="1.0"?>
 <wsp>
   <collection>
-    <id>jdg</id>
-    <name>Jahresberichte fuer deutsche Geschichte</name>
+    <id>gwb</id>
+    <name>Goethe-Wörterbuch</name>
     <!-- if dataUrl is not a directory but a file, it should end with a forward slash -->
     <url>
-      <dataUrl>http://telota.bbaw.de/exist/servlet/db/JDG/</dataUrl>
-      <webBaseUrl>http://www.jdg-online.de</webBaseUrl>
+      <dataUrl>http://telota.bbaw.de/exist/rest/db/gwb/</dataUrl>
+      <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/dtm/de/Startseite</webBaseUrl>
       <exclude>scripts</exclude>
+      <exclude>test</exclude>
     </url>
     <languages>ger</languages>
     <mainLanguage>ger</mainLanguage>
