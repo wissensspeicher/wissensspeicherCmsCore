@@ -87,7 +87,13 @@ public class JenaMainForAI {
 						temp = temp.substring(1);
 					}
 
-					wspStore = new WspRdfStoreForAi(temp);
+					try {
+						wspStore = new WspRdfStoreForAi(temp);
+						saveStorePath();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 
 				} else {
 
