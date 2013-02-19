@@ -220,7 +220,8 @@ public class AdminInterface extends JFrame {
 					}
 					// JenaMainForAI jMain = new JenaMainForAI(" ", desF);
 					jenaMain.setDestination(desF);
-					jenaMain.removeModel(namedGraph);
+					jenaMain.saveGraph(namedGraph);
+					// jenaMain.removeModel(namedGraph);
 					println(namedGraph + " successfully removed.");
 					println("Index will refresh now.");
 					combobox.removeAllItems();

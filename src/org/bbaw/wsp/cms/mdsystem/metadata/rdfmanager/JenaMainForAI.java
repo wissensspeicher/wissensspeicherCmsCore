@@ -167,6 +167,32 @@ public class JenaMainForAI {
 
 	}
 
+	public void saveGraph(final String name) {
+		Thread saveAction = new Thread() {
+
+			@Override
+			public void run() {
+
+				try {
+
+					wspStore.createStore();
+					wspStore.createModelFactory();
+					wspStore.openDataset();
+					dataset = wspStore.getDataset();
+					Model model = dataset.getNamedModel(name);
+					model.write(new FileOutputStream(destination), "RDF/XML");
+
+					wspStore.closeDataset();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		};
+
+		saveAction.run();
+	}
+
 	/**
 	 * Gets all named Graphs of the Dataset an returns them as arraylist
 	 * 
@@ -181,7 +207,8 @@ public class JenaMainForAI {
 
 				try {
 					// closeAll.join();
-					loadWspStore();
+					if (wspStore == null)
+						loadWspStore();
 					wspStore.createStore();
 					wspStore.createModelFactory();
 					dataset = wspStore.getDataset();
