@@ -877,9 +877,11 @@ public class IndexHandler {
     String fromLanguage = null;
     String inputTerm = inputTermQuery.getTerm().text();
     if (fromLang == null || fromLang.isEmpty()) {
-      String detectedLang = MicrosoftTranslator.detectLanguageCode(inputTerm);
-      if (detectedLang != null)
-        fromLanguage = detectedLang;
+      if (translate) { // detect only language when translate = true
+        String detectedLang = MicrosoftTranslator.detectLanguageCode(inputTerm);
+        if (detectedLang != null)
+          fromLanguage = detectedLang;
+      }
     } else {
       fromLanguage = fromLang;
     }
