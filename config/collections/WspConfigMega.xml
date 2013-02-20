@@ -5,6 +5,9 @@
     <name>Marx-Engels-Gesamtausgabe</name>
     <url> 
       <!-- Abteilung 1   -->
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/i21_inhalt.pdf</dataUrl>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/I_30_inhalt_einf.pdf</dataUrl>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/I_32_inhalt_einf.pdf</dataUrl>
 
       <!-- Abteilung 2   -->
       <dataUrl>http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B001-01_ETX.xml</dataUrl>
@@ -15,9 +18,33 @@
       <dataUrl>http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B012-00_ETX.xml</dataUrl>
       <dataUrl>http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B013-00_ETX.xml</dataUrl>
 
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/II_11einf.pdf</dataUrl>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/II12.pdf</dataUrl>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/II_13einf.pdf</dataUrl>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/mega8.pdf</dataUrl>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/mega10.pdf</dataUrl>
+
       <!-- Abteilung 3   -->
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/mega9.pdf</dataUrl>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/mega4.pdf</dataUrl>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/III11.pdf</dataUrl>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/mega7.pdf</dataUrl>
 
       <!-- Abteilung 4   -->
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/de/bilder/IV3.pdf</dataUrl>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/IV31.pdf</dataUrl>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/mega3.pdf</dataUrl>
+
+      <!-- Jahrbuecher -->
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/JB_11.pdf</dataUrl>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/JB_10.pdf</dataUrl>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/JB_09.pdf</dataUrl>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/JB_08.pdf</dataUrl>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/JB_07.pdf</dataUrl>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/JB_06.pdf</dataUrl>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/JB_05.pdf</dataUrl>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/JB_04.pdf</dataUrl>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/JB_03.pdf</dataUrl>
 
       <webBaseUrl>http://telota.bbaw.de/mega</webBaseUrl>
     </url>
