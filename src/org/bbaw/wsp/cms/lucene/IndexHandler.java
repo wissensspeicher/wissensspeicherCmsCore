@@ -1127,7 +1127,10 @@ public class IndexHandler {
       makeDocumentsSearcherManagerUpToDate();
       searcher = documentsSearcherManager.acquire();
       String fieldNameDocId = "docId";
-      Query queryDocId = new QueryParser(Version.LUCENE_35, fieldNameDocId, documentsPerFieldAnalyzer).parse(docId);
+      String docIdQuery = docId;
+      if (docId.contains(" "))
+        docIdQuery = "\"" + docId + "\"";
+      Query queryDocId = new QueryParser(Version.LUCENE_35, fieldNameDocId, documentsPerFieldAnalyzer).parse(docIdQuery);
       TopDocs topDocs = searcher.search(queryDocId, 100000);
       topDocs.setMaxScore(1);
       if (topDocs != null && topDocs.scoreDocs != null && topDocs.scoreDocs.length > 0) {
