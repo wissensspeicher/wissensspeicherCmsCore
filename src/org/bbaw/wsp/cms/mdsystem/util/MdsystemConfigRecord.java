@@ -19,7 +19,6 @@ public class MdsystemConfigRecord implements IMdsystemConfigRecord {
 		this.normdataPath = normdataPath;
 	}
 
-	@Override
 	public String geteDocTemplatePath() {
 		return eDocTemplatePath;
 	}
@@ -28,7 +27,6 @@ public class MdsystemConfigRecord implements IMdsystemConfigRecord {
 		this.eDocTemplatePath = eDocTemplatePath;
 	}
 
-	@Override
 	public String getModsStylesheetPath() {
 		return modsStylesheetPath;
 	}
@@ -37,7 +35,6 @@ public class MdsystemConfigRecord implements IMdsystemConfigRecord {
 		this.modsStylesheetPath = modsStylesheetPath;
 	}
 
-	@Override
 	public String getMetsStylesheetPath() {
 		return metsStylesheetPath;
 	}
@@ -46,7 +43,6 @@ public class MdsystemConfigRecord implements IMdsystemConfigRecord {
 		this.metsStylesheetPath = metsStylesheetPath;
 	}
 
-	@Override
 	public String getDatasetPath() {
 		return datasetPath;
 	}
@@ -55,7 +51,6 @@ public class MdsystemConfigRecord implements IMdsystemConfigRecord {
 		this.datasetPath = datasetPath;
 	}
 
-	@Override
 	public String getLarqIndexPath() {
 		return larqIndexPath;
 	}
