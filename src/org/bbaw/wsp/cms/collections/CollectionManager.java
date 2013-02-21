@@ -2,8 +2,10 @@ package org.bbaw.wsp.cms.collections;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.net.FileNameMap;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Hashtable;
@@ -212,8 +214,12 @@ public class CollectionManager {
             uriPath = uriPath.substring(prefix.length());
           }
           String docId = "/" + collectionId + uriPath;
+          String mimeType = getMimeType(docId);
           mdRecord.setDocId(docId);
           mdRecord.setUri(docUrl);
+          // if mimeType is not xml then the docUrl is also the webUri
+          if (mimeType != null && ! mimeType.contains("xml"))
+            mdRecord.setWebUri(docUrl);
           mdRecord.setCollectionNames(collectionId);
           mdRecord.setxQueries(xQueries);
           mdRecords.add(mdRecord);
@@ -252,6 +258,13 @@ public class CollectionManager {
       documentUrls = extractor.initExtractor(collectionDataUrl, excludesStr);
     }
     return documentUrls;
+  }
+
+  private String getMimeType(String docId) {
+    String mimeType = null;
+    FileNameMap fileNameMap = URLConnection.getFileNameMap();  // map with 53 entries such as "application/xml"
+    mimeType = fileNameMap.getContentTypeFor(docId);
+    return mimeType;
   }
 
 }
