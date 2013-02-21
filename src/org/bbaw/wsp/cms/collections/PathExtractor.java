@@ -97,6 +97,7 @@ public class PathExtractor {
                   url = startUrl + nameAttributeValue;
                 boolean startUrlIsExcluded = isExcluded(url); // if exclude contains a full file name e.g. verzeichnisse/personenkorrektur.xml
                 if (! startUrlIsExcluded) {
+                  url = url.replaceAll("%20", " ");
                   ressourceLoc.add(url);
                 }
               }
