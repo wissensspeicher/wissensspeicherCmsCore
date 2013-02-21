@@ -175,8 +175,9 @@ public class JenaMainForAI {
 					wspStore.openDataset();
 					dataset = wspStore.getDataset();
 					Model model = dataset.getNamedModel(name);
-					model.write(new FileOutputStream(pathHandler.getPath()),
-							"RDF/XML");
+					model.write(
+							new FileOutputStream(new File(pathHandler.getPath()
+									+ "/xml.xml")), "RDF/XML");
 
 					wspStore.closeDataset();
 				} catch (IOException e) {
