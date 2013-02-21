@@ -103,6 +103,9 @@ public class DocumentHandler {
         docType = docType.trim();
       }
       if (docType == null) {
+        docType = mimeType;
+      }
+      if (docType == null) {
         FileUtils.deleteQuietly(docDestFile);
         docOperation.setErrorMessage("file type of: " + srcUrlStr + "is not supported");
         return;
