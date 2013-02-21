@@ -623,7 +623,7 @@ public class DocumentHandler {
     String fileExt = getDocFileExtension(docId);
     if (fileExt != null) {
       fileExt = fileExt.toLowerCase();
-      if (fileExt.equals("xml") || fileExt.equals("html") || fileExt.equals("xhtml"))
+      if (fileExt.equals("xml"))
         isXml = true;
     }
     return isXml;
