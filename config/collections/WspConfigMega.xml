@@ -4,6 +4,9 @@
     <id>MEGA</id>
     <name>Marx-Engels-Gesamtausgabe</name>
     <url> 
+      <webBaseUrl>http://telota.bbaw.de/mega</webBaseUrl>
+      <!-- Homepage -->
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/de/Ueberblick/index.html</dataUrl>
       <!-- Abteilung 1   -->
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/i21_inhalt.pdf</dataUrl>
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/I_30_inhalt_einf.pdf</dataUrl>
@@ -46,7 +49,6 @@
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/JB_04.pdf</dataUrl>
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/JB_03.pdf</dataUrl>
 
-      <webBaseUrl>http://telota.bbaw.de/mega</webBaseUrl>
     </url>
     <languages>ger</languages>
     <mainLanguage>ger</mainLanguage>

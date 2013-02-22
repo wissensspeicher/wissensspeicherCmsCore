@@ -5,8 +5,11 @@
     <name>Jahresberichte fuer deutsche Geschichte</name>
     <!-- if dataUrl is not a directory but a file, it should end with a forward slash -->
     <url>
-      <dataUrl>http://telota.bbaw.de/exist/servlet/db/JDG/</dataUrl>
       <webBaseUrl>http://www.jdg-online.de</webBaseUrl>
+      <!-- Homepage -->
+      <dataUrl>http://www.jdg-online.de/index.html</dataUrl>
+      <!-- XML-Texte -->
+      <dataUrl>http://telota.bbaw.de/exist/servlet/db/JDG/</dataUrl>
       <exclude>scripts</exclude>
     </url>
     <languages>ger</languages>

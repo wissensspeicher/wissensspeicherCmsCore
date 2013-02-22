@@ -5,8 +5,11 @@
     <name>Corpus Vitrearum Medii Aevi. Glasmalereiforschung</name>
     <!-- if dataUrl is not a directory but a file, it should end with a forward slash -->
     <url>
-      <dataUrl>http://telota.bbaw.de/exist/rest/db/cvma/</dataUrl>
       <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/cvma/de/Startseite</webBaseUrl>
+      <!-- Homepage -->
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/cvma/de/Startseite/index.html</dataUrl>
+      <!-- XML-Texte -->
+      <dataUrl>http://telota.bbaw.de/exist/rest/db/cvma/</dataUrl>
       <exclude>scripts</exclude>
     </url>
     <languages>ger</languages>

@@ -4,6 +4,7 @@
     <id>cmg</id>
     <name>Corpus Medicorum Graecorum/ Latinorum</name>
     <url>
+      <webBaseUrl>http://cmg.bbaw.de</webBaseUrl>
       <dataUrlPrefix>/home/joey/dataWsp/documentsExtern/cmg</dataUrlPrefix>
       <dataUrl>file:/home/joey/dataWsp/documentsExtern/cmg/cmg_06_02_02.xml</dataUrl>
       <dataUrl>file:/home/joey/dataWsp/documentsExtern/cmg/cmg_04.xml</dataUrl>
@@ -92,7 +93,6 @@
       <dataUrl>file:/home/joey/dataWsp/documentsExtern/cmg/cmg_10_01_01.xml</dataUrl>
       <dataUrl>file:/home/joey/dataWsp/documentsExtern/cmg/cmg_01_01.xml</dataUrl>
       <dataUrl>file:/home/joey/dataWsp/documentsExtern/cmg/wa_dioscurides_mat_med_lib_5_crat_sext_nig_simpl.xml</dataUrl>
-      <webBaseUrl>http://cmg.bbaw.de</webBaseUrl>
     </url>
     <languages>lat</languages>
     <mainLanguage>lat</mainLanguage>

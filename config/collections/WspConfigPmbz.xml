@@ -5,8 +5,11 @@
     <name>Prosopographie der mittelbyzantinischen Zeit</name>
     <!-- if dataUrl is not a directory but a file, it should end with a forward slash -->
     <url>
+      <webBaseUrl>http://pmbz.bbaw.de</webBaseUrl>
+      <!-- Homepage -->
+      <dataUrl>http://pmbz.bbaw.de/index.html</dataUrl>
+      <!-- XML-Texte -->
       <dataUrl>http://telota.bbaw.de/exist/rest/db/pmbz/</dataUrl>
-      <webBaseUrl>http://pmbz.bbaw.de/</webBaseUrl>
       <exclude>scripts</exclude>
     </url>
     <languages>ger</languages>
