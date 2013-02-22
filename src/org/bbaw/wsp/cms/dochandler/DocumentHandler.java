@@ -283,6 +283,29 @@ public class DocumentHandler {
             if (pageCount <= 0)
               pageCount = 1;  // each document at least has one page
             mdRecord.setPageCount(pageCount);
+            if (mdRecord.getIdentifier() == null)
+              mdRecord.setIdentifier(tikaMDRecord.getIdentifier());
+            if (mdRecord.getCreator() == null)
+              mdRecord.setCreator(tikaMDRecord.getCreator());
+            if (mdRecord.getTitle() == null)
+              mdRecord.setTitle(tikaMDRecord.getTitle());
+            if (mdRecord.getLanguage() == null) {
+              String tikaLang = tikaMDRecord.getLanguage();
+              if (tikaLang != null) 
+                mdRecord.setLanguage(tikaLang);
+            }
+            if (mdRecord.getPublisher() == null)
+              mdRecord.setPublisher(tikaMDRecord.getPublisher());
+            if (mdRecord.getDate() == null)
+              mdRecord.setDate(tikaMDRecord.getDate());
+            if (mdRecord.getDescription() == null)
+              mdRecord.setDescription(tikaMDRecord.getDescription());
+            if (mdRecord.getSubject() == null)
+              mdRecord.setSubject(tikaMDRecord.getSubject());
+            if (mdRecord.getSwd() == null)
+              mdRecord.setSwd(tikaMDRecord.getSwd());
+            if (mdRecord.getDdc() == null)
+              mdRecord.setDdc(tikaMDRecord.getDdc());
           }
         } catch (ApplicationException e) {
           LOGGER.severe(e.getLocalizedMessage());
