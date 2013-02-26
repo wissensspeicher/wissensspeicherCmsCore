@@ -2,6 +2,7 @@ package org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -162,7 +163,7 @@ public class JenaMainForAI {
 
 	}
 
-	public void saveGraph(final String name) {
+	public void saveModel(final String name, final String fileName) {
 		Thread saveAction = new Thread() {
 
 			@Override
@@ -175,9 +176,15 @@ public class JenaMainForAI {
 					wspStore.openDataset();
 					dataset = wspStore.getDataset();
 					Model model = dataset.getNamedModel(name);
-					model.write(
-							new FileOutputStream(new File(pathHandler.getPath()
-									+ "/xml.xml")), "RDF/XML");
+
+					// removes old file
+					File file = new File(fileName);
+					if (file.exists()) {
+						file.delete();
+						file = new File(fileName);
+					}
+
+					model.write(new FileOutputStream(file), "RDF/XML");
 
 					wspStore.closeDataset();
 				} catch (IOException e) {
@@ -191,6 +198,56 @@ public class JenaMainForAI {
 		};
 
 		saveAction.run();
+	}
+
+	public void saveAllModel(final String directory) {
+		try {
+			wspStore.createStore(pathHandler.getPath());
+			wspStore.createModelFactory();
+			wspStore.openDataset();
+			dataset = wspStore.getDataset();
+			Iterator<String> it = dataset.listNames();
+			while (it.hasNext()) {
+				String temp = it.next();
+				Model model = dataset.getNamedModel(temp);
+				try {
+
+					// removes old file
+					String name = buildValidXMLName(temp, directory);
+					File file = new File(name);
+					if (file.exists()) {
+						file.delete();
+
+						file = new File(name);
+					}
+
+					model.write(new FileOutputStream(name), "RDF/XML");
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+
+		} catch (ApplicationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	/**
+	 * builds the filename and returns it
+	 * 
+	 * @param model
+	 * @param directory
+	 * @return
+	 */
+	private String buildValidXMLName(String model, String directory) {
+		String[] temp = model.split("[://.]+");
+		return directory + "/" + temp[temp.length - 2] + temp[temp.length - 1]
+				+ ".xml";
+
 	}
 
 	/**
