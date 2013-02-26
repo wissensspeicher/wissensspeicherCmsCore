@@ -63,7 +63,7 @@ public class AdminInterface extends JFrame {
 	// ButtonsNames for distinction
 	private static final String SOURCE_BUTTON = "Choose Metadata";
 	private static final String DESTINATION_BUTTON = "Choose Destination";
-	private static final String START_BUTTON = "Add to Triplestore";
+	private static final String START_BUTTON = "Create new /add to Triplestore";
 	private static final String LOAD_NAMEDMODELLS_BUTTON = "Load Models";
 	private static final String REMOVE_BUTTON = "Remove";
 	private static final String SAVE_AS_XML = "Save as XML";
@@ -124,7 +124,7 @@ public class AdminInterface extends JFrame {
 
 		Panel removePanel = new Panel();
 		removePanel.setLayout(new GridLayout(7, 1));
-		removePanel.add(new Label("Remove Area"));
+		removePanel.add(new Label("Save/Remove Area"));
 		removePanel.add(new Label("Load all Named Models from destination"));
 		removePanel.add(load_set_btn);
 
@@ -152,16 +152,19 @@ public class AdminInterface extends JFrame {
 				+ "2. is used to create a new dataset, \n"
 				+ "to do so there will open a save \n"
 				+ "dialog in \"Choose Destination\" option\n\n"
-				+ "NEVER SAVE A NEW ONE IN A FOLDER \n"
-				+ "WHERE ALREADY A \".store\" EXISTS! \n\n"
 				+ "If none of the Checkboxes is selected \n"
 				+ "the default is:\n"
 				+ "choose 1 file to add to an existing dataset." + "\n\n"
 				+ "Load Models lists all NamedModel which are\n"
 				+ "currently in the choosen Dataset.\n\n"
+				+ "The Export function gives the possible\n"
+				+ "options to export a singel Model,\n"
+				+ "or to export all to a given location.\n\n"
 				+ "Remove deletes the choosen NamedModel\nfrom Dataset."
-				+ "\n\nIf there already is a NamedModel with equal\nname,"
-				+ "it will be replaced by the newer version");
+				+ "\n\nIf there already is a NamedModel or XML\n"
+				+ "with equal name, it will be replaced\n"
+				+ "by the newer version");
+
 	}
 
 	/**
@@ -258,16 +261,13 @@ public class AdminInterface extends JFrame {
 
 				else if (ev.getActionCommand().equals(START_BUTTON)) {
 
-					if (srcD == null) {
-						println("no source choosed!");
-						return;
-					}
 					if (desF == null) {
 						println("no destination choosed!");
 						return;
 					}
-
-					println("Choosen Data: " + srcD);
+					if (srcD != null) {
+						println("Choosen Data: " + srcD);
+					}
 					println("Choosen Destination" + desF);
 
 					try {
@@ -312,7 +312,8 @@ public class AdminInterface extends JFrame {
 	 */
 	private void execution() throws ClassNotFoundException, IOException {
 
-		jenaMain.setSource(srcD);
+		if (srcD != null)
+			jenaMain.setSource(srcD);
 		jenaMain.setDestination(desF);
 		jenaMain.initStore(createDataset.isSelected());
 

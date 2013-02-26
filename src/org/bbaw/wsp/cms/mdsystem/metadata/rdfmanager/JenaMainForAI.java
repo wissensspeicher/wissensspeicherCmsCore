@@ -144,11 +144,12 @@ public class JenaMainForAI {
 				}
 
 				wspStore.setForce(true);
-				if (new File(source).isDirectory()) {
-					createNamedModelsFromOreSets(source);
-				} else
-					createNewModelFromSingleOre(source);
-
+				if (source != null) {
+					if (new File(source).isDirectory()) {
+						createNamedModelsFromOreSets(source);
+					} else
+						createNewModelFromSingleOre(source);
+				}
 				try {
 					savePathFile();
 				} catch (IOException e) {
@@ -159,6 +160,7 @@ public class JenaMainForAI {
 			}
 
 		};
+
 		editStore.run();
 
 	}
@@ -200,6 +202,11 @@ public class JenaMainForAI {
 		saveAction.run();
 	}
 
+	/**
+	 * Exports all models of a given Dataset to the given Directory
+	 * 
+	 * @param directory
+	 */
 	public void saveAllModel(final String directory) {
 		try {
 			wspStore.createStore(pathHandler.getPath());
