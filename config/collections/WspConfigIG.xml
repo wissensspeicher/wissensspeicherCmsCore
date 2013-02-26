@@ -5,8 +5,11 @@
     <name>Inscriptiones Graecae</name>
     <!-- if dataUrl is not a file but a directory, it should end with a forward slash-->
     <url>
-      <dataUrl>http://telota.bbaw.de/exist/rest/db/ig/texts/</dataUrl>
       <webBaseUrl>http://telota.bbaw.de/ig</webBaseUrl>
+      <!-- Homepage -->
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/ig/de/Ueberblick/index.html</dataUrl>
+      <!-- Xml-Texte -->
+      <dataUrl>http://telota.bbaw.de/exist/rest/db/ig/texts/</dataUrl>
       <exclude>pages</exclude>
       <exclude>scripts</exclude>
       <exclude>svg</exclude>

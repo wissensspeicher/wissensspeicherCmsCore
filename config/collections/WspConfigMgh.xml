@@ -5,8 +5,11 @@
     <name>Monumenta Germaniae Historica</name>
     <!-- if dataUrl is not a directory but a file, it should end with a forward slash -->
     <url>
-      <dataUrl>http://telota.bbaw.de/exist/rest/db/wdg/</dataUrl>
       <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mgh/de/Startseite</webBaseUrl>
+      <!-- Homepage -->
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mgh/de/Startseite/index.html</dataUrl>
+      <!-- XML-Texte -->
+      <dataUrl>http://telota.bbaw.de/exist/rest/db/wdg/</dataUrl>
       <exclude>scripts</exclude>
     </url>
     <languages>ger</languages>

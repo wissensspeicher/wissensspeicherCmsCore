@@ -5,6 +5,10 @@
     <name>Registres de l'Academie</name>
     <!-- if dataUrl is not a directory but a file, it should end with a forward slash-->
     <url>
+      <webBaseUrl>http://akademieregistres.bbaw.de</webBaseUrl>
+      <!-- Homepage -->
+      <dataUrl>http://akademieregistres.bbaw.de/indexmehr.html</dataUrl>
+      <!-- XML-Texte -->
       <dataUrl>http://telota.bbaw.de:9979/exist/rest/db/registres/</dataUrl>
       <exclude>pages</exclude>
       <exclude>styles</exclude>

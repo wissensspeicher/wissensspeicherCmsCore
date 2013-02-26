@@ -5,8 +5,11 @@
     <name>Goethe-Wörterbuch</name>
     <!-- if dataUrl is not a directory but a file, it should end with a forward slash -->
     <url>
-      <dataUrl>http://telota.bbaw.de/exist/rest/db/gwb/</dataUrl>
       <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/dtm/de/Startseite</webBaseUrl>
+      <!-- Homepage -->
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/dtm/de/Startseite/index.html</dataUrl>
+      <!-- XML-Texte -->
+      <dataUrl>http://telota.bbaw.de/exist/rest/db/gwb/</dataUrl>
       <exclude>scripts</exclude>
       <exclude>test</exclude>
     </url>
