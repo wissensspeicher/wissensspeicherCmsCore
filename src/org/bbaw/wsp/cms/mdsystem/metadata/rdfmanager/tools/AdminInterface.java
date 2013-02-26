@@ -200,7 +200,7 @@ public class AdminInterface extends JFrame {
 				} else if (ev.getActionCommand().equals(
 						LOAD_NAMEDMODELLS_BUTTON)) {
 					if (desF == null) {
-						println("no source choosed!");
+						println("no Destination selected");
 						return;
 					}
 					jenaMain.setDestination(desF);
