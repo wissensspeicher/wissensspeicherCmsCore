@@ -1,55 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- 
-Wissenspeicher Konfigurationsdatei Template
+Wissensspeicher: Template einer Konfigurationsdatei
 
-Jeder Sammlung von Ressourcen ist eine Konfigurationsdatei zugeordnet, in dem 
-sammlungszugehörige Informationen enthalten sind. Um ein Projekt in den Wissenspeicher einzupflegen muss 
-eine solche Konfigurationsdatei angelegt werden.
+Jeder Sammlung von Ressourcen (z.B. einem Projekt eines Vorhabens) ist eine Konfigurationsdatei zugeordnet, in dem 
+sammlungszugehörige Informationen enthalten sind. Um solch eine Sammlung in den Volltextindex des Wissenspeichers 
+hinzuzufuegen, muss eine solche Konfigurationsdatei im Verzeichnis wspCmsCore/config/collections angelegt werden.
+Name der Datei: WspConfigProjektkuerzel.xml
 
-In der Konfigurationsdatei wird in das update Tag eingetragen, 
-ob eine Veränderung der Ressource(n) stattgefunden hat (durch 'true' oder 'false') . In regelmäßigen Abständen 
-wird die Konfigurationsdatei überprüft und der Index bei dem Wert <update>true</update> aktualisiert.
+Beschreibung der Pflicht-Felder
+<id> : Projektkuerzel (String ohne Blanks)
+<name> : Name des Projekts (String, kann Blanks enthalten)
+<dataUrl> : URL der Ressource. Sie verweist auf die zu indizierende Ressource. 
+  Attribute:
+    type (falls nicht angegeben, wird "single" als default verwendet):
+      single (einzelne Ressource; default)
+      eXistDir (eXist Daten-Verzeichnis: es werden rekursiv alle XML-Dateien rekursiv unterhalb dieses Verzeichnisses betrachtet)
+<mainLanguage> : Hauptsprache der Resssourcen des Projekts (3-stelliges Laenderkuerzel nach ISO 639)
 
-In <dataUrl> muss eine Url angegeben werden, die auf zu indizierende Ressourcen verweist.  
 
-Die Konfigurationsdatei muss unter folgendendem Namen gespeichert werden: WspConfigProjektname.xml
-
-Beispiel:
+Beispiele:
+WspConfigIg.xml:
 <wsp>
   <collection>
-    <id>schleiermacher</id>
-    <name>Schleiermacher: Kritische Gesamtausgabe</name>
-    URL des Vorhabens if the collectionDataUrl is not a directory but a file, it should end with a forward slash
+    <id>ig</id>
+    <name>Inscriptiones Graecae</name>
     <url>
-      <dataUrl>http://telotadev.bbaw.de:8085/exist/rest/db/schleiermacher/</dataUrl>
-      <exclude>pages</exclude>
-      <exclude>scripts</exclude>
-      <exclude>svg</exclude>
-      <exclude>users</exclude>
-      <exclude>backup</exclude>
+      <dataUrl type="eXistDir">http://telota.bbaw.de/exist/rest/db/ig/texts</dataUrl>
     </url>
-    <languages>ger</languages>
     <mainLanguage>ger</mainLanguage>
-    Spezifiziert die Formate in denen die Ressourcen des Vorhabens angelegt sind
-    <formats>
-      <format>xml</format>
-      <format>pdf</format>
-      <format></format>
-      <exclude></exclude>
-    </formats>
-    <fields>
-      <field>Source</field>
-      <field>Content</field>
-      <field>persname</field>
-      <exclude></exclude>
-    </fields>
-    <operation>
-      soll geupdated werden?
-      <update>true</update>
-      soll nur gelöscht werden (update beinhaltet das Löschen der alten zu updatenden Dateien)
-      <delete></delete>
-    </operation>
   </collection>
 </wsp>
 
+WspConfigMega.xml:
+<wsp>
+  <collection>
+    <id>mega</id>
+    <name>Marx-Engels-Gesamtausgabe</name>
+    <url>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/de/Ueberblick/index.html</dataUrl>
+
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/i21_inhalt.pdf</dataUrl>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/I_30_inhalt_einf.pdf</dataUrl>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/I_32_inhalt_einf.pdf</dataUrl>
+
+      <dataUrl>http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B001-01_ETX.xml</dataUrl>
+      <dataUrl>http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B001-02_ETX.xml</dataUrl>
+      <dataUrl>http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B004-01_ETX.xml</dataUrl>
+      <dataUrl>http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B005-00_ETX.xml</dataUrl>
+      <dataUrl>http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B011-00_ETX.xml</dataUrl>
+      <dataUrl>http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B012-00_ETX.xml</dataUrl>
+      <dataUrl>http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B013-00_ETX.xml</dataUrl>
+    </url>
+    <mainLanguage>ger</mainLanguage>
+  </collection>
+</wsp>
 -->
