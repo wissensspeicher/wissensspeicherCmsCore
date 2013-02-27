@@ -2,6 +2,7 @@ package org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -23,6 +24,8 @@ import com.hp.hpl.jena.rdf.model.ReifiedStatement;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 
+import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
+
 public class JenaMainForAI {
 
 	/**
@@ -37,12 +40,13 @@ public class JenaMainForAI {
 	private static final String MODS = "C:/Dokumente und Einstellungen/wsp-shk1/Eigene Dateien/Development/ParserTest/XSLTTest/outputs/v2_29_11_2012/mods";
 
 	private Model model;
-	private RdfHandler manager;
-	private WspRdfStoreForAi wspStore;
+	private RdfHandler rdfHandler;
+	private final WspRdfStore wspStore = WspRdfStore.getInstance();
 	private Dataset dataset;
 	private String source;
 	private String destination;
-	protected String modelName;
+
+	private StorePathHandler pathHandler = new StorePathHandler();
 
 	/**
 	 * needs to be instantiated from outside e.g.
@@ -88,8 +92,8 @@ public class JenaMainForAI {
 					}
 
 					try {
-						wspStore = new WspRdfStoreForAi(temp);
-						saveStorePath();
+						pathHandler.setPath(temp);
+						savePathFile();
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -98,7 +102,7 @@ public class JenaMainForAI {
 				} else {
 
 					try {
-						loadWspStore();
+						loadPathFile();
 					} catch (ClassNotFoundException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -110,7 +114,7 @@ public class JenaMainForAI {
 				}
 				try {
 
-					wspStore.createStore();
+					wspStore.createStore(pathHandler.getPath());
 
 				} catch (Exception e) {
 					System.out.println("Store already in use");
@@ -119,7 +123,7 @@ public class JenaMainForAI {
 
 				wspStore.createModelFactory();
 				dataset = wspStore.getDataset();
-				manager = new RdfHandler();
+				rdfHandler = new RdfHandler();
 
 			}
 
@@ -138,36 +142,30 @@ public class JenaMainForAI {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				modelName = checkifValid(manager.scanID(source), source);
-				if (new File(source).isDirectory()) {
-					createDatasetFromSet(source);
-				} else {
-					// Update NameModel by delete from dataset and adding the
-					// new one
-					for (String name : getModels()) {
-						if (name.equals(modelName)) {
-							removeModel(modelName);
 
-						}
-					}
-
-					createNewModelFromSingleOre(source);
+				wspStore.setForce(true);
+				if (source != null) {
+					if (new File(source).isDirectory()) {
+						createNamedModelsFromOreSets(source);
+					} else
+						createNewModelFromSingleOre(source);
 				}
 				try {
-					saveStorePath();
+					savePathFile();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				wspStore.closeDataset();
+
 			}
 
 		};
+
 		editStore.run();
 
 	}
 
-	public void saveGraph(final String name) {
+	public void saveModel(final String name, final String fileName) {
 		Thread saveAction = new Thread() {
 
 			@Override
@@ -175,15 +173,26 @@ public class JenaMainForAI {
 
 				try {
 
-					wspStore.createStore();
+					wspStore.createStore(pathHandler.getPath());
 					wspStore.createModelFactory();
 					wspStore.openDataset();
 					dataset = wspStore.getDataset();
 					Model model = dataset.getNamedModel(name);
-					model.write(new FileOutputStream(destination), "RDF/XML");
+
+					// removes old file
+					File file = new File(fileName);
+					if (file.exists()) {
+						file.delete();
+						file = new File(fileName);
+					}
+
+					model.write(new FileOutputStream(file), "RDF/XML");
 
 					wspStore.closeDataset();
 				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ApplicationException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
@@ -191,6 +200,61 @@ public class JenaMainForAI {
 		};
 
 		saveAction.run();
+	}
+
+	/**
+	 * Exports all models of a given Dataset to the given Directory
+	 * 
+	 * @param directory
+	 */
+	public void saveAllModel(final String directory) {
+		try {
+			wspStore.createStore(pathHandler.getPath());
+			wspStore.createModelFactory();
+			wspStore.openDataset();
+			dataset = wspStore.getDataset();
+			Iterator<String> it = dataset.listNames();
+			while (it.hasNext()) {
+				String temp = it.next();
+				Model model = dataset.getNamedModel(temp);
+				try {
+
+					// removes old file
+					String name = buildValidXMLName(temp, directory);
+					File file = new File(name);
+					if (file.exists()) {
+						file.delete();
+
+						file = new File(name);
+					}
+
+					model.write(new FileOutputStream(name), "RDF/XML");
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+
+		} catch (ApplicationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	/**
+	 * builds the filename and returns it
+	 * 
+	 * @param model
+	 * @param directory
+	 * @return
+	 */
+	private String buildValidXMLName(String model, String directory) {
+		String[] temp = model.split("[://.]+");
+		return directory + "/" + temp[temp.length - 2] + temp[temp.length - 1]
+				+ ".xml";
+
 	}
 
 	/**
@@ -207,9 +271,10 @@ public class JenaMainForAI {
 
 				try {
 					// closeAll.join();
-					if (wspStore == null)
-						loadWspStore();
-					wspStore.createStore();
+					// System.out.println(pathHandler.getPath());
+					if (pathHandler.getPath().equals(""))
+						loadPathFile();
+					wspStore.createStore(pathHandler.getPath());
 					wspStore.createModelFactory();
 					dataset = wspStore.getDataset();
 
@@ -222,7 +287,12 @@ public class JenaMainForAI {
 					}
 					wspStore.closeDataset();
 
+				} catch (ApplicationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -243,8 +313,8 @@ public class JenaMainForAI {
 	public void removeModel(String name) {
 
 		try {
-			loadWspStore();
-			wspStore.createStore();
+			loadPathFile();
+			wspStore.createStore(pathHandler.getPath());
 			wspStore.createModelFactory();
 			dataset = wspStore.getDataset();
 			wspStore.openDataset();
@@ -257,6 +327,9 @@ public class JenaMainForAI {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (ApplicationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 
 	}
@@ -267,11 +340,11 @@ public class JenaMainForAI {
 	 * @throws IOException
 	 * @throws ClassNotFoundException
 	 */
-	private void loadWspStore() throws IOException, ClassNotFoundException {
+	private void loadPathFile() throws IOException, ClassNotFoundException {
 
 		FileInputStream input = new FileInputStream(destination);
 		ObjectInputStream ois = new ObjectInputStream(input);
-		wspStore = (WspRdfStoreForAi) ois.readObject();
+		pathHandler = (StorePathHandler) ois.readObject();
 
 		ois.close();
 
@@ -282,14 +355,14 @@ public class JenaMainForAI {
 	 * 
 	 * @throws IOException
 	 */
-	private void saveStorePath() throws IOException {
+	private void savePathFile() throws IOException {
 		OutputStream fos = null;
 
 		try {
 			fos = new FileOutputStream(destination);
 			@SuppressWarnings("resource")
 			ObjectOutputStream o = new ObjectOutputStream(fos);
-			o.writeObject(wspStore);
+			o.writeObject(pathHandler);
 			o.flush();
 		} catch (IOException e) {
 			System.err.println(e);
@@ -317,7 +390,7 @@ public class JenaMainForAI {
 		// createNamedModelsFromOreSets(MODS);
 		// model.close();
 		// dataset.close();
-		saveStorePath();
+		savePathFile();
 		// dataset.close();
 		// wspStore.closeDataset();
 		wspStore.closeDataset();
@@ -333,11 +406,18 @@ public class JenaMainForAI {
 
 		wspStore.openDataset();
 		Model freshModel = wspStore.getFreshModel();
-		Model model = manager.fillModelFromFile(freshModel, file);
+		Model model = rdfHandler.fillModelFromFile(freshModel, file);
 		// function is used in initstore() - result = modelName
-		// String rdfAbout = checkifValid(manager.scanID(file), file);
+		String rdfAbout = checkifValid(rdfHandler.scanID(file), file);
 
-		wspStore.addNamedModelToWspStore(modelName, model);
+		try {
+			wspStore.addNamedModelToWspStore(rdfAbout, model);
+		} catch (ApplicationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			wspStore.closeDataset();
+		}
 
 	}
 
@@ -377,9 +457,15 @@ public class JenaMainForAI {
 		wspStore.openDataset();
 		for (String string : data) {
 			Model freshsModel = wspStore.getFreshModel();
-			Model m = manager.fillModelFromFile(freshsModel, string);
-			String modsRdfAbout = checkifValid(manager.scanID(string), string);
-			wspStore.addNamedModelToWspStore(modsRdfAbout, m);
+			Model m = rdfHandler.fillModelFromFile(freshsModel, string);
+			String modsRdfAbout = checkifValid(rdfHandler.scanID(string),
+					string);
+			try {
+				wspStore.addNamedModelToWspStore(modsRdfAbout, m);
+			} catch (ApplicationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 		}
 		wspStore.closeDataset();
@@ -410,21 +496,29 @@ public class JenaMainForAI {
 	 */
 	private void createNamedModelsFromOreSets(String location) {
 		// read all mods rdf
-		List<String> pathList = extractPathLocally(location);
+		final List<String> pathList = extractPathLocally(location);
 		System.out.println("pathlist : " + pathList.size());
 
 		final long start = System.currentTimeMillis();
 		wspStore.openDataset();
-		for (String string : pathList) {
-			Model freshsModel = wspStore.getFreshModel();
-			Model m = manager.fillModelFromFile(freshsModel, string);
-			String modsRdfAbout = checkifValid(manager.scanID(location), string);
-			wspStore.addNamedModelToWspStore(modsRdfAbout, m);
-
+		for (final String string : pathList) {
+			final Model freshsModel = wspStore.getFreshModel();
+			final Model m = rdfHandler.fillModelFromFile(freshsModel, string);
+			System.out.println("File path: " + string);
+			final String modsRdfAbout = rdfHandler.scanID(string);
+			if (modsRdfAbout != null) {
+				try {
+					wspStore.addNamedModelToWspStore(modsRdfAbout, m);
+					System.out.println(modsRdfAbout + " successfully added.");
+				} catch (final ApplicationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
 
-		// System.out.println("set read in time elapsed : "
-		// + (System.currentTimeMillis() - start) / 1000);
+		System.out.println("set read in time elapsed : "
+				+ (System.currentTimeMillis() - start) / 1000);
 		wspStore.closeDataset();
 	}
 
@@ -475,7 +569,8 @@ public class JenaMainForAI {
 		String sparqlSelect = "select ?s ?p ?o where {?s ?p ?o}";
 		// String sparqlSelect =
 		// "PREFIX foaf:<http://xmlns.com/foaf/0.1/> SELECT ?familyName FROM NAMED <http://wsp.bbaw.de/oreTestBriefe> WHERE {?x foaf:familyName  ?familyName}";
-		QueryExecution quExec = manager.selectSomething(sparqlSelect, dataset);
+		QueryExecution quExec = rdfHandler.selectSomething(sparqlSelect,
+				dataset);
 		// QueryExecution quExec = QueryExecutionFactory.create(
 		// "PREFIX foaf:<http://xmlns.com/foaf/0.1/> SELECT ?familyName FROM NAMED <http://wsp.bbaw.de/oreTestBriefe> WHERE {?x foaf:familyName  ?familyName}"
 		// , dataset) ;
@@ -507,7 +602,7 @@ public class JenaMainForAI {
 			System.out.println("is reified : " + state.isReified());
 			System.out.println("reified statement : " + reifSt.toString());
 		}
-		System.out.println(manager.getAllTriples(model));
+		System.out.println(rdfHandler.getAllTriples(model));
 	}
 
 	/**
@@ -521,7 +616,7 @@ public class JenaMainForAI {
 				+ "INSERT DATA "
 				+ " { <http://www.bbaw.de/posterDh> dc:title  \"Digital Knowledge Store\" } ";
 		wspStore.openDataset();
-		manager.performUpdate(dataset, updateToDefault);
+		rdfHandler.performUpdate(dataset, updateToDefault);
 		wspStore.closeDataset();
 	}
 
@@ -628,6 +723,7 @@ public class JenaMainForAI {
 
 	public void setDestination(String destination) {
 		this.destination = destination;
+
 	}
 
 }

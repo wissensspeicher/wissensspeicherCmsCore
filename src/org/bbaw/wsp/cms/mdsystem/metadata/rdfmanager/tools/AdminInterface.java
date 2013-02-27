@@ -45,9 +45,11 @@ public class AdminInterface extends JFrame {
 	private JButton btn_des;
 	private JButton load_set_btn;
 	private JButton remove_btn;
+	private JButton save_as_xml_btn;
 	private Label des;
 	private String srcD;
 	private String desF;
+	private JCheckBox allXML;
 	private JCheckBox folderScr;
 	private JCheckBox createDataset;
 	private TextArea textArea;
@@ -61,9 +63,10 @@ public class AdminInterface extends JFrame {
 	// ButtonsNames for distinction
 	private static final String SOURCE_BUTTON = "Choose Metadata";
 	private static final String DESTINATION_BUTTON = "Choose Destination";
-	private static final String START_BUTTON = "Add to Triplestore";
+	private static final String START_BUTTON = "Create new /add to Triplestore";
 	private static final String LOAD_NAMEDMODELLS_BUTTON = "Load Models";
 	private static final String REMOVE_BUTTON = "Remove";
+	private static final String SAVE_AS_XML = "Save as XML";
 
 	/**
 	 * Opens a new Frame
@@ -93,6 +96,7 @@ public class AdminInterface extends JFrame {
 		btn_go = new JButton(START_BUTTON);
 		load_set_btn = new JButton(LOAD_NAMEDMODELLS_BUTTON);
 		remove_btn = new JButton(REMOVE_BUTTON);
+		save_as_xml_btn = new JButton(SAVE_AS_XML);
 		combobox.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
@@ -106,9 +110,11 @@ public class AdminInterface extends JFrame {
 		addButtonListener(btn_des);
 		addButtonListener(remove_btn);
 		addButtonListener(load_set_btn);
+		addButtonListener(save_as_xml_btn);
 
 		panel.add(folderScr = new JCheckBox("Choose a source Folder"));
-		panel.add(createDataset = new JCheckBox("Create a Dataset new Location"));
+		panel.add(createDataset = new JCheckBox(
+				"Create a Dataset at new Location"));
 		panel.add(btn_src);
 		panel.add(src);
 		panel.add(btn_des);
@@ -119,13 +125,15 @@ public class AdminInterface extends JFrame {
 
 		Panel removePanel = new Panel();
 		removePanel.setLayout(new GridLayout(7, 1));
-		removePanel.add(new Label("Remove Area"));
+		removePanel.add(new Label("Save/Remove Area"));
 		removePanel.add(new Label("Load all Named Models from destination"));
 		removePanel.add(load_set_btn);
-		removePanel.add(combobox);
-		removePanel.add(new Label(""));
-		removePanel.add(new Label(""));
+
+		removePanel.add(allXML = new JCheckBox(
+				"Save all Models as XML to location"));
+		removePanel.add(save_as_xml_btn);
 		removePanel.add(remove_btn);
+		removePanel.add(combobox);
 
 		Panel mainPanel = new Panel();
 		mainPanel.setLayout(new GridLayout(1, 3));
@@ -145,16 +153,19 @@ public class AdminInterface extends JFrame {
 				+ "2. is used to create a new dataset, \n"
 				+ "to do so there will open a save \n"
 				+ "dialog in \"Choose Destination\" option\n\n"
-				+ "NEVER SAVE A NEW ONE IN A FOLDER \n"
-				+ "WHERE ALREADY A \".store\" EXISTS! \n\n"
 				+ "If none of the Checkboxes is selected \n"
 				+ "the default is:\n"
 				+ "choose 1 file to add to an existing dataset." + "\n\n"
 				+ "Load Models lists all NamedModel which are\n"
 				+ "currently in the choosen Dataset.\n\n"
+				+ "The Export function gives the possible\n"
+				+ "options to export a singel Model,\n"
+				+ "or to export all to a given location.\n\n"
 				+ "Remove deletes the choosen NamedModel\nfrom Dataset."
-				+ "\n\nIf there already is a NamedModel with equal\nname,"
-				+ "it will be replaced by the newer version");
+				+ "\n\nIf there already is a NamedModel or XML\n"
+				+ "with equal name, it will be replaced\n"
+				+ "by the newer version");
+
 	}
 
 	/**
@@ -190,7 +201,7 @@ public class AdminInterface extends JFrame {
 				} else if (ev.getActionCommand().equals(
 						LOAD_NAMEDMODELLS_BUTTON)) {
 					if (desF == null) {
-						println("no source choosed!");
+						println("no Destination selected");
 						return;
 					}
 					jenaMain.setDestination(desF);
@@ -218,10 +229,10 @@ public class AdminInterface extends JFrame {
 						println("No Models available");
 						return;
 					}
-					// JenaMainForAI jMain = new JenaMainForAI(" ", desF);
+
 					jenaMain.setDestination(desF);
-					jenaMain.saveGraph(namedGraph);
-					// jenaMain.removeModel(namedGraph);
+
+					jenaMain.removeModel(namedGraph);
 					println(namedGraph + " successfully removed.");
 					println("Index will refresh now.");
 					combobox.removeAllItems();
@@ -229,20 +240,35 @@ public class AdminInterface extends JFrame {
 						combobox.addItem(s);
 					}
 
+				} else if (ev.getActionCommand().equals(SAVE_AS_XML)) {
+					if (combobox.getItemCount() == 0) {
+						println("No Models available");
+						return;
+					}
+					jenaMain.setDestination(desF);
+					String file = fileChooserXML();
+					if (file != null) {
+						if (file.endsWith(".xml")) {
+							jenaMain.saveModel(namedGraph, file);
+							println(file + " \nsaved successfully.");
+						} else {
+							jenaMain.saveAllModel(file);
+							println("All Model were saved successfully in\n"
+									+ file);
+						}
+					}
+					return;
 				}
 
 				else if (ev.getActionCommand().equals(START_BUTTON)) {
 
-					if (srcD == null) {
-						println("no source choosed!");
-						return;
-					}
 					if (desF == null) {
 						println("no destination choosed!");
 						return;
 					}
-
-					println("Choosen Data: " + srcD);
+					if (srcD != null) {
+						println("Choosen Data: " + srcD);
+					}
 					println("Choosen Destination" + desF);
 
 					try {
@@ -287,7 +313,8 @@ public class AdminInterface extends JFrame {
 	 */
 	private void execution() throws ClassNotFoundException, IOException {
 
-		jenaMain.setSource(srcD);
+		if (srcD != null)
+			jenaMain.setSource(srcD);
 		jenaMain.setDestination(desF);
 		jenaMain.initStore(createDataset.isSelected());
 
@@ -359,20 +386,62 @@ public class AdminInterface extends JFrame {
 			save = false;
 		}
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
-			String file = chooser.getSelectedFile().getAbsolutePath();
+			try {
+				String file = chooser.getSelectedFile().getAbsolutePath();
 
-			if (save) {
+				if (save) {
 
-				if (!file.toLowerCase().endsWith(".store")) {
-					file += ".store";
+					if (!file.toLowerCase().endsWith(".store")) {
+						file += ".store";
 
+					}
 				}
-			}
 
-			return file;
+				return file;
+			} catch (Exception e) {
+
+			}
 
 		}
 		return null;
+	}
+
+	/**
+	 * Methode whitch opens a dialog to choose a folder or a file for saving a
+	 * given model(s)
+	 * 
+	 * @return
+	 */
+	private String fileChooserXML() {
+		JFileChooser chooser = new JFileChooser();
+		int returnVal = 0;
+		Boolean directorys = allXML.isSelected();
+		if (directorys) {
+			chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+
+		} else
+			chooser.setFileFilter(new XMLFilterFile());
+
+		chooser.showSaveDialog(chooser);
+
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			try {
+				String file = chooser.getSelectedFile().getAbsolutePath();
+
+				if (!directorys) {
+					if (!file.toLowerCase().endsWith(".xml")) {
+						file += ".xml";
+
+					}
+				}
+
+				return file;
+			} catch (Exception e) {
+
+			}
+		}
+		return null;
+
 	}
 
 	/**
@@ -411,6 +480,32 @@ public class AdminInterface extends JFrame {
 			else
 				return false;
 		}
+	}
+
+	/**
+	 * New Filter which is used to choose xml Files
+	 * 
+	 * @author shk2
+	 * 
+	 */
+	class XMLFilterFile extends javax.swing.filechooser.FileFilter {
+
+		@Override
+		public boolean accept(File file) {
+			if (file.isDirectory())
+				return true;
+			else if (file.getName().toLowerCase().endsWith(".xml"))
+				return true;
+			else
+				return false;
+		}
+
+		@Override
+		public String getDescription() {
+
+			return ".xml";
+		}
+
 	}
 
 	/**
