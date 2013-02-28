@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp>
+  <collection>
+    <id>KI</id>
+    <name>LandInnovation</name>
+    <url>
+      <DataUrl> http://landinnovation.bbaw.de/resolveuid/20e4cd72a640633ad2b873b9d5655787</DataUrl>
+      <DataUrl>http://landinnovation.bbaw.de/resolveuid/2a99c69407ece97d986986b73d94ca97</DataUrl>
+      <DataUrl>http://landinnovation.bbaw.de/resolveuid/0624b30d2da99c8a296e43236aeeb973</DataUrl>
+      <DataUrl>http://landinnovation.bbaw.de/resolveuid/8a4599bb3689a0f438b9beeeb8dd1842</DataUrl>
+      <DataUrl>http://landinnovation.bbaw.de/resolveuid/0440d402c6c8adb615a0c9d45db41cf7</DataUrl>
+    </url>
+    
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>PDF</format>
+    </formats> 
+  </collection>
+</wsp>
+

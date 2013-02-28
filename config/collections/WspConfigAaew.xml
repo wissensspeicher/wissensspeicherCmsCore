@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp>
+  <collection>
+    <id>AAEW</id>
+    <name>Preußen in Ägypten-Ägypten in Preußen</name>
+    <url>
+      <dataUrl> http://aaew.bbaw.de/dateien/weitere%20archive/Lepsius-Ausstellung/FuehrungPreussAeg.pdf</dataUrl>
+    </url>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>PDF</format>
+    </formats> 
+  </collection>
+</wsp>
+

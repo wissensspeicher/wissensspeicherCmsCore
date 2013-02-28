@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp>
+  <collection>
+    <id>DTMT</id>
+    <name>Transkription</name>
+    <url>
+      <webBaseUrl> http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/dtm/de/Transkriptionen</webBaseUrl>
+    </url>
+    <languages>ger,gmh</languages>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>PDF</format>
+    </formats> 
+  </collection>
+</wsp>
+

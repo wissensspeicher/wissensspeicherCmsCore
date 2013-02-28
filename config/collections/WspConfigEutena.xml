@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp>
+  <collection>
+    <id>EUTENA</id>
+    <name>EUTENA - Zur Zukunft technischer und naturwissenschaftlicher Bildung in Europa</name>
+    <url>
+      <webBaseUrl> http://www.bbaw.de/forschung/eutena/projektdarstellung</webBaseUrl>
+    </url>
+    <languages>ger,gmh</languages>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>PDF</format>
+    </formats> 
+  </collection>
+</wsp>
+

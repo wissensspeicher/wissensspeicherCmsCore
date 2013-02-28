@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp>
+  <collection>
+    <id>KF</id>
+    <name>Klinische Forschung in vulnerablen Populationen</name>
+    <url>
+      <webBaseUrl> http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/kfvp/de/Startseite</webBaseUrl>
+    </url>
+    
+    <mainLanguage>eng</mainLanguage>
+    <formats>
+      <format>PDF</format>
+    </formats> 
+  </collection>
+</wsp>
+

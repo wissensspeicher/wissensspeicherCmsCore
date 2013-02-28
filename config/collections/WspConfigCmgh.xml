@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<wsp>
+  <collection>
+    <id>CMGH</id>
+    <name>Hippokrates- und  Galenbibliographie</name>
+    <url>
+      <webBaseUrl>http://cmg.bbaw.de/online-publikationen/hippokrates-und-galenbibliographie-fichtner</webBaseUrl>
+       </url>
+    <languages>ger, lat</languages>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>PDF</format>
+    </formats>
+    
+  </collection>
+</wsp>
