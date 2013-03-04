@@ -4,7 +4,7 @@
     <id>EUTENA</id>
     <name>EUTENA - Zur Zukunft technischer und naturwissenschaftlicher Bildung in Europa</name>
     <url>
-      <webBaseUrl> http://www.bbaw.de/forschung/eutena/projektdarstellung</webBaseUrl>
+      <dataUrl>http://www.bbaw.de/publikationen/stellungnahmen-empfehlungen/Stellungnahme_BBAW_MINT.pdf</dataUrl>
     </url>
     <languages>ger,gmh</languages>
     <mainLanguage>ger</mainLanguage>
