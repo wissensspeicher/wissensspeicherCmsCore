@@ -292,10 +292,15 @@ public class VorhabenLister {
       if ((line.trim().startsWith("*") && !line.trim().endsWith("*")) || (line.trim().startsWith("*") && line.trim().endsWith("*"))) {
         // stop here
         return;
-      } else if (line.contains(":")) { // identified field
+      } else if (line.contains(":") && !line.contains("://")) { // identified
+                                                                // field
         final String key = line.substring(0, line.indexOf(":"));
-        final String value = line.substring(line.indexOf(":") + 1, line.length());
+        String value = line.substring(line.indexOf(":") + 1, line.length());
         // value.replace(",", ";"); // neccessary -> , only for CSV seperations!
+
+        if (aktProjekt.getFields().containsKey(key)) {
+          value = aktProjekt.getFields().get(key) + ", " + value;
+        }
 
         aktProjekt.addField(key, value);
         // increase global quantitiy of keys in map
@@ -311,8 +316,11 @@ public class VorhabenLister {
         scanningField = true;
         oldKey = key;
         oldValue = value;
-      } else if (!line.contains(":") && scanningField) { // new line for actual
-                                                         // project
+      } else if ((!line.contains(":") /* || line.contains("://") */) && scanningField) { // new
+        // line
+        // for
+        // actual
+        // project
         final String newValue = oldValue + "\n" + line;
         aktProjekt.addField(oldKey, newValue); // set new value
         oldValue = newValue;
@@ -333,10 +341,15 @@ public class VorhabenLister {
       if ((line.trim().startsWith("*") && !line.trim().endsWith("*")) || (line.trim().startsWith("*") && line.trim().endsWith("*"))) {
         // stop here
         return i;
-      } else if (line.contains(":")) { // identified field
+      } else if (line.contains(":") && !line.contains("://")) { // identified
+                                                                // field
         final String key = line.substring(0, line.indexOf(":"));
-        final String value = line.substring(line.indexOf(":") + 1, line.length());
+        String value = line.substring(line.indexOf(":") + 1, line.length());
         // value.replace(",", ";"); // neccessary -> , only for CSV seperations!
+
+        if (aktVorhaben.getFields().containsKey(key)) {
+          value = aktVorhaben.getFields().get(key) + ", " + value;
+        }
 
         aktVorhaben.addField(key, value);
         globalKeyMap.put(key, (!globalKeyMap.containsKey(key) ? 0 : globalKeyMap.get(key) + 1)); // add
@@ -353,8 +366,11 @@ public class VorhabenLister {
         scanningField = true;
         oldKey = key;
         oldValue = value;
-      } else if (!line.contains(":") && scanningField) { // new line for actual
-                                                         // project
+      } else if ((!line.contains(":") /* || line.contains("://") */) && scanningField) { // new
+        // line
+        // for
+        // actual
+        // project
         if (!line.trim().equals("")) {
           final String newValue = oldValue + "\n" + line;
           aktVorhaben.addField(oldKey, newValue); // set new value
