@@ -3,6 +3,9 @@
  */
 package org.bbaw.wsp.cms.mdsystem.metadata.general.vorhaben;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Record class for a parsed Vorhaben.
  * 
@@ -10,22 +13,40 @@ package org.bbaw.wsp.cms.mdsystem.metadata.general.vorhaben;
  * @since 04.03.2013
  * 
  */
-public class Vorhaben {
-  private String name;
+public class Vorhaben extends ARecordEntry {
+  private List<ARecordEntry> projekte;
 
-  /**
-   * @return the name
-   */
-  public String getName() {
-    return name;
+  public Vorhaben() {
+    projekte = new ArrayList<ARecordEntry>();
   }
 
   /**
-   * @param name
-   *          the name to set
+   * @return the projekte
    */
-  public void setName(final String name) {
-    this.name = name;
+  public List<ARecordEntry> getProjekte() {
+    return projekte;
+  }
+
+  /**
+   * @param projekte
+   *          the projekte to set
+   */
+  public void setProjekte(final List<ARecordEntry> projekte) {
+    this.projekte = projekte;
+  }
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see java.lang.Object#toString()
+   */
+  @Override
+  public String toString() {
+    return super.toString() + "\nVorhaben [projekte=" + projekte + "]";
+  }
+
+  public void addProjekt(final Projekt aktProjekt) {
+    projekte.add(aktProjekt);
   }
 
 }
