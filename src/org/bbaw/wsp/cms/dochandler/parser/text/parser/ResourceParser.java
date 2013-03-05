@@ -43,8 +43,8 @@ public abstract class ResourceParser {
     }
 
     this.parser = parser;
-    this.resourceReader = new ResourceReaderImpl();
-    this.saveStrategy = new DocumentModelStrategy();
+    resourceReader = new ResourceReaderImpl();
+    saveStrategy = new DocumentModelStrategy();
   }
 
   /**
@@ -66,47 +66,51 @@ public abstract class ResourceParser {
     if (uri == null || uri.isEmpty()) {
       throw new IllegalArgumentException("The value for the parameter parser in the method parse() in ResourceParser mustn't be empty.");
     }
-    if (this.saveStrategy == null) {
+    if (saveStrategy == null) {
       throw new IllegalStateException("You must define a saveStategy before calling the parse()-method in ResourceParser.");
     }
     InputStream input;
     try {
-      input = this.resourceReader.read(uri);
+      input = resourceReader.read(uri);
 
       // Don't limit the amount of characters -> -1 as argument
-      ContentHandler textHandler = new BodyContentHandler(-1);
-      Metadata metadata = new Metadata();
-      ParseContext context = new ParseContext();
-      this.parser.parse(input, textHandler, metadata, context);
+      final ContentHandler textHandler = new BodyContentHandler(-1);
+      final Metadata metadata = new Metadata();
+      final ParseContext context = new ParseContext();
+      parser.parse(input, textHandler, metadata, context);
       input.close();
       textHandler.endDocument();
 
       final MetadataRecord mdRecord = new MetadataRecord();
-      this.matchMetadata(metadata, mdRecord);
-      final GeneralDocument doc = (GeneralDocument) this.saveStrategy.generateDocumentModel(uri, uri, textHandler.toString());
-     
+      matchMetadata(metadata, mdRecord);
+      final GeneralDocument doc = (GeneralDocument) saveStrategy.generateDocumentModel(uri, uri, textHandler.toString());
+
       doc.setMetadata(mdRecord);
 
       return doc;
-    } catch (Exception e) {
+    } catch (final Exception e) {
       throw new ApplicationException("Problem while parsing file " + uri + "  -- exception: " + e.getMessage() + "\n");
     }
   }
 
   /**
    * Match the extracted metadata from TIKA to the {@link MetadataRecord}.
-   * @param metadata the {@link Metadata} of TIKA.
-   * @param mdRecord the {@link MetadataRecord}.
+   * 
+   * @param metadata
+   *          the {@link Metadata} of TIKA.
+   * @param mdRecord
+   *          the {@link MetadataRecord}.
    */
-  private void matchMetadata(Metadata metadata, MetadataRecord mdRecord) {
+  private void matchMetadata(final Metadata metadata, final MetadataRecord mdRecord) {
     @SuppressWarnings("deprecation")
     final String pageCount = metadata.get(Metadata.PAGE_COUNT);
-    if(pageCount != null) {
+    if (pageCount != null) {
       mdRecord.setPageCount(Integer.parseInt(pageCount));
-    }      
+    }
     final String type = metadata.get(Metadata.CONTENT_TYPE);
-    if(type != null) {
+    if (type != null) {
       mdRecord.setType(type);
-    }             
+    }
+    System.out.println(metadata);
   }
 }

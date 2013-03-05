@@ -34,7 +34,7 @@
 						<rdf:value>%%date_issued%%</rdf:value>
 					</dcterms:W3CDTF>
 				</dcterms:issued>			
-				<dc:publisher rdf:resource="%%publisher%%"/>
+				<dc:publisher rdf:value="%%publisher%%"/>
 				<dc:language>
 					<dcterms:ISO639-3>						
 						<rdf:value>%%language%%</rdf:value>
