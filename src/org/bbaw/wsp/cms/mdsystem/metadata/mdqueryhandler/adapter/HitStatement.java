@@ -18,24 +18,32 @@ public class HitStatement {
   private final String subject;
   private final URL predicate;
   private final String literal;
+  private final String subjParent;
+  private final URL predParent;
   private final double score;
 
   /**
    * 
    * @param subject
-   *          a {@link URL}
+   *          a {@link String}
    * @param predicate
    *          a {@link URL}
    * @param literal
    *          a {@link String}
    * @param score
    *          a {@link Double}
+   * @param subjParent
+   *          a {@link String}
+   * @param predParent
+   *          a {@link URL}
    */
-  public HitStatement(final String subject, final URL predicate, final String literal, final double score) {
+  public HitStatement(final String subject, final URL predicate, final String literal, final double score, final String subjParent, final URL predParent) {
     this.subject = subject;
     this.predicate = predicate;
     this.literal = literal;
     this.score = score;
+    this.subjParent = subjParent;
+    this.predParent = predParent;
   }
 
   /**
@@ -66,6 +74,20 @@ public class HitStatement {
     return score;
   }
 
+  /**
+   * @return the subject
+   */
+  public String getSubjParent() {
+    return subjParent;
+  }
+
+  /**
+   * @return the predicate
+   */
+  public URL getPredParent() {
+    return predParent;
+  }
+  
   /*
    * (non-Javadoc)
    * 
@@ -73,7 +95,7 @@ public class HitStatement {
    */
   @Override
   public String toString() {
-    return "\t\tHitStatement [subject=" + subject + ", predicate=" + predicate + ", literal=" + literal + ", score=" + score + "]\n";
+    return "\t\tHitStatement [subject=" + subject + ", predicate=" + predicate + ", literal=" + literal + ", score=" + score + ", subjectParent=" + subjParent + ", predicateParent=" + predParent + "]\n";
   }
 
 }

@@ -106,7 +106,15 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
           if (solution.getLiteral("score") != null) {
             score = solution.getLiteral("score").getDouble();
           }
-          final HitStatement statement = new HitStatement(subject, predicate, literal, score);
+          String subjParent = null;
+          if (solution.getResource("sParent") != null) {
+              subjParent = solution.getResource("sParent").toString();
+          }
+          URL predParent = null;
+          if (solution.getResource("pParent") != null) {
+              predParent = new URL(solution.getResource("pParent").getURI());
+          }
+          final HitStatement statement = new HitStatement(subject, predicate, literal, score, subjParent, predParent);
           hitGraph.addStatement(statement);
 
         } catch (final MalformedURLException e) {
