@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp>
+  <collection>
+    <id>IT</id>
+    <name>Iranische Texte in der Turfansammlung</name>
+    <url>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/turfanforschung/bilder/Corpus%20Fontium%20Manichaeorum.pdf</dataUrl>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/turfanforschung/bilder/PsalterBeispiel5v.pdf</dataUrl>
+      <dataUrl>http://zopeman64.bbaw.de/bbaw/Forschung/Forschungsprojekte/turfanforschung/bilder/PsalterMPSyrGrEngversesGlossarySept2012.pdf</dataUrl>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/turfanforschung/bilder/TexteMPdeutsch.pdf</dataUrl>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/turfanforschung/bilder/TextePadeutsch.pdf</dataUrl>
+      
+      
+      
+    </url>
+    <languages>ger,ira</languages>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>PDF</format>
+    </formats> 
+  </collection>
+</wsp>
+

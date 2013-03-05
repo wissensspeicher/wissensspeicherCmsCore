@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp>
+  <collection>
+    <id>Nl</id>
+    <name>Newsletter Nr. 1 (Nr. 2, Nr. 3, Nr. 4, Nr. 5)</name>
+    <url>
+      <dataUrl>http://www.oekosystemleistungen.de/dateien/Newsletter1_Dezember2009_Oekosystemleistungen.pdf</dataUrl>
+      <dataUrl>http://www.oekosystemleistungen.de/dateien/Newsletter1_Sep2010_EcosystemServices.pdf</dataUrl>
+      <dataUrl>http://www.oekosystemleistungen.de/dateien/Newsletter2_Juli2010_Oekosystemleistungen.pdf</dataUrl>
+      <dataUrl>http://www.oekosystemleistungen.de/dateien/Newsletter2_dec2010_EcosystemServices.pdf</dataUrl>
+      <dataUrl>http://www.oekosystemleistungen.de/dateien/Newsletter2_Juli2010_Oekosystemleistungen.pdf</dataUrl>
+      <dataUrl>http://www.oekosystemleistungen.de/dateien/newsletter-no.-3</dataUrl>
+      <dataUrl>http://www.oekosystemleistungen.de/dateien/newsletter-nr.-4/</dataUrl>
+      <dataUrl>http://www.oekosystemleistungen.de/dateien/newsletter-no.-4</dataUrl>
+      <dataUrl>http://www.oekosystemleistungen.de/dateien/newsletter-nr.-5</dataUrl>
+      
+    </url>
+    <languages>ger,eng</languages>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>PDF</format>
+    </formats> 
+  </collection>
+</wsp>
+

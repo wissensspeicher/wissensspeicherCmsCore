@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp>
+  <collection>
+    <id>PS3</id>
+    <name>Politische Schriften, Bd. VI, 3</name>
+    <url>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/IV3tit.pdf</dataUrl>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/IV3text.pdf</dataUrl>
+    </url>
+    <languages>ger,lat</languages>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>PDF</format>
+    </formats> 
+  </collection>
+</wsp>
+
