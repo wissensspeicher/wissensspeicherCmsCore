@@ -69,8 +69,7 @@ public class WspRdfStore {
 	 * @param pathtoSave
 	 * @throws ApplicationException
 	 */
-	public void createStore(final String pathtoSave)
-			throws ApplicationException {
+	public void createStore(final String pathtoSave) throws ApplicationException {
 		System.out.println("create Store");
 		directory = pathtoSave;
 		dataset = TDBFactory.createDataset(directory);
