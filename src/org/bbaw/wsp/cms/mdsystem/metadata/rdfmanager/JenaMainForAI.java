@@ -151,7 +151,7 @@ public class JenaMainForAI {
 	 */
 	private void generatePath() {
 		String[] array = destination.split("[" + seperator + "]+");
-
+		storeLocation = "";
 		for (int i = 0; i < array.length - 1; ++i) {
 			storeLocation += seperator + array[i];
 
