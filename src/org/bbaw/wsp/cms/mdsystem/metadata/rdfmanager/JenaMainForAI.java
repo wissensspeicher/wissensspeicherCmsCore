@@ -33,11 +33,8 @@ public class JenaMainForAI {
 	 */
 	static final String oreTestBriefe = "/home/juergens/WspEtc/rdfData/Briefe.rdf";
 	static final String oreTestSaschas = "/home/juergens/WspEtc/rdfData/AvH-Briefwechsel-Ehrenberg-sascha.rdf";
-	// static final String oreBiblio =
-	// "/home/juergens/WspEtc/rdfData/AvHBiblio.rdf";
+
 	static final String oreBiblioNeu = "/home/juergens/WspEtc/rdfData/BiblioNeu.rdf";
-	private static final String EDOC = "C:/Dokumente und Einstellungen/wsp-shk1/Eigene Dateien/Development/ParserTest/XSLTTest/outputs/v2_29_11_2012/eDocs";
-	private static final String MODS = "C:/Dokumente und Einstellungen/wsp-shk1/Eigene Dateien/Development/ParserTest/XSLTTest/outputs/v2_29_11_2012/mods";
 
 	private Model model;
 	private RdfHandler rdfHandler;
@@ -342,6 +339,10 @@ public class JenaMainForAI {
 
 	}
 
+	/**
+	 * Method rewrites the .store file if the old one is not valid for the
+	 * operating system
+	 */
 	private void checkValidSystem() {
 		if (pathHandler.checkForNewRunningSystem(System.getProperty("os.name"))) {
 
@@ -387,6 +388,7 @@ public class JenaMainForAI {
 	 * 
 	 * @throws IOException
 	 */
+	@SuppressWarnings("unused")
 	private void doYourWork() throws IOException {
 		// createNamedModelsFromOreSets("/home/juergens/WspEtc/rdfData/ModsToRdfTest");
 		if (new File(source).isDirectory()) {
@@ -533,6 +535,7 @@ public class JenaMainForAI {
 	/**
 	 * simply prints all named Models in a dataset
 	 */
+	@SuppressWarnings("unused")
 	private void getAllNamedModelsInDataset() {
 		wspStore.openDataset();
 		Iterator<String> ite = dataset.listNames();
@@ -553,6 +556,7 @@ public class JenaMainForAI {
 	/**
 	 * TODO
 	 */
+	@SuppressWarnings("unused")
 	private void createInferenceModel() {
 		// create inference model
 		wspStore.createInfModel(dataset.getDefaultModel());
@@ -572,6 +576,7 @@ public class JenaMainForAI {
 	/**
 	 * try your sparql SELECT here this should later be done by fuseki over http
 	 */
+	@SuppressWarnings("unused")
 	private void queryPerSparqlSelect() {
 		wspStore.openDataset();
 		String sparqlSelect = "select ?s ?p ?o where {?s ?p ?o}";
@@ -595,6 +600,7 @@ public class JenaMainForAI {
 	/**
 	 * TODO still considering if we really need this
 	 */
+	@SuppressWarnings("unused")
 	private void reify() {
 		// turn triples into quads
 		wspStore.openDataset();
@@ -614,6 +620,7 @@ public class JenaMainForAI {
 	/**
 	 * updates a namedModel
 	 */
+	@SuppressWarnings("unused")
 	private void updateModelBySparqlInsert() {
 		String updateIntoNamed = "PREFIX dc:  <http://purl.org/dc/elements/1.1/> "
 				+ "INSERT DATA INTO <http://wsp.bbaw.de/oreTestBriefe>"
@@ -630,6 +637,7 @@ public class JenaMainForAI {
 	 * get all statements by sparql SELECT from a single named Graph this should
 	 * later be done by fuseki over http
 	 */
+	@SuppressWarnings("unused")
 	private void queryAllBySelect() {
 		wspStore.openDataset();
 		// select all FROM
@@ -650,6 +658,7 @@ public class JenaMainForAI {
 	/**
 	 * same as queryAllBySelect() but without Sparql
 	 */
+	@SuppressWarnings("unused")
 	private void queryAllStatementsFromJenaCode() {
 		wspStore.openDataset();
 		Model briefe = dataset.getNamedModel("http://wsp.bbaw.de/oreTestBriefe");
@@ -670,7 +679,8 @@ public class JenaMainForAI {
 	 * 
 	 * @param res
 	 */
-	private void writeToDotLang(String res) {
+	@SuppressWarnings("unused")
+	private void writeToDotLang(final String res) {
 		try {
 			OutputStream outputStream = new FileOutputStream(new File(
 					"oreTestBriefe.dot"));
