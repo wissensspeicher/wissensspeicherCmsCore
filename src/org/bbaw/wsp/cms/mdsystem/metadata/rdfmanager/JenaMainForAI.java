@@ -71,15 +71,8 @@ public class JenaMainForAI {
 			public void run() {
 				if (newSet) {
 
-					String[] array = destination.split("[" + seperator + "]+");
-
-					for (int i = 0; i < array.length - 1; ++i) {
-						storeLocation += seperator + array[i];
-
-					}
-					storeLocation = storeLocation.substring(1);
-
 					try {
+						generatePath();
 						pathHandler.setPath(storeLocation);
 						savePathFile();
 					} catch (IOException e) {
@@ -151,6 +144,19 @@ public class JenaMainForAI {
 
 		editStore.run();
 
+	}
+
+	/**
+	 * is used to build a Valid path for the TripleStore save location
+	 */
+	private void generatePath() {
+		String[] array = destination.split("[" + seperator + "]+");
+
+		for (int i = 0; i < array.length - 1; ++i) {
+			storeLocation += seperator + array[i];
+
+		}
+		storeLocation = storeLocation.substring(1);
 	}
 
 	public void saveModel(final String name, final String fileName) {
@@ -348,6 +354,7 @@ public class JenaMainForAI {
 
 			try {
 				new File(destination).delete();
+				generatePath();
 				pathHandler = new StorePathHandler();
 				pathHandler.setPath(storeLocation);
 				savePathFile();
