@@ -45,12 +45,13 @@ public class JenaMainForAI {
 	private Dataset dataset;
 	private String source;
 	private String destination;
+	private String storeLocation = "";
+	private final String seperator = System.getProperty("file.separator");
 
 	private StorePathHandler pathHandler = new StorePathHandler();
 
 	/**
-	 * needs to be instantiated from outside e.g.
-	 * org.bbaw.wsp.cms.test.TestLocal
+	 * needs to be instantiated from outside e.g. org.bbaw.wsp.cms.test.TestLocal
 	 * 
 	 */
 	public JenaMainForAI() {
@@ -72,27 +73,17 @@ public class JenaMainForAI {
 			@Override
 			public void run() {
 				if (newSet) {
-					String temp = "";
-					if (System.getProperty("os.name").startsWith("Windows")) {
 
-						String[] array = destination.split("[\\]+");
-						for (int i = 0; i < array.length - 1; ++i) {
-							temp += "\\" + array[i];
-						}
-						temp = temp.substring(1);
+					String[] array = destination.split("[" + seperator + "]+");
 
-					} else {
-						String[] array = destination.split("[/]+");
+					for (int i = 0; i < array.length - 1; ++i) {
+						storeLocation += seperator + array[i];
 
-						for (int i = 0; i < array.length - 1; ++i) {
-							temp += "/" + array[i];
-
-						}
-						temp = temp.substring(1);
 					}
+					storeLocation = storeLocation.substring(1);
 
 					try {
-						pathHandler.setPath(temp);
+						pathHandler.setPath(storeLocation);
 						savePathFile();
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
@@ -251,9 +242,9 @@ public class JenaMainForAI {
 	 * @return
 	 */
 	private String buildValidXMLName(String model, String directory) {
-		String[] temp = model.split("[://.]+");
-		return directory + "/" + temp[temp.length - 2] + temp[temp.length - 1]
-				+ ".xml";
+		String[] temp = model.split("[:" + seperator + ".]+");
+		return directory + seperator + temp[temp.length - 2]
+				+ temp[temp.length - 1] + ".xml";
 
 	}
 
@@ -347,6 +338,24 @@ public class JenaMainForAI {
 		pathHandler = (StorePathHandler) ois.readObject();
 
 		ois.close();
+		checkValidSystem();
+
+	}
+
+	private void checkValidSystem() {
+		if (pathHandler.checkForNewRunningSystem(System.getProperty("os.name"))) {
+
+			try {
+				new File(destination).delete();
+				pathHandler = new StorePathHandler();
+				pathHandler.setPath(storeLocation);
+				savePathFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
 
 	}
 
@@ -458,8 +467,7 @@ public class JenaMainForAI {
 		for (String string : data) {
 			Model freshsModel = wspStore.getFreshModel();
 			Model m = rdfHandler.fillModelFromFile(freshsModel, string);
-			String modsRdfAbout = checkifValid(rdfHandler.scanID(string),
-					string);
+			String modsRdfAbout = checkifValid(rdfHandler.scanID(string), string);
 			try {
 				wspStore.addNamedModelToWspStore(modsRdfAbout, m);
 			} catch (ApplicationException e) {
@@ -569,8 +577,7 @@ public class JenaMainForAI {
 		String sparqlSelect = "select ?s ?p ?o where {?s ?p ?o}";
 		// String sparqlSelect =
 		// "PREFIX foaf:<http://xmlns.com/foaf/0.1/> SELECT ?familyName FROM NAMED <http://wsp.bbaw.de/oreTestBriefe> WHERE {?x foaf:familyName  ?familyName}";
-		QueryExecution quExec = rdfHandler.selectSomething(sparqlSelect,
-				dataset);
+		QueryExecution quExec = rdfHandler.selectSomething(sparqlSelect, dataset);
 		// QueryExecution quExec = QueryExecutionFactory.create(
 		// "PREFIX foaf:<http://xmlns.com/foaf/0.1/> SELECT ?familyName FROM NAMED <http://wsp.bbaw.de/oreTestBriefe> WHERE {?x foaf:familyName  ?familyName}"
 		// , dataset) ;
@@ -591,8 +598,7 @@ public class JenaMainForAI {
 	private void reify() {
 		// turn triples into quads
 		wspStore.openDataset();
-		Model modsModel = dataset
-				.getNamedModel("http://wsp.bbaw.de/oreTestBriefe");
+		Model modsModel = dataset.getNamedModel("http://wsp.bbaw.de/oreTestBriefe");
 		StmtIterator stit = modsModel.listStatements();
 		while (stit.hasNext()) {
 			Statement state = stit.next();
@@ -628,7 +634,8 @@ public class JenaMainForAI {
 		wspStore.openDataset();
 		// select all FROM
 		QueryExecution quecExec = QueryExecutionFactory
-				.create("SELECT * FROM NAMED <http://pom.bbaw.de:8085/exist/rest/db/wsp/avh/avhBib.xml> WHERE { GRAPH <http://pom.bbaw.de:8085/exist/rest/db/wsp/avh/avhBib.xml> { ?s ?p ?o } }",
+				.create(
+						"SELECT * FROM NAMED <http://pom.bbaw.de:8085/exist/rest/db/wsp/avh/avhBib.xml> WHERE { GRAPH <http://pom.bbaw.de:8085/exist/rest/db/wsp/avh/avhBib.xml> { ?s ?p ?o } }",
 						dataset);
 		ResultSet resu = quecExec.execSelect();
 		System.out.println("_____________check_reults_______________");
@@ -645,8 +652,7 @@ public class JenaMainForAI {
 	 */
 	private void queryAllStatementsFromJenaCode() {
 		wspStore.openDataset();
-		Model briefe = dataset
-				.getNamedModel("http://wsp.bbaw.de/oreTestBriefe");
+		Model briefe = dataset.getNamedModel("http://wsp.bbaw.de/oreTestBriefe");
 		StmtIterator erator = briefe.listStatements();
 		while (erator.hasNext()) {
 			Statement st = erator.next();
