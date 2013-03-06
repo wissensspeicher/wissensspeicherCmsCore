@@ -300,7 +300,8 @@ public class JenaMainForAI {
 	}
 
 	/**
-	 * Removes the given named model from the dataset of the given location
+	 * Removes the given named model of the dataset, which is in the given
+	 * location
 	 * 
 	 * @param name
 	 */
