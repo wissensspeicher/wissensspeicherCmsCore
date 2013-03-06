@@ -91,8 +91,11 @@ public class DocumentHandler {
       FileUtils.copyURLToFile(srcUrl, docDestFile, 100000, 100000);
       MetadataRecord mdRecord = docOperation.getMdRecord();
       mdRecord.setLastModified(new Date());
-      String mimeType = getMimeType(docId);
-      mdRecord.setType(mimeType);
+      String mimeType = mdRecord.getType();
+      if (mimeType == null) {
+        mimeType = getMimeType(docId);
+        mdRecord.setType(mimeType);
+      }
       String docType = null;
       XQueryEvaluator xQueryEvaluator = null;
       if (docIsXml) {
