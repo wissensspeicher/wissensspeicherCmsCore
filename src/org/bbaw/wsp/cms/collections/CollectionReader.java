@@ -102,6 +102,17 @@ public class CollectionReader {
         if(collectionDataUrlPrefix != null) {
           collection.setDataUrlPrefix(collectionDataUrlPrefix);
         }
+        String formatsStr = xQueryEvaluator.evaluateAsStringValueJoined(configFileUrl, "/wsp/collection/formats/format", "###");
+        ArrayList<String> formatsArrayList = new ArrayList<String>();
+        if(formatsStr != null) {
+          String[] formats = formatsStr.split("###");
+          for (int i=0; i<formats.length; i++) {
+            String format = formats[i].trim().toLowerCase();
+            if (! format.isEmpty())
+              formatsArrayList.add(format);
+          }
+        }
+        collection.setFormats(formatsArrayList);
         String fieldsStr = xQueryEvaluator.evaluateAsStringValueJoined(configFileUrl, "/wsp/collection/fields/field", "###");
         ArrayList<String> fieldsArrayList = new ArrayList<String>();
         if(fieldsStr != null) {
