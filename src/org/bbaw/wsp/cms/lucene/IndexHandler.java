@@ -524,9 +524,11 @@ public class IndexHandler {
           }
           docs.add(doc);
         }
+        int sizeTotalDocuments = documentsIndexReader.numDocs();
         if (docs != null) {
           hits = new Hits(docs, from, to);
           hits.setSize(resultDocs.scoreDocs.length);
+          hits.setSizeTotalDocuments(sizeTotalDocuments);
           hits.setQuery(morphQuery);
         }
       }
