@@ -91,18 +91,20 @@ public class CollectionManager {
   private void updateCollection(Collection collection, boolean forceUpdate) throws ApplicationException {
     boolean isUpdateNecessary = collection.isUpdateNecessary();
     if (isUpdateNecessary || forceUpdate) {
-      String[] collectionDataUrls = collection.getDataUrls();
+      WspUrl[] collectionDataUrls = collection.getDataUrls();
       String excludesStr = collection.getExcludesStr();
       if (collectionDataUrls != null) {
         List<String> collectionDocumentUrls = new ArrayList<String>();
         for (int i=0; i<collectionDataUrls.length; i++) {
-          String url = collectionDataUrls[i];
-          if (url.endsWith("/")) {
-            url = url.substring(0, url.length() - 1);
-            List<String> collectionDocumentUrlsTemp = extractDocumentUrls(url, excludesStr);
+          WspUrl wspUrl = collectionDataUrls[i];
+          String urlStr = wspUrl.getUrl();
+          if (wspUrl.isEXistDir()) {
+            if (urlStr.endsWith("/"))
+              urlStr = urlStr.substring(0, urlStr.length() - 1);
+            List<String> collectionDocumentUrlsTemp = extractDocumentUrls(urlStr, excludesStr);
             collectionDocumentUrls.addAll(collectionDocumentUrlsTemp);
           } else {
-            collectionDocumentUrls.add(url);
+            collectionDocumentUrls.add(urlStr);
           }
         }
         collection.setDocumentUrls(collectionDocumentUrls);
