@@ -4,13 +4,11 @@
     <id>GDA</id>
     <name>Grundsätze der Abschätzung möglicher gesundheitlicher Wirkungen gentechnisch veränderter Organismen</name>
     <url>
-      <DataUrl>http://www.gentechnologiebericht.de/gen/themen/gruene-gentechnologie/resolveuid/725d481877c7c24355c0c8e7e64963e4</DataUrl>
-       </url>
-    
+      <dataUrl>http://www.gentechnologiebericht.de/gen/themen/gruene-gentechnologie/resolveuid/725d481877c7c24355c0c8e7e64963e4</dataUrl>
+    </url>
     <mainLanguage>ger</mainLanguage>
     <formats>
       <format>PDF</format>
     </formats>
-    
   </collection>
 </wsp>

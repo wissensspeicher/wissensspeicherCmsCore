@@ -7,9 +7,9 @@
     <url>
       <webBaseUrl>http://www.jdg-online.de</webBaseUrl>
       <!-- Homepage -->
-      <dataUrl>http://www.jdg-online.de/index.html</dataUrl>
+      <dataUrl>http://www.jdg-online.de</dataUrl>
       <!-- XML-Texte -->
-      <dataUrl>http://telota.bbaw.de/exist/servlet/db/JDG/</dataUrl>
+      <dataUrl type="eXistDir">http://telota.bbaw.de/exist/servlet/db/JDG/</dataUrl>
       <exclude>scripts</exclude>
     </url>
     <languages>ger</languages>

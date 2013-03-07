@@ -9,7 +9,7 @@
       <!-- Homepage -->
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/cvma/de/Startseite/index.html</dataUrl>
       <!-- XML-Texte -->
-      <dataUrl>http://telota.bbaw.de/exist/rest/db/cvma/</dataUrl>
+      <dataUrl type="eXistDir">http://telota.bbaw.de/exist/rest/db/cvma/</dataUrl>
       <exclude>scripts</exclude>
     </url>
     <languages>ger</languages>

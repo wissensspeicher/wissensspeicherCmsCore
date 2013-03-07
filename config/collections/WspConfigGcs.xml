@@ -9,7 +9,7 @@
       <!-- Homepage -->
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/de/Startseite/index.html</dataUrl>
       <!-- XML-Texte -->
-      <dataUrl>http://telota.bbaw.de/exist/rest/db/gcs/</dataUrl>
+      <dataUrl type="eXistDir">http://telota.bbaw.de/exist/rest/db/gcs/</dataUrl>
       <exclude>scripts</exclude>
     </url>
     <languages>ger, grc</languages>

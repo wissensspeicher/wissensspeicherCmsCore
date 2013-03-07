@@ -7,7 +7,7 @@
     <url>
       <webBaseUrl>http://kant.bbaw.de</webBaseUrl>
       <!-- XML-Texte -->
-      <dataUrl>http://telota.bbaw.de/exist/rest/db/kant/</dataUrl>
+      <dataUrl type="eXistDir">http://telota.bbaw.de/exist/rest/db/kant/</dataUrl>
       <exclude>scripts</exclude>
     </url>
     <languages>ger</languages>
