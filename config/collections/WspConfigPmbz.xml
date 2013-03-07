@@ -9,7 +9,7 @@
       <!-- Homepage -->
       <dataUrl>http://pmbz.bbaw.de/index.html</dataUrl>
       <!-- XML-Texte -->
-      <dataUrl>http://telota.bbaw.de/exist/rest/db/pmbz/</dataUrl>
+      <dataUrl type="eXistDir">http://telota.bbaw.de/exist/rest/db/pmbz/</dataUrl>
       <exclude>scripts</exclude>
     </url>
     <languages>ger</languages>

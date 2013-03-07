@@ -7,7 +7,7 @@
     <url>
       <webBaseUrl>http://corpuscoranicum.de/kommentar/index/sure</webBaseUrl>
       <!-- XML-Texte -->
-      <dataUrl>http://telotadev.bbaw.de:8085/exist/rest/db/Koran/</dataUrl>
+      <dataUrl type="eXistDir">http://telotadev.bbaw.de:8085/exist/rest/db/Koran/</dataUrl>
       <!-- this user is only needed for the parent directory: http://telotadev.bbaw.de:8085/exist/rest/db/   -->
       <user>
         <name>koran</name>

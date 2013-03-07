@@ -9,7 +9,7 @@
       <!-- Homepage -->
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/dtm/de/Startseite/index.html</dataUrl>
       <!-- XML-Texte -->
-      <dataUrl>http://telota.bbaw.de/exist/rest/db/gwb/</dataUrl>
+      <dataUrl type="eXistDir">http://telota.bbaw.de/exist/rest/db/gwb/</dataUrl>
       <exclude>scripts</exclude>
       <exclude>test</exclude>
     </url>

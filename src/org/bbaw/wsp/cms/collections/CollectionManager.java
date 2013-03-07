@@ -2,7 +2,9 @@ package org.bbaw.wsp.cms.collections;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.FileNameMap;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -89,18 +91,20 @@ public class CollectionManager {
   private void updateCollection(Collection collection, boolean forceUpdate) throws ApplicationException {
     boolean isUpdateNecessary = collection.isUpdateNecessary();
     if (isUpdateNecessary || forceUpdate) {
-      String[] collectionDataUrls = collection.getDataUrls();
+      WspUrl[] collectionDataUrls = collection.getDataUrls();
       String excludesStr = collection.getExcludesStr();
       if (collectionDataUrls != null) {
         List<String> collectionDocumentUrls = new ArrayList<String>();
         for (int i=0; i<collectionDataUrls.length; i++) {
-          String url = collectionDataUrls[i];
-          if (url.endsWith("/")) {
-            url = url.substring(0, url.length() - 1);
-            List<String> collectionDocumentUrlsTemp = extractDocumentUrls(url, excludesStr);
+          WspUrl wspUrl = collectionDataUrls[i];
+          String urlStr = wspUrl.getUrl();
+          if (wspUrl.isEXistDir()) {
+            if (urlStr.endsWith("/"))
+              urlStr = urlStr.substring(0, urlStr.length() - 1);
+            List<String> collectionDocumentUrlsTemp = extractDocumentUrls(urlStr, excludesStr);
             collectionDocumentUrls.addAll(collectionDocumentUrlsTemp);
           } else {
-            collectionDocumentUrls.add(url);
+            collectionDocumentUrls.add(urlStr);
           }
         }
         collection.setDocumentUrls(collectionDocumentUrls);
@@ -210,11 +214,31 @@ public class CollectionManager {
           String prefix = collection.getDataUrlPrefix();
           if (prefix == null)
             prefix = "/exist/rest/db";
-          if(uriPath.startsWith(prefix)){
+          if (uriPath.startsWith(prefix)) {
             uriPath = uriPath.substring(prefix.length());
+          }
+          if (! uriPath.matches(".*\\.[^/]+")) {  // no file with extension (such as a.xml or b.pdf) but a directory: then a special default file-name is used in docId
+            HttpURLConnection connection = (HttpURLConnection) uri.openConnection();
+            connection.setRequestMethod("HEAD");
+            connection.connect();
+            String mimeType = connection.getContentType();
+            String fileExtension = "html";
+            if (mimeType != null && mimeType.contains("html"))
+              fileExtension = "html";
+            else if (mimeType != null && mimeType.contains("pdf"))
+              fileExtension = "pdf";
+            else if (mimeType != null && mimeType.contains("xml"))
+              fileExtension = "xml";
+            int pos = i + 1;
+            String fileName = "indexxx" + pos + "." + fileExtension;
+            if (uriPath.endsWith("/"))
+              uriPath = uriPath + fileName;
+            else
+              uriPath = uriPath + "/" + fileName;
           }
           String docId = "/" + collectionId + uriPath;
           String mimeType = getMimeType(docId);
+          mdRecord.setType(mimeType);
           mdRecord.setDocId(docId);
           mdRecord.setUri(docUrl);
           // if mimeType is not xml then the docUrl is also the webUri
@@ -226,6 +250,8 @@ public class CollectionManager {
         }
       }
     } catch (MalformedURLException e) {
+      throw new ApplicationException(e);
+    } catch (IOException e) {
       throw new ApplicationException(e);
     }
     return mdRecords;
@@ -239,13 +265,15 @@ public class CollectionManager {
       Document configFileDocument = builder.parse(configFile);
       NodeList updateNodeList = configFileDocument.getElementsByTagName("update");
       Node n = updateNodeList.item(0);
-      if (update)
-        n.setTextContent("true");
-      else 
-        n.setTextContent("false");
-      FileOutputStream os = new FileOutputStream(configFile);
-      XMLSerializer ser = new XMLSerializer(os, null);
-      ser.serialize(configFileDocument);  //  Vorsicht: wenn es auf true ist: es wird alles neu indexiert
+      if (n != null) {
+        if (update)
+          n.setTextContent("true");
+        else 
+          n.setTextContent("false");
+        FileOutputStream os = new FileOutputStream(configFile);
+        XMLSerializer ser = new XMLSerializer(os, null);
+        ser.serialize(configFileDocument);  //  Vorsicht: wenn es auf true ist: es wird alles neu indexiert
+      }
     } catch (Exception e) {
       throw new ApplicationException(e);
     }

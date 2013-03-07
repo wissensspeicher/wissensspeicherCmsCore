@@ -9,7 +9,7 @@
       <!-- Homepage -->
       <dataUrl>http://akademieregistres.bbaw.de/indexmehr.html</dataUrl>
       <!-- XML-Texte -->
-      <dataUrl>http://telota.bbaw.de:9979/exist/rest/db/registres/</dataUrl>
+      <dataUrl type="eXistDir">http://telota.bbaw.de:9979/exist/rest/db/registres/</dataUrl>
       <exclude>pages</exclude>
       <exclude>styles</exclude>
       <exclude>scripts</exclude>

@@ -6,12 +6,11 @@
     <url>
       <dataUrl>http://cmg.bbaw.de/online-publikationen/hippokrates_2013_02.pdf</dataUrl>
       <dataUrl>http://cmg.bbaw.de/online-publikationen/Galen-Bibliographie_2012_08_28.pdf</dataUrl>
-       </url>
+    </url>
     <languages>ger, lat</languages>
     <mainLanguage>ger</mainLanguage>
     <formats>
       <format>PDF</format>
     </formats>
-    
   </collection>
 </wsp>

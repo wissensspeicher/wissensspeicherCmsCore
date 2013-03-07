@@ -7,9 +7,9 @@
     <url>
       <webBaseUrl>http://telota.bbaw.de/ig</webBaseUrl>
       <!-- Homepage -->
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/ig/de/Ueberblick/index.html</dataUrl>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/ig/de/Ueberblick</dataUrl>
       <!-- Xml-Texte -->
-      <dataUrl>http://telota.bbaw.de/exist/rest/db/ig/texts/</dataUrl>
+      <dataUrl type="eXistDir">http://telota.bbaw.de/exist/rest/db/ig/texts/</dataUrl>
       <exclude>pages</exclude>
       <exclude>scripts</exclude>
       <exclude>svg</exclude>
