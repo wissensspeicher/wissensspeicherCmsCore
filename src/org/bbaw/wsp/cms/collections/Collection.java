@@ -9,8 +9,8 @@ import org.bbaw.wsp.cms.document.XQuery;
 public class Collection {
   private String id;
   private String name;
-  private String[] dataUrls;  // urls of data (could also be starting url)
   private String webBaseUrl;  // web base url 
+  private WspUrl[] dataUrls;  // urls of data (could also be starting url (with type "eXist")
   private String dataUrlPrefix;  // prefix of url which is not relevant as id 
   private String[] metadataUrls;  // metadata urls for fetching records
   private String metadataUrlPrefix;  // prefix of metadataUrl which is not relevant as id
@@ -63,11 +63,11 @@ public class Collection {
     this.name = name;
   }
 
-  public String[] getDataUrls() {
+  public WspUrl[] getDataUrls() {
     return dataUrls;
   }
 
-  public void setDataUrls(String[] dataUrls) {
+  public void setDataUrls(WspUrl[] dataUrls) {
     this.dataUrls = dataUrls;
   }
 
