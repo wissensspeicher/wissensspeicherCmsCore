@@ -43,13 +43,13 @@ public class MdSystemQueryHandler {
       e.printStackTrace();
     }
     // sparqlAdapter = new SparqlAdapter(store.getDataset());
-    String query = "Wissenschaftsforschung";
-    ArrayList<QueryTarget> concepts = getConcept(query);
+    String query = "Marx";
+    ArrayList<MdQueryResult> concepts = getConcept(query);
     createJson(query, concepts, true);
   }
 
   public void receiveQueryFromGui(final String query) {
-    final ArrayList<QueryTarget> resList = getConcept(query);
+    final ArrayList<MdQueryResult> resList = getConcept(query);
     if (!resList.isEmpty()) {
       // wenn vorhaben identifiziert wurde
       try {
@@ -63,13 +63,13 @@ public class MdSystemQueryHandler {
 
   }
 
-  public ArrayList<QueryTarget> getConcept(final String query) {
+  public ArrayList<MdQueryResult> getConcept(final String query) {
     identifier.initIdentifying(query, ConceptIdentfierSearchMode.METHODE_OR);
-    ArrayList<QueryTarget> results = identifier.getResultList();
+    ArrayList<MdQueryResult> results = identifier.getResultList();
     return results;
   }
 
-  public void createJson(String query, ArrayList<QueryTarget> concepts, boolean conceptSearch){
+  public void createJson(String query, ArrayList<MdQueryResult> concepts, boolean conceptSearch){
       WspJsonEncoder jsonEncoder = WspJsonEncoder.getInstance();
       jsonEncoder.clear();
       jsonEncoder.putStrings("searchTerm", query);
