@@ -217,9 +217,8 @@ public class CollectionManager {
           if (uriPath.startsWith(prefix)) {
             uriPath = uriPath.substring(prefix.length());
           }
-          if (! uriPath.matches(".*\\.[^/]+")) {  // no file with extension (such as a.xml or b.pdf) but a directory: then a special default file-name is used in docId
+          if (! uriPath.matches(".*\\.[^/-]+")) {  // no file with extension (such as a.xml or b.pdf) but a directory: then a special default file-name is used in docId
             HttpURLConnection connection = (HttpURLConnection) uri.openConnection();
-            connection.setRequestMethod("HEAD");
             connection.connect();
             String mimeType = connection.getContentType();
             String fileExtension = "html";

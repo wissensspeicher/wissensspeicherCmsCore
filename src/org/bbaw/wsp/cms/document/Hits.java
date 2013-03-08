@@ -10,6 +10,7 @@ public class Hits {
   private int from;
   private int to;
   private int size = 0;
+  private int sizeTotalDocuments;
   
   public Hits(ArrayList<Document> hits, int from, int to) {
     this.hits = hits;
@@ -23,6 +24,14 @@ public class Hits {
 
   public void setSize(int size) {
     this.size = size;
+  }
+
+  public int getSizeTotalDocuments() {
+    return sizeTotalDocuments;
+  }
+
+  public void setSizeTotalDocuments(int sizeTotalDocuments) {
+    this.sizeTotalDocuments = sizeTotalDocuments;
   }
 
   public Query getQuery() {
