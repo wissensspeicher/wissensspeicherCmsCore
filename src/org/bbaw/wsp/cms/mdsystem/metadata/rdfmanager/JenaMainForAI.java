@@ -43,7 +43,7 @@ public class JenaMainForAI {
 	private String source;
 	private String destination;
 	private String storeLocation = "";
-	private final String seperator = System.getProperty("file.separator");
+	private String seperator;
 
 	private StorePathHandler pathHandler = new StorePathHandler();
 
@@ -52,6 +52,10 @@ public class JenaMainForAI {
 	 * 
 	 */
 	public JenaMainForAI() {
+		seperator = System.getProperty("file.separator");
+		if (seperator.equals("\\")) {
+			seperator = "\\\\";
+		}
 
 	}
 
