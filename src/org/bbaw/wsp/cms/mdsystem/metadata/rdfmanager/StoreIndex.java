@@ -1,5 +1,6 @@
 package org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager;
 
+import java.io.File;
 import java.util.Iterator;
 
 import org.apache.jena.larq.HitLARQ;
@@ -37,10 +38,25 @@ public class StoreIndex {
   }
 
   /**
-   * Create a new (persistent) StoreIndex
+   * Create a new (persistent) StoreIndex within the default directory (mdsystem
+   * config)
    */
   public StoreIndex() {
     larqBuilder = new IndexBuilderString(LARQ_DIR);
+    commitIndex();
+  }
+
+  /**
+   * Create a new (persistent) StoreIndex relative to the {@link WspRdfStore}.
+   * 
+   * @param directory
+   */
+  public StoreIndex(final String directory) {
+    final File subDir = new File(new File(directory), "larqindex");
+    if (!subDir.exists()) {
+      subDir.mkdir();
+    }
+    larqBuilder = new IndexBuilderString(subDir);
     commitIndex();
   }
 
@@ -83,7 +99,7 @@ public class StoreIndex {
   public void readIndex(final String queryString) {
     System.out.println("LARQ query: " + queryString);
     final Iterator<HitLARQ> results = getCurrentIndex().search(queryString);
-    System.out.println("results : "+results.hasNext());
+    System.out.println("results : " + results.hasNext());
     while (results.hasNext()) {
       final HitLARQ doc = results.next();
       System.out.println("-----------");
