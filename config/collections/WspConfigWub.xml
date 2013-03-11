@@ -4,13 +4,11 @@
     <id>WUB</id>
     <name>Wahrnehmung und Bewertung der Gentherapie in Deutschland</name>
     <url>
-      <DataUrl>http://www.gentechnologiebericht.de/gen/themen/gentherapie/resolveuid/6f188886d421c7199877612ee80e364c</DataUrl>
-       </url>
-    
+      <dataUrl>http://www.gentechnologiebericht.de/gen/themen/gentherapie/resolveuid/6f188886d421c7199877612ee80e364c</dataUrl>
+    </url>
     <mainLanguage>ger</mainLanguage>
     <formats>
       <format>PDF</format>
     </formats>
-    
   </collection>
 </wsp>

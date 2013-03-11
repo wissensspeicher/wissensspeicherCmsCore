@@ -33,11 +33,8 @@ public class JenaMainForAI {
 	 */
 	static final String oreTestBriefe = "/home/juergens/WspEtc/rdfData/Briefe.rdf";
 	static final String oreTestSaschas = "/home/juergens/WspEtc/rdfData/AvH-Briefwechsel-Ehrenberg-sascha.rdf";
-	// static final String oreBiblio =
-	// "/home/juergens/WspEtc/rdfData/AvHBiblio.rdf";
+
 	static final String oreBiblioNeu = "/home/juergens/WspEtc/rdfData/BiblioNeu.rdf";
-	private static final String EDOC = "C:/Dokumente und Einstellungen/wsp-shk1/Eigene Dateien/Development/ParserTest/XSLTTest/outputs/v2_29_11_2012/eDocs";
-	private static final String MODS = "C:/Dokumente und Einstellungen/wsp-shk1/Eigene Dateien/Development/ParserTest/XSLTTest/outputs/v2_29_11_2012/mods";
 
 	private Model model;
 	private RdfHandler rdfHandler;
@@ -45,12 +42,13 @@ public class JenaMainForAI {
 	private Dataset dataset;
 	private String source;
 	private String destination;
+	private String storeLocation = "";
+	private final String seperator = System.getProperty("file.separator");
 
 	private StorePathHandler pathHandler = new StorePathHandler();
 
 	/**
-	 * needs to be instantiated from outside e.g.
-	 * org.bbaw.wsp.cms.test.TestLocal
+	 * needs to be instantiated from outside e.g. org.bbaw.wsp.cms.test.TestLocal
 	 * 
 	 */
 	public JenaMainForAI() {
@@ -72,27 +70,10 @@ public class JenaMainForAI {
 			@Override
 			public void run() {
 				if (newSet) {
-					String temp = "";
-					if (System.getProperty("os.name").startsWith("Windows")) {
-
-						String[] array = destination.split("[\\]+");
-						for (int i = 0; i < array.length - 1; ++i) {
-							temp += "\\" + array[i];
-						}
-						temp = temp.substring(1);
-
-					} else {
-						String[] array = destination.split("[/]+");
-
-						for (int i = 0; i < array.length - 1; ++i) {
-							temp += "/" + array[i];
-
-						}
-						temp = temp.substring(1);
-					}
 
 					try {
-						pathHandler.setPath(temp);
+						generatePath();
+						pathHandler.setPath(storeLocation);
 						savePathFile();
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
@@ -163,6 +144,19 @@ public class JenaMainForAI {
 
 		editStore.run();
 
+	}
+
+	/**
+	 * is used to build a Valid path for the TripleStore save location
+	 */
+	private void generatePath() {
+		String[] array = destination.split("[" + seperator + "]+");
+		storeLocation = "";
+		for (int i = 0; i < array.length - 1; ++i) {
+			storeLocation += seperator + array[i];
+
+		}
+		storeLocation = storeLocation.substring(1);
 	}
 
 	public void saveModel(final String name, final String fileName) {
@@ -251,9 +245,9 @@ public class JenaMainForAI {
 	 * @return
 	 */
 	private String buildValidXMLName(String model, String directory) {
-		String[] temp = model.split("[://.]+");
-		return directory + "/" + temp[temp.length - 2] + temp[temp.length - 1]
-				+ ".xml";
+		String[] temp = model.split("[:" + seperator + ".]+");
+		return directory + seperator + temp[temp.length - 2]
+				+ temp[temp.length - 1] + ".xml";
 
 	}
 
@@ -306,7 +300,8 @@ public class JenaMainForAI {
 	}
 
 	/**
-	 * Removes the given named model from the dataset of the given location
+	 * Removes the given named model of the dataset, which is in the given
+	 * location
 	 * 
 	 * @param name
 	 */
@@ -347,6 +342,29 @@ public class JenaMainForAI {
 		pathHandler = (StorePathHandler) ois.readObject();
 
 		ois.close();
+		checkValidSystem();
+
+	}
+
+	/**
+	 * Method rewrites the .store file if the old one is not valid for the
+	 * operating system
+	 */
+	private void checkValidSystem() {
+		if (pathHandler.checkForNewRunningSystem(System.getProperty("os.name"))) {
+
+			try {
+				new File(destination).delete();
+				generatePath();
+				pathHandler = new StorePathHandler();
+				pathHandler.setPath(storeLocation);
+				savePathFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
 
 	}
 
@@ -378,6 +396,7 @@ public class JenaMainForAI {
 	 * 
 	 * @throws IOException
 	 */
+	@SuppressWarnings("unused")
 	private void doYourWork() throws IOException {
 		// createNamedModelsFromOreSets("/home/juergens/WspEtc/rdfData/ModsToRdfTest");
 		if (new File(source).isDirectory()) {
@@ -458,8 +477,7 @@ public class JenaMainForAI {
 		for (String string : data) {
 			Model freshsModel = wspStore.getFreshModel();
 			Model m = rdfHandler.fillModelFromFile(freshsModel, string);
-			String modsRdfAbout = checkifValid(rdfHandler.scanID(string),
-					string);
+			String modsRdfAbout = checkifValid(rdfHandler.scanID(string), string);
 			try {
 				wspStore.addNamedModelToWspStore(modsRdfAbout, m);
 			} catch (ApplicationException e) {
@@ -525,6 +543,7 @@ public class JenaMainForAI {
 	/**
 	 * simply prints all named Models in a dataset
 	 */
+	@SuppressWarnings("unused")
 	private void getAllNamedModelsInDataset() {
 		wspStore.openDataset();
 		Iterator<String> ite = dataset.listNames();
@@ -545,6 +564,7 @@ public class JenaMainForAI {
 	/**
 	 * TODO
 	 */
+	@SuppressWarnings("unused")
 	private void createInferenceModel() {
 		// create inference model
 		wspStore.createInfModel(dataset.getDefaultModel());
@@ -564,13 +584,13 @@ public class JenaMainForAI {
 	/**
 	 * try your sparql SELECT here this should later be done by fuseki over http
 	 */
+	@SuppressWarnings("unused")
 	private void queryPerSparqlSelect() {
 		wspStore.openDataset();
 		String sparqlSelect = "select ?s ?p ?o where {?s ?p ?o}";
 		// String sparqlSelect =
 		// "PREFIX foaf:<http://xmlns.com/foaf/0.1/> SELECT ?familyName FROM NAMED <http://wsp.bbaw.de/oreTestBriefe> WHERE {?x foaf:familyName  ?familyName}";
-		QueryExecution quExec = rdfHandler.selectSomething(sparqlSelect,
-				dataset);
+		QueryExecution quExec = rdfHandler.selectSomething(sparqlSelect, dataset);
 		// QueryExecution quExec = QueryExecutionFactory.create(
 		// "PREFIX foaf:<http://xmlns.com/foaf/0.1/> SELECT ?familyName FROM NAMED <http://wsp.bbaw.de/oreTestBriefe> WHERE {?x foaf:familyName  ?familyName}"
 		// , dataset) ;
@@ -588,11 +608,11 @@ public class JenaMainForAI {
 	/**
 	 * TODO still considering if we really need this
 	 */
+	@SuppressWarnings("unused")
 	private void reify() {
 		// turn triples into quads
 		wspStore.openDataset();
-		Model modsModel = dataset
-				.getNamedModel("http://wsp.bbaw.de/oreTestBriefe");
+		Model modsModel = dataset.getNamedModel("http://wsp.bbaw.de/oreTestBriefe");
 		StmtIterator stit = modsModel.listStatements();
 		while (stit.hasNext()) {
 			Statement state = stit.next();
@@ -608,6 +628,7 @@ public class JenaMainForAI {
 	/**
 	 * updates a namedModel
 	 */
+	@SuppressWarnings("unused")
 	private void updateModelBySparqlInsert() {
 		String updateIntoNamed = "PREFIX dc:  <http://purl.org/dc/elements/1.1/> "
 				+ "INSERT DATA INTO <http://wsp.bbaw.de/oreTestBriefe>"
@@ -624,11 +645,13 @@ public class JenaMainForAI {
 	 * get all statements by sparql SELECT from a single named Graph this should
 	 * later be done by fuseki over http
 	 */
+	@SuppressWarnings("unused")
 	private void queryAllBySelect() {
 		wspStore.openDataset();
 		// select all FROM
 		QueryExecution quecExec = QueryExecutionFactory
-				.create("SELECT * FROM NAMED <http://pom.bbaw.de:8085/exist/rest/db/wsp/avh/avhBib.xml> WHERE { GRAPH <http://pom.bbaw.de:8085/exist/rest/db/wsp/avh/avhBib.xml> { ?s ?p ?o } }",
+				.create(
+						"SELECT * FROM NAMED <http://pom.bbaw.de:8085/exist/rest/db/wsp/avh/avhBib.xml> WHERE { GRAPH <http://pom.bbaw.de:8085/exist/rest/db/wsp/avh/avhBib.xml> { ?s ?p ?o } }",
 						dataset);
 		ResultSet resu = quecExec.execSelect();
 		System.out.println("_____________check_reults_______________");
@@ -643,10 +666,10 @@ public class JenaMainForAI {
 	/**
 	 * same as queryAllBySelect() but without Sparql
 	 */
+	@SuppressWarnings("unused")
 	private void queryAllStatementsFromJenaCode() {
 		wspStore.openDataset();
-		Model briefe = dataset
-				.getNamedModel("http://wsp.bbaw.de/oreTestBriefe");
+		Model briefe = dataset.getNamedModel("http://wsp.bbaw.de/oreTestBriefe");
 		StmtIterator erator = briefe.listStatements();
 		while (erator.hasNext()) {
 			Statement st = erator.next();
@@ -664,7 +687,8 @@ public class JenaMainForAI {
 	 * 
 	 * @param res
 	 */
-	private void writeToDotLang(String res) {
+	@SuppressWarnings("unused")
+	private void writeToDotLang(final String res) {
 		try {
 			OutputStream outputStream = new FileOutputStream(new File(
 					"oreTestBriefe.dot"));

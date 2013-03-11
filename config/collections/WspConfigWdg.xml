@@ -7,7 +7,7 @@
     <url>
       <webBaseUrl>http://dwb.bbaw.de</webBaseUrl>
       <!-- XML-Texte -->
-      <dataUrl>http://telota.bbaw.de/exist/rest/db/wdg/</dataUrl>
+      <dataUrl type="eXistDir">http://telota.bbaw.de/exist/rest/db/wdg/</dataUrl>
       <exclude>scripts</exclude>
     </url>
     <languages>ger</languages>

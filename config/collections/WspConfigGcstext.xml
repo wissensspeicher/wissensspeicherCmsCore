@@ -4,13 +4,11 @@
     <id>GCSText</id>
     <name>Hippokrates- und  Galenbibliographie</name>
     <url>
-      <DataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/sHLV.pdf</DataUrl>
-       </url>
-    
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/sHLV.pdf</dataUrl>
+    </url>
     <mainLanguage>ger</mainLanguage>
     <formats>
-      <format>PDF</format>
+      <format>pdf</format>
     </formats>
-    
   </collection>
 </wsp>

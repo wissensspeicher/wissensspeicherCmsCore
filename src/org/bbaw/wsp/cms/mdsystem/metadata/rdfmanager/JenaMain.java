@@ -28,13 +28,6 @@ import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
  */
 public class JenaMain {
 
-  /**
-   * examples for test purposes
-   * 
-   */
-  static final String oreTestBriefe = "/home/juergens/WspEtc/rdfData/Briefe.rdf";
-  static final String oreTestSaschas = "/home/juergens/WspEtc/rdfData/AvH-Briefwechsel-Ehrenberg-sascha.rdf";
-  static final String oreBiblioNeu = "/home/juergens/WspEtc/rdfData/BiblioNeu.rdf";
   private static final String datasetPath = MdystemConfigReader.getInstance().getConfig().getDatasetPath();
   private static final String EDOC = "C:/Dokumente und Einstellungen/wsp-shk1/Eigene Dateien/Development/ParserTest/XSLTTest/outputs/v2_29_11_2012/eDocs";
 
@@ -60,7 +53,7 @@ public class JenaMain {
     dataset = wspStore.getDataset();
     rdfHandler = new RdfHandler();
 
-//     doYourWork();
+     doYourWork();
   }
 
   /**

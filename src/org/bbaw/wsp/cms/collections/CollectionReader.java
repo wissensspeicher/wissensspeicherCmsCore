@@ -7,6 +7,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Hashtable;
 
+import net.sf.saxon.s9api.XdmItem;
+import net.sf.saxon.s9api.XdmSequenceIterator;
+import net.sf.saxon.s9api.XdmValue;
+
 import org.bbaw.wsp.cms.document.XQuery;
 import org.bbaw.wsp.cms.general.Constants;
 
@@ -89,10 +93,24 @@ public class CollectionReader {
         if(metadataUrlType != null) {
           collection.setMetadataUrlType(metadataUrlType);
         }
-        String collectionDataUrlStr = xQueryEvaluator.evaluateAsStringValueJoined(configFileUrl, "/wsp/collection/url/dataUrl", " ");
-        if(collectionDataUrlStr != null) {
-          String[] collectionDataUrl = collectionDataUrlStr.split(" ");
-          collection.setDataUrls(collectionDataUrl);
+        XdmValue xmdValueDataUrls = xQueryEvaluator.evaluate(configFileUrl, "/wsp/collection/url/dataUrl");
+        XdmSequenceIterator xmdValueDataUrlsIterator = xmdValueDataUrls.iterator();
+        WspUrl[] wspUrls = null; 
+        if(xmdValueDataUrls != null && xmdValueDataUrls.size() > 0) {
+          int i = 0;
+          wspUrls = new WspUrl[xmdValueDataUrls.size()];
+          while (xmdValueDataUrlsIterator.hasNext()) {
+            XdmItem xdmItemDataUrl = xmdValueDataUrlsIterator.next();
+            String xdmItemDataUrlStr = xdmItemDataUrl.toString();  // e.g. <dataUrl>http://bla.de/bla.xml</dataUrl>
+            String dataUrlType = xQueryEvaluator.evaluateAsString(xdmItemDataUrlStr, "string(/dataUrl/@type)");
+            String dataUrl = xdmItemDataUrl.getStringValue();
+            WspUrl wspUrl = new WspUrl(dataUrl);
+            if (dataUrlType != null && ! dataUrlType.isEmpty())
+              wspUrl.setType(dataUrlType);
+            wspUrls[i] = wspUrl;
+            i++;
+          }
+          collection.setDataUrls(wspUrls);
         }
         String webBaseUrl = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/url/webBaseUrl/text()");
         if(webBaseUrl != null) {
@@ -102,6 +120,17 @@ public class CollectionReader {
         if(collectionDataUrlPrefix != null) {
           collection.setDataUrlPrefix(collectionDataUrlPrefix);
         }
+        String formatsStr = xQueryEvaluator.evaluateAsStringValueJoined(configFileUrl, "/wsp/collection/formats/format", "###");
+        ArrayList<String> formatsArrayList = new ArrayList<String>();
+        if(formatsStr != null) {
+          String[] formats = formatsStr.split("###");
+          for (int i=0; i<formats.length; i++) {
+            String format = formats[i].trim().toLowerCase();
+            if (! format.isEmpty())
+              formatsArrayList.add(format);
+          }
+        }
+        collection.setFormats(formatsArrayList);
         String fieldsStr = xQueryEvaluator.evaluateAsStringValueJoined(configFileUrl, "/wsp/collection/fields/field", "###");
         ArrayList<String> fieldsArrayList = new ArrayList<String>();
         if(fieldsStr != null) {
