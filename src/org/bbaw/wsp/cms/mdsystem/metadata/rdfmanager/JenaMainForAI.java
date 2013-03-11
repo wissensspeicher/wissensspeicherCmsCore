@@ -44,6 +44,7 @@ public class JenaMainForAI {
 	private String destination;
 	private String storeLocation = "";
 	private String seperator;
+	private ArrayList<String> modelList = new ArrayList<String>();
 
 	private StorePathHandler pathHandler = new StorePathHandler();
 
@@ -78,6 +79,7 @@ public class JenaMainForAI {
 					try {
 						generatePath();
 						pathHandler.setPath(storeLocation);
+						getModels();
 						savePathFile();
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
@@ -261,7 +263,6 @@ public class JenaMainForAI {
 	 * @return
 	 */
 	public ArrayList<String> getModels() {
-		final ArrayList<String> liste = new ArrayList<String>();
 
 		Thread mainAction = new Thread() {
 			@Override
@@ -279,10 +280,16 @@ public class JenaMainForAI {
 					wspStore.openDataset();
 					Iterator<String> it = dataset.listNames();
 
-					while (it.hasNext()) {
-						liste.add(it.next());
+					try {
+						while (it.hasNext()) {
+							modelList.add(it.next());
 
+						}
+					} catch (Exception e) {
+						System.out.println("Jena Iterator error, took index from file");
+						modelList = pathHandler.getModelList();
 					}
+
 					wspStore.closeDataset();
 
 				} catch (ApplicationException e) {
@@ -300,7 +307,7 @@ public class JenaMainForAI {
 		};
 		mainAction.run();
 
-		return liste;
+		return modelList;
 	}
 
 	/**
@@ -318,7 +325,9 @@ public class JenaMainForAI {
 			dataset = wspStore.getDataset();
 			wspStore.openDataset();
 			dataset.removeNamedModel(name);
+			modelList.remove(name);
 			wspStore.closeDataset();
+			savePathFile();
 
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -346,6 +355,7 @@ public class JenaMainForAI {
 		pathHandler = (StorePathHandler) ois.readObject();
 
 		ois.close();
+		modelList = pathHandler.getModelList();
 		checkValidSystem();
 
 	}
@@ -358,9 +368,8 @@ public class JenaMainForAI {
 		if (pathHandler.checkForNewRunningSystem(System.getProperty("os.name"))) {
 
 			try {
-				new File(destination).delete();
+
 				generatePath();
-				pathHandler = new StorePathHandler();
 				pathHandler.setPath(storeLocation);
 				savePathFile();
 			} catch (IOException e) {
@@ -381,6 +390,7 @@ public class JenaMainForAI {
 		OutputStream fos = null;
 
 		try {
+			pathHandler.setModelList(modelList);
 			fos = new FileOutputStream(destination);
 			@SuppressWarnings("resource")
 			ObjectOutputStream o = new ObjectOutputStream(fos);
