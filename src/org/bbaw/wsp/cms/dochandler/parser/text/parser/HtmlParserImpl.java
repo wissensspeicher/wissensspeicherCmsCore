@@ -1,6 +1,8 @@
 package org.bbaw.wsp.cms.dochandler.parser.text.parser;
 
+import org.apache.tika.metadata.Metadata;
 import org.apache.tika.parser.html.HtmlParser;
+import org.bbaw.wsp.cms.document.MetadataRecord;
 
 /**
  * This class parses an HTML file. It uses the Singleton pattern. Only one
@@ -30,4 +32,17 @@ public class HtmlParserImpl extends ResourceParser {
     super(new HtmlParser());
   }
 
+  @Override
+  /*
+   * (non-Javadoc)
+   * 
+   * @see
+   * org.bbaw.wsp.cms.dochandler.parser.text.parser.ResourceParser#matchMetadata
+   * (org.apache.tika.metadata.Metadata,
+   * org.bbaw.wsp.cms.document.MetadataRecord)
+   */
+  protected void matchMetadata(final Metadata metadata, final MetadataRecord mdRecord) {
+    super.matchMetadata(metadata, mdRecord);
+    MetadataMatcher.matchDublinCore(metadata, mdRecord);
+  }
 }

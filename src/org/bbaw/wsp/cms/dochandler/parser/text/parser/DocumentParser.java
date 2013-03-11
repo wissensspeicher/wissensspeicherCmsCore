@@ -69,7 +69,7 @@ public class DocumentParser {
    * parse()-method which gets a URL to be parsed.
    */
   public DocumentParser() {
-    this.documentModelBuilder = new DocumentModelStrategy();
+    documentModelBuilder = new DocumentModelStrategy();
   }
 
   /**
@@ -85,9 +85,9 @@ public class DocumentParser {
   public IDocument parse(final String url) throws ApplicationException {
     ResourceParser parser = null;
 
-    if (EdocIndexMetadataFetcherTool.isEDocIndex(url)) {      
+    if (EdocIndexMetadataFetcherTool.isEDocIndex(url)) {
       parser = EdocParserImpl.getInstance();
-    } else if (getExtension(url).equals(EXT_PDF)) {     
+    } else if (getExtension(url).equals(EXT_PDF)) {
       parser = PdfParserImpl.getInstance();
     } else if (getExtension(url).equals(EXT_DOC)) {
       parser = DocParserImpl.getInstance();
@@ -102,7 +102,7 @@ public class DocumentParser {
     }
 
     if (parser != null) {
-      IDocument result = (IDocument) parser.parse("", url);
+      final IDocument result = (IDocument) parser.parse("", url);
       return result;
     } else {
       throw new ApplicationException("There's no parser available for this type of resource: " + getExtension(url));
@@ -126,7 +126,7 @@ public class DocumentParser {
    *          - the resource's URI.
    * @return true if the resource is an image.
    */
-  public boolean isImage(String uri) {
+  public boolean isImage(final String uri) {
     if (getExtension(uri).equals(EXT_JPG) || getExtension(uri).equals(EXT_TIFF) || getExtension(uri).equals(EXT_PNG)) {
       return true;
     }

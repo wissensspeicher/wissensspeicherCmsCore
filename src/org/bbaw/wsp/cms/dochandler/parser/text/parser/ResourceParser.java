@@ -21,7 +21,9 @@ import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
  * @date 06.09.12
  * 
  *       Last change: - ApplicationException instead of log file - Uses
- *       {@link DocumentModelStrategy} only.
+ *       {@link DocumentModelStrategy} only. - 11.03.2013: matchMetadata
+ *       modifier changed to protected so parsers can now override it and
+ *       association to {@link MetadataMatcher} added.
  * 
  */
 public abstract class ResourceParser {
@@ -101,16 +103,7 @@ public abstract class ResourceParser {
    * @param mdRecord
    *          the {@link MetadataRecord}.
    */
-  private void matchMetadata(final Metadata metadata, final MetadataRecord mdRecord) {
-    @SuppressWarnings("deprecation")
-    final String pageCount = metadata.get(Metadata.PAGE_COUNT);
-    if (pageCount != null) {
-      mdRecord.setPageCount(Integer.parseInt(pageCount));
-    }
-    final String type = metadata.get(Metadata.CONTENT_TYPE);
-    if (type != null) {
-      mdRecord.setType(type);
-    }
-    System.out.println(metadata);
+  protected void matchMetadata(final Metadata metadata, final MetadataRecord mdRecord) {
+    MetadataMatcher.matchGeneral(metadata, mdRecord);
   }
 }
