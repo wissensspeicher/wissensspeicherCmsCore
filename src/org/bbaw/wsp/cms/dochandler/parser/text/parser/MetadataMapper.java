@@ -9,7 +9,7 @@ import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 
 /**
  * 
- * This tool class offers static methods to match metadata from the
+ * This tool class offers static methods to map metadata from the
  * {@link Metadata} objects in TIKA to our {@link MetadataRecord} class.
  * 
  * @author <a href="mailto:wsp-shk1@bbaw.de">Sascha Feldmann</a>
@@ -17,7 +17,7 @@ import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
  * 
  */
 
-public class MetadataMatcher {
+public class MetadataMapper {
 
   private static final String DC_DESCRIPTION = "dc.description";
   private static final String DC_PUBLISHER = "dc.publisher";

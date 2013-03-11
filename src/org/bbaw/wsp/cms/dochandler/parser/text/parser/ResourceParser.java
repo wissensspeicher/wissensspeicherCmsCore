@@ -23,7 +23,7 @@ import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
  *       Last change: - ApplicationException instead of log file - Uses
  *       {@link DocumentModelStrategy} only. - 11.03.2013: matchMetadata
  *       modifier changed to protected so parsers can now override it and
- *       association to {@link MetadataMatcher} added.
+ *       association to {@link MetadataMapper} added.
  * 
  */
 public abstract class ResourceParser {
@@ -104,6 +104,6 @@ public abstract class ResourceParser {
    *          the {@link MetadataRecord}.
    */
   protected void matchMetadata(final Metadata metadata, final MetadataRecord mdRecord) {
-    MetadataMatcher.matchGeneral(metadata, mdRecord);
+    MetadataMapper.matchGeneral(metadata, mdRecord);
   }
 }

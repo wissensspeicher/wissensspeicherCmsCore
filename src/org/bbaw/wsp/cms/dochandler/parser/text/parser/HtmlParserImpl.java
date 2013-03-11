@@ -43,6 +43,6 @@ public class HtmlParserImpl extends ResourceParser {
    */
   protected void matchMetadata(final Metadata metadata, final MetadataRecord mdRecord) {
     super.matchMetadata(metadata, mdRecord);
-    MetadataMatcher.matchDublinCore(metadata, mdRecord);
+    MetadataMapper.matchDublinCore(metadata, mdRecord);
   }
 }
