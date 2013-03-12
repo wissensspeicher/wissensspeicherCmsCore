@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp>
+  <collection>
+    <id>pre</id>
+    <name>Probeedition online</name>
+    <url>
+      <webBaseUrl>http://pom.bbaw.de/cmg/</webBaseUrl>
+      <webBaseUrl>http://telota.bbaw.de/cmg	</webBaseUrl>
+      <dataUrl>http://telota.bbaw.de:8088/exist/servlet/db/cmg</dataUrl> 
+    </url>
+    <languages>ger, grc</languages>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>html</format>
+      <format>Jpeg</format>
+      <format>Xml</format>
+    </formats> 
+  </collection>
+</wsp>
+

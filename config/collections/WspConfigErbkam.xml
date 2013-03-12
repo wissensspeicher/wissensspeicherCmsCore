@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp>
+  <collection>
+    <id>erbkam</id>
+    <name>Georg Gustav Erbkam: Tagebuch meiner egyptischen Reise</name>
+    <url>
+    <webBaseUrl>http://aaew.bbaw.de/dateien/weitere%20archive/erbkam/Erbkam.html</webBaseUrl>
+    <webBaseUrl>http://pom.bbaw.de/erbkam/</webBaseUrl>
+      <dataUrl>http://telota.bbaw.de:8088/exist/servlet/db/aaew/erbkam</dataUrl>
+    </url>
+    <languages>ger</languages>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>XML</format>
+      <format>Html</format>
+    </formats> 
+  </collection>
+</wsp>
+

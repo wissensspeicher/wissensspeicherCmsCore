@@ -8,8 +8,9 @@ hinzuzufuegen, muss eine solche Konfigurationsdatei im Verzeichnis wspCmsCore/co
 Name der Datei: WspConfigProjektkuerzel.xml
 
 Beschreibung der Pflicht-Felder
-<id> : Projektkuerzel (String ohne Blanks)
+<id> : Projektkuerzel (String ohne Blanks, kleingeschrieben)
 <name> : Name des Projekts (String, kann Blanks enthalten)
+<webBaseUrl> : URL de Projekts (meist Homepage des Projekts)
 <dataUrl> : URL der Ressource. Sie verweist auf die zu indizierende Ressource. 
   Attribute:
     type (falls nicht angegeben, wird "single" als default verwendet):
@@ -25,6 +26,7 @@ WspConfigIg.xml:
     <id>ig</id>
     <name>Inscriptiones Graecae</name>
     <url>
+      <webBaseUrl>http://telota.bbaw.de/ig</webBaseUrl>
       <dataUrl type="eXistDir">http://telota.bbaw.de/exist/rest/db/ig/texts</dataUrl>
     </url>
     <mainLanguage>ger</mainLanguage>
@@ -37,6 +39,7 @@ WspConfigMega.xml:
     <id>mega</id>
     <name>Marx-Engels-Gesamtausgabe</name>
     <url>
+      <webBaseUrl>http://telota.bbaw.de/mega</webBaseUrl>
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/de/Ueberblick/index.html</dataUrl>
 
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/i21_inhalt.pdf</dataUrl>

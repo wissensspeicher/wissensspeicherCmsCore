@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp>
+  <collection>
+    <id>cml</id>
+    <name>Aus dem Archivum Corporis Electronicum: Eine Auswahl afrikanischer Versinschriften</name>
+    <url>
+    <webBaseUrl>http://cil.bbaw.de/afrika/afrika.html</webBaseUrl>
+    
+    </url>
+    <languages>ger,lat</languages>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>Jpeg</format>
+      <format>Flash</format>
+      <format>Html</format>
+      <format>php</format>
+      
+    </formats> 
+  </collection>
+</wsp>
+
