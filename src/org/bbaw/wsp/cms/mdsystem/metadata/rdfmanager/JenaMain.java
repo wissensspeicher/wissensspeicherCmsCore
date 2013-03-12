@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.MdSystemQueryHandler;
 import org.bbaw.wsp.cms.mdsystem.util.MdystemConfigReader;
 
 import com.hp.hpl.jena.query.Dataset;
@@ -52,8 +53,7 @@ public class JenaMain {
     wspStore.createModelFactory();
     dataset = wspStore.getDataset();
     rdfHandler = new RdfHandler();
-
-     doYourWork();
+//     doYourWork();
   }
 
   /**

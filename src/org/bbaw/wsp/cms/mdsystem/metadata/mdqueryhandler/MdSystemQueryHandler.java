@@ -26,12 +26,18 @@ public class MdSystemQueryHandler {
 
   private ConceptIdentifier identifier;
   private ISparqlAdapter sparqlAdapter;
+  private static MdSystemQueryHandler mdSystemQueryHandler;
 
-  public MdSystemQueryHandler() {
-    init();
+  private MdSystemQueryHandler() {
   }
 
-  private void init() {
+  public static MdSystemQueryHandler getInstance(){
+    if(mdSystemQueryHandler == null)
+      mdSystemQueryHandler = new MdSystemQueryHandler();
+    return mdSystemQueryHandler;
+  }
+  
+  public void init() {
     final WspRdfStore store = WspRdfStore.getInstance();
     URL datasetUrl;
     try {
@@ -43,13 +49,19 @@ public class MdSystemQueryHandler {
       e.printStackTrace();
     }
     // sparqlAdapter = new SparqlAdapter(store.getDataset());
-    String query = "Marx";
-    ArrayList<MdQueryResult> concepts = getConcept(query);
-    createJson(query, concepts, true);
   }
 
+  public String queryConcepts(String query){
+    ArrayList<ConceptQueryResult> concepts = getConcept(query);
+    return createJson(query, concepts, true);
+  }
+  
+  /**
+   * toDo: move to servlet
+   * @param query
+   */
   public void receiveQueryFromGui(final String query) {
-    final ArrayList<MdQueryResult> resList = getConcept(query);
+    final ArrayList<ConceptQueryResult> resList = getConcept(query);
     if (!resList.isEmpty()) {
       // wenn vorhaben identifiziert wurde
       try {
@@ -63,13 +75,13 @@ public class MdSystemQueryHandler {
 
   }
 
-  public ArrayList<MdQueryResult> getConcept(final String query) {
+  private ArrayList<ConceptQueryResult> getConcept(final String query) {
     identifier.initIdentifying(query, ConceptIdentfierSearchMode.METHODE_OR);
-    ArrayList<MdQueryResult> results = identifier.getResultList();
+    ArrayList<ConceptQueryResult> results = identifier.getResultList();
     return results;
   }
 
-  public void createJson(String query, ArrayList<MdQueryResult> concepts, boolean conceptSearch){
+  private String createJson(String query, ArrayList<ConceptQueryResult> concepts, boolean conceptSearch){
       WspJsonEncoder jsonEncoder = WspJsonEncoder.getInstance();
       jsonEncoder.clear();
       jsonEncoder.putStrings("searchTerm", query);
@@ -96,6 +108,7 @@ public class MdSystemQueryHandler {
       jsonEncoder.putJsonObj("mdHits", jsonOuterArray);
 
       System.out.println(JSONValue.toJSONString(jsonEncoder.getJsonObject()));
+      return JSONValue.toJSONString(jsonEncoder.getJsonObject());
   }
   
   // public getSparqlHits(){

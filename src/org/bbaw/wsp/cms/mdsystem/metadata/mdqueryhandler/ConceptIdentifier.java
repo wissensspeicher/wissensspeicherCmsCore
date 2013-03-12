@@ -17,17 +17,16 @@ import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
  */
 public class ConceptIdentifier {
 
-	// Datengrundlage: wsp.normdata
-	final String path = new String(MdystemConfigReader.getInstance()
-			.getConfig().getNormdataPath());
-	ArrayList<QueryTarget> results;
+	// Datengrundlage: wsp.normdata.rdf
+	final String path = new String(MdystemConfigReader.getInstance().getConfig().getNormdataPath());
+	ArrayList<ConceptQueryResult> results;
 
 	public void initIdentifying(String query, int methode) {
 		// ConceptIdentifier identifier = new ConceptIdentifier();
-		this.results = new ArrayList<QueryTarget>();
+		this.results = new ArrayList<ConceptQueryResult>();
 		this.results = scanForElement(path, query, methode);
 
-		for (QueryTarget target : this.results) {
+		for (ConceptQueryResult target : this.results) {
 			System.out.println(target);
 		}
 
@@ -37,37 +36,32 @@ public class ConceptIdentifier {
 	private String format(final String element, final String type) {
 		String[] elementArray = element.split("[#]+");
 		String[] typeArray = type.split("[/]+");
-
-		return elementArray[elementArray.length - 1] + " - "
-				+ typeArray[typeArray.length - 1];
+		return elementArray[elementArray.length - 1] + " - "+ typeArray[typeArray.length - 1];
 	}
 
 	/**
-	 * get a source file and a search string, returns a list of @QueryTarget
+	 * get a source file and a search string, returns a list of @MdQueryResult
 	 * which contains the string
 	 * 
 	 * @param file
 	 * @param element
 	 * @return
 	 */
-	private ArrayList<QueryTarget> scanForElement(final String file,
-			final String element, int methode) {
+	private ArrayList<ConceptQueryResult> scanForElement(final String file, final String element, int methode) {
 		try {
-			RdfMetadataExtractor extractor = MetadataExtractorFactory
-					.newRdfMetadataParser(file);
+			RdfMetadataExtractor extractor = MetadataExtractorFactory.newRdfMetadataParser(file);
 			extractor.searchElements(element, methode);
-			ArrayList<QueryTarget> resultList = extractor.getResultList();
+			ArrayList<ConceptQueryResult> resultList = extractor.getResultList();
 
 			// System.out.println("Identified document: " + identifier);
 			return resultList;
 		} catch (ApplicationException e) {
-			System.out.println("Couldn't identify document: " + file + " - "
-					+ e.getMessage());
+			System.out.println("Couldn't identify document: " + file + " - "+ e.getMessage());
 			return null;
 		}
 	}
 
-	public ArrayList<QueryTarget> getResultList() {
+	public ArrayList<ConceptQueryResult> getResultList() {
 		// easier QueryLibary.getInstance().getAllElements();
 		return this.results;
 	}
