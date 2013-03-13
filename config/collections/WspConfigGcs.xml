@@ -10,12 +10,27 @@
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/de/Startseite/index.html</dataUrl>
       <!-- XML-Texte -->
       <dataUrl type="eXistDir">http://telota.bbaw.de/exist/rest/db/gcs/</dataUrl>
+      <dataUrl type="eXistDir">http://telota.bbaw.de:8088/exist/servlet/db/gcs</dataUrl>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/ProkopOnline.pdf</dataUrl>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/anonyme_kirchengeschichte.pdf</dataUrl>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/daniel.pdf</dataUrl>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/ehrhard.pdf</dataUrl>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/martyrium.pdf</dataUrl>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/mirClem.pdf</dataUrl>
+      <dataUrl>http://telota.bbaw.de/gcs</dataUrl>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/de/blanko.2005-08-13.0693530036</dataUrl>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/sHLV.pdf</dataUrl>
+      <dataUrl>http://gcs.bbaw.de/filmdb/</dataUrl>
+      
+      
       <exclude>scripts</exclude>
     </url>
     <languages>ger, grc</languages>
     <mainLanguage>grc</mainLanguage>
     <formats>
       <format>xml</format>
+      <format>html</format>
+      <format>pdf</format>
     </formats>
     <fields>
       <field>s</field>
