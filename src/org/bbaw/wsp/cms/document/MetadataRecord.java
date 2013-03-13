@@ -8,33 +8,48 @@ import java.util.Hashtable;
 import de.mpg.mpiwg.berlin.mpdl.lt.text.tokenize.XmlTokenizerContentHandler;
 
 public class MetadataRecord {
-  private String docId; // local id: resource identifier in index system, e.g. "/edoc/2011/1591/pdf/08_VI.Dokumente.pdf"
-  private String identifier; // local id: identifier field in resource metadata: e.g. <meta name="DC.identifier" content="47114711">
-  private String uri; // global id: resource URI (uniform resource identifier), e.g. http://de.wikipedia.org/wiki/Ramones
-  private String webUri; // global web url, e.g. "http://telota.bbaw.de/ig/IG I3 501" or "http://edoc.bbaw.de/volltexte/2011/1769/"
+  private String docId; // local id: resource identifier in index system, e.g.
+                        // "/edoc/2011/1591/pdf/08_VI.Dokumente.pdf"
+  private String identifier; // local id: identifier field in resource metadata:
+                             // e.g. <meta name="DC.identifier"
+                             // content="47114711">
+  private String uri; // global id: resource URI (uniform resource identifier),
+                      // e.g. http://de.wikipedia.org/wiki/Ramones
+  private String webUri; // global web url, e.g.
+                         // "http://telota.bbaw.de/ig/IG I3 501" or
+                         // "http://edoc.bbaw.de/volltexte/2011/1769/"
   private String collectionNames; // project name(s), e.g. "edoc" or "ig"
-  private String schemaName; // schema name of resource, e.g. TEI, html, quran etc.
-  private String language;  // language: ISO 639-3 with 3 characters, e.g. "ger" or "eng"
+  private String schemaName; // schema name of resource, e.g. TEI, html, quran
+                             // etc.
+  private String language; // language: ISO 639-3 with 3 characters, e.g. "ger"
+                           // or "eng"
   private String creator; // author(s) of resource
-  private String title;  // title(s) of resource
+  private String title; // title(s) of resource
   private String publisher; // publisher with place: e.g. Springer, New York
   private Date date; // publication date, e.g. 1958
   private String description; // description, abstract etc.
   private String subject; // free subject keywords
-  private String contributor; // additional contributors of the resource such as translators, layouters, designers. These could be persons or organizations.
-  private String coverage; // spatial and temporal coverages, e.g. "13th century" or "Grand Canyon, Arizona"
-  private String ddc; // subject keywords from DDC (Dewey Decimal Classification), e.g. "Philosophie"
-  private String swd; // subject keywords from SWD (Schlagwortnormdatei), normally separated by commas
-  private String persons;  // main persons in resource (e.g. as list in xml format)
-  private String places;  // main places in resource (e.g. as list in xml format)
-  private String type; // mime type: e.g. text/xml 
+  private String contributor; // additional contributors of the resource such as
+                              // translators, layouters, designers. These could
+                              // be persons or organizations.
+  private String coverage; // spatial and temporal coverages, e.g.
+                           // "13th century" or "Grand Canyon, Arizona"
+  private String ddc; // subject keywords from DDC (Dewey Decimal
+                      // Classification), e.g. "Philosophie"
+  private String swd; // subject keywords from SWD (Schlagwortnormdatei),
+                      // normally separated by commas
+  private String persons; // main persons in resource (e.g. as list in xml
+                          // format)
+  private String places; // main places in resource (e.g. as list in xml format)
+  private String type; // mime type: e.g. text/xml
   private String rights; // rights string, e.g. open access
   private String license; // license string, e.g. "CC-BY-SA"
   private String accessRights; // access rights string, e.g. free
-  private Date lastModified;  // last modification date in index system
+  private Date lastModified; // last modification date in index system
   private String encoding; // charset such as "utf-8" or "iso-8859-1"
   private int pageCount; // number of pages
-  private String urn; // uniform resource name, e.g. the KOBV urn, e.g. urn:nbn:de:kobv:b4360-10020
+  private String urn; // uniform resource name, e.g. the KOBV urn, e.g.
+                      // urn:nbn:de:kobv:b4360-10020
   private String documentType; // e.g. the KOBV "Dokumentenart"
   private String isbn; // isbn, e.g. the KOBV ISBN
   private Date creationDate; // e.g. the KOBV "Erstellungsjahr"
@@ -45,16 +60,22 @@ public class MetadataRecord {
   private String tokenNorm; // normalized fulltext tokens of resource
   private String tokenMorph; // morphological fulltext tokens of resource
   private String contentXml; // original xml content of the resources file
-  private String content; // original text content of the resources file (without xml tags)
-  private ArrayList<XmlTokenizerContentHandler.Element> xmlElements;  // xml elements of resource
-  private Hashtable<String, XQuery> xQueries; // dynamic xQueries of xml resources (with name, code, result)
+  private String content; // original text content of the resources file
+                          // (without xml tags)
+  private ArrayList<XmlTokenizerContentHandler.Element> xmlElements; // xml
+                                                                     // elements
+                                                                     // of
+                                                                     // resource
+  private Hashtable<String, XQuery> xQueries; // dynamic xQueries of xml
+                                              // resources (with name, code,
+                                              // result)
   private String realDocUrl; // e.g. the URL to the eDoc (not the index.html)
 
   public String getRealDocUrl() {
     return realDocUrl;
   }
 
-  public void setRealDocUrl(String realDocUrl) {
+  public void setRealDocUrl(final String realDocUrl) {
     this.realDocUrl = realDocUrl;
   }
 
@@ -62,7 +83,7 @@ public class MetadataRecord {
     return documentType;
   }
 
-  public void setDocumentType(String documentType) {
+  public void setDocumentType(final String documentType) {
     this.documentType = documentType;
   }
 
@@ -70,7 +91,7 @@ public class MetadataRecord {
     return isbn;
   }
 
-  public void setIsbn(String isbn) {
+  public void setIsbn(final String isbn) {
     this.isbn = isbn;
   }
 
@@ -78,7 +99,7 @@ public class MetadataRecord {
     return creationDate;
   }
 
-  public void setCreationDate(Date creationDate) {
+  public void setCreationDate(final Date creationDate) {
     this.creationDate = creationDate;
   }
 
@@ -86,7 +107,7 @@ public class MetadataRecord {
     return publishingDate;
   }
 
-  public void setPublishingDate(Date publishingDate) {
+  public void setPublishingDate(final Date publishingDate) {
     this.publishingDate = publishingDate;
   }
 
@@ -94,7 +115,7 @@ public class MetadataRecord {
     return swd;
   }
 
-  public void setSwd(String swd) {
+  public void setSwd(final String swd) {
     this.swd = swd;
   }
 
@@ -102,7 +123,7 @@ public class MetadataRecord {
     return ddc;
   }
 
-  public void setDdc(String ddc) {
+  public void setDdc(final String ddc) {
     this.ddc = ddc;
   }
 
@@ -110,7 +131,7 @@ public class MetadataRecord {
     return urn;
   }
 
-  public void setUrn(String urn) {
+  public void setUrn(final String urn) {
     this.urn = urn;
   }
 
@@ -118,7 +139,7 @@ public class MetadataRecord {
     return docId;
   }
 
-  public void setDocId(String docId) {
+  public void setDocId(final String docId) {
     this.docId = docId;
   }
 
@@ -126,7 +147,7 @@ public class MetadataRecord {
     return uri;
   }
 
-  public void setUri(String uri) {
+  public void setUri(final String uri) {
     this.uri = uri;
   }
 
@@ -134,7 +155,7 @@ public class MetadataRecord {
     return rights;
   }
 
-  public void setRights(String rights) {
+  public void setRights(final String rights) {
     this.rights = rights;
   }
 
@@ -142,7 +163,7 @@ public class MetadataRecord {
     return pageCount;
   }
 
-  public void setPageCount(int pageCount) {
+  public void setPageCount(final int pageCount) {
     this.pageCount = pageCount;
   }
 
@@ -150,7 +171,7 @@ public class MetadataRecord {
     return contributor;
   }
 
-  public void setContributor(String contributor) {
+  public void setContributor(final String contributor) {
     this.contributor = contributor;
   }
 
@@ -158,7 +179,7 @@ public class MetadataRecord {
     return coverage;
   }
 
-  public void setCoverage(String coverage) {
+  public void setCoverage(final String coverage) {
     this.coverage = coverage;
   }
 
@@ -166,7 +187,7 @@ public class MetadataRecord {
     return encoding;
   }
 
-  public void setEncoding(String encoding) {
+  public void setEncoding(final String encoding) {
     this.encoding = encoding;
   }
 
@@ -174,7 +195,7 @@ public class MetadataRecord {
     return license;
   }
 
-  public void setLicense(String license) {
+  public void setLicense(final String license) {
     this.license = license;
   }
 
@@ -182,7 +203,7 @@ public class MetadataRecord {
     return accessRights;
   }
 
-  public void setAccessRights(String accessRights) {
+  public void setAccessRights(final String accessRights) {
     this.accessRights = accessRights;
   }
 
@@ -190,7 +211,7 @@ public class MetadataRecord {
     return creator;
   }
 
-  public void setCreator(String creator) {
+  public void setCreator(final String creator) {
     this.creator = creator;
   }
 
@@ -198,7 +219,7 @@ public class MetadataRecord {
     return title;
   }
 
-  public void setTitle(String title) {
+  public void setTitle(final String title) {
     this.title = title;
   }
 
@@ -206,16 +227,16 @@ public class MetadataRecord {
     return date;
   }
 
-  public void setDate(Date date) {
+  public void setDate(final Date date) {
     this.date = date;
   }
 
   public String getYear() {
     String year = null;
     if (date != null) {
-      Calendar cal = Calendar.getInstance();
+      final Calendar cal = Calendar.getInstance();
       cal.setTime(date);
-      int iYear = cal.get(Calendar.YEAR);
+      final int iYear = cal.get(Calendar.YEAR);
       year = "" + iYear;
     }
     return year;
@@ -225,7 +246,7 @@ public class MetadataRecord {
     return description;
   }
 
-  public void setDescription(String description) {
+  public void setDescription(final String description) {
     this.description = description;
   }
 
@@ -233,7 +254,7 @@ public class MetadataRecord {
     return subject;
   }
 
-  public void setSubject(String subject) {
+  public void setSubject(final String subject) {
     this.subject = subject;
   }
 
@@ -241,7 +262,7 @@ public class MetadataRecord {
     return collectionNames;
   }
 
-  public void setCollectionNames(String collectionNames) {
+  public void setCollectionNames(final String collectionNames) {
     this.collectionNames = collectionNames;
   }
 
@@ -249,7 +270,7 @@ public class MetadataRecord {
     return identifier;
   }
 
-  public void setIdentifier(String identifier) {
+  public void setIdentifier(final String identifier) {
     this.identifier = identifier;
   }
 
@@ -257,7 +278,7 @@ public class MetadataRecord {
     return language;
   }
 
-  public void setLanguage(String language) {
+  public void setLanguage(final String language) {
     this.language = language;
   }
 
@@ -265,7 +286,7 @@ public class MetadataRecord {
     return publisher;
   }
 
-  public void setPublisher(String publisher) {
+  public void setPublisher(final String publisher) {
     this.publisher = publisher;
   }
 
@@ -273,7 +294,7 @@ public class MetadataRecord {
     return type;
   }
 
-  public void setType(String type) {
+  public void setType(final String type) {
     this.type = type;
   }
 
@@ -281,7 +302,7 @@ public class MetadataRecord {
     return tokenOrig;
   }
 
-  public void setTokenOrig(String tokenOrig) {
+  public void setTokenOrig(final String tokenOrig) {
     this.tokenOrig = tokenOrig;
   }
 
@@ -289,7 +310,7 @@ public class MetadataRecord {
     return tokenReg;
   }
 
-  public void setTokenReg(String tokenReg) {
+  public void setTokenReg(final String tokenReg) {
     this.tokenReg = tokenReg;
   }
 
@@ -297,7 +318,7 @@ public class MetadataRecord {
     return tokenNorm;
   }
 
-  public void setTokenNorm(String tokenNorm) {
+  public void setTokenNorm(final String tokenNorm) {
     this.tokenNorm = tokenNorm;
   }
 
@@ -305,7 +326,7 @@ public class MetadataRecord {
     return tokenMorph;
   }
 
-  public void setTokenMorph(String tokenMorph) {
+  public void setTokenMorph(final String tokenMorph) {
     this.tokenMorph = tokenMorph;
   }
 
@@ -313,7 +334,7 @@ public class MetadataRecord {
     return contentXml;
   }
 
-  public void setContentXml(String contentXml) {
+  public void setContentXml(final String contentXml) {
     this.contentXml = contentXml;
   }
 
@@ -321,7 +342,7 @@ public class MetadataRecord {
     return content;
   }
 
-  public void setContent(String content) {
+  public void setContent(final String content) {
     this.content = content;
   }
 
@@ -329,8 +350,7 @@ public class MetadataRecord {
     return xmlElements;
   }
 
-  public void setXmlElements(
-      ArrayList<XmlTokenizerContentHandler.Element> xmlElements) {
+  public void setXmlElements(final ArrayList<XmlTokenizerContentHandler.Element> xmlElements) {
     this.xmlElements = xmlElements;
   }
 
@@ -338,7 +358,7 @@ public class MetadataRecord {
     return schemaName;
   }
 
-  public void setSchemaName(String schemaName) {
+  public void setSchemaName(final String schemaName) {
     this.schemaName = schemaName;
   }
 
@@ -346,7 +366,7 @@ public class MetadataRecord {
     return lastModified;
   }
 
-  public void setLastModified(Date lastModified) {
+  public void setLastModified(final Date lastModified) {
     this.lastModified = lastModified;
   }
 
@@ -354,7 +374,7 @@ public class MetadataRecord {
     return persons;
   }
 
-  public void setPersons(String persons) {
+  public void setPersons(final String persons) {
     this.persons = persons;
   }
 
@@ -362,7 +382,7 @@ public class MetadataRecord {
     return places;
   }
 
-  public void setPlaces(String places) {
+  public void setPlaces(final String places) {
     this.places = places;
   }
 
@@ -370,7 +390,7 @@ public class MetadataRecord {
     return webUri;
   }
 
-  public void setWebUri(String webUri) {
+  public void setWebUri(final String webUri) {
     this.webUri = webUri;
   }
 
@@ -378,7 +398,7 @@ public class MetadataRecord {
     return xQueries;
   }
 
-  public void setxQueries(Hashtable<String, XQuery> xQueries) {
+  public void setxQueries(final Hashtable<String, XQuery> xQueries) {
     this.xQueries = xQueries;
   }
 
@@ -386,12 +406,17 @@ public class MetadataRecord {
     return inPublication;
   }
 
-  public void setInPublication(String inPublication) {
+  public void setInPublication(final String inPublication) {
     this.inPublication = inPublication;
   }
-  
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see java.lang.Object#toString()
+   */
   @Override
   public String toString() {
-    return "MetadataRecord [docId=" + docId + ", identifier=" + identifier + ", uri=" + uri + ", language=" + language + ", creator=" + creator + ", title=" + title + ", description=" + description + ", subject=" + subject + ", ddc=" + ddc + ", swd=" + swd + ", publisher=" + publisher + ", type=" + type + ", rights=" + rights + ", date=" + date + ", license=" + license + ", accessRights=" + accessRights + ", collectionNames=" + collectionNames + ", schemaName=" + schemaName + ", lastModified=" + lastModified + ", pageCount=" + pageCount + ", persons=" + persons + ", places=" + places + ", urn=" + urn + ", documentType=" + documentType + ", isbn=" + isbn + ", creationDate=" + creationDate + ", publishingDate=" + publishingDate + "]";
+    return "MetadataRecord [docId=" + docId + ", identifier=" + identifier + ", uri=" + uri + ", webUri=" + webUri + ", collectionNames=" + collectionNames + ", schemaName=" + schemaName + ", language=" + language + ", creator=" + creator + ", title=" + title + ", publisher=" + publisher + ", date=" + date + ", description=" + description + ", subject=" + subject + ", contributor=" + contributor + ", coverage=" + coverage + ", ddc=" + ddc + ", swd=" + swd + ", persons=" + persons + ", places=" + places + ", type=" + type + ", rights=" + rights + ", license=" + license + ", accessRights=" + accessRights + ", lastModified=" + lastModified + ", encoding=" + encoding + ", pageCount=" + pageCount + ", urn=" + urn + ", documentType=" + documentType + ", isbn=" + isbn + ", creationDate=" + creationDate + ", publishingDate=" + publishingDate + ", inPublication=" + inPublication + ", tokenOrig=" + tokenOrig + ", tokenReg=" + tokenReg + ", tokenNorm=" + tokenNorm + ", tokenMorph=" + tokenMorph + ", contentXml=" + contentXml + ", content=" + content + ", xmlElements=" + xmlElements + ", xQueries=" + xQueries + ", realDocUrl=" + realDocUrl + "]";
   }
 }
