@@ -21,6 +21,8 @@ public class MetadataRecord {
   private Date date; // publication date, e.g. 1958
   private String description; // description, abstract etc.
   private String subject; // free subject keywords
+  private String contributor; // additional contributors of the resource such as translators, layouters, designers. These could be persons or organizations.
+  private String coverage; // spatial and temporal coverages, e.g. "13th century" or "Grand Canyon, Arizona"
   private String ddc; // subject keywords from DDC (Dewey Decimal Classification), e.g. "Philosophie"
   private String swd; // subject keywords from SWD (Schlagwortnormdatei), normally separated by commas
   private String persons;  // main persons in resource (e.g. as list in xml format)
@@ -30,6 +32,7 @@ public class MetadataRecord {
   private String license; // license string, e.g. "CC-BY-SA"
   private String accessRights; // access rights string, e.g. free
   private Date lastModified;  // last modification date in index system
+  private String encoding; // charset such as "utf-8" or "iso-8859-1"
   private int pageCount; // number of pages
   private String urn; // uniform resource name, e.g. the KOBV urn, e.g. urn:nbn:de:kobv:b4360-10020
   private String documentType; // e.g. the KOBV "Dokumentenart"
@@ -141,6 +144,30 @@ public class MetadataRecord {
 
   public void setPageCount(int pageCount) {
     this.pageCount = pageCount;
+  }
+
+  public String getContributor() {
+    return contributor;
+  }
+
+  public void setContributor(String contributor) {
+    this.contributor = contributor;
+  }
+
+  public String getCoverage() {
+    return coverage;
+  }
+
+  public void setCoverage(String coverage) {
+    this.coverage = coverage;
+  }
+
+  public String getEncoding() {
+    return encoding;
+  }
+
+  public void setEncoding(String encoding) {
+    this.encoding = encoding;
   }
 
   public String getLicense() {
