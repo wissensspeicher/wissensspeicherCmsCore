@@ -3,6 +3,7 @@
   <description>wspCmsCore</description>
   <!-- global properties -->
   <property name="src" location="src"/>
+  <property name="srcLog" location="config/log"/>
   <property name="lib" location="lib"/>
   <property name="build" location="build/classes"/>
   <property name="config" location="config"/>
@@ -24,6 +25,11 @@
     <copy todir="${build}">
       <fileset dir="${src}">
         <include name="**/*.xsl"/>
+        <include name="**/*.properties"/>
+      </fileset>
+    </copy>
+    <copy todir="${build}">
+      <fileset dir="${srcLog}">
         <include name="**/*.properties"/>
       </fileset>
     </copy>
