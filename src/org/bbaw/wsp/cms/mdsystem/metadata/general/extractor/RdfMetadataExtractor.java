@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.ConceptIdentfierSearchMode;
-import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.QueryTarget;
+import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.ConceptQueryResult;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 
@@ -23,7 +23,7 @@ import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
  */
 public class RdfMetadataExtractor extends MetadataExtractor {
 
-	ArrayList<QueryTarget> targetList;
+	ArrayList<ConceptQueryResult> targetList;
 
 	/**
 	 * Create a new ModsMetadataParser instance.
@@ -40,7 +40,7 @@ public class RdfMetadataExtractor extends MetadataExtractor {
 			final HashMap<String, String> namespaces)
 			throws ApplicationException {
 		super(uri, namespaces);
-		targetList = new ArrayList<QueryTarget>();
+		targetList = new ArrayList<ConceptQueryResult>();
 	}
 
 	/**
@@ -83,7 +83,7 @@ public class RdfMetadataExtractor extends MetadataExtractor {
 					false);
 
 			if (checkIfContains(elements, temp.toLowerCase(), strategie)) {
-				QueryTarget target = new QueryTarget();
+				ConceptQueryResult target = new ConceptQueryResult();
 				targetList.add(target);
 
 				String query = "//rdf:Description[" + i + "]/@rdf:about";
@@ -229,7 +229,7 @@ public class RdfMetadataExtractor extends MetadataExtractor {
 	 * @param value
 	 * @param target
 	 */
-	private void addToTarget(String key, Object value, QueryTarget target) {
+	private void addToTarget(String key, Object value, ConceptQueryResult target) {
 		if (value instanceof String[]) {
 			String[] temp = (String[]) value;
 			for (String s : temp) {
@@ -246,7 +246,7 @@ public class RdfMetadataExtractor extends MetadataExtractor {
 		}
 	}
 
-	public ArrayList<QueryTarget> getResultList() {
+	public ArrayList<ConceptQueryResult> getResultList() {
 		return this.targetList;
 	}
 
