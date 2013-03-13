@@ -7,13 +7,13 @@ import java.io.InputStreamReader;
 import java.io.StringReader;
 import java.net.FileNameMap;
 import java.net.MalformedURLException;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.logging.Logger;
 
 import net.sf.saxon.s9api.Axis;
 import net.sf.saxon.s9api.QName;
@@ -21,6 +21,7 @@ import net.sf.saxon.s9api.XdmNode;
 import net.sf.saxon.s9api.XdmNodeKind;
 import net.sf.saxon.s9api.XdmSequenceIterator;
 
+import org.apache.log4j.Logger;
 import org.apache.commons.io.FileUtils;
 import org.bbaw.wsp.cms.dochandler.parser.document.IDocument;
 import org.bbaw.wsp.cms.dochandler.parser.text.parser.DocumentParser;
@@ -50,7 +51,7 @@ import de.mpg.mpiwg.berlin.mpdl.xml.xquery.XQueryEvaluator;
  * Handler for documents (singleton). 
  */
 public class DocumentHandler {
-  private static Logger LOGGER = Logger.getLogger(DocumentHandler.class.getName());
+  private static Logger LOGGER = Logger.getLogger(DocumentHandler.class);
   
   public void doOperation(CmsDocOperation docOperation) throws ApplicationException{
     String operationName = docOperation.getName();  
@@ -88,7 +89,13 @@ public class DocumentHandler {
       } else {
         docOperation.setStatus("download file from: " + srcUrlStr + " to CMS");
       }
-      FileUtils.copyURLToFile(srcUrl, docDestFile, 100000, 100000);
+      try {
+        FileUtils.copyURLToFile(srcUrl, docDestFile, 5000, 5000);
+      } catch (SocketTimeoutException e) {
+        LOGGER.error("Operation failed. Read timeout for: " + srcUrl);
+        FileUtils.deleteQuietly(docDestFile);
+        return;
+      }
       MetadataRecord mdRecord = docOperation.getMdRecord();
       mdRecord.setLastModified(new Date());
       String mimeType = mdRecord.getType();
@@ -317,7 +324,7 @@ public class DocumentHandler {
               mdRecord.setEncoding(tikaMDRecord.getEncoding());
           }
         } catch (ApplicationException e) {
-          LOGGER.severe(e.getLocalizedMessage());
+          LOGGER.error(e.getLocalizedMessage());
         }
         String mdRecordLanguage = mdRecord.getLanguage();
         String mainLanguage = docOperation.getMainLanguage();
