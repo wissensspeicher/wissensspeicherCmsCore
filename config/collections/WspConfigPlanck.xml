@@ -5,16 +5,13 @@
     <name>150 Jahre Max Planck</name>
     <url>
       <webBaseUrl>http://planck.bbaw.de</webBaseUrl>
-  
+      <dataUrl>http://planck.bbaw.de</dataUrl>
     </url>  
-      
     <languages>ger</languages>
     <mainLanguage>ger</mainLanguage>
     <formats>
       <format>Html</format>
       <format>Jpeg</format>
     </formats>
-   
-   
   </collection>    
 </wsp>

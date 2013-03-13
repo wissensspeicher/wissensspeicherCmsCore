@@ -47,41 +47,41 @@ import de.mpg.mpiwg.berlin.mpdl.util.Util;
 import de.mpg.mpiwg.berlin.mpdl.xml.xquery.XQueryEvaluator;
 
 /**
- * Handler for documents (singleton).
+ * Handler for documents (singleton). 
  */
 public class DocumentHandler {
   private static Logger LOGGER = Logger.getLogger(DocumentHandler.class.getName());
-
-  public void doOperation(final CmsDocOperation docOperation) throws ApplicationException {
-    final String operationName = docOperation.getName();
+  
+  public void doOperation(CmsDocOperation docOperation) throws ApplicationException{
+    String operationName = docOperation.getName();  
     if (operationName.equals("create")) {
       create(docOperation);
     } else if (operationName.equals("delete")) {
       delete(docOperation);
     }
   }
-
-  private void create(final CmsDocOperation docOperation) throws ApplicationException {
+  
+  private void create(CmsDocOperation docOperation) throws ApplicationException {
     try {
-      final String operationName = docOperation.getName();
-      final String srcUrlStr = docOperation.getSrcUrl();
-      final String docId = docOperation.getDocIdentifier();
-      final String mainLanguage = docOperation.getMainLanguage();
-      final String[] elementNames = docOperation.getElementNames();
+      String operationName = docOperation.getName();  
+      String srcUrlStr = docOperation.getSrcUrl(); 
+      String docId = docOperation.getDocIdentifier();
+      String mainLanguage = docOperation.getMainLanguage();
+      String[] elementNames = docOperation.getElementNames();
       if (elementNames == null) {
-        final String[] defaultElementNames = { "persName", "placeName", "p", "s", "head" };
+        String[] defaultElementNames = {"persName", "placeName", "p", "s", "head"};
         docOperation.setElementNames(defaultElementNames); // default
       }
-      final String docDirName = getDocDir(docId);
-      final String docDestFileName = getDocFullFileName(docId);
-      final boolean docIsXml = isDocXml(docId);
+      String docDirName = getDocDir(docId);
+      String docDestFileName = getDocFullFileName(docId); 
+      boolean docIsXml = isDocXml(docId); 
       URL srcUrl = null;
       String protocol = null;
-      if (srcUrlStr != null && !srcUrlStr.equals("empty")) {
+      if (srcUrlStr != null && ! srcUrlStr.equals("empty")) {
         srcUrl = new URL(srcUrlStr);
         protocol = srcUrl.getProtocol();
       }
-      final File docDestFile = new File(docDestFileName);
+      File docDestFile = new File(docDestFileName);
       // perform operation on file system
       if (protocol.equals("file")) {
         docOperation.setStatus("upload file: " + srcUrlStr + " to CMS");
@@ -101,12 +101,7 @@ public class DocumentHandler {
       if (docIsXml) {
         // parse validation on file
         xQueryEvaluator = new XQueryEvaluator();
-        final XdmNode docNode = xQueryEvaluator.parse(srcUrl); // if it is not
-                                                               // parseable an
-                                                               // exception with
-                                                               // a detail
-                                                               // message is
-                                                               // thrown
+        XdmNode docNode = xQueryEvaluator.parse(srcUrl); // if it is not parseable an exception with a detail message is thrown 
         docType = getNodeType(docNode);
         docType = docType.trim();
       }
@@ -119,130 +114,109 @@ public class DocumentHandler {
         return;
       }
       // document is xml fulltext document: is of type XML and not mets
-      if (docIsXml && !docType.equals("mets")) {
-        // replace anchor in echo documents and also add the number attribute to
-        // figures
-        final String docDestFileNameUpgrade = docDestFileName + ".upgrade";
-        final File docDestFileUpgrade = new File(docDestFileNameUpgrade);
-        final XslResourceTransformer replaceAnchorTransformer = new XslResourceTransformer("replaceAnchor.xsl");
-        final String docDestFileUrlStr = docDestFile.getPath();
-        final String result = replaceAnchorTransformer.transform(docDestFileUrlStr);
+      if (docIsXml && ! docType.equals("mets")) {
+        // replace anchor in echo documents and also add the number attribute to figures
+        String docDestFileNameUpgrade = docDestFileName + ".upgrade";
+        File docDestFileUpgrade = new File(docDestFileNameUpgrade);
+        XslResourceTransformer replaceAnchorTransformer = new XslResourceTransformer("replaceAnchor.xsl");
+        String docDestFileUrlStr = docDestFile.getPath();
+        String result = replaceAnchorTransformer.transform(docDestFileUrlStr);
         FileUtils.writeStringToFile(docDestFileUpgrade, result, "utf-8");
-
+        
         // generate toc file (toc, figure, handwritten, persons, places, pages)
-        final XslResourceTransformer tocTransformer = new XslResourceTransformer("toc.xsl");
-        final File tocFile = new File(docDirName + "/toc.xml");
-        final String tocResult = tocTransformer.transform(docDestFileNameUpgrade);
+        XslResourceTransformer tocTransformer = new XslResourceTransformer("toc.xsl");
+        File tocFile = new File(docDirName + "/toc.xml");
+        String tocResult = tocTransformer.transform(docDestFileNameUpgrade);
         FileUtils.writeStringToFile(tocFile, tocResult, "utf-8");
-        final String persons = getPersons(tocResult, xQueryEvaluator);
-        final String places = getPlaces(tocResult, xQueryEvaluator);
-
+        String persons = getPersons(tocResult, xQueryEvaluator); 
+        String places = getPlaces(tocResult, xQueryEvaluator);
+  
         // Get metadata info out of the xml document
         mdRecord.setPersons(persons);
         mdRecord.setPlaces(places);
         docOperation.setStatus("extract metadata of: " + srcUrlStr + " to CMS");
         mdRecord = getMetadataRecord(docDestFileUpgrade, docType, mdRecord, xQueryEvaluator);
         String mdRecordLanguage = mdRecord.getLanguage();
-        final String langId = Language.getInstance().getLanguageId(mdRecordLanguage); // test
-                                                                                      // if
-                                                                                      // language
-                                                                                      // code
-                                                                                      // is
-                                                                                      // supported
-        if (langId == null) {
+        String langId = Language.getInstance().getLanguageId(mdRecordLanguage); // test if language code is supported
+        if (langId == null)
           mdRecordLanguage = null;
-        }
-        if (mdRecordLanguage == null && mainLanguage != null) {
+        if (mdRecordLanguage == null && mainLanguage != null)
           mdRecord.setLanguage(mainLanguage);
-        }
-
+          
         // save all pages as single xml files (untokenized and tokenized)
         docOperation.setStatus("extract page fragments of: " + srcUrlStr + " to CMS");
-        final File docDir = new File(docDirName + "/pages");
-        FileUtils.deleteQuietly(docDir); // first delete pages directory
+        File docDir = new File(docDirName + "/pages");
+        FileUtils.deleteQuietly(docDir);  // first delete pages directory
         Hashtable<Integer, StringBuilder> pageFragments = getFragments(docDestFileNameUpgrade, "pb");
         int pageCount = pageFragments.size();
         if (pageCount == 0) {
           // no pb element is found: then the whole document is the first page
           String docXmlStr = FileUtils.readFileToString(docDestFileUpgrade, "utf-8");
-          docXmlStr = docXmlStr.replaceAll("<\\?xml.*?\\?>", ""); // remove the
-                                                                  // xml
-                                                                  // declaration
-                                                                  // if it
-                                                                  // exists
+          docXmlStr = docXmlStr.replaceAll("<\\?xml.*?\\?>", "");  // remove the xml declaration if it exists
           pageFragments = new Hashtable<Integer, StringBuilder>();
           pageFragments.put(new Integer(1), new StringBuilder(docXmlStr));
           pageCount = 1;
         }
-        for (int page = 1; page <= pageCount; page++) {
+        for (int page=1; page<=pageCount; page++) {
           String fragment = pageFragments.get(new Integer(page)).toString();
           fragment = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" + fragment;
-          final String docPageFileName = docDirName + "/pages/page-" + page + ".xml";
-          final File docPageFile = new File(docPageFileName);
+          String docPageFileName = docDirName + "/pages/page-" + page + ".xml";
+          File docPageFile = new File(docPageFileName);
           FileUtils.writeStringToFile(docPageFile, fragment, "utf-8");
-          final String language = mdRecord.getLanguage();
+          String language = mdRecord.getLanguage();
           String tokenizedXmlStr = tokenizeWithLemmas(fragment, language);
           tokenizedXmlStr = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" + tokenizedXmlStr;
-          final String docPageTokenizedFileName = docDirName + "/pages/page-" + page + "-morph.xml";
-          final File docPageTokenizedFile = new File(docPageTokenizedFileName);
+          String docPageTokenizedFileName = docDirName + "/pages/page-" + page + "-morph.xml";
+          File docPageTokenizedFile = new File(docPageTokenizedFileName);
           FileUtils.writeStringToFile(docPageTokenizedFile, tokenizedXmlStr, "utf-8");
         }
       } else if (docIsXml && docType.equals("mets")) {
         mdRecord = getMetadataRecord(docDestFile, docType, mdRecord, xQueryEvaluator);
         String mdRecordLanguage = mdRecord.getLanguage();
-        final String langId = Language.getInstance().getLanguageId(mdRecordLanguage); // test
-                                                                                      // if
-                                                                                      // language
-                                                                                      // code
-                                                                                      // is
-                                                                                      // supported
-        if (langId == null) {
+        String langId = Language.getInstance().getLanguageId(mdRecordLanguage); // test if language code is supported
+        if (langId == null)
           mdRecordLanguage = null;
-        }
-        if (mdRecordLanguage == null && mainLanguage != null) {
+        if (mdRecordLanguage == null && mainLanguage != null)
           mdRecord.setLanguage(mainLanguage);
-        }
-      }
+      } 
       // build the documents fulltext fields
-      if (!docType.equals("mets")) {
+      if (! docType.equals("mets"))
         buildFulltextFields(docOperation);
-      }
       // perform operation on Lucene
       docOperation.setStatus(operationName + " document: " + docId + " in CMS");
-      final IndexHandler indexHandler = IndexHandler.getInstance();
+      IndexHandler indexHandler = IndexHandler.getInstance();
       indexHandler.indexDocument(docOperation);
-    } catch (final IOException e) {
+    } catch (IOException e) {
       throw new ApplicationException(e);
     }
   }
-
-  private void delete(final CmsDocOperation docOperation) throws ApplicationException {
-    final String operationName = docOperation.getName();
-    final String docIdentifier = docOperation.getDocIdentifier();
-    if (docIdentifier == null || docIdentifier.trim().equals("")) {
+  
+  private void delete(CmsDocOperation docOperation) throws ApplicationException {
+    String operationName = docOperation.getName();  
+    String docIdentifier = docOperation.getDocIdentifier();
+    if (docIdentifier == null || docIdentifier.trim().equals(""))
       throw new ApplicationException("Your document identifier is empty. Please specify a document identifier for your document.");
-    }
-    final String docDirStr = getDocDir(docIdentifier);
-    final File docDir = new File(docDirStr);
-    final boolean docExists = docDir.exists();
-    if (!docExists) {
+    String docDirStr = getDocDir(docIdentifier);
+    File docDir = new File(docDirStr);
+    boolean docExists = docDir.exists();
+    if (! docExists) {
       throw new ApplicationException("Document:" + docIdentifier + " does not exists. Please use a name that exists and perform the operation \"Delete\" again.");
     }
     // perform operation on file system
     docOperation.setStatus(operationName + " document: " + docIdentifier + " in CMS");
     FileUtils.deleteQuietly(docDir);
-
+      
     // perform operation on Lucene
-    final IndexHandler indexHandler = IndexHandler.getInstance();
+    IndexHandler indexHandler = IndexHandler.getInstance();
     indexHandler.deleteDocument(docOperation);
   }
-
-  private void buildFulltextFields(final CmsDocOperation docOperation) throws ApplicationException {
+  
+  private void buildFulltextFields(CmsDocOperation docOperation) throws ApplicationException {
     try {
-      final MetadataRecord mdRecord = docOperation.getMdRecord();
-      final String docId = mdRecord.getDocId();
-      final String language = mdRecord.getLanguage();
-      final boolean docIsXml = isDocXml(docId);
+      MetadataRecord mdRecord = docOperation.getMdRecord();
+      String docId = mdRecord.getDocId();
+      String language = mdRecord.getLanguage();
+      boolean docIsXml = isDocXml(docId);
       String docTokensOrig = null;
       String docTokensNorm = null;
       String docTokensMorph = null;
@@ -252,50 +226,47 @@ public class DocumentHandler {
       XmlTokenizer docXmlTokenizer = null;
       if (docIsXml) {
         docFileName = getDocFullFileName(docId) + ".upgrade";
-        final InputStreamReader docFileReader = new InputStreamReader(new FileInputStream(docFileName), "utf-8");
-        // to guarantee that utf-8 is used (if not done, it does not work on
-        // Tomcat which has another default charset)
+        InputStreamReader docFileReader = new InputStreamReader(new FileInputStream(docFileName), "utf-8");
+        // to guarantee that utf-8 is used (if not done, it does not work on Tomcat which has another default charset)
         docXmlTokenizer = new XmlTokenizer(docFileReader);
         docXmlTokenizer.setDocIdentifier(docId);
         docXmlTokenizer.setLanguage(language);
         docXmlTokenizer.setOutputFormat("string");
-        final String[] outputOptionsWithLemmas = { "withLemmas" }; // so all
-                                                                   // tokens are
+        String[] outputOptionsWithLemmas = { "withLemmas" }; // so all tokens are
         // fetched with lemmas (costs performance)
         docXmlTokenizer.setOutputOptions(outputOptionsWithLemmas);
-        final String[] normFunctionNone = { "none" };
+        String[] normFunctionNone = { "none" };
         docXmlTokenizer.setNormFunctions(normFunctionNone);
         docXmlTokenizer.tokenize();
-
+  
         int pageCount = docXmlTokenizer.getPageCount();
-        if (pageCount <= 0) {
-          pageCount = 1; // each document at least has one page
-        }
-
-        final String[] outputOptionsEmpty = {};
-        docXmlTokenizer.setOutputOptions(outputOptionsEmpty);
+        if (pageCount <= 0)
+          pageCount = 1;  // each document at least has one page
+  
+        String[] outputOptionsEmpty = {};
+        docXmlTokenizer.setOutputOptions(outputOptionsEmpty); 
         // must be set to null so that the normalization function works
         docTokensOrig = docXmlTokenizer.getStringResult();
-        final String[] normFunctionNorm = { "norm" };
+        String[] normFunctionNorm = { "norm" };
         docXmlTokenizer.setNormFunctions(normFunctionNorm);
         docTokensNorm = docXmlTokenizer.getStringResult();
         docXmlTokenizer.setOutputOptions(outputOptionsWithLemmas);
         docTokensMorph = docXmlTokenizer.getStringResult();
         // fetch original xml content of the documents file
-        final File docFile = new File(docFileName);
+        File docFile = new File(docFileName);
         contentXml = FileUtils.readFileToString(docFile, "utf-8");
         // fetch original content of the documents file (without xml tags)
-        final XslResourceTransformer charsTransformer = new XslResourceTransformer("chars.xsl");
+        XslResourceTransformer charsTransformer = new XslResourceTransformer("chars.xsl");
         content = charsTransformer.transform(docFileName);
-        // get elements from xml tokenizer
-        final String[] elementNamesArray = docOperation.getElementNames();
+        // get elements from xml tokenizer 
+        String[] elementNamesArray = docOperation.getElementNames();
         String elementNames = "";
         for (int i = 0; i < elementNamesArray.length; i++) {
-          final String elemName = elementNamesArray[i];
+          String elemName = elementNamesArray[i];
           elementNames = elementNames + elemName + " ";
         }
         elementNames = elementNames.substring(0, elementNames.length() - 1);
-        final ArrayList<XmlTokenizerContentHandler.Element> xmlElements = docXmlTokenizer.getElements(elementNames);
+        ArrayList<XmlTokenizerContentHandler.Element> xmlElements = docXmlTokenizer.getElements(elementNames);
         // fill mdRecord
         mdRecord.setTokenOrig(docTokensOrig);
         mdRecord.setTokenNorm(docTokensNorm);
@@ -305,195 +276,173 @@ public class DocumentHandler {
         mdRecord.setXmlElements(xmlElements);
         mdRecord.setPageCount(pageCount);
       } else {
-        final DocumentParser tikaParser = new DocumentParser();
+        DocumentParser tikaParser = new DocumentParser();
         try {
-          final IDocument tikaDoc = tikaParser.parse(docFileName);
+          IDocument tikaDoc = tikaParser.parse(docFileName);
           docTokensOrig = tikaDoc.getTextOrig();
-          final MetadataRecord tikaMDRecord = tikaDoc.getMetadata();
-          System.out.println("-----------\n\n" + tikaMDRecord + "-----------\n\n");
+          MetadataRecord tikaMDRecord = tikaDoc.getMetadata();
           if (tikaMDRecord != null) {
             int pageCount = tikaMDRecord.getPageCount();
-            if (pageCount <= 0) {
-              pageCount = 1; // each document at least has one page
-            }
+            if (pageCount <= 0)
+              pageCount = 1;  // each document at least has one page
             mdRecord.setPageCount(pageCount);
-            if (mdRecord.getIdentifier() == null) {
+            if (mdRecord.getIdentifier() == null)
               mdRecord.setIdentifier(tikaMDRecord.getIdentifier());
-            }
-            if (mdRecord.getCreator() == null) {
+            if (mdRecord.getCreator() == null)
               mdRecord.setCreator(tikaMDRecord.getCreator());
-            }
-            if (mdRecord.getTitle() == null) {
+            if (mdRecord.getTitle() == null)
               mdRecord.setTitle(tikaMDRecord.getTitle());
-            }
             if (mdRecord.getLanguage() == null) {
-              final String tikaLang = tikaMDRecord.getLanguage();
-              if (tikaLang != null) {
+              String tikaLang = tikaMDRecord.getLanguage();
+              if (tikaLang != null) 
                 mdRecord.setLanguage(tikaLang);
-              }
             }
-            if (mdRecord.getPublisher() == null) {
+            if (mdRecord.getPublisher() == null)
               mdRecord.setPublisher(tikaMDRecord.getPublisher());
-            }
-            if (mdRecord.getDate() == null) {
+            if (mdRecord.getDate() == null)
               mdRecord.setDate(tikaMDRecord.getDate());
-            }
-            if (mdRecord.getDescription() == null) {
+            if (mdRecord.getDescription() == null)
               mdRecord.setDescription(tikaMDRecord.getDescription());
-            }
-            if (mdRecord.getSubject() == null) {
+            if (mdRecord.getContributor() == null)
+              mdRecord.setContributor(tikaMDRecord.getContributor());
+            if (mdRecord.getCoverage() == null)
+              mdRecord.setCoverage(tikaMDRecord.getCoverage());
+            if (mdRecord.getSubject() == null)
               mdRecord.setSubject(tikaMDRecord.getSubject());
-            }
-            if (mdRecord.getSwd() == null) {
+            if (mdRecord.getSwd() == null)
               mdRecord.setSwd(tikaMDRecord.getSwd());
-            }
-            if (mdRecord.getDdc() == null) {
+            if (mdRecord.getDdc() == null)
               mdRecord.setDdc(tikaMDRecord.getDdc());
-            }
+            if (mdRecord.getEncoding() == null)
+              mdRecord.setEncoding(tikaMDRecord.getEncoding());
           }
-        } catch (final ApplicationException e) {
+        } catch (ApplicationException e) {
           LOGGER.severe(e.getLocalizedMessage());
         }
-        final String mdRecordLanguage = mdRecord.getLanguage();
-        final String mainLanguage = docOperation.getMainLanguage();
-        if (mdRecordLanguage == null && mainLanguage != null) {
+        String mdRecordLanguage = mdRecord.getLanguage();
+        String mainLanguage = docOperation.getMainLanguage();
+        if (mdRecordLanguage == null && mainLanguage != null)
           mdRecord.setLanguage(mainLanguage);
-        }
-        final String lang = mdRecord.getLanguage();
-        final DocumentTokenizer docTokenizer = DocumentTokenizer.getInstance();
-        final String[] normFunctions = { "norm" };
-        final ArrayList<Token> normTokens = docTokenizer.getToken(docTokensOrig, lang, normFunctions);
+        String lang = mdRecord.getLanguage();
+        DocumentTokenizer docTokenizer = DocumentTokenizer.getInstance();
+        String[] normFunctions = {"norm"};
+        ArrayList<Token> normTokens = docTokenizer.getToken(docTokensOrig, lang, normFunctions);
         docTokensNorm = docTokenizer.buildStr(normTokens, lang, "norm");
         docTokensMorph = docTokenizer.buildStr(normTokens, lang, "morph");
-        content = docTokensOrig; // content is the same as docTokensOrig
+        content = docTokensOrig;  // content is the same as docTokensOrig
         // fill mdRecord
         mdRecord.setTokenOrig(docTokensOrig);
         mdRecord.setTokenNorm(docTokensNorm);
         mdRecord.setTokenMorph(docTokensMorph);
         mdRecord.setContent(content);
       }
-    } catch (final Exception e) {
+    } catch (Exception e) {
       throw new ApplicationException(e);
     }
   }
-
-  private MetadataRecord getMetadataRecord(final File xmlFile, final String schemaName, MetadataRecord mdRecord, final XQueryEvaluator xQueryEvaluator) throws ApplicationException {
-    if (schemaName == null) {
+  
+  private MetadataRecord getMetadataRecord(File xmlFile, String schemaName, MetadataRecord mdRecord, XQueryEvaluator xQueryEvaluator) throws ApplicationException {
+    if (schemaName == null)
       return mdRecord;
-    }
     try {
-      final URL srcUrl = xmlFile.toURI().toURL();
-      if (schemaName.equals("TEI")) {
+      URL srcUrl = xmlFile.toURI().toURL();
+      if (schemaName.equals("TEI"))
         mdRecord = getMetadataRecordTei(xQueryEvaluator, srcUrl, mdRecord);
-      } else if (schemaName.equals("mets")) {
+      else if (schemaName.equals("mets"))
         mdRecord = getMetadataRecordMets(xQueryEvaluator, srcUrl, mdRecord);
-      } else if (schemaName.equals("html")) {
+      else if (schemaName.equals("html"))
         mdRecord = getMetadataRecordHtml(xQueryEvaluator, srcUrl, mdRecord);
-      } else {
-        mdRecord.setSchemaName(schemaName); // all other cases: set docType to
-                                            // schemaName
-      }
+      else
+        mdRecord.setSchemaName(schemaName); // all other cases: set docType to schemaName
       evaluateXQueries(xQueryEvaluator, srcUrl, mdRecord);
-    } catch (final MalformedURLException e) {
+    } catch (MalformedURLException e) {
       throw new ApplicationException(e);
     }
     return mdRecord;
   }
 
-  private MetadataRecord evaluateXQueries(final XQueryEvaluator xQueryEvaluator, final URL srcUrl, final MetadataRecord mdRecord) {
-    final Hashtable<String, XQuery> xqueriesHashtable = mdRecord.getxQueries();
+  private MetadataRecord evaluateXQueries(XQueryEvaluator xQueryEvaluator, URL srcUrl, MetadataRecord mdRecord) {
+    Hashtable<String, XQuery> xqueriesHashtable = mdRecord.getxQueries();
     if (xqueriesHashtable != null) {
-      final Enumeration<String> keys = xqueriesHashtable.keys();
+      Enumeration<String> keys = xqueriesHashtable.keys();
       while (keys != null && keys.hasMoreElements()) {
-        final String key = keys.nextElement();
-        final XQuery xQuery = xqueriesHashtable.get(key);
-        final String xQueryCode = xQuery.getCode();
+        String key = keys.nextElement();
+        XQuery xQuery = xqueriesHashtable.get(key);
+        String xQueryCode = xQuery.getCode();
         try {
           String xQueryResult = xQueryEvaluator.evaluateAsString(srcUrl, xQueryCode);
-          if (xQueryResult != null) {
+          if (xQueryResult != null)
             xQueryResult = xQueryResult.trim();
-          }
           xQuery.setResult(xQueryResult);
-        } catch (final Exception e) {
+        } catch (Exception e) {
           // nothing
         }
       }
     }
     return mdRecord;
   }
-
-  private MetadataRecord getMetadataRecordTei(final XQueryEvaluator xQueryEvaluator, final URL srcUrl, final MetadataRecord mdRecord) throws ApplicationException {
-    final String metadataXmlStr = xQueryEvaluator.evaluateAsString(srcUrl, "/*:TEI/*:teiHeader");
+  
+  private MetadataRecord getMetadataRecordTei(XQueryEvaluator xQueryEvaluator, URL srcUrl, MetadataRecord mdRecord) throws ApplicationException {
+    String metadataXmlStr = xQueryEvaluator.evaluateAsString(srcUrl, "/*:TEI/*:teiHeader");
     if (metadataXmlStr != null) {
       String identifier = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:publicationStmt/*:idno");
-      if (identifier != null) {
+      if (identifier != null)
         identifier = StringUtils.deresolveXmlEntities(identifier.trim());
-      }
       String creator = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:titleStmt/*:author");
-      if (creator != null) {
+      if (creator != null)
         creator = StringUtils.deresolveXmlEntities(creator.trim());
-      }
       String title = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:titleStmt/*:title");
-      if (title != null) {
+      if (title != null)
         title = StringUtils.deresolveXmlEntities(title.trim());
-      }
       String language = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/*:teiHeader/*:profileDesc/*:langUsage/*:language[1]/@ident)");
-      if (language != null && language.isEmpty()) {
+      if (language != null && language.isEmpty())
         language = null;
-      }
       if (language != null) {
         language = StringUtils.deresolveXmlEntities(language.trim());
         language = Language.getInstance().getISO639Code(language);
       }
       String publisher = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:publicationStmt/*:publisher", ", ");
-      if (publisher != null) {
+      if (publisher != null)
         publisher = StringUtils.deresolveXmlEntities(publisher.trim());
-      }
       String place = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:publicationStmt/*:pubPlace");
-      if (place != null) {
+      if (place != null)
         place = StringUtils.deresolveXmlEntities(place.trim());
-      }
       String publisherStr = null;
       boolean publisherEndsWithComma = false;
-      if (publisher != null) {
+      if (publisher != null)
         publisherEndsWithComma = publisher.lastIndexOf(",") == publisher.length() - 1;
-      }
-      if (publisher == null && place != null) {
+      if (publisher == null && place != null)
         publisherStr = place;
-      } else if (publisher != null && place == null) {
+      else if (publisher != null && place == null)
         publisherStr = publisher;
-      } else if (publisher != null && place != null && publisherEndsWithComma) {
+      else if (publisher != null && place != null && publisherEndsWithComma)
         publisherStr = publisher + " " + place;
-      } else if (publisher != null && place != null && !publisherEndsWithComma) {
+      else if (publisher != null && place != null && ! publisherEndsWithComma)
         publisherStr = publisher + ", " + place;
-      }
       String yearStr = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:publicationStmt/*:date");
-      Date date = null;
-      if (yearStr != null && !yearStr.equals("")) {
+      Date date = null; 
+      if (yearStr != null && ! yearStr.equals("")) {
         yearStr = StringUtils.deresolveXmlEntities(yearStr.trim());
-        yearStr = new Util().toYearStr(yearStr); // test if possible etc
+        yearStr = new Util().toYearStr(yearStr);  // test if possible etc
         if (yearStr != null) {
           try {
             date = new Util().toDate(yearStr + "-01-01T00:00:00.000Z");
-          } catch (final Exception e) {
+          } catch (Exception e) {
             // nothing
           }
         }
       }
       String subject = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:profileDesc/*:textClass/*:keywords/*:term");
-      if (subject != null) {
+      if (subject != null)
         subject = StringUtils.deresolveXmlEntities(subject.trim());
-      }
       String rights = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:publicationStmt/*:availability");
-      if (rights == null) {
+      if (rights == null)
         rights = "open access";
-      }
       rights = StringUtils.deresolveXmlEntities(rights.trim());
-      final String license = "http://echo.mpiwg-berlin.mpg.de/policy/oa_basics/declaration";
+      String license = "http://echo.mpiwg-berlin.mpg.de/policy/oa_basics/declaration";
       String accessRights = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/*:teiHeader/*:fileDesc/*:publicationStmt/*:availability/@status)");
-      if (accessRights == null) {
+      if (accessRights == null) 
         accessRights = "free";
-      }
       accessRights = StringUtils.deresolveXmlEntities(accessRights.trim());
       mdRecord.setIdentifier(identifier);
       mdRecord.setLanguage(language);
@@ -506,95 +455,81 @@ public class DocumentHandler {
       mdRecord.setLicense(license);
       mdRecord.setAccessRights(accessRights);
     }
-    final String pageCountStr = xQueryEvaluator.evaluateAsString(srcUrl, "count(//*:pb)");
-    final int pageCount = Integer.valueOf(pageCountStr);
+    String pageCountStr = xQueryEvaluator.evaluateAsString(srcUrl, "count(//*:pb)");
+    int pageCount = Integer.valueOf(pageCountStr);
     mdRecord.setPageCount(pageCount);
     mdRecord.setSchemaName("TEI");
     return mdRecord;
   }
 
-  private MetadataRecord getMetadataRecordMets(final XQueryEvaluator xQueryEvaluator, final URL srcUrl, final MetadataRecord mdRecord) throws ApplicationException {
-    final String metadataXmlStrDmd = xQueryEvaluator.evaluateAsString(srcUrl, "/*:mets/*:dmdSec");
-    final String metadataXmlStrAmd = xQueryEvaluator.evaluateAsString(srcUrl, "/*:mets/*:amdSec");
+  private MetadataRecord getMetadataRecordMets(XQueryEvaluator xQueryEvaluator, URL srcUrl, MetadataRecord mdRecord) throws ApplicationException {
+    String metadataXmlStrDmd = xQueryEvaluator.evaluateAsString(srcUrl, "/*:mets/*:dmdSec");
+    String metadataXmlStrAmd = xQueryEvaluator.evaluateAsString(srcUrl, "/*:mets/*:amdSec");
     if (metadataXmlStrDmd != null) {
       String identifier = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStrDmd, "string(/*:dmdSec/@ID)");
-      if (identifier != null) {
+      if (identifier != null)
         identifier = StringUtils.deresolveXmlEntities(identifier.trim());
-      }
       String webUri = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStrAmd, "/*:amdSec/*:digiprovMD/*:mdWrap/*:xmlData/*:links/*:presentation");
-      if (webUri != null) {
+      if (webUri != null)
         webUri = StringUtils.deresolveXmlEntities(webUri.trim());
-      }
       String creator = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStrDmd, "/*:dmdSec/*:mdWrap/*:xmlData/*:mods/*:name");
-      if (creator != null) {
+      if (creator != null)
         creator = StringUtils.deresolveXmlEntities(creator.trim());
-      }
       String title = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStrDmd, "/*:dmdSec/*:mdWrap/*:xmlData/*:mods/*:titleInfo");
-      if (title != null) {
+      if (title != null)
         title = StringUtils.deresolveXmlEntities(title.trim());
-      }
-      final String language = null; // TODO
-      // String language =
-      // xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStrDmd,
-      // "string(/*:teiHeader/*:profileDesc/*:langUsage/*:language[1]/@ident)");
+      String language = null;  // TODO
+      // String language = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStrDmd, "string(/*:teiHeader/*:profileDesc/*:langUsage/*:language[1]/@ident)");
       // if (language != null && language.isEmpty())
-      // language = null;
+      //   language = null;
       // if (language != null) {
-      // language = StringUtils.deresolveXmlEntities(language.trim());
-      // language = Language.getInstance().getISO639Code(language);
+      //   language = StringUtils.deresolveXmlEntities(language.trim());
+      //   language = Language.getInstance().getISO639Code(language);
       // }
       String publisher = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStrAmd, "/*:amdSec/*:rightsMD/*:mdWrap/*:xmlData/*:rights/*:owner", ", ");
-      if (publisher != null) {
+      if (publisher != null)
         publisher = StringUtils.deresolveXmlEntities(publisher.trim());
-      }
       String place = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStrDmd, "/*:dmdSec/*:mdWrap/*:xmlData/*:mods/*:originInfo/*:place/*:placeTerm", ", ");
-      if (place != null) {
+      if (place != null)
         place = StringUtils.deresolveXmlEntities(place.trim());
-      }
       String publisherStr = null;
       boolean publisherEndsWithComma = false;
-      if (publisher != null) {
+      if (publisher != null)
         publisherEndsWithComma = publisher.lastIndexOf(",") == publisher.length() - 1;
-      }
-      if (publisher == null && place != null) {
+      if (publisher == null && place != null)
         publisherStr = place;
-      } else if (publisher != null && place == null) {
+      else if (publisher != null && place == null)
         publisherStr = publisher;
-      } else if (publisher != null && place != null && publisherEndsWithComma) {
+      else if (publisher != null && place != null && publisherEndsWithComma)
         publisherStr = publisher + " " + place;
-      } else if (publisher != null && place != null && !publisherEndsWithComma) {
+      else if (publisher != null && place != null && ! publisherEndsWithComma)
         publisherStr = publisher + ", " + place;
-      }
       String yearStr = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStrDmd, "/*:dmdSec/*:mdWrap/*:xmlData/*:mods/*:originInfo/*:dateIssued");
-      Date date = null;
-      if (yearStr != null && !yearStr.equals("")) {
+      Date date = null; 
+      if (yearStr != null && ! yearStr.equals("")) {
         yearStr = StringUtils.deresolveXmlEntities(yearStr.trim());
-        yearStr = new Util().toYearStr(yearStr); // test if possible etc
+        yearStr = new Util().toYearStr(yearStr);  // test if possible etc
         if (yearStr != null) {
           try {
             date = new Util().toDate(yearStr + "-01-01T00:00:00.000Z");
-          } catch (final Exception e) {
+          } catch (Exception e) {
             // nothing
           }
         }
       }
-      final String subject = null; // TODO
-      // String subject =
-      // xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStrDmd,
-      // "/*:teiHeader/*:profileDesc/*:textClass/*:keywords/*:term");
+      String subject = null;  // TODO
+      // String subject = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStrDmd, "/*:teiHeader/*:profileDesc/*:textClass/*:keywords/*:term");
       // if (subject != null)
-      // subject = StringUtils.deresolveXmlEntities(subject.trim());
-      final String rightsOwner = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStrAmd, "/*:amdSec/*:rightsMD/*:mdWrap/*:xmlData/*:rights/*:owner");
-      final String rightsOwnerUrl = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStrAmd, "/*:amdSec/*:rightsMD/*:mdWrap/*:xmlData/*:rights/*:ownerSiteURL");
+      //   subject = StringUtils.deresolveXmlEntities(subject.trim());
+      String rightsOwner = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStrAmd, "/*:amdSec/*:rightsMD/*:mdWrap/*:xmlData/*:rights/*:owner");
+      String rightsOwnerUrl = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStrAmd, "/*:amdSec/*:rightsMD/*:mdWrap/*:xmlData/*:rights/*:ownerSiteURL");
       String rights = null;
-      if (rightsOwner != null) {
+      if (rightsOwner != null)
         rights = StringUtils.deresolveXmlEntities(rightsOwner.trim());
-      }
-      if (rightsOwner != null && rightsOwnerUrl != null) {
+      if (rightsOwner != null && rightsOwnerUrl != null)
         rights = rights + ", " + StringUtils.deresolveXmlEntities(rightsOwnerUrl.trim());
-      } else if (rightsOwner == null && rightsOwnerUrl != null) {
+      else if (rightsOwner == null && rightsOwnerUrl != null)
         rights = StringUtils.deresolveXmlEntities(rightsOwnerUrl.trim());
-      }
       mdRecord.setIdentifier(identifier);
       mdRecord.setWebUri(webUri);
       mdRecord.setLanguage(language);
@@ -609,66 +544,56 @@ public class DocumentHandler {
     return mdRecord;
   }
 
-  private MetadataRecord getMetadataRecordHtml(final XQueryEvaluator xQueryEvaluator, final URL srcUrl, final MetadataRecord mdRecord) throws ApplicationException {
-    final String metadataXmlStr = xQueryEvaluator.evaluateAsString(srcUrl, "/html/head");
+  private MetadataRecord getMetadataRecordHtml(XQueryEvaluator xQueryEvaluator, URL srcUrl, MetadataRecord mdRecord) throws ApplicationException {
+    String metadataXmlStr = xQueryEvaluator.evaluateAsString(srcUrl, "/html/head");
     if (metadataXmlStr != null) {
       String identifier = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/meta[@name = 'DC.identifier']/@content)");
-      if (identifier != null && !identifier.isEmpty()) {
+      if (identifier != null && ! identifier.isEmpty())
         identifier = StringUtils.deresolveXmlEntities(identifier.trim());
-      }
       String creator = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/meta[@name = 'DC.creator']/@content)");
-      if (creator != null && !creator.isEmpty()) {
+      if (creator != null && ! creator.isEmpty())
         creator = StringUtils.deresolveXmlEntities(creator.trim());
-      }
       String title = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/meta[@name = 'DC.title']/@content)");
-      if (title != null && !title.isEmpty()) {
+      if (title != null && ! title.isEmpty())
         title = StringUtils.deresolveXmlEntities(title.trim());
-      }
       String language = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/meta[@name = 'DC.language']/@content)");
-      if (language != null && language.isEmpty()) {
+      if (language != null && language.isEmpty())
         language = null;
-      }
-      if (language != null && !language.isEmpty()) {
+      if (language != null && ! language.isEmpty()) {
         language = StringUtils.deresolveXmlEntities(language.trim());
         language = Language.getInstance().getISO639Code(language);
       }
       String publisher = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/meta[@name = 'DC.publisher']/@content)");
-      if (publisher != null) {
+      if (publisher != null)
         publisher = StringUtils.deresolveXmlEntities(publisher.trim());
-      }
       String yearStr = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/meta[@name = 'DC.date']/@content)");
-      Date date = null;
-      if (yearStr != null && !yearStr.equals("")) {
+      Date date = null; 
+      if (yearStr != null && ! yearStr.equals("")) {
         yearStr = StringUtils.deresolveXmlEntities(yearStr.trim());
-        yearStr = new Util().toYearStr(yearStr); // test if possible etc
+        yearStr = new Util().toYearStr(yearStr);  // test if possible etc
         if (yearStr != null) {
           try {
             date = new Util().toDate(yearStr + "-01-01T00:00:00.000Z");
-          } catch (final Exception e) {
+          } catch (Exception e) {
             // nothing
           }
         }
       }
       String subject = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/meta[@name = 'DC.subject']/@content)");
-      if (subject != null) {
+      if (subject != null)
         subject = StringUtils.deresolveXmlEntities(subject.trim());
-      }
       String description = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/meta[@name = 'DC.description']/@content)");
-      if (description != null) {
+      if (description != null)
         description = StringUtils.deresolveXmlEntities(description.trim());
-      }
       String rights = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/meta[@name = 'DC.rights']/@content)");
-      if (rights != null && !rights.isEmpty()) {
+      if (rights != null && ! rights.isEmpty())
         rights = StringUtils.deresolveXmlEntities(rights.trim());
-      }
       String license = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/meta[@name = 'DC.license']/@content)");
-      if (license != null && !license.isEmpty()) {
+      if (license != null && ! license.isEmpty())
         license = StringUtils.deresolveXmlEntities(license.trim());
-      }
       String accessRights = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/meta[@name = 'DC.accessRights']/@content)");
-      if (accessRights != null && !accessRights.isEmpty()) {
+      if (accessRights != null && ! accessRights.isEmpty())
         accessRights = StringUtils.deresolveXmlEntities(accessRights.trim());
-      }
       mdRecord.setIdentifier(identifier);
       mdRecord.setLanguage(language);
       mdRecord.setCreator(creator);
@@ -681,37 +606,33 @@ public class DocumentHandler {
       mdRecord.setLicense(license);
       mdRecord.setAccessRights(accessRights);
     }
-    final String pageCountStr = xQueryEvaluator.evaluateAsString(srcUrl, "count(//pb)");
-    final int pageCount = Integer.valueOf(pageCountStr);
+    String pageCountStr = xQueryEvaluator.evaluateAsString(srcUrl, "count(//pb)");
+    int pageCount = Integer.valueOf(pageCountStr);
     mdRecord.setPageCount(pageCount);
     mdRecord.setSchemaName("html");
     return mdRecord;
   }
 
-  private String getPersons(final String tocString, final XQueryEvaluator xQueryEvaluator) throws ApplicationException {
-    final String persons = xQueryEvaluator.evaluateAsStringValueJoined(tocString, "/list/list[@type='persons']/item[not(. = preceding::item)]", "###"); // [not(.
-                                                                                                                                                        // =
-                                                                                                                                                        // preceding::item)]
-                                                                                                                                                        // removes
-                                                                                                                                                        // duplicates
+  private String getPersons(String tocString, XQueryEvaluator xQueryEvaluator) throws ApplicationException {
+    String persons = xQueryEvaluator.evaluateAsStringValueJoined(tocString, "/list/list[@type='persons']/item[not(. = preceding::item)]", "###"); // [not(. = preceding::item)] removes duplicates
     return persons;
   }
-
-  private String getPlaces(final String tocString, final XQueryEvaluator xQueryEvaluator) throws ApplicationException {
-    final String places = xQueryEvaluator.evaluateAsStringValueJoined(tocString, "/list/list[@type='places']/item[not(. = preceding::item)]", "###");
+  
+  private String getPlaces(String tocString, XQueryEvaluator xQueryEvaluator) throws ApplicationException {
+    String places = xQueryEvaluator.evaluateAsStringValueJoined(tocString, "/list/list[@type='places']/item[not(. = preceding::item)]", "###"); 
     return places;
   }
-
-  private String getNodeType(final XdmNode node) {
+  
+  private String getNodeType(XdmNode node) {
     String nodeType = null;
-    final XdmSequenceIterator iter = node.axisIterator(Axis.CHILD);
+    XdmSequenceIterator iter = node.axisIterator(Axis.CHILD);
     if (iter != null) {
       while (iter.hasNext()) {
-        final XdmNode firstChild = (XdmNode) iter.next();
+        XdmNode firstChild = (XdmNode) iter.next();
         if (firstChild != null) {
-          final XdmNodeKind nodeKind = firstChild.getNodeKind();
+          XdmNodeKind nodeKind = firstChild.getNodeKind();
           if (nodeKind.ordinal() == XdmNodeKind.ELEMENT.ordinal()) {
-            final QName nodeQName = firstChild.getNodeName();
+            QName nodeQName = firstChild.getNodeName();
             nodeType = nodeQName.getLocalName();
           }
         }
@@ -719,123 +640,111 @@ public class DocumentHandler {
     }
     return nodeType;
   }
-
-  public String getDocFullFileName(final String docId) {
-    if (docId == null || docId.trim().isEmpty()) {
+  
+  public String getDocFullFileName(String docId) {
+    if (docId == null || docId.trim().isEmpty())
       return null;
-    }
-    final String docDir = getDocDir(docId);
-    final String docFileName = getDocFileName(docId);
-    final String docFullFileName = docDir + "/" + docFileName;
+    String docDir = getDocDir(docId);
+    String docFileName = getDocFileName(docId);
+    String docFullFileName = docDir + "/" + docFileName; 
     return docFullFileName;
   }
-
-  public boolean isDocXml(final String docId) {
+  
+  public boolean isDocXml(String docId) {
     boolean isXml = false;
     String fileExt = getDocFileExtension(docId);
     if (fileExt != null) {
       fileExt = fileExt.toLowerCase();
-      if (fileExt.equals("xml")) {
+      if (fileExt.equals("xml"))
         isXml = true;
-      }
     }
     return isXml;
   }
 
-  public String getMimeType(final String docId) {
+  public String getMimeType(String docId) {
     String mimeType = null;
     String fileName = getDocFileName(docId);
     if (fileName != null) {
       fileName = fileName.toLowerCase();
-      final FileNameMap fileNameMap = URLConnection.getFileNameMap();
+      FileNameMap fileNameMap = URLConnection.getFileNameMap();
       mimeType = fileNameMap.getContentTypeFor(fileName);
     }
     return mimeType;
   }
 
-  public String getDocDir(final String docId) {
-    if (docId == null || docId.trim().isEmpty()) {
+  public String getDocDir(String docId) {
+    if (docId == null || docId.trim().isEmpty())
       return null;
-    }
-    final String documentsDirectory = Constants.getInstance().getDocumentsDir();
+    String documentsDirectory = Constants.getInstance().getDocumentsDir();
     String docDir = documentsDirectory;
-    final String docFileName = getDocFileName(docId);
-    final String docFilePath = getDocFilePath(docId);
-    if (docFilePath != null) {
+    String docFileName = getDocFileName(docId);
+    String docFilePath = getDocFilePath(docId);
+    if (docFilePath != null)
       docDir = docDir + docFilePath;
-    }
-    if (docFileName != null) {
+    if (docFileName != null)
       docDir = docDir + "/" + docFileName;
-    } else {
+    else
       docDir = docDir + "/" + "XXXXX";
-    }
     return docDir;
   }
-
-  private String getDocFileName(final String docId) {
+  
+  private String getDocFileName(String docId) {
     String docFileName = docId.trim();
-    final int index = docId.lastIndexOf("/");
+    int index = docId.lastIndexOf("/");
     if (index != -1) {
       docFileName = docId.substring(index + 1);
     }
     return docFileName;
   }
-
+  
   private String getDocFileExtension(String docId) {
     docId = docId.trim();
     String fileExt = null;
-    final int index = docId.lastIndexOf(".");
+    int index = docId.lastIndexOf(".");
     if (index != -1) {
       fileExt = docId.substring(index + 1);
     }
     return fileExt;
   }
-
-  private String getDocFilePath(final String docId) {
+  
+  private String getDocFilePath(String docId) {
     String docFilePath = null;
-    final int index = docId.lastIndexOf("/");
+    int index = docId.lastIndexOf("/");
     if (index >= 0) {
       docFilePath = docId.substring(0, index);
     }
-    if (docFilePath != null && !docFilePath.startsWith("/")) {
+    if (docFilePath != null && ! docFilePath.startsWith("/"))
       docFilePath = docFilePath + "/";
-    }
     return docFilePath;
   }
 
-  private Hashtable<Integer, StringBuilder> getFragments(final String fileName, final String milestoneElementName) throws ApplicationException {
+  private Hashtable<Integer, StringBuilder> getFragments(String fileName, String milestoneElementName) throws ApplicationException {
     try {
-      final GetFragmentsContentHandler getFragmentsContentHandler = new GetFragmentsContentHandler(milestoneElementName);
-      final XMLReader xmlParser = new SAXParser();
+      GetFragmentsContentHandler getFragmentsContentHandler = new GetFragmentsContentHandler(milestoneElementName);
+      XMLReader xmlParser = new SAXParser();
       xmlParser.setContentHandler(getFragmentsContentHandler);
-      final InputSource inputSource = new InputSource(fileName);
+      InputSource inputSource = new InputSource(fileName);
       xmlParser.parse(inputSource);
-      final Hashtable<Integer, StringBuilder> resultFragments = getFragmentsContentHandler.getResultPages();
+      Hashtable<Integer, StringBuilder> resultFragments = getFragmentsContentHandler.getResultPages();
       return resultFragments;
-    } catch (final SAXException e) {
+    } catch (SAXException e) {
       throw new ApplicationException(e);
-    } catch (final IOException e) {
+    } catch (IOException e) {
       throw new ApplicationException(e);
     }
   }
 
-  private String tokenizeWithLemmas(final String xmlStr, final String language) throws ApplicationException {
-    final StringReader strReader = new StringReader(xmlStr);
-    final XmlTokenizer xmlTokenizer = new XmlTokenizer(strReader);
+  private String tokenizeWithLemmas(String xmlStr, String language) throws ApplicationException {
+    StringReader strReader = new StringReader(xmlStr);
+    XmlTokenizer xmlTokenizer = new XmlTokenizer(strReader);
     xmlTokenizer.setLanguage(language);
-    final String[] outputOptionsWithLemmas = { "withLemmas" }; // so all tokens
-                                                               // are fetched
-                                                               // with lemmas
-                                                               // (costs
-                                                               // performance)
-    final String[] nwbElements = { "lb", "br", "cb" }; // non word breaking
-                                                       // elements // TODO: "hi"
-                                                       // cause bug
+    String[] outputOptionsWithLemmas = {"withLemmas"}; // so all tokens are fetched with lemmas (costs performance)
+    String[] nwbElements = {"lb", "br", "cb"};  // non word breaking elements // TODO: "hi" cause bug
     xmlTokenizer.setNWBElements(nwbElements);
-    xmlTokenizer.setOutputOptions(outputOptionsWithLemmas);
-    xmlTokenizer.tokenize();
-    final String retStr = xmlTokenizer.getXmlResult();
+    xmlTokenizer.setOutputOptions(outputOptionsWithLemmas); 
+    xmlTokenizer.tokenize();  
+    String retStr = xmlTokenizer.getXmlResult();
     return retStr;
   }
-
+  
 }
