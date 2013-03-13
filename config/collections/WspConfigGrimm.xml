@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<wsp>
+  <collection>
+    <id>grimm</id>
+    <name>Belegzettel von Jacob und Wilhelm Grimm</name>
+    <!-- if dataUrl is not a directory but a file, it should end with a forward slash -->
+    <url>
+      <webBaseUrl>http://digilib.bbaw.de/digitallibrary/greyskin/diginew.jsp?fn=dwb/&pn=1</webBaseUrl>
+      <dataUrl>http://digilib.bbaw.de/digitallibrary/greyskin/diginew.jsp?fn=dwb/&pn=1</dataUrl>
+      
+    </url>
+    
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>jpeg</format>
+      
+    </formats>
+    
+  </collection>
+</wsp>

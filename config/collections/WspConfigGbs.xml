@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp>
+  <collection>
+    <id>gbs</id>
+    <name>Ausgewählte Gelehrtenbriefe -Schlegel</name>
+    <url>
+    	<webBaseUrl>http://archiv.bbaw.de/archiv/gelehrtenbriefe</webBaseUrl>
+      <dataUrl>http://archiv.bbaw.de/archiv/gelehrtenbriefe</dataUrl>
+    </url>
+
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>jpeg</format>
+    </formats> 
+  </collection>
+</wsp>
+
