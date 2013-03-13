@@ -11,7 +11,7 @@
       <dataUrl>http://telota.bbaw.de/kant</dataUrl>
       <dataUrl>http://telotadev.bbaw.de:8088/kant_entwurf</dataUrl>
       <dataUrl>http://kant.bbaw.de/opus-postumum/faksimiles-chronologisch</dataUrl>
-      <dataUrl>http://kxant.bbaw.de/opus-postumum/faksimiles-diplomatisch</dataUrl>
+      <dataUrl>http://kant.bbaw.de/opus-postumum/faksimiles-diplomatisch</dataUrl>
       
       <!-- XML-Texte -->
       <dataUrl type="eXistDir">http://telota.bbaw.de/exist/rest/db/kant/</dataUrl>
