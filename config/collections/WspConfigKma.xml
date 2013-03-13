@@ -12,7 +12,7 @@
      <dataUrl>http://telota.bbaw.de/mze/</dataUrl>
      <dataUrl>http://www.bbaw.de/forschung/moritz/biblio/index.html</dataUrl>
      
-     <dataUrl type="eXistDir">http://telota.bbaw.de:8085/exist/servlet/db/mes/data</dataUrl>
+     <!--  <dataUrl type="eXistDir">http://telota.bbaw.de:8085/exist/servlet/db/mes/data</dataUrl>  -->
      <exclude>scripts</exclude>
     </url>
 
