@@ -5,7 +5,13 @@
     <name>Corpus Coranicum</name>
     <!-- if dataUrl is not a file but a directory, it should end with a forward slash-->
     <url>
-      <webBaseUrl>http://corpuscoranicum.de/kommentar/index/sure</webBaseUrl>
+      <webBaseUrl>http://koran.bbaw.de/</webBaseUrl>
+      <dataUrl>http://koran.bbaw.de/</dataUrl>
+      <dataUrl>http://bbaw.schicke-seite.de/index</dataUrl>
+      <dataUrl>www.corpuscoranicum.de</dataUrl>
+      <dataUrl>http://corpuscoranicum.de/kommentar/index/sure</dataUrl>
+      <dataUrl>http://koran.bbaw.de/materialien/bergstrasser-original-indexklein.pdf</dataUrl>
+      
       <!-- XML-Texte -->
       <dataUrl type="eXistDir">http://telotadev.bbaw.de:8085/exist/rest/db/Koran/</dataUrl>
       <!-- this user is only needed for the parent directory: http://telotadev.bbaw.de:8085/exist/rest/db/   -->
@@ -23,10 +29,12 @@
       <exclude>Kommentar/Kommentar.xsd</exclude>
       <exclude>Textstruktur/Textstruktur.xsd</exclude>
     </url>
-    <languages>ger, ara</languages>
+    <languages>ger,ara,grc</languages>
     <mainLanguage>ger</mainLanguage>
     <formats>
       <format>xml</format>
+      <format>html</format>
+      <format>pdf</format>
     </formats>
     <fields>
       <field>p</field>
