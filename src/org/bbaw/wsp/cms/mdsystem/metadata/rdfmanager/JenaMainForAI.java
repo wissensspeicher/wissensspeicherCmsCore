@@ -357,11 +357,11 @@ public class JenaMainForAI {
 	 * operating system
 	 */
 	private void checkValidSystem() {
+		generatePath();
 		if (pathHandler.checkForNewRunningSystem(System.getProperty("os.name"))) {
 
 			try {
 
-				generatePath();
 				pathHandler.setPath(storeLocation);
 				pathHandler.refreshSystemInfo();
 
@@ -371,6 +371,8 @@ public class JenaMainForAI {
 				e.printStackTrace();
 			}
 
+		} else if (!storeLocation.equals(pathHandler.getPath())) {
+			pathHandler.setPath(storeLocation);
 		}
 
 	}
