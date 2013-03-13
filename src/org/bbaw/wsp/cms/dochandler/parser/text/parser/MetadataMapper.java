@@ -113,7 +113,6 @@ public class MetadataMapper implements IMetadataFields {
         break;
       }
     }
-    System.out.println("\n\n");
   }
 
   /**
