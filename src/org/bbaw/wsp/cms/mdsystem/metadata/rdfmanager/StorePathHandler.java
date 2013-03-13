@@ -9,7 +9,7 @@ public class StorePathHandler implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 4303415179300522376L;
-	private final String system = System.getProperty("os.name");
+	private String system = System.getProperty("os.name");
 	private String path = "";
 	private ArrayList<String> modelList = new ArrayList<String>();
 
@@ -19,6 +19,10 @@ public class StorePathHandler implements Serializable {
 
 	public void setPath(String path) {
 		this.path = path;
+	}
+
+	public void refreshSystemInfo() {
+		system = System.getProperty("os.name");
 	}
 
 	public Boolean checkForNewRunningSystem(String sys) {

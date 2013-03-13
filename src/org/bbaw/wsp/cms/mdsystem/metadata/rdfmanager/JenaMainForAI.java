@@ -28,14 +28,6 @@ import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 
 public class JenaMainForAI {
 
-	/**
-	 * examples for test purposes
-	 */
-	static final String oreTestBriefe = "/home/juergens/WspEtc/rdfData/Briefe.rdf";
-	static final String oreTestSaschas = "/home/juergens/WspEtc/rdfData/AvH-Briefwechsel-Ehrenberg-sascha.rdf";
-
-	static final String oreBiblioNeu = "/home/juergens/WspEtc/rdfData/BiblioNeu.rdf";
-
 	private Model model;
 	private RdfHandler rdfHandler;
 	private final WspRdfStore wspStore = WspRdfStore.getInstance();
@@ -49,7 +41,7 @@ public class JenaMainForAI {
 	private StorePathHandler pathHandler = new StorePathHandler();
 
 	/**
-	 * needs to be instantiated from outside e.g. org.bbaw.wsp.cms.test.TestLocal
+	 * Konstruktor, also checks seperator for different running systems
 	 * 
 	 */
 	public JenaMainForAI() {
@@ -371,6 +363,8 @@ public class JenaMainForAI {
 
 				generatePath();
 				pathHandler.setPath(storeLocation);
+				pathHandler.refreshSystemInfo();
+
 				savePathFile();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -403,31 +397,6 @@ public class JenaMainForAI {
 			fos.close();
 
 		}
-	}
-
-	/**
-	 * call methods from here
-	 * 
-	 * @throws IOException
-	 */
-	@SuppressWarnings("unused")
-	private void doYourWork() throws IOException {
-		// createNamedModelsFromOreSets("/home/juergens/WspEtc/rdfData/ModsToRdfTest");
-		if (new File(source).isDirectory()) {
-			createDatasetFromSet(source);
-		} else
-			createNewModelFromSingleOre(source);
-		// getAllNamedModelsInDataset();
-
-		// queryPerSparqlSelect();
-		// createNamedModelsFromOreSets(MODS);
-		// model.close();
-		// dataset.close();
-		savePathFile();
-		// dataset.close();
-		// wspStore.closeDataset();
-		wspStore.closeDataset();
-
 	}
 
 	/**
@@ -480,6 +449,7 @@ public class JenaMainForAI {
 	 * 
 	 * @param location
 	 */
+	@SuppressWarnings("unused")
 	private void createDatasetFromSet(final String location) {
 		ArrayList<String> data = new ArrayList<String>();
 		for (File file : new File(location).listFiles()) {
