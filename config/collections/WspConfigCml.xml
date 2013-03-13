@@ -4,8 +4,8 @@
     <id>cml</id>
     <name>Aus dem Archivum Corporis Electronicum: Eine Auswahl afrikanischer Versinschriften</name>
     <url>
-    <webBaseUrl>http://cil.bbaw.de/afrika/afrika.html</webBaseUrl>
-    
+      <webBaseUrl>http://cil.bbaw.de/afrika/afrika.html</webBaseUrl>
+      <dataUrl>http://cil.bbaw.de/afrika/afrika.html</dataUrl> 
     </url>
     <languages>ger,lat</languages>
     <mainLanguage>ger</mainLanguage>
@@ -13,8 +13,7 @@
       <format>Jpeg</format>
       <format>Flash</format>
       <format>Html</format>
-      <format>php</format>
-      
+      <format>php</format>      
     </formats> 
   </collection>
 </wsp>
