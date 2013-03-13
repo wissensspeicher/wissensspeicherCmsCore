@@ -44,7 +44,6 @@ public class MdystemConfigReader {
    */
   public IMdsystemConfigRecord getConfig() {
     // get persisted record class or load from file
-    System.out.println(record);
     return record;
   }
 
@@ -60,7 +59,6 @@ public class MdystemConfigReader {
       final String modsStylesheetPath = evaluator.evaluateAsString(configFileUrl, "/mdsystem/converter/xslt/mods/stylesheetPath/text()");
       record.setModsStylesheetPath(modsStylesheetPath);
 
-      System.out.println("mods stylesheet path: " + modsStylesheetPath);
       final String metsStylesheetPath = evaluator.evaluateAsString(configFileUrl, "/mdsystem/converter/xslt/mets/stylesheetPath/text()");
       record.setMetsStylesheetPath(metsStylesheetPath);
 
