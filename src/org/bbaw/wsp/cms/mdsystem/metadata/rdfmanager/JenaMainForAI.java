@@ -371,6 +371,8 @@ public class JenaMainForAI {
 
 				generatePath();
 				pathHandler.setPath(storeLocation);
+				pathHandler.refreshSystemInfo();
+
 				savePathFile();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
