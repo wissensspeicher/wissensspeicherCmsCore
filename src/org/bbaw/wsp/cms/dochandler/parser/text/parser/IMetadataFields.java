@@ -35,5 +35,9 @@ public interface IMetadataFields {
   static final String CONTENT_TYPE = "content-type";
   static final String CONTENT_ENCODING = "content-encoding";
   static final String KEYWORDS = "keywords";
+  /**
+   * e.g. <meta name="description" ...>
+   */
+  static final String DESCRIPTION = "description";
 
 }

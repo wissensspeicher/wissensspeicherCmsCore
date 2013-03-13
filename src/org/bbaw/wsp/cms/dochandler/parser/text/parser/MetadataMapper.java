@@ -46,6 +46,9 @@ public class MetadataMapper implements IMetadataFields {
       case IMetadataFields.KEYWORDS:
         mdRecord.setSubject(concatenate(mdRecord.getSubject(), IMetadataFields.MULTIVALUE_SEPARATOR, value));
         break;
+      case IMetadataFields.DESCRIPTION:
+        mdRecord.setDescription(value);
+        break;
       }
     }
   }
