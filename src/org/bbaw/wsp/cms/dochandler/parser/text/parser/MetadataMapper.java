@@ -17,20 +17,7 @@ import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
  * 
  */
 
-public class MetadataMapper {
-
-  private static final String DC_DESCRIPTION = "dc.description";
-  private static final String DC_PUBLISHER = "dc.publisher";
-  private static final String DC_LANGUAGE = "dc.language";
-  private static final String DC_RIGHTS = "dc.rights";
-  private static final String DC_IDENTIFIER = "dc.identifier";
-  private static final String DC_DATE = "dc.date";
-  private static final String DC_DATE_CREATED = "dc.date.created";
-  private static final String DC_TITLE = "dc.title";
-  private static final String DC_CREATOR = "dc.creator";
-  private static final String DC_SUBJECT = "dc.subject";
-  private static final String DC_MODIFIED = "dc.date.modified";
-
+public class MetadataMapper implements IMetadataFields {
   /**
    * Match general metadata, such as content-type, coding..
    * 
@@ -43,14 +30,23 @@ public class MetadataMapper {
     if (pageCount != null) {
       mdRecord.setPageCount(Integer.parseInt(pageCount));
     }
-    final String type = tikaMetadata.get(Metadata.CONTENT_TYPE);
-    if (type != null) {
-      mdRecord.setType(type);
-    }
-    @SuppressWarnings("deprecation")
-    final String title = tikaMetadata.get(Metadata.TITLE);
-    if (title != null) {
-      mdRecord.setTitle(title);
+
+    for (final String field : tikaMetadata.names()) {
+      final String value = tikaMetadata.get(field);
+      switch (field.toLowerCase()) {
+      case IMetadataFields.TITLE:
+        mdRecord.setTitle(value);
+        break;
+      case IMetadataFields.CONTENT_TYPE:
+        mdRecord.setType(value);
+        break;
+      case IMetadataFields.CONTENT_ENCODING:
+        mdRecord.setEncoding(value);
+        break;
+      case IMetadataFields.KEYWORDS:
+        mdRecord.setSubject(concatenate(mdRecord.getSubject(), IMetadataFields.MULTIVALUE_SEPARATOR, value));
+        break;
+      }
     }
   }
 
@@ -62,64 +58,83 @@ public class MetadataMapper {
    */
   public static void matchDublinCore(final Metadata tikaMetadata, final MetadataRecord mdRecord) {
     // Metadaten - Felder
-
     for (final String field : tikaMetadata.names()) {
       final String value = tikaMetadata.get(field);
       switch (field.toLowerCase()) {
-      case DC_DESCRIPTION:
+      case IMetadataFields.DC_DESCRIPTION:
         mdRecord.setDescription(value);
         break;
-      case DC_PUBLISHER:
+      case IMetadataFields.DC_PUBLISHER:
         mdRecord.setPublisher(value);
         break;
-      case DC_LANGUAGE:
+      case IMetadataFields.DC_LANGUAGE:
         mapLanguage(value, mdRecord);
         break;
-      case DC_RIGHTS:
+      case IMetadataFields.DC_RIGHTS:
         mdRecord.setRights(value);
         break;
-      case DC_IDENTIFIER:
+      case IMetadataFields.DC_IDENTIFIER:
         mdRecord.setIdentifier(value);
         break;
-      case DC_DATE:
+      case IMetadataFields.DC_DATE:
         final Date insert = mapDate(value);
         if (insert != null) {
           mdRecord.setDate(insert);
         }
         break;
-      case DC_DATE_CREATED:
+      case IMetadataFields.DC_DATE_CREATED:
         final Date insertCreated = mapDate(value);
         if (insertCreated != null) {
           mdRecord.setCreationDate(insertCreated);
         }
         break;
-      case DC_TITLE:
+      case IMetadataFields.DC_TITLE:
         mdRecord.setTitle(value);
         break;
-      case DC_CREATOR:
-        String creatorString = mdRecord.getCreator();
-        if (creatorString != null && !creatorString.isEmpty()) {
-          creatorString += ("; " + value);
-        } else {
-          creatorString = value;
-        }
-        mdRecord.setCreator(creatorString);
+      case IMetadataFields.DC_TITLE_COLON_SEPARATOR:
+        mdRecord.setTitle(value);
+      case IMetadataFields.DC_CREATOR:
+        mdRecord.setCreator(concatenate(mdRecord.getCreator(), IMetadataFields.MULTIVALUE_SEPARATOR, value));
         break;
-      case DC_SUBJECT:
-        mdRecord.setSubject(value);
+      case IMetadataFields.DC_SUBJECT:
+        mdRecord.setSubject(concatenate(mdRecord.getSubject(), IMetadataFields.MULTIVALUE_SEPARATOR, value));
         break;
-      case DC_MODIFIED:
+      case IMetadataFields.DC_COVERAGE:
+        mdRecord.setCoverage(value);
+        break;
+      case IMetadataFields.DC_CONTRIBUTOR:
+        mdRecord.setContributor(concatenate(mdRecord.getContributor(), IMetadataFields.MULTIVALUE_SEPARATOR, value));
+        break;
+      case IMetadataFields.DC_MODIFIED:
         final Date modified = mapDate(value);
         if (modified != null) {
           mdRecord.setDate(modified);
         }
         break;
-      default:
-        System.err.println("unmatched field for " + field);
-        break;
       }
     }
     System.out.println("\n\n");
+  }
+
+  /**
+   * Concatenated two values.
+   * 
+   * @param oldValue
+   *          may be null
+   * @param newValue
+   *          mustn't be null
+   * @return a {@link String}, newValue if oldValue is null or the concatened
+   *         String (oldValue [separator] newValue)
+   */
+  private static String concatenate(final String oldValue, final char seperator, final String newValue) {
+    if (oldValue == null || oldValue.trim().isEmpty()) {
+      return newValue;
+    }
+    final StringBuilder builder = new StringBuilder();
+    builder.append(oldValue);
+    builder.append(seperator);
+    builder.append(newValue);
+    return builder.toString();
   }
 
   /**
@@ -134,7 +149,6 @@ public class MetadataMapper {
       return DateMapper.mapDate(dateString);
     } catch (final ApplicationException e) {
       System.err.println(e);
-      ;
     }
     return null;
   }
