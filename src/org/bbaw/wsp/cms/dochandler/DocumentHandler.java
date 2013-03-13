@@ -303,12 +303,18 @@ public class DocumentHandler {
               mdRecord.setDate(tikaMDRecord.getDate());
             if (mdRecord.getDescription() == null)
               mdRecord.setDescription(tikaMDRecord.getDescription());
+            if (mdRecord.getContributor() == null)
+              mdRecord.setContributor(tikaMDRecord.getContributor());
+            if (mdRecord.getCoverage() == null)
+              mdRecord.setCoverage(tikaMDRecord.getCoverage());
             if (mdRecord.getSubject() == null)
               mdRecord.setSubject(tikaMDRecord.getSubject());
             if (mdRecord.getSwd() == null)
               mdRecord.setSwd(tikaMDRecord.getSwd());
             if (mdRecord.getDdc() == null)
               mdRecord.setDdc(tikaMDRecord.getDdc());
+            if (mdRecord.getEncoding() == null)
+              mdRecord.setEncoding(tikaMDRecord.getEncoding());
           }
         } catch (ApplicationException e) {
           LOGGER.severe(e.getLocalizedMessage());
