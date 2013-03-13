@@ -6,14 +6,24 @@
     <!-- if dataUrl is not a directory but a file, it should end with a forward slash -->
     <url>
       <webBaseUrl>http://kant.bbaw.de</webBaseUrl>
+      <dataUrl>http://kant.bbaw.de</dataUrl>
+      <dataUrl>http://pom.bbaw.de/kant/</dataUrl>
+      <dataUrl>http://telota.bbaw.de/kant</dataUrl>
+      <dataUrl>http://telotadev.bbaw.de:8088/kant_entwurf</dataUrl>
+      <dataUrl>http://kant.bbaw.de/opus-postumum/faksimiles-chronologisch</dataUrl>
+      <dataUrl>http://kxant.bbaw.de/opus-postumum/faksimiles-diplomatisch</dataUrl>
+      
       <!-- XML-Texte -->
       <dataUrl type="eXistDir">http://telota.bbaw.de/exist/rest/db/kant/</dataUrl>
+      <dataUrl type="eXistDir">http://telota.bbaw.de:8088/exist/servlet/db/kant</dataUrl>
       <exclude>scripts</exclude>
     </url>
     <languages>ger</languages>
     <mainLanguage>ger</mainLanguage>
     <formats>
       <format>xml</format>
+      <format>html</format>
+      <format>jpeg</format>
     </formats>
     <fields>
       <field>s</field>
