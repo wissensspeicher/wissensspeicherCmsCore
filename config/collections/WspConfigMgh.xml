@@ -8,14 +8,27 @@
       <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mgh/de/Startseite</webBaseUrl>
       <!-- Homepage -->
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mgh/de/Startseite/index.html</dataUrl>
+      <!-- Der Goldene Bulle -->
+      <dataUrl>http://pom.bbaw.de/mgh/</dataUrl>
+      <dataUrl>http://telota.bbaw.de/mgh/</dataUrl>
+      
+      <!-- Constitutiones et acta publica imperatorum et regum -->
+      <dataUrl>http://telota.bbaw.de/constitutiones/</dataUrl>
+      
+      <!-- Kaiser, Reich und Region -->
+      <dataUrl> http://edoc.bbaw.de/volltexte/2006/75/</dataUrl>
+      
       <!-- XML-Texte -->
       <dataUrl type="eXistDir">http://telota.bbaw.de/exist/rest/db/wdg/</dataUrl>
+      <dataUrl type="eXistDir">http://telota.bbaw.de:8088/exist/servlet/db/mgh</dataUrl>
       <exclude>scripts</exclude>
     </url>
-    <languages>ger</languages>
+    <languages>ger, lat, gmh</languages>
     <mainLanguage>ger</mainLanguage>
     <formats>
       <format>xml</format>
+      <format>html</format>
+      <format>pdf</format>
     </formats>
     <fields>
       <field>s</field>
