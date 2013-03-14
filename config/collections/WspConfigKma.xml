@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<wsp>
+  <collection>
+    <id>kma</id>
+    <name>Kritische Karl-Philipp-Moritz-Ausgabe</name>
+    <!-- if dataUrl is not a directory but a file, it should end with a forward slash -->
+    <url>
+      <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/moritz/de/Startseite</webBaseUrl>
+     <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/moritz/de/Startseite</dataUrl> 
+     
+     <dataUrl>http://pom.bbaw.de/mze/</dataUrl>
+     <dataUrl>http://telota.bbaw.de/mze/</dataUrl>
+     <dataUrl>http://www.bbaw.de/forschung/moritz/biblio/index.html</dataUrl>
+     
+     <!--  <dataUrl type="eXistDir">http://telota.bbaw.de:8085/exist/servlet/db/mes/data</dataUrl>  -->
+     <exclude>scripts</exclude>
+    </url>
+
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>xml</format>
+      <format>html</format>
+      
+    </formats>
+   
+  </collection>
+</wsp>

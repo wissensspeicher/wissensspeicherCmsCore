@@ -3,13 +3,15 @@
   <collection>
     <id>IG</id>
     <name>Inscriptiones Graecae</name>
-    <!-- if dataUrl is not a file but a directory, it should end with a forward slash-->
     <url>
-      <webBaseUrl>http://telota.bbaw.de/ig</webBaseUrl>
-      <!-- Homepage -->
+      <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/ig/de/Startseite/</webBaseUrl>
+      <!-- HTML-Texte -->
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/ig/de/Startseite/</dataUrl>
+      <dataUrl>http://telota.bbaw.de/ig</dataUrl>
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/ig/de/Ueberblick</dataUrl>
-      <!-- Xml-Texte -->
+      <!-- XML-Texte -->
       <dataUrl type="eXistDir">http://telota.bbaw.de/exist/rest/db/ig/texts/</dataUrl>
+      <dataUrl type="eXistDir">http://telota.bbaw.de:8088/exist/servlet/db/ig</dataUrl>
       <exclude>pages</exclude>
       <exclude>scripts</exclude>
       <exclude>svg</exclude>

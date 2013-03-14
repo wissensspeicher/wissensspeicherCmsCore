@@ -5,15 +5,13 @@
     <name>300 Jahre Euler</name>
     <url>
       <webBaseUrl>http://euler.bbaw.de</webBaseUrl>
+      <dataUrl>http://euler.bbaw.de</dataUrl>
     </url>  
-      
     <languages>ger</languages>
     <mainLanguage>ger</mainLanguage>
     <formats>
       <format>Html</format>
       <format>Jpeg</format>
     </formats>
-   
-   
   </collection>    
 </wsp>

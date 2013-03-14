@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<wsp>
+  <collection>
+    <id>edd</id>
+    <name>Das Europa der Diktatur. Wirtschaftssteuerung und Recht</name>
+    <!-- if dataUrl is not a directory but a file, it should end with a forward slash -->
+    <url>
+      <webBaseUrl>http://www.europa-der-diktatur.de/</webBaseUrl>
+   
+      <dataUrl>http://www.europa-der-diktatur.de/</dataUrl>
+     
+      
+    </url>
+    <languages>ger</languages>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>html</format>
+    </formats>
+    
+  </collection>
+</wsp>

@@ -357,11 +357,11 @@ public class JenaMainForAI {
 	 * operating system
 	 */
 	private void checkValidSystem() {
+		generatePath();
 		if (pathHandler.checkForNewRunningSystem(System.getProperty("os.name"))) {
 
 			try {
 
-				generatePath();
 				pathHandler.setPath(storeLocation);
 				pathHandler.refreshSystemInfo();
 
@@ -371,6 +371,8 @@ public class JenaMainForAI {
 				e.printStackTrace();
 			}
 
+		} else if (!storeLocation.equals(pathHandler.getPath())) {
+			pathHandler.setPath(storeLocation);
 		}
 
 	}
@@ -414,6 +416,8 @@ public class JenaMainForAI {
 
 		try {
 			wspStore.addNamedModelToWspStore(rdfAbout, model);
+			if (!modelList.contains(rdfAbout))
+				modelList.add(rdfAbout);
 		} catch (ApplicationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -510,6 +514,8 @@ public class JenaMainForAI {
 			final String modsRdfAbout = rdfHandler.scanID(string);
 			if (modsRdfAbout != null) {
 				try {
+					if (!modelList.contains(modsRdfAbout))
+						modelList.add(modsRdfAbout);
 					wspStore.addNamedModelToWspStore(modsRdfAbout, m);
 					System.out.println(modsRdfAbout + " successfully added.");
 				} catch (final ApplicationException e) {
@@ -522,6 +528,7 @@ public class JenaMainForAI {
 		System.out.println("set read in time elapsed : "
 				+ (System.currentTimeMillis() - start) / 1000);
 		wspStore.closeDataset();
+
 	}
 
 	/**

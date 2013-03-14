@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<wsp>
+  <collection>
+    <id>dfg</id>
+    <name>Die DFG im Spannungsfeld von KWG und Akademien der Wissenschaften bis 1945</name>
+    <!-- if dataUrl is not a directory but a file, it should end with a forward slash -->
+    <url>
+      <webBaseUrl>http://www.bbaw.de/forschung/dfg_hist/projektdarstellung</webBaseUrl>
+      <!-- Homepage -->
+      <dataUrl>http://www.bbaw.de/forschung/dfg_hist/projektdarstellung</dataUrl>
+      <!-- XML-Texte -->
+      
+     
+      
+   
+    </url>
+    
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      
+      <format>html</format>
+      
+    </formats>
+    
+  </collection>
+</wsp>

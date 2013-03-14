@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<wsp>
+  <collection>
+    <id>kga</id>
+    <name>Schleiermacher in Berlin 1808-1834. Briefwechsel, Tageskalender, Vorlesungen</name>
+    <!-- if dataUrl is not a directory but a file, it should end with a forward slash -->
+    <url>
+      <webBaseUrl>http://www.bbaw.de/forschung/alphabetisch/schleiermacher_II/uebersicht</webBaseUrl>
+      <dataUrl>http://www.bbaw.de/forschung/alphabetisch/schleiermacher_II/uebersicht</dataUrl>
+      
+    </url>
+    
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>xml</format>
+      <format>html</format>
+      <format>jpeg</format>
+    </formats>
+    
+  </collection>
+</wsp>
