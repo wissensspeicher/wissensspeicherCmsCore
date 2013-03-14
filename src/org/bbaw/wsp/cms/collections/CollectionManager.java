@@ -12,11 +12,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
-import java.util.logging.Logger;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import org.apache.log4j.Logger;
 import org.bbaw.wsp.cms.dochandler.DocumentHandler;
 import org.bbaw.wsp.cms.dochandler.parser.text.parser.EdocIndexMetadataFetcherTool;
 import org.bbaw.wsp.cms.document.MetadataRecord;
@@ -32,7 +32,7 @@ import org.w3c.dom.NodeList;
 import com.sun.org.apache.xml.internal.serialize.XMLSerializer;
 
 public class CollectionManager {
-  private static Logger LOGGER = Logger.getLogger(CollectionManager.class.getName());
+  private static Logger LOGGER = Logger.getLogger(CollectionManager.class);
   private CollectionReader collectionReader;  // has the collection infos of the configuration files
   private int counter = 0;
   private static CollectionManager confManager;
@@ -183,7 +183,7 @@ public class CollectionManager {
                   webUri = uriEdoc;
                 }
               } else {
-                LOGGER.severe("Fetching metadata failed for: " + metadataUrl + " (no url in index.html found)");
+                LOGGER.error("Fetching metadata failed for: " + metadataUrl + " (no url in index.html found)");
               }
             } else {
               // TODO
@@ -219,6 +219,8 @@ public class CollectionManager {
           }
           if (! uriPath.matches(".*\\.[^/-]+")) {  // no file with extension (such as a.xml or b.pdf) but a directory: then a special default file-name is used in docId
             HttpURLConnection connection = (HttpURLConnection) uri.openConnection();
+            connection.setConnectTimeout(5000);
+            connection.setReadTimeout(5000);
             connection.connect();
             String mimeType = connection.getContentType();
             String fileExtension = "html";
