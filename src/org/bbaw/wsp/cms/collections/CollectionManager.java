@@ -9,7 +9,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -125,8 +124,7 @@ public class CollectionManager {
       String docId = mdRecord.getDocId();
       String collectionId = mdRecord.getCollectionNames();
       counter++;
-      Date now = new Date();
-      LOGGER.info(counter + ". " + now.toString() + " Collection: " + collectionId + ": Create: " + docId);
+      LOGGER.info(counter + ". " + "Collection: " + collectionId + ": Create: " + docId);
       CmsDocOperation docOp = new CmsDocOperation("create", docUrl, null, docId);
       docOp.setMdRecord(mdRecord);
       ArrayList<String> fields = collection.getFields();
