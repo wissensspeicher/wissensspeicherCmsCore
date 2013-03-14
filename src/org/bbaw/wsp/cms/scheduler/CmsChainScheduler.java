@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
 
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
@@ -117,7 +117,7 @@ public class CmsChainScheduler {
         docOperations.add(docOperation);
       }
     } catch (SchedulerException e) {
-      LOGGER.severe(e.getMessage());
+      LOGGER.error(e.getMessage());
       throw new ApplicationException(e);
     }
     return docOperations;
@@ -153,7 +153,7 @@ public class CmsChainScheduler {
           return docOperation;
       }
     } catch (SchedulerException e) {
-      LOGGER.severe(e.getMessage());
+      LOGGER.error(e.getMessage());
       throw new ApplicationException(e);
     }
     // if not found return null
@@ -198,7 +198,7 @@ public class CmsChainScheduler {
       String jobInfo = "Schedule document operation: " + docOperation.toString() + ": done at: " + fireTime.toString();
       LOGGER.info(jobInfo);
     } catch (SchedulerException e) {
-      LOGGER.severe(e.getMessage());
+      LOGGER.error(e.getMessage());
       throw new ApplicationException(e);
     }
   }
@@ -215,7 +215,7 @@ public class CmsChainScheduler {
         LOGGER.info("Started Quartz scheduler factory: " + quartzPath);
       } 
     } catch (SchedulerException e) {
-      LOGGER.severe(e.getMessage());
+      LOGGER.error(e.getMessage());
       throw new ApplicationException(e);
     }
   }
@@ -228,7 +228,7 @@ public class CmsChainScheduler {
       String quartzPath = getQuartzPath();
       LOGGER.info("Ended Quartz scheduler factory: " + quartzPath);
     } catch (SchedulerException e) {
-      LOGGER.severe(e.getMessage());
+      LOGGER.error(e.getMessage());
       throw new ApplicationException(e);
     }
   }
