@@ -2,7 +2,7 @@ package org.bbaw.wsp.cms.scheduler;
 
 import java.util.Date;
 
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
 
 import org.bbaw.wsp.cms.dochandler.DocumentHandler;
 import org.quartz.Job;
@@ -12,7 +12,6 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
-
 
 public class CmsDocJob implements Job {
   public static String STATUS_BEGIN = "started";
@@ -54,7 +53,7 @@ public class CmsDocJob implements Job {
           }
         }
         docOperation.setErrorMessage(errorMessage);
-        LOGGER.severe(errorMessage);
+        LOGGER.error(errorMessage);
         JobExecutionException jobExecutionException = new JobExecutionException(e);
         jobExecutionException.setUnscheduleAllTriggers(true);
         throw jobExecutionException;
