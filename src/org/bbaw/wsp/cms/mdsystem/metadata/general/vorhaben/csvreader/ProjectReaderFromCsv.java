@@ -8,7 +8,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.Iterator;
 import java.util.List;
 
 import com.googlecode.jcsv.CSVStrategy;
