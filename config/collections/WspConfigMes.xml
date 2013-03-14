@@ -3,7 +3,6 @@
   <collection>
     <id>mes</id>
     <name>Magazin fur Erfahrungsseelenkunde</name>
-    <!-- if dataUrl is not a directory but a file, it should end with a forward slash-->
     <url>
       <webBaseUrl>http://telota.bbaw.de/mze</webBaseUrl>
       <!-- Homepage -->
@@ -27,8 +26,6 @@
       <field>p</field>
       <field>s</field>
       <field>head</field>
-      <exclude/>
     </fields>
-    <update>false</update>
   </collection>
 </wsp>
