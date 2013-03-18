@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<wsp>
+  <collection>     
+    <id>census</id>
+    <name>Census of Antique Works of Art and Architecture Known in the Renaissance</name>
+    <url>
+      <webBaseUrl>http://www.census.de/census/</webBaseUrl>
+      <dataUrl>http://www.census.de/census/</dataUrl>
+      <!-- Kein Mangel an Beweisen-Der Census of Antique Works of Art and Architecture Known in the Renaissance -->
+      <dataUrl>http://pom.bbaw.de/census/map/home.html</dataUrl>
+      <dataUrl>http://telota.bbaw.de/census</dataUrl>
+       
+       <!-- Census-Database -->
+       <dataUrl>http://census.bbaw.de/</dataUrl>
+       
+       <!-- Mirabilia Urbis Romae (Pilotprojekt) -->
+       <dataUrl>http://telota.bbaw.de/census/fulltext/</dataUrl>
+       
+       
+       
+       
+    </url>  
+    <languages>ger,ita,eng</languages>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+    <format>xml</format>
+      <format>Html</format>
+      <format>Jpeg</format>
+    </formats>
+  </collection>    
+</wsp>

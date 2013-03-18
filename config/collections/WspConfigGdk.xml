@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<wsp>
+  <collection>     
+    <id>gdk</id>
+    <name>Gesamtbestand des Kunstbesitzes</name>
+    <url>
+      <webBaseUrl>http://archiv.bbaw.de/archiv/archivbestaende/abteilung-sammlungen/gesamtbestand-des-kunstbesitzes</webBaseUrl>
+      <dataUrl>http://archiv.bbaw.de/archiv/archivbestaende/abteilung-sammlungen/gesamtbestand-des-kunstbesitzes</dataUrl>
+    </url>  
+    <languages>ger</languages>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>Html</format>
+      <format>Jpeg</format>
+    </formats>
+  </collection>    
+</wsp>

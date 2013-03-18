@@ -17,6 +17,7 @@
       
       
       <dataUrl type="eXistDir">http://telota.bbaw.de/exist/rest/db/dtm/</dataUrl>
+      <dataUrl type="eXistDir">http://telota.bbaw.de:8088/exist/servlet/db/dtm/singles</dataUrl>
       
       <exclude>scripts</exclude>
     </url>

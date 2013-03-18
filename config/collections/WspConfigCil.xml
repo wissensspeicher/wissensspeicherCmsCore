@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<wsp>
+  <collection>
+    <id>cil</id>
+    <name>Corpus Inscriptionum Latinarum</name>
+    <url>
+    	<webBaseUrl>http://cil.bbaw.de/</webBaseUrl>
+      <dataUrl>http://cil.bbaw.de/</dataUrl>
+      <!--  Aus dem Archivum Corporis Electronicum: Eine Auswahl afrikanischer Versinschriften -->
+      <dataUrl>http://cil.bbaw.de/afrika/afrika.html</dataUrl>
+      
+    </url>
+    <languages>ger, lat</languages>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>html</format>
+      <format>flash</format>
+    </formats>
+    
+  </collection>
+</wsp>
