@@ -12,6 +12,17 @@
       <dataUrl type="eXistDir">http://telota.bbaw.de:8088/exist/servlet/db/cmg</dataUrl> 
       <!-- weitere lokale XML-Texte -->
       <dataUrl>http://cmg.bbaw.de/epubl/online/editionen.html</dataUrl>
+      
+      <!-- Probeedition online -->
+      <dataUrl>http://pom.bbaw.de/cmg/</dataUrl>
+      <dataUrl>http://telota.bbaw.de/cmg</dataUrl>
+      
+      <!-- Der Dielssche Handschriftenkatalog online -->
+      <dataUrl>http://cmg.bbaw.de/online-publikationen/Dielskatalog</dataUrl>
+      
+      <!-- Hippokrates- und  Galenbibliographie -->
+      <dataUrl>http://cmg.bbaw.de/online-publikationen/hippokrates-und-galenbibliographie-fichtner</dataUrl>
+      
       <dataUrlPrefix>/home/joey/dataWsp/documentsExtern/cmg</dataUrlPrefix>
       <dataUrl>file:/home/joey/dataWsp/documentsExtern/cmg/cmg_06_02_02.xml</dataUrl>
       <dataUrl>file:/home/joey/dataWsp/documentsExtern/cmg/cmg_04.xml</dataUrl>
@@ -105,6 +116,9 @@
     <mainLanguage>lat</mainLanguage>
     <formats>
       <format>html</format>
+      <format>xml</format>
+      <format>pdf</format>
+      <format>png</format>
     </formats> 
   </collection>
 </wsp>

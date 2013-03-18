@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp>
+  <collection>
+    <id>dwds</id>
+    <name>Digitales Wörterbuch der deutschen Sprache</name>
+    <url>
+    
+    	<webBaseUrl>http://www.dwds.de/</webBaseUrl>
+    	<!-- Etymologisches Wörterbuch des Deutschen (EtymWB) -->
+    	<dataUrl>http://www.dwds.de/</dataUrl>
+    	    	
+    	<dataUrl type="eXistDir">http://telota.bbaw.de:8088/exist/servlet/db/wdg</dataUrl>
+      
+    </url>
+
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>xml</format>
+    </formats> 
+  </collection>
+</wsp>
+

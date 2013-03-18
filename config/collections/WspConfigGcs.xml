@@ -4,20 +4,34 @@
     <id>gcs</id>
     <name>Die Griechischen Christlichen Schriftsteller</name>
     <!-- if dataUrl is not a directory but a file, it should end with a forward slash -->
-    <url>
+    <url>	
       <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/de/Startseite</webBaseUrl>
       <!-- Homepage -->
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/de/Startseite/index.html</dataUrl>
       <!-- weitere Texte -->
+      <!-- Die Griechischen Christlichen Schriftsteller -->
+      <dataUrl>http://pom.bbaw.de/gcs/</dataUrl>
+      <dataUrl>http://telota.bbaw.de/gcs</dataUrl>
+      
+  	<!-- GCS-Texte zum Download -->
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/de/blanko.2005-08-13.0693530036</dataUrl>
+      
+    <!-- Hans-Lietzmann-Vorlesung -->
+    <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/sHLV.pdf</dataUrl>  
+    
+    <!-- GCS-Filmdatenbank -->
+   <!--  <dataUrl>http://gcs.bbaw.de/filmdb/</dataUrl>
+      ist eine Datenbank
+      -->
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/ProkopOnline.pdf</dataUrl>
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/anonyme_kirchengeschichte.pdf</dataUrl>
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/daniel.pdf</dataUrl>
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/ehrhard.pdf</dataUrl>
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/martyrium.pdf</dataUrl>
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/mirClem.pdf</dataUrl>
-      <dataUrl>http://telota.bbaw.de/gcs</dataUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/de/blanko.2005-08-13.0693530036</dataUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/sHLV.pdf</dataUrl>
+
+     
+      
       <dataUrl>http://gcs.bbaw.de/filmdb/</dataUrl>
       <!-- XML-Texte -->
       <dataUrl type="eXistDir">http://telota.bbaw.de/exist/rest/db/gcs/</dataUrl>
@@ -29,6 +43,7 @@
     <formats>
       <format>xml</format>
       <format>html</format>
+      <format>php</format>
       <format>pdf</format>
     </formats>
     <fields>

@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<wsp>
+  <collection>
+    <id>dwb	</id>
+    <name>Deutsches Wörterbuch von Jacob Grimm und Wilhelm Grimm</name>
+    
+    <url>
+      <webBaseUrl>http://dwb.bbaw.de/</webBaseUrl>
+      <dataUrl>http://dwb.bbaw.de/</dataUrl>
+     <dataUrl>http://pom.bbaw.de/dwb/</dataUrl>
+     <dataUrl>http://telota.bbaw.de/dwb/</dataUrl>
+     
+     <!-- DWB online / Der digitale Grimm -->
+     
+     <dataUrl>http://urts55.uni-trier.de:8080/Projekte/DWB</dataUrl>
+     <dataUrl>http://kompetenzzentrum.uni-trier.de/de/projekte/projekte/der-digitale-grimm/</dataUrl>
+     
+  	<!-- Belegzettel von Jacob und Wilhelm Grimm -->
+  	<dataUrl>http://digilib.bbaw.de/digitallibrary/greyskin/diginew.jsp?fn=dwb/&pn=1</dataUrl>
+  
+  <dataUrl type="eXistDir">http://telota.bbaw.de:8088/exist/servlet/db/dwb/dwb.xml</dataUrl>
+  
+    </url>
+   <languages>ger,goh,gmh,gml,gsw</languages>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>html</format>
+      <format>jpeg</format>
+      <format>xml</format>
+      <format>jsp</format>
+      
+    </formats>
+    
+  </collection>
+</wsp>

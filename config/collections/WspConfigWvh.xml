@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp>
+  <collection>
+    <id>wvh</id>
+    <name>Wilhelm von Humboldt: Schriften zur Sprachwissenschaft</name>
+    <url>
+    	<webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/wvhumboldt/de/Startseite</webBaseUrl>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/wvhumboldt/de/Startseite</dataUrl>
+      <dataUrl type="eXistDir">http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/wvhumboldt/de/blanko.2005-02-23.7610561414/materialien/</dataUrl>
+      <!-- Briefdatenbank -->
+      <dataUrl>http://telota.bbaw.de/wvh/db-start.jsf</dataUrl>
+      <dataUrl type="eXistDir">http://telota.bbaw.de:8085/exist/servlet/wvh/wvh-briefdb.xml</dataUrl>
+      <!-- Bibliographie der neueren Sekundärliteratur zu Wilhelm von Humboldt -->
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/wvhumboldt/de/blanko.2005-02-23.7610561414/materialien/</dataUrl>
+      
+      
+    </url>
+	<languages>ger,eng,lat,spa,fra,eus,san,egy,zho,jav,map,omq,oto,hus,yua,crn,cok,tar,que,cba,arw,awd,tmz,grn,omg,arn,huh,vil,axb,moc,nah,azc </languages>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>jpeg</format>
+      <format>jsf</format>
+      <format>html</format>
+      <format>xml</format>
+      <format>pdf</format>
+    </formats> 
+  </collection>
+</wsp>
+

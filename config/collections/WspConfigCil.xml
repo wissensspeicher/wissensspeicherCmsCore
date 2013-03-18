@@ -9,12 +9,21 @@
       <!--  Aus dem Archivum Corporis Electronicum: Eine Auswahl afrikanischer Versinschriften -->
       <dataUrl>http://cil.bbaw.de/afrika/afrika.html</dataUrl>
       
+      <!-- Archivum Corporis Electronicum (ACE) -->
+      <dataUrl>http://cil.bbaw.de/</dataUrl>
+      
+      <!-- Aus dem Archivum Corporis Electronicum: Eine Auswahl afrikanischer Versinschriften -->
+      <dataUrl>http://cil.bbaw.de/afrika/afrika.html</dataUrl>
+      
+      
+      
     </url>
     <languages>ger, lat</languages>
     <mainLanguage>ger</mainLanguage>
     <formats>
       <format>html</format>
       <format>flash</format>
+      <format>php</format>
     </formats>
     
   </collection>

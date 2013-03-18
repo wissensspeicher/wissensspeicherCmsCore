@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp>
+  <collection>
+    <id>pir</id>
+    <name>Prosopographia Imperii Romani</name>
+    <url>
+      <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/pir/de/Startseite</webBaseUrl>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/pir/de/Startseite</dataUrl>
+      
+      <!-- Stichwortliste -->
+     <!-- <dataUrl> http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/pir/de/blanko.2005-02-17.2432643101</dataUrl>
+      ist eine Datenbank
+      -->
+      
+      
+      
+      <!-- Addenda -->
+      <!-- <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/pir/de/blanko.2005-02-17.7966795951
+	ebenfalls Datenbank
+	</dataUrl> -->
+     
+     
+    </url>
+    <languages>ger,lat</languages>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>html</format>
+      <format>xml</format>
+      <format>jpeg</format>
+    </formats> 
+  </collection>
+</wsp>
+

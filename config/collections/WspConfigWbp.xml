@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<wsp>
+  <collection>
+    <id>wbp</id>
+    <name>Wörterbuchportal</name>
+    <url>
+    <webBaseUrl> http://www.woerterbuch-portal.de/</webBaseUrl>
+      <dataUrl> http://www.woerterbuch-portal.de</dataUrl>
+      
+      <!-- Wörterbuch-Portal.de -->
+	<dataUrl>http://www.woerterbuch-portal.de/</dataUrl>
+
+    </url>
+    <languages>ger,nds</languages>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>html</format>
+      <format>jpeg</format>
+    </formats>
+  </collection>
+</wsp>

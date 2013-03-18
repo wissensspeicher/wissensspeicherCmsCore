@@ -8,14 +8,25 @@
       <webBaseUrl>http://pmbz.bbaw.de</webBaseUrl>
       <!-- Homepage -->
       <dataUrl>http://pmbz.bbaw.de/index.html</dataUrl>
+      
+      <!-- Prosopographie der mittelbyzantinischen Zeit -->
+      <dataUrl>http://pmbz.bbaw.de/pmbz.ger.php</dataUrl>
+      
+      
       <!-- XML-Texte -->
+      
       <dataUrl type="eXistDir">http://telota.bbaw.de/exist/rest/db/pmbz/</dataUrl>
+      <dataUrl type="eXistDir">http://telota.bbaw.de:8085/exist/servlet/db/pmbz/data/pmbz2.xml</dataUrl>
+      <dataUrl type="eXistDir">http://telota.bbaw.de:8088/exist/servlet/db/pmbz/singles</dataUrl>
+      
       <exclude>scripts</exclude>
     </url>
-    <languages>ger</languages>
+    <languages>ger,eng,grc</languages>
     <mainLanguage>ger</mainLanguage>
     <formats>
-      <format>xml</format>
+      <format>html</format>
+      <format>jpeg</format>
+      <format>pdf</format>
     </formats>
     <fields>
       <field>s</field>
