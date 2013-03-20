@@ -17,9 +17,6 @@
       <!-- Kaiser, Reich und Region -->
       <dataUrl> http://edoc.bbaw.de/volltexte/2006/75/</dataUrl>
       
-      <!-- Regesta Imperii -->
-      <dataUrl>http://www.bbaw.de/forschung/regestaimperii/uebersicht</dataUrl>
-      
       <!-- XML-Texte -->
       <dataUrl type="eXistDir">http://telota.bbaw.de/exist/rest/db/mgh/data/</dataUrl>
       <exclude>scripts</exclude>
