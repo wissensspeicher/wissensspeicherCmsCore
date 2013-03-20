@@ -3,7 +3,6 @@
   <collection>
     <id>pmbz</id>
     <name>Prosopographie der mittelbyzantinischen Zeit</name>
-    <!-- if dataUrl is not a directory but a file, it should end with a forward slash -->
     <url>
       <webBaseUrl>http://pmbz.bbaw.de</webBaseUrl>
       <!-- Homepage -->
@@ -12,14 +11,12 @@
       <!-- Prosopographie der mittelbyzantinischen Zeit -->
       <dataUrl>http://pmbz.bbaw.de/pmbz.ger.php</dataUrl>
       
-      
       <!-- XML-Texte -->
-      
+      <!-- folgendes eXist-verzeichnis ist problematisch, da es sehr viele singles gibt und sie keine Resourcen darstellen -->
+      <!-- 
       <dataUrl type="eXistDir">http://telota.bbaw.de/exist/rest/db/pmbz/</dataUrl>
-      <dataUrl type="eXistDir">http://telota.bbaw.de:8085/exist/servlet/db/pmbz/data/pmbz2.xml</dataUrl>
-      <dataUrl type="eXistDir">http://telota.bbaw.de:8088/exist/servlet/db/pmbz/singles</dataUrl>
-      
       <exclude>scripts</exclude>
+      -->
     </url>
     <languages>ger,eng,grc</languages>
     <mainLanguage>ger</mainLanguage>

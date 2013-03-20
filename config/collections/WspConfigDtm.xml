@@ -3,23 +3,23 @@
   <collection>
     <id>dtm</id>
     <name>Deutsche Texte des Mittelalters</name>
-    <!-- if dataUrl is not a directory but a file, it should end with a forward slash -->
     <url>
       <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/dtm/de/Startseite</webBaseUrl>
       <!-- Homepage -->
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/dtm/de/Startseite/index.html</dataUrl>
-      <!-- XML-Texte -->
+
       <dataUrl>http://www.bbaw.de/forschung/dtm/HSA/startseite-hsa.html</dataUrl>
       <dataUrl>http://pom.bbaw.de/dtm/search.html</dataUrl>
-      <dataUrl>http://telota.bbaw.de/dtm/search.html</dataUrl>#
+      <dataUrl>http://telota.bbaw.de/dtm/search.html</dataUrl>
       <dataUrl>http://dtm.bbaw.de/E_Bericht/Editionsbericht-internet.html</dataUrl>
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/dtm/de/Transkriptionen</dataUrl>
-      
-      
-      <dataUrl type="eXistDir">http://telota.bbaw.de/exist/rest/db/dtm/</dataUrl>
-      <dataUrl type="eXistDir">http://telota.bbaw.de:8088/exist/servlet/db/dtm/singles</dataUrl>
-      
-      <exclude>scripts</exclude>
+
+      <!-- XML-Texte -->
+      <!-- folgendes eXist-verzeichnis ist problematisch, da es sehr viele singles gibt und sie keine Resourcen darstellen -->
+      <!-- 
+        <dataUrl type="eXistDir">http://telota.bbaw.de/exist/rest/db/dtm/</dataUrl>
+        <exclude>scripts</exclude>
+      -->
     </url>
     <languages>ger,gmh</languages>
     <mainLanguage>ger</mainLanguage>
@@ -30,6 +30,8 @@
       <format>pdf</format>
       <format>HiDA</format>
     </formats>
-    
+    <fields>
+      <field>s</field>
+    </fields>
   </collection>
 </wsp>

@@ -3,7 +3,6 @@
   <collection>
     <id>mgh</id>
     <name>Monumenta Germaniae Historica</name>
-    <!-- if dataUrl is not a directory but a file, it should end with a forward slash -->
     <url>
       <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mgh/de/Startseite</webBaseUrl>
       <!-- Homepage -->
@@ -22,8 +21,7 @@
       <dataUrl>http://www.bbaw.de/forschung/regestaimperii/uebersicht</dataUrl>
       
       <!-- XML-Texte -->
-      <dataUrl type="eXistDir">http://telota.bbaw.de/exist/rest/db/wdg/</dataUrl>
-      <dataUrl type="eXistDir">http://telota.bbaw.de:8088/exist/servlet/db/mgh/data</dataUrl>
+      <dataUrl type="eXistDir">http://telota.bbaw.de/exist/rest/db/mgh/data/</dataUrl>
       <exclude>scripts</exclude>
     </url>
     <languages>ger, lat, gmh</languages>

@@ -3,7 +3,6 @@
   <collection>
     <id>kant</id>
     <name>Kant’s gesammelte Schriften</name>
-    <!-- if dataUrl is not a directory but a file, it should end with a forward slash -->
     <url>
       <webBaseUrl>http://kant.bbaw.de</webBaseUrl>
       <dataUrl>http://kant.bbaw.de</dataUrl>
@@ -15,7 +14,6 @@
       
       <!-- XML-Texte -->
       <dataUrl type="eXistDir">http://telota.bbaw.de/exist/rest/db/kant/</dataUrl>
-      <dataUrl type="eXistDir">http://telota.bbaw.de:8088/exist/servlet/db/kant</dataUrl>
       <exclude>scripts</exclude>
     </url>
     <languages>ger</languages>

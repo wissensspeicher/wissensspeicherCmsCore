@@ -3,30 +3,17 @@
   <collection>
     <id>gwb</id>
     <name>Goethe-Wörterbuch</name>
-    <!-- if dataUrl is not a directory but a file, it should end with a forward slash -->
     <url>
-    
-    
       <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/dtm/de/Startseite</webBaseUrl>
       <!-- Homepage -->
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/dtm/de/Startseite/index.html</dataUrl>
-      
       <!-- Das Goethe-Wörterbuch im Internet -->
       <dataUrl>http://www.gwb.uni-trier.de/</dataUrl>
-      
       <!-- Goethe-Wörterbuch -->
       <dataUrl>http://pom.bbaw.de/gwb/</dataUrl>
       <dataUrl>http://telota.bbaw.de/gwb</dataUrl>
-      
-      
-      
-      
-      
       <!-- XML-Texte -->
       <dataUrl type="eXistDir">http://telota.bbaw.de/exist/rest/db/gwb/</dataUrl>
-      <dataUrl type="eXistDir">http://telota.bbaw.de:8088/exist/servlet/db/gwb</dataUrl>
-           
-      
       <exclude>scripts</exclude>
       <exclude>test</exclude>
     </url>
