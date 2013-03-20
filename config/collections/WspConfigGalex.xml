@@ -4,20 +4,15 @@
     <id>galex</id>
     <name>Greek into Arabic - Philosophical Concepts and Linguistic Bridges</name>
     <url>
-    <webBaseUrl>http://www.greekintoarabic.eu/</webBaseUrl>
+      <webBaseUrl>http://www.greekintoarabic.eu/</webBaseUrl>
       <dataUrl>http://www.greekintoarabic.eu/</dataUrl>
-      
       <!--  Glossarium Graeco-Arabicum -->
       <!-- ist ein dataset  <dataUrl> http://telota.bbaw.de/glossga/</dataUrl> -->
-      
-      
-      
     </url>
- 	<languages>ger,grc,ara</languages>
+    <languages>ger,grc,ara</languages>
     <mainLanguage>ger</mainLanguage>
     <formats>
       <format>html</format>
-      
     </formats>
   </collection>
 </wsp>

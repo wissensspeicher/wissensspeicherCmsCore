@@ -4,12 +4,8 @@
     <id>wbp</id>
     <name>Wörterbuchportal</name>
     <url>
-    <webBaseUrl> http://www.woerterbuch-portal.de/</webBaseUrl>
+      <webBaseUrl> http://www.woerterbuch-portal.de/</webBaseUrl>
       <dataUrl> http://www.woerterbuch-portal.de</dataUrl>
-      
-      <!-- Wörterbuch-Portal.de -->
-	<dataUrl>http://www.woerterbuch-portal.de/</dataUrl>
-
     </url>
     <languages>ger,nds</languages>
     <mainLanguage>ger</mainLanguage>

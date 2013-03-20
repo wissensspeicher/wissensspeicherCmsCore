@@ -9,16 +9,10 @@
       <!-- Kein Mangel an Beweisen-Der Census of Antique Works of Art and Architecture Known in the Renaissance -->
       <dataUrl>http://pom.bbaw.de/census/map/home.html</dataUrl>
       <dataUrl>http://telota.bbaw.de/census</dataUrl>
-       
-       <!-- Census-Database -->
-       <dataUrl>http://census.bbaw.de/</dataUrl>
-       
-       <!-- Mirabilia Urbis Romae (Pilotprojekt) -->
-       <dataUrl>http://telota.bbaw.de/census/fulltext/</dataUrl>
-       
-       
-       
-       
+      <!-- Census-Database -->
+      <dataUrl>http://census.bbaw.de/</dataUrl>
+      <!-- Mirabilia Urbis Romae (Pilotprojekt) -->
+      <dataUrl>http://telota.bbaw.de/census/fulltext/</dataUrl>
     </url>  
     <languages>ger,ita,eng</languages>
     <mainLanguage>ger</mainLanguage>

@@ -4,12 +4,9 @@
     <id>gw</id>
     <name>Gegenworte - Hefte für den Disput über Wissen</name>
     <url>
-    <webBaseUrl>http://www.gegenworte.org/index.html</webBaseUrl>
+      <webBaseUrl>http://www.gegenworte.org/index.html</webBaseUrl>
       <dataUrl>http://www.gegenworte.org/index.html</dataUrl>
-      
-      
     </url>
-   	
     <mainLanguage>ger</mainLanguage>
     <formats>
       <format>html</format>
