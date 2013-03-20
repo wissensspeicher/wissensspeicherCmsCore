@@ -216,11 +216,17 @@ public class CollectionManager {
             uriPath = uriPath.substring(prefix.length());
           }
           if (! uriPath.matches(".*\\.[^/-]+")) {  // no file with extension (such as a.xml or b.pdf) but a directory: then a special default file-name is used in docId
-            HttpURLConnection connection = (HttpURLConnection) uri.openConnection();
-            connection.setConnectTimeout(5000);
-            connection.setReadTimeout(5000);
-            connection.connect();
-            String mimeType = connection.getContentType();
+            String mimeType = null;
+            try {
+              HttpURLConnection connection = (HttpURLConnection) uri.openConnection();
+              connection.setConnectTimeout(5000);
+              connection.setReadTimeout(5000);
+              connection.connect();
+              mimeType = connection.getContentType();
+            } catch (IOException e) {
+              LOGGER.error("get mime type failed for: " + docUrl);
+              e.printStackTrace();
+            }
             String fileExtension = "html";
             if (mimeType != null && mimeType.contains("html"))
               fileExtension = "html";
