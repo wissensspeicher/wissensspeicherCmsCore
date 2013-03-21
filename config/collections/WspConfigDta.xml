@@ -7,11 +7,13 @@
       <webBaseUrl>http://www.deutschestextarchiv.de/</webBaseUrl>
       <!-- Homepage -->
       <dataUrl>http://www.deutschestextarchiv.de/</dataUrl>
+      
+      <!-- Software -->
+      <dataUrl>http://www.deutschestextarchiv.de/documentation/resources/</dataUrl>
     </url>
     <mainLanguage>ger</mainLanguage>
-    <formats>
       <format>html</format>
       <format>jpeg</format>
-    </formats>
+      <format>Software</format>
   </collection>
 </wsp>
