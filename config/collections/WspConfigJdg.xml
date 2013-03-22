@@ -16,11 +16,8 @@
       <dataUrl>http://pom.bbaw.de/JDG/</dataUrl>
       <dataUrl>http://telota.bbaw.de/JDG/</dataUrl>
       
-      
-      
       <!-- XML-Texte -->
       <dataUrl type="eXistDir">http://telota.bbaw.de/exist/servlet/db/JDG/</dataUrl>
-      <dataUrl type="eXistDir">http://telota.bbaw.de:8088/exist/servlet/db/JDG/</dataUrl>
       <exclude>scripts</exclude>
     </url>
     <languages>ger</languages>
@@ -28,9 +25,6 @@
     <formats>
       <format>xml</format>
     </formats>
-    <fields>
-      <field>s</field>
-    </fields>
     <update>false</update>
   </collection>
 </wsp>
