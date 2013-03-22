@@ -16,6 +16,8 @@
       
       <!-- Kaiser, Reich und Region -->
       <dataUrl> http://edoc.bbaw.de/volltexte/2006/75/</dataUrl>
+
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mgh/bilder/broschuere_mgh_ri.pdf</dataUrl>
       
       <!-- XML-Texte -->
       <dataUrl type="eXistDir">http://telota.bbaw.de/exist/rest/db/mgh/data/</dataUrl>
