@@ -2,10 +2,10 @@
 <wsp>
   <collection>
     <id>aus</id>
-    <name>Akademie und Schule</name>
+    <name>Sonnentaler</name>
     <url>
-      <webBaseUrl>http://www.bbaw.de/AuS/</webBaseUrl>
-      <dataUrl>http://www.bbaw.de/AuS/</dataUrl>
+      <webBaseUrl>http://www.sonnentaler.net</webBaseUrl>
+      <dataUrl>http://www.sonnentaler.net</dataUrl>
     </url>
     <languages>ger,fra,ita,por,eng</languages>
     <mainLanguage>ger</mainLanguage>
