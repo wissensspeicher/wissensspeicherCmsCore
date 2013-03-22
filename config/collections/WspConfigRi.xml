@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <wsp>
   <collection>
-    <id>mghri</id>
-    <name>Monumenta Germaniae Historica: Regesta Imperii</name>
+    <id>ri</id>
+    <name>Regesta Imperii – Regesten Kaiser Friedrichs III.</name>
     <url>
-      <webBaseUrl>http://www.bbaw.de/forschung/regestaimperii/uebersicht</webBaseUrl>
+      <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/regestaimperii/de/Startseite</webBaseUrl>
       <dataUrl>http://www.bbaw.de/forschung/regestaimperii/uebersicht</dataUrl>
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mgh/bilder/broschuere_mgh_ri.pdf</dataUrl>
     </url>
