@@ -4,6 +4,10 @@
     <id>DTMT</id>
     <name>Transkription</name>
     <url>
+      <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/dtm/de/Transkriptionen</webBaseUrl>
+      <!-- Homepage -->
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/dtm/de/Transkriptionen</dataUrl>
+      
       <dataUrl> http://dtm.bbaw.de/EliHsS.pdf </dataUrl>
       <dataUrl> http://dtm.bbaw.de/Christh.pdf </dataUrl>
       <dataUrl> http://dtm.bbaw.de/Christherrechronik_Teilausgabe.pdf</dataUrl>

@@ -4,9 +4,9 @@
     <id>gwb</id>
     <name>Goethe-Wörterbuch</name>
     <url>
-      <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/dtm/de/Startseite</webBaseUrl>
+      <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gwb/de/Startseite</webBaseUrl>
       <!-- Homepage -->
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/dtm/de/Startseite/index.html</dataUrl>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gwb/de/Startseite/index.html</dataUrl>
       <!-- Das Goethe-Wörterbuch im Internet -->
       <dataUrl>http://www.gwb.uni-trier.de/</dataUrl>
       <!-- Goethe-Wörterbuch -->
