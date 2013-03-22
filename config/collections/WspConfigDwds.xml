@@ -2,12 +2,12 @@
 <wsp>
   <collection>
     <id>dwds</id>
-    <name>Digitales Wörterbuch der deutschen Sprache</name>
+    <name>Digitales Wörterbuch der deutschen Sprache (DWDS)</name>
     <url>
     	<webBaseUrl>http://www.dwds.de/</webBaseUrl>
-    	<!-- Etymologisches Wörterbuch des Deutschen (EtymWB) -->
     	<dataUrl>http://www.dwds.de/</dataUrl>
-    	<dataUrl type="eXistDir">http://telota.bbaw.de:8088/exist/servlet/db/wdg</dataUrl>
+    	<!-- Wörterbuch der deutschen Gegenwartssprache (WDG) -->
+      <dataUrl type="eXistDir">http://telota.bbaw.de/exist/rest/db/wdg/</dataUrl>
     </url>
     <mainLanguage>ger</mainLanguage>
     <formats>
