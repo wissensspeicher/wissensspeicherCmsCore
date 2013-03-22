@@ -3,7 +3,6 @@
   <collection>
     <id>gcs</id>
     <name>Die Griechischen Christlichen Schriftsteller</name>
-    <!-- if dataUrl is not a directory but a file, it should end with a forward slash -->
     <url>	
       <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/de/Startseite</webBaseUrl>
       <!-- Homepage -->
@@ -13,15 +12,9 @@
       <dataUrl>http://pom.bbaw.de/gcs/</dataUrl>
       <dataUrl>http://telota.bbaw.de/gcs</dataUrl>
       
-  	<!-- GCS-Texte zum Download -->
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/de/blanko.2005-08-13.0693530036</dataUrl>
-      
-    <!-- Hans-Lietzmann-Vorlesung -->
-    <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/sHLV.pdf</dataUrl>  
-    
-    <!-- GCS-Filmdatenbank -->
-   <!--  <dataUrl>http://gcs.bbaw.de/filmdb/</dataUrl>
-      ist eine Datenbank
+      <!-- GCS-Filmdatenbank -->
+      <!--  <dataUrl>http://gcs.bbaw.de/filmdb/</dataUrl>
+        ist eine Datenbank
       -->
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/ProkopOnline.pdf</dataUrl>
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/anonyme_kirchengeschichte.pdf</dataUrl>
@@ -29,13 +22,10 @@
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/ehrhard.pdf</dataUrl>
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/martyrium.pdf</dataUrl>
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/mirClem.pdf</dataUrl>
-
-     
       
       <dataUrl>http://gcs.bbaw.de/filmdb/</dataUrl>
       <!-- XML-Texte -->
       <dataUrl type="eXistDir">http://telota.bbaw.de/exist/rest/db/gcs/</dataUrl>
-      <dataUrl type="eXistDir">http://telota.bbaw.de:8088/exist/servlet/db/gcs</dataUrl>
       <exclude>scripts</exclude>
     </url>
     <languages>ger, grc</languages>
@@ -46,9 +36,6 @@
       <format>php</format>
       <format>pdf</format>
     </formats>
-    <fields>
-      <field>s</field>
-    </fields>
     <update>false</update>
   </collection>
 </wsp>

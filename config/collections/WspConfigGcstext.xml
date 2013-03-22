@@ -1,10 +1,11 @@
 <?xml version="1.0"?>
 <wsp>
   <collection>
-    <id>GCSText</id>
-    <name>Hippokrates- und  Galenbibliographie</name>
+    <id>gcstext</id>
+    <name>GCS-Texte zum Download</name>
     <url>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/sHLV.pdf</dataUrl>
+      <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/de/blanko.2005-08-13.0693530036</webBaseUrl>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/de/blanko.2005-08-13.0693530036</dataUrl>
     </url>
     <mainLanguage>ger</mainLanguage>
     <formats>
