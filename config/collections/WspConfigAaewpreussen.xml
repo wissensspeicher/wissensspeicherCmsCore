@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <wsp>
   <collection>
-    <id>aaew</id>
-    <name>Altägyptisches Wörterbuch</name>
+    <id>aaewpreussen</id>
+    <name>Altägyptisches Wörterbuch: Preußen in Ägypten-Ägypten in Preußen</name>
     <url>
       <webBaseUrl>http://aaew.bbaw.de/</webBaseUrl>
-      <dataUrl>http://aaew.bbaw.de/</dataUrl>
+      <dataUrl> http://aaew.bbaw.de/dateien/weitere%20archive/Lepsius-Ausstellung/FuehrungPreussAeg.pdf</dataUrl>
     </url>
     <languages>ger,eng,egy</languages>
     <mainLanguage>ger</mainLanguage>

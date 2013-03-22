@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <wsp>
   <collection>
-    <id>aaew</id>
-    <name>Altägyptisches Wörterbuch</name>
+    <id>aaewtla</id>
+    <name>Altägyptisches Wörterbuch: Thesaurus Linguae Aegyptiae (TLA)</name>
     <url>
-      <webBaseUrl>http://aaew.bbaw.de/</webBaseUrl>
-      <dataUrl>http://aaew.bbaw.de/</dataUrl>
+      <webBaseUrl>http://aaew.bbaw.de/tla/</webBaseUrl>
+      <dataUrl>http://aaew.bbaw.de/tla/</dataUrl>
     </url>
     <languages>ger,eng,egy</languages>
     <mainLanguage>ger</mainLanguage>

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <wsp>
   <collection>
-    <id>aaew</id>
-    <name>Altägyptisches Wörterbuch</name>
+    <id>aaewvor</id>
+    <name>Altägyptisches Wörterbuch: Das Vormanuskript des Wörterbuchs der Ägyptischen Sprache</name>
     <url>
       <webBaseUrl>http://aaew.bbaw.de/</webBaseUrl>
-      <dataUrl>http://aaew.bbaw.de/</dataUrl>
+      <dataUrl>http://aaew.bbaw.de/tla/servlet/TlaLogin</dataUrl>
     </url>
     <languages>ger,eng,egy</languages>
     <mainLanguage>ger</mainLanguage>
