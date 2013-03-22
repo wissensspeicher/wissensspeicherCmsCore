@@ -6,13 +6,10 @@
     <url>
     	<webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/wvhumboldt/de/Startseite</webBaseUrl>
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/wvhumboldt/de/Startseite</dataUrl>
-      <!-- Briefdatenbank -->
-      <dataUrl>http://telota.bbaw.de/wvh/db-start.jsf</dataUrl>
-      <dataUrl>http://telota.bbaw.de:8085/exist/servlet/wvh/wvh-briefdb.xml</dataUrl>
       <!-- Bibliographie der neueren Sekundärliteratur zu Wilhelm von Humboldt -->
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/wvhumboldt/de/blanko.2005-02-23.7610561414/materialien/</dataUrl>
     </url>
-	<languages>ger,eng,lat,spa,fra,eus,san,egy,zho,jav,map,omq,oto,hus,yua,crn,cok,tar,que,cba,arw,awd,tmz,grn,omg,arn,huh,vil,axb,moc,nah,azc </languages>
+	  <languages>ger</languages>
     <mainLanguage>ger</mainLanguage>
     <formats>
       <format>jpeg</format>
@@ -21,14 +18,6 @@
       <format>xml</format>
       <format>pdf</format>
     </formats> 
-    <fields>
-      <field>persName</field>
-      <field>placeName</field>
-      <field>p</field>
-      <field>s</field>
-      <field>head</field>
-      <exclude/>
-    </fields>
   </collection>
 </wsp>
 
