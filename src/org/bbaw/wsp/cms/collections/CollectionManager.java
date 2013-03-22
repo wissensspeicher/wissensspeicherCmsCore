@@ -128,7 +128,7 @@ public class CollectionManager {
       CmsDocOperation docOp = new CmsDocOperation("create", docUrl, null, docId);
       docOp.setMdRecord(mdRecord);
       ArrayList<String> fields = collection.getFields();
-      if (fields != null) {
+      if (fields != null && ! fields.isEmpty()) {
         String[] fieldsArray = new String[fields.size()];
         for (int j=0;j<fields.size();j++) {
           String f = fields.get(j);
