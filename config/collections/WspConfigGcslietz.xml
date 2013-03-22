@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<wsp>
+  <collection>
+    <id>gcslietz</id>
+    <name>GCS: Hans Lietzmann Vorlesung</name>
+    <url>
+      <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/de/blanko.2005-11-04.9010533261</webBaseUrl>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/sHLV.pdf</dataUrl>
+    </url>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>pdf</format>
+    </formats>
+  </collection>
+</wsp>
