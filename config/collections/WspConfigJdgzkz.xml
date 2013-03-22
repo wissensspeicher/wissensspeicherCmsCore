@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<wsp>
+  <collection>
+    <id>jdgzkz</id>
+    <name>Jahresberichte fuer deutsche Geschichte aus der Zwischenkriegszeit</name>
+    <url>
+      <webBaseUrl>http://www.jdg-online.de/projekte/die-jahresberichte-der-zwischenkriegszeit</webBaseUrl>
+      <!-- Homepage -->
+      <dataUrl>http://www.jdg-online.de/projekte/die-jahresberichte-der-zwischenkriegszeit</dataUrl>
+    </url>
+    <languages>ger</languages>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>xml</format>
+    </formats>
+    <update>false</update>
+  </collection>
+</wsp>
