@@ -1,19 +1,13 @@
 <?xml version="1.0"?>
 <wsp>
   <collection>
-    <id>leibniz</id>
-    <name>Leibniz-Edition Berlin/ Potsdam</name>
+    <id>leibnizpotsdam</id>
+    <name>Leibniz-Edition Potsdam</name>
     <url>
-    	<webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_berlin/de/Startseite</webBaseUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_berlin/de/Startseite</dataUrl>
+    	<webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/de/Startseite</webBaseUrl>
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/de/Startseite</dataUrl>
       <dataUrl>http://www.bbaw.de/forschung/leibniz_potsdam</dataUrl>
-      <dataUrl>http://leibniz.bbaw.de/</dataUrl>
-      <dataUrl>http://leibnizviii.bbaw.de/</dataUrl>
-      <dataUrl>http://www.leibniz-edition.de/</dataUrl>
-      <dataUrl>http://edoc.bbaw.de/volltexte/2009/1167/</dataUrl>
-      <dataUrl>http://telotadev.bbaw.de/leibniz8_2/upload/web/Leibniz_Reihe_8/leibniz8_2_gesamt.pdf</dataUrl>
-    	<dataUrl>http://telota.bbaw.de/leibniziv/Sachregister/sachreg_start.html</dataUrl>
+
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/Corrigenda.pdf</dataUrl>
 
       <!-- Politische Schriften -->
