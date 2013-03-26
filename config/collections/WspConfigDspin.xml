@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp>
+  <collection>
+    <id>dspin</id>
+    <name>Deutsche Sprachressourcen-Infrastruktur</name>
+    <url>
+    	<webBaseUrl>http://weblicht.sfs.uni-tuebingen.de/index.shtml</webBaseUrl>
+    	<dataUrl>http://weblicht.sfs.uni-tuebingen.de/index.shtml</dataUrl>
+    	
+    	<!-- WebLicht -->
+    	<dataUrl>http//:weblicht.sfs.uni-tuebingen.de/weblicht.shtml</dataUrl>
+    	  	
+    	            
+      </url>
+      <languages>deu, eng, fin, fra, ita, ron, spa</languages>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+     
+      <format>Software</format>
+      
+    </formats> 
+  </collection>
+</wsp>
+

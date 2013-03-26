@@ -6,15 +6,19 @@
     <url>
     	<webBaseUrl>http://www.dwds.de/</webBaseUrl>
     	<dataUrl>http://www.dwds.de/</dataUrl>
+    	
+    	<!-- Software TAGH-->
+    	<dataUrl>http://www.dwds.de/dokumentation/tagh/</dataUrl>
+    	
+    	
     	<!-- Wörterbuch der deutschen Gegenwartssprache (WDG) -->
       <dataUrl type="eXistDir">http://telota.bbaw.de/exist/rest/db/wdg/</dataUrl>
-      
-      
-      
-    </url>
+            
+      </url>
     <mainLanguage>ger</mainLanguage>
     <formats>
       <format>xml</format>
+      <format>Software</format>
     </formats> 
   </collection>
 </wsp>

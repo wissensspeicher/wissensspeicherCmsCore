@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp>
+  <collection>
+    <id>wsp</id>
+    <name>Wissensspeicher</name>
+    <url>
+    	<webBaseUrl>http://wsp.bbaw.de</webBaseUrl>
+      <dataUrl>http://wsp.bbaw.de</dataUrl>
+      
+      <!-- Digital Knowledge Store – Technical Reader -->
+      <dataUrl>http://wsp.bbaw.de/project/resources/digital-knowledge-store-technical-reader</dataUrl>
+      
+      <dataUrl type="eXistDir">http://telota.bbaw.de:8085/exist/servlet/db/wsp/dataMods</dataUrl>
+    </url>
+	  <languages>ger</languages>
+    <mainLanguage>ger</mainLanguage>
+    <formats
+    	<format>Software</format>
+      <format>jpeg</format>
+      <format>html</format>
+      <format>xml</format>
+      <format>pdf</format>
+    </formats> 
+  </collection>
+</wsp>
+
