@@ -8,6 +8,9 @@
     	<dataUrl>http://www.dwds.de/</dataUrl>
     	<!-- Wörterbuch der deutschen Gegenwartssprache (WDG) -->
       <dataUrl type="eXistDir">http://telota.bbaw.de/exist/rest/db/wdg/</dataUrl>
+      
+      
+      
     </url>
     <mainLanguage>ger</mainLanguage>
     <formats>
