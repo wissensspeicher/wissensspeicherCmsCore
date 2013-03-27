@@ -6,7 +6,7 @@
     <url>
     	<webBaseUrl>http://weblicht.sfs.uni-tuebingen.de/index.shtml</webBaseUrl>
     	<dataUrl>http://weblicht.sfs.uni-tuebingen.de/index.shtml</dataUrl>
-    	<dataUrl>http//:weblicht.sfs.uni-tuebingen.de/weblicht.shtml</dataUrl>
+    	<dataUrl>http://weblicht.sfs.uni-tuebingen.de/weblicht.shtml</dataUrl>
     </url>
     <languages>deu, eng, fin, fra, ita, ron, spa</languages>
     <mainLanguage>ger</mainLanguage>
