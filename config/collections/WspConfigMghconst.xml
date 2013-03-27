@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<wsp>
+  <collection>
+    <id>mghconst</id>
+    <name>Monumenta Germaniae Historica: Constitutiones et acta publica imperatorum et regum</name>
+    <url>
+      <webBaseUrl>http://telota.bbaw.de/constitutiones/</webBaseUrl>
+      <dataUrl>http://telota.bbaw.de/constitutiones/</dataUrl>
+    </url>
+    <languages>ger, lat, gmh</languages>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>xml</format>
+      <format>html</format>
+      <format>pdf</format>
+    </formats>
+    <update>false</update>
+  </collection>
+</wsp>

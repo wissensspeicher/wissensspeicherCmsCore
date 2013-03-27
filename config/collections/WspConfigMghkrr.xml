@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<wsp>
+  <collection>
+    <id>mghkrr</id>
+    <name>Monumenta Germaniae Historica: Kaiser, Reich und Region</name>
+    <url>
+      <webBaseUrl>http://edoc.bbaw.de/volltexte/2006/75/</webBaseUrl>
+      <dataUrl>http://edoc.bbaw.de/volltexte/2006/75/</dataUrl>
+    </url>
+    <languages>ger, lat, gmh</languages>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>xml</format>
+      <format>html</format>
+      <format>pdf</format>
+    </formats>
+    <update>false</update>
+  </collection>
+</wsp>

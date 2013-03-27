@@ -5,23 +5,8 @@
     <name>Monumenta Germaniae Historica</name>
     <url>
       <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mgh/de/Startseite</webBaseUrl>
-      <!-- Homepage -->
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mgh/de/Startseite/index.html</dataUrl>
-      <!-- Der Goldene Bulle -->
-      <dataUrl>http://pom.bbaw.de/mgh/</dataUrl>
-      <dataUrl>http://telota.bbaw.de/mgh/</dataUrl>
-      
-      <!-- Constitutiones et acta publica imperatorum et regum -->
-      <dataUrl>http://telota.bbaw.de/constitutiones/</dataUrl>
-      
-      <!-- Kaiser, Reich und Region -->
-      <dataUrl> http://edoc.bbaw.de/volltexte/2006/75/</dataUrl>
-
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mgh/bilder/broschuere_mgh_ri.pdf</dataUrl>
-      
-      <!-- XML-Texte -->
-      <dataUrl type="eXistDir">http://telota.bbaw.de/exist/rest/db/mgh/data/</dataUrl>
-      <exclude>scripts</exclude>
     </url>
     <languages>ger, lat, gmh</languages>
     <mainLanguage>ger</mainLanguage>
@@ -30,9 +15,6 @@
       <format>html</format>
       <format>pdf</format>
     </formats>
-    <fields>
-      <field>s</field>
-    </fields>
     <update>false</update>
   </collection>
 </wsp>
