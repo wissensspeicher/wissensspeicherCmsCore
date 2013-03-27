@@ -117,7 +117,8 @@ public class DocumentHandler {
       }
       if (docType == null) {
         FileUtils.deleteQuietly(docDestFile);
-        docOperation.setErrorMessage("file type of: " + srcUrlStr + "is not supported");
+        docOperation.setErrorMessage(srcUrlStr + " is not created: mime type is not supported");
+        LOGGER.info(srcUrlStr + " is not created: mime type is not supported");
         return;
       }
       // document is xml fulltext document: is of type XML and not mets
