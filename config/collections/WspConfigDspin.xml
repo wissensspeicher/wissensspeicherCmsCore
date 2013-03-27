@@ -4,21 +4,10 @@
     <id>dspin</id>
     <name>Deutsche Sprachressourcen-Infrastruktur</name>
     <url>
-    	<webBaseUrl>http://weblicht.sfs.uni-tuebingen.de/index.shtml</webBaseUrl>
-    	<dataUrl>http://weblicht.sfs.uni-tuebingen.de/index.shtml</dataUrl>
-    	
-    	<!-- WebLicht -->
-    	<dataUrl>http//:weblicht.sfs.uni-tuebingen.de/weblicht.shtml</dataUrl>
-    	  	
-    	            
-      </url>
-      <languages>deu, eng, fin, fra, ita, ron, spa</languages>
+    	<webBaseUrl>http://www.bbaw.de/forschung/deutsche-sprachressourcen-infrastruktur</webBaseUrl>
+    	<dataUrl>http://www.bbaw.de/forschung/deutsche-sprachressourcen-infrastruktur</dataUrl>
+    </url>
     <mainLanguage>ger</mainLanguage>
-    <formats>
-     
-      <format>Software</format>
-      
-    </formats> 
   </collection>
 </wsp>
 

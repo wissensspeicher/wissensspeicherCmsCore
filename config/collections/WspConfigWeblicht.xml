@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp>
+  <collection>
+    <id>weblicht</id>
+    <name>WebLicht</name>
+    <url>
+    	<webBaseUrl>http://weblicht.sfs.uni-tuebingen.de/index.shtml</webBaseUrl>
+    	<dataUrl>http://weblicht.sfs.uni-tuebingen.de/index.shtml</dataUrl>
+    	<dataUrl>http//:weblicht.sfs.uni-tuebingen.de/weblicht.shtml</dataUrl>
+    </url>
+    <languages>deu, eng, fin, fra, ita, ron, spa</languages>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>Software</format>
+    </formats> 
+  </collection>
+</wsp>
+
