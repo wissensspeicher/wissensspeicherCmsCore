@@ -1,19 +1,11 @@
 <?xml version="1.0"?>
 <wsp>
   <collection>
-    <id>AvH</id>
-    <name>Alexander von Humboldt Forschungsstelle (Briefwechsel, Abhandlungen, Orinoco Reise)</name>
+    <id>avhorinoco</id>
+    <name>Alexander von Humboldt Forschungsstelle: Alexander von Humboldt am Orinoco (31.März-7. April 1800)</name>
     <url>
-      <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/avh/de/Startseite</webBaseUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/avh/de/Startseite</dataUrl>
+      <webBaseUrl>http://www.bbaw.de/forschung/avh/orinoco/index.html</webBaseUrl>
       <dataUrl>http://www.bbaw.de/forschung/avh/orinoco/index.html</dataUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/avh/de/Blanko.2004-12-14.3730549301#chronologische%20Uebersicht</dataUrl>
-      <dataUrl>http://telota.bbaw.de/avh/uns/</dataUrl>
-      <!--  Briefedition -->
-      <dataUrl type="eXistDir">http://telota.bbaw.de:8085/exist/rest/db/AvHBriefedition/</dataUrl>
-      <!--  Abhandlungen -->
-      <dataUrl type="eXistDir">http://telota.bbaw.de:8088/exist/servlet/db/avh/</dataUrl>
-      <!-- Orinoco Reise -->
       <dataUrl>http://www.bbaw.de/forschung/avh/orinoco/texte/german.html</dataUrl>
       <dataUrl>http://www.bbaw.de/forschung/avh/orinoco/texte/english.html</dataUrl>
       <dataUrl>http://www.bbaw.de/forschung/avh/orinoco/texte/french.html</dataUrl>
@@ -34,11 +26,6 @@
       <dataUrl>http://www.bbaw.de/forschung/avh/orinoco/diary/diary_254.html</dataUrl>
       <dataUrl>http://www.bbaw.de/forschung/avh/orinoco/diary/diary_255.html</dataUrl>
       <dataUrl>http://www.bbaw.de/forschung/avh/orinoco/diary/diary_256.html</dataUrl>
-      <exclude>pages</exclude>
-      <exclude>scripts</exclude>
-      <exclude>svg</exclude>
-      <exclude>users</exclude>
-      <exclude>backup</exclude>
     </url>
     <languages>ger,lat,fra,eng</languages>
     <mainLanguage>ger</mainLanguage>
@@ -47,15 +34,6 @@
       <format>html</format>
       <format>php</format>
     </formats>
-    <fields>
-      <field>persName</field>
-      <field>placeName</field>
-      <field>zoolName</field>
-      <field>p</field>
-      <field>s</field>
-      <field>head</field>
-      <exclude/>
-    </fields>
     <update>false</update>
   </collection>
 </wsp>

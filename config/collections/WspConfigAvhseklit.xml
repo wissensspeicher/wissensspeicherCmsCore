@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<wsp>
+  <collection>
+    <id>avhseklit</id>
+    <name>Alexander von Humboldt Forschungsstelle: Sekundärliteraturdatenbank zu Alexander von Humboldt</name>
+    <url>
+      <webBaseUrl>http://avh.bbaw.de/biblio/</webBaseUrl>
+      <dataUrl>http://avh.bbaw.de/biblio/</dataUrl>
+    </url>
+    <languages>ger,lat,fra,eng</languages>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>html</format>
+      <format>php</format>
+    </formats>
+    <update>false</update>
+  </collection>
+</wsp>
