@@ -11,6 +11,7 @@ import net.sf.saxon.s9api.XdmItem;
 import net.sf.saxon.s9api.XdmSequenceIterator;
 import net.sf.saxon.s9api.XdmValue;
 
+import org.apache.log4j.Logger;
 import org.bbaw.wsp.cms.document.XQuery;
 import org.bbaw.wsp.cms.general.Constants;
 
@@ -20,6 +21,7 @@ import de.mpg.mpiwg.berlin.mpdl.xml.xquery.Hits;
 import de.mpg.mpiwg.berlin.mpdl.xml.xquery.XQueryEvaluator;
 
 public class CollectionReader {
+  private static Logger LOGGER = Logger.getLogger(CollectionReader.class);
 	private final HashMap<String, Collection> collectionContainer;
 	private static CollectionReader collectionReader;
 
@@ -67,45 +69,37 @@ public class CollectionReader {
 					URL configFileUrl = configFile.toURI().toURL();
 					Collection collection = new Collection();
 					collection.setConfigFileName(configFileName);
-					String update = xQueryEvaluator.evaluateAsString(configFileUrl,
-							"/wsp/collection/update/text()");
+					String update = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/update/text()");
 					if (update != null) {
 						if (update.equals("true"))
 							collection.setUpdateNecessary(true);
 					}
-					String collectionId = xQueryEvaluator.evaluateAsString(configFileUrl,
-							"/wsp/collection/id/text()");
+					String collectionId = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/id/text()");
 					if (collectionId != null) {
 						collection.setId(collectionId);
 					}
-					String mainLanguage = xQueryEvaluator.evaluateAsString(configFileUrl,
-							"/wsp/collection/mainLanguage/text()");
+					String mainLanguage = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/mainLanguage/text()");
 					if (mainLanguage != null) {
 						collection.setMainLanguage(mainLanguage);
 					}
-					String collectionName = xQueryEvaluator.evaluateAsString(
-							configFileUrl, "/wsp/collection/name/text()");
+					String collectionName = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/name/text()");
 					if (collectionName != null) {
 						collection.setName(collectionName);
 					}
-					String metadataUrlStr = xQueryEvaluator.evaluateAsStringValueJoined(
-							configFileUrl, "/wsp/collection/metadata/url");
+					String metadataUrlStr = xQueryEvaluator.evaluateAsStringValueJoined(configFileUrl, "/wsp/collection/metadata/url");
 					if (metadataUrlStr != null) {
 						String[] metadataUrls = metadataUrlStr.split(" ");
 						collection.setMetadataUrls(metadataUrls);
 					}
-					String metadataUrlPrefix = xQueryEvaluator.evaluateAsString(
-							configFileUrl, "/wsp/collection/metadata/urlPrefix/text()");
+					String metadataUrlPrefix = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/metadata/urlPrefix/text()");
 					if (metadataUrlPrefix != null) {
 						collection.setMetadataUrlPrefix(metadataUrlPrefix);
 					}
-					String metadataUrlType = xQueryEvaluator.evaluateAsString(
-							configFileUrl, "/wsp/collection/metadata/urlType/text()");
+					String metadataUrlType = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/metadata/urlType/text()");
 					if (metadataUrlType != null) {
 						collection.setMetadataUrlType(metadataUrlType);
 					}
-					XdmValue xmdValueDataUrls = xQueryEvaluator.evaluate(configFileUrl,
-							"/wsp/collection/url/dataUrl");
+					XdmValue xmdValueDataUrls = xQueryEvaluator.evaluate(configFileUrl, "/wsp/collection/url/dataUrl");
 					XdmSequenceIterator xmdValueDataUrlsIterator = xmdValueDataUrls
 							.iterator();
 					WspUrl[] wspUrls = null;
@@ -114,10 +108,8 @@ public class CollectionReader {
 						wspUrls = new WspUrl[xmdValueDataUrls.size()];
 						while (xmdValueDataUrlsIterator.hasNext()) {
 							XdmItem xdmItemDataUrl = xmdValueDataUrlsIterator.next();
-							String xdmItemDataUrlStr = xdmItemDataUrl.toString(); // e.g.
-																																		// <dataUrl>http://bla.de/bla.xml</dataUrl>
-							String dataUrlType = xQueryEvaluator.evaluateAsString(
-									xdmItemDataUrlStr, "string(/dataUrl/@type)");
+							String xdmItemDataUrlStr = xdmItemDataUrl.toString(); // e.g. <dataUrl>http://bla.de/bla.xml</dataUrl>
+							String dataUrlType = xQueryEvaluator.evaluateAsString(xdmItemDataUrlStr, "string(/dataUrl/@type)");
 							String dataUrl = xdmItemDataUrl.getStringValue();
 							WspUrl wspUrl = new WspUrl(dataUrl);
 							if (dataUrlType != null && !dataUrlType.isEmpty())
@@ -127,18 +119,15 @@ public class CollectionReader {
 						}
 						collection.setDataUrls(wspUrls);
 					}
-					String webBaseUrl = xQueryEvaluator.evaluateAsString(configFileUrl,
-							"/wsp/collection/url/webBaseUrl/text()");
+					String webBaseUrl = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/url/webBaseUrl/text()");
 					if (webBaseUrl != null) {
 						collection.setWebBaseUrl(webBaseUrl);
 					}
-					String collectionDataUrlPrefix = xQueryEvaluator.evaluateAsString(
-							configFileUrl, "/wsp/collection/url/dataUrlPrefix/text()");
+					String collectionDataUrlPrefix = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/url/dataUrlPrefix/text()");
 					if (collectionDataUrlPrefix != null) {
 						collection.setDataUrlPrefix(collectionDataUrlPrefix);
 					}
-					String formatsStr = xQueryEvaluator.evaluateAsStringValueJoined(
-							configFileUrl, "/wsp/collection/formats/format", "###");
+					String formatsStr = xQueryEvaluator.evaluateAsStringValueJoined(configFileUrl, "/wsp/collection/formats/format", "###");
 					ArrayList<String> formatsArrayList = new ArrayList<String>();
 					if (formatsStr != null) {
 						String[] formats = formatsStr.split("###");
@@ -149,8 +138,7 @@ public class CollectionReader {
 						}
 					}
 					collection.setFormats(formatsArrayList);
-					String fieldsStr = xQueryEvaluator.evaluateAsStringValueJoined(
-							configFileUrl, "/wsp/collection/fields/field", "###");
+					String fieldsStr = xQueryEvaluator.evaluateAsStringValueJoined(configFileUrl, "/wsp/collection/fields/field", "###");
 					ArrayList<String> fieldsArrayList = new ArrayList<String>();
 					if (fieldsStr != null) {
 						String[] fields = fieldsStr.split("###");
@@ -161,17 +149,14 @@ public class CollectionReader {
 						}
 					}
 					collection.setFields(fieldsArrayList);
-					Hits xQueries = (Hits) xQueryEvaluator.evaluate(configFileUrl,
-							"/wsp/collection/xqueries/xquery", 0, 9, "hits");
+					Hits xQueries = (Hits) xQueryEvaluator.evaluate(configFileUrl, "/wsp/collection/xqueries/xquery", 0, 9, "hits");
 					if (xQueries != null) {
 						Hashtable<String, XQuery> xqueriesHashtable = new Hashtable<String, XQuery>();
 						for (int i = 0; i < xQueries.getSize(); i++) {
 							Hit xqueryHit = xQueries.getHits().get(i);
 							String xqueryStr = xqueryHit.getContent();
-							String xQueryName = xQueryEvaluator.evaluateAsStringValueJoined(
-									xqueryStr, "xquery/name");
-							String xQueryCode = xQueryEvaluator.evaluateAsStringValueJoined(
-									xqueryStr, "xquery/code");
+							String xQueryName = xQueryEvaluator.evaluateAsStringValueJoined(xqueryStr, "xquery/name");
+							String xQueryCode = xQueryEvaluator.evaluateAsStringValueJoined(xqueryStr, "xquery/code");
 							if (xQueryName != null && xQueryCode != null) {
 								XQuery xQuery = new XQuery(xQueryName, xQueryCode);
 								xqueriesHashtable.put(xQueryName, xQuery);
@@ -179,15 +164,15 @@ public class CollectionReader {
 						}
 						collection.setxQueries(xqueriesHashtable);
 					}
-					String excludesStr = xQueryEvaluator.evaluateAsStringValueJoined(
-							configFileUrl, "/wsp/collection/url/exclude");
+					String excludesStr = xQueryEvaluator.evaluateAsStringValueJoined(configFileUrl, "/wsp/collection/url/exclude");
 					if (excludesStr != null) {
 						collection.setExcludesStr(excludesStr);
 					}
 					collectionContainer.put(collection.getId(), collection);
 
 				} catch (Exception e) {
-					System.out.println(name + " is not vaild");
+          LOGGER.error("Reading of: " + name + " failed");
+          e.printStackTrace();
 				}
 
 			}
