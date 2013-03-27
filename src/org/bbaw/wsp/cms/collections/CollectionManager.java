@@ -256,8 +256,6 @@ public class CollectionManager {
       }
     } catch (MalformedURLException e) {
       throw new ApplicationException(e);
-    } catch (IOException e) {
-      throw new ApplicationException(e);
     }
     return mdRecords;
   }
