@@ -6,24 +6,19 @@
     <url>
       <webBaseUrl>http://kant.bbaw.de</webBaseUrl>
       <dataUrl>http://kant.bbaw.de</dataUrl>
-      <dataUrl>http://pom.bbaw.de/kant/</dataUrl>
       <dataUrl>http://telota.bbaw.de/kant</dataUrl>
-      <dataUrl>http://kant.bbaw.de/opus-postumum/faksimiles-chronologisch</dataUrl>
-      <dataUrl>http://kant.bbaw.de/opus-postumum/faksimiles-diplomatisch</dataUrl>
       <!-- XML-Texte -->
+      <!-- 
       <dataUrl type="eXistDir">http://telota.bbaw.de/exist/rest/db/kant/</dataUrl>
       <exclude>xquery</exclude>
+      -->
     </url>
     <languages>ger</languages>
     <mainLanguage>ger</mainLanguage>
     <formats>
       <format>xml</format>
       <format>html</format>
-      <format>jpeg</format>
     </formats>
-    <fields>
-      <field>s</field>
-    </fields>
     <update>false</update>
   </collection>
 </wsp>
