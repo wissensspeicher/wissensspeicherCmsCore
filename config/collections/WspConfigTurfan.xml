@@ -6,6 +6,7 @@
     <url>
       <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/turfanforschung/de/Startseite/</webBaseUrl>
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/turfanforschung/de/Startseite/</dataUrl>
+      <dataUrl>http://telota.bbaw.de/turfan/start.php?aufl=1280</dataUrl>
     </url>
     <languages></languages>
     <mainLanguage>ger,eng,fra,ira,chi,rus,kor,jpn,chi,san,xto,xtq,txg,txb,xbc,sog,xct,syc,kho,cmg,oui,mnc,xmn,xpr,otk,per</mainLanguage>

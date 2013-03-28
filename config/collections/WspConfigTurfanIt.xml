@@ -6,7 +6,6 @@
     <url>
       <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/turfanforschung/de/iranischeTexte</webBaseUrl>
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/turfanforschung/de/iranischeTexte</dataUrl>
-      <dataUrl>http://telota.bbaw.de/turfan/start.php?aufl=1280</dataUrl>
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/turfanforschung/bilder/Corpus%20Fontium%20Manichaeorum.pdf</dataUrl>
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/turfanforschung/bilder/PsalterBeispiel5v.pdf</dataUrl>
       <dataUrl>http://zopeman64.bbaw.de/bbaw/Forschung/Forschungsprojekte/turfanforschung/bilder/PsalterMPSyrGrEngversesGlossarySept2012.pdf</dataUrl>
@@ -16,7 +15,7 @@
     <languages>ger,ira</languages>
     <mainLanguage>ger</mainLanguage>
     <formats>
-      <format>PDF</format>
+      <format>pdf</format>
     </formats> 
     <fields>
       <field>s</field>
