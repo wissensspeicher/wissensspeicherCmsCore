@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <wsp>
   <collection>
-    <id>bk</id>
+    <id>bkvb</id>
     <name>Berliner Klassik</name>
     <url>
-      <webBaseUrl>http://www.berliner-klassik.de/</webBaseUrl>
-      <dataUrl>http://www.berliner-klassik.de/</dataUrl>
-      <!-- Berliner Klassik Datenbanken -->
-      <dataUrl>http://berlinerklassik.bbaw.de/BK</dataUrl>
+      <webBaseUrl>http://www.berliner-klassik.de/bk_stadtplan/gui/index.html</webBaseUrl>
+      <!-- Virtuelles Berlin um 1800 -->
+      <dataUrl>http://www.berliner-klassik.de/bk_stadtplan/gui/index.html</dataUrl>
     </url>
     <mainLanguage>ger</mainLanguage>
     <formats>
