@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<wsp>
+  <collection>
+    <id>zmk</id>
+    <name>Zukunft mit Kindern - Fertilität und gesellschaftliche Entwicklung</name>
+    <url>
+    <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/Fertilitaet/de/Startseite</webBaseUrl>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/Fertilitaet/de/Startseite</dataUrl>
+      <dataUrl>http://www.zukunft-mit-kindern.eu/</dataUrl>
+      
+      <!-- Why have birth rates dropped? For medical reasons? -->
+      <dataUrl>http://www.kup.at/kup/pdf/9273.pdf</dataUrl>
+      
+          
+      <dataUrl>http://www.kup.at/kup/pdf/9835.pdf</dataUrl>
+      
+      
+      <!-- Rush-hour des Lebens: Geburtenaufschub, Einkommensverläufe und familienpolitische Perspektiven -->
+      <dataUrl>http://www.kup.at/kup/pdf/9836.pdf</dataUrl>
+      
+      <!-- Der Kinderwunsch Jugendlicher zwischen Wunsch und Wirklichkeit – Ärztliche Gespräche mit jungen Mädchen in Schulen -->
+      <dataUrl>http://www.kup.at/kup/pdf/9837.pdf</dataUrl>
+      
+      <!-- Schwangerschaftsrisiken und Outcome der Kinder nach ART -->
+      <dataUrl>http://www.kup.at/kup/pdf/9838.pdf</dataUrl>
+      
+      <!-- Späte Mutterschaft und deren Risiken -->
+      <dataUrl>http://www.kup.at/kup/pdf/9839.pdf</dataUrl>
+      
+      <!-- Fertilitätsdaten für Deutschland, Österreich und die Schweiz: Wo liegen die Möglichkeiten? Was sind die Begrenzungen? -->
+      <dataUrl>http://www.comparativepopulationstudies.de/index.php/CPoS/article/view/62/49</dataUrl>
+      
+            
+      
+    </url>
+    <languages>ger</languages>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+    	<format>pdf</format>
+      <format>html</format>
+      <format>jpeg</format>
+    </formats>
+  </collection>
+</wsp>
