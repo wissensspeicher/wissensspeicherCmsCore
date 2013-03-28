@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <wsp>
   <collection>
-    <id>mirabilia</id>
+    <id>censusmir</id>
     <name>Mirabilia Urbis Romae (Pilotprojekt)</name>
     <url>
       <webBaseUrl>http://telota.bbaw.de/census/fulltext/</webBaseUrl>
@@ -10,8 +10,8 @@
     <languages>ger,ita,eng</languages>
     <mainLanguage>ger</mainLanguage>
     <formats>
-      <format>Png</format>
-      <format>Html</format>
+      <format>png</format>
+      <format>html</format>
     </formats> 
   </collection>
 </wsp>
