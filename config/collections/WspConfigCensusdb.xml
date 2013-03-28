@@ -1,12 +1,11 @@
 <?xml version="1.0"?>
 <wsp>
   <collection>     
-    <id>census</id>
-    <name>Census of Antique Works of Art and Architecture Known in the Renaissance</name>
+    <id>censusdb</id>
+    <name>Census of Antique Works of Art and Architecture Known in the Renaissance: Census Database</name>
     <url>
-      <webBaseUrl>http://www.census.de/census/</webBaseUrl>
-      <dataUrl>http://www.census.de/census/</dataUrl>
-      <dataUrl>http://telota.bbaw.de/census</dataUrl>
+      <webBaseUrl>http://census.bbaw.de</webBaseUrl>
+      <dataUrl>http://census.bbaw.de/</dataUrl>
     </url>  
     <languages>ger,ita,eng</languages>
     <mainLanguage>ger</mainLanguage>
