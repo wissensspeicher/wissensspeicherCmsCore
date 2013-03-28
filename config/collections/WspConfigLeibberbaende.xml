@@ -1,11 +1,12 @@
 <?xml version="1.0"?>
 <wsp>
   <collection>
-    <id>leibber</id>
-    <name>Leibniz-Edition Berlin</name>
+    <id>leibberbaende</id>
+    <name>Leibniz-Edition Berlin: Bände</name>
     <url>
     	<webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_berlin/de/Startseite</webBaseUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_berlin/de/Startseite</dataUrl>
+      <dataUrl>http://telotadev.bbaw.de/leibniz8_2/upload/web/Leibniz_Reihe_8/leibniz8_2_gesamt.pdf</dataUrl>
+      <dataUrl>http://edoc.bbaw.de/volltexte/2009/1167/</dataUrl>
     </url>
     <languages>ger,lat,eng</languages>
     <mainLanguage>ger</mainLanguage>

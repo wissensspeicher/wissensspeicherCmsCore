@@ -1,15 +1,10 @@
 <?xml version="1.0"?>
 <wsp>
   <collection>
-    <id>leibnizpotsdam</id>
-    <name>Leibniz-Edition Potsdam</name>
+    <id>leibpotsbaende</id>
+    <name>Leibniz-Edition Potsdam: Bände</name>
     <url>
-    	<webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/de/Startseite</webBaseUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/de/Startseite</dataUrl>
-      <dataUrl>http://www.bbaw.de/forschung/leibniz_potsdam</dataUrl>
-
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/Corrigenda.pdf</dataUrl>
-
+      <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/de/Startseite</webBaseUrl>
       <!-- Politische Schriften -->
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/IV1tit.pdf</dataUrl>
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/IV1text.pdf</dataUrl>
@@ -25,14 +20,17 @@
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/IV6TEXT.pdf</dataUrl>
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/IV7TIT.pdf</dataUrl>
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/IV7text.pdf</dataUrl>
+
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/Corrigenda.pdf</dataUrl>
+
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/Bibelindex.pdf</dataUrl>
+      
     </url>
     <languages>ger,lat,eng</languages>
     <mainLanguage>ger</mainLanguage>
     <formats>
       <format>html</format>
-      <format>xml</format>
       <format>pdf</format>
-      <format>jpeg</format>
     </formats>
   </collection>
 </wsp>

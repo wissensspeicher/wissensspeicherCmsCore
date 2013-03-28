@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <wsp>
   <collection>
-    <id>leibber</id>
-    <name>Leibniz-Edition Berlin</name>
+    <id>leibbersach</id>
+    <name>Leibniz-Edition Berlin: Sachregister</name>
     <url>
     	<webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_berlin/de/Startseite</webBaseUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_berlin/de/Startseite</dataUrl>
+    	<dataUrl>http://telota.bbaw.de/leibniziv/Sachregister/sachreg_start.html</dataUrl>
     </url>
     <languages>ger,lat,eng</languages>
     <mainLanguage>ger</mainLanguage>
