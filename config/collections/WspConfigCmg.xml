@@ -8,8 +8,9 @@
       <!-- Homepages -->
       <dataUrl>http://cmg.bbaw.de</dataUrl>
       <dataUrl>http://telota.bbaw.de/cmg</dataUrl>
+
       <!-- XML-Texte -->
-      <dataUrl type="eXistDir">http://telota.bbaw.de:8088/exist/servlet/db/cmg</dataUrl> 
+      <dataUrl type="eXistDir">http://telota.bbaw.de/exist/servlet/db/cmg</dataUrl> 
       
       <dataUrlPrefix>/home/joey/dataWsp/documentsExtern/cmg</dataUrlPrefix>
       <dataUrl>file:/home/joey/dataWsp/documentsExtern/cmg/cmg_06_02_02.xml</dataUrl>
