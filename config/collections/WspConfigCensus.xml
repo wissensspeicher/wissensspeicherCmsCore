@@ -11,8 +11,7 @@
       <dataUrl>http://telota.bbaw.de/census</dataUrl>
       <!-- Census-Database -->
       <dataUrl>http://census.bbaw.de/</dataUrl>
-      <!-- Mirabilia Urbis Romae (Pilotprojekt) -->
-      <dataUrl>http://telota.bbaw.de/census/fulltext/</dataUrl>
+      
     </url>  
     <languages>ger,ita,eng</languages>
     <mainLanguage>ger</mainLanguage>

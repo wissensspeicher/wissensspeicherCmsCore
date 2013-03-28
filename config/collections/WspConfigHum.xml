@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<wsp>
+  <collection>
+    <id>hum</id>
+    <name>Humanprojekt</name>
+   
+    <url>
+      <webBaseUrl>http://humanprojekt.bbaw.de/</webBaseUrl>
+      
+      <dataUrl>http://humanprojekt.bbaw.de/</dataUrl>
+     
+    </url>
+    
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>jpeg</format>
+      <format>html</format>
+    </formats>
+   
+    <update>false</update>
+  </collection>
+</wsp>
