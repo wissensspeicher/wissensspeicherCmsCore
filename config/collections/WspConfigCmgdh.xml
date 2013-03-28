@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp>
+  <collection>
+    <id>cmgdh</id>
+    <name>Corpus Medicorum Graecorum / Latinorum: Der Dielssche Handschriftenkatalog online</name>
+    <url>
+      <webBaseUrl>http://cmg.bbaw.de/online-publikationen/Dielskatalog</webBaseUrl>
+      <!-- Der Dielssche Handschriftenkatalog online -->
+      <dataUrl>http://cmg.bbaw.de/online-publikationen/Dielskatalog</dataUrl>
+    </url>
+    <languages>ger</languages>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>html</format>
+      <format>xml</format>
+      <format>pdf</format>
+      <format>png</format>
+    </formats> 
+  </collection>
+</wsp>
+
