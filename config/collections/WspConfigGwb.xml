@@ -10,7 +10,6 @@
       <!-- Das Goethe-Wörterbuch im Internet -->
       <dataUrl>http://www.gwb.uni-trier.de/</dataUrl>
       <!-- Goethe-Wörterbuch -->
-      <dataUrl>http://pom.bbaw.de/gwb/</dataUrl>
       <dataUrl>http://telota.bbaw.de/gwb</dataUrl>
       <!-- XML-Texte -->
       <dataUrl type="eXistDir">http://telota.bbaw.de/exist/rest/db/gwb/</dataUrl>
@@ -20,11 +19,8 @@
     <languages>ger</languages>
     <mainLanguage>ger</mainLanguage>
     <formats>
+      <format>html</format>
       <format>xml</format>
     </formats>
-    <fields>
-      <field>s</field>
-    </fields>
-    <update>false</update>
   </collection>
 </wsp>
