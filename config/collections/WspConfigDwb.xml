@@ -22,7 +22,6 @@
       <format>html</format>
       <format>jpeg</format>
       <format>xml</format>
-      <format>jsp</format>
     </formats>
   </collection>
 </wsp>
