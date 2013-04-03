@@ -6,13 +6,14 @@
     <url>
     	<webBaseUrl>http://wsp.bbaw.de</webBaseUrl>
       <dataUrl>http://wsp.bbaw.de</dataUrl>
+      
       <!-- Digital Knowledge Store – Technical Reader -->
       <dataUrl>http://wsp.bbaw.de/project/resources/digital-knowledge-store-technical-reader</dataUrl>
     </url>
 	  <languages>ger</languages>
     <mainLanguage>ger</mainLanguage>
     <formats>
-    	<format>Software</format>
+    	<format>software</format>
       <format>jpeg</format>
       <format>html</format>
       <format>xml</format>
