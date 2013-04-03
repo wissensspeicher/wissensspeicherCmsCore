@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <wsp>
   <collection>
-    <id>PDR</id>
+    <id>pdr</id>
     <name>Personendaten-Repositorium</name>
     <url>
-      <dataUrl>http://pdr.bbaw.de/software/downloads/ae/handbuch/ae_manual_de.pdf</dataUrl>
-      
       <!-- Archiv-Editior -->
-      
       <dataUrl>http://pdr.bbaw.de/downloads/ae</dataUrl>
+
       <!-- Handbuch -->
-      
       <dataUrl>http://pdr.bbaw.de/software/downloads/ae/handbuch/ae_manual_de.pdf</dataUrl>
-      
+
       <!-- PDR Interface Tools (PIT) -->
       <dataUrl>http://pdrdev.bbaw.de/pit/2-1/</dataUrl>
       

@@ -4,8 +4,8 @@
     <id>cmgpo</id>
     <name>Corpus Medicorum Graecorum / Latinorum: Probeedition online</name>
     <url>
-      <webBaseUrl>http://telota.bbaw.de/cmg</webBaseUrl>
-      <dataUrl>http://telota.bbaw.de/cmg</dataUrl>
+      <webBaseUrl>http://cmg.bbaw.de/online-publikationen/probeedition-online</webBaseUrl>
+      <dataUrl>http://cmg.bbaw.de/online-publikationen/probeedition-online</dataUrl>
     </url>
     <languages>ger</languages>
     <mainLanguage>ger</mainLanguage>
