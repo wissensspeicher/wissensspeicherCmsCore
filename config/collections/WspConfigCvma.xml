@@ -14,10 +14,12 @@
       <!-- XML-Texte -->
       <dataUrl type="eXistDir">http://telota.bbaw.de/exist/rest/db/cvma/</dataUrl>
       <exclude>scripts</exclude>
+      <exclude>halberstadt/HBS_Obergaden_FENSTER_I%27.xml</exclude>
     </url>
     <languages>ger</languages>
     <mainLanguage>ger</mainLanguage>
     <formats>
+      <format>html</format>
       <format>xml</format>
     </formats>
   </collection>
