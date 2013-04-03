@@ -3,25 +3,14 @@
   <collection>
     <id>ei</id>
     <name>Eliten-Integration</name>
-    <!-- if dataUrl is not a directory but a file, it should end with a forward slash -->
     <url>
       <webBaseUrl>http://elitenintegration.bbaw.de/</webBaseUrl>
-      <!-- Homepage -->
       <dataUrl>http://elitenintegration.bbaw.de/</dataUrl>
-      <dataUrl>http://elitenintegration.bbaw.de/veranstaltungen#Bericht1</dataUrl>
-      <!-- XML-Texte -->
-      
-     
-      
-   
+      <dataUrl>http://elitenintegration.bbaw.de/veranstaltungen</dataUrl>
     </url>
-    
     <mainLanguage>ger</mainLanguage>
     <formats>
-      
       <format>html</format>
-      
     </formats>
-    
   </collection>
 </wsp>
