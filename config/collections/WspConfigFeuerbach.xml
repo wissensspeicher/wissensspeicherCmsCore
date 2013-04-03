@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp>
+  <collection>
+    <id>feuerbach</id>
+    <name>Feuerbach</name>
+    <url>
+    	<webBaseUrl>http://feuerbach.bbaw.de/</webBaseUrl>
+      <dataUrl>http://feuerbach.bbaw.de/</dataUrl>
+    </url>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>html</format>
+    </formats> 
+  </collection>
+</wsp>
+
