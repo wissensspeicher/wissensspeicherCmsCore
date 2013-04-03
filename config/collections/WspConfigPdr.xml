@@ -42,9 +42,9 @@
     <languages>ger,itl,eng</languages>
     <mainLanguage>ger</mainLanguage>
     <formats>
-      <format>PDF</format>
-      <format>Software</format>
-      <format>Html</format>
+      <format>pdf</format>
+      <format>software</format>
+      <format>html</format>
     </formats> 
   </collection>
 </wsp>
