@@ -9,11 +9,7 @@
       <dataUrl>http://telota.bbaw.de/mze</dataUrl>
       <!-- XML-Texte -->
       <dataUrl type="eXistDir">http://telota.bbaw.de:8085/exist/rest/db/mes/</dataUrl>
-      <exclude>pages</exclude>
       <exclude>scripts</exclude>
-      <exclude>svg</exclude>
-      <exclude>users</exclude>
-      <exclude>backup</exclude>
     </url>
     <languages>ger</languages>
     <mainLanguage>ger</mainLanguage>

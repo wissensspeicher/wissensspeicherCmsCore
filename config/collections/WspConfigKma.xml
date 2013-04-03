@@ -6,10 +6,6 @@
     <url>
       <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/moritz/de/Startseite</webBaseUrl>
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/moritz/de/Startseite</dataUrl> 
-     
-      <!-- Moritz-Bibliographie. Neuere Werkausgaben und Sekundärliteratur -->
-      <dataUrl>http://www.bbaw.de/forschung/moritz/biblio/index.html</dataUrl>
-     
     </url>
     <mainLanguage>ger</mainLanguage>
     <formats>

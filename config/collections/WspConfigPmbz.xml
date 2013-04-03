@@ -6,7 +6,8 @@
     <url>
       <webBaseUrl>http://pmbz.bbaw.de</webBaseUrl>
       <!-- Homepage -->
-      <dataUrl>http://pmbz.bbaw.de/index.html</dataUrl>
+      <dataUrl>http://pmbz.bbaw.de</dataUrl>
+      <dataUrl>http://telota.bbaw.de/pmbz/index.html</dataUrl>
       
       <!-- Prosopographie der mittelbyzantinischen Zeit -->
       <dataUrl>http://pmbz.bbaw.de/pmbz.ger.php</dataUrl>
@@ -25,9 +26,5 @@
       <format>jpeg</format>
       <format>pdf</format>
     </formats>
-    <fields>
-      <field>s</field>
-    </fields>
-    <update>false</update>
   </collection>
 </wsp>
