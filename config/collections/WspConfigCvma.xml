@@ -3,15 +3,16 @@
   <collection>
     <id>cvma</id>
     <name>Corpus Vitrearum Medii Aevi. Glasmalereiforschung</name>
-    <!-- if dataUrl is not a directory but a file, it should end with a forward slash -->
     <url>
       <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/cvma/de/Startseite</webBaseUrl>
       <!-- Homepage -->
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/cvma/de/Startseite/index.html</dataUrl>
+
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/cvma/de/Blanko.2005-01-06.1930917637</dataUrl>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/cvma/de/Konservierung</dataUrl>
+      
       <!-- XML-Texte -->
       <dataUrl type="eXistDir">http://telota.bbaw.de/exist/rest/db/cvma/</dataUrl>
-      <dataUrl type="eXistDir">http://telota.bbaw.de:8088/exist/servlet/db/cvma</dataUrl>
-          
       <exclude>scripts</exclude>
     </url>
     <languages>ger</languages>
@@ -19,9 +20,5 @@
     <formats>
       <format>xml</format>
     </formats>
-    <fields>
-      <field>s</field>
-    </fields>
-    <update>false</update>
   </collection>
 </wsp>
