@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <wsp>
   <collection>
-    <id>feuerbach</id>
-    <name>Feuerbach</name>
+    <id>forster</id>
+    <name>Forster-Ausgabe</name>
     <url>
-    	<webBaseUrl>http://feuerbach.bbaw.de</webBaseUrl>
-      <dataUrl>http://feuerbach.bbaw.de</dataUrl>
+    	<webBaseUrl>http://forster.bbaw.de</webBaseUrl>
+      <dataUrl>http://forster.bbaw.de</dataUrl>
     </url>
     <mainLanguage>ger</mainLanguage>
     <formats>
