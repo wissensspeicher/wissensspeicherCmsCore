@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<wsp>
+  <collection>
+    <id>kmabib</id>
+    <name>Kritische Karl-Philipp-Moritz-Ausgabe: Moritz-Bibliographie. Neuere Werkausgaben und Sekundärliteratur</name>
+    <url>
+      <webBaseUrl>http://www.bbaw.de/forschung/moritz/biblio/index.html</webBaseUrl>
+      <dataUrl>http://www.bbaw.de/forschung/moritz/biblio/index.html</dataUrl>
+    </url>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>html</format>
+    </formats>
+  </collection>
+</wsp>
