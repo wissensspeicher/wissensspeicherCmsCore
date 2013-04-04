@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp>
+  <collection>
+    <id>alternbase</id>
+    <name>Altern und gesellschaftliche Entwicklung: Berlin Aging Study (BASE)</name>
+    <url>
+      <webBaseUrl>http://www.base-berlin.mpg.de/de/BASE_II.html</webBaseUrl>
+      <dataUrl>http://www.base-berlin.mpg.de/de/BASE_II.html</dataUrl>
+    </url>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>html</format>
+    </formats> 
+  </collection>
+</wsp>
+
