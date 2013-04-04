@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <wsp>
   <collection>
-    <id>KF</id>
+    <id>kf</id>
     <name>Klinische Forschung in vulnerablen Populationen</name>
     <url>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/kfvp/de/Startseite</dataUrl>
       <dataUrl>http://www.ea-aw.de/fileadmin/downloads/Graue_Reihe/GR_46_ClinicalResearchInMinors_112008.pdf</dataUrl>
     </url>
     <mainLanguage>eng</mainLanguage>
