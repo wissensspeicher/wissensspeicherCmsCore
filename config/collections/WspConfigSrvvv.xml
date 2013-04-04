@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp>
+  <collection>
+    <id>srvvv</id>
+    <name>Sprache des Rechts, Vermitteln, Verstehen, Verwechseln</name>
+    <url>
+      <webBaseUrl>http://www.bbaw.de/forschung/sdr/uebersicht</webBaseUrl>
+      <dataUrl>http://www.bbaw.de/forschung/sdr/uebersicht</dataUrl>
+      
+    </url>
+    <languages>ger</languages>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>pdf</format>
+    </formats> 
+   
+  </collection>
+</wsp>
+

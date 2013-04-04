@@ -1,14 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <wsp>
   <collection>
-    <id>IOG</id>
+    <id>iog</id>
     <name>Institutionen und öffentliche Güter in der Landwirtschaft</name>
     <url>
-      <dataUrl>http://www.netzwerk-laendlicher-raum.de/fileadmin/sites/ELER/Dateien/05_Service/Publikationen/LandInPForm/PDF-Downloads/06_LiF_Spezial_01_Beckmann.pdf</dataUrl>
+    
+    	<webBaseUrl>http://www.netzwerk-laendlicher-raum.de/</webBaseUrl>
+    	<dataUrl>http://www.netzwerk-laendlicher-raum.de/</dataUrl>
+    	
+    	<!--  geht nicht       <dataUrl>http://www.netzwerk-laendlicher-raum.de/fileadmin/sites/ELER/Dateien/05_Service/Publikationen/LandInPForm/PDF-Downloads/06_LiF_Spezial_01_Beckmann.pdf</dataUrl>
+    -->
     </url>
     <mainLanguage>ger</mainLanguage>
     <formats>
-      <format>PDF</format>
+    <format>html</format>
+      <format>pdf</format>
     </formats> 
   </collection>
 </wsp>
