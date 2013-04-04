@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp>
+  <collection>
+    <id>techcult</id>
+    <name>TECHcultures</name>
+    <url>
+    	<webBaseUrl>http://www.bbaw.de/forschung/techcultures/uebersicht</webBaseUrl>
+      <dataUrl>http://www.bbaw.de/forschung/techcultures/uebersicht</dataUrl>
+    </url>
+
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+    <format>html</format>
+      <format>jpeg</format>
+    </formats> 
+  </collection>
+</wsp>
+
