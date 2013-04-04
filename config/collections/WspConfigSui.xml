@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp>
+  <collection>
+    <id>sui</id>
+    <name>Studiengruppe Strukturbildung und Innovation</name>
+    <url>
+    	<webBaseUrl>http://www.bbaw.de/forschung/sui</webBaseUrl>
+      <dataUrl>http://www.bbaw.de/forschung/sui</dataUrl>
+    </url>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>html</format>
+    </formats> 
+  </collection>
+</wsp>
+
