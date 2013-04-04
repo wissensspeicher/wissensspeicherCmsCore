@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<wsp>
+  <collection>
+    <id>dtme</id>
+    <name>Deutsche Texte des Mittelalters: Editionsbericht</name>
+    <url>
+      <webBaseUrl>http://dtm.bbaw.de/E_Bericht/Editionsbericht-internet.html</webBaseUrl>
+      <dataUrl>http://dtm.bbaw.de/E_Bericht/Editionsbericht-internet.html</dataUrl>
+    </url>
+    <languages>ger</languages>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>html</format>
+    </formats>
+  </collection>
+</wsp>
