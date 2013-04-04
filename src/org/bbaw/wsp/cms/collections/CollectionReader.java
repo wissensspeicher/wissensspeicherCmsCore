@@ -181,8 +181,12 @@ public class CollectionReader {
 					if (excludesStr != null) {
 						collection.setExcludesStr(excludesStr);
 					}
-					collectionContainer.put(collection.getId(), collection);
-
+					Collection coll = collectionContainer.get(collectionId);
+					if (coll != null) {
+            LOGGER.error("Double collectionId \"" + collectionId + "\" (in: \"" + collection.getConfigFileName() + "\" and in \"" + coll.getConfigFileName() + "\"");
+					} else {
+  					collectionContainer.put(collectionId, collection);
+					}
 				} catch (Exception e) {
           LOGGER.error("Reading of: " + name + " failed");
           e.printStackTrace();
