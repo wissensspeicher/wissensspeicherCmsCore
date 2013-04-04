@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp>
+  <collection>
+    <id>molmed</id>
+    <name>Forschungsschwerpunkte der molekularen Medizin</name>
+    <url>
+      <webBaseUrl>http://www.bbaw.de/forschung/molmed</webBaseUrl>
+      <dataUrl>http://www.bbaw.de/forschung/molmed</dataUrl>
+    </url>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>html</format>
+    </formats> 
+  </collection>
+</wsp>
+
