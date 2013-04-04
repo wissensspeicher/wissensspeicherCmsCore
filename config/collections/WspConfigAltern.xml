@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp>
+  <collection>
+    <id>altern</id>
+    <name>Altern und gesellschaftliche Entwicklung</name>
+    <url>
+      <webBaseUrl>http://altern.bbaw.de</webBaseUrl>
+      <dataUrl>http://altern.bbaw.de</dataUrl>
+    </url>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>html</format>
+    </formats> 
+  </collection>
+</wsp>
+
