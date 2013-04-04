@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <wsp>
   <collection>
-    <id>MEGA</id>
+    <id>mega</id>
     <name>Marx-Engels-Gesamtausgabe</name>
     <url> 
       <webBaseUrl>http://telota.bbaw.de/mega</webBaseUrl>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <wsp>
   <collection>
-    <id>DTMT</id>
-    <name>Transkription</name>
+    <id>dtmt</id>
+    <name>Deutsche Texte des Mittelalters: Transkription</name>
     <url>
       <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/dtm/de/Transkriptionen</webBaseUrl>
       <!-- Homepage -->
@@ -16,7 +16,7 @@
     <languages>ger,gmh</languages>
     <mainLanguage>ger</mainLanguage>
     <formats>
-      <format>PDF</format>
+      <format>pdf</format>
     </formats> 
   </collection>
 </wsp>

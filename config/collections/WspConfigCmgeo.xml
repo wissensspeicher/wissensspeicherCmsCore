@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp>
+  <collection>
+    <id>cmgeo</id>
+    <name>Corpus Medicorum Graecorum / Latinorum: Editionen Online</name>
+    <url>
+      <webBaseUrl>http://cmg.bbaw.de/epubl/online/editionen.html</webBaseUrl>
+      <dataUrl>http://cmg.bbaw.de/epubl/online/editionen.html</dataUrl>
+    </url>
+    <languages>ger</languages>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>html</format>
+      <format>xml</format>
+      <format>pdf</format>
+    </formats> 
+  </collection>
+</wsp>
+

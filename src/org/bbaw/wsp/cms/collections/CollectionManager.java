@@ -124,7 +124,7 @@ public class CollectionManager {
       String docId = mdRecord.getDocId();
       String collectionId = mdRecord.getCollectionNames();
       counter++;
-      LOGGER.info(counter + ". " + "Collection: " + collectionId + ": Create: " + docId);
+      LOGGER.info(counter + ". " + "Collection: " + collectionId + ": Create resource: " + docUrl + " (" + docId + ")");
       CmsDocOperation docOp = new CmsDocOperation("create", docUrl, null, docId);
       docOp.setMdRecord(mdRecord);
       ArrayList<String> fields = collection.getFields();

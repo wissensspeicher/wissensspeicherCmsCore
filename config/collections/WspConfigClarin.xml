@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<wsp>
+  <collection>
+    <id>clarin</id>
+    <name>CLARIN-D</name>
+    <url>
+      <webBaseUrl>http://www.bbaw.de/forschung/clarin</webBaseUrl>
+      <dataUrl>http://www.bbaw.de/forschung/clarin</dataUrl>
+    </url>
+    <languages>ger</languages>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>html</format>
+    </formats>
+  </collection>
+</wsp>

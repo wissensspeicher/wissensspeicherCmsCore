@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<wsp>
+  <collection>
+    <id>wab</id>
+    <name>Die Welt als Bild</name>
+    <url>
+      <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/Weltbilder/de/Startseite</webBaseUrl>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/Weltbilder/de/Startseite</dataUrl>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/Weltbilder/de/blanko.2006-10-17.4822835395/materialien/</dataUrl>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/Weltbilder/de/blanko.2007-06-14.1989096396/materialien/</dataUrl>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/Weltbilder/de/blanko.2007-09-11.6923069455/materialien/</dataUrl>
+    </url>
+    <languages>ger</languages>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>html</format>
+    </formats>
+  </collection>
+</wsp>

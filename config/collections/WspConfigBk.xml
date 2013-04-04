@@ -6,16 +6,9 @@
     <url>
       <webBaseUrl>http://www.berliner-klassik.de/</webBaseUrl>
       <dataUrl>http://www.berliner-klassik.de/</dataUrl>
-      
       <!-- Berliner Klassik Datenbanken -->
       <dataUrl>http://berlinerklassik.bbaw.de/BK</dataUrl>
-      
-      <!-- Virtuelles Berlin um 1800 -->
-      <dataUrl>http://www.berliner-klassik.de/bk_stadtplan/gui/index.html</dataUrl>
-     
-     
     </url>
-    
     <mainLanguage>ger</mainLanguage>
     <formats>
       <format>html</format>

@@ -15,7 +15,7 @@
     <languages>ger,ira</languages>
     <mainLanguage>ger</mainLanguage>
     <formats>
-      <format>PDF</format>
+      <format>pdf</format>
     </formats> 
     <fields>
       <field>s</field>

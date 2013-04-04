@@ -6,17 +6,7 @@
     <url>
       <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/turfanforschung/de/Startseite/</webBaseUrl>
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/turfanforschung/de/Startseite/</dataUrl>
-      <!-- Edition der alttürkischen und mitteliranischen Texte -->
-      <dataUrl>http://pom.bbaw.de/turfan/start.php?aufl=1280</dataUrl>
       <dataUrl>http://telota.bbaw.de/turfan/start.php?aufl=1280</dataUrl>
-      <!-- International Dunhuang Project (DTA II) -->
-      <dataUrl>http://idp.bbaw.de/</dataUrl>
-      <!--  Digitales Turfan-Archiv (DTA I) -->
-      <dataUrl>http://www.bbaw.de/forschung/turfanforschung/dta/index.html</dataUrl>
-      <!-- Published Manichaean Middle Persian and Parthian Texts (MIRTEXT) -->
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/turfanforschung/de/MIRTEXT</dataUrl>
-      <!-- Iranische Texte in der Turfansammlung -->
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/turfanforschung/de/iranischeTexte</dataUrl>
     </url>
     <languages></languages>
     <mainLanguage>ger,eng,fra,ira,chi,rus,kor,jpn,chi,san,xto,xtq,txg,txb,xbc,sog,xct,syc,kho,cmg,oui,mnc,xmn,xpr,otk,per</mainLanguage>

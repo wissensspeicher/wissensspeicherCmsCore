@@ -2,7 +2,8 @@ package org.bbaw.wsp.cms.collections;
 
 public class WspUrl {
   private String type; // default: null (no type), or eXistDir
-  private String url;  // url 
+  private String url;  // url string
+  private String collectionId; // collection id
   
   public WspUrl(String url) {
     this.url = url;
@@ -22,6 +23,14 @@ public class WspUrl {
   
   public void setUrl(String url) {
     this.url = url;
+  }
+
+  public String getCollectionId() {
+    return collectionId;
+  }
+
+  public void setCollectionId(String collectionId) {
+    this.collectionId = collectionId;
   }
 
   public boolean isEXistDir() {

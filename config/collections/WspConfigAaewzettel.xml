@@ -4,8 +4,8 @@
     <id>aaewzettel</id>
     <name>Altägyptisches Wörterbuch: Das Digitalisierte Zettelarchiv</name>
     <url>
-      <webBaseUrl>http://aaew.bbaw.de/</webBaseUrl>
-      <dataUrl>http://aaew.bbaw.de/tla/servlet/TlaLogin</dataUrl>
+      <webBaseUrl>http://aaew.bbaw.de/dateien/dza/dza.html</webBaseUrl>
+      <dataUrl>http://aaew.bbaw.de/dateien/dza/dza.html</dataUrl>
     </url>
     <languages>ger,eng,egy</languages>
     <mainLanguage>ger</mainLanguage>

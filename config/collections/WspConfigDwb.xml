@@ -6,7 +6,6 @@
     <url>
       <webBaseUrl>http://dwb.bbaw.de/</webBaseUrl>
       <dataUrl>http://dwb.bbaw.de/</dataUrl>
-      <dataUrl>http://pom.bbaw.de/dwb/</dataUrl>
       <dataUrl>http://telota.bbaw.de/dwb/</dataUrl>
       <!-- DWB online / Der digitale Grimm -->
       <dataUrl>http://urts55.uni-trier.de:8080/Projekte/DWB</dataUrl>
@@ -23,10 +22,6 @@
       <format>html</format>
       <format>jpeg</format>
       <format>xml</format>
-      <format>jsp</format>
     </formats>
-    <fields>
-      <field>s</field>
-    </fields>
   </collection>
 </wsp>

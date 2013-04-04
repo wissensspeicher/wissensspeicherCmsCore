@@ -2,7 +2,7 @@
 <wsp>
   <collection>
     <id>ab</id>
-    <name>Acta Borussica-Preußen als Kulturstaat</name>
+    <name>Protokolle des Preußischen Staatsministeriums Acta Borussica</name>
     <url>
     	<webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/actaborussica/de/Startseite/</webBaseUrl>
       <dataUrl> http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/actaborussica/de/Startseite/</dataUrl>
@@ -12,9 +12,6 @@
     	<dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/actaborussica/de/blanko.2009-01-12.7288943857</dataUrl>
     	<dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/actaborussica/de/blanko.2009-06-30.5311768302</dataUrl>
     	<dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/actaborussica/de/blanko.2011-04-11.3959427800</dataUrl>
-    	
-    	
-    	
     </url>
     <mainLanguage>ger</mainLanguage>
     <formats>

@@ -22,11 +22,13 @@ import de.mpg.mpiwg.berlin.mpdl.xml.xquery.XQueryEvaluator;
 
 public class CollectionReader {
   private static Logger LOGGER = Logger.getLogger(CollectionReader.class);
-	private final HashMap<String, Collection> collectionContainer;
-	private static CollectionReader collectionReader;
-
+  private static CollectionReader collectionReader;
+	private HashMap<String, Collection> collectionContainer;  // key is collectionId string and value is collection
+  private HashMap<String, WspUrl> wspUrls;  // key is wspUrl string and value is wspUrl 
+	
 	private CollectionReader() throws ApplicationException {
 		collectionContainer = new HashMap<String, Collection>();
+		wspUrls = new HashMap<String, WspUrl>();
 		readConfFiles();
 	}
 
@@ -55,13 +57,13 @@ public class CollectionReader {
 
 	private void readConfFiles() throws ApplicationException {
 		try {
-			// holt alle Konfigurationsdateien aus dem Konfigurationsordner
+			// liest alle Konfigurationsdateien ein
 			PathExtractor pathExtractor = new PathExtractor();
 			String confDir = Constants.getInstance().getCollectionConfDir();
+      LOGGER.info("Reading all config files from \"" + confDir + "\"");
 			List<String> configsFileList = pathExtractor.extractPathLocally(confDir);
-			for (String configFileName : configsFileList) {
+			for (String configFileName:configsFileList) {
 				String name = "";
-
 				try {
 					File configFile = new File(configFileName);
 					name = configFile.getName();
@@ -100,24 +102,35 @@ public class CollectionReader {
 						collection.setMetadataUrlType(metadataUrlType);
 					}
 					XdmValue xmdValueDataUrls = xQueryEvaluator.evaluate(configFileUrl, "/wsp/collection/url/dataUrl");
-					XdmSequenceIterator xmdValueDataUrlsIterator = xmdValueDataUrls
-							.iterator();
-					WspUrl[] wspUrls = null;
+					XdmSequenceIterator xmdValueDataUrlsIterator = xmdValueDataUrls.iterator();
 					if (xmdValueDataUrls != null && xmdValueDataUrls.size() > 0) {
-						int i = 0;
-						wspUrls = new WspUrl[xmdValueDataUrls.size()];
+						ArrayList<WspUrl> collectionWspUrls = new ArrayList<WspUrl>();
 						while (xmdValueDataUrlsIterator.hasNext()) {
 							XdmItem xdmItemDataUrl = xmdValueDataUrlsIterator.next();
 							String xdmItemDataUrlStr = xdmItemDataUrl.toString(); // e.g. <dataUrl>http://bla.de/bla.xml</dataUrl>
 							String dataUrlType = xQueryEvaluator.evaluateAsString(xdmItemDataUrlStr, "string(/dataUrl/@type)");
 							String dataUrl = xdmItemDataUrl.getStringValue();
-							WspUrl wspUrl = new WspUrl(dataUrl);
-							if (dataUrlType != null && !dataUrlType.isEmpty())
-								wspUrl.setType(dataUrlType);
-							wspUrls[i] = wspUrl;
-							i++;
+							if (dataUrl != null && ! dataUrl.isEmpty()) {
+                WspUrl urlKey = wspUrls.get(dataUrl);
+                if (urlKey == null) {
+    							WspUrl newWspUrl = new WspUrl(dataUrl);
+    							newWspUrl.setCollectionId(collectionId);
+    							if (dataUrlType != null && !dataUrlType.isEmpty())
+    							  newWspUrl.setType(dataUrlType);
+    							collectionWspUrls.add(newWspUrl);
+    							wspUrls.put(dataUrl, newWspUrl);
+                } else {
+                  // dataUrl is a doublet
+                  String wspKeyCollectionId = urlKey.getCollectionId();
+                  String errorDoStr = "please remove it either in configuration \"" + wspKeyCollectionId + "\" or \"" + collectionId + "\"";
+                  if (collectionId.equals(wspKeyCollectionId))
+                    errorDoStr = "please remove it in configuration \"" + collectionId + "\"";
+                  LOGGER.error("Doublet: url \"" + dataUrl + "\" is not added: " + errorDoStr);
+                }
+							}
 						}
-						collection.setDataUrls(wspUrls);
+						WspUrl[] collectionWspUrlsArray = collectionWspUrls.toArray(new WspUrl[collectionWspUrls.size()]);
+						collection.setDataUrls(collectionWspUrlsArray);
 					}
 					String webBaseUrl = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/url/webBaseUrl/text()");
 					if (webBaseUrl != null) {

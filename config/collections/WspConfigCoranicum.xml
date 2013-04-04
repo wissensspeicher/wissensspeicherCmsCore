@@ -3,12 +3,11 @@
   <collection>
     <id>coranicum</id>
     <name>Corpus Coranicum</name>
-    <!-- if dataUrl is not a file but a directory, it should end with a forward slash-->
     <url>
       <webBaseUrl>http://koran.bbaw.de/</webBaseUrl>
       <dataUrl>http://koran.bbaw.de/</dataUrl>
       <dataUrl>http://bbaw.schicke-seite.de/index</dataUrl>
-      <dataUrl>www.corpuscoranicum.de</dataUrl>
+      <dataUrl>http://www.corpuscoranicum.de</dataUrl>
       <dataUrl>http://corpuscoranicum.de/kommentar/index/sure</dataUrl>
       <dataUrl>http://koran.bbaw.de/materialien/bergstrasser-original-indexklein.pdf</dataUrl>
       
