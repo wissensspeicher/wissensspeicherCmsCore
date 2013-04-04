@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<wsp>
+  <collection>
+    <id>ksw</id>
+    <name>Kultureller und sozialer Wandel</name>
+   
+    <url>
+      <webBaseUrl>http://www.bbaw.de/forschung/kultureller_wandel/uebersicht</webBaseUrl>
+      
+      <dataUrl>http://www.bbaw.de/forschung/kultureller_wandel/uebersicht</dataUrl>
+     
+    </url>
+    
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>jpeg</format>
+      <format>html</format>
+    </formats>
+   
+    <update>false</update>
+  </collection>
+</wsp>
