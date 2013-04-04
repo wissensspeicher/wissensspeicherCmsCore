@@ -4,12 +4,14 @@
     <id>kf</id>
     <name>Klinische Forschung in vulnerablen Populationen</name>
     <url>
+      <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/kfvp/de/Startseite</webBaseUrl>
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/kfvp/de/Startseite</dataUrl>
       <dataUrl>http://www.ea-aw.de/fileadmin/downloads/Graue_Reihe/GR_46_ClinicalResearchInMinors_112008.pdf</dataUrl>
     </url>
-    <mainLanguage>eng</mainLanguage>
+    <mainLanguage>ger</mainLanguage>
     <formats>
-      <format>PDF</format>
+      <format>html</format>
+      <format>pdf</format>
     </formats> 
   </collection>
 </wsp>
