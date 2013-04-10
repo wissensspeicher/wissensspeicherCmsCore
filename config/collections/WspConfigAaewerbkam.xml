@@ -7,7 +7,7 @@
       <webBaseUrl>http://aaew.bbaw.de/dateien/weitere%20archive/erbkam/Erbkam.html</webBaseUrl>
       <!-- Homepages -->
       <dataUrl>http://aaew.bbaw.de/dateien/weitere%20archive/erbkam/Erbkam.html</dataUrl>
-      <dataUrl>http://pom.bbaw.de/erbkam/</dataUrl>
+      <dataUrl>http://telota.bbaw.de/erbkam/</dataUrl>
       <!-- XML-Texte -->
       <dataUrl type="eXistDir">http://telota.bbaw.de:8088/exist/servlet/db/aaew/erbkam</dataUrl>
     </url>
