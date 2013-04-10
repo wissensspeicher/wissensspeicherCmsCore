@@ -491,16 +491,16 @@ public class IndexHandler {
       TopDocs resultDocs = null;
       if (sortFieldNames != null) {
         Sort sort = buildSort(sortFieldNames, "doc");  // build sort criteria 
-        resultDocs = searcher.search(morphQuery, 10000, sort);
+        resultDocs = searcher.search(morphQuery, 100000, sort);
       } else {
-        resultDocs = searcher.search(morphQuery, 10000);
+        resultDocs = searcher.search(morphQuery, 100000);
       }
       resultDocs.setMaxScore(1);
       int toTmp = to;
       if (resultDocs.scoreDocs.length <= to)
         toTmp = resultDocs.scoreDocs.length - 1;
       if (resultDocs != null) {
-        ArrayList<org.bbaw.wsp.cms.document.Document>  docs = new ArrayList<org.bbaw.wsp.cms.document.Document>();
+        ArrayList<org.bbaw.wsp.cms.document.Document> docs = new ArrayList<org.bbaw.wsp.cms.document.Document>();
         for (int i=from; i<=toTmp; i++) { 
           int docID = resultDocs.scoreDocs[i].doc;
           FieldSelector docFieldSelector = getDocFieldSelector();
