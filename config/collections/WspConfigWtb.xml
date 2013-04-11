@@ -10,10 +10,8 @@
     <languages>ger</languages>
     <mainLanguage>ger</mainLanguage>
     <formats>
-      <format>html</format>
-      
-      <format>jpeg</format>
-    
+      <format>html</format>      
+      <format>jpeg</format>    
     </formats> 
   </collection>
 </wsp>

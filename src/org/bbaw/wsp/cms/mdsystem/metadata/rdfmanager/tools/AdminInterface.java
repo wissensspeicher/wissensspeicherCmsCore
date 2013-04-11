@@ -20,15 +20,16 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
+import org.apache.log4j.Logger;
+import org.bbaw.wsp.cms.collections.CollectionReader;
 import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.JenaMainForAI;
 
 public class AdminInterface extends JFrame {
 
 	/**
-	 * Marco Seidler (shk2) tool for creation or appending a
-	 * Dataset/Triplestore, with one or more rdf ttl nt file at the same time,
-	 * also available is checking of already existing models and removing of
-	 * models
+	 * Marco Seidler (shk2) tool for creation or appending a Dataset/Triplestore,
+	 * with one or more rdf ttl nt file at the same time, also available is
+	 * checking of already existing models and removing of models
 	 */
 	private static final long serialVersionUID = 5952164735517923589L;
 
@@ -59,6 +60,7 @@ public class AdminInterface extends JFrame {
 	private final JComboBox combobox = new JComboBox();
 	private String namedGraph = "";
 	private final JenaMainForAI jenaMain = new JenaMainForAI();
+	private static Logger LOGGER = Logger.getLogger(CollectionReader.class);
 
 	// ButtonsNames for distinction
 	private static final String SOURCE_BUTTON = "Choose Metadata";
@@ -78,6 +80,7 @@ public class AdminInterface extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 		initalisation();
+		LOGGER.info("AdminInterface started.");
 	}
 
 	/**
@@ -99,6 +102,7 @@ public class AdminInterface extends JFrame {
 		save_as_xml_btn = new JButton(SAVE_AS_XML);
 		combobox.addActionListener(new ActionListener() {
 
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				namedGraph = (String) combobox.getSelectedItem();
 
@@ -113,8 +117,8 @@ public class AdminInterface extends JFrame {
 		addButtonListener(save_as_xml_btn);
 
 		panel.add(folderScr = new JCheckBox("Choose a source Folder"));
-		panel.add(createDataset = new JCheckBox(
-				"Create a Dataset at new Location"));
+		panel
+				.add(createDataset = new JCheckBox("Create a Dataset at new Location"));
 		panel.add(btn_src);
 		panel.add(src);
 		panel.add(btn_des);
@@ -129,8 +133,8 @@ public class AdminInterface extends JFrame {
 		removePanel.add(new Label("Load all Named Models from destination"));
 		removePanel.add(load_set_btn);
 
-		removePanel.add(allXML = new JCheckBox(
-				"Save all Models as XML to location"));
+		removePanel
+				.add(allXML = new JCheckBox("Save all Models as XML to location"));
 		removePanel.add(save_as_xml_btn);
 		removePanel.add(remove_btn);
 		removePanel.add(combobox);
@@ -147,14 +151,12 @@ public class AdminInterface extends JFrame {
 
 	private void giveInstruct() {
 		println("Short instruction about main features: \n" + "\n"
-				+ "The two Checkboxes:\n"
-				+ "1. is used to choose a whole folder \n "
+				+ "The two Checkboxes:\n" + "1. is used to choose a whole folder \n "
 				+ "where all possible data will be selected \n"
 				+ "2. is used to create a new dataset, \n"
 				+ "to do so there will open a save \n"
 				+ "dialog in \"Choose Destination\" option\n\n"
-				+ "If none of the Checkboxes is selected \n"
-				+ "the default is:\n"
+				+ "If none of the Checkboxes is selected \n" + "the default is:\n"
 				+ "choose 1 file to add to an existing dataset." + "\n\n"
 				+ "Load Models lists all NamedModel which are\n"
 				+ "currently in the choosen Dataset.\n\n"
@@ -163,23 +165,24 @@ public class AdminInterface extends JFrame {
 				+ "or to export all to a given location.\n\n"
 				+ "Remove deletes the choosen NamedModel\nfrom Dataset."
 				+ "\n\nIf there already is a NamedModel or XML\n"
-				+ "with equal name, it will be replaced\n"
-				+ "by the newer version");
+				+ "with equal name, it will be replaced\n" + "by the newer version");
 
 	}
 
 	/**
-	 * buttonlistener executes all the main Events differenced by which Button
-	 * where pressed. Also exceptionhandling when wrong data are given
+	 * buttonlistener executes all the main Events differenced by which Button was
+	 * pressed. Also exceptionhandling if wrong data were given
 	 * 
 	 * @param b
 	 */
 	private void addButtonListener(JButton b) {
 		b.addActionListener(new ActionListener() {
 
+			@Override
 			@SuppressWarnings("unchecked")
 			public void actionPerformed(ActionEvent ev) {
 				if (ev.getActionCommand().equals(SOURCE_BUTTON)) {
+
 					if (folderScr.isSelected()) {
 						srcD = fileChooser(false, false);
 						scanforRDF(srcD);
@@ -189,7 +192,7 @@ public class AdminInterface extends JFrame {
 						src.setText("no Source Folder selected");
 					} else
 						src.setText(srcD);
-
+					LOGGER.info(srcD + " as source selected.");
 				} else if (ev.getActionCommand().equals(DESTINATION_BUTTON)) {
 
 					desF = fileChooser(true, true);
@@ -198,8 +201,8 @@ public class AdminInterface extends JFrame {
 					} else
 						des.setText(desF);
 
-				} else if (ev.getActionCommand().equals(
-						LOAD_NAMEDMODELLS_BUTTON)) {
+					LOGGER.info(des + " as source selected.");
+				} else if (ev.getActionCommand().equals(LOAD_NAMEDMODELLS_BUTTON)) {
 					if (desF == null) {
 						println("no Destination selected");
 						return;
@@ -207,8 +210,7 @@ public class AdminInterface extends JFrame {
 					jenaMain.setDestination(desF);
 					ArrayList<String> models = jenaMain.getModels();
 					if (models.isEmpty()) {
-						println("There are no models in the choosen Dataset\n"
-								+ desF);
+						println("There are no models in the choosen Dataset\n" + desF);
 						return;
 					}
 					for (String s : models) {
@@ -253,8 +255,7 @@ public class AdminInterface extends JFrame {
 							println(file + " \nsaved successfully.");
 						} else {
 							jenaMain.saveAllModel(file);
-							println("All Model were saved successfully in\n"
-									+ file);
+							println("All Model were saved successfully in\n" + file);
 						}
 					}
 					return;
@@ -357,8 +358,8 @@ public class AdminInterface extends JFrame {
 
 	/**
 	 * Is used to Choose the folder or a file, differenced by given Parameter.
-	 * returns the folder/file-path or null if nothing where chosen or the
-	 * Dialog was aborted
+	 * returns the folder/file-path or null if nothing where chosen or the Dialog
+	 * was aborted
 	 * 
 	 * @return
 	 */
@@ -433,8 +434,9 @@ public class AdminInterface extends JFrame {
 						file += ".xml";
 
 					}
-				}
 
+				}
+				LOGGER.info("Choosed " + file + " for export as XML");
 				return file;
 			} catch (Exception e) {
 
@@ -450,8 +452,10 @@ public class AdminInterface extends JFrame {
 	 * @param message
 	 */
 	private void errorMessage(final String message) {
+		LOGGER.error(message);
 		JOptionPane.showMessageDialog(this, message, "Error",
 				JOptionPane.ERROR_MESSAGE);
+
 	}
 
 	/**
@@ -509,8 +513,8 @@ public class AdminInterface extends JFrame {
 	}
 
 	/**
-	 * Creates the Filefilter for filechooser, in this case it filters for
-	 * .store types
+	 * Creates the Filefilter for filechooser, in this case it filters for .store
+	 * types
 	 * 
 	 * @author shk2
 	 * 

@@ -15,13 +15,7 @@
       <!-- GCS-Filmdatenbank -->
       <!--  <dataUrl>http://gcs.bbaw.de/filmdb/</dataUrl>
         ist eine Datenbank
-      -->
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/ProkopOnline.pdf</dataUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/anonyme_kirchengeschichte.pdf</dataUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/daniel.pdf</dataUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/ehrhard.pdf</dataUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/martyrium.pdf</dataUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/mirClem.pdf</dataUrl>
+      -->    
       
       <dataUrl>http://gcs.bbaw.de/filmdb/</dataUrl>
       <!-- XML-Texte -->
