@@ -14,6 +14,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+import org.bbaw.wsp.cms.collections.CollectionReader;
+
 import com.hp.hpl.jena.query.Dataset;
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QueryExecutionFactory;
@@ -37,7 +40,7 @@ public class JenaMainForAI {
 	private String storeLocation = "";
 	private String seperator;
 	private ArrayList<String> modelList = new ArrayList<String>();
-
+	private static Logger LOGGER = Logger.getLogger(CollectionReader.class);
 	private StorePathHandler pathHandler = new StorePathHandler();
 
 	/**
@@ -73,6 +76,7 @@ public class JenaMainForAI {
 						pathHandler.setPath(storeLocation);
 						getModels();
 						savePathFile();
+						LOGGER.info("New Dataset was created in " + storeLocation);
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -96,6 +100,7 @@ public class JenaMainForAI {
 					wspStore.createStore(pathHandler.getPath());
 
 				} catch (Exception e) {
+					LOGGER.error(e.getMessage());
 					System.out.println("Store already in use");
 					System.out.println(e.getMessage());
 				}
@@ -278,7 +283,7 @@ public class JenaMainForAI {
 
 						}
 					} catch (Exception e) {
-						System.out.println("Jena Iterator error, took index from file");
+						LOGGER.info("Jena Iterator error, took index from file");
 						modelList = pathHandler.getModelList();
 					}
 
