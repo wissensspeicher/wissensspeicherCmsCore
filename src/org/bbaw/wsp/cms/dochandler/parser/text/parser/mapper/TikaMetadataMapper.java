@@ -1,8 +1,9 @@
-package org.bbaw.wsp.cms.dochandler.parser.text.parser;
+package org.bbaw.wsp.cms.dochandler.parser.text.parser.mapper;
 
 import java.util.Date;
 
 import org.apache.tika.metadata.Metadata;
+import org.bbaw.wsp.cms.dochandler.parser.text.parser.DateMapper;
 import org.bbaw.wsp.cms.document.MetadataRecord;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
@@ -17,7 +18,7 @@ import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
  * 
  */
 
-public class MetadataMapper implements IMetadataFields {
+public class TikaMetadataMapper implements IMetadataFields {
   /**
    * Match general metadata, such as content-type, coding..
    * 

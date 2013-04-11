@@ -2,6 +2,7 @@ package org.bbaw.wsp.cms.dochandler.parser.text.parser;
 
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.parser.html.HtmlParser;
+import org.bbaw.wsp.cms.dochandler.parser.text.parser.mapper.TikaMetadataMapper;
 import org.bbaw.wsp.cms.document.MetadataRecord;
 
 /**
@@ -43,6 +44,6 @@ public class HtmlParserImpl extends ResourceParser {
    */
   protected void matchMetadata(final Metadata metadata, final MetadataRecord mdRecord) {
     super.matchMetadata(metadata, mdRecord);
-    MetadataMapper.matchDublinCore(metadata, mdRecord);
+    TikaMetadataMapper.matchDublinCore(metadata, mdRecord);
   }
 }

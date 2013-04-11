@@ -1,8 +1,11 @@
 package org.bbaw.wsp.cms.dochandler.parser.text.parser;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -12,6 +15,7 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.bbaw.wsp.cms.dochandler.parser.text.parser.mapper.EdocFieldValueMapper;
 import org.bbaw.wsp.cms.dochandler.parser.text.reader.IResourceReader;
 import org.bbaw.wsp.cms.dochandler.parser.text.reader.ResourceReaderImpl;
 import org.bbaw.wsp.cms.document.MetadataRecord;
@@ -19,10 +23,7 @@ import org.bbaw.wsp.cms.document.MetadataRecord;
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 
 /**
- * This tool class provides methods to fetch DC fields into a given
- * {@link MetadataRecord}. Last change: - Added fields documentType, isbn,
- * creationDate, publishingDate - 06.09.12: throws {@link ApplicationException}
- * now - Added methods to check if a file is an eDoc index.html file
+ * This tool class provides methods to fetch DC fields into a given {@link MetadataRecord}. Last change: - Added fields documentType, isbn, creationDate, publishingDate - 06.09.12: throws {@link ApplicationException} now - Added methods to check if a file is an eDoc index.html file
  * 
  * 24.01.2013: closed scanner
  * 
@@ -33,8 +34,7 @@ public class EdocIndexMetadataFetcherTool {
   private static IResourceReader reader = new ResourceReaderImpl();
 
   /**
-   * This class reads from an URL and fetches the DC tags directly (with String
-   * operations).
+   * This class reads from an URL and fetches the DC tags directly (with String operations).
    * 
    * It's designed for the eDoc server.
    * 
@@ -43,8 +43,7 @@ public class EdocIndexMetadataFetcherTool {
    * @param mdRecord
    *          - the {@link MetadataRecord} to fill
    * 
-   *          Last change: bugfixed the publishingDate 06.06.2012 several
-   *          changes
+   *          Last change: bugfixed the publishingDate 06.06.2012 several changes
    * 
    * @return the complete {@link MetadataRecord}
    * @throws ApplicationException
@@ -52,14 +51,19 @@ public class EdocIndexMetadataFetcherTool {
   public static MetadataRecord fetchHtmlDirectly(final String srcUrl, final MetadataRecord mdRecord) throws ApplicationException {
     InputStream in;
     try {
+      // initialize the field value mapper
+      final EdocFieldValueMapper eDocMapper = new EdocFieldValueMapper();
       in = reader.read(srcUrl);
-      final Scanner scanner = new Scanner(in);
+
+      final Scanner scanner = new Scanner(in, "UTF-16");
       scanner.useDelimiter("\n"); // delimiter via line break
       final StringBuilder builder = new StringBuilder();
       while (scanner.hasNext()) {
-        builder.append(scanner.next()); // concat to one String
+        builder.append(scanner.nextLine());
       }
       scanner.close();
+      in.close();
+
       final String line = builder.toString();
       final StringBuilder creatorBuilder = new StringBuilder(); // fix: more than one
       // creator
@@ -156,14 +160,18 @@ public class EdocIndexMetadataFetcherTool {
         } else if (key.contains("ISBN")) {
           mdRecord.setIsbn(value);
         } else if (key.contains("Institut")) {
-          mdRecord.setPublisher(value);
+          // use the mapper to set the publisher and collection
+          eDocMapper.mapField(EdocFieldValueMapper.EDOC_FIELD_INSTITUT, value, mdRecord);
         } else if (key.contains("Collection")) {
           final Pattern pColl = Pattern.compile("(?i)<a.*?>(.*?)</a>");
           final Matcher mColl = pColl.matcher(value);
           mColl.find();
           final String collections = mColl.group(1);
-
-          mdRecord.setCollectionNames(collections);
+          String collectionsExisting = collections;
+          if (mdRecord.getCollectionNames() != null) {
+            collectionsExisting += ";" + mdRecord.getCollectionNames();
+          }
+          mdRecord.setCollectionNames(collectionsExisting);
         } else if (key.contains("Kurzfassung auf Deutsch") && value != null && mdRecord.getDescription() != null) {
           mdRecord.setDescription(value);
         }
@@ -185,8 +193,7 @@ public class EdocIndexMetadataFetcherTool {
   /**
    * Check if the file is an index.html file to an eDoc.
    * 
-   * LastChange: Performance optimation - check URI before reading from input
-   * stream
+   * LastChange: Performance optimation - check URI before reading from input stream
    * 
    * @param uri
    *          - the URL as string to the index.html file.
@@ -241,8 +248,7 @@ public class EdocIndexMetadataFetcherTool {
 
           final URL indexUrl = new URL(newUrl);
           @SuppressWarnings("unused")
-          final
-          URLConnection conn = indexUrl.openConnection();
+          final URLConnection conn = indexUrl.openConnection();
 
           return true;
         }
@@ -256,12 +262,10 @@ public class EdocIndexMetadataFetcherTool {
   }
 
   /**
-   * Fetch the eDoc's id as it's stored on the file system. This id can be used
-   * for an OAI/ORE aggregation for example.
+   * Fetch the eDoc's id as it's stored on the file system. This id can be used for an OAI/ORE aggregation for example.
    * 
    * @param eDocUrl
-   *          {@link String} the URL to the eDoc. This will be parsed for the
-   *          id.
+   *          {@link String} the URL to the eDoc. This will be parsed for the id.
    * @return {@link Integer} the docID or -1 if the ID couldn'T be parsed.
    * @throws ApplicationException
    */
@@ -281,8 +285,7 @@ public class EdocIndexMetadataFetcherTool {
    * Fetch the edoc's year. This is used in the aggregation name for example.
    * 
    * @param realDocUrl
-   * @return the year as it's stored in edoc server or null if it couldn't be
-   *         parsed.
+   * @return the year as it's stored in edoc server or null if it couldn't be parsed.
    * @throws ApplicationException
    */
   public static String getDocYear(final String eDocUrl) throws ApplicationException {
