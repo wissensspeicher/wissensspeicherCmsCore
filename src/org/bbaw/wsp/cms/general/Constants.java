@@ -3,10 +3,20 @@ package org.bbaw.wsp.cms.general;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.security.SecureRandom;
+import java.security.cert.X509Certificate;
 import java.util.Properties;
+
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+
+import org.apache.log4j.Logger;
 
 public class Constants {
   private static Constants instance;
+  private static Logger LOGGER = Logger.getLogger(Constants.class);
   private String applicationDirectory;
   private String configDirectory;
   private Properties properties;
@@ -35,21 +45,43 @@ public class Constants {
     }
     configDirectory = configDir.getAbsolutePath();
     if (configDir.exists()) {
-      final File coreConstantsPropFile = new File(configDirectory + "/core/constants.properties");
+      File coreConstantsPropFile = new File(configDirectory + "/core/constants.properties");
       if (coreConstantsPropFile.exists()) {
         try {
-          final FileInputStream in = new FileInputStream(coreConstantsPropFile);
+          FileInputStream in = new FileInputStream(coreConstantsPropFile);
           properties = new Properties();
           properties.load(in);
-          System.out.println("CMS core property file: " + coreConstantsPropFile.getAbsolutePath() + " loaded");
+          LOGGER.info("CMS core property file: " + coreConstantsPropFile.getAbsolutePath() + " loaded");
         } catch (final IOException e) {
           e.printStackTrace();
         }
       } else {
-        System.out.println("CMS core property file: " + coreConstantsPropFile.getAbsolutePath() + " not found");
+        LOGGER.info("CMS core property file: " + coreConstantsPropFile.getAbsolutePath() + " not found");
       }
     } else {
-      System.out.println("Application configuration directory: " + configDirectory + " not found");
+      LOGGER.info("Application configuration directory: " + configDirectory + " not found");
+    }
+    // a little hack: this is done so that https urls could be fetched (e.g. by FileUtils.copyURLToFile) without certificate error
+    TrustManager[] trustAllCerts = new TrustManager[] {
+        new X509TrustManager() {
+          public X509Certificate[] getAcceptedIssuers() {
+            return null;
+          }
+          public void checkClientTrusted(X509Certificate[] certs, String authType) {
+            //No need to implement.
+          }
+          public void checkServerTrusted(X509Certificate[] certs, String authType) {
+            //No need to implement.
+          }
+        }
+    };
+    try {
+      // Install the all-trusting trust manager
+      SSLContext sc = SSLContext.getInstance("SSL");
+      sc.init(null, trustAllCerts, new SecureRandom());
+      HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+    } catch (Exception e) {
+      e.printStackTrace();
     }
   }
 
