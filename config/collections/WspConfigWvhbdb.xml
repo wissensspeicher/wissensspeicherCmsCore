@@ -8,7 +8,7 @@
       <dataUrl>http://telota.bbaw.de/wvh/db-start.jsf</dataUrl>
       <dataUrl>http://telota.bbaw.de:8085/exist/servlet/wvh/wvh-briefdb.xml</dataUrl>
     </url>
-  	<languages>ger</languages>
+  	<languages>ger, eng, fra, lat, spa</languages>
     <mainLanguage>ger</mainLanguage>
     <formats>
       <format>jpeg</format>
