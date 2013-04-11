@@ -4,14 +4,13 @@
     <id>ig</id>
     <name>Inscriptiones Graecae</name>
     <url>
-      <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/ig/de/Startseite/</webBaseUrl>
+      <webBaseUrl>http://telota.bbaw.de/ig</webBaseUrl>
       <!-- HTML-Texte -->
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/ig/de/Startseite/</dataUrl>
       <dataUrl>http://telota.bbaw.de/ig</dataUrl>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/ig/de/Startseite/</dataUrl>
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/ig/de/Ueberblick</dataUrl>
       <!-- XML-Texte -->
       <dataUrl type="eXistDir">http://telota.bbaw.de/exist/rest/db/ig/texts/</dataUrl>
-      <dataUrl type="eXistDir">http://telota.bbaw.de:8088/exist/servlet/db/ig</dataUrl>
       <exclude>pages</exclude>
       <exclude>scripts</exclude>
       <exclude>svg</exclude>
