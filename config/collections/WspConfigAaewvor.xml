@@ -12,8 +12,7 @@
     <formats>
       <format>html</format>
       <format>xml</format>
-      <format>jpeg</format>
-      <format>pdf</format>
+      <format>jpeg</format>     
     </formats> 
   </collection>
 </wsp>
