@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp>
+  <collection>
+    <id>sonnentaler</id>
+    <name>Sonnentaler</name>
+    <url>
+      <webBaseUrl>http://www.sonnentaler.net</webBaseUrl>
+      <dataUrl>http://www.sonnentaler.net</dataUrl>
+    </url>
+    <languages>ger,fra,ita,por,eng</languages>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>html</format>
+      <format>xml</format>
+      <format>jpeg</format>
+    </formats> 
+  </collection>
+</wsp>
+

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp>
+  <collection>
+    <id>archiv</id>
+    <name>Akademiearchiv</name>
+    <url>
+      <webBaseUrl>http://archiv.bbaw.de/archiv</webBaseUrl>
+      <dataUrl>http://archiv.bbaw.de/archiv</dataUrl>
+    </url>
+    <languages>ger,eng</languages>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>html</format>
+      <format>xml</format>
+    </formats> 
+  </collection>
+</wsp>
+

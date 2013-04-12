@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<wsp>
+  <collection>
+    <id>wieland</id>
+    <name>Wieland-Ausgabe</name>
+    <url>
+    	<webBaseUrl>http://wieland.bbaw.de/</webBaseUrl>
+      <dataUrl>http://wieland.bbaw.de/</dataUrl>
+    </url>
+    <languages>ger</languages>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>html</format>
+      <format>flash</format>
+      <format>php</format>
+    </formats>
+  </collection>
+</wsp>

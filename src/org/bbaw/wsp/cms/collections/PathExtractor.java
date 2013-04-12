@@ -15,6 +15,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.log4j.Logger;
 
 /**
  * eXist-specific Crawler
@@ -24,6 +25,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
  *
  */
 public class PathExtractor {
+  private static Logger LOGGER = Logger.getLogger(PathExtractor.class);
   private List<String> ressourceLoc;
   private String excludes;
 
@@ -51,7 +53,9 @@ public class PathExtractor {
     try {
       resp = client.execute(httpget);
     } catch (IOException e) {
+      LOGGER.error("Operation failed for: " + startUrl + ". " + e.getMessage());
       e.printStackTrace();
+      return;
     }
     HttpEntity entity = resp.getEntity();
     if (entity != null) {
@@ -104,7 +108,7 @@ public class PathExtractor {
             }
           }
           if (event == XMLStreamConstants.ATTRIBUTE) {
-            // System.out.println("localName : "+reader.getLocalName());
+            // nothing
           }
         }
       } catch (XMLStreamException e) {
@@ -147,12 +151,7 @@ public class PathExtractor {
    */
   public List<String> extractPathLocally(String startUrl) {
     List<String> pathList = new ArrayList<String>();
-    // home verzeichnis pfad über system variable
-    // String loc = System.getenv("HOME")+"/wsp/configs";
-    // out.println("hom variable + conf datei : "+loc);
     File f = new File(startUrl);
-    // out.println("readable : "+Boolean.toString(f.canRead()));
-    // out.println("readable : "+f.isDirectory());
     if (f.isDirectory()) {
       File[] filelist = f.listFiles();
       for (File file : filelist) {

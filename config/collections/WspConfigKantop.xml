@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<wsp>
+  <collection>
+    <id>kantop</id>
+    <name>Kant’s gesammelte Schriften: Opus Postumum</name>
+    <url>
+      <webBaseUrl>http://kant.bbaw.de/opus-postumum</webBaseUrl>
+      <dataUrl>http://kant.bbaw.de/opus-postumum</dataUrl>
+      <dataUrl>http://kant.bbaw.de/opus-postumum/faksimiles-chronologisch</dataUrl>
+      <dataUrl>http://kant.bbaw.de/opus-postumum/faksimiles-diplomatisch</dataUrl>
+    </url>
+    <languages>ger</languages>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>html</format>
+    </formats>
+    <update>false</update>
+  </collection>
+</wsp>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp>
+  <collection>
+    <id>globw</id>
+    <name>Globaler Wandel- Regionale Entwicklung</name>
+    <url>
+    	<webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/Globaler%20Wandel/de/Startseite</webBaseUrl>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/Globaler%20Wandel/de/Startseite</dataUrl>
+      <dataUrl>http://edoc.bbaw.de/volltexte/2011/2083/</dataUrl>
+    </url>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>html</format>
+      <format>pdf</format>
+    </formats> 
+  </collection>
+</wsp>
+

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<wsp>
+  <collection>
+    <id>cil</id>
+    <name>Corpus Inscriptionum Latinarum</name>
+    <url>
+    	<webBaseUrl>http://cil.bbaw.de/</webBaseUrl>
+      <dataUrl>http://cil.bbaw.de/</dataUrl>
+    </url>
+    <languages>ger, lat</languages>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>html</format>
+      <format>php</format>
+    </formats>
+  </collection>
+</wsp>

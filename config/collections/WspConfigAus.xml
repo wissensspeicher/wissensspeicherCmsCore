@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp>
+  <collection>
+    <id>aus</id>
+    <name>Akademie und Schule</name>
+    <url>
+      <webBaseUrl>http://www.bbaw.de/AuS/</webBaseUrl>
+      <dataUrl>http://www.bbaw.de/AuS/</dataUrl>
+    </url>
+    <languages>ger,fra,ita,por,eng</languages>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>html</format>
+      <format>xml</format>
+      <format>jpeg</format>
+    </formats> 
+  </collection>
+</wsp>
+

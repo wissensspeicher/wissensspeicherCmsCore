@@ -1,17 +1,18 @@
 <?xml version="1.0"?>
 <wsp>
   <collection>
-    <id>CMGH</id>
-    <name>Hippokrates- und  Galenbibliographie</name>
+    <id>cmgh</id>
+    <name>Corpus Medicorum Graecorum / Latinorum: Hippokrates- und  Galenbibliographie</name>
     <url>
+      <webBaseUrl>http://cmg.bbaw.de/online-publikationen/hippokrates-und-galenbibliographie-fichtner</webBaseUrl>
+      <dataUrl>http://cmg.bbaw.de/online-publikationen/hippokrates-und-galenbibliographie-fichtner</dataUrl>
       <dataUrl>http://cmg.bbaw.de/online-publikationen/hippokrates_2013_02.pdf</dataUrl>
       <dataUrl>http://cmg.bbaw.de/online-publikationen/Galen-Bibliographie_2012_08_28.pdf</dataUrl>
     </url>
     <languages>ger, lat</languages>
     <mainLanguage>ger</mainLanguage>
     <formats>
-      <format>PDF</format>
+      <format>pdf</format>
     </formats>
-    
   </collection>
 </wsp>

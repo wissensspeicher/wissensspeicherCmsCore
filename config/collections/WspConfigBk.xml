@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp>
+  <collection>
+    <id>bk</id>
+    <name>Berliner Klassik</name>
+    <url>
+      <webBaseUrl>http://www.berliner-klassik.de/</webBaseUrl>
+      <dataUrl>http://www.berliner-klassik.de/</dataUrl>
+      <!-- Berliner Klassik Datenbanken -->
+      <dataUrl>http://berlinerklassik.bbaw.de/BK</dataUrl>
+    </url>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>html</format>
+      <format>xml</format>
+      <format>jpeg</format>
+    </formats> 
+  </collection>
+</wsp>
+

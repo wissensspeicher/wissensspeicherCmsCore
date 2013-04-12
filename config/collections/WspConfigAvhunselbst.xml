@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<wsp>
+  <collection>
+    <id>avhunselbst</id>
+    <name>Alexander von Humboldt Forschungsstelle: Die unselbständigen Schriften Alexander von Humboldts</name>
+    <url>
+      <webBaseUrl>http://telota.bbaw.de/avh/uns/</webBaseUrl>
+      <dataUrl>http://telota.bbaw.de/avh/uns/</dataUrl>
+    </url>
+    <languages>ger,lat,fra,eng</languages>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>html</format>
+    </formats>
+    <update>false</update>
+  </collection>
+</wsp>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp>
+  <collection>
+    <id>cmgpo</id>
+    <name>Corpus Medicorum Graecorum / Latinorum: Probeedition online</name>
+    <url>
+      <webBaseUrl>http://cmg.bbaw.de/online-publikationen/probeedition-online</webBaseUrl>
+      <dataUrl>http://cmg.bbaw.de/online-publikationen/probeedition-online</dataUrl>
+    </url>
+    <languages>ger</languages>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>html</format>
+      <format>xml</format>
+      <format>pdf</format>
+      <format>png</format>
+    </formats> 
+  </collection>
+</wsp>
+

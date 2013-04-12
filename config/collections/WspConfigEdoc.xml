@@ -2,7 +2,7 @@
 <wsp>
   <collection>     
     <id>edoc</id>
-    <name>Elektronischer Dokumentenserver</name>
+    <name>Akademiebibliothek: Elektronischer Dokumentenserver (EDOC)</name>
     <url>
       <webBaseUrl>http://edoc.bbaw.de</webBaseUrl>
       <dataUrlPrefix>/home/joey/dataWsp/documentsExtern/edoc</dataUrlPrefix>

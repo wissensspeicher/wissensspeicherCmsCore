@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp>
+  <collection>
+    <id>aug</id>
+    <name>Antike und Gegenwart</name>
+    <url>
+    	<webBaseUrl>http://antikeundgegenwart.bbaw.de</webBaseUrl>
+      <dataUrl>http://antikeundgegenwart.bbaw.de</dataUrl>
+    </url>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>html</format>
+    </formats> 
+  </collection>
+</wsp>
+

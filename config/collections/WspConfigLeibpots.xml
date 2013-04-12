@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<wsp>
+  <collection>
+    <id>leibpots</id>
+    <name>Leibniz-Edition Potsdam</name>
+    <url>
+    	<webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/de/Startseite</webBaseUrl>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/de/Startseite</dataUrl>
+      <dataUrl>http://www.bbaw.de/forschung/leibniz_potsdam</dataUrl>
+      <dataUrl>http://leibnizviii.bbaw.de/</dataUrl>
+    </url>
+    <languages>ger,lat,eng</languages>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>html</format>
+      <format>pdf</format>
+    </formats>
+  </collection>
+</wsp>

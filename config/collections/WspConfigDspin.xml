@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp>
+  <collection>
+    <id>dspin</id>
+    <name>Deutsche Sprachressourcen-Infrastruktur</name>
+    <url>
+    	<webBaseUrl>http://www.bbaw.de/forschung/deutsche-sprachressourcen-infrastruktur</webBaseUrl>
+    	<dataUrl>http://www.bbaw.de/forschung/deutsche-sprachressourcen-infrastruktur</dataUrl>
+    </url>
+    <mainLanguage>ger</mainLanguage>
+  </collection>
+</wsp>
+

@@ -8,8 +8,11 @@
       <webBaseUrl>http://www.jdg-online.de</webBaseUrl>
       <!-- Homepage -->
       <dataUrl>http://www.jdg-online.de</dataUrl>
-      <!-- XML-Texte -->
-      <dataUrl type="eXistDir">http://telota.bbaw.de/exist/servlet/db/JDG/</dataUrl>
+      
+      <!-- Jahresberichte für deutsche Geschichte -->
+      <dataUrl>http://jdgdb.bbaw.de/cgi-bin/jdg?lang=de</dataUrl>
+      
+      
       <exclude>scripts</exclude>
     </url>
     <languages>ger</languages>
@@ -17,9 +20,6 @@
     <formats>
       <format>xml</format>
     </formats>
-    <fields>
-      <field>s</field>
-    </fields>
     <update>false</update>
   </collection>
 </wsp>

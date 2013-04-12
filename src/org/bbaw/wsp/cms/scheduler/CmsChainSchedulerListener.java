@@ -1,6 +1,6 @@
 package org.bbaw.wsp.cms.scheduler;
 
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
 
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
@@ -23,7 +23,7 @@ public class CmsChainSchedulerListener implements JobListener {
 
   public void jobExecutionVetoed(JobExecutionContext inContext) {
     String message = "Quartz: JobChainingListener: Job execution was vetoed.";
-    LOGGER.fine(message);
+    LOGGER.debug(message);
   }
 
   public void jobWasExecuted(JobExecutionContext inContext, JobExecutionException inException) {
@@ -37,7 +37,7 @@ public class CmsChainSchedulerListener implements JobListener {
       if (docOperation != null) {
         docOperation.setErrorMessage(e.getMessage());
       }
-      LOGGER.severe(e.getMessage());
+      LOGGER.error(e.getMessage());
     }
   }
 

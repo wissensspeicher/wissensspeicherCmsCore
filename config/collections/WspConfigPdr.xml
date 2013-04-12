@@ -1,15 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <wsp>
   <collection>
-    <id>PDR</id>
+    <id>pdr</id>
     <name>Personendaten-Repositorium</name>
     <url>
+      <!-- Archiv-Editior -->
+      <dataUrl>http://pdr.bbaw.de/downloads/ae</dataUrl>
+
+      <!-- Handbuch -->
       <dataUrl>http://pdr.bbaw.de/software/downloads/ae/handbuch/ae_manual_de.pdf</dataUrl>
+
+      <!-- PDR Interface Tools (PIT) -->
+      <dataUrl>http://pdrdev.bbaw.de/pit/2-1/</dataUrl>
+      
+      <!-- Projektvorstellung / Project Description -->
+      <dataUrl>http://pdr.bbaw.de/downloads/pdr_projektvorstellung_deutsch.pdf/at_download/file</dataUrl>
+      
+      <!-- Zur Problematik der Strukturierung  und Abbildung von Personendaten in digitalen Systemen -->
+      <dataUrl>http://pdr.bbaw.de/downloads/vortrag_walkowski_2009-09-22.pdf/at_download/file</dataUrl>
+      
+      <!-- Datenrepositorium für historische Personennamen aus dem 19. Jh. -->
+      <dataUrl>http://pdr.bbaw.de/downloads/praesentation_walkowski_2009-09-22.pdf/at_download/file</dataUrl>
+      
+      <!-- Kooperationsmöglichkeiten mit dem Personendaten-Repositorium  der BBAW -->
+      <dataUrl>http://pdr.bbaw.de/downloads/vortrag_roeder_2009-09-23.pdf/at_download/file</dataUrl>
+      
+      <!-- Das Konzept einer polysemischen Datenbank und seine Konkretisierung im Personendaten-Repositorium der BBAW -->
+      <dataUrl>http://computerphilologie.tu-darmstadt.de/jg09/walkowski.html</dataUrl>
+      
+      <!-- Datenarchäologie und Datenaufbereitung -->
+      <dataUrl>http://digiversity.net/2010/datenarchaeologie/</dataUrl>
+      
+      <!-- DFG-Projekt „Personennamen-Repositorium“ -->
+      <dataUrl>http://digiversity.net/2009/personendaten-repositorium/</dataUrl>
+      
+      <!-- Tagungsbericht: „Die Universität Kiel und ihre Professorinnen und Professorenoder: Wozu der Kieler Professorenkatalog?“ -->
+      <dataUrl>http://digiversity.net/2012/04/</dataUrl>
+      
+                  
     </url>
-    <languages>ger,itl</languages>
+    <languages>ger,itl,eng</languages>
     <mainLanguage>ger</mainLanguage>
     <formats>
-      <format>PDF</format>
+      <format>pdf</format>
+      <format>software</format>
+      <format>html</format>
     </formats> 
   </collection>
 </wsp>

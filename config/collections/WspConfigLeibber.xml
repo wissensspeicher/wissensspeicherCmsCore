@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<wsp>
+  <collection>
+    <id>leibber</id>
+    <name>Leibniz-Edition Berlin</name>
+    <url>
+    	<webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_berlin/de/Startseite</webBaseUrl>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_berlin/de/Startseite</dataUrl>
+    </url>
+    <languages>ger,lat,eng</languages>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>html</format>
+      <format>pdf</format>
+    </formats>
+  </collection>
+</wsp>

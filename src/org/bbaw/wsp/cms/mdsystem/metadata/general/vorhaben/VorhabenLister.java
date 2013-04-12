@@ -253,9 +253,14 @@ public class VorhabenLister {
           scanningProjekt = true;
           final String projektName = line.trim().substring(1, line.trim().length());
           System.out.println("\n\n+++++++++++\n\n" + projektName + "\n\n+++++++++++\n\n");
-          aktProjekt.setName(projektName.replace("Title: ", ""));
+          if (projectDoesntExist(vorhaben, projektName.replace("Title: ", ""))) {
+            aktProjekt.setName(projektName.replace("Title: ", ""));
+            vorhaben.addProjekt(aktProjekt);
+          }
         } else { // end of actual project
-          vorhaben.addProjekt(aktProjekt);
+          if (projectDoesntExist(vorhaben, aktProjekt.getName())) {
+            vorhaben.addProjekt(aktProjekt);
+          }
           aktProjekt = new Projekt();
           final String projektName = line.trim().substring(1, line.trim().length());
           aktProjekt.setName(projektName.replace("Title: ", ""));
@@ -272,6 +277,23 @@ public class VorhabenLister {
       }
     }
     return -1;
+  }
+
+  /**
+   * Check if a project with the specified name exists.
+   * 
+   * @param vorhaben
+   * @param pName
+   *          the project's name
+   * @return true if the project DOESN'T exist.
+   */
+  private boolean projectDoesntExist(final Vorhaben vorhaben, final String pName) {
+    for (final ARecordEntry p : vorhaben.getProjekte()) {
+      if (p.getName().equals(pName)) {
+        return false;
+      }
+    }
+    return true;
   }
 
   private void fetchFields(final Projekt aktProjekt, final String parsedText, final int lineNumber) {
@@ -293,8 +315,12 @@ public class VorhabenLister {
         String value = line.substring(line.indexOf(":") + 1, line.length());
         // value.replace(",", ";"); // neccessary -> , only for CSV seperations!
 
-        if (aktProjekt.getFields().containsKey(key)) {
-          value = aktProjekt.getFields().get(key) + ", " + value;
+        if (aktProjekt.getFields().containsKey(key)) { // concat values
+          if (!aktProjekt.getFields().get(key).contains(value)) { // don't
+                                                                  // repeat
+                                                                  // values
+            value = aktProjekt.getFields().get(key) + ", " + value;
+          }
         }
 
         aktProjekt.addField(key, value);

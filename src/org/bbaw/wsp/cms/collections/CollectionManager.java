@@ -9,7 +9,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -125,12 +124,11 @@ public class CollectionManager {
       String docId = mdRecord.getDocId();
       String collectionId = mdRecord.getCollectionNames();
       counter++;
-      Date now = new Date();
-      LOGGER.info(counter + ". " + now.toString() + " Collection: " + collectionId + ": Create: " + docId);
+      LOGGER.info(counter + ". " + "Collection: " + collectionId + ": Create resource: " + docUrl + " (" + docId + ")");
       CmsDocOperation docOp = new CmsDocOperation("create", docUrl, null, docId);
       docOp.setMdRecord(mdRecord);
       ArrayList<String> fields = collection.getFields();
-      if (fields != null) {
+      if (fields != null && ! fields.isEmpty()) {
         String[] fieldsArray = new String[fields.size()];
         for (int j=0;j<fields.size();j++) {
           String f = fields.get(j);
@@ -217,12 +215,19 @@ public class CollectionManager {
           if (uriPath.startsWith(prefix)) {
             uriPath = uriPath.substring(prefix.length());
           }
-          if (! uriPath.matches(".*\\.[^/-]+")) {  // no file with extension (such as a.xml or b.pdf) but a directory: then a special default file-name is used in docId
-            HttpURLConnection connection = (HttpURLConnection) uri.openConnection();
-            connection.setConnectTimeout(5000);
-            connection.setReadTimeout(5000);
-            connection.connect();
-            String mimeType = connection.getContentType();
+          // no file with extension (such as a.xml or b.pdf) but a directory: then a special default file-name is used in docId
+          if (! uriPath.toLowerCase().matches(".*\\.csv$|.*\\.gif$|.*\\.jpg$|.*\\.jpeg$|.*\\.html$|.*\\.htm$|.*\\.log$|.*\\.mp3$|.*\\.pdf$|.*\\.txt$|.*\\.xml$")) {
+            String mimeType = null;
+            try {
+              HttpURLConnection connection = (HttpURLConnection) uri.openConnection();
+              connection.setConnectTimeout(5000);
+              connection.setReadTimeout(5000);
+              connection.connect();
+              mimeType = connection.getContentType();
+            } catch (IOException e) {
+              LOGGER.error("get mime type failed for: " + docUrl);
+              e.printStackTrace();
+            }
             String fileExtension = "html";
             if (mimeType != null && mimeType.contains("html"))
               fileExtension = "html";
@@ -251,8 +256,6 @@ public class CollectionManager {
         }
       }
     } catch (MalformedURLException e) {
-      throw new ApplicationException(e);
-    } catch (IOException e) {
       throw new ApplicationException(e);
     }
     return mdRecords;

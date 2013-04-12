@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<wsp>
+  <collection>
+    <id>jpor</id>
+    <name>Jean Paul Edition: Online-Register des Jean Paul Briefwechsels</name>
+    <url>
+    	<webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/jean_paul/de/Startseite</webBaseUrl>
+      <dataUrl>http://telota.bbaw.de/jeanpaul/</dataUrl>
+    </url>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>html</format>
+      <format>pdf</format>
+      <format>jpeg</format>
+    </formats>
+  </collection>
+</wsp>

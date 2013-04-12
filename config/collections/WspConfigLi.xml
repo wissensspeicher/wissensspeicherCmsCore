@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <wsp>
   <collection>
-    <id>LI</id>
+    <id>li</id>
     <name>LandInnovation</name>
     <url>
+      <webBaseUrl>http://landinnovation.bbaw.de</webBaseUrl>
+      <dataUrl>http://landinnovation.bbaw.de</dataUrl>
+      <!-- Arbeitsberichte -->
       <dataUrl>http://landinnovation.bbaw.de/resolveuid/20e4cd72a640633ad2b873b9d5655787</dataUrl>
       <dataUrl>http://landinnovation.bbaw.de/resolveuid/2a99c69407ece97d986986b73d94ca97</dataUrl>
       <dataUrl>http://landinnovation.bbaw.de/resolveuid/0624b30d2da99c8a296e43236aeeb973</dataUrl>
@@ -12,7 +15,7 @@
     </url>
     <mainLanguage>ger</mainLanguage>
     <formats>
-      <format>PDF</format>
+      <format>pdf</format>
     </formats> 
   </collection>
 </wsp>

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<wsp>
+  <collection>
+    <id>avh</id>
+    <name>Alexander von Humboldt Forschungsstelle</name>
+    <url>
+      <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/avh/de/Startseite</webBaseUrl>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/avh/de/Startseite</dataUrl>
+    </url>
+    <languages>ger,lat,fra,eng</languages>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>html</format>
+    </formats>
+    <update>false</update>
+  </collection>
+</wsp>

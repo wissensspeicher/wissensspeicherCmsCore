@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<wsp>
+  <collection>
+    <id>pd</id>
+    <name>Psychologisches Denken</name>
+    <url>
+      <webBaseUrl>http://psychologischesdenken.bbaw.de</webBaseUrl>
+      <dataUrl>http://psychologischesdenken.bbaw.de</dataUrl>
+    </url>
+    <languages>ger</languages>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>html</format>
+    </formats>
+  </collection>
+</wsp>

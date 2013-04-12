@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp>
+  <collection>
+    <id>dariah</id>
+    <name>Digital Research Infrastructure for the Arts and Humanities</name>
+    <url>
+    	<webBaseUrl>http://www.bbaw.de/telota/forschung/dariahde</webBaseUrl>
+    	<dataUrl>http://www.bbaw.de/telota/forschung/dariahde</dataUrl>
+    	
+    	  	
+    	            
+      </url>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+     <format>html</format>
+     <format>Software</format>
+    </formats> 
+  </collection>
+</wsp>
+

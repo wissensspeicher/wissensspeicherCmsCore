@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<wsp>
+  <collection>
+    <id>dta</id>
+    <name>Deutsches Textarchiv</name>
+    <url>
+      <webBaseUrl>http://www.deutschestextarchiv.de/</webBaseUrl>
+      <!-- Homepage -->
+      <dataUrl>http://www.deutschestextarchiv.de/</dataUrl>
+      
+      <!-- Software, alle unter der URL zu finden -->
+      <dataUrl>http://www.deutschestextarchiv.de/documentation/resources/</dataUrl>
+    </url>
+    <mainLanguage>ger</mainLanguage>
+      <format>html</format>
+      <format>jpeg</format>
+      <format>Software</format>
+  </collection>
+</wsp>

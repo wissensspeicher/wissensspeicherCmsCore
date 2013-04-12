@@ -18,6 +18,8 @@ Beschreibung der Pflicht-Felder
       eXistDir (eXist Daten-Verzeichnis: es werden rekursiv alle XML-Dateien rekursiv unterhalb dieses Verzeichnisses betrachtet)
 <mainLanguage> : Hauptsprache der Resssourcen des Projekts (3-stelliges Laenderkuerzel nach ISO 639)
 
+Falls eine eXistDir angegeben wurde sollte folgendes Feld ausgefüllt werden 
+<fields> : Liste der XML-Element Namen, die indexiert werden sollen
 
 Beispiele:
 WspConfigIg.xml:
@@ -55,6 +57,28 @@ WspConfigMega.xml:
       <dataUrl>http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B013-00_ETX.xml</dataUrl>
     </url>
     <mainLanguage>ger</mainLanguage>
+  </collection>
+</wsp>
+
+WspConfigMes:
+<wsp>
+  <collection>
+    <id>mes</id>
+    <name>Magazin fur Erfahrungsseelenkunde</name>
+    <url>
+      <webBaseUrl>http://telota.bbaw.de/mze</webBaseUrl>
+      <dataUrl>http://telota.bbaw.de/mze/index.html</dataUrl>
+      <dataUrl type="eXistDir">http://telota.bbaw.de:8085/exist/rest/db/mes/</dataUrl>
+    </url>
+    <languages>ger, ell</languages>
+    <mainLanguage>ger</mainLanguage>
+    <fields>
+      <field>persName</field>
+      <field>placeName</field>
+      <field>p</field>
+      <field>s</field>
+      <field>head</field>
+    </fields>
   </collection>
 </wsp>
 -->

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<wsp>
+  <collection>
+    <id>kantddk</id>
+    <name>Kant’s gesammelte Schriften: Die drei Kritiken</name>
+    <url>
+      <webBaseUrl>http://kant.bbaw.de/die-drei-kritiken</webBaseUrl>
+      <dataUrl>http://kant.bbaw.de/die-drei-kritiken</dataUrl>
+    </url>
+    <languages>ger</languages>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>html</format>
+    </formats>
+    <update>false</update>
+  </collection>
+</wsp>

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<wsp>
+  <collection>
+    <id>leibedition</id>
+    <name>Leibniz-Edition</name>
+    <url>
+    	<webBaseUrl>http://www.leibniz-edition.de</webBaseUrl>
+      <dataUrl>http://www.leibniz-edition.de</dataUrl>
+    </url>
+    <languages>ger,lat,eng</languages>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>html</format>
+      <format>pdf</format>
+    </formats>
+  </collection>
+</wsp>

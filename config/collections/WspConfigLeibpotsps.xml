@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<wsp>
+  <collection>
+    <id>leibpotsps</id>
+    <name>Leibniz-Edition Potsdam: Personen- und Sachindex der Ausgaben von Erdmann (Opera philosophica) und Grua (Textes inédits)</name>
+    <url>
+    	<webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/de/Startseite</webBaseUrl>
+    	<!-- ToDo Access DB -->
+    </url>
+    <languages>ger</languages>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>html</format>
+    </formats>
+  </collection>
+</wsp>

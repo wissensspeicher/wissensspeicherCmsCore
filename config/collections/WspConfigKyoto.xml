@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<wsp>
+  <collection>     
+    <id>kyoto</id>
+    <name>Knowledge Yielding Ontologies for Transition-based Organization (KYOTO)</name>
+    <url>
+      <webBaseUrl>http://www.kyoto-project.eu/</webBaseUrl>
+      <dataUrl>http://www.kyoto-project.eu/</dataUrl>
+     
+     
+    </url>  
+    <languages>ger,eng,zho,eus,ita,jpn,nld</languages>
+    <mainLanguage>engx</mainLanguage>
+    <formats>
+    <format>xml</format>
+      <format>Html</format>
+      <format>Jpeg</format>
+      <format>Software</format>
+    </formats>
+  </collection>    
+</wsp>

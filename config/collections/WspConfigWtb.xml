@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp>
+  <collection>
+    <id>wtb</id>
+    <name>Workshops/Tagungen/Berichte</name>
+    <url>
+      <webBaseUrl>http://elitenintegration.bbaw.de/veranstaltungen#Bericht1</webBaseUrl>
+      <dataUrl>http://elitenintegration.bbaw.de/veranstaltungen#Bericht1</dataUrl>
+    </url>
+    <languages>ger</languages>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>html</format>      
+      <format>jpeg</format>    
+    </formats> 
+  </collection>
+</wsp>

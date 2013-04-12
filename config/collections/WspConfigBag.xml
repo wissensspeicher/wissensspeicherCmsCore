@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<wsp>
+  <collection>
+    <id>bag</id>
+    <name>Berliner Akademiegeschichte im 19. und 20. Jahrhundert</name>
+    <url>
+      <webBaseUrl>http://akademiegeschichte.bbaw.de/</webBaseUrl>
+      <dataUrl>http://akademiegeschichte.bbaw.de/</dataUrl>
+      
+    </url>
+    <languages>ger</languages>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>html</format>
+    </formats>
+  </collection>
+</wsp>

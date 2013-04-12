@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <wsp>
   <collection>
-    <id>PDP</id>
+    <id>pdp</id>
     <name>Die Protokolle des Preußischen Staatsministeriums 1817-1934/38</name>
     <url>
+      <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/preussen_protokolle/de/Startseite</webBaseUrl>
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/preussen_protokolle/bilder/Band_1.pdf</dataUrl>
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/preussen_protokolle/bilder/Band_2.pdf</dataUrl>
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/preussen_protokolle/bilder/Band_3.pdf</dataUrl>
@@ -24,7 +25,7 @@
     </url>
     <mainLanguage>ger</mainLanguage>
     <formats>
-      <format>PDF</format>
+      <format>pdf</format>
     </formats> 
   </collection>
 </wsp>
