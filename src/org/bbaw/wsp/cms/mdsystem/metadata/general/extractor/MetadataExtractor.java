@@ -1,9 +1,15 @@
 package org.bbaw.wsp.cms.mdsystem.metadata.general.extractor;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.xml.transform.sax.SAXSource;
 import javax.xml.xpath.XPath;
 
 import net.sf.saxon.om.ValueRepresentation;
@@ -18,7 +24,10 @@ import net.sf.saxon.s9api.XdmNode;
 import net.sf.saxon.s9api.XdmValue;
 import net.sf.saxon.trans.XPathException;
 
+import org.apache.log4j.Logger;
 import org.bbaw.wsp.cms.mdsystem.metadata.general.MetadataParserHelper;
+import org.bbaw.wsp.cms.mdsystem.metadata.general.extractor.factory.MetadataExtractorFactory;
+import org.xml.sax.InputSource;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 
@@ -48,12 +57,9 @@ public abstract class MetadataExtractor {
 	 *             if the uri is null, empty or doesn't refer to an existing
 	 *             file.
 	 */
-	public MetadataExtractor(final String uri,
-			final HashMap<String, String> namespaces)
-			throws ApplicationException {
+	public MetadataExtractor(final String uri, final HashMap<String, String> namespaces) throws ApplicationException {
 		if (uri == null || uri.isEmpty()) {
-			throw new IllegalArgumentException(
-					"The value for the parameter uri in the constructor of ModsMetadataParser mustn't be empty.");
+			throw new IllegalArgumentException("The value for the parameter uri in the constructor of ModsMetadataParser mustn't be empty.");
 		}
 		this.uri = uri;
 
@@ -62,15 +68,15 @@ public abstract class MetadataExtractor {
 		xPathCompiler = processor.newXPathCompiler();
 		// declare each namespace
 		for (String namespace : namespaces.keySet()) {
-			xPathCompiler
-					.declareNamespace(namespace, namespaces.get(namespace));
+			xPathCompiler.declareNamespace(namespace, namespaces.get(namespace));
 		}
 		DocumentBuilder builder = processor.newDocumentBuilder();
 		try {
+	    Logger logger = Logger.getLogger(MetadataExtractor.class);
+	    logger.info("MetadataExtractor parses: "+uri);
 			contextItem = builder.build(new File(uri));
 		} catch (SaxonApiException e) {
-			throw new ApplicationException(
-					"Error while trying to access file using Saxon: " + uri);
+			throw new ApplicationException("Error while trying to access file using Saxon: " + uri + "stacktrace: "+e);
 		}
 	}
 

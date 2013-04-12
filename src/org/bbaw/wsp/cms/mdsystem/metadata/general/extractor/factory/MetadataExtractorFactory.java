@@ -2,6 +2,7 @@ package org.bbaw.wsp.cms.mdsystem.metadata.general.extractor.factory;
 
 import java.util.HashMap;
 
+import org.apache.log4j.Logger;
 import org.bbaw.wsp.cms.mdsystem.metadata.general.extractor.MetadataExtractor;
 import org.bbaw.wsp.cms.mdsystem.metadata.general.extractor.ModsMetadataExtractor;
 import org.bbaw.wsp.cms.mdsystem.metadata.general.extractor.RdfMetadataExtractor;
@@ -25,8 +26,7 @@ public class MetadataExtractorFactory {
 	 * @throws ApplicationException
 	 *             if the resource to be parsed is not validated by Saxon.
 	 */
-	public static RdfMetadataExtractor newRdfMetadataParser(final String uri)
-			throws ApplicationException {
+	public static RdfMetadataExtractor newRdfMetadataParser(final String uri) throws ApplicationException {
 		final HashMap<String, String> namespaces = new HashMap<String, String>();
 		namespaces.put("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
 		namespaces.put("", "http://wsp.normdata.rdf#");

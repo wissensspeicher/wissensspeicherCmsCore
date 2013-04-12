@@ -1,10 +1,14 @@
 package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler;
 
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
+import org.apache.log4j.Logger;
 import org.bbaw.wsp.cms.mdsystem.metadata.general.extractor.RdfMetadataExtractor;
 import org.bbaw.wsp.cms.mdsystem.metadata.general.extractor.factory.MetadataExtractorFactory;
-import org.bbaw.wsp.cms.mdsystem.util.MdystemConfigReader;
+import org.bbaw.wsp.cms.mdsystem.util.MdSystemConfigReader;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 
@@ -18,18 +22,29 @@ import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 public class ConceptIdentifier {
 
 	// Datengrundlage: wsp.normdata.rdf
-	final String path = new String(MdystemConfigReader.getInstance().getConfig().getNormdataPath());
+//	final String path = new String(MdSystemConfigReader.getInstance().getConfig().getNormdataPath());
 	ArrayList<ConceptQueryResult> results;
 
+	/**
+	 * 
+	 * @param query
+	 * @param methode
+	 */
 	public void initIdentifying(String query, int methode) {
-		// ConceptIdentifier identifier = new ConceptIdentifier();
-		this.results = new ArrayList<ConceptQueryResult>();
-		this.results = scanForElement(path, query, methode);
+    Logger logger = Logger.getLogger(ConceptIdentifier.class);
+    logger.info("initIdentifying");
+	  String path = "";
+	  
+    MdSystemConfigReader confReader = MdSystemConfigReader.getInstance();
+    String normdataFile = confReader.getNormDataFilePath();
+    
+    logger.info("urlToConfFile : "+normdataFile);
+    this.results = new ArrayList<ConceptQueryResult>();
+    this.results = scanForElement(normdataFile, query, methode);
 
-		for (ConceptQueryResult target : this.results) {
-			System.out.println(target);
-		}
-
+//		for (ConceptQueryResult target : this.results) {
+//			System.out.println(target);
+//		}
 	}
 
 	@SuppressWarnings("unused")
@@ -48,15 +63,15 @@ public class ConceptIdentifier {
 	 * @return
 	 */
 	private ArrayList<ConceptQueryResult> scanForElement(final String file, final String element, int methode) {
+    Logger logger = Logger.getLogger(ConceptIdentifier.class);
 		try {
 			RdfMetadataExtractor extractor = MetadataExtractorFactory.newRdfMetadataParser(file);
 			extractor.searchElements(element, methode);
 			ArrayList<ConceptQueryResult> resultList = extractor.getResultList();
 
-			// System.out.println("Identified document: " + identifier);
 			return resultList;
 		} catch (ApplicationException e) {
-			System.out.println("Couldn't identify document: " + file + " - "+ e.getMessage());
+			logger.info("Couldn't identify document: " + file + " - "+ e.getMessage());
 			return null;
 		}
 	}

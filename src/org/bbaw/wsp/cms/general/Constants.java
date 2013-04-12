@@ -104,4 +104,13 @@ public class Constants {
   public String getMdsystemConfFile() {
     return getMdsystemConfDir() + "/mdsystem.xml";
   }
+  
+  
+   /**
+   * @return the path to the mdsystem.xml
+   * @return
+   */
+  public String getMdsystemNormdataFile() {
+    return getMdsystemConfDir() + "/export_normdata_clean_130112.rdf";
+  }
 }

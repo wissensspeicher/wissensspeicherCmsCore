@@ -51,31 +51,37 @@ public class MdSystemQueryHandler {
     // sparqlAdapter = new SparqlAdapter(store.getDataset());
   }
 
-  public String queryConcepts(String query){
-    ArrayList<ConceptQueryResult> concepts = getConcept(query);
-    return createJson(query, concepts, true);
-  }
+//  public String queryConcepts(String query){
+//    ArrayList<ConceptQueryResult> concepts = getConcept(query);
+//    return createJson(query, concepts, true);
+//  }
   
+//  /**
+//   * toDo: move to servlet
+//   * @param query
+//   */
+//  public void receiveQueryFromGui(final String query) {
+//    final ArrayList<ConceptQueryResult> resList = getConcept(query);
+//    if (!resList.isEmpty()) {
+//      // wenn vorhaben identifiziert wurde
+//      try {
+//        sparqlAdapter.buildSparqlQuery(new URL(resList.get(0).toString()), resList.get(1).toString());
+//      } catch (final MalformedURLException e) {
+//        e.printStackTrace();
+//      }
+//    } else {
+//      sparqlAdapter.buildSparqlQuery(query);
+//    }
+//
+//  }
+
   /**
-   * toDo: move to servlet
+   * use locally
+   * 
    * @param query
+   * @return
    */
-  public void receiveQueryFromGui(final String query) {
-    final ArrayList<ConceptQueryResult> resList = getConcept(query);
-    if (!resList.isEmpty()) {
-      // wenn vorhaben identifiziert wurde
-      try {
-        sparqlAdapter.buildSparqlQuery(new URL(resList.get(0).toString()), resList.get(1).toString());
-      } catch (final MalformedURLException e) {
-        e.printStackTrace();
-      }
-    } else {
-      sparqlAdapter.buildSparqlQuery(query);
-    }
-
-  }
-
-  private ArrayList<ConceptQueryResult> getConcept(final String query) {
+  public ArrayList<ConceptQueryResult> getConcept(final String query) {
     identifier.initIdentifying(query, ConceptIdentfierSearchMode.METHODE_OR);
     ArrayList<ConceptQueryResult> results = identifier.getResultList();
     return results;

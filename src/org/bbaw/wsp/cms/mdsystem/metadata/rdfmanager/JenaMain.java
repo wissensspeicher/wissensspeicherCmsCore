@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.MdSystemQueryHandler;
-import org.bbaw.wsp.cms.mdsystem.util.MdystemConfigReader;
+import org.bbaw.wsp.cms.mdsystem.util.MdSystemConfigReader;
 
 import com.hp.hpl.jena.query.Dataset;
 import com.hp.hpl.jena.query.Query;
@@ -29,7 +29,7 @@ import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
  */
 public class JenaMain {
 
-  private static final String datasetPath = MdystemConfigReader.getInstance().getConfig().getDatasetPath();
+  private static final String datasetPath = MdSystemConfigReader.getInstance().getConfig().getDatasetPath();
   private static final String EDOC = "C:/Dokumente und Einstellungen/wsp-shk1/Eigene Dateien/Development/ParserTest/XSLTTest/outputs/v2_29_11_2012/eDocs";
 
   protected RdfHandler rdfHandler;

@@ -7,7 +7,7 @@ import org.apache.jena.larq.HitLARQ;
 import org.apache.jena.larq.IndexBuilderString;
 import org.apache.jena.larq.IndexLARQ;
 import org.apache.jena.larq.LARQ;
-import org.bbaw.wsp.cms.mdsystem.util.MdystemConfigReader;
+import org.bbaw.wsp.cms.mdsystem.util.MdSystemConfigReader;
 
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Statement;
@@ -25,7 +25,7 @@ public class StoreIndex {
    * Define the Index Save Location here. Should be defined relative to the
    * project.
    */
-  private static final String LARQ_DIR = MdystemConfigReader.getInstance().getConfig().getLarqIndexPath();
+  private static final String LARQ_DIR = MdSystemConfigReader.getInstance().getConfig().getLarqIndexPath();
 
   public IndexBuilderString larqBuilder;
 
