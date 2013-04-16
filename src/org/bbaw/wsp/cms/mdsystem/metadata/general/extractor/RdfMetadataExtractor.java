@@ -3,6 +3,8 @@ package org.bbaw.wsp.cms.mdsystem.metadata.general.extractor;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.apache.log4j.Logger;
+import org.bbaw.wsp.cms.mdsystem.metadata.general.extractor.factory.MetadataExtractorFactory;
 import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.ConceptIdentfierSearchMode;
 import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.ConceptQueryResult;
 
@@ -36,9 +38,7 @@ public class RdfMetadataExtractor extends MetadataExtractor {
 	 *             if the uri is null, empty or doesn't refer to an existing
 	 *             file.
 	 */
-	public RdfMetadataExtractor(final String uri,
-			final HashMap<String, String> namespaces)
-			throws ApplicationException {
+	public RdfMetadataExtractor(final String uri, final HashMap<String, String> namespaces) throws ApplicationException {
 		super(uri, namespaces);
 		targetList = new ArrayList<ConceptQueryResult>();
 	}
@@ -53,8 +53,7 @@ public class RdfMetadataExtractor extends MetadataExtractor {
 	 *             if the rdf:about isn't tagged
 	 */
 	public String getRdfAboutValue() throws ApplicationException {
-		String erg = (String) buildXPath("//rdf:Description[1]/@rdf:about",
-				false); // First
+		String erg = (String) buildXPath("//rdf:Description[1]/@rdf:about",	false); // First
 		if (erg.equals("")) {
 			throw new ApplicationException(
 					"No attribute rdf:about found. This is required for the authentification of the document!");

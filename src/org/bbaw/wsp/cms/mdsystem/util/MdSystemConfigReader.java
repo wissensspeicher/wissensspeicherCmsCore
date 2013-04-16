@@ -18,22 +18,22 @@ import de.mpg.mpiwg.berlin.mpdl.xml.xquery.XQueryEvaluator;
  * @date 28.01.2013
  * 
  */
-public class MdystemConfigReader {
+public class MdSystemConfigReader {
 
-  private final String configFile;
+  private final String configFilePath;
 
   private MdsystemConfigRecord record;
 
-  private static MdystemConfigReader instance;
+  private static MdSystemConfigReader instance;
 
-  private MdystemConfigReader() {
-    configFile = Constants.getInstance().getMdsystemConfFile();
+  private MdSystemConfigReader() {
+    configFilePath = Constants.getInstance().getMdsystemConfFile();
     loadFromConfigFile();
   }
 
-  public static MdystemConfigReader getInstance() {
+  public static MdSystemConfigReader getInstance() {
     if (instance == null) {
-      instance = new MdystemConfigReader();
+      instance = new MdSystemConfigReader();
     }
     return instance;
   }
@@ -52,7 +52,7 @@ public class MdystemConfigReader {
     final XQueryEvaluator evaluator = new XQueryEvaluator();
     URL configFileUrl;
     try {
-      configFileUrl = new URL("file:///" + new File(configFile).getAbsolutePath());
+      configFileUrl = new URL("file:///" + new File(configFilePath).getAbsolutePath());
       final String eDocTemplatePath = evaluator.evaluateAsString(configFileUrl, "/mdsystem/converter/templates/eDoc/templatePath/text()");
       record.seteDocTemplatePath(eDocTemplatePath);
 
@@ -79,5 +79,15 @@ public class MdystemConfigReader {
     }
     return record;
   }
-
+  
+  public String getConfigFilePath(){
+    String configFilePath = Constants.getInstance().getMdsystemConfFile();
+    return configFilePath;
+  }
+  
+  public String getNormDataFilePath(){
+    String configFilePath = Constants.getInstance().getMdsystemNormdataFile();
+    return configFilePath;
+  }
+  
 }
