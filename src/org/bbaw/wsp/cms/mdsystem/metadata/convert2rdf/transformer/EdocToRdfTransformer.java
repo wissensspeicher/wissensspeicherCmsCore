@@ -36,16 +36,6 @@ public class EdocToRdfTransformer extends ToRdfTransformer {
    */
   public static final String AGGREGATION_NAME_PREFIX = "http://wsp.bbaw.de/edoc/";
   private static EdocToRdfTransformer instance;
-	/**
-	 * Specify the RDF template here.
-	 */
-	private static final String RDF_TEMPLATE_URL = MdSystemConfigReader
-			.getInstance().getConfig().geteDocTemplatePath();
-	/**
-	 * The prefix of the aggregation name is it is stored in the quad.
-	 */
-	public static final String AGGREGATION_NAME_PREFIX = "http://wsp.bbaw.de/edoc/";
-	private static EdocToRdfTransformer instance;
 
 	private EdocToRdfTransformer() throws ApplicationException {
 		super(ToRdfTransformer.MODE_DIRECT);
