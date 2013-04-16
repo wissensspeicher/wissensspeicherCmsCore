@@ -15,14 +15,12 @@ import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
  * @date 08.10.12
  * 
  */
-public class ModsToRdfTransformer extends ToRdfTransformer implements
-		IXsltTransformable {
-	/**
-	 * The standard XSLT template for mods to rdf transformations. Use
-	 * setXslInput() if you prefer another template.
-	 */
-	public static final String PATH_XSLT_TEMPLATE = MdSystemConfigReader
-			.getInstance().getConfig().getModsStylesheetPath();
+public class ModsToRdfTransformer extends ToRdfTransformer implements IXsltTransformable {
+  /**
+   * The standard XSLT template for mods to rdf transformations. Use
+   * setXslInput() if you prefer another template.
+   */
+  public static final String PATH_XSLT_TEMPLATE = MdSystemConfigReader.getInstance().getConfig().getModsStylesheetPath();
 
 	private static ModsToRdfTransformer instance;
 

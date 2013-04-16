@@ -14,14 +14,12 @@ import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
  * @date 17.01.13
  * 
  */
-public class MetsToRdfTransformer extends ToRdfTransformer implements
-		IXsltTransformable {
-	/**
-	 * The standard XSLT template for mets to rdf transformations. Use
-	 * setXslInput() if you prefer another template.
-	 */
-	public static final String PATH_XSLT_TEMPLATE = MdSystemConfigReader
-			.getInstance().getConfig().getMetsStylesheetPath();
+public class MetsToRdfTransformer extends ToRdfTransformer implements IXsltTransformable {
+  /**
+   * The standard XSLT template for mets to rdf transformations. Use
+   * setXslInput() if you prefer another template.
+   */
+  public static final String PATH_XSLT_TEMPLATE = MdSystemConfigReader.getInstance().getConfig().getMetsStylesheetPath();
 
 	private static MetsToRdfTransformer instance;
 
