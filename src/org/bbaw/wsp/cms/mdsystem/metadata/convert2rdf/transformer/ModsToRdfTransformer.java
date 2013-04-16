@@ -22,33 +22,33 @@ public class ModsToRdfTransformer extends ToRdfTransformer implements IXsltTrans
    */
   public static final String PATH_XSLT_TEMPLATE = MdSystemConfigReader.getInstance().getConfig().getModsStylesheetPath();
 
-  private static ModsToRdfTransformer instance;
+	private static ModsToRdfTransformer instance;
 
-  private ModsToRdfTransformer() throws ApplicationException {
-    super(ToRdfTransformer.MODE_XSLT); // this is an XSLT transformer
-    setXslInput(PATH_XSLT_TEMPLATE);
-  }
+	private ModsToRdfTransformer() throws ApplicationException {
+		super(ToRdfTransformer.MODE_XSLT); // this is an XSLT transformer
+		setXslInput(PATH_XSLT_TEMPLATE);
+	}
 
-  /**
-   * 
-   * @return the only existing instance.
-   * @throws ApplicationException
-   *           if the mode wasn't specified correctly.
-   */
-  public static ModsToRdfTransformer getInstance() throws ApplicationException {
-    if (instance == null) {
-      return new ModsToRdfTransformer();
-    }
-    return instance;
-  }
+	/**
+	 * 
+	 * @return the only existing instance.
+	 * @throws ApplicationException
+	 *           if the mode wasn't specified correctly.
+	 */
+	public static ModsToRdfTransformer getInstance() throws ApplicationException {
+		if (instance == null) {
+			return new ModsToRdfTransformer();
+		}
+		return instance;
+	}
 
-  /**
-   * Set the aggregation id. This will be set to the xslt transformation.
-   * 
-   * @param id
-   */
-  public void setAggregationId(final int id) {
-    super.aggrId = id;
-  }
+	/**
+	 * Set the aggregation id. This will be set to the xslt transformation.
+	 * 
+	 * @param id
+	 */
+	public void setAggregationId(final int id) {
+		super.aggrId = id;
+	}
 
 }
