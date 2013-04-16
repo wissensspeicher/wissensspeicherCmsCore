@@ -3,7 +3,7 @@
  */
 package org.bbaw.wsp.cms.mdsystem.metadata.convert2rdf.transformer;
 
-import org.bbaw.wsp.cms.mdsystem.util.MdystemConfigReader;
+import org.bbaw.wsp.cms.mdsystem.util.MdSystemConfigReader;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 
@@ -20,7 +20,7 @@ public class ModsToRdfTransformer extends ToRdfTransformer implements IXsltTrans
    * The standard XSLT template for mods to rdf transformations. Use
    * setXslInput() if you prefer another template.
    */
-  public static final String PATH_XSLT_TEMPLATE = MdystemConfigReader.getInstance().getConfig().getModsStylesheetPath();
+  public static final String PATH_XSLT_TEMPLATE = MdSystemConfigReader.getInstance().getConfig().getModsStylesheetPath();
 
   private static ModsToRdfTransformer instance;
 

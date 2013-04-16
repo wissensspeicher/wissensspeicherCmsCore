@@ -14,7 +14,7 @@ import org.bbaw.wsp.cms.dochandler.parser.document.PdfDocument;
 import org.bbaw.wsp.cms.dochandler.parser.text.parser.EdocIndexMetadataFetcherTool;
 import org.bbaw.wsp.cms.document.MetadataRecord;
 import org.bbaw.wsp.cms.mdsystem.metadata.convert2rdf.util.TemplateMapper;
-import org.bbaw.wsp.cms.mdsystem.util.MdystemConfigReader;
+import org.bbaw.wsp.cms.mdsystem.util.MdSystemConfigReader;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 
@@ -30,7 +30,7 @@ public class EdocToRdfTransformer extends ToRdfTransformer {
   /**
    * Specify the RDF template here.
    */
-  private static final String RDF_TEMPLATE_URL = MdystemConfigReader.getInstance().getConfig().geteDocTemplatePath();
+  private static final String RDF_TEMPLATE_URL = MdSystemConfigReader.getInstance().getConfig().geteDocTemplatePath();
   /**
    * The prefix of the aggregation name is it is stored in the quad.
    */
