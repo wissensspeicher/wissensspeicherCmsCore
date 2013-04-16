@@ -17,9 +17,9 @@ import com.googlecode.jcsv.annotations.MapToColumn;
 public class ParsedProject {
 
   @MapToColumn(column = 0)
-  private String creator;
+  private String vorhaben;
   @MapToColumn(column = 1)
-  private String title;
+  private String project;
   @MapToColumn(column = 2)
   private String publisher;
   @MapToColumn(column = 3)
@@ -78,35 +78,51 @@ public class ParsedProject {
   private String pfad_struktur;
   @MapToColumn(column = 30)
   private String status_anett;
+  private String description;
+
+  /**
+   * @return the description
+   */
+  public final String getDescription() {
+    return description;
+  }
+
+  /**
+   * @param description
+   *          the description to set
+   */
+  public final void setDescription(final String description) {
+    this.description = description;
+  }
 
   /**
    * @return the creator
    */
-  public String getCreator() {
-    return creator;
+  public String getVorhaben() {
+    return vorhaben;
   }
 
   /**
    * @param creator
    *          the creator to set
    */
-  public void setCreator(final String creator) {
-    this.creator = creator;
+  public void setVorhaben(final String creator) {
+    this.vorhaben = creator;
   }
 
   /**
    * @return the title
    */
-  public String getTitle() {
-    return title;
+  public String getProject() {
+    return project;
   }
 
   /**
    * @param title
    *          the title to set
    */
-  public void setTitle(final String title) {
-    this.title = title;
+  public void setProject(final String title) {
+    this.project = title;
   }
 
   /**
@@ -551,7 +567,7 @@ public class ParsedProject {
    */
   @Override
   public String toString() {
-    return "ParsedProject [creator=" + creator + ", title=" + title + ", publisher=" + publisher + ", date=" + date + ", coverage=" + coverage + ", subject=" + subject + ", extent=" + extent + ", language=" + language + ", format=" + format + ", type=" + type + ", contributor=" + contributor + ", method=" + method + ", acronym=" + acronym + ", state=" + state + ", relation_part_of=" + relation_part_of + ", laufzeit=" + laufzeit + ", subjekt=" + subjekt + ", cooperation=" + cooperation + ", mitarbeiter=" + mitarbeiter + ", version=" + version + ", coverage_geo=" + coverage_geo + ", identifier=" + identifier + ", pfad=" + pfad + ", kompatibel_mit=" + kompatibel_mit + ", relation=" + relation + ", relation_gefoerdet_von=" + relation_gefoerdet_von + ", person_historisch=" + person_historisch + ", genre=" + genre + ", personen_gruender=" + personen_gruender + ", pfad_struktur=" + pfad_struktur + ", status_anett=" + status_anett + "]";
+    return "ParsedProject [creator=" + vorhaben + ", title=" + project + ", publisher=" + publisher + ", date=" + date + ", coverage=" + coverage + ", subject=" + subject + ", extent=" + extent + ", language=" + language + ", format=" + format + ", type=" + type + ", contributor=" + contributor + ", method=" + method + ", acronym=" + acronym + ", state=" + state + ", relation_part_of=" + relation_part_of + ", laufzeit=" + laufzeit + ", subjekt=" + subjekt + ", cooperation=" + cooperation + ", mitarbeiter=" + mitarbeiter + ", version=" + version + ", coverage_geo=" + coverage_geo + ", identifier=" + identifier + ", pfad=" + pfad + ", kompatibel_mit=" + kompatibel_mit + ", relation=" + relation + ", relation_gefoerdet_von=" + relation_gefoerdet_von + ", person_historisch=" + person_historisch + ", genre=" + genre + ", personen_gruender=" + personen_gruender + ", pfad_struktur=" + pfad_struktur + ", status_anett=" + status_anett + "]";
   }
 
 }

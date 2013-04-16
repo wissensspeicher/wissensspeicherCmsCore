@@ -31,6 +31,7 @@ public class ProjectIdentifierInserter {
    */
   private static final String INPUT_DOC = "C:/Dokumente und Einstellungen/wsp-shk1/Eigene Dateien/Development/Vorhaben/Vorhabenliste_komplett_fertig.odt";
   private static final String OUTPUTCSV = "C:/Dokumente und Einstellungen/wsp-shk1/Eigene Dateien/Development/Vorhaben/Vorhaben_converted_identifier.csv";
+  private static final String DESCRIPTION_VORHABEN = "vorhaben";
 
   public static void main(final String[] args) {
     final File csvFile = new File(ProjectReaderFromCsv.INPUT_CSV);
@@ -38,11 +39,13 @@ public class ProjectIdentifierInserter {
 
     parseEach(projects);
 
-    writeToCsv(projects);
+    // writeToCsv(projects);
 
     // Print fetched identifiers
     for (final ParsedProject changedPro : projects) {
-      System.out.println("project --> " + changedPro.getCreator() + " - " + changedPro.getTitle() + " - " + changedPro.getIdentifier());
+      if (changedPro.getDescription() != null) {
+        System.out.println("project --> " + changedPro.getVorhaben() + " - " + changedPro.getProject() + " - " + changedPro.getIdentifier() + " - " + changedPro.getDescription());
+      }
     }
   }
 
@@ -84,27 +87,80 @@ public class ProjectIdentifierInserter {
    */
   private static void fetchIdentifier(final ParsedProject project, final String fulltext) {
 
-    final int projPos = fulltext.indexOf(project.getTitle());
-    final int vorPos = fulltext.indexOf(project.getCreator());
-    if (projPos != -1 && !project.getTitle().trim().isEmpty()) {
-      System.out.println("proj found" + project.getTitle());
+    final int projPos = fulltext.indexOf(project.getProject());
+    final int vorPos = fulltext.indexOf(project.getVorhaben());
+    if (projPos != -1 && !project.getProject().trim().isEmpty()) {
+      System.out.println("proj found" + project.getProject());
       final String hopeIdContains = fulltext.substring(projPos, projPos + 200);
 
+      /*
+       * ------ fetch identifier --------
+       */
       final Pattern p = Pattern.compile("(?i)identifier:(.*?)\\n");
       for (final Matcher m = p.matcher(hopeIdContains); m.find();) {
         final String identifier = m.group(1);
         project.setIdentifier(identifier);
       }
-    } else if (vorPos != -1 && !project.getTitle().equals("---")) {
-      System.out.println("vor found" + project.getCreator());
+      /*
+       * --------------------------------
+       */
+      /*
+       * ------ fetch description --------
+       */
+      final Pattern pDescription = Pattern.compile("(?i)description:(.*?)\\n");
+      for (final Matcher m = pDescription.matcher(hopeIdContains); m.find();) {
+        final String strDescription = m.group(1).trim();
+        project.setDescription(strDescription);
+
+        // case: found a project which is a vorhaben
+        if (strDescription.toLowerCase().contains(DESCRIPTION_VORHABEN)) {
+          if (project.getProject() != null) {
+            final String oldProject = project.getProject();
+            project.setProject("---");
+            project.setVorhaben(oldProject);
+          }
+        }
+
+        // project.setIdentifier(identifier);
+      }
+      /*
+       * --------------------------------
+       */
+    } else if (vorPos != -1 && !project.getProject().equals("---")) {
+      System.out.println("vor found" + project.getVorhaben());
 
       final String hopeIdContains = fulltext.substring(projPos, projPos + 200);
-
+      /*
+       * ------ fetch identifier --------
+       */
       final Pattern p = Pattern.compile("(?i)identifier:(.*?)\\n");
       for (final Matcher m = p.matcher(hopeIdContains); m.find();) {
         final String identifier = m.group(1);
         project.setIdentifier(identifier);
       }
+      /*
+       * --------------------------------
+       */
+      /*
+       * ------ fetch description --------
+       */
+      final Pattern pDescription = Pattern.compile("(?i)description:(.*?)\\n");
+      for (final Matcher m = pDescription.matcher(hopeIdContains); m.find();) {
+        final String strDescription = m.group(1).trim();
+        project.setDescription(strDescription);
+
+        // // case: found a vorhaben which actually isn't a vorhaben
+        // if (!strDescription.toLowerCase().contains(DESCRIPTION_VORHABEN)) {
+        // if (project.getVorhaben() != null) {
+        // final String oldVorhaben = project.getVorhaben();
+        // project.setVorhaben("---");
+        // project.setProject(oldVorhaben);
+        // }
+        // }
+      }
+      /*
+       * --------------------------------
+       */
     }
 
   }

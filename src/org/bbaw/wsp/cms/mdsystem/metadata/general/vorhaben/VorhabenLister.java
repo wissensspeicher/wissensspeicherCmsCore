@@ -54,9 +54,7 @@ public class VorhabenLister {
     /*
      * (non-Javadoc)
      * 
-     * @see
-     * com.googlecode.jcsv.writer.CSVEntryConverter#convertEntry(java.lang.Object
-     * )
+     * @see com.googlecode.jcsv.writer.CSVEntryConverter#convertEntry(java.lang.Object )
      */
     public String[] convertEntry(final ARecordEntry recordEntry) {
       final int numberCols = 2 + sortedKeysMap.size();
@@ -89,8 +87,7 @@ public class VorhabenLister {
   }
 
   /**
-   * ValueComparator which is used to sort the values of an unsorted {@link Map}
-   * descending.
+   * ValueComparator which is used to sort the values of an unsorted {@link Map} descending.
    * 
    * @author <a href="mailto:wsp-shk1@bbaw.de">Sascha Feldmann</a>
    * @since 05.03.2013
@@ -192,7 +189,7 @@ public class VorhabenLister {
   }
 
   private void fetchVorhaben() {
-    final String parsedText = parseText();
+    final String parsedText = ListerUtil.parseText(docFile);
     final Scanner scanner = new Scanner(parsedText);
 
     int i = 0;
@@ -438,24 +435,5 @@ public class VorhabenLister {
   */
   
   //@formatter:on
-
-  /**
-   * Start parsing.
-   * 
-   * @return the String containing the fulltext or an empty String.
-   */
-  private String parseText() {
-    final DocumentParser tikaParser = new DocumentParser();
-    IDocument tikaDoc;
-    try {
-      tikaDoc = tikaParser.parse(docFile.toURI().toString());
-      final String docTokensOrig = tikaDoc.getTextOrig();
-      return docTokensOrig;
-    } catch (final ApplicationException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-      return "";
-    }
-  }
 
 }

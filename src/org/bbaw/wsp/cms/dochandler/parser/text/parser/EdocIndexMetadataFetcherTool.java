@@ -1,14 +1,12 @@
 package org.bbaw.wsp.cms.dochandler.parser.text.parser;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.Charset;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
@@ -16,6 +14,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.bbaw.wsp.cms.dochandler.parser.text.parser.mapper.EdocFieldValueMapper;
+import org.bbaw.wsp.cms.dochandler.parser.text.parser.mapper.InstitutMapping;
 import org.bbaw.wsp.cms.dochandler.parser.text.reader.IResourceReader;
 import org.bbaw.wsp.cms.dochandler.parser.text.reader.ResourceReaderImpl;
 import org.bbaw.wsp.cms.document.MetadataRecord;
@@ -31,6 +30,16 @@ import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
  * 
  */
 public class EdocIndexMetadataFetcherTool {
+  /**
+   * Define the default separator used for multi values here.
+   */
+  private static final String DEFAULT_SEPARATOR = ";";
+
+  /**
+   * Define the encoding of the index.html files here. See the file's header and the {@link Charset} documentation.
+   */
+  public static String INDEX_ENCODING = "UTF-8";
+
   private static IResourceReader reader = new ResourceReaderImpl();
 
   /**
@@ -55,11 +64,18 @@ public class EdocIndexMetadataFetcherTool {
       final EdocFieldValueMapper eDocMapper = new EdocFieldValueMapper();
       in = reader.read(srcUrl);
 
-      final Scanner scanner = new Scanner(in, "UTF-16");
+      // the charset to be used for the decoding - see the index.html headers
+      final Charset charsetUtf16 = Charset.forName(INDEX_ENCODING);
+      final Scanner scanner = new Scanner(in);
       scanner.useDelimiter("\n"); // delimiter via line break
       final StringBuilder builder = new StringBuilder();
       while (scanner.hasNext()) {
-        builder.append(scanner.nextLine());
+        final String nextLine = scanner.nextLine();
+        final byte[] byteSequence = nextLine.getBytes();
+        final String strUtf8 = new String(byteSequence, charsetUtf16);
+
+        // builder.append(scanner.nextLine());
+        builder.append(strUtf8);
       }
       scanner.close();
       in.close();
@@ -159,19 +175,15 @@ public class EdocIndexMetadataFetcherTool {
           mdRecord.setPublishingDate(cal.getTime());
         } else if (key.contains("ISBN")) {
           mdRecord.setIsbn(value);
-        } else if (key.contains("Institut")) {
-          // use the mapper to set the publisher and collection
-          eDocMapper.mapField(EdocFieldValueMapper.EDOC_FIELD_INSTITUT, value, mdRecord);
-        } else if (key.contains("Collection")) {
+        } else if (key.contains("Institut")) { // multi values possible
+          mapInstitut(mdRecord, eDocMapper, value);
+        } else if (key.contains("Collection")) { // multi values possible
           final Pattern pColl = Pattern.compile("(?i)<a.*?>(.*?)</a>");
           final Matcher mColl = pColl.matcher(value);
           mColl.find();
           final String collections = mColl.group(1);
-          String collectionsExisting = collections;
-          if (mdRecord.getCollectionNames() != null) {
-            collectionsExisting += ";" + mdRecord.getCollectionNames();
-          }
-          mdRecord.setCollectionNames(collectionsExisting);
+          final String newCollections = concatenateValues(mdRecord.getCollectionNames(), collections, DEFAULT_SEPARATOR);
+          mdRecord.setCollectionNames(newCollections);
         } else if (key.contains("Kurzfassung auf Deutsch") && value != null && mdRecord.getDescription() != null) {
           mdRecord.setDescription(value);
         }
@@ -179,7 +191,7 @@ public class EdocIndexMetadataFetcherTool {
       // Bugfix: Institut
       final Pattern p3 = Pattern.compile("(?i)<TD class=\"frontdoor\" valign=\"top\"><B>Institut:</B></TD>.*?<TD class=\"frontdoor\" valign=\"top\">(.*?)</TD><");
       for (final Matcher m = p3.matcher(line); m.find();) {
-        mdRecord.setPublisher(m.group(1));
+        mapInstitut(mdRecord, eDocMapper, m.group(1));
       }
 
       in.close();
@@ -188,6 +200,29 @@ public class EdocIndexMetadataFetcherTool {
       throw new ApplicationException("Problem while parsing " + srcUrl + " for DC tags " + e.getMessage());
     }
 
+  }
+
+  /**
+   * Map the value of "Institut" to our new value. Use the {@link EdocFieldValueMapper} to do that.
+   * 
+   * @param mdRecord
+   * @param eDocMapper
+   * @param institutValue
+   * @throws ApplicationException
+   *           thrown by the {@link EdocFieldValueMapper}
+   */
+  private static void mapInstitut(final MetadataRecord mdRecord, final EdocFieldValueMapper eDocMapper, final String institutValue) throws ApplicationException {
+    // use the mapper to set the publisher and collection and concatenate collection names
+    final InstitutMapping newValues = eDocMapper.mapField(EdocFieldValueMapper.EDOC_FIELD_INSTITUT, institutValue);
+    if (newValues != null) { // mapping values retrieved
+      final String newPublisher = concatenateValues(mdRecord.getPublisher(), newValues.getInstitut(), DEFAULT_SEPARATOR);
+      mdRecord.setPublisher(newPublisher);
+      final String newCollections = concatenateValues(mdRecord.getCollectionNames(), newValues.getConfigId(), DEFAULT_SEPARATOR);
+      mdRecord.setCollectionNames(newCollections);
+    } else if (institutValue != null) { // no mapping values retrieved -> so set the unmapped publisher
+      final String newPublisher = concatenateValues(mdRecord.getCollectionNames(), institutValue, DEFAULT_SEPARATOR);
+      mdRecord.setPublisher(newPublisher);
+    }
   }
 
   /**
@@ -300,4 +335,36 @@ public class EdocIndexMetadataFetcherTool {
     return null;
   }
 
+  /**
+   * Concatenate two values.
+   * 
+   * @param oldValue
+   *          String to be extended. If the value is null, the newValue will only be the new value.
+   * @param newValue
+   *          String to concatenate.
+   * @param separator
+   *          String the seperator
+   * @throws IllegalArgumentException
+   *           if newValue or seperator are null
+   * @return the new string.
+   */
+  private static String concatenateValues(final String oldValue, final String newValue, final String separator) {
+    if (newValue == null || separator == null) {
+      throw new IllegalArgumentException("The value for the parameters newValue and separator in concatenateValues mustn't be null");
+    }
+
+    final StringBuilder returnBuilder = new StringBuilder();
+
+    if (oldValue != null && !oldValue.trim().isEmpty()) { // concatenate to old value
+      returnBuilder.append(oldValue);
+      if (!oldValue.equals(newValue) && !newValue.trim().isEmpty()) { // only concatenate newValue if not already contained
+        returnBuilder.append(separator);
+        returnBuilder.append(newValue);
+      }
+    } else { // returnValue = newValue because there's no old value
+      returnBuilder.append(newValue); // concatenate new value
+    }
+
+    return returnBuilder.toString();
+  }
 }

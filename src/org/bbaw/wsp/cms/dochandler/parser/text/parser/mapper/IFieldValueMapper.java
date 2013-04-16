@@ -20,11 +20,10 @@ public interface IFieldValueMapper {
    *          the name of the parsed field (one metadata field, e.g. "Institut")
    * @param parsedFieldValue
    *          the value of the parsed metadata field
-   * @param mdRecord
-   *          the (maybe already filled) {@link MetadataRecord}
+   * @return {@link InstitutMapping} with the new values
    * @throws ApplicationException
    *           if the field couln't be mapped
    */
-  void mapField(final String parsedFieldName, final String parsedFieldValue, MetadataRecord mdRecord) throws ApplicationException;
+  InstitutMapping mapField(final String parsedFieldName, final String parsedFieldValue) throws ApplicationException;
 
 }

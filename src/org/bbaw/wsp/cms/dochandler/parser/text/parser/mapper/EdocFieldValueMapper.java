@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
-import org.bbaw.wsp.cms.document.MetadataRecord;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 
@@ -22,6 +21,17 @@ public class EdocFieldValueMapper implements IFieldValueMapper {
   public static final String EDOC_FIELD_INSTITUT = "Institut";
   private static Map<String, InstitutMapping> institutMap = fillInstitutMap();
   private static Logger logger;
+
+  /**
+   * Create a new {@link EdocFieldValueMapper} instance.
+   */
+  public EdocFieldValueMapper() {
+    initialize();
+  }
+
+  private void initialize() {
+    logger = Logger.getLogger(EdocFieldValueMapper.class);
+  }
 
   /**
    * Fill the institut map with the replacing values once.
@@ -63,6 +73,7 @@ public class EdocFieldValueMapper implements IFieldValueMapper {
     mapping.put("Interdisziplinäre Arbeitsgruppe Gesundheitsstandards", new InstitutMapping("Gesundheitsstandards", "gs"));
     mapping.put("Interdisziplinäre Arbeitsgruppe Humanprojekt", new InstitutMapping("Humanprojekt", "hum"));
     mapping.put("Akademienvorhaben Turfanforschung", new InstitutMapping("Turfanforschung", "turfan"));
+    mapping.put("Interdisziplinäre Arbeitsgruppe Gegenworte - Hefte für den Disput über Wissen", new InstitutMapping("Gegenworte - Hefte für den Disput über Wissen", "gw"));
     return mapping;
   }
 
@@ -72,12 +83,12 @@ public class EdocFieldValueMapper implements IFieldValueMapper {
    * @see org.bbaw.wsp.cms.dochandler.parser.text.parser.mapper.IFieldValueMapper#mapField(java.lang.String, java.lang.String, org.bbaw.wsp.cms.document.MetadataRecord)
    */
   @Override
-  public void mapField(final String parsedFieldName, final String parsedFieldValue, final MetadataRecord mdRecord) throws ApplicationException {
+  public InstitutMapping mapField(final String parsedFieldName, final String parsedFieldValue) throws ApplicationException {
     switch (parsedFieldName) {
     case EDOC_FIELD_INSTITUT:
-      mapInstitut(parsedFieldValue, mdRecord);
-      break;
+      return mapInstitut(parsedFieldValue);
     }
+    return null;
   }
 
   /**
@@ -85,20 +96,20 @@ public class EdocFieldValueMapper implements IFieldValueMapper {
    * 
    * @param parsedFieldValue
    * @param mdRecord
+   * @return {@link InstitutMapping} the new values.
    */
-  private void mapInstitut(final String parsedFieldValue, final MetadataRecord mdRecord) {
+  private InstitutMapping mapInstitut(final String parsedFieldValue) {
     final InstitutMapping mapping = institutMap.get(parsedFieldValue);
     if (mapping != null) {
       final String newValue = mapping.getInstitut();
       final String newCollection = mapping.getConfigId();
-      String collectionsExisting = newCollection;
-      if (mdRecord.getCollectionNames() != null) {
-        collectionsExisting += ";" + mdRecord.getCollectionNames();
-      }
-      mdRecord.setPublisher(newValue);
-      mdRecord.setCollectionNames(collectionsExisting);
+
+      final InstitutMapping newValues = new InstitutMapping(newValue, newCollection);
+
+      return newValues;
     } else {
-      System.err.println("Canno't replace the value of eDoc's \"Institut\" metadata field. The value to be replaced: " + parsedFieldValue);
+      logger.error("Canno't replace the value of eDoc's \"Institut\" metadata field. The value to be replaced: " + parsedFieldValue);
+      return null;
     }
   }
 }
