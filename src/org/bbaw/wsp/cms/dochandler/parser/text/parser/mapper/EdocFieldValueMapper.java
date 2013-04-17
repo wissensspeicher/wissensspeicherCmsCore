@@ -40,6 +40,13 @@ public class EdocFieldValueMapper implements IFieldValueMapper {
    */
   private static Map<String, InstitutMapping> fillInstitutMap() {
     final Map<String, InstitutMapping> mapping = new HashMap<String, InstitutMapping>();
+    // without concrete institute: map to root node "edoc"
+    mapping.put("Berlin-Brandenburgische Akademie der Wissenschaften", new InstitutMapping("Akademiebibliothek: Elektronischer Dokumentenserver (EDOC)", "edoc"));
+    mapping.put("Veröffentlichungen von Akademiemitgliedern", new InstitutMapping("Akademiebibliothek: Elektronischer Dokumentenserver (EDOC)", "edoc"));
+    mapping.put("Veröffentlichungen von Akademiemitarbeitern", new InstitutMapping("Akademiebibliothek: Elektronischer Dokumentenserver (EDOC)", "edoc"));
+    mapping.put("Veröffentlichungen der Vorgängerinstitutionen der Berlin-Brandenburgischen Akademie der Wissenschaften", new InstitutMapping("Akademiebibliothek: Elektronischer Dokumentenserver (EDOC)", "edoc"));
+    mapping.put("Veröffentlichungen externer Institutionen", new InstitutMapping("Akademiebibliothek: Elektronischer Dokumentenserver (EDOC)", "edoc"));
+    // mappings to institutes
     mapping.put("Interdisziplinäre Arbeitsgruppe Psychologisches Denken und psychologische Praxis", new InstitutMapping("Interdisziplinäre Arbeitsgruppe Psychologisches Denken und psychologische Praxis", "pd"));
     mapping.put("Akademienvorhaben Altägyptisches Wörterbuch", new InstitutMapping("Altägyptisches Wörterbuch", "aaew"));
     mapping.put("Interdisziplinäre Arbeitsgruppe Berliner Akademiegeschichte im 19. und 20. Jahrhundert", new InstitutMapping("Berliner Akademiegeschichte im 19. und 20. Jahrhundert", "bag"));
@@ -74,6 +81,7 @@ public class EdocFieldValueMapper implements IFieldValueMapper {
     mapping.put("Interdisziplinäre Arbeitsgruppe Humanprojekt", new InstitutMapping("Humanprojekt", "hum"));
     mapping.put("Akademienvorhaben Turfanforschung", new InstitutMapping("Turfanforschung", "turfan"));
     mapping.put("Interdisziplinäre Arbeitsgruppe Gegenworte - Hefte für den Disput über Wissen", new InstitutMapping("Gegenworte - Hefte für den Disput über Wissen", "gw"));
+    mapping.put("Interdisziplinäre Arbeitsgruppe Strategien zur Abfallenergieverwertung", new InstitutMapping("Strategien zur Abfallenergieverwertung", "sza"));
     return mapping;
   }
 
@@ -108,7 +116,7 @@ public class EdocFieldValueMapper implements IFieldValueMapper {
 
       return newValues;
     } else {
-      logger.error("Canno't replace the value of eDoc's \"Institut\" metadata field. The value to be replaced: " + parsedFieldValue);
+      logger.error("Cannot replace the value of eDoc's \"Institut\" metadata field. The value to be replaced: " + parsedFieldValue);
       return null;
     }
   }
