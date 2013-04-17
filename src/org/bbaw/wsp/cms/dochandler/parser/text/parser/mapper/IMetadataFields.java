@@ -1,4 +1,4 @@
-package org.bbaw.wsp.cms.dochandler.parser.text.parser;
+package org.bbaw.wsp.cms.dochandler.parser.text.parser.mapper;
 
 import org.bbaw.wsp.cms.document.MetadataRecord;
 

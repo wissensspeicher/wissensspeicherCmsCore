@@ -7,6 +7,7 @@ import org.apache.tika.parser.ParseContext;
 import org.apache.tika.parser.Parser;
 import org.apache.tika.sax.BodyContentHandler;
 import org.bbaw.wsp.cms.dochandler.parser.document.GeneralDocument;
+import org.bbaw.wsp.cms.dochandler.parser.text.parser.mapper.TikaMetadataMapper;
 import org.bbaw.wsp.cms.dochandler.parser.text.reader.IResourceReader;
 import org.bbaw.wsp.cms.dochandler.parser.text.reader.ResourceReaderImpl;
 import org.bbaw.wsp.cms.document.MetadataRecord;
@@ -23,7 +24,7 @@ import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
  *       Last change: - ApplicationException instead of log file - Uses
  *       {@link DocumentModelStrategy} only. - 11.03.2013: matchMetadata
  *       modifier changed to protected so parsers can now override it and
- *       association to {@link MetadataMapper} added.
+ *       association to {@link TikaMetadataMapper} added.
  * 
  */
 public abstract class ResourceParser {
@@ -104,6 +105,6 @@ public abstract class ResourceParser {
    *          the {@link MetadataRecord}.
    */
   protected void matchMetadata(final Metadata metadata, final MetadataRecord mdRecord) {
-    MetadataMapper.matchGeneral(metadata, mdRecord);
+    TikaMetadataMapper.matchGeneral(metadata, mdRecord);
   }
 }

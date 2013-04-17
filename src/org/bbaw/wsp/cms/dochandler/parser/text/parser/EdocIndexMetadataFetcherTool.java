@@ -6,12 +6,15 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.charset.Charset;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.bbaw.wsp.cms.dochandler.parser.text.parser.mapper.EdocFieldValueMapper;
+import org.bbaw.wsp.cms.dochandler.parser.text.parser.mapper.InstitutMapping;
 import org.bbaw.wsp.cms.dochandler.parser.text.reader.IResourceReader;
 import org.bbaw.wsp.cms.dochandler.parser.text.reader.ResourceReaderImpl;
 import org.bbaw.wsp.cms.document.MetadataRecord;
@@ -19,10 +22,7 @@ import org.bbaw.wsp.cms.document.MetadataRecord;
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 
 /**
- * This tool class provides methods to fetch DC fields into a given
- * {@link MetadataRecord}. Last change: - Added fields documentType, isbn,
- * creationDate, publishingDate - 06.09.12: throws {@link ApplicationException}
- * now - Added methods to check if a file is an eDoc index.html file
+ * This tool class provides methods to fetch DC fields into a given {@link MetadataRecord}. Last change: - Added fields documentType, isbn, creationDate, publishingDate - 06.09.12: throws {@link ApplicationException} now - Added methods to check if a file is an eDoc index.html file
  * 
  * 24.01.2013: closed scanner
  * 
@@ -30,11 +30,20 @@ import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
  * 
  */
 public class EdocIndexMetadataFetcherTool {
+  /**
+   * Define the default separator used for multi values here.
+   */
+  private static final String DEFAULT_SEPARATOR = ";";
+
+  /**
+   * Define the encoding of the index.html files here. See the file's header and the {@link Charset} documentation.
+   */
+  public static String INDEX_ENCODING = "UTF-8";
+
   private static IResourceReader reader = new ResourceReaderImpl();
 
   /**
-   * This class reads from an URL and fetches the DC tags directly (with String
-   * operations).
+   * This class reads from an URL and fetches the DC tags directly (with String operations).
    * 
    * It's designed for the eDoc server.
    * 
@@ -43,8 +52,7 @@ public class EdocIndexMetadataFetcherTool {
    * @param mdRecord
    *          - the {@link MetadataRecord} to fill
    * 
-   *          Last change: bugfixed the publishingDate 06.06.2012 several
-   *          changes
+   *          Last change: bugfixed the publishingDate 06.06.2012 several changes
    * 
    * @return the complete {@link MetadataRecord}
    * @throws ApplicationException
@@ -52,14 +60,26 @@ public class EdocIndexMetadataFetcherTool {
   public static MetadataRecord fetchHtmlDirectly(final String srcUrl, final MetadataRecord mdRecord) throws ApplicationException {
     InputStream in;
     try {
+      // initialize the field value mapper
+      final EdocFieldValueMapper eDocMapper = new EdocFieldValueMapper();
       in = reader.read(srcUrl);
+
+      // the charset to be used for the decoding - see the index.html headers
+      final Charset charsetUtf16 = Charset.forName(INDEX_ENCODING);
       final Scanner scanner = new Scanner(in);
       scanner.useDelimiter("\n"); // delimiter via line break
       final StringBuilder builder = new StringBuilder();
       while (scanner.hasNext()) {
-        builder.append(scanner.next()); // concat to one String
+        final String nextLine = scanner.nextLine();
+        final byte[] byteSequence = nextLine.getBytes();
+        final String strUtf8 = new String(byteSequence, charsetUtf16);
+
+        // builder.append(scanner.nextLine());
+        builder.append(strUtf8);
       }
       scanner.close();
+      in.close();
+
       final String line = builder.toString();
       final StringBuilder creatorBuilder = new StringBuilder(); // fix: more than one
       // creator
@@ -155,15 +175,15 @@ public class EdocIndexMetadataFetcherTool {
           mdRecord.setPublishingDate(cal.getTime());
         } else if (key.contains("ISBN")) {
           mdRecord.setIsbn(value);
-        } else if (key.contains("Institut")) {
-          mdRecord.setPublisher(value);
-        } else if (key.contains("Collection")) {
+        } else if (key.contains("Institut")) { // multi values possible
+          mapInstitut(mdRecord, eDocMapper, value);
+        } else if (key.contains("Collection")) { // multi values possible
           final Pattern pColl = Pattern.compile("(?i)<a.*?>(.*?)</a>");
           final Matcher mColl = pColl.matcher(value);
           mColl.find();
           final String collections = mColl.group(1);
-
-          mdRecord.setCollectionNames(collections);
+          final String newCollections = concatenateValues(mdRecord.getCollectionNames(), collections, DEFAULT_SEPARATOR);
+          mdRecord.setCollectionNames(newCollections);
         } else if (key.contains("Kurzfassung auf Deutsch") && value != null && mdRecord.getDescription() != null) {
           mdRecord.setDescription(value);
         }
@@ -171,7 +191,7 @@ public class EdocIndexMetadataFetcherTool {
       // Bugfix: Institut
       final Pattern p3 = Pattern.compile("(?i)<TD class=\"frontdoor\" valign=\"top\"><B>Institut:</B></TD>.*?<TD class=\"frontdoor\" valign=\"top\">(.*?)</TD><");
       for (final Matcher m = p3.matcher(line); m.find();) {
-        mdRecord.setPublisher(m.group(1));
+        mapInstitut(mdRecord, eDocMapper, m.group(1));
       }
 
       in.close();
@@ -183,10 +203,32 @@ public class EdocIndexMetadataFetcherTool {
   }
 
   /**
+   * Map the value of "Institut" to our new value. Use the {@link EdocFieldValueMapper} to do that.
+   * 
+   * @param mdRecord
+   * @param eDocMapper
+   * @param institutValue
+   * @throws ApplicationException
+   *           thrown by the {@link EdocFieldValueMapper}
+   */
+  private static void mapInstitut(final MetadataRecord mdRecord, final EdocFieldValueMapper eDocMapper, final String institutValue) throws ApplicationException {
+    // use the mapper to set the publisher and collection and concatenate collection names
+    final InstitutMapping newValues = eDocMapper.mapField(EdocFieldValueMapper.EDOC_FIELD_INSTITUT, institutValue);
+    if (newValues != null) { // mapping values retrieved
+      final String newPublisher = concatenateValues(mdRecord.getPublisher(), newValues.getInstitut(), DEFAULT_SEPARATOR);
+      mdRecord.setPublisher(newPublisher);
+      final String newCollections = concatenateValues(mdRecord.getCollectionNames(), newValues.getConfigId(), DEFAULT_SEPARATOR);
+      mdRecord.setCollectionNames(newCollections);
+    } else if (institutValue != null) { // no mapping values retrieved -> so set the unmapped publisher
+      final String newPublisher = concatenateValues(mdRecord.getCollectionNames(), institutValue, DEFAULT_SEPARATOR);
+      mdRecord.setPublisher(newPublisher);
+    }
+  }
+
+  /**
    * Check if the file is an index.html file to an eDoc.
    * 
-   * LastChange: Performance optimation - check URI before reading from input
-   * stream
+   * LastChange: Performance optimation - check URI before reading from input stream
    * 
    * @param uri
    *          - the URL as string to the index.html file.
@@ -241,8 +283,7 @@ public class EdocIndexMetadataFetcherTool {
 
           final URL indexUrl = new URL(newUrl);
           @SuppressWarnings("unused")
-          final
-          URLConnection conn = indexUrl.openConnection();
+          final URLConnection conn = indexUrl.openConnection();
 
           return true;
         }
@@ -256,12 +297,10 @@ public class EdocIndexMetadataFetcherTool {
   }
 
   /**
-   * Fetch the eDoc's id as it's stored on the file system. This id can be used
-   * for an OAI/ORE aggregation for example.
+   * Fetch the eDoc's id as it's stored on the file system. This id can be used for an OAI/ORE aggregation for example.
    * 
    * @param eDocUrl
-   *          {@link String} the URL to the eDoc. This will be parsed for the
-   *          id.
+   *          {@link String} the URL to the eDoc. This will be parsed for the id.
    * @return {@link Integer} the docID or -1 if the ID couldn'T be parsed.
    * @throws ApplicationException
    */
@@ -281,8 +320,7 @@ public class EdocIndexMetadataFetcherTool {
    * Fetch the edoc's year. This is used in the aggregation name for example.
    * 
    * @param realDocUrl
-   * @return the year as it's stored in edoc server or null if it couldn't be
-   *         parsed.
+   * @return the year as it's stored in edoc server or null if it couldn't be parsed.
    * @throws ApplicationException
    */
   public static String getDocYear(final String eDocUrl) throws ApplicationException {
@@ -297,4 +335,36 @@ public class EdocIndexMetadataFetcherTool {
     return null;
   }
 
+  /**
+   * Concatenate two values.
+   * 
+   * @param oldValue
+   *          String to be extended. If the value is null, the newValue will only be the new value.
+   * @param newValue
+   *          String to concatenate.
+   * @param separator
+   *          String the seperator
+   * @throws IllegalArgumentException
+   *           if newValue or seperator are null
+   * @return the new string.
+   */
+  private static String concatenateValues(final String oldValue, final String newValue, final String separator) {
+    if (newValue == null || separator == null) {
+      throw new IllegalArgumentException("The value for the parameters newValue and separator in concatenateValues mustn't be null");
+    }
+
+    final StringBuilder returnBuilder = new StringBuilder();
+
+    if (oldValue != null && !oldValue.trim().isEmpty()) { // concatenate to old value
+      returnBuilder.append(oldValue);
+      if (!oldValue.equals(newValue) && !newValue.trim().isEmpty()) { // only concatenate newValue if not already contained
+        returnBuilder.append(separator);
+        returnBuilder.append(newValue);
+      }
+    } else { // returnValue = newValue because there's no old value
+      returnBuilder.append(newValue); // concatenate new value
+    }
+
+    return returnBuilder.toString();
+  }
 }

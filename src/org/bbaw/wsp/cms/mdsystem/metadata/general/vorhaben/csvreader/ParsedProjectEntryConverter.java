@@ -21,8 +21,8 @@ public class ParsedProjectEntryConverter implements CSVEntryConverter<ParsedProj
   @Override
   public String[] convertEntry(final ParsedProject project) {
     final String[] columns = new String[31];
-    columns[0] = project.getCreator();
-    columns[1] = project.getTitle();
+    columns[0] = project.getVorhaben();
+    columns[1] = project.getProject();
     columns[2] = project.getPublisher();
     columns[3] = project.getDate();
     columns[4] = project.getCoverage();
