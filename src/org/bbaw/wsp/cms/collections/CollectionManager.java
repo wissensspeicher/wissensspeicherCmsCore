@@ -190,7 +190,8 @@ public class CollectionManager {
               mdRecord.setDocId(docId);
               mdRecord.setUri(uri);
               mdRecord.setWebUri(webUri);
-              mdRecord.setCollectionNames(collectionId);
+              if (mdRecord.getCollectionNames() == null)
+                mdRecord.setCollectionNames(collectionId);
               String mainLanguage = collection.getMainLanguage();
               mdRecord.setLanguage(mainLanguage);
               mdRecord.setSchemaName(null);
