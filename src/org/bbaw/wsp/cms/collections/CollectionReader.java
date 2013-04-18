@@ -170,8 +170,14 @@ public class CollectionReader {
 							String xqueryStr = xqueryHit.getContent();
 							String xQueryName = xQueryEvaluator.evaluateAsStringValueJoined(xqueryStr, "xquery/name");
 							String xQueryCode = xQueryEvaluator.evaluateAsStringValueJoined(xqueryStr, "xquery/code");
+              String xQueryPreStr = xQueryEvaluator.evaluateAsStringValueJoined(xqueryStr, "xquery/preStr");
+              String xQueryAfterStr = xQueryEvaluator.evaluateAsStringValueJoined(xqueryStr, "xquery/afterStr");
 							if (xQueryName != null && xQueryCode != null) {
 								XQuery xQuery = new XQuery(xQueryName, xQueryCode);
+								if (xQueryPreStr != null && ! xQueryPreStr.isEmpty())
+								  xQuery.setPreStr(xQueryPreStr);
+                if (xQueryAfterStr != null && ! xQueryAfterStr.isEmpty())
+                  xQuery.setAfterStr(xQueryAfterStr);
 								xqueriesHashtable.put(xQueryName, xQuery);
 							}
 						}
