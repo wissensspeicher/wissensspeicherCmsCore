@@ -316,13 +316,16 @@ public class IndexHandler {
           XQuery xQueryWebId = xqueriesHashtable.get("webId");
           if (xQueryWebId != null) {
             String webId = xQueryWebId.getResult();
-            String collectionName = mdRecord.getCollectionNames();
-            if (collectionName != null && webId != null) {
+            if (webId != null) {
               webId = webId.trim();
-              Collection collection = CollectionReader.getInstance().getCollection(collectionName);
-              String webBaseUrl = collection.getWebBaseUrl();
-              if (webBaseUrl != null)
-                webUri = webBaseUrl + "/" + webId;
+              if (! webId.isEmpty()) {
+                String xQueryPreStr = xQueryWebId.getPreStr();
+                if (xQueryPreStr != null)
+                  webUri = xQueryPreStr + "/" + webId;
+                String xQueryAfterStr = xQueryWebId.getAfterStr();
+                if (xQueryAfterStr != null)
+                  webUri = webUri + xQueryAfterStr;
+              }
             }
           }
         }
