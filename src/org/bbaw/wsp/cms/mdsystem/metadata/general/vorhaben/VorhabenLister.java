@@ -189,7 +189,7 @@ public class VorhabenLister {
   }
 
   private void fetchVorhaben() {
-    final String parsedText = ListerUtil.parseText(docFile);
+    final String parsedText = ""; //ListerUtil.parseText(docFile);
     final Scanner scanner = new Scanner(parsedText);
 
     int i = 0;
