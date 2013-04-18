@@ -42,9 +42,7 @@
     <xqueries>
       <xquery>
         <name>webId</name>
-        <code>/*[1]/*[1]/string(@id)</code>
-        <preStr>http://corpuscoranicum.de/kommentar/index/sure</preStr>
-        <afterStr>/vers/1</afterStr>
+        <code>concat(/*[1]/*[1]/string(@id), '/vers/1')</code>
       </xquery>
     </xqueries>
     <exclude/>

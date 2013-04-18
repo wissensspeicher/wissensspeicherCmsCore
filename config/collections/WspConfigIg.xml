@@ -33,7 +33,6 @@
       <xquery>
         <name>webId</name>
         <code>//*:idno[@type="signature"]/text()</code>
-        <preStr>http://telota.bbaw.de/ig</preStr>
       </xquery>
     </xqueries>
     <exclude/>
