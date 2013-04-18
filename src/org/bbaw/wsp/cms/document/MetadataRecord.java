@@ -8,38 +8,24 @@ import java.util.Hashtable;
 import de.mpg.mpiwg.berlin.mpdl.lt.text.tokenize.XmlTokenizerContentHandler;
 
 public class MetadataRecord {
-  private String docId; // local id: resource identifier in index system, e.g.
-                        // "/edoc/2011/1591/pdf/08_VI.Dokumente.pdf"
-  private String identifier; // local id: identifier field in resource metadata:
-                             // e.g. <meta name="DC.identifier"
-                             // content="47114711">
-  private String uri; // global id: resource URI (uniform resource identifier),
-                      // e.g. http://de.wikipedia.org/wiki/Ramones
-  private String webUri; // global web url, e.g.
-                         // "http://telota.bbaw.de/ig/IG I3 501" or
-                         // "http://edoc.bbaw.de/volltexte/2011/1769/"
-  private String collectionNames; // project name(s), e.g. "edoc" or "ig"
-  private String schemaName; // schema name of resource, e.g. TEI, html, quran
-                             // etc.
-  private String language; // language: ISO 639-3 with 3 characters, e.g. "ger"
-                           // or "eng"
+  private String docId; // local id: resource identifier in index system, e.g. "/edoc/2011/1591/pdf/08_VI.Dokumente.pdf"
+  private String identifier; // local id: identifier field in resource metadata: e.g. <meta name="DC.identifier" content="47114711">
+  private String uri; // global id: resource URI (uniform resource identifier), e.g. http://de.wikipedia.org/wiki/Ramones
+  private String webUri; // global web url, e.g. "http://telota.bbaw.de/ig/IG I3 501" or "http://edoc.bbaw.de/volltexte/2011/1769/"
+  private String collectionNames; // project name(s), e.g. "edoc" or "ig", at this time only exactly one collection name is supported
+  private String schemaName; // schema name of resource, e.g. TEI, html, quran etc.
+  private String language; // language: ISO 639-3 with 3 characters, e.g. "ger" or "eng"
   private String creator; // author(s) of resource
   private String title; // title(s) of resource
   private String publisher; // publisher with place: e.g. Springer, New York
   private Date date; // publication date, e.g. 1958
   private String description; // description, abstract etc.
   private String subject; // free subject keywords
-  private String contributor; // additional contributors of the resource such as
-                              // translators, layouters, designers. These could
-                              // be persons or organizations.
-  private String coverage; // spatial and temporal coverages, e.g.
-                           // "13th century" or "Grand Canyon, Arizona"
-  private String ddc; // subject keywords from DDC (Dewey Decimal
-                      // Classification), e.g. "Philosophie"
-  private String swd; // subject keywords from SWD (Schlagwortnormdatei),
-                      // normally separated by commas
-  private String persons; // main persons in resource (e.g. as list in xml
-                          // format)
+  private String contributor; // additional contributors of the resource such as translators, layouters, designers. These could be persons or organizations.
+  private String coverage; // spatial and temporal coverages, e.g. "13th century" or "Grand Canyon, Arizona"
+  private String ddc; // subject keywords of DDC (Dewey Decimal Classification), e.g. "Philosophie" 
+  private String swd; // subject keywords of SWD (Schlagwortnormdatei), normally separated by commas
+  private String persons; // main persons in resource (e.g. as list in xml format)
   private String places; // main places in resource (e.g. as list in xml format)
   private String type; // mime type: e.g. text/xml
   private String rights; // rights string, e.g. open access
@@ -48,8 +34,8 @@ public class MetadataRecord {
   private Date lastModified; // last modification date in index system
   private String encoding; // charset such as "utf-8" or "iso-8859-1"
   private int pageCount; // number of pages
-  private String urn; // uniform resource name, e.g. the KOBV urn, e.g.
-                      // urn:nbn:de:kobv:b4360-10020
+  private String urn; // uniform resource name, e.g. the KOBV urn, e.g. urn:nbn:de:kobv:b4360-10020
+  private String edocCollection;  // edoc collection. e.g. "BBAW / Schriftenreihen / Berichte und Abhandlungen / Berichte und Abhandlungen - Band 10", in case of multi values: separated by semicolon
   private String documentType; // e.g. the KOBV "Dokumentenart"
   private String isbn; // isbn, e.g. the KOBV ISBN
   private Date creationDate; // e.g. the KOBV "Erstellungsjahr"
@@ -60,15 +46,9 @@ public class MetadataRecord {
   private String tokenNorm; // normalized fulltext tokens of resource
   private String tokenMorph; // morphological fulltext tokens of resource
   private String contentXml; // original xml content of the resources file
-  private String content; // original text content of the resources file
-                          // (without xml tags)
-  private ArrayList<XmlTokenizerContentHandler.Element> xmlElements; // xml
-                                                                     // elements
-                                                                     // of
-                                                                     // resource
-  private Hashtable<String, XQuery> xQueries; // dynamic xQueries of xml
-                                              // resources (with name, code,
-                                              // result)
+  private String content; // original text content of the resources file (without xml tags)
+  private ArrayList<XmlTokenizerContentHandler.Element> xmlElements; // xml elements of resource
+  private Hashtable<String, XQuery> xQueries; // dynamic xQueries of xml resources (with name, code, result)
   private String realDocUrl; // e.g. the URL to the eDoc (not the index.html)
 
   public String getRealDocUrl() {
@@ -109,6 +89,14 @@ public class MetadataRecord {
 
   public void setPublishingDate(final Date publishingDate) {
     this.publishingDate = publishingDate;
+  }
+
+  public String getEdocCollection() {
+    return edocCollection;
+  }
+
+  public void setEdocCollection(String edocCollection) {
+    this.edocCollection = edocCollection;
   }
 
   public String getSwd() {
@@ -410,12 +398,6 @@ public class MetadataRecord {
     this.inPublication = inPublication;
   }
 
-  /*
-   * (non-Javadoc)
-   * 
-   * @see java.lang.Object#toString()
-   */
-  @Override
   public String toString() {
     return "MetadataRecord [docId=" + docId + ", identifier=" + identifier + ", uri=" + uri + ", webUri=" + webUri + ", collectionNames=" + collectionNames + ", schemaName=" + schemaName + ", language=" + language + ", creator=" + creator + ", title=" + title + ", publisher=" + publisher + ", date=" + date + ", description=" + description + ", subject=" + subject + ", contributor=" + contributor + ", coverage=" + coverage + ", ddc=" + ddc + ", swd=" + swd + ", persons=" + persons + ", places=" + places + ", type=" + type + ", rights=" + rights + ", license=" + license + ", accessRights=" + accessRights + ", lastModified=" + lastModified + ", encoding=" + encoding + ", pageCount=" + pageCount + ", urn=" + urn + ", documentType=" + documentType + ", isbn=" + isbn + ", creationDate=" + creationDate + ", publishingDate=" + publishingDate + ", inPublication=" + inPublication + ", tokenOrig=" + tokenOrig + ", tokenReg=" + tokenReg + ", tokenNorm=" + tokenNorm + ", tokenMorph=" + tokenMorph + ", contentXml=" + contentXml + ", content=" + content + ", xmlElements=" + xmlElements + ", xQueries=" + xQueries + ", realDocUrl=" + realDocUrl + "]";
   }
