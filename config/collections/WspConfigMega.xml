@@ -67,6 +67,13 @@
       <field>s</field>
       <field>head</field>
     </fields>
+    <xqueries>
+      <xquery>
+        <name>webId</name>
+        <code>concat('mega', '')</code>
+        <preStr>http://telota.bbaw.de</preStr>
+      </xquery>
+    </xqueries>
     <update>false</update>
   </collection>
 </wsp>
