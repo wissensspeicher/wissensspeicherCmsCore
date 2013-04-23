@@ -4,11 +4,15 @@
     <id>mega</id>
     <name>Marx-Engels-Gesamtausgabe</name>
     <url> 
-      <webBaseUrl>http://telota.bbaw.de/mega</webBaseUrl>
-      <!-- Homepage -->
+      <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/de/Startseite</webBaseUrl>
+
+      <!-- Homepages -->
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/de/Startseite</dataUrl>
+      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/en/Startseite</dataUrl>
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/de/Ueberblick/index.html</dataUrl>
+      <dataUrl>http://telota.bbaw.de/mega</dataUrl>
+      
       <!-- Abteilung 1   -->
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mgh</dataUrl>
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/i21_inhalt.pdf</dataUrl>
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/I_30_inhalt_einf.pdf</dataUrl>
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/I_32_inhalt_einf.pdf</dataUrl>
@@ -21,7 +25,9 @@
       <dataUrl>http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B011-00_ETX.xml</dataUrl>
       <dataUrl>http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B012-00_ETX.xml</dataUrl>
       <dataUrl>http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B013-00_ETX.xml</dataUrl>
-
+      <!--  neuer Mega-Band demnächst verfügbar
+        <dataUrl>http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B015-00_ETX.xml</dataUrl>
+      -->
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/II_11einf.pdf</dataUrl>
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/II12.pdf</dataUrl>
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/II_13einf.pdf</dataUrl>
@@ -50,7 +56,6 @@
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/JB_04.pdf</dataUrl>
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/JB_03.pdf</dataUrl>
 
-		<dataUrl type="eXistDir">http://telota.bbaw.de:8085/exist/servlet/db/mega/docs</dataUrl>
     </url>
     <languages>ger</languages>
     <mainLanguage>ger</mainLanguage>
@@ -62,6 +67,13 @@
       <field>s</field>
       <field>head</field>
     </fields>
+    <xqueries>
+      <xquery>
+        <name>webId</name>
+        <code>concat('mega', '')</code>
+        <preStr>http://telota.bbaw.de</preStr>
+      </xquery>
+    </xqueries>
     <update>false</update>
   </collection>
 </wsp>

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.MdSystemQueryHandler;
 import org.bbaw.wsp.cms.mdsystem.util.MdSystemConfigReader;
 
@@ -29,12 +30,13 @@ import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
  */
 public class JenaMain {
 
-  private static final String datasetPath = MdSystemConfigReader.getInstance().getConfig().getDatasetPath();
+  private static final String datasetPath = MdSystemConfigReader.getInstance().getRdfMdDir();
   private static final String EDOC = "C:/Dokumente und Einstellungen/wsp-shk1/Eigene Dateien/Development/ParserTest/XSLTTest/outputs/v2_29_11_2012/eDocs";
 
   protected RdfHandler rdfHandler;
   protected WspRdfStore wspStore;
   protected Dataset dataset;
+  Logger logger;
 
   public Dataset getDataset() {
     return dataset;
@@ -49,6 +51,8 @@ public class JenaMain {
 
   public void initStore() throws ApplicationException {
     wspStore = WspRdfStore.getInstance();
+    logger = Logger.getLogger(JenaMain.class);
+    logger.info("datasetPath : "+datasetPath);
     wspStore.createStore(datasetPath);
     wspStore.createModelFactory();
     dataset = wspStore.getDataset();
@@ -89,19 +93,19 @@ public class JenaMain {
   private void createNamedModelsFromOreSets(final String location) {
     // read all mods rdf
     final List<String> pathList = extractPathLocally(location);
-    System.out.println("pathlist : " + pathList.size());
+    logger.info("pathlist : " + pathList.size());
 
     final long start = System.currentTimeMillis();
     wspStore.openDataset();
     for (final String string : pathList) {
       final Model freshsModel = wspStore.getFreshModel();
       final Model m = rdfHandler.fillModelFromFile(freshsModel, string);
-      System.out.println("File path: " + string);
+      logger.info("File path: " + string);
       final String modsRdfAbout = rdfHandler.scanID(string);
       if (modsRdfAbout != null) {
         try {
           wspStore.addNamedModelToWspStore(modsRdfAbout, m);
-          System.out.println(modsRdfAbout + " successfully added.");
+          logger.info(modsRdfAbout + " successfully added.");
         } catch (final ApplicationException e) {
           // TODO Auto-generated catch block
           e.printStackTrace();
@@ -109,8 +113,7 @@ public class JenaMain {
       }
     }
 
-     System.out.println("set read in time elapsed : "
-     + (System.currentTimeMillis() - start) / 1000);
+    logger.info("set read in time elapsed : " + (System.currentTimeMillis() - start) / 1000);
     wspStore.closeDataset();
   }
 
@@ -122,7 +125,7 @@ public class JenaMain {
     final Iterator<String> ite = dataset.listNames();
     while (ite.hasNext()) {
       final String s = ite.next();
-      System.out.println("name : " + s);
+      logger.info("name : " + s);
     }
     wspStore.closeDataset();
   }

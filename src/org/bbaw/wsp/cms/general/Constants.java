@@ -125,7 +125,6 @@ public class Constants {
   }
 
   /**
-   * 
    * @return the dir to the mdsystem.xml
    */
   public String getMdsystemConfDir() {
@@ -134,7 +133,6 @@ public class Constants {
 
   /**
    * @return the path to the mdsystem.xml
-   * @return
    */
   public String getMdsystemConfFile() {
     return getMdsystemConfDir() + "/mdsystem.xml";
@@ -142,9 +140,31 @@ public class Constants {
 
   /**
    * @return the path to the mdsystem.xml
-   * @return
    */
   public String getMdsystemNormdataFile() {
-    return getMdsystemConfDir() + "/export_normdata_clean_130112.rdf";
+    return getMdsystemConfDir() + "/export_normdata_clean_130112.rdf"; 
   }
+
+  /**
+  * @return the path to the rdfStoreRdfDir
+  */
+ public String getRdfStoreMdDir() {
+   if (properties != null) {
+     return properties.getProperty("rdfStoreRdfDir");
+   } else {
+     return "no properties file";
+   }
+ }
+ 
+ /**
+  * @return the path to the rdfStoreLarqDir
+  */
+ public String getRdfStoreLarqDir() {
+   if (properties != null) {
+     return properties.getProperty("rdfStoreLarqDir");
+   } else {
+     return "no properties file";
+   }
+ }
+ 
 }

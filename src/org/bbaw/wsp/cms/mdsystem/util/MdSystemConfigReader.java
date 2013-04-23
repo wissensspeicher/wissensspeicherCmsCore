@@ -4,6 +4,7 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.apache.log4j.Logger;
 import org.bbaw.wsp.cms.general.Constants;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
@@ -52,6 +53,7 @@ public class MdSystemConfigReader {
     final XQueryEvaluator evaluator = new XQueryEvaluator();
     URL configFileUrl;
     try {
+      Logger logger = Logger.getLogger(MdSystemConfigReader.class);
       configFileUrl = new URL("file:///" + new File(configFilePath).getAbsolutePath());
       final String eDocTemplatePath = evaluator.evaluateAsString(configFileUrl, "/mdsystem/converter/templates/eDoc/templatePath/text()");
       record.seteDocTemplatePath(eDocTemplatePath);
@@ -89,5 +91,14 @@ public class MdSystemConfigReader {
     String configFilePath = Constants.getInstance().getMdsystemNormdataFile();
     return configFilePath;
   }
-  
+ 
+  public String getRdfMdDir(){
+    String rdfMdDir = Constants.getInstance().getRdfStoreMdDir();
+    return rdfMdDir;
+  }
+
+  public String getRdfLarqDir(){
+    String larqDir = Constants.getInstance().getRdfStoreLarqDir();
+    return larqDir;
+  }
 }

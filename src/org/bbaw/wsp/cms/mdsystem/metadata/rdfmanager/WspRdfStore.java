@@ -3,6 +3,8 @@ package org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.hp.hpl.jena.query.Dataset;
 import com.hp.hpl.jena.query.ReadWrite;
 import com.hp.hpl.jena.rdf.model.InfModel;
@@ -32,6 +34,7 @@ public class WspRdfStore {
   private List<String> modelList;
   private static WspRdfStore wspRdfStore;
   private boolean force;
+  Logger logger;
 
   /**
    * The global (persistent) store index.
@@ -70,8 +73,10 @@ public class WspRdfStore {
    * @throws ApplicationException
    */
   public void createStore(final String pathtoSave) throws ApplicationException {
-    System.out.println("create Store");
+    logger = Logger.getLogger(WspRdfStore.class);
+    logger.info("create Store");
     directory = pathtoSave;
+    logger.info("directory : "+directory);
     dataset = TDBFactory.createDataset(directory);
     if (defaultModel == null) {
       defaultModel = dataset.getDefaultModel();
