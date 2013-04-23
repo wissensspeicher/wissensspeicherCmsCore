@@ -23,7 +23,6 @@ import com.hp.hpl.jena.query.QueryExecutionFactory;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.query.ResultSetFormatter;
 import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ReifiedStatement;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 
@@ -433,7 +432,8 @@ public class JenaMainForAI {
 			System.err.println(e);
 		} finally {
 
-			fos.close();
+			if (fos != null)
+				fos.close();
 
 		}
 	}
@@ -631,26 +631,6 @@ public class JenaMainForAI {
 			quExec.close();
 		}
 		wspStore.closeDataset();
-	}
-
-	/**
-	 * TODO still considering if we really need this
-	 */
-	@SuppressWarnings("unused")
-	private void reify() {
-		// turn triples into quads
-		wspStore.openDataset();
-		Model modsModel = dataset.getNamedModel("http://wsp.bbaw.de/oreTestBriefe");
-		StmtIterator stit = modsModel.listStatements();
-		while (stit.hasNext()) {
-			Statement state = stit.next();
-			// System.out.println("statements : "+state);
-			ReifiedStatement reifSt = state
-					.createReifiedStatement("http://wsp.bbaw.de/oreTestBriefe");
-			System.out.println("is reified : " + state.isReified());
-			System.out.println("reified statement : " + reifSt.toString());
-		}
-		System.out.println(rdfHandler.getAllTriples(model));
 	}
 
 	/**
