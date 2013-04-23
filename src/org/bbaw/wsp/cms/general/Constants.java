@@ -45,10 +45,10 @@ public class Constants {
     }
     configDirectory = configDir.getAbsolutePath();
     if (configDir.exists()) {
-      File coreConstantsPropFile = new File(configDirectory + "/core/constants.properties");
+      final File coreConstantsPropFile = new File(configDirectory + "/core/constants.properties");
       if (coreConstantsPropFile.exists()) {
         try {
-          FileInputStream in = new FileInputStream(coreConstantsPropFile);
+          final FileInputStream in = new FileInputStream(coreConstantsPropFile);
           properties = new Properties();
           properties.load(in);
           LOGGER.info("CMS core property file: " + coreConstantsPropFile.getAbsolutePath() + " loaded");
@@ -62,25 +62,28 @@ public class Constants {
       LOGGER.info("Application configuration directory: " + configDirectory + " not found");
     }
     // a little hack: this is done so that https urls could be fetched (e.g. by FileUtils.copyURLToFile) without certificate error
-    TrustManager[] trustAllCerts = new TrustManager[] {
-        new X509TrustManager() {
-          public X509Certificate[] getAcceptedIssuers() {
-            return null;
-          }
-          public void checkClientTrusted(X509Certificate[] certs, String authType) {
-            //No need to implement.
-          }
-          public void checkServerTrusted(X509Certificate[] certs, String authType) {
-            //No need to implement.
-          }
-        }
-    };
+    final TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
+      @Override
+      public X509Certificate[] getAcceptedIssuers() {
+        return null;
+      }
+
+      @Override
+      public void checkClientTrusted(final X509Certificate[] certs, final String authType) {
+        // No need to implement.
+      }
+
+      @Override
+      public void checkServerTrusted(final X509Certificate[] certs, final String authType) {
+        // No need to implement.
+      }
+    } };
     try {
       // Install the all-trusting trust manager
-      SSLContext sc = SSLContext.getInstance("SSL");
+      final SSLContext sc = SSLContext.getInstance("SSL");
       sc.init(null, trustAllCerts, new SecureRandom());
       HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
-    } catch (Exception e) {
+    } catch (final Exception e) {
       e.printStackTrace();
     }
   }
@@ -136,9 +139,8 @@ public class Constants {
   public String getMdsystemConfFile() {
     return getMdsystemConfDir() + "/mdsystem.xml";
   }
-  
-  
-   /**
+
+  /**
    * @return the path to the mdsystem.xml
    * @return
    */
