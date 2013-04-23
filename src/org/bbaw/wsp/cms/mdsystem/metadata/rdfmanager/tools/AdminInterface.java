@@ -334,17 +334,53 @@ public class AdminInterface extends JFrame {
 
 		File dir = new File(str);
 		ArrayList<File> liste = new ArrayList<File>();
-		println("\nValid Files in the Folder:\n");
-		for (File f : dir.listFiles()) {
-			if (f.getName().toLowerCase().endsWith(".rdf")
-					|| f.getName().toLowerCase().endsWith(".ttl")
-					|| f.getName().toLowerCase().endsWith(".nt"))
-				liste.add(f);
-			println(" - " + f.getName());
 
+		ArrayList<String> folderList = new ArrayList<String>();
+		folderList.add(str);
+		folderList = scanFolder(folderList, dir);
+		println("\n");
+		for (String path : folderList) {
+			println("Current directory is " + path);
+
+			println("Valid Files in the Folder:\n");
+			for (File f : new File(path).listFiles()) {
+				if (f.getName().toLowerCase().endsWith(".rdf")
+						|| f.getName().toLowerCase().endsWith(".ttl")
+						|| f.getName().toLowerCase().endsWith(".nt")) {
+					liste.add(f);
+					println(" - " + f.getName());
+				}
+			}
+			println("\n");
 		}
 
 		return liste;
+	}
+
+	/**
+	 * Methoded lists all folders in a given dir and returns them, needs a list to
+	 * write in & a root folder
+	 * 
+	 * @param folderlist
+	 * @param root
+	 * @return
+	 */
+	private ArrayList<String> scanFolder(ArrayList<String> folderlist, File root) {
+
+		ArrayList<File> tempFolderList = new ArrayList<File>();
+		for (File f : root.listFiles()) {
+			if (f.isDirectory()) {
+				tempFolderList.add(f);
+			}
+		}
+
+		for (File f : tempFolderList) {
+			scanFolder(folderlist, f);
+			folderlist.add(f.getAbsolutePath());
+
+		}
+
+		return folderlist;
 	}
 
 	/**
