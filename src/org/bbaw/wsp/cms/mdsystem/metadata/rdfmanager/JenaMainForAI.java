@@ -748,8 +748,9 @@ public class JenaMainForAI {
 		if (f.isDirectory()) {
 			File[] filelist = f.listFiles();
 			for (File file : filelist) {
-				if (file.getName().toLowerCase().contains("rdf")
-						|| file.getName().toLowerCase().endsWith(".nt")) {
+				if (file.getName().toLowerCase().endsWith(".rdf")
+						|| file.getName().toLowerCase().endsWith(".nt")
+						|| file.getName().toLowerCase().endsWith(".ttl")) {
 					if (!startUrl.endsWith("/")) {
 						pathList.add(startUrl + "/" + file.getName());
 					} else {
