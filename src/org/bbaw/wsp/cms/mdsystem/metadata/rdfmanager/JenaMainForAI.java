@@ -130,7 +130,13 @@ public class JenaMainForAI {
 				wspStore.setForce(true);
 				if (source != null) {
 					if (new File(source).isDirectory()) {
-						createNamedModelsFromOreSets(source);
+						ArrayList<String> folders = new ArrayList<String>();
+						folders.add(source);
+						folders = scanFolder(folders, new File(source));
+						for (String s : folders) {
+							createNamedModelsFromOreSets(s);
+						}
+
 					} else
 						createNewModelFromSingleOre(source);
 				}
@@ -147,6 +153,32 @@ public class JenaMainForAI {
 
 		editStore.run();
 
+	}
+
+	/**
+	 * Methoded lists all folders in a given dir and returns them, needs a list to
+	 * write in & a root folder
+	 * 
+	 * @param folderlist
+	 * @param root
+	 * @return
+	 */
+	private ArrayList<String> scanFolder(ArrayList<String> folderlist, File root) {
+
+		ArrayList<File> tempFolderList = new ArrayList<File>();
+		for (File f : root.listFiles()) {
+			if (f.isDirectory()) {
+				tempFolderList.add(f);
+			}
+		}
+
+		for (File f : tempFolderList) {
+			scanFolder(folderlist, f);
+			folderlist.add(f.getAbsolutePath());
+
+		}
+
+		return folderlist;
 	}
 
 	/**
