@@ -39,7 +39,7 @@ public class JenaMainForAI {
 	private String storeLocation = "";
 	private String seperator;
 	private ArrayList<String> modelList = new ArrayList<String>();
-	private static Logger LOGGER = Logger.getLogger(CollectionReader.class);
+	private static Logger LOGGER = Logger.getLogger(JenaMainForAI.class);
 	private StorePathHandler pathHandler = new StorePathHandler();
 
 	/**
