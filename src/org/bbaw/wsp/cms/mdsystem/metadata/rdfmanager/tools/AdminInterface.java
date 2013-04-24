@@ -7,10 +7,8 @@ import java.awt.Panel;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -570,46 +568,6 @@ public class AdminInterface extends JFrame {
 
 			else
 				return false;
-		}
-	}
-
-	/**
-	 * Executes Bash jobs
-	 * 
-	 * @param cmd
-	 * @param cwd
-	 */
-	@SuppressWarnings("unused")
-	private void bash(String cmd, File cwd) {
-		if (System.getProperty("os.name").startsWith("Windows")) {
-			println("only works with Unix-shell!");
-			return;
-		}
-		try {
-			println("Path: " + cwd.getAbsolutePath());
-			println(cmd);
-			ProcessBuilder pb = new ProcessBuilder("bash", "-c", cmd);
-			if (cwd != null) {
-				pb.directory(cwd);
-			}
-			pb.redirectErrorStream(true);
-			Process pr = pb.start();
-			BufferedReader input = new BufferedReader(new InputStreamReader(
-					pr.getInputStream()));
-
-			String line = null;
-
-			while ((line = input.readLine()) != null) {
-				println(line);
-			}
-
-			int exitVal = pr.waitFor();
-			if (exitVal != 0) {
-				throw new Error("Failure while executing bash command '" + cmd
-						+ "'. Return code = " + exitVal);
-			}
-		} catch (Exception e) {
-			throw new Error("Could not execute bash command '" + cmd + "'.", e);
 		}
 	}
 }
