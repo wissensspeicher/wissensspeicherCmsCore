@@ -5,6 +5,7 @@ package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
 
 import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.WspRdfStore;
 
@@ -22,8 +23,7 @@ public class HitGraph {
    * Create a new {@link HitGraph}.
    * 
    * @param namedGraphUrl
-   *          the name (an URL) of the named graph as stored in the
-   *          {@link WspRdfStore}
+   *          the name (an URL) of the named graph as stored in the {@link WspRdfStore}
    */
   public HitGraph(final URL namedGraphUrl) {
     this.namedGraphUrl = namedGraphUrl;
@@ -47,14 +47,22 @@ public class HitGraph {
   }
 
   /**
-   * Add a {@link HitStatement}. Should be done by the {@link SparqlAdapter}
-   * only.
+   * Add a {@link HitStatement}. Should be done by the {@link SparqlAdapter} only.
    * 
    * @param statement
    *          a {@link HitStatement}
    */
   public void addStatement(final HitStatement statement) {
     hitStatements.add(statement);
+  }
+
+  /**
+   * Return the {@link HitStatement} of this {@link HitGraph}.
+   * 
+   * @return
+   */
+  public Collection<HitStatement> getAllHitStatements() {
+    return hitStatements;
   }
 
   /*

@@ -85,21 +85,26 @@ public class IndexStore {
 
   /**
    * 
-   * @return the latest {@link IndexLARQ}
+   * @return the latest {@link IndexLARQ} or null if the {@link IndexStore} wasn't initialized.
    */
   public IndexLARQ getCurrentIndex() {
-    return larqBuilder.getIndex();
+    if (larqBuilder != null) {
+      return larqBuilder.getIndex();
+    }
+    return null;
   }
 
   /**
    * Close the current index.
    */
   public void commitIndex() {
-    larqBuilder.flushWriter();
-    larqBuilder.setAvoidDuplicates(false);
-    logger = Logger.getLogger(WspRdfStore.class);
-    logger.info("setting larq index");
-    LARQ.setDefaultIndex(getCurrentIndex());
+    if (larqBuilder != null) {
+      larqBuilder.flushWriter();
+      larqBuilder.setAvoidDuplicates(false);
+      logger = Logger.getLogger(WspRdfStore.class);
+      logger.info("setting larq index");
+      LARQ.setDefaultIndex(getCurrentIndex());
+    }
   }
 
   /**
@@ -126,6 +131,8 @@ public class IndexStore {
    * Close the index. Consider, that no more updates on the index will be possible.
    */
   public void closeIndex() {
-    larqBuilder.closeWriter();
+    if (larqBuilder != null) {
+      larqBuilder.closeWriter();
+    }
   }
 }

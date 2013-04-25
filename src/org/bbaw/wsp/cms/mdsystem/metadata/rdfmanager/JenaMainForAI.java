@@ -73,7 +73,7 @@ public class JenaMainForAI {
 					try {
 						generatePath();
 						pathHandler.setPath(storeLocation);
-						getModels();
+
 						savePathFile();
 						LOGGER.info("New Dataset was created in " + storeLocation);
 					} catch (IOException e) {
@@ -141,6 +141,7 @@ public class JenaMainForAI {
 				}
 				try {
 					savePathFile();
+
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
