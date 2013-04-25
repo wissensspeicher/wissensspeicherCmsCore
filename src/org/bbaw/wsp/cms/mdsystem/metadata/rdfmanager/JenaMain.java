@@ -63,7 +63,8 @@ public class JenaMain {
    * call methods from here
    */
   private void doYourWork() {
-    createNamedModelsFromOreSets("C:/Dokumente und Einstellungen/wsp-shk1/Eigene Dateien/Development/ParserTest/XSLTTest/outputs/v2_29_11_2012/eDocs");
+    wspStore.setForce(true);
+    createNamedModelsFromOreSets("C:/Dokumente und Einstellungen/wsp-shk1/Eigene Dateien/Development/ParserTest/XSLTTest/outputs/v2_29_11_2012/mods");
     // createNewModelFromSingleOre(oreBiblioNeu);
     // getAllNamedModelsInDataset();
     // wspStore.openDataset();
@@ -74,7 +75,6 @@ public class JenaMain {
     // "http://purl.org/dc/terms/abstract", "knowledge browsing");
     // wspStore.closeDataset();
     // listAllStatementsbyJena("http://edoc.bbaw.de/volltexte/2010/1347/pdf/13_brown.pdf");
-    wspStore.setForce(true);
     // createNamedModelsFromOreSets(EDOC);
     // createNamedModelsFromOreSets(MODS);
     // createNewModelFromSingleOre(EDOC_1);
@@ -206,7 +206,7 @@ public class JenaMain {
     return m;
   }
 
-  public StoreIndex getIndexStore() {
+  public IndexStore getIndexStore() {
     return wspStore.getIndexStore();
   }
 
