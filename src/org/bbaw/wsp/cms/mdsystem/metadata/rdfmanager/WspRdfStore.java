@@ -13,6 +13,7 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.ModelMaker;
 import com.hp.hpl.jena.tdb.TDB;
 import com.hp.hpl.jena.tdb.TDBFactory;
+import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.IndexStore;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 
@@ -39,14 +40,14 @@ public class WspRdfStore {
   /**
    * The global (persistent) store index.
    */
-  private StoreIndex indexStore;
+  private IndexStore indexStore;
   private Model freshModel;
 
   /**
    * 
-   * @return {@link StoreIndex}
+   * @return {@link IndexStore}
    */
-  public StoreIndex getIndexStore() {
+  public IndexStore getIndexStore() {
     return indexStore;
   }
 
@@ -76,15 +77,14 @@ public class WspRdfStore {
     logger = Logger.getLogger(WspRdfStore.class);
     logger.info("create Store");
     directory = pathtoSave;
-    logger.info("directory : "+directory);
+    logger.info("directory : " + directory);
     dataset = TDBFactory.createDataset(directory);
     if (defaultModel == null) {
       defaultModel = dataset.getDefaultModel();
     }
     modelList = new ArrayList<String>();
     TDB.getContext().set(TDB.symUnionDefaultGraph, true);
-    // loadIndexStore();
-    indexStore = new StoreIndex(directory);
+    indexStore = new IndexStore();
   }
 
   public void createModelFactory() {
@@ -105,8 +105,7 @@ public class WspRdfStore {
   }
 
   /**
-   * Add a named model to the store. If you want to force the operation although
-   * a named model already exists under that name, use the setForce() method.
+   * Add a named model to the store. If you want to force the operation although a named model already exists under that name, use the setForce() method.
    * 
    * @param name
    *          identifier of the model
@@ -119,7 +118,7 @@ public class WspRdfStore {
       if (model != null) {
         dataset.addNamedModel(name, model);
         modelList.add(name);
-        // this.indexStore.addModelToIndex(model);
+        // indexStore.addModelToIndex(model);
       }
     } else {
       throw new ApplicationException("You're not allowed to add a named model which already exists. If you want to force that, use setForce() method on the store.");
@@ -139,14 +138,18 @@ public class WspRdfStore {
 
   public void openDataset() {
     dataset.begin(ReadWrite.WRITE);
+    indexStore.initializeIndexBuilder();
   }
 
   /**
    * Close transaction and "commit" current LARQ index.
    */
   public void closeDataset() {
-    indexStore.commitIndex();
-    // freshModel.unregister(indexStore.getLarqBuilder());
+    if (indexStore.getLarqBuilder() != null) {
+      freshModel.unregister(indexStore.getLarqBuilder());
+      indexStore.commitIndex();
+      indexStore.closeIndex();
+    }
     dataset.commit();
     dataset.end();
     // persistIndexStore();
@@ -176,8 +179,7 @@ public class WspRdfStore {
   }
 
   /**
-   * Create a lucene index for a given model. The index will be activated
-   * automaticly.
+   * Create a lucene index for a given model. The index will be activated automaticly.
    * 
    * @param model
    *          - the {@link Model} for which the index is created.
@@ -195,8 +197,7 @@ public class WspRdfStore {
   }
 
   /**
-   * Set the force mode, e.g. to allow a client to add a named model which
-   * already exists in the dataset.
+   * Set the force mode, e.g. to allow a client to add a named model which already exists in the dataset.
    * 
    * @param force
    *          set to true if you want to enable force.

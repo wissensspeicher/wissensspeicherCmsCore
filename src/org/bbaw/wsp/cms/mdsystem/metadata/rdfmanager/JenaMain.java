@@ -20,8 +20,7 @@ import com.hp.hpl.jena.rdf.model.Model;
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 
 /**
- * This class is designed to execute general tasks and to activate and control @RdfHandler
- * and @WspRdfStore
+ * This class is designed to execute general tasks and to activate and control @RdfHandler and @WspRdfStore
  * 
  * @author marco juergens
  * @author sascha feldmann
@@ -52,19 +51,19 @@ public class JenaMain {
   public void initStore() throws ApplicationException {
     wspStore = WspRdfStore.getInstance();
     logger = Logger.getLogger(JenaMain.class);
-    logger.info("datasetPath : "+datasetPath);
+    logger.info("datasetPath : " + datasetPath);
     wspStore.createStore(datasetPath);
     wspStore.createModelFactory();
     dataset = wspStore.getDataset();
     rdfHandler = new RdfHandler();
-//     doYourWork();
+    // doYourWork();
   }
 
   /**
    * call methods from here
    */
   private void doYourWork() {
-     createNamedModelsFromOreSets("/home/juergens/wspEtc/rdfData/v2_29_11_2012/mods");
+    createNamedModelsFromOreSets("C:/Dokumente und Einstellungen/wsp-shk1/Eigene Dateien/Development/ParserTest/XSLTTest/outputs/v2_29_11_2012/eDocs");
     // createNewModelFromSingleOre(oreBiblioNeu);
     // getAllNamedModelsInDataset();
     // wspStore.openDataset();
@@ -76,7 +75,7 @@ public class JenaMain {
     // wspStore.closeDataset();
     // listAllStatementsbyJena("http://edoc.bbaw.de/volltexte/2010/1347/pdf/13_brown.pdf");
     wspStore.setForce(true);
-    createNamedModelsFromOreSets(EDOC);
+    // createNamedModelsFromOreSets(EDOC);
     // createNamedModelsFromOreSets(MODS);
     // createNewModelFromSingleOre(EDOC_1);
     // model.close();
@@ -85,8 +84,7 @@ public class JenaMain {
   }
 
   /**
-   * creates a namedmodel from code this should later be done by fuseki over
-   * http
+   * creates a namedmodel from code this should later be done by fuseki over http
    * 
    * @param location
    */
@@ -220,8 +218,7 @@ public class JenaMain {
   }
 
   /**
-   * Return the number of triples of all named graphs (the union of all graphes
-   * in the dataset)
+   * Return the number of triples of all named graphs (the union of all graphes in the dataset)
    * 
    * @return
    */

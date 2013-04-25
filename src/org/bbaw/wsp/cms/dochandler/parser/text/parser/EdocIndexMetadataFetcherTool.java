@@ -65,17 +65,17 @@ public class EdocIndexMetadataFetcherTool {
       in = reader.read(srcUrl);
 
       // the charset to be used for the decoding - see the index.html headers
-      final Charset charsetUtf16 = Charset.forName(INDEX_ENCODING);
+      final Charset charset = Charset.forName(INDEX_ENCODING);
       final Scanner scanner = new Scanner(in);
       scanner.useDelimiter("\n"); // delimiter via line break
       final StringBuilder builder = new StringBuilder();
       while (scanner.hasNext()) {
         final String nextLine = scanner.nextLine();
         final byte[] byteSequence = nextLine.getBytes();
-        final String strUtf8 = new String(byteSequence, charsetUtf16);
+        final String strCharset = new String(byteSequence, charset);
 
         // builder.append(scanner.nextLine());
-        builder.append(strUtf8);
+        builder.append(strCharset);
       }
       scanner.close();
       in.close();
