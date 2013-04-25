@@ -201,25 +201,7 @@ public class AdminInterface extends JFrame {
 
 					LOGGER.info(des + " as source selected.");
 				} else if (ev.getActionCommand().equals(LOAD_NAMEDMODELLS_BUTTON)) {
-					if (desF == null) {
-						println("no Destination selected");
-						return;
-					}
-					jenaMain.setDestination(desF);
-					ArrayList<String> models = jenaMain.getModels();
-					if (models.isEmpty()) {
-						println("There are no models in the choosen Dataset\n" + desF);
-						return;
-					}
-					for (String s : models) {
-						if (checkAlreadyinList(s))
-							combobox.addItem(s);
-
-					}
-					combobox.showPopup();
-
-					println("Loaded all named Graphes from " + desF);
-					namedGraph = (String) combobox.getItemAt(0);
+					getModels();
 
 				} else if (ev.getActionCommand().equals(REMOVE_BUTTON)) {
 					if (desF == null) {
@@ -272,6 +254,7 @@ public class AdminInterface extends JFrame {
 
 					try {
 						execution();
+						getModels();
 						println("finished!");
 
 					} catch (Exception e) {
@@ -283,6 +266,31 @@ public class AdminInterface extends JFrame {
 
 			}
 		});
+	}
+
+	/**
+	 * Methode asks Triplestore for containing Models
+	 */
+	private void getModels() {
+		if (desF == null) {
+			println("no Destination selected");
+			return;
+		}
+		jenaMain.setDestination(desF);
+		ArrayList<String> models = jenaMain.getModels();
+		if (models.isEmpty()) {
+			println("There are no models in the choosen Dataset\n" + desF);
+			return;
+		}
+		for (String s : models) {
+			if (checkAlreadyinList(s))
+				combobox.addItem(s);
+
+		}
+		combobox.showPopup();
+
+		println("Loaded all named Graphes from " + desF);
+		namedGraph = (String) combobox.getItemAt(0);
 	}
 
 	/**
@@ -330,6 +338,8 @@ public class AdminInterface extends JFrame {
 
 	private ArrayList<File> scanforRDF(String str) {
 
+		if (str == null)
+			return null;
 		File dir = new File(str);
 		ArrayList<File> liste = new ArrayList<File>();
 
