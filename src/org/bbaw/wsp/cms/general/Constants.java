@@ -140,7 +140,7 @@ public class Constants {
    * @return the path to the mdsystem.xml
    */
   public String getMdsystemNormdataFile() {
-    return getMdsystemConfDir() + "/export_normdata_clean_130112.rdf"; 
+    return getMdsystemConfDir() + "/wsp.normdata.rdf"; 
   }
 
   /**
