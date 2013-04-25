@@ -1,6 +1,5 @@
 package org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager;
 
-import java.io.File;
 import java.util.Iterator;
 
 import org.apache.jena.larq.HitLARQ;
@@ -11,20 +10,16 @@ import org.apache.log4j.Logger;
 import org.bbaw.wsp.cms.mdsystem.util.MdSystemConfigReader;
 
 import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.Statement;
-import com.hp.hpl.jena.rdf.model.StmtIterator;
 
 /**
  * This class encapsulates the larq index to make it persistent.
  * 
- * @ Project : Untitled @ File Name : StoreIndex.java @ Date : 10.01.2013 @
- * Author : Sascha Feldmann
+ * @ Project : Untitled @ File Name : StoreIndex.java @ Date : 10.01.2013 @ Author : Sascha Feldmann
  */
 
-public class StoreIndex {
+public class IndexStore {
   /**
-   * Define the Index Save Location here. Should be defined relative to the
-   * project.
+   * Define the Index Save Location here. Should be defined relative to the project.
    */
   private static final String LARQ_DIR = MdSystemConfigReader.getInstance().getRdfLarqDir();
 
@@ -40,26 +35,24 @@ public class StoreIndex {
   }
 
   /**
-   * Create a new (persistent) StoreIndex within the default directory (mdsystem
-   * config)
+   * initialize the {@link IndexBuilderString}
    */
-  public StoreIndex() {
+  public void initializeIndexBuilder() {
+    if (larqBuilder != null) {
+      commitIndex();
+      closeIndex();
+    }
+    getLogger().info("Initializing LARQ index store in dir " + LARQ_DIR);
     larqBuilder = new IndexBuilderString(LARQ_DIR);
-    commitIndex();
+    commitIndex(); // commit the index immediately
   }
 
-  /**
-   * Create a new (persistent) StoreIndex relative to the {@link WspRdfStore}.
-   * 
-   * @param directory
-   */
-  public StoreIndex(final String directory) {
-    final File subDir = new File(new File(directory), "larqindex");
-    if (!subDir.exists()) {
-      subDir.mkdir();
+  private Logger getLogger() {
+    if (logger == null) {
+      final Logger logger = Logger.getLogger(getClass());
+      this.logger = logger;
     }
-    larqBuilder = new IndexBuilderString(subDir);
-    commitIndex();
+    return logger;
   }
 
   /**
@@ -68,11 +61,25 @@ public class StoreIndex {
    * @param m
    */
   public void addModelToIndex(final Model m) {
-    // larqBuilder.indexStatements(m.listStatements());
-    while (m.listStatements().hasNext()) {
-      final Statement s = m.listStatements().next();
-      larqBuilder.indexStatement(s);
-    }
+    /*
+     * This shouldn't be done. It doesn't really work.
+     */
+    // try {
+    larqBuilder.indexStatements(m.listStatements());
+    // } catch (final Exception e) {
+    // // don't do anything...
+    // }
+    // while (m.listStatements().hasNext()) {
+    // final Statement s = m.listStatements().next();
+    // if (null != s) {
+    // try {
+    // larqBuilder.indexStatement(s);
+    // } catch (final Exception e) {
+    // // logger.error("StoreIndex: Couldn't index model " + m);
+    // }
+    //
+    // }
+    // }
     commitIndex();
   }
 
@@ -88,7 +95,8 @@ public class StoreIndex {
    * Close the current index.
    */
   public void commitIndex() {
-    larqBuilder.closeWriter();
+    larqBuilder.flushWriter();
+    larqBuilder.setAvoidDuplicates(false);
     logger = Logger.getLogger(WspRdfStore.class);
     logger.info("setting larq index");
     LARQ.setDefaultIndex(getCurrentIndex());
@@ -112,5 +120,12 @@ public class StoreIndex {
       System.out.println("-----------");
     }
     System.out.println("finished lucene search");
+  }
+
+  /**
+   * Close the index. Consider, that no more updates on the index will be possible.
+   */
+  public void closeIndex() {
+    larqBuilder.closeWriter();
   }
 }

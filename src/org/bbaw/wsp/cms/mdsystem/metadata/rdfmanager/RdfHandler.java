@@ -9,6 +9,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
 import org.bbaw.wsp.cms.mdsystem.metadata.general.extractor.RdfMetadataExtractor;
 import org.bbaw.wsp.cms.mdsystem.metadata.general.extractor.factory.MetadataExtractorFactory;
 import org.openjena.riot.Lang;
@@ -50,10 +51,10 @@ import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 public class RdfHandler {
 
   private static final String URN_UNION = "urn:x-arq:UnionGraph";
+  private Logger logger;
 
   /**
-   * adds a certain statement without Sparql if the ressource already exists
-   * nothing is added
+   * adds a certain statement without Sparql if the ressource already exists nothing is added
    * 
    * @param model
    * @param uri
@@ -157,8 +158,7 @@ public class RdfHandler {
   }
 
   /**
-   * Perform a select query on a dataset. Use the union model of all named
-   * graphes to execute the query.
+   * Perform a select query on a dataset. Use the union model of all named graphes to execute the query.
    * 
    * @param sparqlSelect
    * @param dataset
@@ -206,8 +206,7 @@ public class RdfHandler {
    * takes a file and scans it for the about id
    * 
    * @param file
-   * @return String as like as ID of the file or null if the document couldn't
-   *         be identificated.
+   * @return String as like as ID of the file or null if the document couldn't be identificated.
    */
 
   public String scanID(final String file) {
@@ -231,9 +230,7 @@ public class RdfHandler {
   }
 
   /**
-   * Helper method that splits up a URI into a namespace and a local part. It
-   * uses the prefixMap to recognize namespaces, and replaces the namespace part
-   * by a prefix.
+   * Helper method that splits up a URI into a namespace and a local part. It uses the prefixMap to recognize namespaces, and replaces the namespace part by a prefix.
    * 
    * @param prefixMap
    * @param resource
@@ -281,8 +278,7 @@ public class RdfHandler {
   }
 
   /**
-   * Fetch a {@link Collection} of all {@link URL} of the named graphes within a
-   * dataset.
+   * Fetch a {@link Collection} of all {@link URL} of the named graphes within a dataset.
    * 
    * @param dataset
    *          the {@link Dataset}
@@ -295,12 +291,37 @@ public class RdfHandler {
     while (it.hasNext()) {
       final Node graphName = it.next();
       try {
-        System.out.println(graphName);
         urls.add(new URL(graphName.getURI()));
       } catch (final MalformedURLException e) {
-        System.err.println("RdfHandler: Error while trying to fetch named graphes URI\n " + e.getMessage());
+        getLogger().error("RdfHandler: Error while trying to fetch named graphes URI\n " + e.getMessage());
+        // System.err.println();
       }
     }
     return urls;
+  }
+
+  /**
+   * Build the larq index for a given dataset.
+   * 
+   * @param dataset
+   *          the {@link Dataset} instance which contains the models to be indexed.
+   * @param indexStore
+   *          the {@link IndexStore} which will enrich and offer the active index.
+   */
+  public void buildLarqIndex(final Dataset dataset, final IndexStore indexStore) {
+    final Collection<URL> namedGraphUrls = fetchAllNamedGraphes(dataset);
+    for (final URL namedGraphUrl : namedGraphUrls) {
+      getLogger().info("RdfHandler: trying to build larq index for named model " + namedGraphUrl);
+      final Model namedGraphModel = dataset.getNamedModel(namedGraphUrl.toExternalForm());
+      indexStore.addModelToIndex(namedGraphModel);
+    }
+  }
+
+  private Logger getLogger() {
+    if (null == logger) {
+      final Logger logger = Logger.getLogger(getClass());
+      this.logger = logger;
+    }
+    return logger;
   }
 }
