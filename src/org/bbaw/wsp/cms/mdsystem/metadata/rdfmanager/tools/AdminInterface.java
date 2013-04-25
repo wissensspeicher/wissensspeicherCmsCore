@@ -7,10 +7,8 @@ import java.awt.Panel;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -334,17 +332,53 @@ public class AdminInterface extends JFrame {
 
 		File dir = new File(str);
 		ArrayList<File> liste = new ArrayList<File>();
-		println("\nValid Files in the Folder:\n");
-		for (File f : dir.listFiles()) {
-			if (f.getName().toLowerCase().endsWith(".rdf")
-					|| f.getName().toLowerCase().endsWith(".ttl")
-					|| f.getName().toLowerCase().endsWith(".nt"))
-				liste.add(f);
-			println(" - " + f.getName());
 
+		ArrayList<String> folderList = new ArrayList<String>();
+		folderList.add(str);
+		folderList = scanFolder(folderList, dir);
+		println("\n");
+		for (String path : folderList) {
+			println("Current directory is " + path);
+
+			println("Valid Files in the Folder:\n");
+			for (File f : new File(path).listFiles()) {
+				if (f.getName().toLowerCase().endsWith(".rdf")
+						|| f.getName().toLowerCase().endsWith(".ttl")
+						|| f.getName().toLowerCase().endsWith(".nt")) {
+					liste.add(f);
+					println(" - " + f.getName());
+				}
+			}
+			println("\n");
 		}
 
 		return liste;
+	}
+
+	/**
+	 * Methoded lists all folders in a given dir and returns them, needs a list to
+	 * write in & a root folder
+	 * 
+	 * @param folderlist
+	 * @param root
+	 * @return
+	 */
+	private ArrayList<String> scanFolder(ArrayList<String> folderlist, File root) {
+
+		ArrayList<File> tempFolderList = new ArrayList<File>();
+		for (File f : root.listFiles()) {
+			if (f.isDirectory()) {
+				tempFolderList.add(f);
+			}
+		}
+
+		for (File f : tempFolderList) {
+			scanFolder(folderlist, f);
+			folderlist.add(f.getAbsolutePath());
+
+		}
+
+		return folderlist;
 	}
 
 	/**
@@ -534,46 +568,6 @@ public class AdminInterface extends JFrame {
 
 			else
 				return false;
-		}
-	}
-
-	/**
-	 * Executes Bash jobs
-	 * 
-	 * @param cmd
-	 * @param cwd
-	 */
-	@SuppressWarnings("unused")
-	private void bash(String cmd, File cwd) {
-		if (System.getProperty("os.name").startsWith("Windows")) {
-			println("only works with Unix-shell!");
-			return;
-		}
-		try {
-			println("Path: " + cwd.getAbsolutePath());
-			println(cmd);
-			ProcessBuilder pb = new ProcessBuilder("bash", "-c", cmd);
-			if (cwd != null) {
-				pb.directory(cwd);
-			}
-			pb.redirectErrorStream(true);
-			Process pr = pb.start();
-			BufferedReader input = new BufferedReader(new InputStreamReader(
-					pr.getInputStream()));
-
-			String line = null;
-
-			while ((line = input.readLine()) != null) {
-				println(line);
-			}
-
-			int exitVal = pr.waitFor();
-			if (exitVal != 0) {
-				throw new Error("Failure while executing bash command '" + cmd
-						+ "'. Return code = " + exitVal);
-			}
-		} catch (Exception e) {
-			throw new Error("Could not execute bash command '" + cmd + "'.", e);
 		}
 	}
 }

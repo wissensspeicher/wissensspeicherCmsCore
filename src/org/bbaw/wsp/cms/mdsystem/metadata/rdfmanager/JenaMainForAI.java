@@ -23,7 +23,6 @@ import com.hp.hpl.jena.query.QueryExecutionFactory;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.query.ResultSetFormatter;
 import com.hp.hpl.jena.rdf.model.Model;
-import com.hp.hpl.jena.rdf.model.ReifiedStatement;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 
@@ -130,7 +129,13 @@ public class JenaMainForAI {
 				wspStore.setForce(true);
 				if (source != null) {
 					if (new File(source).isDirectory()) {
-						createNamedModelsFromOreSets(source);
+						ArrayList<String> folders = new ArrayList<String>();
+						folders.add(source);
+						folders = scanFolder(folders, new File(source));
+						for (String s : folders) {
+							createNamedModelsFromOreSets(s);
+						}
+
 					} else
 						createNewModelFromSingleOre(source);
 				}
@@ -147,6 +152,32 @@ public class JenaMainForAI {
 
 		editStore.run();
 
+	}
+
+	/**
+	 * Methoded lists all folders in a given dir and returns them, needs a list to
+	 * write in & a root folder
+	 * 
+	 * @param folderlist
+	 * @param root
+	 * @return
+	 */
+	private ArrayList<String> scanFolder(ArrayList<String> folderlist, File root) {
+
+		ArrayList<File> tempFolderList = new ArrayList<File>();
+		for (File f : root.listFiles()) {
+			if (f.isDirectory()) {
+				tempFolderList.add(f);
+			}
+		}
+
+		for (File f : tempFolderList) {
+			scanFolder(folderlist, f);
+			folderlist.add(f.getAbsolutePath());
+
+		}
+
+		return folderlist;
 	}
 
 	/**
@@ -401,7 +432,8 @@ public class JenaMainForAI {
 			System.err.println(e);
 		} finally {
 
-			fos.close();
+			if (fos != null)
+				fos.close();
 
 		}
 	}
@@ -602,26 +634,6 @@ public class JenaMainForAI {
 	}
 
 	/**
-	 * TODO still considering if we really need this
-	 */
-	@SuppressWarnings("unused")
-	private void reify() {
-		// turn triples into quads
-		wspStore.openDataset();
-		Model modsModel = dataset.getNamedModel("http://wsp.bbaw.de/oreTestBriefe");
-		StmtIterator stit = modsModel.listStatements();
-		while (stit.hasNext()) {
-			Statement state = stit.next();
-			// System.out.println("statements : "+state);
-			ReifiedStatement reifSt = state
-					.createReifiedStatement("http://wsp.bbaw.de/oreTestBriefe");
-			System.out.println("is reified : " + state.isReified());
-			System.out.println("reified statement : " + reifSt.toString());
-		}
-		System.out.println(rdfHandler.getAllTriples(model));
-	}
-
-	/**
 	 * updates a namedModel
 	 */
 	@SuppressWarnings("unused")
@@ -716,8 +728,9 @@ public class JenaMainForAI {
 		if (f.isDirectory()) {
 			File[] filelist = f.listFiles();
 			for (File file : filelist) {
-				if (file.getName().toLowerCase().contains("rdf")
-						|| file.getName().toLowerCase().endsWith(".nt")) {
+				if (file.getName().toLowerCase().endsWith(".rdf")
+						|| file.getName().toLowerCase().endsWith(".nt")
+						|| file.getName().toLowerCase().endsWith(".ttl")) {
 					if (!startUrl.endsWith("/")) {
 						pathList.add(startUrl + "/" + file.getName());
 					} else {
