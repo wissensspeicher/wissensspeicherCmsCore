@@ -28,11 +28,6 @@
         <include name="**/*.properties"/>
       </fileset>
     </copy>
-    <copy todir="${build}">
-      <fileset dir="${srcLog}">
-        <include name="**/*.properties"/>
-      </fileset>
-    </copy>
     <jar jarfile="${dist}/wspCmsCore.jar" basedir="${build}"/>
   </target>
 
