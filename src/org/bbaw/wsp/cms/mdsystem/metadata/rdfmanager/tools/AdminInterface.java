@@ -8,6 +8,7 @@ import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -45,9 +46,12 @@ public class AdminInterface extends JFrame {
 	private JButton load_set_btn;
 	private JButton remove_btn;
 	private JButton save_as_xml_btn;
+	private JButton btn_larq;
 	private Label des;
+	private Label larq;
 	private String srcD;
 	private String desF;
+	private String larqD;
 	private JCheckBox allXML;
 	private JCheckBox folderScr;
 	private JCheckBox createDataset;
@@ -67,6 +71,7 @@ public class AdminInterface extends JFrame {
 	private static final String LOAD_NAMEDMODELLS_BUTTON = "Load Models";
 	private static final String REMOVE_BUTTON = "Remove";
 	private static final String SAVE_AS_XML = "Save as XML";
+	private static final String SET_NEW_LARQ = "Set new LarqIndex";
 
 	/**
 	 * Opens a new Frame
@@ -89,11 +94,14 @@ public class AdminInterface extends JFrame {
 		setLayout(new BorderLayout(5, 5));
 
 		Panel panel = new Panel();
-		panel.setLayout(new GridLayout(7, 1));
+		panel.setLayout(new GridLayout(9, 1));
 		btn_src = new JButton(SOURCE_BUTTON);
 		src = new Label("no Source Data selected");
 		btn_des = new JButton(DESTINATION_BUTTON);
 		des = new Label("no Destination selected");
+		btn_larq = new JButton(SET_NEW_LARQ);
+		larq = new Label(jenaMain.readLarq());
+
 		btn_go = new JButton(START_BUTTON);
 		load_set_btn = new JButton(LOAD_NAMEDMODELLS_BUTTON);
 		remove_btn = new JButton(REMOVE_BUTTON);
@@ -113,6 +121,7 @@ public class AdminInterface extends JFrame {
 		addButtonListener(remove_btn);
 		addButtonListener(load_set_btn);
 		addButtonListener(save_as_xml_btn);
+		addButtonListener(btn_larq);
 
 		panel.add(folderScr = new JCheckBox("Choose a source Folder"));
 		panel
@@ -121,6 +130,9 @@ public class AdminInterface extends JFrame {
 		panel.add(src);
 		panel.add(btn_des);
 		panel.add(des);
+		panel.add(btn_larq);
+		panel.add(larq);
+
 		panel.add(btn_go);
 
 		textArea = new TextArea("Welcome,\n");
@@ -179,7 +191,24 @@ public class AdminInterface extends JFrame {
 			@Override
 			@SuppressWarnings("unchecked")
 			public void actionPerformed(ActionEvent ev) {
-				if (ev.getActionCommand().equals(SOURCE_BUTTON)) {
+				if (ev.getActionCommand().equals(SET_NEW_LARQ)) {
+
+					larqD = fileChooser(false, false);
+					if (larqD != null) {
+						larq.setText(larqD);
+						try {
+							jenaMain.setLarq(larqD);
+						} catch (FileNotFoundException e) {
+							// TODO Auto-generated catch block
+							errorMessage(e.getMessage());
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							errorMessage(e.getMessage());
+						}
+
+					}
+
+				} else if (ev.getActionCommand().equals(SOURCE_BUTTON)) {
 
 					if (folderScr.isSelected()) {
 						srcD = fileChooser(false, false);
@@ -260,6 +289,7 @@ public class AdminInterface extends JFrame {
 					} catch (Exception e) {
 						println(e.getMessage());
 						errorMessage(e.getMessage());
+						LOGGER.error(e.getMessage());
 					}
 
 				}
@@ -271,6 +301,7 @@ public class AdminInterface extends JFrame {
 	/**
 	 * Methode asks Triplestore for containing Models
 	 */
+	@SuppressWarnings("unchecked")
 	private void getModels() {
 		if (desF == null) {
 			println("no Destination selected");
