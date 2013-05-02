@@ -25,8 +25,7 @@ import com.hp.hpl.jena.rdf.model.StmtIterator;
 import com.hp.hpl.jena.tdb.TDB;
 
 /**
- * This Class is meant to be the connector between @QueryHandler sent by the GUI
- * and the @RdfHandler. It combines Strings to valid Sparql queries
+ * This Class is meant to be the connector between @QueryHandler sent by the GUI and the @RdfHandler. It combines Strings to valid Sparql queries
  * 
  * @author marco juergens
  * @param <T>
@@ -50,9 +49,7 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
   /*
    * (non-Javadoc)
    * 
-   * @see
-   * org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.ISparqlAdapter#buildSparqlQuery
-   * (java.lang.String)
+   * @see org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.ISparqlAdapter#buildSparqlQuery (java.lang.String)
    */
   public HitGraphContainer buildSparqlQuery(final String literal) {
     final T results = queryStrategy.queryLiteral(literal);
@@ -108,11 +105,11 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
           }
           String subjParent = null;
           if (solution.getResource("sParent") != null) {
-              subjParent = solution.getResource("sParent").toString();
+            subjParent = solution.getResource("sParent").toString();
           }
           URL predParent = null;
           if (solution.getResource("pParent") != null) {
-              predParent = new URL(solution.getResource("pParent").getURI());
+            predParent = new URL(solution.getResource("pParent").getURI());
           }
           final HitStatement statement = new HitStatement(subject, predicate, literal, score, subjParent, predParent);
           hitGraph.addStatement(statement);
@@ -133,9 +130,7 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
   /*
    * (non-Javadoc)
    * 
-   * @see
-   * org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.ISparqlAdapter#buildSparqlQuery
-   * (java.net.URL, java.lang.String)
+   * @see org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.ISparqlAdapter#buildSparqlQuery (java.net.URL, java.lang.String)
    */
   // public void buildSparqlQuery(final URL namedGraphUrl, final String literal)
   // {
@@ -164,9 +159,7 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
   /*
    * (non-Javadoc)
    * 
-   * @see
-   * org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.ISparqlAdapter#buildSparqlQuery
-   * (java.net.URL, java.net.URL, java.lang.String)
+   * @see org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.ISparqlAdapter#buildSparqlQuery (java.net.URL, java.net.URL, java.lang.String)
    */
   public void buildSparqlQuery(final URL subject, final URL predicate, final String object) {
     // final String query =
@@ -185,8 +178,7 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
   /*
    * (non-Javadoc)
    * 
-   * @see org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.ISparqlAdapter#
-   * findRelativeConcepts(java.net.URL)
+   * @see org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.ISparqlAdapter# findRelativeConcepts(java.net.URL)
    */
   public String findRelatedConcepts(final URL subject) {
     // TODO Auto-generated method stub
@@ -197,9 +189,7 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
   /*
    * (non-Javadoc)
    * 
-   * @see
-   * org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.ISparqlAdapter#buildSparqlQuery
-   * (java.net.URL, java.net.URL, java.net.URL, java.lang.String)
+   * @see org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.ISparqlAdapter#buildSparqlQuery (java.net.URL, java.net.URL, java.net.URL, java.lang.String)
    */
   public void buildSparqlQuery(final URL namedGraphUrl, final URL subject, final URL predicate, final String object) {
     // final String query =
@@ -234,8 +224,7 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
   // }
 
   /**
-   * evtl. könnte diese Klasse eine abgewandelte Klasse von @FusekiClient
-   * werden
+   * evtl. könnte diese Klasse eine abgewandelte Klasse von @FusekiClient werden
    */
 
 }
