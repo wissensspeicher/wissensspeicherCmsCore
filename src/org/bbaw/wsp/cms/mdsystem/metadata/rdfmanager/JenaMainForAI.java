@@ -9,13 +9,16 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Properties;
 
 import org.apache.log4j.Logger;
 import org.bbaw.wsp.cms.collections.CollectionReader;
+import org.bbaw.wsp.cms.general.Constants;
 
 import com.hp.hpl.jena.query.Dataset;
 import com.hp.hpl.jena.query.QueryExecution;
@@ -30,7 +33,6 @@ import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 
 public class JenaMainForAI {
 
-	private Model model;
 	private RdfHandler rdfHandler;
 	private final WspRdfStore wspStore = WspRdfStore.getInstance();
 	private Dataset dataset;
@@ -41,6 +43,7 @@ public class JenaMainForAI {
 	private ArrayList<String> modelList = new ArrayList<String>();
 	private static Logger LOGGER = Logger.getLogger(JenaMainForAI.class);
 	private StorePathHandler pathHandler = new StorePathHandler();
+	private Properties prop = Constants.getInstance().getProperties();
 
 	/**
 	 * Konstruktor, also checks seperator for different running systems
@@ -152,6 +155,35 @@ public class JenaMainForAI {
 		};
 
 		editStore.run();
+
+	}
+
+	/**
+	 * get path of the LarqIndex
+	 * 
+	 * @return
+	 */
+	public String readLarq() {
+
+		return prop.getProperty("rdfStoreLarqDir");
+
+	}
+
+	/**
+	 * Sets new LarqPath and saves it in properties file
+	 * 
+	 * @param applicationDirectory
+	 * @throws IOException
+	 * @throws FileNotFoundException
+	 */
+	public void setLarq(String applicationDirectory)
+			throws FileNotFoundException, IOException {
+		prop = Constants.getInstance(applicationDirectory).getProperties();
+		prop.put("rdfStoreLarqDir", applicationDirectory);
+
+		prop.store(new PrintWriter(Constants.getInstance().getPropConstantFile()),
+				"new LarqIndex setted");
+		LOGGER.info(applicationDirectory + " as new LarqIndex selected.");
 
 	}
 
