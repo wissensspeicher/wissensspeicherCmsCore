@@ -180,8 +180,7 @@ public class WspRdfStore {
 			try {
 				freshModel.unregister(indexStore.getLarqBuilder());
 			} catch (NullPointerException e) {
-				throw new IllegalParameterException(
-						"Your chosen LarqIndex is not vaild\nfor the Dataset ");
+				throw new IllegalParameterException("LarqIndex is empty or corrupt.");
 			} finally {
 				indexStore.commitIndex();
 				indexStore.closeIndex();

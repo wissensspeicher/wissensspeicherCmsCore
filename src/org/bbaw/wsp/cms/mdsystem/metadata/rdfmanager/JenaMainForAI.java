@@ -348,6 +348,7 @@ public class JenaMainForAI {
 				dataset = wspStore.getDataset();
 
 				wspStore.openDataset();
+				wspStore.getFreshModel();
 				Iterator<String> it = dataset.listNames();
 
 				try {
