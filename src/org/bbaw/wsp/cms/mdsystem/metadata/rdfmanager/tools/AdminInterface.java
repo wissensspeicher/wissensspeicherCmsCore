@@ -23,6 +23,8 @@ import org.apache.log4j.Logger;
 import org.bbaw.wsp.cms.collections.CollectionReader;
 import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.JenaMainForAI;
 
+import com.hp.hpl.jena.reasoner.IllegalParameterException;
+
 public class AdminInterface extends JFrame {
 
 	/**
@@ -308,20 +310,25 @@ public class AdminInterface extends JFrame {
 			return;
 		}
 		jenaMain.setDestination(desF);
-		ArrayList<String> models = jenaMain.getModels();
-		if (models.isEmpty()) {
-			println("There are no models in the choosen Dataset\n" + desF);
-			return;
-		}
-		for (String s : models) {
-			if (checkAlreadyinList(s))
-				combobox.addItem(s);
+		try {
+			ArrayList<String> models = jenaMain.getModels();
 
-		}
-		combobox.showPopup();
+			if (models.isEmpty()) {
+				println("There are no models in the choosen Dataset\n" + desF);
+				return;
+			}
+			for (String s : models) {
+				if (checkAlreadyinList(s))
+					combobox.addItem(s);
 
-		println("Loaded all named Graphes from " + desF);
-		namedGraph = (String) combobox.getItemAt(0);
+			}
+			combobox.showPopup();
+
+			println("Loaded all named Graphes from " + desF);
+			namedGraph = (String) combobox.getItemAt(0);
+		} catch (IllegalParameterException e) {
+			errorMessage(e.getMessage());
+		}
 	}
 
 	/**
