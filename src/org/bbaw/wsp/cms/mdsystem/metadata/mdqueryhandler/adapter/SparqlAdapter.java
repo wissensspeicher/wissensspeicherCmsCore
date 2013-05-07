@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
+
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 
@@ -17,6 +19,7 @@ import com.hp.hpl.jena.query.ResultSet;
  * 
  */
 public class SparqlAdapter<T> implements ISparqlAdapter {
+  private static final Logger logger = Logger.getLogger(SparqlAdapter.class);
   private final IQueryStrategy<T> queryStrategy;
 
   /**
@@ -139,7 +142,7 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
       hitGraph.addStatement(statement);
 
     } catch (final MalformedURLException e) {
-      System.err.println("SparQlAdapter: not a valid URL (should be one): " + e.getMessage());
+      logger.error("SparQlAdapter: not a valid URL (should be one): " + e.getMessage());
     }
   }
 
