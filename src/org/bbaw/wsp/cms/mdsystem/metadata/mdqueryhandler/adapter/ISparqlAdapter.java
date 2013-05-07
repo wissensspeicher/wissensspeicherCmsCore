@@ -5,10 +5,8 @@ package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter;
 
 import java.net.URL;
 
-
 /**
- * Adapter interface which is used to communicate with the {@link SparqlAdapter}
- * .
+ * Adapter interface which is used to communicate with the {@link SparqlAdapter} .
  * 
  * @author Sascha Feldmann (wsp-shk1)
  * 
@@ -16,8 +14,7 @@ import java.net.URL;
 public interface ISparqlAdapter {
 
   /**
-   * Build a sparql query from only one literal. Query the default graph. Here,
-   * the pf:textmatch method is used.
+   * Build a sparql query from only one literal. Query the default graph. Here, the pf:textmatch method is used.
    * 
    * @param literal
    *          the literal String.
@@ -26,8 +23,7 @@ public interface ISparqlAdapter {
   HitGraphContainer buildSparqlQuery(String literal);
 
   /**
-   * Build a sparql query from only one literal. Here, the pf:textmatch method
-   * is used.
+   * Build a sparql query from only one literal. Here, the pf:textmatch method is used.
    * 
    * @param namedGraphUrl
    *          the {@link URL} of the named graph to be queried.
@@ -51,12 +47,7 @@ public interface ISparqlAdapter {
   void buildSparqlQuery(URL namedGraphUrl, URL subject, URL predicate, String object);
 
   /**
-   * Verwandte Konzepte finden --> wie? z.B. eine Aussage der Form: Subjekt ist
-   * verbunden mit Objekt Dieses Objekt wiederrum steht in Relation mit einem
-   * anderen Objekt. [Evtl: das andere Objekt wiederrum ist mit einem weiteren
-   * Objekt verbunden]
-   * 
-   * Dann wird evtl. das Objekt der "Stufe" 2 oder 3 zurueckgeliefert.
+   * Benachbarte Knoten finden (wir sehen unsere Tripels als Teil eines Graphen). Dabei nach oben oder unten suchen (Graph ist eine Baumstruktur). Eingabe: ein Knoten (URL oder Literal) Eingabe: Nachbarsgrad Rückgabe: Liste von benachbarten Knoten
    */
-  String findRelatedConcepts(URL subject);
+  String findRelatedConcepts(String node, int numberOfEdges);
 }

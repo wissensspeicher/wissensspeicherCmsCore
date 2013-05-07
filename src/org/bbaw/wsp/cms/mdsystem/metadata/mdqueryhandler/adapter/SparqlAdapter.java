@@ -4,10 +4,15 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+
+import org.apache.log4j.Logger;
 
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
+import com.hp.hpl.jena.rdf.model.Literal;
+import com.hp.hpl.jena.rdf.model.RDFNode;
 
 /**
  * This Class is meant to be the connector between @QueryHandler sent by the GUI and the @RdfHandler. It combines Strings to valid Sparql queries
@@ -17,7 +22,13 @@ import com.hp.hpl.jena.query.ResultSet;
  * 
  */
 public class SparqlAdapter<T> implements ISparqlAdapter {
+  private static final Logger logger = Logger.getLogger(SparqlAdapter.class);
+  private static final String PLACEHOLDER_LASTNODE = "%%PLACEHOLDER_LASTNODE%%";
   private final IQueryStrategy<T> queryStrategy;
+  /**
+   * Index of the last queried node within the findRelatedConcepts().
+   */
+  private int relatedLastNode;
 
   /**
    * Create a new SparqlAdapter.
@@ -139,7 +150,7 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
       hitGraph.addStatement(statement);
 
     } catch (final MalformedURLException e) {
-      System.err.println("SparQlAdapter: not a valid URL (should be one): " + e.getMessage());
+      logger.error("SparQlAdapter: not a valid URL (should be one): " + e.getMessage());
     }
   }
 
@@ -194,17 +205,6 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
   /*
    * (non-Javadoc)
    * 
-   * @see org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.ISparqlAdapter# findRelativeConcepts(java.net.URL)
-   */
-  public String findRelatedConcepts(final URL subject) {
-    // TODO Auto-generated method stub
-    return null;
-  }
-
-  @Override
-  /*
-   * (non-Javadoc)
-   * 
    * @see org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.ISparqlAdapter#buildSparqlQuery (java.net.URL, java.net.URL, java.net.URL, java.lang.String)
    */
   public void buildSparqlQuery(final URL namedGraphUrl, final URL subject, final URL predicate, final String object) {
@@ -235,9 +235,66 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
 
   }
 
+  @Override
+  public String findRelatedConcepts(final String node, final int numberOfTriples) {
+    final String sparqlQuery = buildRelatedQuery(node, numberOfTriples);
+    System.out.println("query: " + sparqlQuery);
+    this.handleRelatedSolution(queryStrategy.delegateQuery(sparqlQuery));
+    return null;
+  }
+
   // public HitRecordContainer getHitRecordContainer() {
   // // return hitRecordContainer;
   // }
+
+  private void handleRelatedSolution(final T results) {
+    if (results instanceof ResultSet) {
+      final ResultSet realResults = (ResultSet) results;
+      while (realResults.hasNext()) {
+        final QuerySolution solution = realResults.next();
+        final RDFNode relatedNode = solution.get("o" + this.relatedLastNode);
+        final RDFNode relatedPred = solution.get("p" + this.relatedLastNode);
+        System.out.println("related node: " + relatedNode.toString());
+        System.out.println("related pred: " + relatedPred.toString());
+        // try { // try to handle result as literal
+        // final Literal relatedLiteral = solution.getLiteral("o" + this.relatedLastNode);
+        // if (relatedLiteral != null) {
+        // System.out.println(relatedLiteral.getLexicalForm());
+        // }
+        // } catch (final ClassCastException e) {
+        //
+        // }
+      }
+    }
+  }
+
+  /**
+   * @param node
+   * @param numberOfTriples
+   * @return
+   */
+  private String buildRelatedQuery(final String node, final int numberOfTriples) {
+    String sparqlQuery = "SELECT DISTINCT " + PLACEHOLDER_LASTNODE + " {\n";
+    int prevPredIndex = 0;
+    int prevSubjIndex = 0;
+    int prevObjIndex = 0;
+    for (int i = 0; i < numberOfTriples; i++) { // case a: node is subject
+      if (i == 0) {
+        sparqlQuery += node + " ?p1 ?o1." + "\n";
+        prevPredIndex = 1;
+        prevSubjIndex = 1;
+        prevObjIndex = 1;
+      } else {
+        sparqlQuery += "?o" + prevObjIndex + " ?p" + (prevPredIndex + 1) + " ?o" + (prevObjIndex + 1) + ".\n";
+        prevPredIndex += 1;
+        prevObjIndex += 1;
+      }
+    }
+    sparqlQuery += "}\n";
+    sparqlQuery = sparqlQuery.replace(PLACEHOLDER_LASTNODE, "?o" + prevObjIndex + "?p" + prevObjIndex);
+    this.relatedLastNode = prevObjIndex;
+    return sparqlQuery;
+  }
 
   /**
    * evtl. könnte diese Klasse eine abgewandelte Klasse von @FusekiClient werden
