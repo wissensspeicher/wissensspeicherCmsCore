@@ -18,6 +18,8 @@ public class HitGraph {
 
   private final URL namedGraphUrl;
   private final ArrayList<HitStatement> hitStatements;
+  private double avgScore;
+  private double highestScore;
 
   /**
    * Create a new {@link HitGraph}.
@@ -28,6 +30,8 @@ public class HitGraph {
   public HitGraph(final URL namedGraphUrl) {
     this.namedGraphUrl = namedGraphUrl;
     hitStatements = new ArrayList<HitStatement>();
+    avgScore = 0;
+    highestScore = 0;
   }
 
   public URL getNamedGraphUrl() {
@@ -35,23 +39,19 @@ public class HitGraph {
   }
 
   /**
-   * Hier den Score berechnen.
    * 
-   * z.B. als arithmetisches Mittel aller Scores der HitStatements...
-   * 
-   * @return
+   * @return the average score of all {@link HitStatement}.
    */
-  public double calcScore() {
-    // calc arithmetisches Mittel
-    double sum = 0;
-    for (final HitStatement statement : hitStatements) {
-      sum += statement.getScore();
-    }
-    double avg = 0;
-    if (sum != 0) {
-      avg = sum / hitStatements.size();
-    }
-    return avg;
+  public double getAvgScore() {
+    return avgScore;
+  }
+
+  /**
+   * 
+   * @return the maximum score of all {@link HitStatement}
+   */
+  public double getHighestScore() {
+    return highestScore;
   }
 
   /**
@@ -62,6 +62,33 @@ public class HitGraph {
    */
   public void addStatement(final HitStatement statement) {
     hitStatements.add(statement);
+    // calculate scores
+    calcAvgScore(statement);
+    calcHighestScore(statement);
+  }
+
+  private void calcHighestScore(final HitStatement statement) {
+    if (highestScore == 0) {
+      highestScore = statement.getScore();
+    } else {
+      if (statement.getScore() > highestScore) {
+        highestScore = statement.getScore();
+      }
+    }
+  }
+
+  private void calcAvgScore(final HitStatement newStatement) {
+    // calc arithmetisches Mittel
+    if (avgScore == 0) {
+      avgScore = newStatement.getScore();
+    } else {
+      final double sum = avgScore + newStatement.getScore();
+      double avg = 0;
+      if (sum != 0) {
+        avg = sum / 2;
+      }
+      avgScore = avg;
+    }
   }
 
   /**
@@ -80,7 +107,7 @@ public class HitGraph {
    */
   @Override
   public String toString() {
-    return "\tHitGraph [namedGraphUrl=" + namedGraphUrl + ", avgScore= " + calcScore() + "hitStatements=" + hitStatements + "]\n";
+    return "HitGraph [namedGraphUrl=" + namedGraphUrl + ", hitStatements=" + hitStatements + ", avgScore=" + avgScore + ", highestScore=" + highestScore + "]";
   }
 
 }
