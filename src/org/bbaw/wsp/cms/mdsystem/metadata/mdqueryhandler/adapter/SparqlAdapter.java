@@ -6,23 +6,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.lucene.analysis.Analyzer;
-import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.RdfHandler;
-import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.fuseki.FusekiClient;
-import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.tools.SparqlCommandBuilder;
-
-import com.hp.hpl.jena.query.Dataset;
-import com.hp.hpl.jena.query.Query;
-import com.hp.hpl.jena.query.QueryExecution;
-import com.hp.hpl.jena.query.QueryExecutionFactory;
-import com.hp.hpl.jena.query.QueryFactory;
 import com.hp.hpl.jena.query.QuerySolution;
-import com.hp.hpl.jena.query.ReadWrite;
 import com.hp.hpl.jena.query.ResultSet;
-import com.hp.hpl.jena.query.ResultSetFormatter;
-import com.hp.hpl.jena.rdf.model.Statement;
-import com.hp.hpl.jena.rdf.model.StmtIterator;
-import com.hp.hpl.jena.tdb.TDB;
 
 /**
  * This Class is meant to be the connector between @QueryHandler sent by the GUI and the @RdfHandler. It combines Strings to valid Sparql queries
@@ -33,7 +18,6 @@ import com.hp.hpl.jena.tdb.TDB;
  */
 public class SparqlAdapter<T> implements ISparqlAdapter {
   private final IQueryStrategy<T> queryStrategy;
-  private final HitGraphContainer hitRecordContainer;
 
   /**
    * Create a new SparqlAdapter.
@@ -42,7 +26,6 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
    */
   public SparqlAdapter(final IQueryStrategy<T> queryStrategy) {
     this.queryStrategy = queryStrategy;
-    hitRecordContainer = new HitGraphContainer();
   }
 
   @Override
@@ -85,53 +68,79 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
       final ResultSet realResults = (ResultSet) results;
       while (realResults.hasNext()) {
         final QuerySolution solution = realResults.next();
-        try {
-          final URL graphUrl = new URL(solution.getResource("g").getURI());
-          final HitGraph hitGraph;
-          if (!container.contains(graphUrl)) {
-            hitGraph = new HitGraph(graphUrl);
-            container.addHitRecord(graphUrl, hitGraph);
-          } else {
-            hitGraph = container.getHitGraph(graphUrl);
-          }
-          String subject = null;
-          if (solution.getResource("s") != null) {
-            subject = solution.getResource("s").toString();
-          }
-          URL predicate = null;
-          if (solution.getResource("p") != null) {
-            predicate = new URL(solution.getResource("p").getURI());
-          }
-          String literal = null;
-          if (solution.getLiteral("lit") != null) {
-            literal = solution.getLiteral("lit").toString();
-          }
-          double score = 0;
-          if (solution.getLiteral("score") != null) {
-            score = solution.getLiteral("score").getDouble();
-          }
-          String subjParent = null;
-          if (solution.getResource("sParent") != null) {
-            subjParent = solution.getResource("sParent").toString();
-          }
-          URL predParent = null;
-          if (solution.getResource("pParent") != null) {
-            predParent = new URL(solution.getResource("pParent").getURI());
-          }
-          final HitStatement statement = new HitStatement(subject, predicate, literal, score, subjParent, predParent);
-          hitGraph.addStatement(statement);
-
-        } catch (final MalformedURLException e) {
-          System.err.println("SparQlAdapter: not a valid URL (should be one): " + e.getMessage());
-        }
-        // System.out.println("o: " + solution.getLiteral("o"));
+        this.handleSolution(container, solution, null);
       }
-    } else if (results instanceof HashMap<?, ?>) {
-
+    } else if (results instanceof HashMap<?, ?>) { // query strategy returns hash map in the form named graph url - value
+      @SuppressWarnings("unchecked")
+      final Map<URL, ResultSet> resultMap = (HashMap<URL, ResultSet>) results;
+      for (final URL namedGraph : resultMap.keySet()) {
+        final ResultSet realResults = resultMap.get(namedGraph);
+        while (realResults.hasNext()) {
+          final QuerySolution solution = realResults.next();
+          this.handleSolution(container, solution, namedGraph);
+        }
+      }
     }
 
     return container;
 
+  }
+
+  /**
+   * Handle a single solution (which is from a {@link ResultSet}
+   * 
+   * @param container
+   *          the {@link HitGraphContainer} to be filled with records.
+   * @param solution
+   *          the {@link QuerySolution}
+   * @param namedGraphUrl
+   *          some query strategy operate for single named graphes and can pass the named url belonging to the given solution to this method. Otherwise, the named graph will be fetched by the sparql query. Set it to null.
+   */
+  private void handleSolution(final HitGraphContainer container, final QuerySolution solution, final URL namedGraphUrl) {
+    try {
+      final URL graphUrl;
+      if (namedGraphUrl == null) { // means: sparql query contains the graph name
+        graphUrl = new URL(solution.getResource("g").getURI());
+      } else { // means: sparql query was executed on a single named graph -> the graph name is passed as argument
+        graphUrl = namedGraphUrl;
+      }
+      final HitGraph hitGraph;
+      if (!container.contains(graphUrl)) { // create new hit graph
+        hitGraph = new HitGraph(graphUrl);
+        container.addHitRecord(graphUrl, hitGraph);
+      } else {
+        hitGraph = container.getHitGraph(graphUrl);
+      }
+      String subject = null;
+      if (solution.getResource("s") != null) {
+        subject = solution.getResource("s").toString();
+      }
+      URL predicate = null;
+      if (solution.getResource("p") != null) {
+        predicate = new URL(solution.getResource("p").getURI());
+      }
+      String literal = null;
+      if (solution.getLiteral("lit") != null) {
+        literal = solution.getLiteral("lit").toString();
+      }
+      double score = 0;
+      if (solution.getLiteral("score") != null) {
+        score = solution.getLiteral("score").getDouble();
+      }
+      String subjParent = null;
+      if (solution.getResource("sParent") != null) {
+        subjParent = solution.getResource("sParent").toString();
+      }
+      URL predParent = null;
+      if (solution.getResource("pParent") != null) {
+        predParent = new URL(solution.getResource("pParent").getURI());
+      }
+      final HitStatement statement = new HitStatement(subject, predicate, literal, score, subjParent, predParent);
+      hitGraph.addStatement(statement);
+
+    } catch (final MalformedURLException e) {
+      System.err.println("SparQlAdapter: not a valid URL (should be one): " + e.getMessage());
+    }
   }
 
   /*

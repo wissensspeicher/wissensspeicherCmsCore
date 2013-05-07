@@ -40,7 +40,7 @@ public enum SparqlCommandBuilder {
       // return "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n" +
       // "SELECT " + toSelect + " { GRAPH ?g { ?o pf:textMatch '" + graphPattern
       // + "'. ?s ?p ?o. } }";
-      return "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n" + "SELECT DISTINCT " + toSelect + " { ?o pf:textMatch '" + graphPattern + "'}";
+      return "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n" + "SELECT DISTINCT " + toSelect + " { (?lit ?score )  pf:textMatch '" + graphPattern + "'. ?s ?p ?lit\n OPTIONAL {?sParent ?pParent ?s\n FILTER (isBlank(?s))}}";
     case SELECT_NAMED_USING_INDEX:
       return "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n" + "SELECT DISTINCT " + toSelect + " FROM NAMED <" + graphName + "> { (?lit ?score ) pf:textMatch '" + graphPattern + "'.?doc ?p ?lit\n }";
     case SELECT_USING_INDEX_AND_NAMED_GRAPH:

@@ -6,6 +6,7 @@ package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter;
 import java.net.URL;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.JenaMain;
 import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.RdfHandler;
 import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.tools.SparqlCommandBuilder;
@@ -19,7 +20,7 @@ import com.hp.hpl.jena.query.ResultSet;
  * 
  */
 public class QueryStrategyJena implements IQueryStrategy<Map<URL, ResultSet>> {
-
+  private static Logger logger = Logger.getLogger(QueryStrategyJena.class);
   private final RdfHandler rdfhandler;
   private final Dataset dataset;
   private final JenaMain jenamain;
@@ -60,6 +61,7 @@ public class QueryStrategyJena implements IQueryStrategy<Map<URL, ResultSet>> {
    */
   public Map<URL, ResultSet> queryLiteral(final String literal) {
     final String query = SparqlCommandBuilder.SELECT_USING_INDEX.getSelectQueryString("*", null, literal);
+    logger.info("QueryStrategyJena: builded sparql query: " + query);
     return delegateQuery(query);
   }
 
