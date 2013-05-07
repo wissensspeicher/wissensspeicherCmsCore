@@ -15,8 +15,9 @@ import com.hp.hpl.jena.query.ResultSet;
  * 
  * @author <a href="mailto:wsp-shk1@bbaw.de">Sascha Feldmann</a>
  * @since 08.02.2013
- * 
+ * @deprecated This strategy shouldn't be used anymore. The {@link QueryStrategyJena} will do this work in the future. That is because jena main allows access to the index and several more things to guarant a clean state.
  */
+@Deprecated
 public class QueryStrategyHandler implements IQueryStrategy<ResultSet> {
 
   private final RdfHandler rdfHandler;
@@ -37,9 +38,7 @@ public class QueryStrategyHandler implements IQueryStrategy<ResultSet> {
   /*
    * (non-Javadoc)
    * 
-   * @see
-   * org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter.IQueryStrategy
-   * #delegateQuery(java.lang.String)
+   * @see org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter.IQueryStrategy #delegateQuery(java.lang.String)
    */
   public ResultSet delegateQuery(final String sparqlSelectQuery) {
     final QueryExecution qEx = rdfHandler.selectSomething(sparqlSelectQuery, dataset);
@@ -51,9 +50,7 @@ public class QueryStrategyHandler implements IQueryStrategy<ResultSet> {
   /*
    * (non-Javadoc)
    * 
-   * @see
-   * org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter.IQueryStrategy
-   * #queryLiteral(java.lang.String)
+   * @see org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter.IQueryStrategy #queryLiteral(java.lang.String)
    */
   public ResultSet queryLiteral(final String literal) {
     final String query = SparqlCommandBuilder.SELECT_USING_INDEX_AND_NAMED_GRAPH.getSelectQueryString("*", null, literal);
@@ -61,6 +58,12 @@ public class QueryStrategyHandler implements IQueryStrategy<ResultSet> {
     // "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#> SELECT * {?s pf:textMatch '+Humboldt'} LIMIT 10";
     System.out.println("QueryUsingHandler: generated query " + query);
     return delegateQuery(query);
+  }
+
+  @Override
+  public void free() {
+    // TODO Auto-generated method stub
+
   }
 
 }

@@ -84,7 +84,9 @@ public class WspRdfStore {
     }
     modelList = new ArrayList<String>();
     TDB.getContext().set(TDB.symUnionDefaultGraph, true);
+    // create and initialize the index builder.
     indexStore = new IndexStore();
+    indexStore.initializeIndexBuilder();
   }
 
   public void createModelFactory() {

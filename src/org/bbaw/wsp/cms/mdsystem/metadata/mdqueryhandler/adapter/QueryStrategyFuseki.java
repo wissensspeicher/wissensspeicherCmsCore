@@ -26,8 +26,7 @@ public class QueryStrategyFuseki implements IQueryStrategy<ResultSet> {
    * Delegate the sparql query to a fuseki server.
    * 
    * @param fusekiDatasetUrl
-   *          the {@link URL} to the fuseki dataset (e.g.
-   *          http://domain/[yourdataset]
+   *          the {@link URL} to the fuseki dataset (e.g. http://domain/[yourdataset]
    */
   public QueryStrategyFuseki(final URL fusekiDatasetUrl) {
     fusekiUrl = fusekiDatasetUrl;
@@ -38,9 +37,7 @@ public class QueryStrategyFuseki implements IQueryStrategy<ResultSet> {
   /*
    * (non-Javadoc)
    * 
-   * @see
-   * org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter.IQueryStrategy
-   * #delegateQuery(java.lang.String)
+   * @see org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter.IQueryStrategy #delegateQuery(java.lang.String)
    */
   public ResultSet delegateQuery(final String sparqlSelectQuery) {
     final ResultSet results = fusekiHandler.performSelect(fusekiUrl.toExternalForm(), sparqlSelectQuery);
@@ -59,14 +56,23 @@ public class QueryStrategyFuseki implements IQueryStrategy<ResultSet> {
   /*
    * (non-Javadoc)
    * 
-   * @see
-   * org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter.IQueryStrategy
-   * #queryLiteral(java.lang.String)
+   * @see org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter.IQueryStrategy #queryLiteral(java.lang.String)
    */
   public ResultSet queryLiteral(final String literal) {
     final String query = SparqlCommandBuilder.SELECT_USING_INDEX_AND_NAMED_GRAPH.getSelectQueryString("*", null, literal);
     System.out.println(query);
     return delegateQuery(query);
+  }
+
+  @Override
+  /*
+   * (non-Javadoc)
+   * 
+   * @see org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter.IQueryStrategy#free()
+   */
+  public void free() {
+    // TODO Auto-generated method stub
+
   }
 
 }
