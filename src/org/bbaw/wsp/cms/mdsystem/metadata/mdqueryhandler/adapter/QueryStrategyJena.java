@@ -6,6 +6,7 @@ package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter;
 import java.net.URL;
 import java.util.Map;
 
+import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.JenaMain;
 import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.RdfHandler;
 import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.tools.SparqlCommandBuilder;
 
@@ -21,27 +22,30 @@ public class QueryStrategyJena implements IQueryStrategy<Map<URL, ResultSet>> {
 
   private final RdfHandler rdfhandler;
   private final Dataset dataset;
+  private final JenaMain jenamain;
 
   /**
    * Delegate the sparql query to a local jena TDB using the {@link RdfHandler}.
    * 
-   * @param handler
-   *          the {@link RdfHandler}
-   * @param dataset
-   *          the {@link Dataset} on which the query shall be performed.
+   * @param jenamain
+   *          the {@link JenaMain}
+   * @throws IllegalArgumentException
+   *           if the parameter is null
    */
-  public QueryStrategyJena(final RdfHandler handler, final Dataset dataset) {
-    rdfhandler = handler;
-    this.dataset = dataset;
+  public QueryStrategyJena(final JenaMain jenamain) {
+    if (jenamain == null) {
+      throw new IllegalArgumentException("The parameter for jenamain in QueryStrategyJena mustn't be null");
+    }
+    rdfhandler = jenamain.getManager();
+    dataset = jenamain.getDataset();
+    this.jenamain = jenamain;
   }
 
   @Override
   /*
    * (non-Javadoc)
    * 
-   * @see
-   * org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter.IQueryStrategy
-   * #delegateQuery(java.lang.String)
+   * @see org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter.IQueryStrategy #delegateQuery(java.lang.String)
    */
   public Map<URL, ResultSet> delegateQuery(final String sparqlSelectQuery) {
     final Map<URL, ResultSet> resultMap = rdfhandler.queryAllNamedModels(dataset, sparqlSelectQuery);
@@ -52,12 +56,20 @@ public class QueryStrategyJena implements IQueryStrategy<Map<URL, ResultSet>> {
   /*
    * (non-Javadoc)
    * 
-   * @see
-   * org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter.IQueryStrategy
-   * #queryLiteral(java.lang.String)
+   * @see org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter.IQueryStrategy #queryLiteral(java.lang.String)
    */
   public Map<URL, ResultSet> queryLiteral(final String literal) {
     final String query = SparqlCommandBuilder.SELECT_USING_INDEX.getSelectQueryString("*", null, literal);
     return delegateQuery(query);
+  }
+
+  @Override
+  /*
+   * (non-Javadoc)
+   * 
+   * @see org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter.IQueryStrategy#free()
+   */
+  public void free() {
+    jenamain.getIndexStore().closeIndex(); // close larq index
   }
 }

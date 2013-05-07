@@ -67,25 +67,27 @@ public class WspRdfStore {
 		return wspRdfStore;
 	}
 
-	/**
-	 * create the store directory ect...
-	 * 
-	 * @param pathtoSave
-	 * @throws ApplicationException
-	 */
-	public void createStore(final String pathtoSave) throws ApplicationException {
-		logger = Logger.getLogger(WspRdfStore.class);
-		logger.info("create Store");
-		directory = pathtoSave;
-		logger.info("directory : " + directory);
-		dataset = TDBFactory.createDataset(directory);
-		if (defaultModel == null) {
-			defaultModel = dataset.getDefaultModel();
-		}
-		modelList = new ArrayList<String>();
-		TDB.getContext().set(TDB.symUnionDefaultGraph, true);
-		indexStore = new IndexStore();
-	}
+  /**
+   * create the store directory ect...
+   * 
+   * @param pathtoSave
+   * @throws ApplicationException
+   */
+  public void createStore(final String pathtoSave) throws ApplicationException {
+    logger = Logger.getLogger(WspRdfStore.class);
+    logger.info("create Store");
+    directory = pathtoSave;
+    logger.info("directory : " + directory);
+    dataset = TDBFactory.createDataset(directory);
+    if (defaultModel == null) {
+      defaultModel = dataset.getDefaultModel();
+    }
+    modelList = new ArrayList<String>();
+    TDB.getContext().set(TDB.symUnionDefaultGraph, true);
+    // create and initialize the index builder.
+    indexStore = new IndexStore();
+    indexStore.initializeIndexBuilder();
+  }
 
 	public void createModelFactory() {
 		modelmaker = ModelFactory.createMemModelMaker();
@@ -180,8 +182,7 @@ public class WspRdfStore {
 			try {
 				freshModel.unregister(indexStore.getLarqBuilder());
 			} catch (NullPointerException e) {
-				throw new IllegalParameterException(
-						"Your chosen LarqIndex is not vaild\nfor the Dataset ");
+				throw new IllegalParameterException("LarqIndex is empty or corrupt.");
 			} finally {
 				indexStore.commitIndex();
 				indexStore.closeIndex();

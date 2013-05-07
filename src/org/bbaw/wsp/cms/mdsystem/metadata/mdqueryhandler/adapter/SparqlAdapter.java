@@ -53,7 +53,7 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
    */
   public HitGraphContainer buildSparqlQuery(final String literal) {
     final T results = queryStrategy.queryLiteral(literal);
-
+    freeQueryStrategy();
     return this.handleLiteralResults(results);
 
     // final Query q = Que ryFactory.create(query);
@@ -63,6 +63,13 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
     // qExec.getContext().set(TDB.symUnionDefaultGraph, true);
     // // qExec.execSelect().nextSolution().
     // ResultSetFormatter.out(System.out, qExec.execSelect(), q);
+  }
+
+  /**
+   * Do some work on the query strategy after it performed a query.
+   */
+  private void freeQueryStrategy() {
+    queryStrategy.free();
   }
 
   /**
