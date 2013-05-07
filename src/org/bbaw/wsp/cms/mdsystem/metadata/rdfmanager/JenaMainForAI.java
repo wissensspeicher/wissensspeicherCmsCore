@@ -28,6 +28,7 @@ import com.hp.hpl.jena.query.ResultSetFormatter;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
+import com.hp.hpl.jena.reasoner.IllegalParameterException;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 
@@ -323,48 +324,46 @@ public class JenaMainForAI {
 	 * 
 	 * @return
 	 */
-	public ArrayList<String> getModels() {
+	public ArrayList<String> getModels() throws IllegalParameterException {
 
 		Thread mainAction = new Thread() {
 			@Override
 			public void run() {
 
-				try {
-					// closeAll.join();
-					// System.out.println(pathHandler.getPath());
-					if (pathHandler.getPath().equals(""))
-						loadPathFile();
-					wspStore.createStore(pathHandler.getPath());
-					wspStore.createModelFactory();
-					dataset = wspStore.getDataset();
-
-					wspStore.openDataset();
-					Iterator<String> it = dataset.listNames();
-
+				// closeAll.join();
+				// System.out.println(pathHandler.getPath());
+				if (pathHandler.getPath().equals(""))
 					try {
-						while (it.hasNext()) {
-							modelList.add(it.next());
-
-						}
-					} catch (Exception e) {
-						LOGGER.info("Jena Iterator error, took index from file");
-						modelList = pathHandler.getModelList();
+						loadPathFile();
+						wspStore.createStore(pathHandler.getPath());
+					} catch (ClassNotFoundException | IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (ApplicationException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
 
-					wspStore.closeDataset();
+				wspStore.createModelFactory();
+				dataset = wspStore.getDataset();
 
-				} catch (ApplicationException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				wspStore.openDataset();
+				wspStore.getFreshModel();
+				Iterator<String> it = dataset.listNames();
+
+				try {
+					while (it.hasNext()) {
+						modelList.add(it.next());
+
+					}
+				} catch (Exception e) {
+					LOGGER.info("Jena Iterator error, took index from file");
+					modelList = pathHandler.getModelList();
 				}
 
+				wspStore.closeDataset();
 			}
+
 		};
 		mainAction.run();
 
@@ -577,6 +576,9 @@ public class JenaMainForAI {
 
 		final long start = System.currentTimeMillis();
 		wspStore.openDataset();
+		if (pathList.size() == 0) {
+			wspStore.getFreshModel();
+		}
 		for (final String string : pathList) {
 			final Model freshsModel = wspStore.getFreshModel();
 			final Model m = rdfHandler.fillModelFromFile(freshsModel, string);
