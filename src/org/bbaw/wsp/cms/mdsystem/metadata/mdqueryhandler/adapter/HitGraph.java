@@ -42,8 +42,16 @@ public class HitGraph {
    * @return
    */
   public double calcScore() {
-    // TODO Auto-generated method stub
-    return 0;
+    // calc arithmetisches Mittel
+    double sum = 0;
+    for (final HitStatement statement : hitStatements) {
+      sum += statement.getScore();
+    }
+    double avg = 0;
+    if (sum != 0) {
+      avg = sum / hitStatements.size();
+    }
+    return avg;
   }
 
   /**
@@ -72,7 +80,7 @@ public class HitGraph {
    */
   @Override
   public String toString() {
-    return "\tHitGraph [namedGraphUrl=" + namedGraphUrl + ", hitStatements=" + hitStatements + "]\n";
+    return "\tHitGraph [namedGraphUrl=" + namedGraphUrl + ", avgScore= " + calcScore() + "hitStatements=" + hitStatements + "]\n";
   }
 
 }
