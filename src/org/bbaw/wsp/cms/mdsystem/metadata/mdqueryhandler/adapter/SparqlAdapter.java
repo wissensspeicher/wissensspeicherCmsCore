@@ -30,7 +30,8 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
   /**
    * Index of the last queried node within the findRelatedConcepts().
    */
-  private int relatedLastNode;
+  private int relatedMaxNode;
+  private int relatedMinNode;
 
   /**
    * Create a new SparqlAdapter.
@@ -237,19 +238,6 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
 
   }
 
-  @Override
-  /*
-   * (non-Javadoc)
-   * 
-   * @see org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter.ISparqlAdapter#findRelatedConcepts(java.lang.String, int)
-   */
-  public String findRelatedConcepts(final String node, final int numberOfTriples) {
-    final String sparqlQuery = buildRelatedQuery(node, numberOfTriples);
-    System.out.println("query: " + sparqlQuery);
-    this.handleRelatedSolution(queryStrategy.delegateQuery(sparqlQuery));
-    return null;
-  }
-
   // public HitRecordContainer getHitRecordContainer() {
   // // return hitRecordContainer;
   // }
@@ -260,20 +248,14 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
       final ResultSet realResults = (ResultSet) results;
       while (realResults.hasNext()) {
         final QuerySolution solution = realResults.next();
-        final RDFNode relatedNode = solution.get("o" + this.relatedLastNode);
-        final RDFNode relatedPred = solution.get("p" + this.relatedLastNode);
-
-        final String subject;
-        final URL predicate;
-        final URL predParent;
-        final double score;
-        final String subjParent;
-        final String literal;
-        final HitStatement relatedStatement;
-        // resultStatements.add(relatedStatement);
-        System.out.println("related node: " + relatedNode.toString());
-        System.out.println("related pred: " + relatedPred.toString());
-
+        for (int i = this.relatedMinNode; i <= this.relatedMaxNode; i++) {
+          final RDFNode relatedPred = solution.get("p" + i);
+          final RDFNode relatedNode = solution.get("o" + i);
+          final RelatedHitStatement relatedStatement = new RelatedHitStatement(null, relatedPred, relatedNode, 0, null, null, i);
+          if (!resultStatements.contains(relatedStatement)) {
+            resultStatements.add(relatedStatement);
+          }
+        }
       }
     }
 
@@ -281,35 +263,115 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
   }
 
   /**
+   * 
+   * 
    * @param node
    * @param numberOfTriples
+   * @param maxNumberTriples
    * @return
    */
-  private String buildRelatedQuery(final String node, final int numberOfTriples) {
+  private String buildRelatedQuery(final String node, final int minNumberTriples, final int maxNumberTriples) {
     String sparqlQuery = "SELECT DISTINCT " + PLACEHOLDER_LASTNODE + " {\n";
     int prevPredIndex = 0;
-    int prevSubjIndex = 0;
     int prevObjIndex = 0;
-    for (int i = 0; i < numberOfTriples; i++) { // case a: node is subject
-      if (i == 0) {
+    // graph patterns
+    String selection = ""; // concatenaed string for the selection part of the sparql command
+
+    /*
+     * ..:: required graph patterns ::..
+     */
+    for (int i = 0; i < minNumberTriples; i++) {
+      if (i == 0) { // first pattern
         sparqlQuery += node + " ?p1 ?o1." + "\n";
         prevPredIndex = 1;
-        prevSubjIndex = 1;
         prevObjIndex = 1;
       } else {
+        if (i == minNumberTriples - 1) {
+          selection += " ?p" + (prevPredIndex + 1) + " ?o" + minNumberTriples;
+        }
         sparqlQuery += "?o" + prevObjIndex + " ?p" + (prevPredIndex + 1) + " ?o" + (prevObjIndex + 1) + ".\n";
+
         prevPredIndex += 1;
         prevObjIndex += 1;
       }
     }
+
+    /*
+     * ..::::::::::::::::::::::::::::..
+     */
+
+    /*
+     * ..:: optional graph patterns ::..
+     */
+    for (int j = minNumberTriples; j < maxNumberTriples; j++) {
+      sparqlQuery += "OPTIONAL {\n ";
+      selection += " ?p" + (prevPredIndex + 1) + " ?o" + (prevObjIndex + 1);
+      // apply pattern
+      sparqlQuery += "?o" + prevObjIndex + " ?p" + (prevPredIndex + 1) + " ?o" + (prevObjIndex + 1) + ".\n";
+      prevPredIndex += 1;
+      prevObjIndex += 1;
+
+      if (j == maxNumberTriples - 1) {
+        for (int ij = maxNumberTriples; ij > minNumberTriples; ij--) {
+          /*
+           * ..:: additional filters ::..
+           */
+          String filter = "";
+          for (int k = ij - 1; k > 0; k--) {
+            filter += "?o" + (k) + " != " + "?o" + ij;
+            if (k > 1) {
+              filter += " && ";
+            }
+          }
+
+          if (!filter.equals("")) {
+            sparqlQuery += "FILTER ( ";
+            sparqlQuery += filter;
+            sparqlQuery += ") ";
+          }
+
+          // sparqlQuery += "?o" + (ij + 1) + " ?x" + (ij + 1) + " ?o" + prevObjIndex + "";
+
+          /*
+           * ..::::::::::::::::::::::::..
+           */
+          sparqlQuery += "}\n";
+        }
+      }
+    }
+    /*
+     * ..::::::::::::::::::::::::::::..
+     */
+
     sparqlQuery += "}\n";
-    sparqlQuery = sparqlQuery.replace(PLACEHOLDER_LASTNODE, "?o" + prevObjIndex + "?p" + prevObjIndex);
-    this.relatedLastNode = prevObjIndex;
+    sparqlQuery = sparqlQuery.replace(PLACEHOLDER_LASTNODE, selection);
+    this.relatedMaxNode = prevObjIndex;
+    relatedMinNode = minNumberTriples;
     return sparqlQuery;
   }
 
   /**
    * evtl. könnte diese Klasse eine abgewandelte Klasse von @FusekiClient werden
    */
+
+  @Override
+  /*
+   * (non-Javadoc)
+   * 
+   * @see org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter.ISparqlAdapter#findRelatedConcepts(java.lang.String, int, int)
+   */
+  public List<HitStatement> findRelatedConcepts(final String node, final int minNumberTriples, final int maxNumberTriples) throws IllegalArgumentException {
+    if (node == null) {
+      throw new IllegalArgumentException("FindRelatedConcept: value for argument node mustn't be null.");
+    }
+    if (minNumberTriples < 2) {
+      throw new IllegalArgumentException("FindRelatedConcept: value for argument minNumberTriples mustn't be less than 2.");
+    }
+    final String sparqlQuery = buildRelatedQuery(node, minNumberTriples, maxNumberTriples);
+    System.out.println("query: " + sparqlQuery);
+    final List<HitStatement> statements = this.handleRelatedSolution(queryStrategy.delegateQuery(sparqlQuery));
+    // final List<HitStatement> statements = null;
+    return statements;
+  }
 
 }

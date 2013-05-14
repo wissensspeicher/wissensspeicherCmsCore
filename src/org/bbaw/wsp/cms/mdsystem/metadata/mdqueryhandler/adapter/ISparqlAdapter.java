@@ -4,6 +4,7 @@
 package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter;
 
 import java.net.URL;
+import java.util.List;
 
 /**
  * Adapter interface which is used to communicate with the {@link SparqlAdapter} .
@@ -47,7 +48,17 @@ public interface ISparqlAdapter {
   void buildSparqlQuery(URL namedGraphUrl, URL subject, URL predicate, String object);
 
   /**
-   * Benachbarte Knoten finden (wir sehen unsere Tripels als Teil eines Graphen). Dabei nach oben oder unten suchen (Graph ist eine Baumstruktur). Eingabe: ein Knoten (URL oder Literal) Eingabe: Nachbarsgrad Rückgabe: Liste von benachbarten Knoten
+   * Find related concepts. A related concept is a statement that has an object which is related to a given node via a given number of triples.
+   * 
+   * @param node
+   *          the node (as String in the form <URL>) whose related concepts will be found.
+   * @param minNumberTriples
+   *          the minimum number of triples that are between the node and the related concept. Must be a minimum of 2.
+   * @param maxNumberTriples
+   *          the maximum number of triples that are between the node and the related concept.
+   * @return a list of {@link HitStatement}. The resulting HitStatements are related triples. The subject within the {@link HitStatement} is the related concept.
+   * @throws IllegalArgumentException
+   *           if the minNumberTriples is less than 2 or one of the parameters is null.
    */
-  String findRelatedConcepts(String node, int numberOfEdges);
+  List<HitStatement> findRelatedConcepts(String node, int minNumberTriples, int maxNumberTriples) throws IllegalArgumentException;
 }

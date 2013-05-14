@@ -40,6 +40,7 @@ public class QueryStrategyFuseki implements IQueryStrategy<ResultSet> {
    * @see org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter.IQueryStrategy #delegateQuery(java.lang.String)
    */
   public ResultSet delegateQuery(final String sparqlSelectQuery) {
+    System.out.println("performing " + sparqlSelectQuery);
     final ResultSet results = fusekiHandler.performSelect(fusekiUrl.toExternalForm(), sparqlSelectQuery);
     return results;
   }
