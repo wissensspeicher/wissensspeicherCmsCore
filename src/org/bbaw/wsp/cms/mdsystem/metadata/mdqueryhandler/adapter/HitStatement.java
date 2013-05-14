@@ -3,8 +3,6 @@
  */
 package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter;
 
-import java.net.URL;
-
 import com.hp.hpl.jena.rdf.model.RDFNode;
 
 /**
@@ -16,12 +14,12 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
  */
 public class HitStatement {
 
-  private final RDFNode subject;
-  private final RDFNode predicate;
-  private final RDFNode literal;
-  private final RDFNode subjParent;
-  private final RDFNode predParent;
-  private final double score;
+  protected final RDFNode subject;
+  protected final RDFNode predicate;
+  protected final RDFNode object;
+  protected final RDFNode subjParent;
+  protected final RDFNode predParent;
+  protected final double score;
 
   /**
    * Create a new HitStatement to represent results of the {@link SparqlAdapter}
@@ -30,7 +28,7 @@ public class HitStatement {
    *          an {@link RDFNode}
    * @param predicate
    *          an {@link RDFNode}
-   * @param literal
+   * @param object
    *          an {@link RDFNode}
    * @param score
    *          a {@link Double}
@@ -39,10 +37,10 @@ public class HitStatement {
    * @param predParent
    *          an {@link RDFNode}
    */
-  public HitStatement(final RDFNode subject, final RDFNode predicate, final RDFNode literal, final double score, final RDFNode subjParent, final RDFNode predParent) {
+  public HitStatement(final RDFNode subject, final RDFNode predicate, final RDFNode object, final double score, final RDFNode subjParent, final RDFNode predParent) {
     this.subject = subject;
     this.predicate = predicate;
-    this.literal = literal;
+    this.object = object;
     this.score = score;
     this.subjParent = subjParent;
     this.predParent = predParent;
@@ -63,10 +61,10 @@ public class HitStatement {
   }
 
   /**
-   * @return the literal
+   * @return the object
    */
-  public RDFNode getLiteral() {
-    return literal;
+  public RDFNode getObject() {
+    return object;
   }
 
   /**
@@ -97,7 +95,85 @@ public class HitStatement {
    */
   @Override
   public String toString() {
-    return "\t\tHitStatement [subject=" + subject + ", predicate=" + predicate + ", literal=" + literal + ", score=" + score + ", subjectParent=" + subjParent + ", predicateParent=" + predParent + "]\n";
+    return "\t\tHitStatement [subject=" + subject + ", predicate=" + predicate + ", literal=" + object + ", score=" + score + ", subjectParent=" + subjParent + ", predicateParent=" + predParent + "]\n";
+  }
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see java.lang.Object#hashCode()
+   */
+  @Override
+  public int hashCode() {
+    final int prime = 31;
+    int result = 1;
+    result = prime * result + ((object == null) ? 0 : object.hashCode());
+    result = prime * result + ((predParent == null) ? 0 : predParent.hashCode());
+    result = prime * result + ((predicate == null) ? 0 : predicate.hashCode());
+    long temp;
+    temp = Double.doubleToLongBits(score);
+    result = prime * result + (int) (temp ^ (temp >>> 32));
+    result = prime * result + ((subjParent == null) ? 0 : subjParent.hashCode());
+    result = prime * result + ((subject == null) ? 0 : subject.hashCode());
+    return result;
+  }
+
+  /*
+   * (non-Javadoc)
+   * 
+   * @see java.lang.Object#equals(java.lang.Object)
+   */
+  @Override
+  public boolean equals(final Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (obj == null) {
+      return false;
+    }
+    if (getClass() != obj.getClass()) {
+      return false;
+    }
+    final HitStatement other = (HitStatement) obj;
+    if (object == null) {
+      if (other.object != null) {
+        return false;
+      }
+    } else if (!object.equals(other.object)) {
+      return false;
+    }
+    if (predParent == null) {
+      if (other.predParent != null) {
+        return false;
+      }
+    } else if (!predParent.equals(other.predParent)) {
+      return false;
+    }
+    if (predicate == null) {
+      if (other.predicate != null) {
+        return false;
+      }
+    } else if (!predicate.equals(other.predicate)) {
+      return false;
+    }
+    if (Double.doubleToLongBits(score) != Double.doubleToLongBits(other.score)) {
+      return false;
+    }
+    if (subjParent == null) {
+      if (other.subjParent != null) {
+        return false;
+      }
+    } else if (!subjParent.equals(other.subjParent)) {
+      return false;
+    }
+    if (subject == null) {
+      if (other.subject != null) {
+        return false;
+      }
+    } else if (!subject.equals(other.subject)) {
+      return false;
+    }
+    return true;
   }
 
 }
