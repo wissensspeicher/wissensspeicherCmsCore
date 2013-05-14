@@ -5,9 +5,10 @@ package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter;
 
 import java.net.URL;
 
+import com.hp.hpl.jena.rdf.model.RDFNode;
+
 /**
- * A HitStatement holds the LARQ search results of a hit statement within the
- * RdfStore. It belongs to a {@link HitGraph}.
+ * A HitStatement holds the LARQ search results of a hit statement within the RdfStore. It belongs to a {@link HitGraph}.
  * 
  * @author <a href="mailto:wsp-shk1@bbaw.de">Sascha Feldmann</a>
  * @since 08.02.2013
@@ -15,29 +16,30 @@ import java.net.URL;
  */
 public class HitStatement {
 
-  private final String subject;
-  private final URL predicate;
-  private final String literal;
-  private final String subjParent;
-  private final URL predParent;
+  private final RDFNode subject;
+  private final RDFNode predicate;
+  private final RDFNode literal;
+  private final RDFNode subjParent;
+  private final RDFNode predParent;
   private final double score;
 
   /**
+   * Create a new HitStatement to represent results of the {@link SparqlAdapter}
    * 
    * @param subject
-   *          a {@link String}
+   *          an {@link RDFNode}
    * @param predicate
-   *          a {@link URL}
+   *          an {@link RDFNode}
    * @param literal
-   *          a {@link String}
+   *          an {@link RDFNode}
    * @param score
    *          a {@link Double}
    * @param subjParent
-   *          a {@link String}
+   *          an {@link RDFNode}
    * @param predParent
-   *          a {@link URL}
+   *          an {@link RDFNode}
    */
-  public HitStatement(final String subject, final URL predicate, final String literal, final double score, final String subjParent, final URL predParent) {
+  public HitStatement(final RDFNode subject, final RDFNode predicate, final RDFNode literal, final double score, final RDFNode subjParent, final RDFNode predParent) {
     this.subject = subject;
     this.predicate = predicate;
     this.literal = literal;
@@ -49,21 +51,21 @@ public class HitStatement {
   /**
    * @return the subject
    */
-  public String getSubject() {
+  public RDFNode getSubject() {
     return subject;
   }
 
   /**
    * @return the predicate
    */
-  public URL getPredicate() {
+  public RDFNode getPredicate() {
     return predicate;
   }
 
   /**
    * @return the literal
    */
-  public String getLiteral() {
+  public RDFNode getLiteral() {
     return literal;
   }
 
@@ -77,17 +79,17 @@ public class HitStatement {
   /**
    * @return the subject
    */
-  public String getSubjParent() {
+  public RDFNode getSubjParent() {
     return subjParent;
   }
 
   /**
    * @return the predicate
    */
-  public URL getPredParent() {
+  public RDFNode getPredParent() {
     return predParent;
   }
-  
+
   /*
    * (non-Javadoc)
    * 
