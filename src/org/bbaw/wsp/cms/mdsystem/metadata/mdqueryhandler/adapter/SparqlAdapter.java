@@ -2,9 +2,11 @@ package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -122,29 +124,29 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
       } else {
         hitGraph = container.getHitGraph(graphUrl);
       }
-      String subject = null;
+      RDFNode subject = null;
       if (solution.getResource("s") != null) {
-        subject = solution.getResource("s").toString();
+        subject = solution.getResource("s");
       }
-      URL predicate = null;
+      RDFNode predicate = null;
       if (solution.getResource("p") != null) {
-        predicate = new URL(solution.getResource("p").getURI());
+        predicate = solution.getResource("p");
       }
-      String literal = null;
+      RDFNode literal = null;
       if (solution.getLiteral("lit") != null) {
-        literal = solution.getLiteral("lit").toString();
+        literal = solution.getLiteral("lit");
       }
       double score = 0;
       if (solution.getLiteral("score") != null) {
         score = solution.getLiteral("score").getDouble();
       }
-      String subjParent = null;
+      RDFNode subjParent = null;
       if (solution.getResource("sParent") != null) {
-        subjParent = solution.getResource("sParent").toString();
+        subjParent = solution.getResource("sParent");
       }
-      URL predParent = null;
+      RDFNode predParent = null;
       if (solution.getResource("pParent") != null) {
-        predParent = new URL(solution.getResource("pParent").getURI());
+        predParent = solution.getResource("pParent");
       }
       final HitStatement statement = new HitStatement(subject, predicate, literal, score, subjParent, predParent);
       hitGraph.addStatement(statement);
@@ -236,6 +238,11 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
   }
 
   @Override
+  /*
+   * (non-Javadoc)
+   * 
+   * @see org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter.ISparqlAdapter#findRelatedConcepts(java.lang.String, int)
+   */
   public String findRelatedConcepts(final String node, final int numberOfTriples) {
     final String sparqlQuery = buildRelatedQuery(node, numberOfTriples);
     System.out.println("query: " + sparqlQuery);
@@ -247,25 +254,30 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
   // // return hitRecordContainer;
   // }
 
-  private void handleRelatedSolution(final T results) {
-    if (results instanceof ResultSet) {
+  private List<HitStatement> handleRelatedSolution(final T results) {
+    final List<HitStatement> resultStatements = new ArrayList<HitStatement>();
+    if (results instanceof ResultSet) { // returned by QueryStrategyFuseki
       final ResultSet realResults = (ResultSet) results;
       while (realResults.hasNext()) {
         final QuerySolution solution = realResults.next();
         final RDFNode relatedNode = solution.get("o" + this.relatedLastNode);
         final RDFNode relatedPred = solution.get("p" + this.relatedLastNode);
+
+        final String subject;
+        final URL predicate;
+        final URL predParent;
+        final double score;
+        final String subjParent;
+        final String literal;
+        final HitStatement relatedStatement;
+        // resultStatements.add(relatedStatement);
         System.out.println("related node: " + relatedNode.toString());
         System.out.println("related pred: " + relatedPred.toString());
-        // try { // try to handle result as literal
-        // final Literal relatedLiteral = solution.getLiteral("o" + this.relatedLastNode);
-        // if (relatedLiteral != null) {
-        // System.out.println(relatedLiteral.getLexicalForm());
-        // }
-        // } catch (final ClassCastException e) {
-        //
-        // }
+
       }
     }
+
+    return resultStatements;
   }
 
   /**
