@@ -15,13 +15,18 @@ public class ReasonerTest {
 	public static void main(String[] args) {
 		String NS = "urn:x-hp-jena:eg/";
 
-		Model rdfsModel = ModelFactory.createDefaultModel();
+		Model tempModel = ModelFactory.createDefaultModel();
+		Model rdfsModel = ModelFactory.createRDFSModel(tempModel);
 		Property p = rdfsModel.createProperty(NS, "p");
 		Property q = rdfsModel.createProperty(NS, "q");
 		rdfsModel.add(p, RDFS.subPropertyOf, q);
 		rdfsModel.createResource(NS + "a").addProperty(p, "fuu");
 
-		Reasoner reasoner = RDFSRuleReasonerFactory.theInstance().create(null);
+		Resource config = ModelFactory.createDefaultModel().createResource()
+				.addProperty(ReasonerVocabulary.PROPsetRDFSLevel, "simple");
+
+		Reasoner reasoner = RDFSRuleReasonerFactory.theInstance().create(config);
+
 		reasoner.setParameter(ReasonerVocabulary.PROPsetRDFSLevel,
 				ReasonerVocabulary.RDFS_SIMPLE);
 
