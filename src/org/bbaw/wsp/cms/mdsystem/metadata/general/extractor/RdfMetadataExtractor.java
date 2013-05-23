@@ -176,9 +176,6 @@ public class RdfMetadataExtractor extends MetadataExtractor {
 				query = "//rdf:Description[" + i + "]/*:identifier/@rdf:resource";
 				addToTarget("identifier", queryExecute(query), target);
 
-				query = "//rdf:Description[" + i + "]/*:identifier/@rdf:resource";
-				addToTarget("identifier", queryExecute(query), target);
-
 				query = "//rdf:Description[" + i
 						+ "]/*:relatedCorporateBody/@rdf:resource";
 				addToTarget("relatedCorporateBody", queryExecute(query), target);
