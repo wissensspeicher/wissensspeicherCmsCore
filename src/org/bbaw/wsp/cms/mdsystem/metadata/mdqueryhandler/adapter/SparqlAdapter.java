@@ -5,15 +5,14 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter.RelatedHitStatement.Relationship;
 
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
-import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 
 /**
@@ -249,11 +248,29 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
       while (realResults.hasNext()) {
         final QuerySolution solution = realResults.next();
         for (int i = this.relatedMinNode; i <= this.relatedMaxNode; i++) {
-          final RDFNode relatedPred = solution.get("p" + i);
-          final RDFNode relatedNode = solution.get("o" + i);
-          final RelatedHitStatement relatedStatement = new RelatedHitStatement(null, relatedPred, relatedNode, 0, null, null, i);
-          if (!resultStatements.contains(relatedStatement)) {
-            resultStatements.add(relatedStatement);
+          // ..:: top-down query (node is subject) ::..
+          final RDFNode topDownRelatedSubj = solution.get("o" + (i - 1)); // subject is object in the parent statement
+          final RDFNode topwDownRelatedPred = solution.get("p" + i);
+          final RDFNode topDownRelatedNode = solution.get("o" + i);
+
+          // the subject (object of the parent statement) doesn't need to be part of another statement
+          if (topDownRelatedSubj != null && topDownRelatedSubj.isResource() && topwDownRelatedPred != null && topDownRelatedNode != null) {
+            final RelatedHitStatement relatedStatement = new RelatedHitStatement(topDownRelatedSubj, topwDownRelatedPred, topDownRelatedNode, 0, null, null, i, Relationship.CHILD);
+            if (!resultStatements.contains(relatedStatement)) {
+              resultStatements.add(relatedStatement);
+            }
+          }
+
+          // ..:: bottom-up query (node is object) ::..
+          final RDFNode bottomRelatedSubj = solution.get("s1" + i);
+          final RDFNode bottomDownRelatedPred = solution.get("p1" + i);
+          final RDFNode bottomRelatedNode = solution.get("s1" + (i - 1)); // object is subject in the child statement
+
+          if (bottomRelatedNode != null && bottomRelatedNode.isResource() && bottomDownRelatedPred != null && bottomRelatedSubj != null) {
+            final RelatedHitStatement bottomRelatedStatement = new RelatedHitStatement(bottomRelatedSubj, bottomDownRelatedPred, bottomRelatedNode, 0, null, null, i, Relationship.PARENT);
+            if (!resultStatements.contains(bottomRelatedStatement)) {
+              resultStatements.add(bottomRelatedStatement);
+            }
           }
         }
       }
@@ -271,7 +288,7 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
    * @return
    */
   private String buildRelatedQuery(final String node, final int minNumberTriples, final int maxNumberTriples) {
-    String sparqlQuery = "SELECT DISTINCT " + PLACEHOLDER_LASTNODE + " {\n";
+    final StringBuilder sparqlQueryBuilder = new StringBuilder("SELECT DISTINCT " + PLACEHOLDER_LASTNODE + " {\n");
     int prevPredIndex = 0;
     int prevObjIndex = 0;
     // graph patterns
@@ -280,16 +297,17 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
     /*
      * ..:: required graph patterns ::..
      */
+    sparqlQueryBuilder.append("\n\t{"); // left side of UNION
     for (int i = 0; i < minNumberTriples; i++) {
       if (i == 0) { // first pattern
-        sparqlQuery += node + " ?p1 ?o1." + "\n";
+        sparqlQueryBuilder.append("\n\t\t" + node + " ?p1 ?o1." + "\n");
         prevPredIndex = 1;
         prevObjIndex = 1;
       } else {
         if (i == minNumberTriples - 1) {
-          selection += " ?p" + (prevPredIndex + 1) + " ?o" + minNumberTriples;
+          selection += "?o" + (minNumberTriples - 1) + " ?p" + (prevPredIndex + 1) + " ?o" + minNumberTriples;
         }
-        sparqlQuery += "?o" + prevObjIndex + " ?p" + (prevPredIndex + 1) + " ?o" + (prevObjIndex + 1) + ".\n";
+        sparqlQueryBuilder.append("\n\t\t" + "?o" + prevObjIndex + " ?p" + (prevPredIndex + 1) + " ?o" + (prevObjIndex + 1) + ".\n");
 
         prevPredIndex += 1;
         prevObjIndex += 1;
@@ -304,10 +322,10 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
      * ..:: optional graph patterns ::..
      */
     for (int j = minNumberTriples; j < maxNumberTriples; j++) {
-      sparqlQuery += "OPTIONAL {\n ";
+      sparqlQueryBuilder.append("\n\tOPTIONAL {\n ");
       selection += " ?p" + (prevPredIndex + 1) + " ?o" + (prevObjIndex + 1);
       // apply pattern
-      sparqlQuery += "?o" + prevObjIndex + " ?p" + (prevPredIndex + 1) + " ?o" + (prevObjIndex + 1) + ".\n";
+      sparqlQueryBuilder.append("\n\t\t" + "?o" + prevObjIndex + " ?p" + (prevPredIndex + 1) + " ?o" + (prevObjIndex + 1) + ".\n");
       prevPredIndex += 1;
       prevObjIndex += 1;
 
@@ -325,9 +343,9 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
           }
 
           if (!filter.equals("")) {
-            sparqlQuery += "FILTER ( ";
-            sparqlQuery += filter;
-            sparqlQuery += ") ";
+            sparqlQueryBuilder.append("\n\t\tFILTER ( ");
+            sparqlQueryBuilder.append(filter);
+            sparqlQueryBuilder.append(") ");
           }
 
           // sparqlQuery += "?o" + (ij + 1) + " ?x" + (ij + 1) + " ?o" + prevObjIndex + "";
@@ -335,15 +353,81 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
           /*
            * ..::::::::::::::::::::::::..
            */
-          sparqlQuery += "}\n";
+          sparqlQueryBuilder.append("}\n");
         }
       }
     }
+    sparqlQueryBuilder.append("} \n"); // end of left side of UNION
+
+    sparqlQueryBuilder.append("\tUNION \n");
+    /*
+     * ..:: right side of UNION ::..
+     */
+    sparqlQueryBuilder.append("{ \n");
+
+    for (int i = 0; i < minNumberTriples; i++) {
+      if (i == 0) { // first pattern
+        sparqlQueryBuilder.append("\n\t\t" + "?s11 ?p11 " + node + ".\n");
+        prevPredIndex = 1;
+        prevObjIndex = 1;
+      } else {
+        if (i == minNumberTriples - 1) {
+          selection += " ?p1" + (prevPredIndex + 1) + " ?s1" + minNumberTriples + " ?s1" + (minNumberTriples - 1);
+        }
+        sparqlQueryBuilder.append("\n\t\t" + "?s1" + (prevObjIndex + 1) + " ?p1" + (prevPredIndex + 1) + " ?s1" + (prevObjIndex) + ".\n");
+
+        prevPredIndex += 1;
+        prevObjIndex += 1;
+      }
+    }
+
     /*
      * ..::::::::::::::::::::::::::::..
      */
 
-    sparqlQuery += "}\n";
+    /*
+     * ..:: optional graph patterns ::..
+     */
+    for (int j = minNumberTriples; j < maxNumberTriples; j++) {
+      sparqlQueryBuilder.append("\n\tOPTIONAL {\n ");
+      selection += " ?p1" + (prevPredIndex + 1) + " ?s1" + (prevObjIndex + 1);
+      // apply pattern
+      sparqlQueryBuilder.append("\n\t\t" + "?s1" + (prevObjIndex + 1) + " ?p1" + (prevPredIndex + 1) + " ?s1" + prevObjIndex + ".\n");
+      prevPredIndex += 1;
+      prevObjIndex += 1;
+
+      if (j == maxNumberTriples - 1) {
+        for (int ij = maxNumberTriples; ij > minNumberTriples; ij--) {
+          /*
+           * ..:: additional filters ::..
+           */
+          String filter = "";
+          for (int k = ij - 1; k > 0; k--) {
+            filter += "?s1" + (k) + " != " + "?s1" + ij;
+            if (k > 1) {
+              filter += " && ";
+            }
+          }
+
+          if (!filter.equals("")) {
+            sparqlQueryBuilder.append("\n\t\tFILTER ( ");
+            sparqlQueryBuilder.append(filter);
+            sparqlQueryBuilder.append(") ");
+          }
+
+          // sparqlQuery += "?o" + (ij + 1) + " ?x" + (ij + 1) + " ?o" + prevObjIndex + "";
+
+          /*
+           * ..::::::::::::::::::::::::..
+           */
+          sparqlQueryBuilder.append("\n\t}\n");
+        }
+      }
+    }
+    sparqlQueryBuilder.append("} \n"); // end of right side of UNION
+
+    sparqlQueryBuilder.append("}\n");
+    String sparqlQuery = sparqlQueryBuilder.toString();
     sparqlQuery = sparqlQuery.replace(PLACEHOLDER_LASTNODE, selection);
     this.relatedMaxNode = prevObjIndex;
     relatedMinNode = minNumberTriples;
@@ -368,9 +452,7 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
       throw new IllegalArgumentException("FindRelatedConcept: value for argument minNumberTriples mustn't be less than 2.");
     }
     final String sparqlQuery = buildRelatedQuery(node, minNumberTriples, maxNumberTriples);
-    System.out.println("query: " + sparqlQuery);
     final List<HitStatement> statements = this.handleRelatedSolution(queryStrategy.delegateQuery(sparqlQuery));
-    // final List<HitStatement> statements = null;
     return statements;
   }
 
