@@ -176,6 +176,9 @@ public class RdfMetadataExtractor extends MetadataExtractor {
 				query = "//rdf:Description[" + i + "]/*:identifier/@rdf:resource";
 				addToTarget("identifier", queryExecute(query), target);
 
+				query = "//rdf:Description[" + i + "]/*:identifier/@rdf:resource";
+				addToTarget("identifier", queryExecute(query), target);
+
 				query = "//rdf:Description[" + i
 						+ "]/*:relatedCorporateBody/@rdf:resource";
 				addToTarget("relatedCorporateBody", queryExecute(query), target);
@@ -187,6 +190,10 @@ public class RdfMetadataExtractor extends MetadataExtractor {
 				query = "//rdf:Description[" + i
 						+ "]/*:contributingPerson/@rdf:resource";
 				addToTarget("contributingPerson", queryExecute(query), target);
+
+				query = "//rdf:Description[" + i
+						+ "]/*:contributingCorporateBody/@rdf:resource";
+				addToTarget("contributingCorporateBody", queryExecute(query), target);
 
 				query = "//rdf:Description[" + i + "]/*:temporal";
 				addToTarget("temporal", queryExecute(query), target);
