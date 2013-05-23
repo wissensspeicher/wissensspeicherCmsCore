@@ -73,8 +73,8 @@
 <xsl:variable name="dbpediaRelatedTerms" select="saxon:evaluate($dbpediaRelatedTermsEvalStr)" xmlns:saxon="http://saxon.sf.net/"/>
 <xsl:variable name="wikiUrls" select="//*:isPrimaryTopicOf/@*:resource"/>
 
-<xsl:variable name="pdrHits" select="//*:match"/>
-
+<xsl:variable name="pdrPitHits" select="//*:item"/>
+<xsl:variable name="pdrConcordancerHits" select="subsequence(//*:match, 1, 10)"/>
 
 <xsl:template match="/">
   <div class="title">
@@ -102,7 +102,7 @@
       </span>
     </div>
   </xsl:if>
-  <xsl:if test="empty($label) and empty($pdrHits)">
+  <xsl:if test="empty($label) and empty($pdrPitHits) and empty($pdrConcordancerHits)">
     <div class="result">Query delivers no results</div>
   </xsl:if>
   <xsl:if test="not(empty($label))">
@@ -250,10 +250,27 @@
     </div>
   </xsl:if>
   <xsl:if test="$type = 'person'">
-    <xsl:if test="not(empty($pdrHits))">
+    <xsl:if test="not(empty($pdrPitHits))">
       <div class="pdr">
         <span class="h2"><xsl:value-of select="'PDR'"/></span>
-        <xsl:apply-templates select="$pdrHits"/>
+        <xsl:variable name="pdrPitResultSize" select="count($pdrPitHits)"/>
+        <xsl:variable name="pdrGetAspectsUrl" select="concat('http://pdrdev.bbaw.de/pit/2-1/getAspects.php?content=', $query)"/>
+        <div>
+          <xsl:value-of select="concat('first ', $pdrPitResultSize, ' hits (all hits: see ')"/>
+          <a class="url" href="{$pdrGetAspectsUrl}"><xsl:value-of select="'here'"/></a>
+          <xsl:value-of select="'):'"/>
+        </div>
+        <xsl:apply-templates select="$pdrPitHits"/>
+      </div>
+    </xsl:if>
+    <xsl:if test="not(empty($pdrConcordancerHits))">
+      <div class="pdr">
+        <span class="h2"><xsl:value-of select="'PDR (Concordancer)'"/></span>
+        <xsl:variable name="pdrConcordancerResultSize" select="count($pdrConcordancerHits)"/>
+        <div>
+          <xsl:value-of select="concat('first ', $pdrConcordancerResultSize, ' hits: ')"/>
+        </div>
+        <xsl:apply-templates select="$pdrConcordancerHits"/>
       </div>
     </xsl:if>
   </xsl:if>
@@ -293,7 +310,27 @@
   </xsl:if>
 </xsl:template>
 
-<!--  PDR person matches -->
+<!--  PDR PIT person matches -->
+<xsl:template match="*:item">
+  <xsl:variable name="name" select="relatedPersons/person"/>
+  <xsl:variable name="pdrId" select="relatedPersons/person/@id"/>
+  <xsl:variable name="description" select="content"/>
+  <div class="person"> 
+    <div class="name">
+      <xsl:sequence select="$typeLogo"/>
+      <xsl:value-of select="$name"/>
+    </div>
+    <xsl:if test="not(empty($description)) and $description != $name"><div class="description"><xsl:value-of select="$description"/></div></xsl:if>
+    <xsl:if test="not(empty($pdrId))">
+      <xsl:variable name="pdrGetPersonUrl" select="concat('http://pdrdev.bbaw.de/pit/2-1/getPerson.php?personId=', $pdrId, '&amp;format=html')"/>
+      <ul class="pitPersonLink">
+        <li class="provider"><a class="url" href="{$pdrGetPersonUrl}"><xsl:value-of select="'Details'"/></a></li>
+      </ul>
+    </xsl:if>
+  </div>
+</xsl:template>
+
+<!--  PDR concordancer person matches -->
 <xsl:template match="*:match">
   <xsl:variable name="name" select="person/name"/>
   <xsl:variable name="otherNames" select="person/otherNames[normalize-space() != '']"/>
