@@ -11,7 +11,7 @@ public class Tester {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		new ConceptIdentifier().initIdentifying("ProduktionssystemeZukünftige",
+		new ConceptIdentifier().initIdentifying("Günter",
 				ConceptIdentfierSearchMode.METHODE_OR);
 
 	}

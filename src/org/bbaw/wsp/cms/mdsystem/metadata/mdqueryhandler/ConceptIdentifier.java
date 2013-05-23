@@ -1,8 +1,5 @@
 package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler;
 
-import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
@@ -22,7 +19,8 @@ import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 public class ConceptIdentifier {
 
 	// Datengrundlage: wsp.normdata.rdf
-//	final String path = new String(MdSystemConfigReader.getInstance().getConfig().getNormdataPath());
+	// final String path = new
+	// String(MdSystemConfigReader.getInstance().getConfig().getNormdataPath());
 	ArrayList<ConceptQueryResult> results;
 
 	/**
@@ -31,27 +29,30 @@ public class ConceptIdentifier {
 	 * @param methode
 	 */
 	public void initIdentifying(String query, int methode) {
-    Logger logger = Logger.getLogger(ConceptIdentifier.class);
-    logger.info("initIdentifying");
-	  String path = "";
-	  
-    MdSystemConfigReader confReader = MdSystemConfigReader.getInstance();
-    String normdataFile = confReader.getNormDataFilePath();
-    
-    logger.info("urlToConfFile : "+normdataFile);
-    this.results = new ArrayList<ConceptQueryResult>();
-    this.results = scanForElement(normdataFile, query, methode);
+		Logger logger = Logger.getLogger(ConceptIdentifier.class);
+		logger.info("initIdentifying");
+		String path = "";
 
-//		for (ConceptQueryResult target : this.results) {
-//			System.out.println(target);
-//		}
+		MdSystemConfigReader confReader = MdSystemConfigReader.getInstance();
+		String normdataFile = confReader.getNormDataFilePath();
+
+		logger.info("urlToConfFile : " + normdataFile);
+		this.results = new ArrayList<ConceptQueryResult>();
+		// this.results = scanForElement(normdataFile, query, methode);
+		this.results = scanForElement(
+				"/home/shk2/quellen/Normdata/wsp.normdata.rdf", query, methode);
+
+		for (ConceptQueryResult target : this.results) {
+			System.out.println(target);
+		}
 	}
 
 	@SuppressWarnings("unused")
 	private String format(final String element, final String type) {
 		String[] elementArray = element.split("[#]+");
 		String[] typeArray = type.split("[/]+");
-		return elementArray[elementArray.length - 1] + " - "+ typeArray[typeArray.length - 1];
+		return elementArray[elementArray.length - 1] + " - "
+				+ typeArray[typeArray.length - 1];
 	}
 
 	/**
@@ -62,16 +63,19 @@ public class ConceptIdentifier {
 	 * @param element
 	 * @return
 	 */
-	private ArrayList<ConceptQueryResult> scanForElement(final String file, final String element, int methode) {
-    Logger logger = Logger.getLogger(ConceptIdentifier.class);
+	private ArrayList<ConceptQueryResult> scanForElement(final String file,
+			final String element, int methode) {
+		Logger logger = Logger.getLogger(ConceptIdentifier.class);
 		try {
-			RdfMetadataExtractor extractor = MetadataExtractorFactory.newRdfMetadataParser(file);
+			RdfMetadataExtractor extractor = MetadataExtractorFactory
+					.newRdfMetadataParser(file);
 			extractor.searchElements(element, methode);
 			ArrayList<ConceptQueryResult> resultList = extractor.getResultList();
 
 			return resultList;
 		} catch (ApplicationException e) {
-			logger.info("Couldn't identify document: " + file + " - "+ e.getMessage());
+			logger.info("Couldn't identify document: " + file + " - "
+					+ e.getMessage());
 			return null;
 		}
 	}
@@ -90,9 +94,9 @@ public class ConceptIdentifier {
 	 * 
 	 * Strategie: eine person ist, wer einen "familyName" oder als "description"
 	 * oder "functionOrRole" "Wissenschaftliche(r) Mitarbeiter(in)",
-	 * "Arbeitsstellenleiter" etc hat suche also alle subjekte mit pf:textmatch
-	 * in dem der suchterm vorkommt und als prädikat foaf:familyName hat falls
-	 * es doppelungen gibt, entscheide nach häufigkeit, welches konzeot
+	 * "Arbeitsstellenleiter" etc hat suche also alle subjekte mit pf:textmatch in
+	 * dem der suchterm vorkommt und als prädikat foaf:familyName hat falls es
+	 * doppelungen gibt, entscheide nach häufigkeit, welches konzeot
 	 * wahrschienlich gesucht wird <rdf:type
 	 * rdf:resource="http://xmlns.com/foaf/0.1/Person"/> alle Personen haben das
 	 * /Person tag
@@ -102,12 +106,11 @@ public class ConceptIdentifier {
 	 * vorhaben/projekt
 	 * 
 	 * Strategie: ein vorhaben ist, was eine "description" mit dem inhalt
-	 * "Vorhaben", "Arbeitsgruppe", "Drittmittelprojekt", etc hat suche also
-	 * alle subjekte mit pf:textmatch in dem der suchterm vorkommt und als
-	 * prädikat description und den entsprechenden inhalt hat falls es
-	 * doppelungen gibt, entscheide nach häufigkeit, welches konzeot
-	 * wahrschienlich gesucht wird <rdf:type
-	 * rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
+	 * "Vorhaben", "Arbeitsgruppe", "Drittmittelprojekt", etc hat suche also alle
+	 * subjekte mit pf:textmatch in dem der suchterm vorkommt und als prädikat
+	 * description und den entsprechenden inhalt hat falls es doppelungen gibt,
+	 * entscheide nach häufigkeit, welches konzeot wahrschienlich gesucht wird
+	 * <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
 	 * 
 	 * ------------------------ case: identifiziere einen string als ort
 	 * 
