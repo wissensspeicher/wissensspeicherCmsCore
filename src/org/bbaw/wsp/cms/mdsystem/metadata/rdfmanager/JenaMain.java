@@ -56,7 +56,7 @@ public class JenaMain {
     wspStore.createModelFactory();
     dataset = wspStore.getDataset();
     rdfHandler = new RdfHandler();
-    // doYourWork();
+     doYourWork();
   }
 
   /**
@@ -64,7 +64,7 @@ public class JenaMain {
    */
   private void doYourWork() {
     wspStore.setForce(true);
-    createNamedModelsFromOreSets("C:/Dokumente und Einstellungen/wsp-shk1/Eigene Dateien/Development/ParserTest/XSLTTest/outputs/v2_29_11_2012/mods");
+    createNamedModelsFromOreSets("/home/juergens/wspEtc/rdfData/projektRdf/Normdata/");
     // createNewModelFromSingleOre(oreBiblioNeu);
     // getAllNamedModelsInDataset();
     // wspStore.openDataset();
