@@ -175,7 +175,7 @@ public class EdocIndexMetadataFetcherTool {
           mdRecord.setPublishingDate(cal.getTime());
         } else if (key.contains("ISBN")) {
           mdRecord.setIsbn(value);
-        } else if (key.contains("Institut") && ! key.contains("Sonstige beteiligte Institution")) { // multi values possible
+        } else if (key.contains("Institut") && !key.contains("Sonstige beteiligte Institution")) { // multi values possible
           mapInstitut(mdRecord, eDocMapper, value);
         } else if (key.contains("Collection")) { // multi values possible
           final Pattern pColl = Pattern.compile("(?i)<a.*?>(.*?)</a>");
@@ -217,13 +217,15 @@ public class EdocIndexMetadataFetcherTool {
     if (newValues != null) { // mapping values retrieved
       final String newPublisher = concatenateValues(mdRecord.getPublisher(), newValues.getInstitut(), DEFAULT_SEPARATOR);
       mdRecord.setPublisher(newPublisher);
-      if (mdRecord.getCollectionNames() == null && newValues.getConfigId() != null)
+      if (mdRecord.getCollectionNames() == null && newValues.getConfigId() != null) {
         mdRecord.setCollectionNames(newValues.getConfigId());
+      }
     } else if (institutValue != null) { // no mapping values retrieved -> so set the unmapped publisher
       final String newPublisher = concatenateValues(mdRecord.getCollectionNames(), institutValue, DEFAULT_SEPARATOR);
       mdRecord.setPublisher(newPublisher);
-      if (mdRecord.getCollectionNames() == null)
-        mdRecord.setCollectionNames("edoc");  // default value if no mapping is found
+      if (mdRecord.getCollectionNames() == null) {
+        mdRecord.setCollectionNames("edoc"); // default value if no mapping is found
+      }
     }
   }
 

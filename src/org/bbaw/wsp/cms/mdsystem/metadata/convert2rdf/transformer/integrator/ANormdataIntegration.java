@@ -6,6 +6,10 @@ package org.bbaw.wsp.cms.mdsystem.metadata.convert2rdf.transformer.integrator;
 import java.io.File;
 
 import org.bbaw.wsp.cms.general.Constants;
+import org.bbaw.wsp.cms.mdsystem.metadata.general.extractor.WspNormdataExtractor;
+import org.bbaw.wsp.cms.mdsystem.metadata.general.extractor.factory.MetadataExtractorFactory;
+
+import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 
 /**
  * This interface declares methods for concrete normdata integrator classes to integrate normdata ressources to their pretransformed rdf.
@@ -15,13 +19,24 @@ import org.bbaw.wsp.cms.general.Constants;
  * 
  */
 public abstract class ANormdataIntegration {
+  /**
+   * The normdataFile, will be passed to the extractor.
+   */
   protected File rdfNormdataFile;
+  /**
+   * The {@link WspNormdataExtractor} which is responsible for giving XPath access.
+   */
+  protected WspNormdataExtractor normdataExtractor;
 
   /**
    * Create and initialize the NormdataIntegration class. Initialize the normdata file immediatly.
+   * 
+   * @throws ApplicationException
+   *           delegated by the Saxon parser.
    */
-  public ANormdataIntegration() {
+  public ANormdataIntegration() throws ApplicationException {
     rdfNormdataFile = new File(Constants.getInstance().getMdsystemNormdataFile());
+    normdataExtractor = MetadataExtractorFactory.newWspNormdataExtractor(rdfNormdataFile.getAbsolutePath());
   }
 
   /**

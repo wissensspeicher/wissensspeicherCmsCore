@@ -21,6 +21,7 @@ import net.sf.saxon.s9api.XsltExecutable;
 import net.sf.saxon.s9api.XsltTransformer;
 
 import org.bbaw.wsp.cms.dochandler.parser.text.reader.ResourceReaderImpl;
+import org.bbaw.wsp.cms.mdsystem.metadata.convert2rdf.transformer.integrator.ANormdataIntegration;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
@@ -55,13 +56,11 @@ public abstract class ToRdfTransformer {
    */
   private static final String STYLESHEET_PARAM_ID = "aggrId";
   /**
-   * Parameter name in all XSLT stylesheets for the creator of the resulting
-   * OAI/ORE (Wissensspeicher),
+   * Parameter name in all XSLT stylesheets for the creator of the resulting OAI/ORE (Wissensspeicher),
    */
   private static final String STYLESHEET_PARAM_CREATOR_NAME = "resourceCreatorName";
   /**
-   * Parameter name in all XSLT stylesheets for the creator's page (URL) of the
-   * resulting OAI/ORE (Wissensspeicher),
+   * Parameter name in all XSLT stylesheets for the creator's page (URL) of the resulting OAI/ORE (Wissensspeicher),
    */
   private static final String STYLESHEET_PARAM_CREATOR_PAGE = "resourceCreatorPage";
 
@@ -73,14 +72,15 @@ public abstract class ToRdfTransformer {
 
   protected ResourceWriter resourceWriter;
 
+  protected ANormdataIntegration normdataIntegrator;
+
   public Integer aggrId;
 
   /**
    * Create a new instance.
    * 
    * @param transformMode
-   *          - the mode of the transformer (XSLT transformation or hard-coded
-   *          conversion).
+   *          - the mode of the transformer (XSLT transformation or hard-coded conversion).
    * @throws ApplicationException
    *           if the entered mode isn't valid.
    */
@@ -94,8 +94,7 @@ public abstract class ToRdfTransformer {
   }
 
   /**
-   * Do an transformation job. The kind of job (XSLT transformation or direct
-   * parsing) depends on the subclass.
+   * Do an transformation job. The kind of job (XSLT transformation or direct parsing) depends on the subclass.
    * 
    * @param inputUrl
    *          - the url of the resource to be transformed.
@@ -125,9 +124,7 @@ public abstract class ToRdfTransformer {
   /*
    * (non-Javadoc)
    * 
-   * @see
-   * bbaw.wsp.parser.metadata.transformer.IXsltTransformable#transform(java.
-   * io.InputStream, java.io.InputStream, java.io.InputStream)
+   * @see bbaw.wsp.parser.metadata.transformer.IXsltTransformable#transform(java. io.InputStream, java.io.InputStream, java.io.InputStream)
    */
   public void transform(final InputStream xmlInput, final InputStream xslStylesheet, final OutputStream xmlOutput) throws ApplicationException {
     if (xmlInput == null || xslStylesheet == null || xmlOutput == null) {
