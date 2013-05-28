@@ -34,6 +34,9 @@ public class EdocNormdataIntegrator extends ANormdataIntegration {
     case "dc:publisher":
       final String vorhabenUri = normdataExtractor.getParentOfFoaf(object);
       return vorhabenUri;
+    case "dc:creator":
+      final String creatorUri = normdataExtractor.getParentOfGivenFamily(predicate, object);
+      return creatorUri;
     }
     return null;
   }
@@ -49,6 +52,50 @@ public class EdocNormdataIntegrator extends ANormdataIntegration {
 
     // replace publisher by URI
     integrationRdf = _fetchPublisher(preTransformedRdf, integrationRdf);
+    // replace creator(s) by URI
+    integrationRdf = _fetchCreators(integrationRdf, integrationRdf);
+    return integrationRdf;
+  }
+
+  /**
+   * Fetch the creator from the normdata file.
+   * 
+   * Check if there is a person with both the given and family name.
+   * 
+   * @param preTransformedRdf
+   *          the pretransformed rdf-String
+   * @param integrationRdf
+   *          the progressing rdf integration String
+   * @return the replaced string
+   */
+  private String _fetchCreators(final String preTransformedRdf, String integrationRdf) {
+    System.out.println("_fetchCreators, integrationRdf: " + preTransformedRdf);
+    // (?s) enables the dot for multiline matching
+    final Pattern p = Pattern.compile("(?s)(?i)<dc:creator rdf:parseType=\"Resource\">(.*?)</dc:creator>(?i)");
+    for (final Matcher m = p.matcher(preTransformedRdf); m.find();) {
+      final String creator = m.group(1);
+      System.out.println("EdocNormdataIntegrator: fetched creator " + creator);
+      final Pattern pGiven = Pattern.compile("(?i)<foaf:givenName>(.*)</foaf:givenName>(?i)");
+      final Pattern pFamily = Pattern.compile("(?i)<foaf:familyName>(.*)</foaf:familyName>(?i)");
+      final Matcher mGiven = pGiven.matcher(creator);
+      final Matcher mFamily = pFamily.matcher(creator);
+      if (mGiven.find() && mFamily.find()) {
+        final String givenName = mGiven.group(1);
+        final String familyName = mFamily.group(1);
+        System.out.println("EdocNormdataIntegrator: matched familyname " + familyName);
+        System.out.println("EdocNormdataIntegrator: matched givenname " + givenName);
+        final String creatorUri = fetchObject("dc:creator", givenName, familyName);
+        System.out.println("EdocNormdataIntegrator: creatorUri " + creatorUri);
+        String matchedCreator = "";
+        if (creatorUri != null && !creatorUri.isEmpty()) {
+          // the institute is a resource from the normdata
+          matchedCreator = "<dc:creator rdf:resource=\"" + creatorUri + "\"/>\n\t\t\t\t";
+          System.out.println("EdocNormdataIntegrator: matched creator " + matchedCreator);
+          final Pattern pToBeReplaced = Pattern.compile("(?m)(?i)<dc:creator rdf:parseType=\"Resource\">\n.*?<foaf:givenName>" + givenName + "</foaf:givenName>\n.*?<foaf:familyName>" + familyName + "</foaf:familyName>\n.*?</dc:creator>");
+          integrationRdf = preTransformedRdf.replaceFirst(pToBeReplaced.pattern(), matchedCreator);
+        }
+      }
+    }
     return integrationRdf;
   }
 

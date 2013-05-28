@@ -75,6 +75,7 @@ public class EdocToRdfTransformer extends ToRdfTransformer {
 
     // process normdata integration
     final String integratedRdf = normdataIntegrator.integrateNormdata(mapper.getMappedTemplate());
+    System.out.println("EdocToRdf - integrated Rdf string " + integratedRdf);
     try {
       final FileWriter writer = new FileWriter(new File(outputUrl));
       final BufferedWriter buffer = new BufferedWriter(writer);
