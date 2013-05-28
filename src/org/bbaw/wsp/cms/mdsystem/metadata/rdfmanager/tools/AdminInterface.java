@@ -163,21 +163,31 @@ public class AdminInterface extends JFrame {
 
 	private void giveInstruct() {
 		println("Short instruction about main features: \n" + "\n"
-				+ "The two Checkboxes:\n" + "1. is used to choose a whole folder \n "
-				+ "where all possible data will be selected \n"
-				+ "2. is used to create a new dataset, \n"
+				+ "The two Checkboxes:\n" + "1. is used to choose a whole folder\n "
+				+ "where all possible data will be selected.\n"
+				+ "This means also the Data in subfolders\nwill be selected.\n"
+				+ "2. is used to create a new dataset,\n"
 				+ "to do so there will open a save \n"
 				+ "dialog in \"Choose Destination\" option\n\n"
 				+ "If none of the Checkboxes is selected \n" + "the default is:\n"
 				+ "choose 1 file to add to an existing dataset." + "\n\n"
 				+ "Load Models lists all NamedModel which are\n"
 				+ "currently in the choosen Dataset.\n\n"
+				+ "The Larq Index must be set for the\n"
+				+ "actually Dataset, if it is not the\n"
+				+ " matching index an error will occur.\n"
+				+ "To create a new LarqIndex just select\n"
+				+ "an empty folder,as destination. \n\n"
 				+ "The Export function gives the possible\n"
 				+ "options to export a singel Model,\n"
 				+ "or to export all to a given location.\n\n"
 				+ "Remove deletes the choosen NamedModel\nfrom Dataset."
 				+ "\n\nIf there already is a NamedModel or XML\n"
-				+ "with equal name, it will be replaced\n" + "by the newer version");
+				+ "with equal name, it will be replaced\n"
+				+ "by the newer version.\n\n"
+				+ "To import an as XML extracted Model,\n"
+				+ "just change the fileending \n"
+				+ "to \".rdf\" instead of \".xml\"\n\n" + "Have a nice day.");
 
 	}
 
