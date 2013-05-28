@@ -3,8 +3,6 @@ package org.bbaw.wsp.cms.mdsystem.metadata.general.extractor;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.apache.log4j.Logger;
-import org.bbaw.wsp.cms.mdsystem.metadata.general.extractor.factory.MetadataExtractorFactory;
 import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.ConceptIdentfierSearchMode;
 import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.ConceptQueryResult;
 
@@ -31,14 +29,14 @@ public class RdfMetadataExtractor extends MetadataExtractor {
 	 * Create a new ModsMetadataParser instance.
 	 * 
 	 * @param uri
-	 *            - the URI to the knowledge store metadata record.
+	 *          - the URI to the knowledge store metadata record.
 	 * @throws ApplicationException
-	 *             if the resource to be parsed is not validated by Saxon.
+	 *           if the resource to be parsed is not validated by Saxon.
 	 * @throws IllegalArgumentException
-	 *             if the uri is null, empty or doesn't refer to an existing
-	 *             file.
+	 *           if the uri is null, empty or doesn't refer to an existing file.
 	 */
-	public RdfMetadataExtractor(final String uri, final HashMap<String, String> namespaces) throws ApplicationException {
+	public RdfMetadataExtractor(final String uri,
+			final HashMap<String, String> namespaces) throws ApplicationException {
 		super(uri, namespaces);
 		targetList = new ArrayList<ConceptQueryResult>();
 	}
@@ -50,10 +48,10 @@ public class RdfMetadataExtractor extends MetadataExtractor {
 	 * @return {@link String} the attribute's value (the uri of the described
 	 *         resource)
 	 * @throws ApplicationException
-	 *             if the rdf:about isn't tagged
+	 *           if the rdf:about isn't tagged
 	 */
 	public String getRdfAboutValue() throws ApplicationException {
-		String erg = (String) buildXPath("//rdf:Description[1]/@rdf:about",	false); // First
+		String erg = (String) buildXPath("//rdf:Description[1]/@rdf:about", false); // First
 		if (erg.equals("")) {
 			throw new ApplicationException(
 					"No attribute rdf:about found. This is required for the authentification of the document!");
@@ -78,8 +76,7 @@ public class RdfMetadataExtractor extends MetadataExtractor {
 		int count = Integer.parseInt(number);
 		for (int i = 1; i <= count; ++i) {
 
-			String temp = (String) buildXPath("//rdf:Description[" + i + "]/*",
-					false);
+			String temp = (String) buildXPath("//rdf:Description[" + i + "]/*", false);
 
 			if (checkIfContains(elements, temp.toLowerCase(), strategie)) {
 				ConceptQueryResult target = new ConceptQueryResult();
@@ -128,11 +125,26 @@ public class RdfMetadataExtractor extends MetadataExtractor {
 				query = "//rdf:Description[" + i + "]/*:status";
 				addToTarget("status", queryExecute(query), target);
 
+				query = "//rdf:Description[" + i + "]/*:relation/@rdf:resource";
+				addToTarget("relation", queryExecute(query), target);
+
 				query = "//rdf:Description[" + i + "]/*:coverage/@rdf:resource";
 				addToTarget("coverage", queryExecute(query), target);
 
-				query = "//rdf:Description[" + i + "]/*:topic";
+				query = "//rdf:Description[" + i + "]/*:topic/@rdf:datatype";
 				addToTarget("topic", queryExecute(query), target);
+
+				query = "//rdf:Description[" + i + "]/*:label";
+				addToTarget("label", queryExecute(query), target);
+
+				query = "//rdf:Description[" + i + "]/*:fieldOfActivity";
+				addToTarget("fieldOfActivity", queryExecute(query), target);
+
+				query = "//rdf:Description[" + i + "]/*:geographicAreaCode";
+				addToTarget("geographicAreaCode", queryExecute(query), target);
+
+				query = "//rdf:Description[" + i + "]/*:abstract";
+				addToTarget("abstract", queryExecute(query), target);
 
 				query = "//rdf:Description[" + i + "]/*:homepage/@rdf:resource";
 				addToTarget("homepage", queryExecute(query), target);
@@ -143,30 +155,42 @@ public class RdfMetadataExtractor extends MetadataExtractor {
 				query = "//rdf:Description[" + i + "]/*:name";
 				addToTarget("name", queryExecute(query), target);
 
-				query = "//rdf:Description[" + i
-						+ "]/*:contributor/@rdf:resource";
+				query = "//rdf:Description[" + i + "]/*:contributor/@rdf:resource";
 				addToTarget("contributor", queryExecute(query), target);
 
 				query = "//rdf:Description[" + i + "]/*:nick";
 				addToTarget("nick", queryExecute(query), target);
 
-				query = "//rdf:Description[" + i
-						+ "]/*:isReplacedBy/@rdf:resource";
+				query = "//rdf:Description[" + i + "]/*:hasPart/@rdf:resource";
+				addToTarget("hasPart", queryExecute(query), target);
+
+				query = "//rdf:Description[" + i + "]/*:isReplacedBy/@rdf:resource";
 				addToTarget("isReplacedBy", queryExecute(query), target);
 
 				query = "//rdf:Description[" + i + "]/*:gndIdentifier";
 				addToTarget("gndIdentifier", queryExecute(query), target);
 
-        query = "//rdf:Description[" + i + "]/*:identifier/@rdf:resource";
-        addToTarget("identifier", queryExecute(query), target);
-        
+				query = "//rdf:Description[" + i + "]/*:replaces/@rdf:resource";
+				addToTarget("replaces", queryExecute(query), target);
+
+				query = "//rdf:Description[" + i + "]/*:identifier/@rdf:resource";
+				addToTarget("identifier", queryExecute(query), target);
+
 				query = "//rdf:Description[" + i
 						+ "]/*:relatedCorporateBody/@rdf:resource";
 				addToTarget("relatedCorporateBody", queryExecute(query), target);
 
-				query = "//rdf:Description[" + i	+ "]/*:contributingCorporateBody/@rdf:resource";
-				addToTarget("contributingCorporateBody", queryExecute(query),
-						target);
+				query = "//rdf:Description[" + i
+						+ "]/*:contributingCorporateBody/@rdf:resource";
+				addToTarget("contributingCorporateBody", queryExecute(query), target);
+
+				query = "//rdf:Description[" + i
+						+ "]/*:contributingPerson/@rdf:resource";
+				addToTarget("contributingPerson", queryExecute(query), target);
+
+				query = "//rdf:Description[" + i
+						+ "]/*:contributingCorporateBody/@rdf:resource";
+				addToTarget("contributingCorporateBody", queryExecute(query), target);
 
 				query = "//rdf:Description[" + i + "]/*:temporal";
 				addToTarget("temporal", queryExecute(query), target);
@@ -189,8 +213,7 @@ public class RdfMetadataExtractor extends MetadataExtractor {
 	 * @param strategie
 	 * @return
 	 */
-	private Boolean checkIfContains(String[] elements, String temp,
-			int strategie) {
+	private Boolean checkIfContains(String[] elements, String temp, int strategie) {
 
 		switch (elements.length) {
 		case 0:
@@ -262,13 +285,13 @@ public class RdfMetadataExtractor extends MetadataExtractor {
 	}
 
 	/**
-	 * Build path to the xml:base attribute. The first matching attribute will
-	 * be returned.
+	 * Build path to the xml:base attribute. The first matching attribute will be
+	 * returned.
 	 * 
 	 * @return {@link String} the xml:base attribute's value (the uri of the
 	 *         described resource)
 	 * @throws ApplicationException
-	 *             if the xml:base isn't tagged
+	 *           if the xml:base isn't tagged
 	 */
 	public String getXmlBaseValue() throws ApplicationException {
 		String erg = (String) buildXPath("//*/@xml:base", false);

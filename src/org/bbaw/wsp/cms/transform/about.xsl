@@ -79,29 +79,7 @@
 <xsl:template match="/">
   <div class="title">
     <span class="query">About: <xsl:value-of select="$query"/></span>
-    <span class="about">
-      [Adapted from DBpedia]
-      <a class="logo" href="http://dbpedia.org">
-        <img src="../images/info.png" width="18" height="18" border="0" alt="Info DBpedia"/>
-      </a>
-      <a class="logo" href="http://en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License">
-        <img src="../images/cc.svg" width="18" height="18" border="0" alt="cc license"/>
-      </a>
-    </span>
   </div>
-  <xsl:if test="$type = 'person'">
-    <div class="title">
-      <span class="about">
-        [Adapted from PDR]
-        <a class="logo" href="http://pdr.bbaw.de">
-          <img src="../images/info.png" width="18" height="18" border="0" alt="Info PDR"/>
-        </a>
-        <a class="logo" href="http://en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License">
-          <img src="../images/cc.svg" width="18" height="18" border="0" alt="cc license"/>
-        </a>
-      </span>
-    </div>
-  </xsl:if>
   <xsl:if test="empty($label) and empty($pdrPitHits) and empty($pdrConcordancerHits)">
     <div class="result">Query delivers no results</div>
   </xsl:if>
@@ -112,6 +90,15 @@
     </div>
     <div class="dbpedia">
 	    <span class="h2"><xsl:value-of select="'DBpedia'"/></span>
+      <span class="about">
+        [Adapted from DBpedia]
+        <a class="logo" href="http://dbpedia.org">
+          <img src="../images/info.png" width="18" height="18" border="0" alt="Info DBpedia"/>
+        </a>
+        <a class="logo" href="http://en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License">
+          <img src="../images/cc.svg" width="18" height="18" border="0" alt="cc license"/>
+        </a>
+      </span>
 	    <div class="resource">
 	      <xsl:variable name="dbPediaUrl" select="concat($dbpediaServerName, '/resource/', $dbPediaKey)"/>
 	      <span class="bold"><xsl:value-of select="'Resource '"/></span>
@@ -252,23 +239,57 @@
   <xsl:if test="$type = 'person'">
     <xsl:if test="not(empty($pdrPitHits))">
       <div class="pdr">
-        <span class="h2"><xsl:value-of select="'PDR'"/></span>
+        <span class="h2"><xsl:value-of select="'PDR PIT'"/></span>
+        <span class="about">
+          [Adapted from PIT (PDR Interface Tools)]
+          <a class="logo" href="http://pdr.bbaw.de/software/webservices/">
+            <img src="../images/info.png" width="18" height="18" border="0" alt="Info PDR"/>
+          </a>
+          <a class="logo" href="http://en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License">
+            <img src="../images/cc.svg" width="18" height="18" border="0" alt="cc license"/>
+          </a>
+        </span>
         <xsl:variable name="pdrPitResultSize" select="count($pdrPitHits)"/>
         <xsl:variable name="pdrGetAspectsUrl" select="concat('http://pdrdev.bbaw.de/pit/2-1/getAspects.php?content=', $query)"/>
+        <xsl:variable name="pdrPitHitsText">
+          <xsl:choose>
+            <xsl:when test="$pdrPitResultSize = 1"><xsl:value-of select="'1 hit'"/></xsl:when>
+            <xsl:when test="$pdrPitResultSize &lt; 10"><xsl:value-of select="concat($pdrPitResultSize, ' hits')"/></xsl:when>
+            <xsl:otherwise>
+              <xsl:value-of select="concat('first ', $pdrPitResultSize, ' hits (all hits: see ')"/>
+              <a class="url" href="{$pdrGetAspectsUrl}"><xsl:value-of select="'here'"/></a>
+              <xsl:value-of select="'):'"/>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:variable>
         <div>
-          <xsl:value-of select="concat('first ', $pdrPitResultSize, ' hits (all hits: see ')"/>
-          <a class="url" href="{$pdrGetAspectsUrl}"><xsl:value-of select="'here'"/></a>
-          <xsl:value-of select="'):'"/>
+          <xsl:sequence select="$pdrPitHitsText"/>
         </div>
         <xsl:apply-templates select="$pdrPitHits"/>
       </div>
     </xsl:if>
     <xsl:if test="not(empty($pdrConcordancerHits))">
       <div class="pdr">
-        <span class="h2"><xsl:value-of select="'PDR (Concordancer)'"/></span>
+        <span class="h2"><xsl:value-of select="'PDR Person Concordancer'"/></span>
+        <span class="about">
+          [Adapted from PDR Person Concordancer]
+          <a class="logo" href="http://pdr.bbaw.de/software/webservices/">
+            <img src="../images/info.png" width="18" height="18" border="0" alt="Info PDR"/>
+          </a>
+          <a class="logo" href="http://en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License">
+            <img src="../images/cc.svg" width="18" height="18" border="0" alt="cc license"/>
+          </a>
+        </span>
         <xsl:variable name="pdrConcordancerResultSize" select="count($pdrConcordancerHits)"/>
+        <xsl:variable name="pdrConcordancerHitsText">
+          <xsl:choose>
+            <xsl:when test="$pdrConcordancerResultSize = 1"><xsl:value-of select="'1 hit'"/></xsl:when>
+            <xsl:when test="$pdrConcordancerResultSize &lt; 10"><xsl:value-of select="concat($pdrConcordancerResultSize, ' hits')"/></xsl:when>
+            <xsl:otherwise><xsl:value-of select="concat('first ', $pdrConcordancerResultSize, ' hits')"/></xsl:otherwise>
+          </xsl:choose>
+        </xsl:variable>
         <div>
-          <xsl:value-of select="concat('first ', $pdrConcordancerResultSize, ' hits: ')"/>
+          <xsl:value-of select="$pdrConcordancerHitsText"/>
         </div>
         <xsl:apply-templates select="$pdrConcordancerHits"/>
       </div>
