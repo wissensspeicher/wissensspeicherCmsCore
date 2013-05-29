@@ -155,10 +155,10 @@ public class Constants {
 	}
 
 	/**
-	 * @return the path to the mdsystem.xml
+	 * @return the path to the wsp.normdata.rdf
 	 */
 	public String getMdsystemNormdataFile() {
-		return getMdsystemConfDir() + "/export_normdata_clean_130112.rdf";
+		return getMdsystemConfDir() + "/wsp.nordata.rdf";
 	}
 
 	/**
