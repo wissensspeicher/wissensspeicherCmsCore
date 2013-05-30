@@ -21,6 +21,7 @@ import net.sf.saxon.s9api.XsltExecutable;
 import net.sf.saxon.s9api.XsltTransformer;
 
 import org.bbaw.wsp.cms.dochandler.parser.text.reader.ResourceReaderImpl;
+import org.bbaw.wsp.cms.general.Constants;
 import org.bbaw.wsp.cms.mdsystem.metadata.convert2rdf.transformer.integrator.ANormdataIntegration;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -50,6 +51,11 @@ public abstract class ToRdfTransformer {
   public static final String TRANSFORMER_CREATOR_NAME = "Wissensspeicher";
 
   public static final String TRANSFORMER_CREATOR_URL = "http://wsp.bbaw.de";
+  /**
+   * Path to the normdata file. It will be included in the depending xslt stylesheet file.
+   */
+  // public static final String NORMDATA_FILE_PATH = Constants.getInstance().getMdsystemNormdataFile();
+  public static final String NORMDATA_FILE_PATH = "../mdsystem/wsp.normdata.rdf";
 
   /**
    * Parameter name in all XSLT stylesheets for the aggregation id,
@@ -63,6 +69,10 @@ public abstract class ToRdfTransformer {
    * Parameter name in all XSLT stylesheets for the creator's page (URL) of the resulting OAI/ORE (Wissensspeicher),
    */
   private static final String STYLESHEET_PARAM_CREATOR_PAGE = "resourceCreatorPage";
+  /**
+   * Parameter name in all XSLT stylesheets for the path to the normdata file *
+   */
+  private static final String STYLESHEET_PARAM_NORMDATA_FILE = "normdataFile";
 
   private String xslInput;
 
@@ -158,8 +168,14 @@ public abstract class ToRdfTransformer {
 
         transformer.setParameter(new QName(STYLESHEET_PARAM_ID), item);
       }
+      // export creator name
       transformer.setParameter(new QName(STYLESHEET_PARAM_CREATOR_NAME), new XdmAtomicValue(TRANSFORMER_CREATOR_NAME));
+      // export creator page
       transformer.setParameter(new QName(STYLESHEET_PARAM_CREATOR_PAGE), new XdmAtomicValue(TRANSFORMER_CREATOR_URL));
+      // export path to the normdata.rdf file
+      System.out.println("normdata path: " + NORMDATA_FILE_PATH);
+      transformer.setParameter(new QName(STYLESHEET_PARAM_NORMDATA_FILE), new XdmAtomicValue(NORMDATA_FILE_PATH));
+
       transformer.setSource(inputSource);
       transformer.setDestination(serializer);
       transformer.transform();

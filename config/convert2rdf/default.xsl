@@ -24,6 +24,8 @@
 	<xsl:param name="aggrId" select="--undefined--" />
 	<xsl:param name="resourceCreatorName" select="Wissensspeicher" />
 	<xsl:param name="resourceCreatorPage" select="'http://wsp.bbaw.de' cast as xsd:anyURI" />	
+	<xsl:param name="normdataFile" select="'http://wsp.bbaw.de' cast as xsd:anyURI" />		
+	
 	<!-- global variables -->
 	<xsl:variable name="varResourceCreatorPage" select="$resourceCreatorPage cast as xsd:anyURI" />
 	<xsl:variable name="varResourceCreatorName" select="$resourceCreatorName" />
@@ -31,6 +33,9 @@
 		<xsl:text>
 	</xsl:text>
 	</xsl:variable>
+	
+	<!-- integrate normdata -->
+	<xsl:variable name="normdata" select="document($normdataFile)" />
 	
 	<!--  global templates  -->
 	<xsl:template match="*">

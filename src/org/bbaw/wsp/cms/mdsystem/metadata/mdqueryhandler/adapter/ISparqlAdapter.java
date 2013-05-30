@@ -17,6 +17,8 @@ public interface ISparqlAdapter {
   /**
    * Build a sparql query from only one literal. Query the default graph. Here, the pf:textmatch method is used.
    * 
+   * @TODO not only index search
+   * 
    * @param literal
    *          the literal String.
    * @return

@@ -28,6 +28,11 @@
 			<xsl:apply-templates select="*" />
 
 			<rdf:Description rdf:about="{$aggregationUri}">
+				<!-- ..:: small test ::.. -->
+				<xsl:variable name="normdataTest" select="$normdata//rdf:Description[1]/@rdf:about" />
+				<test><xsl:value-of select="$normdataTest" /></test>
+				
+				<!-- ..:: test end ::.. -->
 				<ore:describedBy rdf:resource="{$docIdentifier}" />
 				<rdf:type rdf:resource="http://www.openarchives.org/ore/terms/Aggregation" />
 				<xsl:variable name="modsTitle" select="//mods:title/text()" />
@@ -122,19 +127,42 @@
 
 	<xsl:template match="mods:name">
 		<!-- decide, if the personal is a creator -->
-		<xsl:if test="mods:role/mods:roleTerm/text() = 'Original Content'">
-			<dc:creator rdf:parseType="Resource">
+		<xsl:if test="mods:role/mods:roleTerm/text() = 'Original Content'">			
 				<!--<foaf:name><xsl:value-of select="concat($modsPrename, ' ', $modsFamily)"/></foaf:name> -->
 				<xsl:choose>
 					<xsl:when test="mods:namePart[@type] != ''">
 						<xsl:variable name="modsFamily" select="mods:namePart[@type='family']" />
 						<xsl:variable name="modsPrename" select="mods:namePart[@type='given']" />
-						<foaf:givenName>
-							<xsl:value-of select="$modsPrename" />
-						</foaf:givenName>
-						<foaf:familyName>
-							<xsl:value-of select="$modsFamily" />
-						</foaf:familyName>
+						<xsl:variable name="normdataFamilyname" select="$normdata//foaf:familyName[text()=$modsFamily]/../@rdf:about" />
+						<xsl:variable name="normdataPrename" select="$normdata//foaf:givenName[text()=$modsPrename]/../@rdf:about" />
+						<xsl:choose>	
+							<!--  ..:: integrate person node if existing ::.. -->													
+							<xsl:when test="$normdataFamilyname != '' and $normdataPrename != ''">
+								<!--  this condition will be true only for a single family name AND given name -->
+								<xsl:for-each select="$normdataFamilyname">									
+									<xsl:variable name="outerArray" select="." />									
+									<xsl:for-each select="$normdataPrename">
+										<xsl:variable name="innerArray" select="." />		
+											<xsl:if test="$innerArray = $outerArray">
+												<dc:creator rdf:resource="{$innerArray}" />										
+											</xsl:if>
+									</xsl:for-each>	
+								</xsl:for-each>									
+							</xsl:when>
+							<xsl:otherwise>												
+								<dc:creator rdf:parseType="Resource">									
+									<foaf:givenName>
+										<xsl:value-of select="$modsPrename" />
+									</foaf:givenName>
+									<foaf:familyName>
+										<xsl:value-of select="$modsFamily" />
+									</foaf:familyName>
+									<!--hier muss die PND irgendwie hin -->
+									<dc:description>Original Content</dc:description>
+								</dc:creator>
+							</xsl:otherwise>
+							<!--  ..::::::::::::::::::::::::::::::::::::::::.. -->	
+						</xsl:choose>						
 					</xsl:when>
 					<xsl:otherwise>
 						<xsl:variable name="modsnamePart" select="mods:namePart[@type='given']" />
@@ -149,10 +177,7 @@
 							<xsl:value-of select="$modsFamily" />
 						</foaf:familyName>
 					</xsl:otherwise>
-				</xsl:choose>
-				<!--hier muss die PND irgendwie hin -->
-				<dc:description>Original Content</dc:description>
-			</dc:creator>
+				</xsl:choose>				
 		</xsl:if>
 		<xsl:if test="mods:role/mods:roleTerm/text() = 'Content Revision'">
 			<dc:creator rdf:parseType="Resource">
@@ -161,14 +186,38 @@
 					<xsl:when test="mods:namePart[@type] != ''">
 						<xsl:variable name="modsFamily" select="mods:namePart[@type='family']" />
 						<xsl:variable name="modsPrename" select="mods:namePart[@type='given']" />
-						<foaf:givenName>
-							<xsl:value-of select="$modsPrename" />
-						</foaf:givenName>
-						<foaf:familyName>
-							<xsl:value-of select="$modsFamily" />
-						</foaf:familyName>
+						<xsl:variable name="normdataFamilyname" select="$normdata//foaf:familyName[text()=$modsFamily]/../@rdf:about" />
+						<xsl:variable name="normdataPrename" select="$normdata//foaf:givenName[text()=$modsPrename]/../@rdf:about" />
+						<xsl:choose>	
+							<!--  ..:: integrate person node if existing ::.. -->													
+							<xsl:when test="$normdataFamilyname != '' and $normdataPrename != ''">
+								<!--  this condition will be true only for a single family name AND given name -->
+								<xsl:for-each select="$normdataFamilyname">									
+									<xsl:variable name="outerArray" select="." />									
+									<xsl:for-each select="$normdataPrename">
+										<xsl:variable name="innerArray" select="." />		
+											<xsl:if test="$innerArray = $outerArray">
+												<dc:creator rdf:resource="{$innerArray}" />										
+											</xsl:if>
+									</xsl:for-each>	
+								</xsl:for-each>									
+							</xsl:when>
+							<xsl:otherwise>											
+								<dc:creator rdf:parseType="Resource">									
+									<foaf:givenName>
+										<xsl:value-of select="$modsPrename" />
+									</foaf:givenName>
+									<foaf:familyName>
+										<xsl:value-of select="$modsFamily" />
+									</foaf:familyName>
+									<!--hier muss die PND irgendwie hin -->
+									<dc:description>Content Revision</dc:description>
+							</xsl:otherwise>
+								<!--  ..::::::::::::::::::::::::::::::::::::::::.. -->	
+							</xsl:choose>													
 					</xsl:when>
 					<xsl:otherwise>
+					
 						<xsl:variable name="modsnamePart" select="mods:namePart[@type='given']" />
 						<xsl:variable name="modsFamily"
 							select="substring-before($modsnamePart, ',')" />
@@ -180,11 +229,12 @@
 						<foaf:familyName>
 							<xsl:value-of select="$modsFamily" />
 						</foaf:familyName>
-					</xsl:otherwise>
+						<dc:description>Content Revision</dc:description>
+						</dc:creator>
+					</xsl:otherwise>					
 				</xsl:choose>
-				<!--hier muss die PND irgendwie hin -->
-				<dc:description>Content Revision</dc:description>
-			</dc:creator>
+				<!--hier muss die PND irgendwie hin -->				
+			
 		</xsl:if>
 		<xsl:if test="mods:role/mods:roleTerm/text() = 'Digital Adaptation' ">
 			<dc:creator rdf:parseType="Resource">
@@ -193,12 +243,27 @@
 					<xsl:when test="mods:namePart[@type] != ''">
 						<xsl:variable name="modsFamily" select="mods:namePart[@type='family']" />
 						<xsl:variable name="modsPrename" select="mods:namePart[@type='given']" />
-						<foaf:givenName>
-							<xsl:value-of select="$modsPrename" />
-						</foaf:givenName>
-						<foaf:familyName>
-							<xsl:value-of select="$modsFamily" />
-						</foaf:familyName>
+						<xsl:variable name="normdataFamilyname" select="$normdata//foaf:familyName[text()=$modsFamily]/../@rdf:about" />
+						<xsl:variable name="normdataPrename" select="$normdata//foaf:givenName[text()=$modsPrename]/../@rdf:about" />
+						<xsl:choose>	
+							<!--  ..:: integrate person node if existing ::.. -->													
+							<xsl:when test="$normdataFamilyname != '' and $normdataPrename != ''">
+								<!--  this condition will be true only for a single family name AND given name -->
+								<xsl:for-each select="$normdataFamilyname">									
+									<xsl:variable name="outerArray" select="." />									
+									<xsl:for-each select="$normdataPrename">
+										<xsl:variable name="innerArray" select="." />		
+											<xsl:if test="$innerArray = $outerArray">
+												<dc:creator rdf:resource="{$innerArray}" />										
+											</xsl:if>
+									</xsl:for-each>	
+								</xsl:for-each>									
+							</xsl:when>
+							<xsl:otherwise>	
+							
+							</xsl:otherwise>
+							<!--  ..::::::::::::::::::::::::::::::::::::::::.. -->	
+						</xsl:choose>				
 					</xsl:when>
 					<xsl:otherwise>
 						<xsl:variable name="modsnamePart" select="mods:namePart[@type='given']" />
