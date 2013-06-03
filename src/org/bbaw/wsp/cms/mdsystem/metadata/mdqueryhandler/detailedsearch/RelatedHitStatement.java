@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter;
+package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.detailedsearch;
 
 import com.hp.hpl.jena.rdf.model.RDFNode;
 

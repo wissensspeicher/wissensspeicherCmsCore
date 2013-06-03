@@ -1,4 +1,4 @@
-package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler;
+package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.conceptsearch;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter;
+package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.detailedsearch;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
-import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter.RelatedHitStatement.Relationship;
+import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.detailedsearch.RelatedHitStatement.Relationship;
 
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
@@ -455,5 +455,5 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
     final List<HitStatement> statements = this.handleRelatedSolution(queryStrategy.delegateQuery(sparqlQuery));
     return statements;
   }
-
+  
 }
