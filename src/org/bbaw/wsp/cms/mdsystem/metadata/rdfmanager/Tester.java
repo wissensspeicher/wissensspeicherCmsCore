@@ -1,7 +1,7 @@
 package org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager;
 
-import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.ConceptIdentfierSearchMode;
-import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.ConceptIdentifier;
+import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.conceptsearch.ConceptIdentfierSearchMode;
+import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.conceptsearch.ConceptIdentifier;
 
 public class Tester {
 
