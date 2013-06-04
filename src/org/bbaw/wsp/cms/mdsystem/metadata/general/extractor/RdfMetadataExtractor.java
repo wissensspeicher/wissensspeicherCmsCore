@@ -3,8 +3,8 @@ package org.bbaw.wsp.cms.mdsystem.metadata.general.extractor;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.ConceptIdentfierSearchMode;
-import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.ConceptQueryResult;
+import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.conceptsearch.ConceptIdentfierSearchMode;
+import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.conceptsearch.ConceptQueryResult;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 

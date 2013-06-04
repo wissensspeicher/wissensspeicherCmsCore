@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <mdsystem>
 	<general>
-		<normdataFile>config/mdsystem/export_normdata_clean_130112.rdf</normdataFile>
+		<normdataFile>config/mdsystem/wsp.normdata.rdf</normdataFile>
 	</general>
 	<converter>
 		<templates>		
