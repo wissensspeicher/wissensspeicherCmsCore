@@ -3,9 +3,11 @@ package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.conceptsearch;
 import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
+import org.bbaw.wsp.cms.general.Constants;
 import org.bbaw.wsp.cms.mdsystem.metadata.general.extractor.RdfMetadataExtractor;
 import org.bbaw.wsp.cms.mdsystem.metadata.general.extractor.factory.MetadataExtractorFactory;
 import org.bbaw.wsp.cms.mdsystem.util.MdSystemConfigReader;
+
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 
@@ -39,8 +41,7 @@ public class ConceptIdentifier {
 		logger.info("urlToConfFile : " + normdataFile);
 		this.results = new ArrayList<ConceptQueryResult>();
 		// this.results = scanForElement(normdataFile, query, methode);
-		this.results = scanForElement(
-				"/home/shk2/quellen/Normdata/wsp.normdata.rdf", query, methode);
+		this.results = scanForElement(Constants.getInstance().getMdsystemNormdataFile(), query, methode);
 
 		for (ConceptQueryResult target : this.results) {
 			System.out.println(target);

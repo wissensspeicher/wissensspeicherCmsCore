@@ -9,14 +9,17 @@ import java.util.Date;
 import java.util.HashMap;
 
 /**
- * This class holds all {@link IHitRecord} instances which result from a single
- * (literal) query with the {@link SparqlAdapter}.
+ * This class holds all {@link IHitRecord} instances which result from a single (literal) query with the {@link SparqlAdapter}.
  * 
  * @author Sascha Feldmann (wsp-shk1)
  * @since 04.02.2013
  * 
  */
 public class HitGraphContainer extends HashMap<URL, HitGraph> {
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 1L;
   private Date resultTime;
 
   public HitGraphContainer() {
@@ -42,8 +45,7 @@ public class HitGraphContainer extends HashMap<URL, HitGraph> {
   }
 
   /**
-   * Return an {@link IHitRecord} which holds information on the results of a
-   * query on one named graph.
+   * Return an {@link IHitRecord} which holds information on the results of a query on one named graph.
    * 
    * @param namedGraphUrl
    * @return
@@ -53,8 +55,7 @@ public class HitGraphContainer extends HashMap<URL, HitGraph> {
   }
 
   /**
-   * Return a {@link Collection} of {@link IHitRecord} which holds all the query
-   * data of the named graphes.
+   * Return a {@link Collection} of {@link IHitRecord} which holds all the query data of the named graphes.
    * 
    * @return
    */
@@ -63,8 +64,7 @@ public class HitGraphContainer extends HashMap<URL, HitGraph> {
   }
 
   /**
-   * Add another {@link IHitRecord}. This should be done from the
-   * {@link SparqlAdapter} after a query was performed.
+   * Add another {@link IHitRecord}. This should be done from the {@link SparqlAdapter} after a query was performed.
    * 
    * @param graphUrl
    * @param graphRecord

@@ -45,17 +45,17 @@ public class WspNormdataExtractor extends MetadataExtractor {
   public String getParentOfGivenFamily(final String givenName, final String familyName) {
     final String queryGiven = "//foaf:givenName[text()='" + givenName + "']/../@rdf:about";
     final String givenParentAbout = (String) super.buildXPath(queryGiven, false);
-    System.out.println("wspNormdataIntegrator - given " + givenParentAbout);
     final String queryFamily = "//foaf:familyName[text()='" + familyName + "']/../@rdf:about";
     final String familyParentAbout = (String) super.buildXPath(queryFamily, false);
-    System.out.println("wspNormdataIntegrator - family" + familyParentAbout);
 
     // it's possible that there are more than one containers for a family name (e.g. for the popular familyname "Schneider").
     // so we need to split the container URIs and find the one existing URI that is contained in the matching containers of the givenName.
-    final String[] familyNames = familyParentAbout.split(" ");
-    for (final String singleFamilyName : familyNames) {
-      if (givenParentAbout.contains(singleFamilyName)) {
-        return singleFamilyName;
+    if (givenParentAbout != null) {
+      final String[] familyNames = familyParentAbout.split(" ");
+      for (final String singleFamilyName : familyNames) {
+        if (givenParentAbout.contains(singleFamilyName)) {
+          return singleFamilyName;
+        }
       }
     }
     return null;

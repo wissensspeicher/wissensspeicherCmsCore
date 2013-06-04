@@ -75,7 +75,6 @@ public class EdocToRdfTransformer extends ToRdfTransformer {
 
     // process normdata integration
     final String integratedRdf = normdataIntegrator.integrateNormdata(mapper.getMappedTemplate());
-    System.out.println("EdocToRdf - integrated Rdf string " + integratedRdf);
     try {
       final FileWriter writer = new FileWriter(new File(outputUrl));
       final BufferedWriter buffer = new BufferedWriter(writer);
@@ -100,8 +99,8 @@ public class EdocToRdfTransformer extends ToRdfTransformer {
     final HashMap<String, String> eDocPlaceholderMap = new HashMap<String, String>();
 
     eDocPlaceholderMap.put("%%aggregation_uri%%", AGGREGATION_NAME_PREFIX + EdocIndexMetadataFetcherTool.getDocYear(mdRecord.getRealDocUrl()) + "/" + EdocIndexMetadataFetcherTool.getDocId(mdRecord.getRealDocUrl()) + "/aggregation");
-    eDocPlaceholderMap.put("%%creator_name%%", ToRdfTransformer.TRANSFORMER_CREATOR_NAME);
-    eDocPlaceholderMap.put("%%creator_url%%", ToRdfTransformer.TRANSFORMER_CREATOR_URL);
+    // integrate normdata.rdf node for the WSP
+    eDocPlaceholderMap.put("%%creator_normdata_uri%%", ToRdfTransformer.TRANSFORMER_CREATOR_NORMDATA_URI);
     String uri = mdRecord.getRealDocUrl();
     if (uri == null) {
       uri = "";

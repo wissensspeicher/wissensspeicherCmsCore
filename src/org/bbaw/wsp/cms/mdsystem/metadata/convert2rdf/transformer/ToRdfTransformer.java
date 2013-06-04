@@ -21,7 +21,6 @@ import net.sf.saxon.s9api.XsltExecutable;
 import net.sf.saxon.s9api.XsltTransformer;
 
 import org.bbaw.wsp.cms.dochandler.parser.text.reader.ResourceReaderImpl;
-import org.bbaw.wsp.cms.general.Constants;
 import org.bbaw.wsp.cms.mdsystem.metadata.convert2rdf.transformer.integrator.ANormdataIntegration;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -47,10 +46,18 @@ public abstract class ToRdfTransformer {
    * Use this option to do an XSLT transformation
    */
   public static final String MODE_XSLT = "XSLT transformation";
-
+  /**
+   * The name of the creator. It will be set as dc:creator/foaf:name in the ouptput .rdf file.
+   */
   public static final String TRANSFORMER_CREATOR_NAME = "Wissensspeicher";
-
-  public static final String TRANSFORMER_CREATOR_URL = "http://wsp.bbaw.de";
+  /**
+   * The webpage of the creator. It will be set as dc:creator/foaf:page in the ouptput .rdf file.
+   */
+  public static final String TRANSFORMER_CREATOR_PAGE_URL = "http://wsp.bbaw.de";
+  /**
+   * The URL of the RDFNode within the normdata.rdf file. If the value is set, none of the the options above will be applied. It will be set as dc:creator rdf:resource="{VALUE}" in the ouptput .rdf file.
+   */
+  public static final String TRANSFORMER_CREATOR_NORMDATA_URI = "http://wsp.normdata.rdf/Wissensspeicher";
   /**
    * Path to the normdata file. It will be included in the depending xslt stylesheet file.
    */
@@ -69,6 +76,10 @@ public abstract class ToRdfTransformer {
    * Parameter name in all XSLT stylesheets for the creator's page (URL) of the resulting OAI/ORE (Wissensspeicher),
    */
   private static final String STYLESHEET_PARAM_CREATOR_PAGE = "resourceCreatorPage";
+  /**
+   * Parameter name in all XSLT stylesheets for the RDFNode's URL within the normdata.rdf file.
+   */
+  private static final String STYLESHEET_PARAM_CREATOR_NORMDATA_URI = "resourceCreatorNormdata";
   /**
    * Parameter name in all XSLT stylesheets for the path to the normdata file *
    */
@@ -171,9 +182,10 @@ public abstract class ToRdfTransformer {
       // export creator name
       transformer.setParameter(new QName(STYLESHEET_PARAM_CREATOR_NAME), new XdmAtomicValue(TRANSFORMER_CREATOR_NAME));
       // export creator page
-      transformer.setParameter(new QName(STYLESHEET_PARAM_CREATOR_PAGE), new XdmAtomicValue(TRANSFORMER_CREATOR_URL));
+      transformer.setParameter(new QName(STYLESHEET_PARAM_CREATOR_PAGE), new XdmAtomicValue(TRANSFORMER_CREATOR_PAGE_URL));
+      // export URI of the WSP's rdf node within the normdata.rdf file
+      transformer.setParameter(new QName(STYLESHEET_PARAM_CREATOR_NORMDATA_URI), new XdmAtomicValue(TRANSFORMER_CREATOR_NORMDATA_URI));
       // export path to the normdata.rdf file
-      System.out.println("normdata path: " + NORMDATA_FILE_PATH);
       transformer.setParameter(new QName(STYLESHEET_PARAM_NORMDATA_FILE), new XdmAtomicValue(NORMDATA_FILE_PATH));
 
       transformer.setSource(inputSource);
