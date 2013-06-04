@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter;
+package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.detailedsearch;
 
 import java.net.URL;
 import java.util.ArrayList;

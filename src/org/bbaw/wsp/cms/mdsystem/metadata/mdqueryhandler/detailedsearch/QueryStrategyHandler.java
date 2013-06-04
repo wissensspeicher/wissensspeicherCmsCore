@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter;
+package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.detailedsearch;
 
 import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.RdfHandler;
 import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.tools.SparqlCommandBuilder;
