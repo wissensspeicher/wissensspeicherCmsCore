@@ -188,6 +188,25 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
   /*
    * (non-Javadoc)
    * 
+   * @see org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.ISparqlAdapter#buildSparqlQuery (java.net.URL, java.lang.String, java.lang.String)
+   */
+  public void buildSparqlQuery(final URL subject, final String predicate, final String object) {
+    // final String query =
+    // SparqlCommandBuilder.SELECT_DEFAULT.getSelectQueryString("*", null, "<" +
+    // subject.toExternalForm() + "> <" + predicate.toExternalForm() + "> " +
+    // object);
+    // System.out.println("Builded query " + query);
+    // final QueryExecution ex = delegateQuery(query);
+    // handler.selectSomething(query, dataset);
+    // for (final String bla : ex.execSelect().getResultVars()) {
+    // System.out.println(bla);
+    // }
+  }
+  
+  @Override
+  /*
+   * (non-Javadoc)
+   * 
    * @see org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.ISparqlAdapter#buildSparqlQuery (java.net.URL, java.net.URL, java.lang.String)
    */
   public void buildSparqlQuery(final URL subject, final URL predicate, final String object) {

@@ -34,7 +34,16 @@ public interface ISparqlAdapter {
    *          the literal String.
    */
   void buildSparqlQuery(URL namedGraphUrl, String literal);
-
+  
+  /**
+   * "Das ganz normale Pattern" :) mit ?p als Prädikat
+   * 
+   * @param subject
+   * @param predicate
+   * @param object
+   */
+  void buildSparqlQuery(URL subject, String predicate, String object);
+  
   /**
    * "Das ganz normale Pattern" :)
    * 
