@@ -101,7 +101,7 @@ public class EdocToRdfTransformer extends ToRdfTransformer {
 
     eDocPlaceholderMap.put("%%aggregation_uri%%", AGGREGATION_NAME_PREFIX + EdocIndexMetadataFetcherTool.getDocYear(mdRecord.getRealDocUrl()) + "/" + EdocIndexMetadataFetcherTool.getDocId(mdRecord.getRealDocUrl()) + "/aggregation");
     eDocPlaceholderMap.put("%%creator_name%%", ToRdfTransformer.TRANSFORMER_CREATOR_NAME);
-    eDocPlaceholderMap.put("%%creator_url%%", ToRdfTransformer.TRANSFORMER_CREATOR_URL);
+    eDocPlaceholderMap.put("%%creator_url%%", ToRdfTransformer.TRANSFORMER_CREATOR_PAGE_URL);
     String uri = mdRecord.getRealDocUrl();
     if (uri == null) {
       uri = "";
