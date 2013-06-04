@@ -109,7 +109,7 @@ public class AdminInterface extends JFrame {
 	    public void actionPerformed(ActionEvent arg0) {
 
 		File file = new File(textFieldSrc.getText());
-		if (!file.exists()) {
+		if (!file.exists() || !file.isDirectory()) {
 		    println("\nYour SourcePath is invalid.");
 		} else {
 		    srcD = textFieldSrc.getText();
@@ -138,10 +138,10 @@ public class AdminInterface extends JFrame {
 	    public void actionPerformed(ActionEvent arg0) {
 
 		File file = new File(textFieldDes.getText());
-		if (!file.exists()) {
+		if (!file.exists() || !file.isDirectory()) {
 		    println("\nYour DestinationPath is invalid.");
 		} else {
-		    desF = textFieldSrc.getText();
+		    desF = textFieldDes.getText();
 		}
 	    }
 	}));
@@ -166,11 +166,11 @@ public class AdminInterface extends JFrame {
 	    @Override
 	    public void actionPerformed(ActionEvent arg0) {
 
-		File file = new File(textFieldSrc.getText());
-		if (!file.exists()) {
+		File file = new File(textFieldLarq.getText());
+		if (!file.exists() || !file.isDirectory()) {
 		    println("\nYour LarqPath is invalid.");
 		} else {
-		    larqD = textFieldSrc.getText();
+		    larqD = textFieldLarq.getText();
 		}
 	    }
 	}));
