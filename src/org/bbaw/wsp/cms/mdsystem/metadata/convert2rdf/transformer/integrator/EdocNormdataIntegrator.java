@@ -69,12 +69,10 @@ public class EdocNormdataIntegrator extends ANormdataIntegration {
    * @return the replaced string
    */
   private String _fetchCreators(final String preTransformedRdf, String integrationRdf) {
-    System.out.println("_fetchCreators, integrationRdf: " + preTransformedRdf);
     // (?s) enables the dot for multiline matching
     final Pattern p = Pattern.compile("(?s)(?i)<dc:creator rdf:parseType=\"Resource\">(.*?)</dc:creator>(?i)");
     for (final Matcher m = p.matcher(preTransformedRdf); m.find();) {
       final String creator = m.group(1);
-      System.out.println("EdocNormdataIntegrator: fetched creator " + creator);
       final Pattern pGiven = Pattern.compile("(?i)<foaf:givenName>(.*)</foaf:givenName>(?i)");
       final Pattern pFamily = Pattern.compile("(?i)<foaf:familyName>(.*)</foaf:familyName>(?i)");
       final Matcher mGiven = pGiven.matcher(creator);
@@ -82,15 +80,11 @@ public class EdocNormdataIntegrator extends ANormdataIntegration {
       if (mGiven.find() && mFamily.find()) {
         final String givenName = mGiven.group(1);
         final String familyName = mFamily.group(1);
-        System.out.println("EdocNormdataIntegrator: matched familyname " + familyName);
-        System.out.println("EdocNormdataIntegrator: matched givenname " + givenName);
         final String creatorUri = fetchObject("dc:creator", givenName, familyName);
-        System.out.println("EdocNormdataIntegrator: creatorUri " + creatorUri);
         String matchedCreator = "";
         if (creatorUri != null && !creatorUri.isEmpty()) {
           // the institute is a resource from the normdata
           matchedCreator = "<dc:creator rdf:resource=\"" + creatorUri + "\"/>\n\t\t\t\t";
-          System.out.println("EdocNormdataIntegrator: matched creator " + matchedCreator);
           final Pattern pToBeReplaced = Pattern.compile("(?m)(?i)<dc:creator rdf:parseType=\"Resource\">\n.*?<foaf:givenName>" + givenName + "</foaf:givenName>\n.*?<foaf:familyName>" + familyName + "</foaf:familyName>\n.*?</dc:creator>");
           integrationRdf = preTransformedRdf.replaceFirst(pToBeReplaced.pattern(), matchedCreator);
         }
@@ -112,7 +106,6 @@ public class EdocNormdataIntegrator extends ANormdataIntegration {
     final Pattern p = Pattern.compile("(?i)<dc:publisher rdf:value=\"(.*?)\"/>(?i)");
     final Matcher m = p.matcher(preTransformedRdf);
     if (m.find()) {
-      System.out.println("EdocNormdataIntegrator: found publisher");
       final String replacementRessource = m.group(1);
       final String[] institutes = replacementRessource.split(";");
       String instituteTriples = "";

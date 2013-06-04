@@ -186,7 +186,6 @@ public abstract class ToRdfTransformer {
       // export URI of the WSP's rdf node within the normdata.rdf file
       transformer.setParameter(new QName(STYLESHEET_PARAM_CREATOR_NORMDATA_URI), new XdmAtomicValue(TRANSFORMER_CREATOR_NORMDATA_URI));
       // export path to the normdata.rdf file
-      System.out.println("normdata path: " + NORMDATA_FILE_PATH);
       transformer.setParameter(new QName(STYLESHEET_PARAM_NORMDATA_FILE), new XdmAtomicValue(NORMDATA_FILE_PATH));
 
       transformer.setSource(inputSource);
