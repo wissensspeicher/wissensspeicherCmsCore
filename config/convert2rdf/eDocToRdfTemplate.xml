@@ -2,11 +2,8 @@
 <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:ore="http://www.openarchives.org/ore/terms/" xmlns:dc="http://purl.org/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:edm="http://www.europeana.eu/schemas/edm/" xmlns:xi="http://www.w3.org/2001/XInclude">
 			<rdf:Description xml:base="%%resource_identifier%%" rdf:about="%%resource_identifier%%">				
 				<ore:describes rdf:resource="%%aggregation_uri%%" />
-				<rdf:type rdf:resource="http://www.openarchives.org/ore/terms/ResourceMap"/>
-				<dc:creator rdf:parseType="Resource">
-					<foaf:name>%%creator_name%%</foaf:name>
-					<foaf:page rdf:resource="%%creator_url%%"/>
-				</dc:creator>				
+				<rdf:type rdf:resource="http://www.openarchives.org/ore/terms/ResourceMap"/>				
+				<dc:creator rdf:resource="%%creator_normdata_uri%%" />						
 				<dcterms:created rdf:datatype="http://www.w3.org/2001/XMLSchema#date">%%actual_date%%</dcterms:created>
 				<dcterms:modified/>
 				<dc:rights/>
