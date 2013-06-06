@@ -572,7 +572,7 @@ public class AdminInterface extends JFrame {
 
 	} else
 	    return;
-	if (desF.endsWith(".store")) {
+	if (desF.toLowerCase().endsWith(".store")) {
 	    jenaMain.setDestination(desF);
 	} else {
 	    println("Your Destination is invalid.");
