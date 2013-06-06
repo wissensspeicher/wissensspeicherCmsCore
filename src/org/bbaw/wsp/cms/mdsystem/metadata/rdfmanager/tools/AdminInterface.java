@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -103,6 +105,31 @@ public class AdminInterface extends JFrame {
 	panel.setLayout(new GridLayout(9, 1));
 	btn_src = new JButton(SOURCE_BUTTON);
 	textFieldSrc = new JTextField("no Source Data selected");
+
+	textFieldSrc.addKeyListener(new KeyListener() {
+
+	    @Override
+	    public void keyTyped(KeyEvent evt) {
+
+	    }
+
+	    @Override
+	    public void keyReleased(KeyEvent evt) {
+
+	    }
+
+	    @Override
+	    public void keyPressed(KeyEvent evt) {
+		// reacts on strg + z pressed and recovers the last source that
+		// was set.
+		if (evt.isControlDown() && evt.getKeyCode() == KeyEvent.VK_Z) {
+		    if (srcD != null) {
+			textFieldSrc.setText(srcD);
+		    }
+		}
+	    }
+	});
+
 	textFieldSrc.addActionListener((new ActionListener() {
 
 	    @Override
@@ -114,6 +141,7 @@ public class AdminInterface extends JFrame {
 		} else {
 		    if (file.isDirectory()) {
 			folderScr.setEnabled(true);
+			scanforRDF(srcD);
 		    } else {
 			folderScr.setEnabled(false);
 		    }
@@ -137,6 +165,31 @@ public class AdminInterface extends JFrame {
 
 	btn_des = new JButton(DESTINATION_BUTTON);
 	textFieldDes = new JTextField("no Destination selected");
+
+	textFieldDes.addKeyListener(new KeyListener() {
+
+	    @Override
+	    public void keyTyped(KeyEvent evt) {
+
+	    }
+
+	    @Override
+	    public void keyReleased(KeyEvent evt) {
+
+	    }
+
+	    @Override
+	    public void keyPressed(KeyEvent evt) {
+		// reacts on strg + z pressed and recovers the last source that
+		// was set.
+		if (evt.isControlDown() && evt.getKeyCode() == KeyEvent.VK_Z) {
+		    if (desF != null) {
+			textFieldSrc.setText(desF);
+		    }
+		}
+	    }
+	});
+
 	textFieldDes.addActionListener((new ActionListener() {
 
 	    @Override
@@ -189,6 +242,31 @@ public class AdminInterface extends JFrame {
 	});
 	btn_larq = new JButton(SET_NEW_LARQ);
 	textFieldLarq = new JTextField(jenaMain.readLarq());
+
+	textFieldLarq.addKeyListener(new KeyListener() {
+
+	    @Override
+	    public void keyTyped(KeyEvent evt) {
+
+	    }
+
+	    @Override
+	    public void keyReleased(KeyEvent evt) {
+
+	    }
+
+	    @Override
+	    public void keyPressed(KeyEvent evt) {
+		// reacts on strg + z pressed and recovers the last source that
+		// was set.
+		if (evt.isControlDown() && evt.getKeyCode() == KeyEvent.VK_Z) {
+		    if (larqD != null) {
+			textFieldSrc.setText(larqD);
+		    }
+		}
+	    }
+	});
+
 	textFieldLarq.addActionListener((new ActionListener() {
 
 	    @Override
@@ -543,8 +621,8 @@ public class AdminInterface extends JFrame {
     }
 
     /**
-     * Methoded lists all folders in a given dir and returns them, needs a list
-     * to write in & a root folder
+     * Method lists all folders in a given dir and returns them, needs a list to
+     * write in & a root folder
      * 
      * @param folderlist
      * @param root
