@@ -59,7 +59,6 @@ public class AdminInterface extends JFrame {
     private JTextField textFieldLarq;
     private String srcD;
     private String desF;
-    private String larqD;
     private JCheckBox allXML;
     private JCheckBox folderScr;
     private JCheckBox createDataset;
@@ -71,6 +70,7 @@ public class AdminInterface extends JFrame {
     private String namedGraph = "";
     private final JenaMainForAI jenaMain = new JenaMainForAI();
     private static Logger LOGGER = Logger.getLogger(CollectionReader.class);
+    private String larqD = jenaMain.readLarq();
 
     // ButtonsNames for distinction
     private static final String SOURCE_BUTTON = "Choose Metadata";
