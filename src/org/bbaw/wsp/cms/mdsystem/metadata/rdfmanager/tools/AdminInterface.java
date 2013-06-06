@@ -109,9 +109,14 @@ public class AdminInterface extends JFrame {
 	    public void actionPerformed(ActionEvent arg0) {
 
 		File file = new File(textFieldSrc.getText());
-		if (!file.exists() || !file.isDirectory()) {
+		if (!file.exists()) {
 		    println("\nYour SourcePath is invalid.");
 		} else {
+		    if (file.isDirectory()) {
+			folderScr.setEnabled(true);
+		    } else {
+			folderScr.setEnabled(false);
+		    }
 		    srcD = textFieldSrc.getText();
 		}
 	    }
@@ -138,11 +143,34 @@ public class AdminInterface extends JFrame {
 	    public void actionPerformed(ActionEvent arg0) {
 
 		File file = new File(textFieldDes.getText());
-		if (!file.exists() || !file.isDirectory()) {
-		    println("\nYour DestinationPath is invalid.");
+		if (file.exists()) {
+		    if (file.isDirectory()) {
+			println("\nYour DestinationPath is invalid.\n"
+				+ "Has to be a .store file.");
+		    } else {
+			desF = textFieldDes.getText();
+		    }
+
+		    try {
+			execution();
+		    } catch (ClassNotFoundException | IOException e) {
+			println(e.getMessage());
+			errorMessage(e.getMessage());
+			LOGGER.error(e.getMessage());
+		    }
+
 		} else {
+		    createDataset.setEnabled(true);
 		    desF = textFieldDes.getText();
+		    try {
+			execution();
+		    } catch (ClassNotFoundException | IOException e) {
+			println(e.getMessage());
+			errorMessage(e.getMessage());
+			LOGGER.error(e.getMessage());
+		    }
 		}
+
 	    }
 	}));
 
@@ -169,8 +197,13 @@ public class AdminInterface extends JFrame {
 		File file = new File(textFieldLarq.getText());
 		if (!file.exists() || !file.isDirectory()) {
 		    println("\nYour LarqPath is invalid.");
+		    // restore Path which is in conifig
+		    textFieldLarq.setText(jenaMain.readLarq());
+
 		} else {
 		    larqD = textFieldLarq.getText();
+		    println("New Larq Index = " + larqD + "\n");
+
 		}
 	    }
 	}));
@@ -456,9 +489,17 @@ public class AdminInterface extends JFrame {
      */
     private void execution() throws ClassNotFoundException, IOException {
 
-	if (srcD != null)
+	if (srcD != null) {
 	    jenaMain.setSource(srcD);
-	jenaMain.setDestination(desF);
+
+	} else
+	    return;
+	if (desF.endsWith(".store")) {
+	    jenaMain.setDestination(desF);
+	} else {
+	    println("Your Destination is invalid.");
+	    return;
+	}
 	jenaMain.initStore(createDataset.isSelected());
 
 	createNewSet = false;
