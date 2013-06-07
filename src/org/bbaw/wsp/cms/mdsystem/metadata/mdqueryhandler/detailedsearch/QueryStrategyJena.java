@@ -74,4 +74,10 @@ public class QueryStrategyJena implements IQueryStrategy<Map<URL, ResultSet>> {
   public void free() {
     jenamain.getIndexStore().closeIndex(); // close larq index
   }
+
+  @Override
+  public Map<URL, ResultSet> querySubject(URL subject) {
+    // TODO Auto-generated method stub
+    return null;
+  }
 }
