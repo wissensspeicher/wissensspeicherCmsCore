@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -57,7 +59,6 @@ public class AdminInterface extends JFrame {
     private JTextField textFieldLarq;
     private String srcD;
     private String desF;
-    private String larqD;
     private JCheckBox allXML;
     private JCheckBox folderScr;
     private JCheckBox createDataset;
@@ -69,6 +70,7 @@ public class AdminInterface extends JFrame {
     private String namedGraph = "";
     private final JenaMainForAI jenaMain = new JenaMainForAI();
     private static Logger LOGGER = Logger.getLogger(CollectionReader.class);
+    private String larqD = jenaMain.readLarq();
 
     // ButtonsNames for distinction
     private static final String SOURCE_BUTTON = "Choose Metadata";
@@ -103,15 +105,46 @@ public class AdminInterface extends JFrame {
 	panel.setLayout(new GridLayout(9, 1));
 	btn_src = new JButton(SOURCE_BUTTON);
 	textFieldSrc = new JTextField("no Source Data selected");
+
+	textFieldSrc.addKeyListener(new KeyListener() {
+
+	    @Override
+	    public void keyTyped(KeyEvent evt) {
+
+	    }
+
+	    @Override
+	    public void keyReleased(KeyEvent evt) {
+
+	    }
+
+	    @Override
+	    public void keyPressed(KeyEvent evt) {
+		// reacts on strg + z pressed and recovers the last source that
+		// was set.
+		if (evt.isControlDown() && evt.getKeyCode() == KeyEvent.VK_Z) {
+		    if (srcD != null) {
+			textFieldSrc.setText(srcD);
+		    }
+		}
+	    }
+	});
+
 	textFieldSrc.addActionListener((new ActionListener() {
 
 	    @Override
 	    public void actionPerformed(ActionEvent arg0) {
 
 		File file = new File(textFieldSrc.getText());
-		if (!file.exists() || !file.isDirectory()) {
+		if (!file.exists()) {
 		    println("\nYour SourcePath is invalid.");
 		} else {
+		    if (file.isDirectory()) {
+			folderScr.setEnabled(true);
+			scanforRDF(srcD);
+		    } else {
+			folderScr.setEnabled(false);
+		    }
 		    srcD = textFieldSrc.getText();
 		}
 	    }
@@ -132,17 +165,65 @@ public class AdminInterface extends JFrame {
 
 	btn_des = new JButton(DESTINATION_BUTTON);
 	textFieldDes = new JTextField("no Destination selected");
+
+	textFieldDes.addKeyListener(new KeyListener() {
+
+	    @Override
+	    public void keyTyped(KeyEvent evt) {
+
+	    }
+
+	    @Override
+	    public void keyReleased(KeyEvent evt) {
+
+	    }
+
+	    @Override
+	    public void keyPressed(KeyEvent evt) {
+		// reacts on strg + z pressed and recovers the last source that
+		// was set.
+		if (evt.isControlDown() && evt.getKeyCode() == KeyEvent.VK_Z) {
+		    if (desF != null) {
+			textFieldSrc.setText(desF);
+		    }
+		}
+	    }
+	});
+
 	textFieldDes.addActionListener((new ActionListener() {
 
 	    @Override
 	    public void actionPerformed(ActionEvent arg0) {
 
 		File file = new File(textFieldDes.getText());
-		if (!file.exists() || !file.isDirectory()) {
-		    println("\nYour DestinationPath is invalid.");
+		if (file.exists()) {
+		    if (file.isDirectory()) {
+			println("\nYour DestinationPath is invalid.\n"
+				+ "Has to be a .store file.");
+		    } else {
+			desF = textFieldDes.getText();
+		    }
+
+		    try {
+			execution();
+		    } catch (ClassNotFoundException | IOException e) {
+			println(e.getMessage());
+			errorMessage(e.getMessage());
+			LOGGER.error(e.getMessage());
+		    }
+
 		} else {
+		    createDataset.setEnabled(true);
 		    desF = textFieldDes.getText();
+		    try {
+			execution();
+		    } catch (ClassNotFoundException | IOException e) {
+			println(e.getMessage());
+			errorMessage(e.getMessage());
+			LOGGER.error(e.getMessage());
+		    }
 		}
+
 	    }
 	}));
 
@@ -161,6 +242,31 @@ public class AdminInterface extends JFrame {
 	});
 	btn_larq = new JButton(SET_NEW_LARQ);
 	textFieldLarq = new JTextField(jenaMain.readLarq());
+
+	textFieldLarq.addKeyListener(new KeyListener() {
+
+	    @Override
+	    public void keyTyped(KeyEvent evt) {
+
+	    }
+
+	    @Override
+	    public void keyReleased(KeyEvent evt) {
+
+	    }
+
+	    @Override
+	    public void keyPressed(KeyEvent evt) {
+		// reacts on strg + z pressed and recovers the last source that
+		// was set.
+		if (evt.isControlDown() && evt.getKeyCode() == KeyEvent.VK_Z) {
+		    if (larqD != null) {
+			textFieldSrc.setText(larqD);
+		    }
+		}
+	    }
+	});
+
 	textFieldLarq.addActionListener((new ActionListener() {
 
 	    @Override
@@ -169,8 +275,13 @@ public class AdminInterface extends JFrame {
 		File file = new File(textFieldLarq.getText());
 		if (!file.exists() || !file.isDirectory()) {
 		    println("\nYour LarqPath is invalid.");
+		    // restore Path which is in conifig
+		    textFieldLarq.setText(jenaMain.readLarq());
+
 		} else {
 		    larqD = textFieldLarq.getText();
+		    println("New Larq Index = " + larqD + "\n");
+
 		}
 	    }
 	}));
@@ -456,9 +567,17 @@ public class AdminInterface extends JFrame {
      */
     private void execution() throws ClassNotFoundException, IOException {
 
-	if (srcD != null)
+	if (srcD != null) {
 	    jenaMain.setSource(srcD);
-	jenaMain.setDestination(desF);
+
+	} else
+	    return;
+	if (desF.toLowerCase().endsWith(".store")) {
+	    jenaMain.setDestination(desF);
+	} else {
+	    println("Your Destination is invalid.");
+	    return;
+	}
 	jenaMain.initStore(createDataset.isSelected());
 
 	createNewSet = false;
@@ -502,8 +621,8 @@ public class AdminInterface extends JFrame {
     }
 
     /**
-     * Methoded lists all folders in a given dir and returns them, needs a list
-     * to write in & a root folder
+     * Method lists all folders in a given dir and returns them, needs a list to
+     * write in & a root folder
      * 
      * @param folderlist
      * @param root

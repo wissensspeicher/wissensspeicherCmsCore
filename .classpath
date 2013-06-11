@@ -52,5 +52,6 @@
 	<classpathentry kind="lib" path="lib/xercesImpl-2.10.0.jar"/>
 	<classpathentry kind="lib" path="lib/jena-larq.jar"/>
 	<classpathentry kind="lib" path="lib/jcsv-1.4.0.jar"/>
+	<classpathentry kind="lib" path="lib/mysql-connector-java-5.0.8-bin.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -3,6 +3,8 @@
  */
 package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.detailedsearch;
 
+import java.net.URL;
+
 import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.RdfHandler;
 import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.tools.SparqlCommandBuilder;
 
@@ -64,6 +66,12 @@ public class QueryStrategyHandler implements IQueryStrategy<ResultSet> {
   public void free() {
     // TODO Auto-generated method stub
 
+  }
+
+  @Override
+  public ResultSet querySubject(URL subject) {
+    // TODO Auto-generated method stub
+    return null;
   }
 
 }

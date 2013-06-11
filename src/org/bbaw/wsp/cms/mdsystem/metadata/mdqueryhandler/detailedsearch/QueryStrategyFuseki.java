@@ -62,6 +62,8 @@ public class QueryStrategyFuseki implements IQueryStrategy<ResultSet> {
     return delegateQuery(query);
   }
 
+  
+  
   @Override
   /*
    * (non-Javadoc)
@@ -71,6 +73,12 @@ public class QueryStrategyFuseki implements IQueryStrategy<ResultSet> {
   public void free() {
     // TODO Auto-generated method stub
 
+  }
+
+  @Override
+  public ResultSet querySubject(URL subject) {
+    final String query = SparqlCommandBuilder.SELECT_DEFAULT.getSelectQueryString("*", null, subject.toString());
+    return delegateQuery(query);
   }
 
 }
