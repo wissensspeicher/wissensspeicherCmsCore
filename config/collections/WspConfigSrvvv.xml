@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>srvvv</id>
+    <rdfId>http://wsp.normdata.rdf/SpracheDesRechts</rdfId>
     <name>Sprache des Rechts, Vermitteln, Verstehen, Verwechseln</name>
     <url>
       <webBaseUrl>http://www.bbaw.de/forschung/sdr/uebersicht</webBaseUrl>

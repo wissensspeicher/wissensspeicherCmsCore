@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>prie</id>
+    <rdfId>http://wsp.normdata.rdf/PrioritaetenEnergieforschung</rdfId>
     <name>Prioritäten in der Energieforschung</name>
     <url>
       <webBaseUrl>http://www.bbaw.de/forschung/energie/uebersicht</webBaseUrl>

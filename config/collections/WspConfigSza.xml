@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>sza</id>
+    <rdfId>http://wsp.normdata.rdf/StrategienAbfall</rdfId>
     <name>Strategien zur Abfallenergieverwertung</name>
     <url>
     	<webBaseUrl>http://abfallenergieverwertung.bbaw.de/</webBaseUrl>

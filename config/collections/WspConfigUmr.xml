@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>umr</id>
+    <rdfId>http://wsp.normdata.rdf/UniverselleMenschenrechte</rdfId>
     <name>Universelle Menschenrechte - partikulare Moral</name>
     <url>
     	<webBaseUrl>http://www.bbaw.de/forschung/universelle_moral</webBaseUrl>

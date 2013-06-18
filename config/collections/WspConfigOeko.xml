@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>oeko</id>
+    <rdfId>http://wsp.normdata.rdf/Oekosystemleistungen</rdfId>
     <name>Ökosystemleistungen</name>
     <url>
       <webBaseUrl>http://www.oekosystemleistungen.de/</webBaseUrl>

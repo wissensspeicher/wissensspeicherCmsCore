@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>wsp</id>
+    <rdfId>http://wsp.normdata.rdf/Wissensspeicher</rdfId>
     <name>Wissensspeicher</name>
     <url>
     	<webBaseUrl>http://wsp.bbaw.de</webBaseUrl>

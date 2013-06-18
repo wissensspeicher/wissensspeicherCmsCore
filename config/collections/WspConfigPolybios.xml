@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>polybios</id>
+    <rdfId>http://wsp.normdata.rdf/PolybiosLexikon</rdfId>
     <name>Polybios-Lexikon</name>
     <url>
     	<webBaseUrl>http://polybios.bbaw.de</webBaseUrl>

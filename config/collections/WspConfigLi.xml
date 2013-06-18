@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>li</id>
+    <rdfId>http://wsp.normdata.rdf/LandInnovation</rdfId>
     <name>LandInnovation</name>
     <url>
       <webBaseUrl>http://landinnovation.bbaw.de</webBaseUrl>

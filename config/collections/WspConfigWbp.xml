@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>wbp</id>
+    <rdfId>http://wsp.normdata.rdf/Woerterbuchportal</rdfId>
     <name>Wörterbuchportal</name>
     <url>
       <webBaseUrl> http://www.woerterbuch-portal.de/</webBaseUrl>

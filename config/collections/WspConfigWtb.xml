@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>wtb</id>
+    <rdfId>http://wsp.normdata.rdf/ElitenIntegration</rdfId>
     <name>Workshops/Tagungen/Berichte</name>
     <url>
       <webBaseUrl>http://elitenintegration.bbaw.de/veranstaltungen#Bericht1</webBaseUrl>

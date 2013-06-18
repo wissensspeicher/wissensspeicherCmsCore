@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>pdp</id>
+    <rdfId>http://wsp.normdata.rdf/ProtokollePreußischesStaatsministerium</rdfId>
     <name>Die Protokolle des Preußischen Staatsministeriums 1817-1934/38</name>
     <url>
       <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/preussen_protokolle/de/Startseite</webBaseUrl>

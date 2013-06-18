@@ -2,6 +2,7 @@
 <wsp>
   <collection>     
     <id>kyoto</id>
+    <rdfId>http://wsp.normdata.rdf/Kyoto</rdfId>
     <name>Knowledge Yielding Ontologies for Transition-based Organization (KYOTO)</name>
     <url>
       <webBaseUrl>http://www.kyoto-project.eu/</webBaseUrl>

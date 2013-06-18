@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>pd</id>
+    <rdfId>http://wsp.normdata.rdf/PsychologischesDenkenPraxis</rdfId>
     <name>Psychologisches Denken</name>
     <url>
       <webBaseUrl>http://psychologischesdenken.bbaw.de</webBaseUrl>

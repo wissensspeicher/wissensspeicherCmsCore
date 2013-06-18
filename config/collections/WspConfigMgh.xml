@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>mgh</id>
+    <rdfId>http://wsp.normdata.rdf/MonumentaGermaniaeHistorica</rdfId>
     <name>Monumenta Germaniae Historica</name>
     <url>
       <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mgh/de/Startseite</webBaseUrl>

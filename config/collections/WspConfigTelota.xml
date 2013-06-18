@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>telota</id>
+    <rdfId>http://wsp.normdata.rdf/Telota</rdfId>
     <name>Telota</name>
     <url>
       <webBaseUrl>http://www.telota.de</webBaseUrl>

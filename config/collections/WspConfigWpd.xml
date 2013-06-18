@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>wpd</id>
+    <rdfId>http://wsp.normdata.rdf/WissenschaftlichePolitikberatung</rdfId>
     <name>Wissenschaftliche Politikberatung in der Demokratie</name>
     <!-- if dataUrl is not a directory but a file, it should end with a forward slash -->
     <url>

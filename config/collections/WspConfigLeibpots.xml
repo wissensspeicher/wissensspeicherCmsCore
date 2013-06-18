@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>leibpots</id>
+    <rdfId>http://wsp.normdata.rdf/LeibnizEditionPotsdam</rdfId>
     <name>Leibniz-Edition Potsdam</name>
     <url>
     	<webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/de/Startseite</webBaseUrl>

@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>ksw</id>
+    <rdfId>http://wsp.normdata.rdf/KulturellerSozialerWandel</rdfId>
     <name>Kultureller und sozialer Wandel</name>
    
     <url>

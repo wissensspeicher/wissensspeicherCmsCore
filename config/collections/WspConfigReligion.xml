@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>religion</id>
+    <rdfId>http://wsp.normdata.rdf/ReligionUndGlauben</rdfId>
     <name>Religion und Glauben</name>
     <url>
     	<webBaseUrl>http://religion.bbaw.de/</webBaseUrl>

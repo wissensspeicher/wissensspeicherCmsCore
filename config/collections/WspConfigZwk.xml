@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>zwk</id>
+    <rdfId>http://wsp.normdata.rdf/ZukunftKommunikationssystem</rdfId>
     <name>Zukunft des wissenschaftlichen Kommunikationssystems</name>
    
     <url>

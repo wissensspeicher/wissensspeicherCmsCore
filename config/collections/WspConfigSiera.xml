@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>siera</id>
+    <rdfId>http://wsp.normdata.rdf/Siera</rdfId>
     <name>SIERA: Integrating Sina Institute into the European Research Area</name>
     <url>
       <webBaseUrl>http://www.bbaw.de/forschung/siera</webBaseUrl>

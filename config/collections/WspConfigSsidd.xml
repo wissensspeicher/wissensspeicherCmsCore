@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>ssidd</id>
+    <rdfId>http://wsp.normdata.rdf/Staatsschulden</rdfId>
     <name>Staatsschulden in der Demokratie: Ursachen, Wirkungen und Grenzen </name>
     <url>
     	<webBaseUrl>http://www.bbaw.de/forschung/staatsschulden</webBaseUrl>

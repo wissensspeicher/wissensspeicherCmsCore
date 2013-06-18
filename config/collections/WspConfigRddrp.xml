@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>rddrp</id>
+    <rdfId>http://wsp.normdata.rdf/RechtslehrerDDR</rdfId>
     <name>Die Rechtslehrer der Deutschen Demokratischen Republik</name>
     <url>
     	<webBaseUrl>http://www.bbaw.de/forschung/rechtslehrer</webBaseUrl>

@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>wab</id>
+    <rdfId>http://wsp.normdata.rdf/WeltAlsBild</rdfId>
     <name>Die Welt als Bild</name>
     <url>
       <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/Weltbilder/de/Startseite</webBaseUrl>

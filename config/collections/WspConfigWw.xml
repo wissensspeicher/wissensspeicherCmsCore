@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>ww</id>
+    <rdfId>http://wsp.normdata.rdf/WissenschaftWiedervereinigung</rdfId>
     <name>Wissenschaft und Wiedervereinigung</name>
     <url>
     	<webBaseUrl>http://wissenschaftundwiedervereinigung.bbaw.de</webBaseUrl>

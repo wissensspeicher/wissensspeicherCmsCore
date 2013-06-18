@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>parzival</id>
+    <rdfId>http://wsp.normdata.rdf/Parzival</rdfId>
     <name>Parzival</name>
     <url>
       <webBaseUrl>http://www.bbaw.de/forschung/parzival</webBaseUrl>

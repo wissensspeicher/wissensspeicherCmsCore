@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>tech</id>
+    <rdfId>http://wsp.normdata.rdf/Technikwissenschaften</rdfId>
     <name>Technikwissenschaften</name>
     <url>
     	<webBaseUrl>http://selbstverstaendnistechnikwissenschaften.bbaw.de/</webBaseUrl>

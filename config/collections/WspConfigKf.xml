@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>kf</id>
+    <rdfId>http://wsp.normdata.rdf/KlinischeForschungPopulation</rdfId>
     <name>Klinische Forschung in vulnerablen Populationen</name>
     <url>
       <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/kfvp/de/Startseite</webBaseUrl>

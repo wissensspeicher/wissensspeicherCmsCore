@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>kg</id>
+    <rdfId>http://wsp.normdata.rdf/KriegUndGewalt</rdfId>
     <name>Krieg und Gewalt</name>
     <url>
     	<webBaseUrl>http://kriegundgewalt.bbaw.de</webBaseUrl>
