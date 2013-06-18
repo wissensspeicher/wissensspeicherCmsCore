@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>eutena</id>
+    <rdfId>http://wsp.normdata.rdf/Eutena</rdfId>
     <name>EUTENA - Zur Zukunft technischer und naturwissenschaftlicher Bildung in Europa</name>
     <url>
       <webBaseUrl>http://www.bbaw.de/forschung/eutena/projektdarstellung</webBaseUrl>

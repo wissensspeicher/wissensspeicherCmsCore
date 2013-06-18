@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>forster</id>
+    <rdfId>http://wsp.normdata.rdf/Forster</rdfId>
     <name>Forster-Ausgabe</name>
     <url>
     	<webBaseUrl>http://forster.bbaw.de</webBaseUrl>

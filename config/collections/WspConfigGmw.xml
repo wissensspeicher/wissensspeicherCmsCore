@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>gmw</id>
+    <rdfId>http://wsp.normdata.rdf/GriechischesMuenzwerk</rdfId>
     <name>Griechisches Münzwerk</name>
     <url>
     	<webBaseUrl>http://gmw.bbaw.de</webBaseUrl>

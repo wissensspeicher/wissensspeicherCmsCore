@@ -2,6 +2,7 @@
 <wsp>
   <collection>     
     <id>eno</id>
+    <rdfId>http://wsp.normdata.rdf/EuropaImNahenOsten</rdfId>
     <name>Europa im Nahen Osten</name>
     <url>
       <webBaseUrl>http://www.bbaw.de/forschung/eino/projektdarstellung</webBaseUrl>

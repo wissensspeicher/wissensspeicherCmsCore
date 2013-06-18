@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>gwt</id>
+    <rdfId>http://wsp.normdata.rdf/GesellschaftWasserTechnik</rdfId>
     <name>Gesellschaft - Wasser - Technik</name>
     <url>
       <webBaseUrl>http://www.bbaw.de/forschung/gwt/uebersicht</webBaseUrl>

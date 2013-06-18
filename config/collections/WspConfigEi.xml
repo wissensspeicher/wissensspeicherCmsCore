@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>ei</id>
+    <rdfId>http://wsp.normdata.rdf/ElitenIntegration</rdfId>
     <name>Eliten-Integration</name>
     <url>
       <webBaseUrl>http://elitenintegration.bbaw.de/</webBaseUrl>

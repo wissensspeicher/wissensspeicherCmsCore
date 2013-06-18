@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>ia</id>
+    <rdfId>http://wsp.normdata.rdf/IdealeAkademie</rdfId>
     <name>Ideale Akademie</name>
     <url>
       <webBaseUrl>http://idealeakademie.bbaw.de/</webBaseUrl>

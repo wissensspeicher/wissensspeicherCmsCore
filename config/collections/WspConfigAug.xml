@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>aug</id>
+    <rdfId>http://wsp.normdata.rdf/AntikeGegenwart</rdfId>
     <name>Antike und Gegenwart</name>
     <url>
     	<webBaseUrl>http://antikeundgegenwart.bbaw.de</webBaseUrl>

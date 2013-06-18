@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>clu</id>
+    <rdfId>http://wsp.normdata.rdf/ClusterWissensforschung</rdfId>
     <name>Cluster Wissensforschung Berlin/Brandenbur</name>
     <url>
       <webBaseUrl>http://www.bbaw.de/forschung/clu</webBaseUrl>

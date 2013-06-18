@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>exzellenz</id>
+    <rdfId>http://wsp.normdata.rdf/Exzellenzinitiative</rdfId>
     <name>Exzellenzinitiative</name>
     <url>
     	<webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/Exzellenzinitiative/de/Startseite</webBaseUrl>

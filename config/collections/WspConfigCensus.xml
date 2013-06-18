@@ -2,6 +2,7 @@
 <wsp>
   <collection>     
     <id>census</id>
+    <rdfId>http://wsp.normdata.rdf/CensusOfAntiqueWorks</rdfId>
     <name>Census of Antique Works of Art and Architecture Known in the Renaissance</name>
     <url>
       <webBaseUrl>http://www.census.de/census/</webBaseUrl>

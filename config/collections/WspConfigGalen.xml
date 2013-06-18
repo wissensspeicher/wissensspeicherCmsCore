@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>galen</id>
+    <rdfId>http://wsp.normdata.rdf/Galen</rdfId>
     <name>Galen als Vermittler, Interpret und Vollender der antiken Medizin</name>
     <url>
     	<webBaseUrl>http://galen.bbaw.de</webBaseUrl>

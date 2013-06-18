@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>gg</id>
+    <rdfId>http://wsp.normdata.rdf/GemeinwohlUndGemeinsinn</rdfId>
     <name>Gemeinwohl und Gemeinsinn</name>
     <url>
     	<webBaseUrl>http://gemeinwohl.bbaw.de</webBaseUrl>

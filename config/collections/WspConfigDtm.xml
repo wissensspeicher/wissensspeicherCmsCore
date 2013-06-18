@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>dtm</id>
+    <rdfId>http://wsp.normdata.rdf/DTM</rdfId>
     <name>Deutsche Texte des Mittelalters</name>
     <url>
       <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/dtm/de/Startseite</webBaseUrl>

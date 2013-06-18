@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>bk</id>
+    <rdfId>http://wsp.normdata.rdf/BerlinerKlassik</rdfId>
     <name>Berliner Klassik</name>
     <url>
       <webBaseUrl>http://www.berliner-klassik.de/</webBaseUrl>

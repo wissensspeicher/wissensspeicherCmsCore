@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>altern</id>
+    <rdfId>http://wsp.normdata.rdf/AlternGesellschaft</rdfId>
     <name>Altern und gesellschaftliche Entwicklung</name>
     <url>
       <webBaseUrl>http://altern.bbaw.de</webBaseUrl>

@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>ig</id>
+    <rdfId>http://wsp.normdata.rdf/InscriptionesGraecae</rdfId>
     <name>Inscriptiones Graecae</name>
     <url>
       <webBaseUrl>http://telota.bbaw.de/ig</webBaseUrl>

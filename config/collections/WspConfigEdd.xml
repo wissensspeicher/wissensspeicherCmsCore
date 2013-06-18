@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>edd</id>
+    <rdfId>http://wsp.normdata.rdf/EuropaDiktatur</rdfId>
     <name>Das Europa der Diktatur. Wirtschaftssteuerung und Recht</name>
     <url>
       <webBaseUrl>http://europaderdiktaturen.bbaw.de</webBaseUrl>

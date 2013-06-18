@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>bag</id>
+    <rdfId>http://wsp.normdata.rdf/BerlinerAkademiegesch</rdfId>
     <name>Berliner Akademiegeschichte im 19. und 20. Jahrhundert</name>
     <url>
       <webBaseUrl>http://akademiegeschichte.bbaw.de/</webBaseUrl>

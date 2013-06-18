@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>dwb</id>
+    <rdfId>http://wsp.normdata.rdf/DWB</rdfId>
     <name>Deutsches Wörterbuch von Jacob Grimm und Wilhelm Grimm</name>
     <url>
       <webBaseUrl>http://dwb.bbaw.de/</webBaseUrl>

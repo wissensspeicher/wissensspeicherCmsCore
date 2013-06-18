@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>cagb</id>
+    <rdfId>http://wsp.normdata.rdf/CommentariaAristotelem</rdfId>
     <name>Commentaria in Aristotelem Graeca et Byzantina</name>
     <url>
       <webBaseUrl>http://www.bbaw.de/forschung/cagb</webBaseUrl>

@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>fb</id>
+    <rdfId>http://wsp.normdata.rdf/FunktionenBewusstsein</rdfId>
     <name>Funktionen des Bewußtseins</name>
     <url>
     	<webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/Bewusstsein/de/Startseite</webBaseUrl>

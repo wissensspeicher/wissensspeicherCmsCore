@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>ba</id>
+    <rdfId>http://wsp.normdata.rdf/BiblioraphischeAnnalen</rdfId>
     <name>Bibliographische Annalen</name>
     <url>
       <webBaseUrl>http://www.bbaw.de/forschung/ba</webBaseUrl>

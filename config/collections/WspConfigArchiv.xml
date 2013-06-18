@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>archiv</id>
+    <rdfId>http://wsp.normdata.rdf/Archiv</rdfId>
     <name>Akademiearchiv</name>
     <url>
       <webBaseUrl>http://archiv.bbaw.de/archiv</webBaseUrl>

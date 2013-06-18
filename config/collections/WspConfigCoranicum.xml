@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>coranicum</id>
+    <rdfId>http://wsp.normdata.rdf/CorpusCoranicum</rdfId>
     <name>Corpus Coranicum</name>
     <url>
       <webBaseUrl>http://koran.bbaw.de/</webBaseUrl>

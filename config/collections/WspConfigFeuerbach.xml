@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>feuerbach</id>
+    <rdfId>http://wsp.normdata.rdf/FeuerbachLudwig</rdfId>
     <name>Feuerbach</name>
     <url>
     	<webBaseUrl>http://feuerbach.bbaw.de</webBaseUrl>

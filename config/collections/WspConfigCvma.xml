@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>cvma</id>
+    <rdfId>http://wsp.normdata.rdf/CorpusVitrearumMediiAevi</rdfId>
     <name>Corpus Vitrearum Medii Aevi. Glasmalereiforschung</name>
     <url>
       <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/cvma/de/Startseite</webBaseUrl>

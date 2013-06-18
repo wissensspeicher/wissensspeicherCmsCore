@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>dim</id>
+    <rdfId>http://wsp.normdata.rdf/DeutscheInschriftenMA</rdfId>
     <name>Deutsche Inschriften des Mittelalters</name>
     <url>
     	<webBaseUrl>http://www.bbaw.de/forschung/dim</webBaseUrl>

@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>bild</id>
+    <rdfId>http://wsp.normdata.rdf/Bildkulturen</rdfId>
     <name>Bildkulturen</name>
     <url>
     	<webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/Bildkulturen/de/Startseite</webBaseUrl>

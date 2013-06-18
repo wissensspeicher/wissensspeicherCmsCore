@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>dfg</id>
+    <rdfId>http://wsp.normdata.rdf/DFGimSpannungsfeld</rdfId>
     <name>Die DFG im Spannungsfeld von KWG und Akademien der Wissenschaften bis 1945</name>
     <url>
       <webBaseUrl>http://www.bbaw.de/forschung/dfg_hist/projektdarstellung</webBaseUrl>

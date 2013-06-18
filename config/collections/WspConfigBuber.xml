@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>buber</id>
+    <rdfId>http://wsp.normdata.rdf/MartinBuberWerkausgabe</rdfId>
     <name>Martin-Buber-Werkausgabe</name>
     <url>
     	<webBaseUrl>http://www.bbaw.de/forschung/buber</webBaseUrl>
