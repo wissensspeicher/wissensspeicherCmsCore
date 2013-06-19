@@ -80,14 +80,52 @@ public class CollectionReader {
 					if (collectionId != null) {
 						collection.setId(collectionId);
 					}
-					String mainLanguage = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/mainLanguage/text()");
-					if (mainLanguage != null) {
-						collection.setMainLanguage(mainLanguage);
-					}
+          String rdfId = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/rdfId/text()");
+          if (rdfId != null) {
+            collection.setRdfId(rdfId);
+          }
+          String dbName = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/db/name/text()");
+          if (dbName != null) {
+            Database database = new Database();
+            database.setName(dbName);
+            String xmlDumpFileName = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/db/xmlDumpFileName/text()");
+            if (xmlDumpFileName != null)
+              database.setXmlDumpFileName(xmlDumpFileName);
+            String mainResourcesTable = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/db/mainResourcesTable/name/text()");
+            if (mainResourcesTable != null)
+              database.setMainResourcesTable(mainResourcesTable);
+            String mainResourcesTableId = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/db/mainResourcesTable/idField/text()");
+            if (mainResourcesTableId != null)
+              database.setMainResourcesTableId(mainResourcesTableId);
+            
+            XdmValue mainResourcesTableFields = xQueryEvaluator.evaluate(configFileUrl, "/wsp/collection/db/mainResourcesTable/field");
+            XdmSequenceIterator mainResourcesTableFieldsIterator = mainResourcesTableFields.iterator();
+            if (mainResourcesTableFields != null && mainResourcesTableFields.size() > 0) {
+              while (mainResourcesTableFieldsIterator.hasNext()) {
+                XdmItem mainResourcesTableField = mainResourcesTableFieldsIterator.next();
+                String mainResourcesTableFieldStr = mainResourcesTableField.toString(); // e.g. <field><dc>title</dc><db>title</db></field>
+                String dcField = xQueryEvaluator.evaluateAsString(mainResourcesTableFieldStr, "/field/dc/text()");
+                String dbField = xQueryEvaluator.evaluateAsString(mainResourcesTableFieldStr, "/field/db/text()");
+                if (dcField != null && dbField != null)
+                  database.addField(dcField, dbField);
+              }
+            }
+            String webIdPreStr = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/db/webId/preStr/text()");
+            if (webIdPreStr != null)
+              database.setWebIdPreStr(webIdPreStr);
+            String webIdAfterStr = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/db/webId/afterStr/text()");
+            if (webIdAfterStr != null)
+              database.setWebIdAfterStr(webIdAfterStr);
+            collection.setDatabase(database);
+          }
 					String collectionName = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/name/text()");
 					if (collectionName != null) {
 						collection.setName(collectionName);
 					}
+          String mainLanguage = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/mainLanguage/text()");
+          if (mainLanguage != null) {
+            collection.setMainLanguage(mainLanguage);
+          }
 					String metadataUrlStr = xQueryEvaluator.evaluateAsStringValueJoined(configFileUrl, "/wsp/collection/metadata/url");
 					if (metadataUrlStr != null) {
 						String[] metadataUrls = metadataUrlStr.split(" ");
