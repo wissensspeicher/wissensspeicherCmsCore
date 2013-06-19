@@ -81,4 +81,10 @@ public class QueryStrategyFuseki implements IQueryStrategy<ResultSet> {
     return delegateQuery(query);
   }
 
+  @Override
+  public ResultSet queryGraph(URL namedGraphUrl) {
+    final String query = SparqlCommandBuilder.SELECT_NAMED.getSelectQueryString("*", namedGraphUrl, "?s ?p ?o");
+    return delegateQuery(query);
+  }
+
 }

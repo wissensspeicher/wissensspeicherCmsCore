@@ -191,6 +191,14 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
    * @see org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.ISparqlAdapter#buildSparqlQuery (java.net.URL, java.lang.String, java.lang.String)
    */
   public void buildSparqlQuery(final URL subject, final String predicate, final String object) {
+    final T results = queryStrategy.querySubject(subject);
+    logger.info("######################");
+    logger.info("results queryStrategy querySubject : " + results);
+    logger.info("######################");
+    freeQueryStrategy();
+//    return results;
+    //d
+    
     // final String query =
     // SparqlCommandBuilder.SELECT_DEFAULT.getSelectQueryString("*", null, "<" +
     // subject.toExternalForm() + "> <" + predicate.toExternalForm() + "> " +
@@ -201,6 +209,15 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
     // for (final String bla : ex.execSelect().getResultVars()) {
     // System.out.println(bla);
     // }
+  }
+  
+  @Override
+  public void buildSparqlQuery(URL namedGraphUrl) {
+    final T results = queryStrategy.queryGraph(namedGraphUrl);
+    logger.info("######################");
+    logger.info("results queryStrategy namedGraphUrl : " + results);
+    logger.info("######################");
+    freeQueryStrategy();
   }
   
   @Override
@@ -474,5 +491,7 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
     final List<HitStatement> statements = this.handleRelatedSolution(queryStrategy.delegateQuery(sparqlQuery));
     return statements;
   }
+
+ 
   
 }

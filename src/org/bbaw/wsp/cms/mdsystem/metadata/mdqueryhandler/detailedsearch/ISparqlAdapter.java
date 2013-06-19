@@ -36,7 +36,15 @@ public interface ISparqlAdapter {
   void buildSparqlQuery(URL namedGraphUrl, String literal);
   
   /**
-   * "Das ganz normale Pattern" :) mit ?p als Prädikat
+   * Build a sparql query to receive all data in a specific graph 
+   * 
+   * @param namedGraphUrl
+   *          the {@link URL} of the named graph to be queried.
+   */
+  void buildSparqlQuery(URL namedGraphUrl);
+  
+  /**
+   * "Das ganz normale Pattern" :) mit ?p als String
    * 
    * @param subject
    * @param predicate
@@ -45,7 +53,7 @@ public interface ISparqlAdapter {
   void buildSparqlQuery(URL subject, String predicate, String object);
   
   /**
-   * "Das ganz normale Pattern" :)
+   * "Das ganz normale Pattern" :) mit ?p als URL
    * 
    * @param subject
    * @param predicate

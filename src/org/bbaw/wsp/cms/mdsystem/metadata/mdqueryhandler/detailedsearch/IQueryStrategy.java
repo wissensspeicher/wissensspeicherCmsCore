@@ -45,6 +45,8 @@ public interface IQueryStrategy<T> {
    */
   T querySubject(URL subject);
   
+  T queryGraph(URL namedGraphUrl);
+  
   /**
    * Free the subsystem of the concrete QueryStrategy (e.g. close an index...). The SparqlAdapter will call this method after a query to ensure, that the {@link IQueryStrategy} does its work to return to a fresh state.
    */

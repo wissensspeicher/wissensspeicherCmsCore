@@ -80,4 +80,10 @@ public class QueryStrategyJena implements IQueryStrategy<Map<URL, ResultSet>> {
     // TODO Auto-generated method stub
     return null;
   }
+
+  @Override
+  public Map<URL, ResultSet> queryGraph(URL namedGraphUrl) {
+    // TODO Auto-generated method stub
+    return null;
+  }
 }

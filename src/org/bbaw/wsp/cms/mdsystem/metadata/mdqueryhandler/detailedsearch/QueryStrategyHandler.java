@@ -74,4 +74,10 @@ public class QueryStrategyHandler implements IQueryStrategy<ResultSet> {
     return null;
   }
 
+  @Override
+  public ResultSet queryGraph(URL namedGraphUrl) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
 }

@@ -1,7 +1,10 @@
 package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.conceptsearch;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
+import org.apache.http.client.utils.URIUtils;
 import org.apache.log4j.Logger;
 import org.bbaw.wsp.cms.general.Constants;
 import org.bbaw.wsp.cms.mdsystem.metadata.general.extractor.RdfMetadataExtractor;
@@ -40,8 +43,20 @@ public class ConceptIdentifier {
 
 		logger.info("urlToConfFile : " + normdataFile);
 		this.results = new ArrayList<ConceptQueryResult>();
+	
+      URL queryAsUrl = null;
+      try {
+        queryAsUrl = new URL(query);
+      } catch (MalformedURLException e) {
+        e.printStackTrace();
+      }
+      if(queryAsUrl.getProtocol() != null && queryAsUrl.getProtocol().equals("http")){
+        this.results = scanForElement(Constants.getInstance().getMdsystemNormdataFile(), queryAsUrl, methode);
+      }else{
+        this.results = scanForElement(Constants.getInstance().getMdsystemNormdataFile(), query, methode);
+      }
+	
 		// this.results = scanForElement(normdataFile, query, methode);
-		this.results = scanForElement(Constants.getInstance().getMdsystemNormdataFile(), query, methode);
 
 		for (ConceptQueryResult target : this.results) {
 			System.out.println(target);
@@ -64,12 +79,10 @@ public class ConceptIdentifier {
 	 * @param element
 	 * @return
 	 */
-	private ArrayList<ConceptQueryResult> scanForElement(final String file,
-			final String element, int methode) {
+	private ArrayList<ConceptQueryResult> scanForElement(final String file, final String element, int methode) {
 		Logger logger = Logger.getLogger(ConceptIdentifier.class);
 		try {
-			RdfMetadataExtractor extractor = MetadataExtractorFactory
-					.newRdfMetadataParser(file);
+			RdfMetadataExtractor extractor = MetadataExtractorFactory.newRdfMetadataParser(file);
 			extractor.searchElements(element, methode);
 			ArrayList<ConceptQueryResult> resultList = extractor.getResultList();
 
@@ -81,6 +94,29 @@ public class ConceptIdentifier {
 		}
 	}
 
+	/**
+   * get a source file and a search string, returns a list of @MdQueryResult
+   * which contains the string
+   * 
+   * @param file
+   * @param element
+   * @return
+   */
+  private ArrayList<ConceptQueryResult> scanForElement(final String file, final URL element, int methode) {
+    Logger logger = Logger.getLogger(ConceptIdentifier.class);
+    try {
+      RdfMetadataExtractor extractor = MetadataExtractorFactory.newRdfMetadataParser(file);
+//      extractor.searchElements(element, methode);
+      ArrayList<ConceptQueryResult> resultList = extractor.getResultList();
+
+      return resultList;
+    } catch (ApplicationException e) {
+      logger.info("Couldn't identify document: " + file + " - "
+          + e.getMessage());
+      return null;
+    }
+  }
+	
 	public ArrayList<ConceptQueryResult> getResultList() {
 		// easier QueryLibary.getInstance().getAllElements();
 		return this.results;
