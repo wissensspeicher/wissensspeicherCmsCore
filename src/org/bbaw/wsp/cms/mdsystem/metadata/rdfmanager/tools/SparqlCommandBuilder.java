@@ -1,5 +1,7 @@
 package org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.tools;
 
+import java.net.URL;
+
 /**
  * This (helper-)enum encapsules special sparql commands and returns the commands as String for often required commands.
  * 
@@ -30,7 +32,7 @@ public enum SparqlCommandBuilder {
   /**
    * @return the sparql query command as {@link String}
    */
-  public String getSelectQueryString(final String toSelect, final String graphName, final String graphPattern) {
+  public String getSelectQueryString(final String toSelect, final URL graphName, final String graphPattern) {
     switch (this) {
     case SELECT_DEFAULT:
       return "SELECT " + toSelect + " { " + graphPattern + "}";
