@@ -2,11 +2,35 @@
 <wsp>
   <collection>
     <id>avhseklit</id>
+    <rdfId>http://wsp.normdata.rdf/AvHForschungsstelle</rdfId>
+    <db>
+      <name>avh_biblio</name>
+      <xmlDumpFileName>/home/joey/dataWsp/documentsExtern/avhseklit/avh_biblio.xml</xmlDumpFileName>
+      <mainResourcesTable>
+        <name>titles</name>
+        <idField>title_id</idField>
+        <field>
+          <dc>title</dc>
+          <db>title</db>
+        </field>
+        <field>
+          <dc>language</dc>
+          <db>language</db>
+        </field>
+      </mainResourcesTable>
+      <webId>
+        <preStr>http://avh.bbaw.de/biblio/title.php?id=</preStr>
+      </webId>
+    </db>
     <name>Alexander von Humboldt Forschungsstelle: Sekundärliteraturdatenbank zu Alexander von Humboldt</name>
     <url>
       <webBaseUrl>http://avh.bbaw.de/biblio/</webBaseUrl>
       <dataUrl>http://avh.bbaw.de/biblio/</dataUrl>
     </url>
+    <metadata>
+      <url>file:/home/joey/dataWsp/documentsExtern/avhseklit/avh_biblio.rdf</url>
+      <urlType>many</urlType>
+    </metadata>
     <languages>ger,lat,fra,eng</languages>
     <mainLanguage>ger</mainLanguage>
     <formats>
