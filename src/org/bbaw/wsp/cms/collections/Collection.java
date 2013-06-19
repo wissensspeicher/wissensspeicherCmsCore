@@ -8,6 +8,8 @@ import org.bbaw.wsp.cms.document.XQuery;
 
 public class Collection {
   private String id;
+  private String rdfId;
+  private Database database;  // when collection is a database
   private String name;
   private String webBaseUrl;  // web base url 
   private WspUrl[] dataUrls;  // urls of data (could also be starting url (with type "eXist")
@@ -51,6 +53,22 @@ public class Collection {
     this.id = id;
   }
   
+  public String getRdfId() {
+    return rdfId;
+  }
+
+  public void setRdfId(String rdfId) {
+    this.rdfId = rdfId;
+  }
+
+  public Database getDatabase() {
+    return database;
+  }
+
+  public void setDatabase(Database database) {
+    this.database = database;
+  }
+
   public List<String> getDocumentUrls() {
     return documentUrls;
   }
