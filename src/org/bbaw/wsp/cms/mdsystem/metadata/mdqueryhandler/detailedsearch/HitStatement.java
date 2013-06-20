@@ -4,6 +4,7 @@
 package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.detailedsearch;
 
 import com.hp.hpl.jena.rdf.model.RDFNode;
+import com.hp.hpl.jena.rdf.model.impl.ResourceImpl;
 
 /**
  * A HitStatement holds the LARQ search results of a hit statement within the RdfStore. It belongs to a {@link HitGraph}.
@@ -38,12 +39,27 @@ public class HitStatement {
    *          an {@link RDFNode}
    */
   public HitStatement(final RDFNode subject, final RDFNode predicate, final RDFNode object, final double score, final RDFNode subjParent, final RDFNode predParent) {
-    this.subject = subject;
-    this.predicate = predicate;
-    this.object = object;
+
+    this.subject = removeSparqlBrackets(subject);
+    this.predicate = removeSparqlBrackets(predicate);
+    this.object = removeSparqlBrackets(object);
     this.score = score;
-    this.subjParent = subjParent;
-    this.predParent = predParent;
+    this.subjParent = removeSparqlBrackets(subjParent);
+    this.predParent = removeSparqlBrackets(predParent);
+  }
+
+  private RDFNode removeSparqlBrackets(final RDFNode rdfnode) {
+    final RDFNode resultingNode;
+    if (rdfnode != null && rdfnode.isResource()) {
+      String uri = rdfnode.asResource().getURI();
+      if (uri != null) {
+        uri = uri.replaceFirst("\\<", "");
+        uri = uri.replaceFirst("\\>", "");
+        resultingNode = new ResourceImpl(uri);
+        return resultingNode;
+      }
+    }
+    return rdfnode;
   }
 
   /**
