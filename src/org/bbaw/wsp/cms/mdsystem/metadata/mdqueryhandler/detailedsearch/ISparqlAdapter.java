@@ -35,7 +35,7 @@ public interface ISparqlAdapter {
    * @param subject
    *          the literal String.
    */
-  HitGraph buildSparqlQuery(URL namedGraphUrl, String subject);
+  HitGraphContainer buildSparqlQuery(URL namedGraphUrl, String subject);
 
   /**
    * Build a sparql query to receive all data in a specific graph
@@ -44,7 +44,7 @@ public interface ISparqlAdapter {
    *          the {@link URL} of the named graph to be queried.
    * @return {@link HitGraph} containing all triples (subject - predicate - object) for the given namedGraphUrl.
    */
-  HitGraph buildSparqlQuery(URL namedGraphUrl);
+  HitGraphContainer buildSparqlQuery(URL namedGraphUrl);
 
   /**
    * Build a sparql query to recieve all triples for a given subject.

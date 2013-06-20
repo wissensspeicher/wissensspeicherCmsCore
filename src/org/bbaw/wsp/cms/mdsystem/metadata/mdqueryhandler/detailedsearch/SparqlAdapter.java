@@ -193,11 +193,11 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
    * 
    * @see org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.detailedsearch.ISparqlAdapter#buildSparqlQuery(java.net.URL)
    */
-  public HitGraph buildSparqlQuery(final URL namedGraphUrl) {
+  public HitGraphContainer buildSparqlQuery(final URL namedGraphUrl) {
     final T results = queryStrategy.queryGraph(namedGraphUrl);
     freeQueryStrategy();
-    final HitGraph hitGraph = this.handleNamedGraphResults(namedGraphUrl, results);
-    return hitGraph;
+    final HitGraphContainer hitGraphContainer = this.handleNamedGraphResults(namedGraphUrl, results);
+    return hitGraphContainer;
   }
 
   /**
@@ -208,7 +208,8 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
    * @param results
    * @return HitGraph to be delegated to the client
    */
-  private HitGraph handleNamedGraphResults(final URL namedGraphUrl, final T results) {
+  private HitGraphContainer handleNamedGraphResults(final URL namedGraphUrl, final T results) {
+    final HitGraphContainer container = new HitGraphContainer(new Date());
     ResultSet realResults = null;
     final HitGraph hitGraph = new HitGraph(namedGraphUrl);
     if (results instanceof ResultSet) { // QueryStrategyFuseki
@@ -229,10 +230,10 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
         final HitStatement hitStatement = new HitStatement(subject, predicate, object, 0, null, null);
         hitGraph.addStatement(hitStatement);
       }
-
     }
 
-    return hitGraph;
+    container.addHitRecord(namedGraphUrl, hitGraph);
+    return container;
   }
 
   @Override
@@ -241,11 +242,11 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
    * 
    * @see org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.detailedsearch.ISparqlAdapter#buildSparqlQuery(java.net.URL, java.lang.String)
    */
-  public HitGraph buildSparqlQuery(final URL namedGraphUrl, final String subject) {
+  public HitGraphContainer buildSparqlQuery(final URL namedGraphUrl, final String subject) {
     final T results = queryStrategy.queryGraph(namedGraphUrl, subject);
     freeQueryStrategy();
-    final HitGraph hitGraph = this.handleNamedGraphSubjectResults(namedGraphUrl, subject, results);
-    return hitGraph;
+    final HitGraphContainer hitGraphContainer = this.handleNamedGraphSubjectResults(namedGraphUrl, subject, results);
+    return hitGraphContainer;
   }
 
   /**
@@ -256,7 +257,8 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
    * @param results
    * @return HitGraph to be delegated to the client
    */
-  private HitGraph handleNamedGraphSubjectResults(final URL namedGraphUrl, final String pSubject, final T results) {
+  private HitGraphContainer handleNamedGraphSubjectResults(final URL namedGraphUrl, final String pSubject, final T results) {
+    final HitGraphContainer container = new HitGraphContainer(new Date());
     ResultSet realResults = null;
     final HitGraph hitGraph = new HitGraph(namedGraphUrl);
     if (results instanceof ResultSet) { // QueryStrategyFuseki
@@ -279,7 +281,8 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
         hitGraph.addStatement(hitStatement);
       }
     }
-    return hitGraph;
+    container.addHitRecord(namedGraphUrl, hitGraph);
+    return container;
   }
 
   private List<HitStatement> handleRelatedSolution(final T results) {
