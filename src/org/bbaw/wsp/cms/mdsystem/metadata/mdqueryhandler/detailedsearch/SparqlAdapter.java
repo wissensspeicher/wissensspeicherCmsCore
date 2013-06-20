@@ -14,6 +14,8 @@ import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.detailedsearch.RelatedH
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.rdf.model.RDFNode;
+import com.hp.hpl.jena.rdf.model.Resource;
+import com.hp.hpl.jena.rdf.model.impl.ResourceImpl;
 
 /**
  * This Class is meant to be the connector between @QueryHandler sent by the GUI and the @RdfHandler. It combines Strings to valid Sparql queries
@@ -51,14 +53,6 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
     final T results = queryStrategy.queryLiteral(literal);
     freeQueryStrategy();
     return this.handleLiteralResults(results);
-
-    // final Query q = Que ryFactory.create(query);
-    // System.out.println("Builded query " + query);
-    // final QueryExecution qExec = QueryExecutionFactory.create(q,
-    // handler.getUnionModel(dataset));
-    // qExec.getContext().set(TDB.symUnionDefaultGraph, true);
-    // // qExec.execSelect().nextSolution().
-    // ResultSetFormatter.out(System.out, qExec.execSelect(), q);
   }
 
   /**
@@ -81,7 +75,7 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
       final ResultSet realResults = (ResultSet) results;
       while (realResults.hasNext()) {
         final QuerySolution solution = realResults.next();
-        this.handleSolution(container, solution, null);
+        this.handleSolution(container, solution, null, null);
       }
     } else if (results instanceof HashMap<?, ?>) { // query strategy returns hash map in the form named graph url - value
       @SuppressWarnings("unchecked")
@@ -90,7 +84,7 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
         final ResultSet realResults = resultMap.get(namedGraph);
         while (realResults.hasNext()) {
           final QuerySolution solution = realResults.next();
-          this.handleSolution(container, solution, namedGraph);
+          this.handleSolution(container, solution, namedGraph, null);
         }
       }
     }
@@ -108,8 +102,10 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
    *          the {@link QuerySolution}
    * @param namedGraphUrl
    *          some query strategy operate for single named graphes and can pass the named url belonging to the given solution to this method. Otherwise, the named graph will be fetched by the sparql query. Set it to null.
+   * @param subject
+   *          an {@link RDFNode} for the subject to be set. This is done if the client looks for triples for a subject. Leave it null if the sparql result will contain a subject.
    */
-  private void handleSolution(final HitGraphContainer container, final QuerySolution solution, final URL namedGraphUrl) {
+  private void handleSolution(final HitGraphContainer container, final QuerySolution solution, final URL namedGraphUrl, final RDFNode pSubject) {
     try {
       final URL graphUrl;
       if (namedGraphUrl == null) { // means: sparql query contains the graph name
@@ -125,8 +121,12 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
         hitGraph = container.getHitGraph(graphUrl);
       }
       RDFNode subject = null;
-      if (solution.getResource("s") != null) {
-        subject = solution.getResource("s");
+      if (pSubject == null) { // didn't the client pass a subject node?
+        if (solution.getResource("s") != null) {
+          subject = solution.getResource("s");
+        }
+      } else {
+        subject = pSubject;
       }
       RDFNode predicate = null;
       if (solution.getResource("p") != null) {
@@ -135,6 +135,9 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
       RDFNode literal = null;
       if (solution.getLiteral("lit") != null) {
         literal = solution.getLiteral("lit");
+      }
+      if (solution.get("o") != null) {
+        literal = solution.get("0");
       }
       double score = 0;
       if (solution.getLiteral("score") != null) {
@@ -188,94 +191,96 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
   /*
    * (non-Javadoc)
    * 
-   * @see org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.ISparqlAdapter#buildSparqlQuery (java.net.URL, java.lang.String, java.lang.String)
+   * @see org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.detailedsearch.ISparqlAdapter#buildSparqlQuery(java.net.URL)
    */
-  public void buildSparqlQuery(final URL subject, final String predicate, final String object) {
-    final T results = queryStrategy.querySubject(subject);
-    logger.info("######################");
-    logger.info("results queryStrategy querySubject : " + results);
-    logger.info("######################");
-    freeQueryStrategy();
-//    return results;
-    //d
-    
-    // final String query =
-    // SparqlCommandBuilder.SELECT_DEFAULT.getSelectQueryString("*", null, "<" +
-    // subject.toExternalForm() + "> <" + predicate.toExternalForm() + "> " +
-    // object);
-    // System.out.println("Builded query " + query);
-    // final QueryExecution ex = delegateQuery(query);
-    // handler.selectSomething(query, dataset);
-    // for (final String bla : ex.execSelect().getResultVars()) {
-    // System.out.println(bla);
-    // }
-  }
-  
-  @Override
-  public void buildSparqlQuery(URL namedGraphUrl) {
+  public HitGraph buildSparqlQuery(final URL namedGraphUrl) {
     final T results = queryStrategy.queryGraph(namedGraphUrl);
-    logger.info("######################");
-    logger.info("results queryStrategy namedGraphUrl : " + results);
-    logger.info("######################");
     freeQueryStrategy();
+    final HitGraph hitGraph = this.handleNamedGraphResults(namedGraphUrl, results);
+    return hitGraph;
   }
-  
+
+  /**
+   * Handle the results for buildSparqlQuery(final URL namedGraphUrl).
+   * 
+   * @param namedGraphUrl
+   * 
+   * @param results
+   * @return HitGraph to be delegated to the client
+   */
+  private HitGraph handleNamedGraphResults(final URL namedGraphUrl, final T results) {
+    ResultSet realResults = null;
+    final HitGraph hitGraph = new HitGraph(namedGraphUrl);
+    if (results instanceof ResultSet) { // QueryStrategyFuseki
+      realResults = (ResultSet) results;
+
+    } else if (results instanceof HashMap<?, ?>) { // returned by QueryStrategyJena
+      @SuppressWarnings("unchecked")
+      final Map<URL, ResultSet> resultMap = (HashMap<URL, ResultSet>) results;
+      realResults = resultMap.get(namedGraphUrl);
+    }
+
+    if (realResults != null) {
+      while (realResults.hasNext()) {
+        final QuerySolution solution = realResults.next();
+        final RDFNode object = solution.get("o");
+        final RDFNode predicate = solution.get("p");
+        final RDFNode subject = solution.get("s");
+        final HitStatement hitStatement = new HitStatement(subject, predicate, object, 0, null, null);
+        hitGraph.addStatement(hitStatement);
+      }
+
+    }
+
+    return hitGraph;
+  }
+
   @Override
   /*
    * (non-Javadoc)
    * 
-   * @see org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.ISparqlAdapter#buildSparqlQuery (java.net.URL, java.net.URL, java.lang.String)
+   * @see org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.detailedsearch.ISparqlAdapter#buildSparqlQuery(java.net.URL, java.lang.String)
    */
-  public void buildSparqlQuery(final URL subject, final URL predicate, final String object) {
-    // final String query =
-    // SparqlCommandBuilder.SELECT_DEFAULT.getSelectQueryString("*", null, "<" +
-    // subject.toExternalForm() + "> <" + predicate.toExternalForm() + "> " +
-    // object);
-    // System.out.println("Builded query " + query);
-    // final QueryExecution ex = delegateQuery(query);
-    // handler.selectSomething(query, dataset);
-    // for (final String bla : ex.execSelect().getResultVars()) {
-    // System.out.println(bla);
-    // }
+  public HitGraph buildSparqlQuery(final URL namedGraphUrl, final String subject) {
+    final T results = queryStrategy.queryGraph(namedGraphUrl, subject);
+    freeQueryStrategy();
+    final HitGraph hitGraph = this.handleNamedGraphSubjectResults(namedGraphUrl, subject, results);
+    return hitGraph;
   }
 
-  @Override
-  /*
-   * (non-Javadoc)
+  /**
+   * Handle the results for buildSparqlQuery(final URL namedGraphUrl, final String subject)
    * 
-   * @see org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.ISparqlAdapter#buildSparqlQuery (java.net.URL, java.net.URL, java.net.URL, java.lang.String)
+   * @param namedGraphUrl
+   * 
+   * @param results
+   * @return HitGraph to be delegated to the client
    */
-  public void buildSparqlQuery(final URL namedGraphUrl, final URL subject, final URL predicate, final String object) {
-    // final String query =
-    // SparqlCommandBuilder.SELECT_NAMED.getSelectQueryString("*",
-    // namedGraphUrl.toExternalForm(), "<" + subject.toExternalForm() + "> <" +
-    // predicate.toExternalForm() + "> " + object);
-    // System.out.println("Builded query " + query);
-    // final QueryExecution ex = delegateQuery(query);
-    // handler.selectSomething(query, dataset);
-    // for (final String bla : ex.execSelect().getResultVars()) {
-    // System.out.println(bla);
-    // }
-    //
-    // final Query q = QueryFactory.create(query);
-    // System.out.println("Builded query " + query);
-    // final QueryExecution qExec = QueryExecutionFactory.create(q, dataset);
-    // // for (String bla : ex.execSelect().getResultVars()) {
-    // //
-    // // // System.out.println(bla);
-    // // }
-    // ResultSetFormatter.out(System.out, qExec.execSelect(), q);
+  private HitGraph handleNamedGraphSubjectResults(final URL namedGraphUrl, final String pSubject, final T results) {
+    ResultSet realResults = null;
+    final HitGraph hitGraph = new HitGraph(namedGraphUrl);
+    if (results instanceof ResultSet) { // QueryStrategyFuseki
+      realResults = (ResultSet) results;
+
+    } else if (results instanceof HashMap<?, ?>) { // returned by QueryStrategyJena
+      @SuppressWarnings("unchecked")
+      final Map<URL, ResultSet> resultMap = (HashMap<URL, ResultSet>) results;
+      realResults = resultMap.get(namedGraphUrl);
+    }
+
+    if (realResults != null) {
+      while (realResults.hasNext()) {
+        final QuerySolution solution = realResults.next();
+        final RDFNode object = solution.get("o");
+        final RDFNode predicate = solution.get("p");
+        // subject is given by the client (who uses the SparqlAdapter)
+        final RDFNode subject = new ResourceImpl(pSubject);
+        final HitStatement hitStatement = new HitStatement(subject, predicate, object, 0, null, null);
+        hitGraph.addStatement(hitStatement);
+      }
+    }
+    return hitGraph;
   }
-
-  @Override
-  public void buildSparqlQuery(final URL namedGraphUrl, final String literal) {
-    // TODO Auto-generated method stub
-
-  }
-
-  // public HitRecordContainer getHitRecordContainer() {
-  // // return hitRecordContainer;
-  // }
 
   private List<HitStatement> handleRelatedSolution(final T results) {
     final List<HitStatement> resultStatements = new ArrayList<HitStatement>();
@@ -492,6 +497,49 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
     return statements;
   }
 
- 
-  
+  @Override
+  /*
+   * (non-Javadoc)
+   * 
+   * @see org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.detailedsearch.ISparqlAdapter#buildSparqlQuery(com.hp.hpl.jena.rdf.model.Resource)
+   */
+  public HitGraphContainer buildSparqlQuery(final Resource subject) {
+    final T results = queryStrategy.querySubject(subject);
+    freeQueryStrategy();
+    final HitGraphContainer hitGraphContainer = this.handleSubjectResults(results, subject);
+    return hitGraphContainer;
+  }
+
+  /**
+   * Handle the results for buildSparqlQuery(final Resource subject)
+   * 
+   * @param namedGraphUrl
+   * 
+   * @param results
+   * @param subject
+   * @return HitGraph to be delegated to the client
+   */
+  private HitGraphContainer handleSubjectResults(final T results, final Resource subject) {
+    final HitGraphContainer container = new HitGraphContainer(new Date()); // result
+    // container
+    if (results instanceof ResultSet) { // QueryStrategyFuseki
+      final ResultSet realResults = (ResultSet) results;
+      while (realResults.hasNext()) {
+        final QuerySolution solution = realResults.next();
+        this.handleSolution(container, solution, null, subject);
+      }
+    } else if (results instanceof HashMap<?, ?>) { // query strategy returns hash map in the form named graph url - value
+      @SuppressWarnings("unchecked")
+      final Map<URL, ResultSet> resultMap = (HashMap<URL, ResultSet>) results;
+      for (final URL namedGraph : resultMap.keySet()) {
+        final ResultSet realResults = resultMap.get(namedGraph);
+        while (realResults.hasNext()) {
+          final QuerySolution solution = realResults.next();
+          this.handleSolution(container, solution, namedGraph, subject);
+        }
+      }
+    }
+
+    return container;
+  }
 }

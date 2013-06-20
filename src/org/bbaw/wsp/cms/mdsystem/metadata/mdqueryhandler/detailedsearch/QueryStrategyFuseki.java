@@ -5,10 +5,12 @@ package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.detailedsearch;
 
 import java.net.URL;
 
+import org.apache.log4j.Logger;
 import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.fuseki.FusekiClient;
 import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.tools.SparqlCommandBuilder;
 
 import com.hp.hpl.jena.query.ResultSet;
+import com.hp.hpl.jena.rdf.model.Resource;
 
 /**
  * Strategy which uses an {@link FusekiClient} to query an RdfStore.
@@ -20,6 +22,7 @@ import com.hp.hpl.jena.query.ResultSet;
 public class QueryStrategyFuseki implements IQueryStrategy<ResultSet> {
   private final URL fusekiUrl;
   private final FusekiClient fusekiHandler;
+  private static Logger logger = Logger.getLogger(QueryStrategyFuseki.class);
 
   /**
    * Delegate the sparql query to a fuseki server.
@@ -58,12 +61,10 @@ public class QueryStrategyFuseki implements IQueryStrategy<ResultSet> {
    * @see org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter.IQueryStrategy #queryLiteral(java.lang.String)
    */
   public ResultSet queryLiteral(final String literal) {
-    final String query = SparqlCommandBuilder.SELECT_USING_INDEX_AND_NAMED_GRAPH.getSelectQueryString("*", null, literal);
+    final String query = SparqlCommandBuilder.SELECT_USING_INDEX_CONTAINING_NAMED_GRAPH.getSelectQueryString("*", null, literal);
     return delegateQuery(query);
   }
 
-  
-  
   @Override
   /*
    * (non-Javadoc)
@@ -76,15 +77,50 @@ public class QueryStrategyFuseki implements IQueryStrategy<ResultSet> {
   }
 
   @Override
-  public ResultSet querySubject(URL subject) {
-    final String query = SparqlCommandBuilder.SELECT_DEFAULT.getSelectQueryString("*", null, subject.toString());
+  /*
+   * (non-Javadoc)
+   * 
+   * @see org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.detailedsearch.IQueryStrategy#querySubject(java.net.URL)
+   */
+  public ResultSet querySubject(final Resource subject) {
+    final String query = SparqlCommandBuilder.SELECT_CONTAINING_NAMED_GRAPH.getSelectQueryString("*", null, subject.getURI() + " ?p ?o");
+    logger.info("querySubject: query builded -> " + query);
     return delegateQuery(query);
   }
 
   @Override
-  public ResultSet queryGraph(URL namedGraphUrl) {
+  /*
+   * (non-Javadoc)
+   * 
+   * @see org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.detailedsearch.IQueryStrategy#queryGraph(java.net.URL)
+   */
+  public ResultSet queryGraph(final URL namedGraphUrl) {
     final String query = SparqlCommandBuilder.SELECT_NAMED.getSelectQueryString("*", namedGraphUrl, "?s ?p ?o");
     return delegateQuery(query);
   }
 
+  @Override
+  /*
+   * (non-Javadoc)
+   * 
+   * @see org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.detailedsearch.IQueryStrategy#delegateNamedGraphQuery(java.net.URL, java.lang.String)
+   */
+  public ResultSet delegateNamedGraphQuery(final URL namedGraphUrl, final String sparqlSelectQuery) {
+    /*
+     * this method is not neccessary, because fuseki is intelligent enough to handle a "SELECT ... FROM NAMED <graphUri>" query ;)
+     */
+    return null;
+  }
+
+  @Override
+  /*
+   * (non-Javadoc)
+   * 
+   * @see org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.detailedsearch.IQueryStrategy#queryGraph(java.net.URL, java.lang.String)
+   */
+  public ResultSet queryGraph(final URL namedGraphUrl, final String subject) {
+    final String query = SparqlCommandBuilder.SELECT_NAMED.getSelectQueryString("*", namedGraphUrl, subject + " ?p ?o");
+    logger.info("queryGraph_namedGraphUrl_subject: query builded -> " + query);
+    return delegateQuery(query);
+  }
 }

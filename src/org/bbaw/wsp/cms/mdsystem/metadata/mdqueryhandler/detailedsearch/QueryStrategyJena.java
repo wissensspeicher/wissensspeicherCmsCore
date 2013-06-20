@@ -4,6 +4,7 @@
 package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.detailedsearch;
 
 import java.net.URL;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -13,6 +14,7 @@ import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.tools.SparqlCommandBuilder;
 
 import com.hp.hpl.jena.query.Dataset;
 import com.hp.hpl.jena.query.ResultSet;
+import com.hp.hpl.jena.rdf.model.Resource;
 
 /**
  * @author <a href="mailto:wsp-shk1@bbaw.de">Sascha Feldmann</a>
@@ -53,6 +55,20 @@ public class QueryStrategyJena implements IQueryStrategy<Map<URL, ResultSet>> {
     return resultMap;
   }
 
+  /*
+   * (non-Javadoc)
+   * 
+   * @see org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.detailedsearch.IQueryStrategy#delegateNamedGraphQuery(java.net.URL, java.lang.String)
+   */
+  @Override
+  public ResultSet delegateNamedGraphQuery(final URL namedGraphUrl, final String sparqlSelectQuery) {
+    /*
+     * @TODO Jena irgendwie dazu bringen, dass wirklich nur der gegebene NamedGraph angesprochen wird... bitte jetzt nur die QueryStrategyFuseki nutzen...
+     */
+    final ResultSet resultSet = rdfhandler.selectSomething(sparqlSelectQuery, dataset).execSelect();
+    return resultSet;
+  }
+
   @Override
   /*
    * (non-Javadoc)
@@ -76,14 +92,26 @@ public class QueryStrategyJena implements IQueryStrategy<Map<URL, ResultSet>> {
   }
 
   @Override
-  public Map<URL, ResultSet> querySubject(URL subject) {
+  public Map<URL, ResultSet> queryGraph(final URL namedGraphUrl) {
+    final Map<URL, ResultSet> map = new HashMap<URL, ResultSet>();
+    final String query = SparqlCommandBuilder.SELECT_NAMED.getSelectQueryString("*", namedGraphUrl, "?s ?p ?o");
+    logger.info("queryGraph: " + query);
+    final ResultSet resultSet = delegateNamedGraphQuery(namedGraphUrl, query);
+    map.put(namedGraphUrl, resultSet);
+    return map;
+  }
+
+  @Override
+  public Map<URL, ResultSet> queryGraph(final URL namedGraphUrl, final String subject) {
     // TODO Auto-generated method stub
+    // not recommended because JENA doesn't work for sparql queries within named graphes...
     return null;
   }
 
   @Override
-  public Map<URL, ResultSet> queryGraph(URL namedGraphUrl) {
-    // TODO Auto-generated method stub
-    return null;
+  public Map<URL, ResultSet> querySubject(final Resource subject) {
+    final String query = SparqlCommandBuilder.SELECT_CONTAINING_NAMED_GRAPH.getSelectQueryString("*", null, subject.getURI() + " ?p ?o");
+    logger.info("querySubject: query builded -> " + query);
+    return delegateQuery(query);
   }
 }

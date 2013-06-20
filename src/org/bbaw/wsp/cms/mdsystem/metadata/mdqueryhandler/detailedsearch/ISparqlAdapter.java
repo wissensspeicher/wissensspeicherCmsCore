@@ -6,6 +6,8 @@ package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.detailedsearch;
 import java.net.URL;
 import java.util.List;
 
+import com.hp.hpl.jena.rdf.model.Resource;
+
 /**
  * Adapter interface which is used to communicate with the {@link SparqlAdapter} .
  * 
@@ -30,41 +32,28 @@ public interface ISparqlAdapter {
    * 
    * @param namedGraphUrl
    *          the {@link URL} of the named graph to be queried.
-   * @param literal
+   * @param subject
    *          the literal String.
    */
-  void buildSparqlQuery(URL namedGraphUrl, String literal);
-  
+  HitGraph buildSparqlQuery(URL namedGraphUrl, String subject);
+
   /**
-   * Build a sparql query to receive all data in a specific graph 
+   * Build a sparql query to receive all data in a specific graph
    * 
    * @param namedGraphUrl
    *          the {@link URL} of the named graph to be queried.
+   * @return {@link HitGraph} containing all triples (subject - predicate - object) for the given namedGraphUrl.
    */
-  void buildSparqlQuery(URL namedGraphUrl);
-  
-  /**
-   * "Das ganz normale Pattern" :) mit ?p als String
-   * 
-   * @param subject
-   * @param predicate
-   * @param object
-   */
-  void buildSparqlQuery(URL subject, String predicate, String object);
-  
-  /**
-   * "Das ganz normale Pattern" :) mit ?p als URL
-   * 
-   * @param subject
-   * @param predicate
-   * @param object
-   */
-  void buildSparqlQuery(URL subject, URL predicate, String object);
+  HitGraph buildSparqlQuery(URL namedGraphUrl);
 
   /**
-   * "Das ganz normale Pattern" :) auf einem Named Graphen
+   * Build a sparql query to recieve all triples for a given subject.
+   * 
+   * @param subject
+   *          a {@link Resource}. A resource in jena is an URI.
+   * @return {@link HitGraphContainer}
    */
-  void buildSparqlQuery(URL namedGraphUrl, URL subject, URL predicate, String object);
+  HitGraphContainer buildSparqlQuery(Resource subject);
 
   /**
    * Find related concepts. A related concept is a statement that has an object which is related to a given node via a given number of triples.

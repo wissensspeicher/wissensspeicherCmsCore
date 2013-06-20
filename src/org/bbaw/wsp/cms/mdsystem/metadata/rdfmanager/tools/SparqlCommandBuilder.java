@@ -11,7 +11,7 @@ import java.net.URL;
  *       Last change: 15.11.2012 -> select queries added
  */
 public enum SparqlCommandBuilder {
-  CLEAR_DATASET, CLEAR_GRAPH, CLEAR_DEFAULT, SELECT_DEFAULT, SELECT_NAMED, SELECT_USING_INDEX, SELECT_NAMED_USING_INDEX, SELECT_USING_INDEX_AND_NAMED_GRAPH;
+  CLEAR_DATASET, CLEAR_GRAPH, CLEAR_DEFAULT, SELECT_DEFAULT, SELECT_NAMED, SELECT_USING_INDEX, SELECT_NAMED_USING_INDEX, SELECT_USING_INDEX_CONTAINING_NAMED_GRAPH, SELECT_CONTAINING_NAMED_GRAPH;
 
   /**
    * @return the spaql command as {@link String}.
@@ -45,8 +45,10 @@ public enum SparqlCommandBuilder {
       return "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n" + "SELECT DISTINCT " + toSelect + " { (?lit ?score )  pf:textMatch '" + graphPattern + "'. ?s ?p ?lit\n OPTIONAL {?sParent ?pParent ?s\n FILTER (isBlank(?s))}}";
     case SELECT_NAMED_USING_INDEX:
       return "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n" + "SELECT DISTINCT " + toSelect + " FROM NAMED <" + graphName + "> { (?lit ?score ) pf:textMatch '" + graphPattern + "'.?doc ?p ?lit\n }";
-    case SELECT_USING_INDEX_AND_NAMED_GRAPH:
+    case SELECT_USING_INDEX_CONTAINING_NAMED_GRAPH:
       return "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n" + "SELECT DISTINCT " + toSelect + " {  (?lit ?score ) pf:textMatch '" + graphPattern + "'. GRAPH ?g { ?s ?p ?lit}\n OPTIONAL {?sParent ?pParent ?s\n FILTER (isBlank(?s))}}";
+    case SELECT_CONTAINING_NAMED_GRAPH:
+      return "SELECT DISTINCT " + toSelect + " {  GRAPH ?g { " + graphPattern + " }}";
       // return "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n" +
       // "SELECT " + toSelect + " {  ?o pf:textMatch '" + graphPattern +
       // "'. GRAPH ?g { ?s ?p ?o}  }";
