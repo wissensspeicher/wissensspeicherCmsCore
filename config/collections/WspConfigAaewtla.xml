@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>aaewtla</id>
+    <rdfId>http://wsp.normdata.rdf/AltaegyptWB/TLA</rdfId>    
     <name>Altägyptisches Wörterbuch: Thesaurus Linguae Aegyptiae (TLA)</name>
     <url>
       <webBaseUrl>http://aaew.bbaw.de/tla/</webBaseUrl>

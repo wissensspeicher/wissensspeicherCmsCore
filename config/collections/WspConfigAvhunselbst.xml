@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>avhunselbst</id>
+    <rdfId>http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften</rdfId>
     <name>Alexander von Humboldt Forschungsstelle: Die unselbständigen Schriften Alexander von Humboldts</name>
     <url>
       <webBaseUrl>http://telota.bbaw.de/avh/uns/</webBaseUrl>
