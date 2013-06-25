@@ -190,6 +190,16 @@ Das modulartig angelegte Vorhaben beginnt mit einer Geschichte des preußischen 
 		<gnd:relatedCorporateBody rdf:resource="http://www.dla-marbach.de/index.php?id=57927#Berend,%20Eduard"/>
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Bernauer"/>
 	</rdf:Description>
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/JeanPaul/Editionsbeispiel">
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Editionsbeispiel</foaf:name>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JeanPaul" />	
+		<foaf:homepage rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/jean_paul/de/Startseite" />
+	</rdf:Description>
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/JeanPaul/Onlineregister">
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Online-Register des Jean Paul Briefwechsels</foaf:name>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JeanPaul" />	
+		<foaf:homepage rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/jean_paul/de/Startseite" />
+	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/Schulz">
 		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
 		<gnd:functionOrRole>Wissenschaftlicher Mitarbeiter</gnd:functionOrRole>
@@ -313,6 +323,11 @@ Das modulartig angelegte Vorhaben beginnt mit einer Geschichte des preußischen 
 		<gnd:topic rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Philologie</gnd:topic>
 		<dcterms:abstract rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Das Vorhaben befasst sich als selbständige Forschungseinrichtung eingehend mit der Edition, Übersetzung, Kommentierung und historischen Kontextualisierung Galenischer Werke. Im Mittelpunkt des Vorhabens steht die Erforschung von Galens Werken und ihrer Rolle als entscheidender Instanz im medizinischen Wissenstransfer von der Antike in das Mittelalter und in die Neuzeit sowie zwischen Europa und dem Orient. Dabei wird die Arbeit an der Arbeitsstelle auf einige Kernthemen fokussiert, für die sowohl die kritische Herausgabe umfangreicher Schlüsseltexte als auch deren inhaltliche Erschließung angestrebt wird.</dcterms:abstract>
 		<dc:coverage rdf:resource="http://wsp.normdata.rdf/Antike"/>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/Galen/GreekIntoArabic">
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Greek into Arabic - Philosophical Concepts and Linguistic Bridges</foaf:name>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Galen" />	
+		<foaf:homepage rdf:resource="http://www.greekintoarabic.eu/" />
 	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/Mohr">
 		<foaf:familyName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Mohr</foaf:familyName>
@@ -1867,6 +1882,17 @@ Texte und Untersuchungen zur Geschichte der altchristlichen Literatur: Untersuch
 		<foaf:status rdf:datatype="http://www.w3.org/2001/XMLSchema#string">abgeschlossen</foaf:status>
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Habermehl"/>
 	</rdf:Description>
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/GriechischChristlichSchriftsteller/Lietzmann">
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Hans Lietzmann Vorlesung</foaf:name>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/GriechischChristlichSchriftsteller" />	
+		<foaf:homepage rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/de/blanko.2005-11-04.9010533261" />
+	</rdf:Description>
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/GriechischChristlichSchriftsteller/Text">
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Texte zum Download</foaf:name>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/GriechischChristlichSchriftsteller" />	
+		<foaf:homepage rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/de/blanko.2005-08-13.0693530036" />
+	</rdf:Description>
+	
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/IdealeAkademie">
 		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
 		<foaf:homepage rdf:resource="http://idealeakademie.bbaw.de"/>
@@ -1996,7 +2022,7 @@ Aktuell in Bearbeitung sind Nietzsches Arbeitshefte W II 8-10 sowie die späten 
 		<foaf:givenName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Klaus</foaf:givenName>
 		<foaf:familyName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Lucas</foaf:familyName>
 		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
-	</rdf:Description>
+	</rdf:Description>f
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/SchlegelFriedrich">
 		<gnd:functionOrRole>Historische Person</gnd:functionOrRole>
 		<gnd:fieldOfActivity rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Literaturwissenschaft</gnd:fieldOfActivity>
@@ -3150,6 +3176,11 @@ Das modulartig angelegte Vorhaben beginnt mit einer Geschichte des preußischen 
 		<gnd:definition>Bibliographie</gnd:definition>
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Jakiel"/>
 		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/JahresberichteDeutscheGeschichte/Zwischenkriegszeit">
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Jahresberichte fuer deutsche Geschichte aus der Zwischenkriegszeit</foaf:name>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JahresberichteDeutscheGeschichte/" />	
+		<foaf:homepage rdf:resource="http://www.jdg-online.de/projekte/die-jahresberichte-der-zwischenkriegszeit" />
 	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/Brandsch">
 		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
@@ -5449,6 +5480,7 @@ Mit der im Juni 2000 durchgeführten internationalen Konferenz »Die Arbeit der 
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/DigitalesWörterbuch">
 		<rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Digitales Wörterbuch</rdfs:label>
 		<rdf:type rdf:resource="http://purl.org/dc/terms/MediaType"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DWB"/>
 	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/Kramer">
 		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
@@ -5474,6 +5506,44 @@ Mit der im Juni 2000 durchgeführten internationalen Konferenz »Die Arbeit der 
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Fischer"/>
 		<gnd:definition>Forschungsbericht</gnd:definition>
 		<dcterms:valid rdf:datatype="http://purl.org/dc/terms/Period">start=1998; end=2002; name=Laufzeit</dcterms:valid>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/Euler">		
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">300 Jahre Euler</foaf:name>
+		<foaf:homepage rdf:resource="http://euler.bbaw.de"/>
+		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
+		<dc:coverage rdf:resource="http://wsp.normdata.rdf/Neuzeit"/>
+		<gnd:relatedCorporateBody rdf:resource="http://bibliothek.bbaw.de/"/>
+		<dcterms:valid rdf:datatype="http://purl.org/dc/terms/Period">start=2007; name=Laufzeit</dcterms:valid>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/Schlegel">		
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ausgewählte Gelehrtenbriefe - Schlegel</foaf:name>
+		<foaf:homepage rdf:resource="http://archiv.bbaw.de/archiv/gelehrtenbriefe"/>
+		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
+		<dc:coverage rdf:resource="http://wsp.normdata.rdf/Neuzeit"/>
+		<gnd:relatedCorporateBody rdf:resource="http://bibliothek.bbaw.de/"/>
+		<gnd:contributingPerson rdf:resource="http://wsp.normdata.rdf/SchlegelFriedrich"/>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/GDK">		
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Gesamtbestand des Kunstbesitzes</foaf:name>
+		<foaf:homepage rdf:resource="http://archiv.bbaw.de/archiv/archivbestaende/abteilung-sammlungen/gesamtbestand-des-kunstbesitzes"/>
+		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
+		<dc:coverage rdf:resource="http://wsp.normdata.rdf/Neuzeit"/>
+		<gnd:relatedCorporateBody rdf:resource="http://bibliothek.bbaw.de/"/>
+		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Knobloch"/>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/GlossariumGraecoArabicum">		
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Glossarium Græco-Arabicum</foaf:name>
+		<foaf:homepage rdf:resource="http://telota.bbaw.de/glossga/"/>
+		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
+		<dc:coverage rdf:resource="http://wsp.normdata.rdf/Neuzeit"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Telota"/>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/InstitutionenOeffentlicheGueter">		
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Institutionen und öffentliche Güter in der Landwirtschaft</foaf:name>
+		<foaf:homepage rdf:resource="http://www.netzwerk-laendlicher-raum.de/"/>
+		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
+		<dc:coverage rdf:resource="http://wsp.normdata.rdf/Gegenwart"/>		
+		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Schleyer"/>
 	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/Pauly">
 		<foaf:title rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Dr.</foaf:title>

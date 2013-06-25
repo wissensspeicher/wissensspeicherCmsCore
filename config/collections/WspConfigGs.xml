@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>gs</id>
+    <rdfId>http://wsp.normdata.rdf/Gesundheitsstandards</rdfId>
     <name>Gesundheitsstandards</name>
     <url>
       <webBaseUrl>http://gesundheitsstandards.bbaw.de</webBaseUrl>

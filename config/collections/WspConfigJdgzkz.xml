@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>jdgzkz</id>
+    <rdfId>http://wsp.normdata.rdf/JahresberichteDeutscheGeschichte/Zwischenkriegszeit</rdfId>
     <name>Jahresberichte fuer deutsche Geschichte aus der Zwischenkriegszeit</name>
     <url>
       <webBaseUrl>http://www.jdg-online.de/projekte/die-jahresberichte-der-zwischenkriegszeit</webBaseUrl>

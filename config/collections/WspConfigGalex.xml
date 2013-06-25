@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>galex</id>
+    <rdfId>http://wsp.normdata.rdf/Galen/GreekIntoArabic</rdfId>
     <name>Greek into Arabic - Philosophical Concepts and Linguistic Bridges</name>
     <url>
       <webBaseUrl>http://www.greekintoarabic.eu/</webBaseUrl>
