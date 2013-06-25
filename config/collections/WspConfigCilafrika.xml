@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>cilafrika</id>
+    <rdfId>http://wsp.normdata.rdf/CorpusInscriptLatinarum/Afrika</rdfId>
     <name>Corpus Inscriptionum Latinarum: Eine Auswahl afrikanischer Versinschriften</name>
     <url>
     	<webBaseUrl>http://cil.bbaw.de/afrika/afrika.html</webBaseUrl>

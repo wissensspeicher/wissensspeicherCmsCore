@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>cmgdh</id>
+    <rdfId>http://wsp.normdata.rdf/CorpusMedicorumGraecorum/DielsscherHandschriftenkatalog</rdfId>
     <name>Corpus Medicorum Graecorum / Latinorum: Der Dielssche Handschriftenkatalog online</name>
     <url>
       <webBaseUrl>http://cmg.bbaw.de/online-publikationen/Dielskatalog</webBaseUrl>

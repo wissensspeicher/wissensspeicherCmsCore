@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>censusmir</id>
+    <rdfId>http://wsp.normdata.rdf/CensusOfAntiqueWorks/MirabiliaUrbisRomae</rdfId>
     <name>Mirabilia Urbis Romae (Pilotprojekt)</name>
     <url>
       <webBaseUrl>http://telota.bbaw.de/census/fulltext/</webBaseUrl>

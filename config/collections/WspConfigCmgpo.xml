@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>cmgpo</id>
+    <rdfId>http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Probeedition</rdfId>
     <name>Corpus Medicorum Graecorum / Latinorum: Probeedition online</name>
     <url>
       <webBaseUrl>http://cmg.bbaw.de/online-publikationen/probeedition-online</webBaseUrl>

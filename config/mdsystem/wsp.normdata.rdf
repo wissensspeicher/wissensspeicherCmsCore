@@ -1364,6 +1364,21 @@ Damit sollen gemeinsame historische Vermächtnisse sowie die Mobilität von Pers
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Schubert"/>
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Stahl"/>
 	</rdf:Description>
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/DTM/Editionsbericht">
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Editionsbericht</foaf:name>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DTM" />	
+		<foaf:homepage rdf:resource="http://dtm.bbaw.de/E_Bericht/Editionsbericht-internet.html" />
+	</rdf:Description>	
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/DTM/Handschriftenarchiv">
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Handschriftenarchiv</foaf:name>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DTM" />	
+		<foaf:homepage rdf:resource="http://www.bbaw.de/forschung/dtm/HSA/startseite-hsa.html" />
+	</rdf:Description>	
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/DTM/Transkription">
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Transkription</foaf:name>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DTM" />	
+		<foaf:homepage rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/dtm/de/Transkriptionen" />
+	</rdf:Description>	
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/Duong">
 		<gnd:functionOrRole>Wissenschaftlicher Mitarbeiter</gnd:functionOrRole>
 		<foaf:mbox rdf:datatype="http://www.w3.org/2001/XMLSchema#string">duong@bbaw.de</foaf:mbox>
@@ -2099,6 +2114,26 @@ Aktuell in Bearbeitung sind Nietzsches Arbeitshefte W II 8-10 sowie die späten 
 		<foaf:homepage rdf:resource="http://galen.bbaw.de"/>
 		<dc:coverage rdf:resource="http://wsp.normdata.rdf/Antike"/>
 		<foaf:status rdf:datatype="http://www.w3.org/2001/XMLSchema#string">abgeschlossen</foaf:status>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/DielsscherHandschriftenkatalog">
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Der Dielssche Handschriftenkatalog online</foaf:name>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum" />	
+		<foaf:homepage rdf:resource="http://cmg.bbaw.de/online-publikationen/Dielskatalog" />
+	</rdf:Description>
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen">
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Editionen Online</foaf:name>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum" />	
+		<foaf:homepage rdf:resource="http://cmg.bbaw.de/epubl/online/editionen.html" />
+	</rdf:Description>
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/HippokratesUndGalen">
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Hippokrates- und Galenbibliographie</foaf:name>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum" />	
+		<foaf:homepage rdf:resource="http://cmg.bbaw.de/online-publikationen/hippokrates-und-galenbibliographie-fichtner" />
+	</rdf:Description>
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Probeedition">
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Probeedition online</foaf:name>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum" />	
+		<foaf:homepage rdf:resource="http://cmg.bbaw.de/online-publikationen/probeedition-online" />
 	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/SachsenAnhaltNord">
 		<dcterms:hasPart rdf:resource="http://wsp.normdata.rdf/Havelberg"/>
@@ -4544,6 +4579,16 @@ Erfasst werden die in der Renaissance bekannten antiken Monumente mit den zugeh�
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Lueck"/>
 		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
 	</rdf:Description>
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/CensusOfAntiqueWorks/CensusDatabase">
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Census Database</foaf:name>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks" />	
+		<foaf:homepage rdf:resource="http://census.bbaw.de" />
+	</rdf:Description>
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/CensusOfAntiqueWorks/MirabiliaUrbisRomae">
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Mirabilia Urbis Romae</foaf:name>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks" />	
+		<foaf:homepage rdf:resource="http://telota.bbaw.de/census/fulltext/" />
+	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/Wittwer">
 		<foaf:familyName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Wittwer</foaf:familyName>
 		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
@@ -5008,6 +5053,11 @@ Erfasst werden die in der Renaissance bekannten antiken Monumente mit den zugeh�
 		<dc:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Vorhaben</dc:description>
 		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
 		<foaf:status rdf:datatype="http://www.w3.org/2001/XMLSchema#string">aktiv</foaf:status>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/BerlinerKlassik/Stadtplan">
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Stadtplan</foaf:name>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik" />	
+		<foaf:homepage rdf:resource="http://www.berliner-klassik.de/bk_stadtplan/gui/index.html" />
 	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/Sturm">
 		<gnd:functionOrRole>Wissenschaftlicher Mitarbeiter</gnd:functionOrRole>
@@ -5507,6 +5557,11 @@ Mit der im Juni 2000 durchgeführten internationalen Konferenz »Die Arbeit der 
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Schmidt"/>
 		<dcterms:valid rdf:datatype="http://purl.org/dc/terms/Period">start=1994; name=Laufzeit</dcterms:valid>
 		<gnd:definition>Edition</gnd:definition>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/CorpusInscriptLatinarum/Afrika">
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Eine Auswahl afrikanischer Versinschriften</foaf:name>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusInscriptLatinarum" />	
+		<foaf:homepage rdf:resource="http://cil.bbaw.de/afrika/afrika.html" />
 	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/Taube">
 		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
