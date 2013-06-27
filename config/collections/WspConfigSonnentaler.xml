@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>sonnentaler</id>
+    <rdfId>http://wsp.normdata.rdf/Sonnentaler</rdfId>
     <name>Sonnentaler</name>
     <url>
       <webBaseUrl>http://www.sonnentaler.net</webBaseUrl>

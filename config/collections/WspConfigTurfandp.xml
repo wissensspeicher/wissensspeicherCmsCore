@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>turfandp</id>
+    <rdfId>http://wsp.normdata.rdf/Turfan/Dunhuang</rdfId>
     <name>Turfanforschung: Dunhuang Project</name>
     <url>
       <webBaseUrl>http://idp.bbaw.de</webBaseUrl>

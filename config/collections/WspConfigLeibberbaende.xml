@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>leibberbaende</id>
+    <rdfId>http://wsp.normdata.rdf/LeibnizEditionBerlin/Baende</rdfId>
     <name>Leibniz-Edition Berlin: Bände</name>
     <url>
     	<webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_berlin/de/Startseite</webBaseUrl>

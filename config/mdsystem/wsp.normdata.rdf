@@ -827,6 +827,14 @@ Damit sollen gemeinsame historische Vermächtnisse sowie die Mobilität von Pers
 		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
 		<gnd:contributingPerson rdf:resource="http://wsp.normdata.rdf/LeibnizGottfriedWilhelm"/>
 	</rdf:Description>
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/LeibnizEditionBerlin/Baende">
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Bände</foaf:name>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionBerlin" />			
+	</rdf:Description>
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/LeibnizEditionBerlin/Sachregister">
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Sachregister</foaf:name>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionBerlin" />	
+	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/Zimmer">
 		<foaf:familyName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Zimmer</foaf:familyName>
 		<gnd:functionOrRole>Systemadministration</gnd:functionOrRole>
@@ -1117,6 +1125,39 @@ Damit sollen gemeinsame historische Vermächtnisse sowie die Mobilität von Pers
 		<foaf:familyName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Neidhardt</foaf:familyName>
 		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
 	</rdf:Description>
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/Planck">		
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">150 Jahre Max Planck</foaf:name>
+		<foaf:homepage rdf:resource="http://planck.bbaw.de"/>
+		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
+		<dc:coverage rdf:resource="http://wsp.normdata.rdf/Neuzeit"/>
+		<gnd:relatedCorporateBody rdf:resource="http://bibliothek.bbaw.de/"/>	
+	</rdf:Description>
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/Registres">		
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Registres de l'Academie</foaf:name>
+		<foaf:homepage rdf:resource="http://akademieregistres.bbaw.de/"/>
+		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
+		<dc:coverage rdf:resource="http://wsp.normdata.rdf/Neuzeit"/>
+		<gnd:relatedCorporateBody rdf:resource="http://bibliothek.bbaw.de/"/>	
+		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Enke"/>
+		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Krauth"/>
+		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Schnoepf"/>
+		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Wiederkehr"/>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/SADE">		
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Skalierbare Architektur für Digitale Editionen</foaf:name>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Telota"/>
+		<foaf:homepage rdf:resource="http://www.bbaw.de/telota/projekte/digitale-editionen/sade"/>
+		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
+		<dc:coverage rdf:resource="http://wsp.normdata.rdf/Gegenwart"/>	
+		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Neumann"/>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/Sonnentaler">		
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Sonnentaler (La main à la pâte (Lamap))</foaf:name>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AkademieSchule"/>
+		<foaf:homepage rdf:resource="http://www.sonnentaler.net"/>
+		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
+		<dc:coverage rdf:resource="http://wsp.normdata.rdf/Gegenwart"/>			
+	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/ProsopographiaImperiiRomani">
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Eck"/>
 		<dcterms:abstract rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Die Prosopographia Imperii Romani (PIR) ist ein Personenlexikon. Es soll im wesentlichen die Führungsschicht des Römischen Reiches in der Frühen und Hohen Kaiserzeit erfassen. Die untere zeitliche Grenze ist die Schlacht von Aktium 31 v. Chr., seit der die monarchische Herrschaftsstruktur für Rom endgültig geworden war; die obere Grenze bildet die Herrschaft Diokletians (284-305), mit der eine wesentliche Änderung im staatlichen und gesellschaftlichen Aufbau des Reiches durchgesetzt wurde.</dcterms:abstract>
@@ -1132,6 +1173,16 @@ Damit sollen gemeinsame historische Vermächtnisse sowie die Mobilität von Pers
 		<foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">PIR</foaf:nick>
 		<gnd:definition>Prosopographie</gnd:definition>
 		<dc:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Drittmittelprojekt</dc:description>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/ProsopographiaImperiiRomani/Addenda">
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Addenda</foaf:name>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ProsopographiaImperiiRomani" />	
+		<foaf:homepage rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/pir/de/blanko.2005-02-17.7966795951" />
+	</rdf:Description>
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/ProsopographiaImperiiRomani/Stichwortliste">
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Stichwortliste</foaf:name>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ProsopographiaImperiiRomani" />	
+		<foaf:homepage rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/pir/de/blanko.2005-02-17.2432643101" />
 	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/WilhelmOstwaldSymposium">
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Knobloch"/>
@@ -1576,6 +1627,21 @@ Damit sollen gemeinsame historische Vermächtnisse sowie die Mobilität von Pers
 		<gnd:definition>Edition</gnd:definition>
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Hohensee"/>
 	</rdf:Description>
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/MonumentaGermaniaeHistorica/Constitutiones">
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Constitutiones et acta publica imperatorum et regum</foaf:name>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MonumentaGermaniaeHistorica" />	
+		<foaf:homepage rdf:resource="http://telota.bbaw.de/constitutiones/"/>		
+	</rdf:Description>
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/MonumentaGermaniaeHistorica/DerGoldeneBulle">
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Der Goldene Bulle</foaf:name>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MonumentaGermaniaeHistorica" />	
+		<foaf:homepage rdf:resource="http://telota.bbaw.de/mgh/"/>		
+	</rdf:Description>
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/MonumentaGermaniaeHistorica/KaiserReichUndRegion">
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Kaiser, Reich und Region</foaf:name>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MonumentaGermaniaeHistorica" />	
+		<foaf:homepage rdf:resource="http://edoc.bbaw.de/volltexte/2006/75/"/>		
+	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/Spikermann">
 		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
 		<gnd:functionOrRole>Wissenschaftlich-technische Mitarbeiterin</gnd:functionOrRole>
@@ -1767,6 +1833,23 @@ Damit sollen gemeinsame historische Vermächtnisse sowie die Mobilität von Pers
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Spikermann"/>
 		<dcterms:valid rdf:datatype="http://purl.org/dc/terms/Period">start=1901; name=Laufzeit</dcterms:valid>
 		<foaf:homepage rdf:resource="http://www.bbaw.de/forschung/leibniz_potsdam"/>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/LeibnizEditionPotsdam/Baende">
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Bände</foaf:name>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam" />	
+		<foaf:homepage rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/de/Startseite"/>		
+	</rdf:Description>
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/LeibnizEditionPotsdam/KumulierterIndex">
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Kumulierter index nominum der Ausgaben von Dutens und deuhardt (Philosophische und Mathematische Schriften)</foaf:name>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam" />		
+	</rdf:Description>
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/LeibnizEditionPotsdam/PersonenUndSachindex">
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Personen- und Sachindex der Ausgaben von Erdmann (Opera philosophica) und Grua (Textes inédits)</foaf:name>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam" />		
+	</rdf:Description>
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/LeibnizEditionPotsdam/RitterKatalog">
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ritter Katalog</foaf:name>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam" />		
 	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/DFGimSpannungsfeld">
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Noetzoldt"/>
@@ -2111,6 +2194,21 @@ Aktuell in Bearbeitung sind Nietzsches Arbeitshefte W II 8-10 sowie die späten 
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Gerber"/>
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Stark"/>
 		<dc:coverage rdf:resource="http://wsp.normdata.rdf/Neuzeit"/>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/KantSchriften/DieDreiKritiken">
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Die drei Kritiken</foaf:name>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KantSchriften" />	
+		<foaf:homepage rdf:resource="http://kant.bbaw.de/die-drei-kritiken" />
+	</rdf:Description>
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/KantSchriften/OpusPostumum">
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Opus Postumum</foaf:name>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KantSchriften" />	
+		<foaf:homepage rdf:resource="http://kant.bbaw.de/opus-postumum" />
+	</rdf:Description>
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/KantSchriften/PhysischeGeographie">
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Vorlesungen über Physische Geographie</foaf:name>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KantSchriften" />	
+		<foaf:homepage rdf:resource="http://kant.bbaw.de/physische-geographie" />
 	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/Walkowski">
 		<foaf:familyName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Walkowski</foaf:familyName>
@@ -2843,6 +2941,26 @@ Hauptaufgabe ist die Edition des türkischen und iranischen Teils der Berliner T
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Kasai"/>
 		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ZentrumAlteWelt"/>
 		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Turfanforschung</foaf:name>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/Turfan/Dunhuang">
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Dunhuang Project</foaf:name>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Turfan" />	
+		<foaf:homepage rdf:resource="http://idp.bbaw.de" />
+	</rdf:Description>
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/Turfan/DigitalesArchiv">
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Digitales Turfan-Archiv</foaf:name>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Turfan" />	
+		<foaf:homepage rdf:resource="http://www.bbaw.de/forschung/turfanforschung/dta/index.html" />
+	</rdf:Description>
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/Turfan/IranischeTexte">
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Iranische Texte in der Turfansammlung</foaf:name>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Turfan" />	
+		<foaf:homepage rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/turfanforschung/de/iranischeTexte" />
+	</rdf:Description>
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/Turfan/ManichaeanMiddlePersianTexts">
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Turfanforschung: Published Manichaean Middle Persian and Parthian Texts</foaf:name>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Turfan" />	
+		<foaf:homepage rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/turfanforschung/de/MIRTEXT" />
 	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/Eck">
 		<foaf:familyName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Eck</foaf:familyName>
@@ -3717,6 +3835,11 @@ Auf der Grundlage der Beschreibung des handschriftlichen sprachwissenschaftliche
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Lindorfer"/>
 		<gnd:definition>Edition</gnd:definition>
 		<foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">WvH</foaf:nick>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/WilhelmVonHumboldt/Briefdatenbank">
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Briefdatenbank</foaf:name>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/WilhelmVonHumboldt" />	
+		<foaf:homepage rdf:resource="http://telota.bbaw.de/wvh/db-start.jsf" />
 	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/Oekosystemleistungen">
 		<dc:coverage rdf:resource="http://wsp.normdata.rdf/Gegenwart"/>
@@ -5883,6 +6006,16 @@ Mit der im Juni 2000 durchgeführten internationalen Konferenz »Die Arbeit der 
 		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ZentrumPreussenBerlin"/>
 		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Kritische Karl Philipp Moritz-Ausgabe</foaf:name>
 		<gnd:definition>Edition</gnd:definition>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/KarlPhilippMoritz/NeuereWerkausgabenSekundaerliteratur">
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Moritz-Bibliographie. Neuere Werkausgaben und Sekundärliteratur</foaf:name>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KarlPhilippMoritz" />	
+		<foaf:homepage rdf:resource="http://www.bbaw.de/forschung/moritz/biblio/index.html" />
+	</rdf:Description>
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/KarlPhilippMoritz/Erfahrungsseelenkunde">
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Magazin für Erfahrungsseelenkunde</foaf:name>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KarlPhilippMoritz" />	
+		<foaf:homepage rdf:resource="http://telota.bbaw.de/mze" />
 	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/BiblioraphischeAnnalen">
 		<gnd:topic rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Philologie</gnd:topic>

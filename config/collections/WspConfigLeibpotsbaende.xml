@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>leibpotsbaende</id>
+    <rdfId>http://wsp.normdata.rdf/LeibnizEditionPotsdam/Baende</rdfId>
     <name>Leibniz-Edition Potsdam: Bände</name>
     <url>
       <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/de/Startseite</webBaseUrl>

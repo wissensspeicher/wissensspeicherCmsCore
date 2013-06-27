@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>kmames</id>
+    <rdfId>http://wsp.normdata.rdf/KarlPhilippMoritz/Erfahrungsseelenkunde</rdfId>
     <name>Kritische Karl-Philipp-Moritz-Ausgabe: Magazin für Erfahrungsseelenkunde</name>
     <url>
       <webBaseUrl>http://telota.bbaw.de/mze</webBaseUrl>
