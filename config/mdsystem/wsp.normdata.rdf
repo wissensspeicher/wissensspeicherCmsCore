@@ -261,8 +261,8 @@ Das modulartig angelegte Vorhaben beginnt mit einer Geschichte des preußischen 
   <rdf:Description rdf:about="http://wsp.normdata.rdf/ArabianWorld">
     <dc:subject rdf:datatype="http://purl.org/dc/terms/DDC">Region</dc:subject>
     <rdf:type rdf:resource="http://purl.org/dc/terms/Location"/>
-    <rdfs:label xml:lang="en">Arabian World</rdfs:label>
-    <rdfs:label xml:lang="de">Arabische Welt</rdfs:label>
+    <rdfs:label xml:lang="eng">Arabian World</rdfs:label>
+    <rdfs:label xml:lang="ger">Arabische Welt</rdfs:label>
     <gnd:geographicAreaCode rdf:datatype="http://purl.org/dc/terms/ISO3166">XX</gnd:geographicAreaCode>
   </rdf:Description>
   <rdf:Description rdf:about="http://wsp.normdata.rdf/WissenschaftlichePolitikberatung">
@@ -559,8 +559,8 @@ Ziel ist es, in einem „State of the art“-Bericht bisher erhobene Daten und v
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Venezuela"/>
     <dc:subject rdf:datatype="http://purl.org/dc/terms/DDC">Fluss</dc:subject>
     <gnd:coordinates rdf:datatype="http://purl.org/dc/terms/Point">north=2.318056; west=-63.361668; name=Orinoco</gnd:coordinates>
-    <rdfs:label xml:lang="pt">Río Orinoco</rdfs:label>
-    <rdfs:label xml:lang="de">Orinoco</rdfs:label>
+    <rdfs:label xml:lang="por">Río Orinoco</rdfs:label>
+    <rdfs:label xml:lang="ger">Orinoco</rdfs:label>
     <rdf:type rdf:resource="http://purl.org/dc/terms/Location"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://wsp.normdata.rdf/Fellbaum">
@@ -724,8 +724,8 @@ Damit sollen gemeinsame historische Vermächtnisse sowie die Mobilität von Pers
   </rdf:Description>
   <rdf:Description rdf:about="http://wsp.normdata.rdf/Egypt">
     <rdf:type rdf:resource="http://purl.org/dc/terms/Location"/>
-    <rdfs:label xml:lang="en">Egypt</rdfs:label>
-    <rdfs:label xml:lang="de">Ägypten</rdfs:label>
+    <rdfs:label xml:lang="eng">Egypt</rdfs:label>
+    <rdfs:label xml:lang="ger">Ägypten</rdfs:label>
     <gnd:geographicAreaCode rdf:datatype="http://purl.org/dc/terms/ISO3166">XC-EG</gnd:geographicAreaCode>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ArabianWorld"/>
     <dc:subject rdf:datatype="http://purl.org/dc/terms/DDC">Staat</dc:subject>
@@ -1895,7 +1895,7 @@ Aktuell in Bearbeitung sind Nietzsches Arbeitshefte W II 8-10 sowie die späten 
     <dc:subject rdf:datatype="http://purl.org/dc/terms/DDC">Region</dc:subject>
     <gnd:geographicAreaCode rdf:datatype="http://purl.org/dc/terms/ISO3166">XA-DE-ST</gnd:geographicAreaCode>
     <dcterms:identifier rdf:resource="http://d-nb.info/gnd/4001538-5"/>
-    <rdfs:label xml:lang="de">Altmark</rdfs:label>
+    <rdfs:label xml:lang="ger">Altmark</rdfs:label>
     <rdf:type rdf:resource="http://purl.org/dc/terms/Location"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://wsp.normdata.rdf/Jansen">
@@ -2066,7 +2066,7 @@ Aktuell in Bearbeitung sind Nietzsches Arbeitshefte W II 8-10 sowie die späten 
   <rdf:Description rdf:about="http://wsp.normdata.rdf/SachsenAnhaltNord">
     <dcterms:hasPart rdf:resource="http://wsp.normdata.rdf/Havelberg"/>
     <dcterms:hasPart rdf:resource="http://wsp.normdata.rdf/Altmark"/>
-    <rdfs:label xml:lang="de">Sachsen Anhalt &lt;Nord&gt;</rdfs:label>
+    <rdfs:label xml:lang="ger">Sachsen Anhalt &lt;Nord&gt;</rdfs:label>
     <rdf:type rdf:resource="http://purl.org/dc/terms/Location"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Germany"/>
     <gnd:geographicAreaCode rdf:datatype="http://purl.org/dc/terms/ISO3166">XA-DE-ST</gnd:geographicAreaCode>
@@ -2166,7 +2166,7 @@ Die interdisziplinäre Arbeitsgruppe befasst sich mit dem Grundthema „Attrakti
     <dcterms:identifier rdf:resource="http://d-nb.info/gnd/4023869-6"/>
     <dc:subject rdf:datatype="http://purl.org/dc/terms/DDC">Stadt</dc:subject>
     <gnd:geographicAreaCode rdf:datatype="http://purl.org/dc/terms/ISO3166">XA-DE-ST</gnd:geographicAreaCode>
-    <rdfs:label xml:lang="de">Havelberg</rdfs:label>
+    <rdfs:label xml:lang="ger">Havelberg</rdfs:label>
     <rdf:type rdf:resource="http://purl.org/dc/terms/Location"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://wsp.normdata.rdf/Wyrwa">
@@ -2347,8 +2347,8 @@ Die interdisziplinäre Arbeitsgruppe befasst sich mit dem Grundthema „Attrakti
     <dcterms:hasPart rdf:resource="http://wsp.normdata.rdf/Orinoco"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Suedamerika"/>
     <gnd:geographicAreaCode rdf:datatype="http://purl.org/dc/terms/ISO3166">XD-CO</gnd:geographicAreaCode>
-    <rdfs:label xml:lang="de">Columbien</rdfs:label>
-    <rdfs:label xml:lang="en">Colombia</rdfs:label>
+    <rdfs:label xml:lang="ger">Columbien</rdfs:label>
+    <rdfs:label xml:lang="eng">Colombia</rdfs:label>
     <dc:subject rdf:datatype="http://purl.org/dc/terms/DDC">Staat</dc:subject>
     <rdf:type rdf:resource="http://purl.org/dc/terms/Location"/>
   </rdf:Description>
@@ -2861,7 +2861,7 @@ Hauptaufgabe ist die Edition des türkischen und iranischen Teils der Berliner T
     <dc:subject rdf:datatype="http://purl.org/dc/terms/DDC">Staat</dc:subject>
     <rdf:type rdf:resource="http://purl.org/dc/terms/Location"/>
     <gnd:geographicAreaCode rdf:datatype="http://purl.org/dc/terms/ISO3166">JP</gnd:geographicAreaCode>
-    <rdfs:label xml:lang="en">Japan</rdfs:label>
+    <rdfs:label xml:lang="eng">Japan</rdfs:label>
   </rdf:Description>
   <rdf:Description rdf:about="http://wsp.normdata.rdf/Menzel">
     <foaf:title rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Dr.</foaf:title>
@@ -2986,8 +2986,8 @@ Hauptaufgabe ist die Edition des türkischen und iranischen Teils der Berliner T
   </rdf:Description>
   <rdf:Description rdf:about="http://wsp.normdata.rdf/Europe">
     <dcterms:hasPart rdf:resource="http://wsp.normdata.rdf/Germany"/>
-    <rdfs:label xml:lang="en">Europe</rdfs:label>
-    <rdfs:label xml:lang="de">Europa</rdfs:label>
+    <rdfs:label xml:lang="eng">Europe</rdfs:label>
+    <rdfs:label xml:lang="ger">Europa</rdfs:label>
     <dc:subject rdf:datatype="http://purl.org/dc/terms/DDC">Kontinent</dc:subject>
     <gnd:geographicAreaCode rdf:datatype="http://purl.org/dc/terms/ISO3166">EU</gnd:geographicAreaCode>
     <rdf:type rdf:resource="http://purl.org/dc/terms/Location"/>
@@ -3213,7 +3213,7 @@ Das modulartig angelegte Vorhaben beginnt mit einer Geschichte des preußischen 
   <rdf:Description rdf:about="http://wsp.normdata.rdf/Xinjiang">
     <dc:subject rdf:datatype="http://purl.org/dc/terms/DDC">Provinz</dc:subject>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/China"/>
-    <rdfs:label xml:lang="de">Uigurisches Autonomes Gebiet Xinjiang</rdfs:label>
+    <rdfs:label xml:lang="ger">Uigurisches Autonomes Gebiet Xinjiang</rdfs:label>
     <gnd:geographicAreaCode rdf:datatype="http://purl.org/dc/terms/ISO3166">CN-65</gnd:geographicAreaCode>
     <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Xinjiang</rdfs:label>
     <rdf:type rdf:resource="http://purl.org/dc/terms/Location"/>
@@ -3327,7 +3327,7 @@ Sie baute dabei zum Teil auf den Ergebnissen der IAG Zukunftsorientierte Nutzung
   <rdf:Description rdf:about="http://wsp.normdata.rdf/UnitedStates">
     <dc:subject rdf:datatype="http://purl.org/dc/terms/DDC">Staat</dc:subject>
     <rdf:type rdf:resource="http://purl.org/dc/terms/Location"/>
-    <rdfs:label xml:lang="en">United States of America</rdfs:label>
+    <rdfs:label xml:lang="eng">United States of America</rdfs:label>
     <gnd:geographicAreaCode rdf:datatype="http://purl.org/dc/terms/ISO3166">US</gnd:geographicAreaCode>
   </rdf:Description>
   <rdf:Description rdf:about="http://wsp.normdata.rdf/Friederici">
@@ -3443,8 +3443,8 @@ Sie baute dabei zum Teil auf den Ergebnissen der IAG Zukunftsorientierte Nutzung
   </rdf:Description>
   <rdf:Description rdf:about="http://wsp.normdata.rdf/Latin">
     <rdf:type rdf:resource="http://purl.org/dc/terms/LinguisticSystem"/>
-    <rdfs:label xml:lang="en">Latin</rdfs:label>
-    <rdfs:label xml:lang="de">Latein</rdfs:label>
+    <rdfs:label xml:lang="eng">Latin</rdfs:label>
+    <rdfs:label xml:lang="ger">Latein</rdfs:label>
     <gnd:languageCode rdf:datatype="http://purl.org/dc/terms/ISO639-3">lat</gnd:languageCode>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/IndoEuropean"/>
   </rdf:Description>
@@ -3687,7 +3687,7 @@ Die IAG wird der zentralen Frage nachgehen, ob wassertechnische Großprojekte ei
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/China"/>
     <gnd:coordinates rdf:datatype="http://purl.org/dc/terms/Point">northlimit=42.58; eastlimit=89.11; name=Turpan</gnd:coordinates>
     <rdf:type rdf:resource="http://purl.org/dc/terms/Location"/>
-    <rdfs:label xml:lang="de">Turfan</rdfs:label>
+    <rdfs:label xml:lang="ger">Turfan</rdfs:label>
     <rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Turpan</rdfs:label>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Xinjiang"/>
   </rdf:Description>
@@ -4211,8 +4211,8 @@ Vierte Abteilung: Exzerpte. Notizen. Marginalien.</dcterms:abstract>
     <dcterms:hasPart rdf:resource="http://wsp.normdata.rdf/Orinoco"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Suedamerika"/>
     <gnd:geographicAreaCode rdf:datatype="http://purl.org/dc/terms/ISO3166">XD-VE</gnd:geographicAreaCode>
-    <rdfs:label xml:lang="de">Venezuela</rdfs:label>
-    <rdfs:label xml:lang="es">República Bolivariana de Venezuela</rdfs:label>
+    <rdfs:label xml:lang="ger">Venezuela</rdfs:label>
+    <rdfs:label xml:lang="spa">República Bolivariana de Venezuela</rdfs:label>
     <rdf:type rdf:resource="http://purl.org/dc/terms/Location"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://wsp.normdata.rdf/Weise">
@@ -4237,8 +4237,8 @@ Vierte Abteilung: Exzerpte. Notizen. Marginalien.</dcterms:abstract>
     <dcterms:hasPart rdf:resource="http://wsp.normdata.rdf/Venezuela"/>
     <gnd:geographicAreaCode rdf:datatype="http://purl.org/dc/terms/ISO3166">XD</gnd:geographicAreaCode>
     <gnd:coordinates rdf:datatype="http://purl.org/dc/terms/Point">west=-594; south=-130; name=South America</gnd:coordinates>
-    <rdfs:label xml:lang="de">Südamerika</rdfs:label>
-    <rdfs:label xml:lang="en">South America</rdfs:label>
+    <rdfs:label xml:lang="ger">Südamerika</rdfs:label>
+    <rdfs:label xml:lang="eng">South America</rdfs:label>
     <dc:subject rdf:datatype="http://purl.org/dc/terms/DDC">Kontinent</dc:subject>
     <rdf:type rdf:resource="http://purl.org/dc/terms/Location"/>
   </rdf:Description>
@@ -4446,8 +4446,8 @@ Im Zentrum steht jeweils eine intensive gemeinsame Arbeitswoche mit parallelen W
   </rdf:Description>
   <rdf:Description rdf:about="http://wsp.normdata.rdf/MHG">
     <rdf:type rdf:resource="http://purl.org/dc/terms/LinguisticSystem"/>
-    <rdfs:label xml:lang="de">Mittelhochdeutsch</rdfs:label>
-    <rdfs:label xml:lang="en">Middle High German</rdfs:label>
+    <rdfs:label xml:lang="ger">Mittelhochdeutsch</rdfs:label>
+    <rdfs:label xml:lang="eng">Middle High German</rdfs:label>
     <gnd:languageCode rdf:datatype="http://purl.org/dc/terms/ISO639-3">gmh</gnd:languageCode>
     <dcterms:valid rdf:datatype="http://purl.org/dc/terms/Period">start=1050; end=1500; name=Anwendungszeitraum</dcterms:valid>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/German"/>
@@ -4525,10 +4525,10 @@ Erfasst werden die in der Renaissance bekannten antiken Monumente mit den zugeh�
     <dcterms:identifier rdf:resource="http://viaf.org/viaf/165610811"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://wsp.normdata.rdf/German">
-    <rdfs:label xml:lang="de">Deutsch</rdfs:label>
+    <rdfs:label xml:lang="ger">Deutsch</rdfs:label>
     <rdf:type rdf:resource="http://purl.org/dc/terms/LinguisticSystem"/>
     <gnd:languageCode rdf:datatype="http://purl.org/dc/terms/ISO639-3">deu</gnd:languageCode>
-    <rdfs:label xml:lang="en">German</rdfs:label>
+    <rdfs:label xml:lang="eng">German</rdfs:label>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/IndoEuropean"/>
     <dcterms:hasPart rdf:resource="http://wsp.normdata.rdf/MHG"/>
   </rdf:Description>
@@ -5339,7 +5339,7 @@ Mit der im Juni 2000 durchgeführten internationalen Konferenz »Die Arbeit der 
   <rdf:Description rdf:about="http://wsp.normdata.rdf/China">
     <dc:subject rdf:datatype="http://purl.org/dc/terms/DDC">Staat</dc:subject>
     <dcterms:hasPart rdf:resource="http://wsp.normdata.rdf/Turpan"/>
-    <rdfs:label xml:lang="en">China</rdfs:label>
+    <rdfs:label xml:lang="eng">China</rdfs:label>
     <rdf:type rdf:resource="http://purl.org/dc/terms/Location"/>
     <gnd:geographicAreaCode rdf:datatype="http://purl.org/dc/terms/ISO3166">CN</gnd:geographicAreaCode>
     <dcterms:hasPart rdf:resource="http://wsp.normdata.rdf/Xinjiang"/>
@@ -5655,8 +5655,8 @@ Mit der im Juni 2000 durchgeführten internationalen Konferenz »Die Arbeit der 
   </rdf:Description>
   <rdf:Description rdf:about="http://wsp.normdata.rdf/English">
     <rdf:type rdf:resource="http://purl.org/dc/terms/LinguisticSystem"/>
-    <rdfs:label xml:lang="en">English</rdfs:label>
-    <rdfs:label xml:lang="de">Englisch</rdfs:label>
+    <rdfs:label xml:lang="eng">English</rdfs:label>
+    <rdfs:label xml:lang="ger">Englisch</rdfs:label>
     <gnd:languageCode rdf:datatype="http://purl.org/dc/terms/ISO639-3">eng</gnd:languageCode>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/IndoEuropean"/>
   </rdf:Description>
@@ -5833,8 +5833,8 @@ Mit der im Juni 2000 durchgeführten internationalen Konferenz »Die Arbeit der 
   </rdf:Description>
   <rdf:Description rdf:about="http://wsp.normdata.rdf/French">
     <rdf:type rdf:resource="http://purl.org/dc/terms/LinguisticSystem"/>
-    <rdfs:label xml:lang="en">French</rdfs:label>
-    <rdfs:label xml:lang="de">Französisch</rdfs:label>
+    <rdfs:label xml:lang="eng">French</rdfs:label>
+    <rdfs:label xml:lang="ger">Französisch</rdfs:label>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/IndoEuropean"/>
     <gnd:languageCode rdf:datatype="http://purl.org/dc/terms/ISO639-3">fra</gnd:languageCode>
   </rdf:Description>
@@ -5921,8 +5921,8 @@ Mit der im Juni 2000 durchgeführten internationalen Konferenz »Die Arbeit der 
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Europe"/>
     <gnd:geographicAreaCode rdf:datatype="http://purl.org/dc/terms/ISO3166">XA-DE</gnd:geographicAreaCode>
     <dc:subject rdf:datatype="http://purl.org/dc/terms/DDC">Staat</dc:subject>
-    <rdfs:label xml:lang="de">Deutschland</rdfs:label>
-    <rdfs:label xml:lang="en">Germany</rdfs:label>
+    <rdfs:label xml:lang="ger">Deutschland</rdfs:label>
+    <rdfs:label xml:lang="eng">Germany</rdfs:label>
     <rdf:type rdf:resource="http://purl.org/dc/terms/Location"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://wsp.normdata.rdf/NoetzoldtH">
