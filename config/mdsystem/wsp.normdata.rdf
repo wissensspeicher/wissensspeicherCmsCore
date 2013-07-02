@@ -579,7 +579,7 @@ Ziel ist es, in einem „State of the art“-Bericht bisher erhobene Daten und v
 		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Venezuela"/>
 		<dc:subject rdf:datatype="http://purl.org/dc/terms/DDC">Fluss</dc:subject>
 		<gnd:coordinates rdf:datatype="http://purl.org/dc/terms/Point">north=2.318056; west=-63.361668; name=Orinoco</gnd:coordinates>
-		<rdfs:label xml:lang="pt">Río Orinoco</rdfs:label>
+		<rdfs:label xml:lang="por">Río Orinoco</rdfs:label>
 		<rdfs:label xml:lang="ger">Orinoco</rdfs:label>
 		<rdf:type rdf:resource="http://purl.org/dc/terms/Location"/>
 	</rdf:Description>
@@ -4438,7 +4438,7 @@ Vierte Abteilung: Exzerpte. Notizen. Marginalien.</dcterms:abstract>
 		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Suedamerika"/>
 		<gnd:geographicAreaCode rdf:datatype="http://purl.org/dc/terms/ISO3166">XD-VE</gnd:geographicAreaCode>
 		<rdfs:label xml:lang="ger">Venezuela</rdfs:label>
-		<rdfs:label xml:lang="es">República Bolivariana de Venezuela</rdfs:label>
+		<rdfs:label xml:lang="spa">República Bolivariana de Venezuela</rdfs:label>
 		<rdf:type rdf:resource="http://purl.org/dc/terms/Location"/>
 	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/Weise">
