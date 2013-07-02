@@ -19,6 +19,25 @@ import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
  *       first matching xml base attribut (which contains the real URL)
  */
 public class RdfMetadataExtractor extends MetadataExtractor {
+  /**
+   * Key to access the *:type from the normdata.
+   */
+  public static final String TYPE = "type";
+  /**
+   * Key to access the *:description (* should match a dc - hopefully ;) )
+   */
+  private static final String DESCRIPTION = "description";
+  /**
+   * Key to access the *:functionOrRole (* should match gnd...)
+   */
+  private static final String FUNCTION_OR_ROLE = "functionOrRole";
+  /**
+   * The URI which identifies a project.
+   */
+  private static final String TYPE_PROJECT = "http://xmlns.com/foaf/0.1/Project";
+  private static final String TYPE_PERSON = "http://xmlns.com/foaf/0.1/Person";
+  private static final String DESCRIPTION_HISTORICAL_PERSON = "Historische Person";
+  private static final String DESCRIPTION_WORK_LEADER = "Arbeitsstellenleiter";
 
   ArrayList<ConceptQueryResult> targetList;
 
@@ -77,7 +96,7 @@ public class RdfMetadataExtractor extends MetadataExtractor {
         addToTarget("Description", queryExecute(query), target);
 
         query = "//rdf:Description[" + i + "]/*:type/@rdf:resource";
-        addToTarget("type", queryExecute(query), target);
+        addToTarget(TYPE, queryExecute(query), target);
 
         // vllt nicht wichtig
         query = "//rdf:Description[" + i + "]/*:imports/@rdf:resource";
@@ -187,9 +206,54 @@ public class RdfMetadataExtractor extends MetadataExtractor {
 
         query = "//rdf:Description[" + i + "]/*:fundedBy/@rdf:resource";
         addToTarget("fundedBy", queryExecute(query), target);
+
+        // new functionality: calculate score for the given target
+        calculateScore(elements, target);
       }
     }
 
+  }
+
+  /**
+   * Calculate the score for the given elements and the resulting target (an RDF node within the normdata)
+   * 
+   * @param elements
+   *          array of String, each element contains the client's search terms.
+   * @param target
+   *          the {@link ConceptQueryResult} for the matched RDF node
+   */
+  private void calculateScore(final String[] elements, final ConceptQueryResult target) {
+
+    if (elements.length == 1) { // one search term, so the score differs
+      final ArrayList<String> type = target.getValue(TYPE);
+      if (type != null) {
+        for (final String typeNode : type) {
+          if (typeNode.contains(TYPE_PERSON)) {
+            final ArrayList<String> description = target.getValue(DESCRIPTION);
+            if (description != null) {
+              for (final String descriptionNode : description) {
+                if (descriptionNode.contains(DESCRIPTION_HISTORICAL_PERSON)) { // highest priority
+                  target.setPriority(ConceptIdentifierPriority.FIRST);
+                } else if (descriptionNode.contains(DESCRIPTION_WORK_LEADER)) { // second highest priority
+                  target.setPriority(ConceptIdentifierPriority.SECOND);
+                }
+              }
+            }
+            final ArrayList<String> functionOrRole = target.getValue(FUNCTION_OR_ROLE);
+            if (functionOrRole != null) {
+              for (final String functionOrRoleNode : functionOrRole) {
+                if (functionOrRoleNode.contains(DESCRIPTION_HISTORICAL_PERSON)) {
+                  target.setPriority(ConceptIdentifierPriority.FIRST);
+                }
+              }
+            }
+            // no person
+          } else if (typeNode.contains(TYPE_PROJECT)) { // third highest priority
+            target.setPriority(ConceptIdentifierPriority.THIRD);
+          }
+        }
+      }
+    }
   }
 
   /**
