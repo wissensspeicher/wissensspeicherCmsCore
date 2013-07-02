@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>registres</id>
+    <rdfId>http://wsp.normdata.rdf/Registres</rdfId>
     <name>Registres de l'Academie</name>
     <!-- if dataUrl is not a directory but a file, it should end with a forward slash-->
     <url>

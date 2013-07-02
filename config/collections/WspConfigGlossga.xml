@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>glossga</id>
+    <rdfId>http://wsp.normdata.rdf/GlossariumGraecoArabicum</rdfId>
     <name>Glossarium Græco-Arabicum</name>
     <url>
     	<webBaseUrl>http://telota.bbaw.de/glossga</webBaseUrl>

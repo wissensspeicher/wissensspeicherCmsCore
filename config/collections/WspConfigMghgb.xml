@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>mghgb</id>
+    <rdfId>http://wsp.normdata.rdf/MonumentaGermaniaeHistorica/DerGoldeneBulle</rdfId>
     <name>Monumenta Germaniae Historica: Der Goldene Bulle</name>
     <url>
       <webBaseUrl>http://telota.bbaw.de/mgh/</webBaseUrl>

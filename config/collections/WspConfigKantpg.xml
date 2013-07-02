@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>kantpg</id>
+    <rdfId>http://wsp.normdata.rdf/KantSchriften/PhysischeGeographie</rdfId>
     <name>Kant’s gesammelte Schriften: Vorlesungen über Physische Geographie</name>
     <url>
       <webBaseUrl>http://kant.bbaw.de/physische-geographie</webBaseUrl>

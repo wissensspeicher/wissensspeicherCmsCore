@@ -2,6 +2,7 @@
 <wsp>
   <collection>     
     <id>gdk</id>
+    <rdfId>http://wsp.normdata.rdf/GDK</rdfId>
     <name>Gesamtbestand des Kunstbesitzes</name>
     <url>
       <webBaseUrl>http://archiv.bbaw.de/archiv/archivbestaende/abteilung-sammlungen/gesamtbestand-des-kunstbesitzes</webBaseUrl>

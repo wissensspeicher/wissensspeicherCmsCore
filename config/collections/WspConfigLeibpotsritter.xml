@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>leibpotsritter</id>
+    <rdfId>http://wsp.normdata.rdf/LeibnizEditionPotsdam/RitterKatalog</rdfId>
     <name>Leibniz-Edition Potsdam: Ritter Katalog</name>
     <url>
     	<webBaseUrl>http://leibniz.bbaw.de</webBaseUrl>

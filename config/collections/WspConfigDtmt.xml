@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>dtmt</id>
+    <rdfId>http://wsp.normdata.rdf/DTM/Transkription</rdfId>
     <name>Deutsche Texte des Mittelalters: Transkription</name>
     <url>
       <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/dtm/de/Transkriptionen</webBaseUrl>

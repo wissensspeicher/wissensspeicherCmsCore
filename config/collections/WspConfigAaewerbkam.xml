@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>aaewerbkam</id>
+    <rdfId>http://wsp.normdata.rdf/AltaegyptWB/Erbkam</rdfId>
     <name>Georg Gustav Erbkam: Tagebuch meiner egyptischen Reise</name>
     <url>
       <webBaseUrl>http://aaew.bbaw.de/dateien/weitere%20archive/erbkam/Erbkam.html</webBaseUrl>

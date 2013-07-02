@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>cmgh</id>
+    <rdfId>http://wsp.normdata.rdf/CorpusMedicorumGraecorum/HippokratesUndGalen</rdfId>
     <name>Corpus Medicorum Graecorum / Latinorum: Hippokrates- und  Galenbibliographie</name>
     <url>
       <webBaseUrl>http://cmg.bbaw.de/online-publikationen/hippokrates-und-galenbibliographie-fichtner</webBaseUrl>

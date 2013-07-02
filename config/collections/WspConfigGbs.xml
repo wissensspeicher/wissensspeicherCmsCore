@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>gbs</id>
+    <rdfId>http://wsp.normdata.rdf/Schlegel</rdfId>
     <name>Ausgewählte Gelehrtenbriefe -Schlegel</name>
     <url>
     	<webBaseUrl>http://archiv.bbaw.de/archiv/gelehrtenbriefe</webBaseUrl>

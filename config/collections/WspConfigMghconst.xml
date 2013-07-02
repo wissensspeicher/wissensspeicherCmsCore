@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>mghconst</id>
+    <rdfId>http://wsp.normdata.rdf/MonumentaGermaniaeHistorica/Constitutiones</rdfId>
     <name>Monumenta Germaniae Historica: Constitutiones et acta publica imperatorum et regum</name>
     <url>
       <webBaseUrl>http://telota.bbaw.de/constitutiones/</webBaseUrl>

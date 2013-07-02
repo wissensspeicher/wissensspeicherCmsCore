@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>dtme</id>
+    <rdfId>http://wsp.normdata.rdf/DTM/Editionsbericht</rdfId>
     <name>Deutsche Texte des Mittelalters: Editionsbericht</name>
     <url>
       <webBaseUrl>http://dtm.bbaw.de/E_Bericht/Editionsbericht-internet.html</webBaseUrl>

@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>bkvb</id>
+    <rdfId>http://wsp.normdata.rdf/BerlinerKlassik/Stadtplan</rdfId>
     <name>Berliner Klassik</name>
     <url>
       <webBaseUrl>http://www.berliner-klassik.de/bk_stadtplan/gui/index.html</webBaseUrl>

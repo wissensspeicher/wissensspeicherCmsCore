@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>aaewpreussen</id>
+    <rdfId>http://wsp.normdata.rdf/AltaegyptWB/Preussen</rdfId>
     <name>Altägyptisches Wörterbuch: Preußen in Ägypten-Ägypten in Preußen</name>
     <url>
       <webBaseUrl>http://aaew.bbaw.de/</webBaseUrl>

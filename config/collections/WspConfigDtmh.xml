@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>dtmh</id>
+    <rdfId>http://wsp.normdata.rdf/DTM/Handschriftenarchiv</rdfId>
     <name>Deutsche Texte des Mittelalters: Handschriftenarchiv</name>
     <url>
       <webBaseUrl>http://www.bbaw.de/forschung/dtm/HSA/startseite-hsa.html</webBaseUrl>

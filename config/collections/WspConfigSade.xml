@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>sade</id>
+    <rdfId>http://wsp.normdata.rdf/SADE</rdfId>
     <name>Skalierbare Architektur für Digitale Editionen</name>
     <url>
       <webBaseUrl>http://www.bbaw.de/telota/projekte/digitale-editionen/sade</webBaseUrl>

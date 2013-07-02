@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>avhorinoco</id>
+    <rdfId>http://wsp.normdata.rdf/AvHForschungsstelle/Orinoco</rdfId>  
     <name>Alexander von Humboldt Forschungsstelle: Alexander von Humboldt am Orinoco (31.März-7. April 1800)</name>
     <url>
       <webBaseUrl>http://www.bbaw.de/forschung/avh/orinoco/index.html</webBaseUrl>

@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>avhbriefe</id>
+    <rdfId>http://wsp.normdata.rdf/AvHForschungsstelle/Briefe</rdfId>   
     <name>Alexander von Humboldt Forschungsstelle: Alexander von Humboldt – Christian Gottfried Ehrenberg. Briefwechsel</name>
     <url>
       <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/avh/de/blanko.2008-09-17.4074640215</webBaseUrl>

@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>kmabib</id>
+    <rdfId>http://wsp.normdata.rdf/KarlPhilippMoritz/NeuereWerkausgabenSekundaerliteratur</rdfId>
     <name>Kritische Karl-Philipp-Moritz-Ausgabe: Moritz-Bibliographie. Neuere Werkausgaben und Sekundärliteratur</name>
     <url>
       <webBaseUrl>http://www.bbaw.de/forschung/moritz/biblio/index.html</webBaseUrl>

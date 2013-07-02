@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>jped</id>
+    <rdfId>http://wsp.normdata.rdf/JeanPaul/Editionsbeispiel</rdfId>
     <name>Jean Paul Edition: Editionsbeispiel</name>
     <url>
     	<webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/jean_paul/de/Startseite</webBaseUrl>

@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>mghkrr</id>
+    <rdfId>http://wsp.normdata.rdf/MonumentaGermaniaeHistorica/KaiserReichUndRegion</rdfId>
     <name>Monumenta Germaniae Historica: Kaiser, Reich und Region</name>
     <url>
       <webBaseUrl>http://edoc.bbaw.de/volltexte/2006/75/</webBaseUrl>

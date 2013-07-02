@@ -2,6 +2,7 @@
 <wsp>
   <collection>     
     <id>planck</id>
+    <rdfId>http://wsp.normdata.rdf/Planck</rdfId>
     <name>150 Jahre Max Planck</name>
     <url>
       <webBaseUrl>http://planck.bbaw.de</webBaseUrl>

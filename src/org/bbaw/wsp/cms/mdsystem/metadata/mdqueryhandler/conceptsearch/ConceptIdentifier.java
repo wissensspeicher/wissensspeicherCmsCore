@@ -43,24 +43,22 @@ public class ConceptIdentifier {
 
 		logger.info("urlToConfFile : " + normdataFile);
 		this.results = new ArrayList<ConceptQueryResult>();
-	
-      URL queryAsUrl = null;
+    URL queryAsUrl = null;
+    if (query != null && query.toLowerCase().startsWith("http")) {
       try {
         queryAsUrl = new URL(query);
       } catch (MalformedURLException e) {
         e.printStackTrace();
       }
-      if(queryAsUrl.getProtocol() != null && queryAsUrl.getProtocol().equals("http")){
-        this.results = scanForElement(Constants.getInstance().getMdsystemNormdataFile(), queryAsUrl, methode);
-      }else{
-        this.results = scanForElement(Constants.getInstance().getMdsystemNormdataFile(), query, methode);
-      }
-	
-		// this.results = scanForElement(normdataFile, query, methode);
-
+      this.results = scanForElement(Constants.getInstance().getMdsystemNormdataFile(), queryAsUrl, methode);
+    } else {
+      this.results = scanForElement(Constants.getInstance().getMdsystemNormdataFile(), query, methode);
+    }
+    /*
 		for (ConceptQueryResult target : this.results) {
 			System.out.println(target);
 		}
+		*/
 	}
 
 	@SuppressWarnings("unused")
