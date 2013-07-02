@@ -4,7 +4,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-import org.apache.http.client.utils.URIUtils;
 import org.apache.log4j.Logger;
 import org.bbaw.wsp.cms.general.Constants;
 import org.bbaw.wsp.cms.mdsystem.metadata.general.extractor.ConceptIdentifierPriority;
@@ -36,8 +35,6 @@ public class ConceptIdentifier {
   public void initIdentifying(final String query, final int methode) {
     final Logger logger = Logger.getLogger(ConceptIdentifier.class);
     logger.info("initIdentifying");
-    final String path = "";
-
     final MdSystemConfigReader confReader = MdSystemConfigReader.getInstance();
     final String normdataFile = confReader.getNormDataFilePath();
 

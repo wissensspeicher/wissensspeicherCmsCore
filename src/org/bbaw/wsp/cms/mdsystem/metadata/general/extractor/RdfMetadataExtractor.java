@@ -225,32 +225,89 @@ public class RdfMetadataExtractor extends MetadataExtractor {
   private void calculateScore(final String[] elements, final ConceptQueryResult target) {
 
     if (elements.length == 1) { // one search term, so the score differs
-      final ArrayList<String> type = target.getValue(TYPE);
-      if (type != null) {
-        for (final String typeNode : type) {
-          if (typeNode.contains(TYPE_PERSON)) {
-            final ArrayList<String> description = target.getValue(DESCRIPTION);
-            if (description != null) {
-              for (final String descriptionNode : description) {
-                if (descriptionNode.contains(DESCRIPTION_HISTORICAL_PERSON)) { // highest priority
-                  target.setPriority(ConceptIdentifierPriority.FIRST);
-                } else if (descriptionNode.contains(DESCRIPTION_WORK_LEADER)) { // second highest priority
-                  target.setPriority(ConceptIdentifierPriority.SECOND);
-                }
-              }
-            }
-            final ArrayList<String> functionOrRole = target.getValue(FUNCTION_OR_ROLE);
-            if (functionOrRole != null) {
-              for (final String functionOrRoleNode : functionOrRole) {
-                if (functionOrRoleNode.contains(DESCRIPTION_HISTORICAL_PERSON)) {
-                  target.setPriority(ConceptIdentifierPriority.FIRST);
-                }
-              }
-            }
-            // no person
-          } else if (typeNode.contains(TYPE_PROJECT)) { // third highest priority
-            target.setPriority(ConceptIdentifierPriority.THIRD);
-          }
+      calcForSingleTerm(target, 0);
+    } else {
+      calcForMultipleTerm(elements, target);
+    }
+  }
+
+  /**
+   * Calculate the priorities for single term queries, like 'marx http://xmlns.com/foaf/0.1/Person'.
+   * 
+   * @param searchTerms
+   *          array of search terms (String)
+   * 
+   * @param target
+   *          the {@link ConceptQueryResult}
+   */
+  private void calcForMultipleTerm(final String[] searchTerms, final ConceptQueryResult target) {
+    // look, if there's a matching URI in the query result for the second element in searchTerms.
+    final String matchingElement = searchTerms[1];
+    boolean elementFound = false;
+    for (final String mdField : target.getAllMDFields()) {
+      final ArrayList<String> nodeValues = target.getValue(mdField);
+      for (final String nodeValue : nodeValues) {
+        if (nodeValue.contains(matchingElement)) { // user's term is contained in nodeValue
+          target.setPriority(ConceptIdentifierPriority.FIRST);
+          elementFound = true;
+        }
+      }
+    }
+
+    if (!elementFound) { // no element found, so we just handle it like a single term
+      calcForSingleTerm(target, 1);
+    }
+  }
+
+  /**
+   * Calculate the priorities for single term queries, like 'marx'.
+   * 
+   * @param target
+   *          the {@link ConceptQueryResult}
+   * @param priorityGap
+   *          the gap (the minumum numbers of priorites) for the highest priority in here. E.g.: if you enter 1, than not FIRST will be the highest priority, but FIRST + 1 = SECOND ;)
+   */
+  private void calcForSingleTerm(final ConceptQueryResult target, final int priorityGap) {
+    ConceptIdentifierPriority highestPriority = ConceptIdentifierPriority.FIRST;
+    for (int i = 0; i < priorityGap; i++) {
+      highestPriority = highestPriority.getNextPriority();
+    }
+
+    final ArrayList<String> type = target.getValue(TYPE);
+    if (type != null) {
+      for (final String typeNode : type) {
+        if (typeNode.contains(TYPE_PERSON)) {
+          handlePerson(target, highestPriority);
+          // no person
+        } else if (typeNode.contains(TYPE_PROJECT)) { // third highest priority
+          target.setPriority(ConceptIdentifierPriority.THIRD);
+        }
+      }
+    }
+  }
+
+  /**
+   * Handle a {@link ConceptQueryResult} of type Person (see constant above).
+   * 
+   * @param target
+   * @param highestPriority
+   */
+  private void handlePerson(final ConceptQueryResult target, final ConceptIdentifierPriority highestPriority) {
+    final ArrayList<String> description = target.getValue(DESCRIPTION);
+    if (description != null) {
+      for (final String descriptionNode : description) {
+        if (descriptionNode.contains(DESCRIPTION_HISTORICAL_PERSON)) { // highest priority
+          target.setPriority(highestPriority);
+        } else if (descriptionNode.contains(DESCRIPTION_WORK_LEADER)) { // second highest priority
+          target.setPriority(highestPriority.getNextPriority());
+        }
+      }
+    }
+    final ArrayList<String> functionOrRole = target.getValue(FUNCTION_OR_ROLE);
+    if (functionOrRole != null) {
+      for (final String functionOrRoleNode : functionOrRole) {
+        if (functionOrRoleNode.contains(DESCRIPTION_HISTORICAL_PERSON)) {
+          target.setPriority(highestPriority);
         }
       }
     }
