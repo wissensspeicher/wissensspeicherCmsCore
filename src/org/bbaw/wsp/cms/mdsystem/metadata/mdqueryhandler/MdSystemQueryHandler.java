@@ -27,12 +27,13 @@ public class MdSystemQueryHandler {
   private MdSystemQueryHandler() {
   }
 
-  public static MdSystemQueryHandler getInstance(){
-    if(mdSystemQueryHandler == null)
+  public static MdSystemQueryHandler getInstance() {
+    if (mdSystemQueryHandler == null) {
       mdSystemQueryHandler = new MdSystemQueryHandler();
+    }
     return mdSystemQueryHandler;
   }
-  
+
   public void init() {
     final WspRdfStore store = WspRdfStore.getInstance();
     URL datasetUrl;
@@ -55,7 +56,8 @@ public class MdSystemQueryHandler {
    */
   public ArrayList<ConceptQueryResult> getConcept(final String query) {
     identifier.initIdentifying(query, ConceptIdentfierSearchMode.METHODE_OR);
-    ArrayList<ConceptQueryResult> results = identifier.getResultList();
+    final ArrayList<ConceptQueryResult> results = identifier.getResultList();
     return results;
   }
+
 }

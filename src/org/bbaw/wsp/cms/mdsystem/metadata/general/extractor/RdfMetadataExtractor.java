@@ -19,6 +19,25 @@ import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
  *       first matching xml base attribut (which contains the real URL)
  */
 public class RdfMetadataExtractor extends MetadataExtractor {
+  /**
+   * Key to access the *:type from the normdata.
+   */
+  public static final String TYPE = "type";
+  /**
+   * Key to access the *:description (* should match a dc - hopefully ;) )
+   */
+  private static final String DESCRIPTION = "description";
+  /**
+   * Key to access the *:functionOrRole (* should match gnd...)
+   */
+  private static final String FUNCTION_OR_ROLE = "functionOrRole";
+  /**
+   * The URI which identifies a project.
+   */
+  private static final String TYPE_PROJECT = "http://xmlns.com/foaf/0.1/Project";
+  private static final String TYPE_PERSON = "http://xmlns.com/foaf/0.1/Person";
+  private static final String DESCRIPTION_HISTORICAL_PERSON = "Historische Person";
+  private static final String DESCRIPTION_WORK_LEADER = "Arbeitsstellenleiter";
 
   ArrayList<ConceptQueryResult> targetList;
 
@@ -77,7 +96,7 @@ public class RdfMetadataExtractor extends MetadataExtractor {
         addToTarget("Description", queryExecute(query), target);
 
         query = "//rdf:Description[" + i + "]/*:type/@rdf:resource";
-        addToTarget("type", queryExecute(query), target);
+        addToTarget(TYPE, queryExecute(query), target);
 
         // vllt nicht wichtig
         query = "//rdf:Description[" + i + "]/*:imports/@rdf:resource";
@@ -187,9 +206,111 @@ public class RdfMetadataExtractor extends MetadataExtractor {
 
         query = "//rdf:Description[" + i + "]/*:fundedBy/@rdf:resource";
         addToTarget("fundedBy", queryExecute(query), target);
+
+        // new functionality: calculate score for the given target
+        calculateScore(elements, target);
       }
     }
 
+  }
+
+  /**
+   * Calculate the score for the given elements and the resulting target (an RDF node within the normdata)
+   * 
+   * @param elements
+   *          array of String, each element contains the client's search terms.
+   * @param target
+   *          the {@link ConceptQueryResult} for the matched RDF node
+   */
+  private void calculateScore(final String[] elements, final ConceptQueryResult target) {
+
+    if (elements.length == 1) { // one search term, so the score differs
+      calcForSingleTerm(target, 0);
+    } else {
+      calcForMultipleTerm(elements, target);
+    }
+  }
+
+  /**
+   * Calculate the priorities for single term queries, like 'marx http://xmlns.com/foaf/0.1/Person'.
+   * 
+   * @param searchTerms
+   *          array of search terms (String)
+   * 
+   * @param target
+   *          the {@link ConceptQueryResult}
+   */
+  private void calcForMultipleTerm(final String[] searchTerms, final ConceptQueryResult target) {
+    // look, if there's a matching URI in the query result for the second element in searchTerms.
+    final String matchingElement = searchTerms[1];
+    boolean elementFound = false;
+    for (final String mdField : target.getAllMDFields()) {
+      final ArrayList<String> nodeValues = target.getValue(mdField);
+      for (final String nodeValue : nodeValues) {
+        if (nodeValue.contains(matchingElement)) { // user's term is contained in nodeValue
+          target.setPriority(ConceptIdentifierPriority.FIRST);
+          elementFound = true;
+        }
+      }
+    }
+
+    if (!elementFound) { // no element found, so we just handle it like a single term
+      calcForSingleTerm(target, 1);
+    }
+  }
+
+  /**
+   * Calculate the priorities for single term queries, like 'marx'.
+   * 
+   * @param target
+   *          the {@link ConceptQueryResult}
+   * @param priorityGap
+   *          the gap (the minumum numbers of priorites) for the highest priority in here. E.g.: if you enter 1, than not FIRST will be the highest priority, but FIRST + 1 = SECOND ;)
+   */
+  private void calcForSingleTerm(final ConceptQueryResult target, final int priorityGap) {
+    ConceptIdentifierPriority highestPriority = ConceptIdentifierPriority.FIRST;
+    for (int i = 0; i < priorityGap; i++) {
+      highestPriority = highestPriority.getNextPriority();
+    }
+
+    final ArrayList<String> type = target.getValue(TYPE);
+    if (type != null) {
+      for (final String typeNode : type) {
+        if (typeNode.contains(TYPE_PERSON)) {
+          handlePerson(target, highestPriority);
+          // no person
+        } else if (typeNode.contains(TYPE_PROJECT)) { // third highest priority
+          target.setPriority(ConceptIdentifierPriority.THIRD);
+        }
+      }
+    }
+  }
+
+  /**
+   * Handle a {@link ConceptQueryResult} of type Person (see constant above).
+   * 
+   * @param target
+   * @param highestPriority
+   */
+  private void handlePerson(final ConceptQueryResult target, final ConceptIdentifierPriority highestPriority) {
+    final ArrayList<String> description = target.getValue(DESCRIPTION);
+    if (description != null) {
+      for (final String descriptionNode : description) {
+        if (descriptionNode.contains(DESCRIPTION_HISTORICAL_PERSON)) { // highest priority
+          target.setPriority(highestPriority);
+        } else if (descriptionNode.contains(DESCRIPTION_WORK_LEADER)) { // second highest priority
+          target.setPriority(highestPriority.getNextPriority());
+        }
+      }
+    }
+    final ArrayList<String> functionOrRole = target.getValue(FUNCTION_OR_ROLE);
+    if (functionOrRole != null) {
+      for (final String functionOrRoleNode : functionOrRole) {
+        if (functionOrRoleNode.contains(DESCRIPTION_HISTORICAL_PERSON)) {
+          target.setPriority(highestPriority);
+        }
+      }
+    }
   }
 
   /**
