@@ -9,11 +9,16 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+
+import net.sf.saxon.s9api.XdmItem;
+import net.sf.saxon.s9api.XdmSequenceIterator;
+import net.sf.saxon.s9api.XdmValue;
 
 import org.apache.log4j.Logger;
 import org.bbaw.wsp.cms.dochandler.DocumentHandler;
@@ -23,6 +28,9 @@ import org.bbaw.wsp.cms.document.XQuery;
 import org.bbaw.wsp.cms.scheduler.CmsDocOperation;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
+import de.mpg.mpiwg.berlin.mpdl.util.StringUtils;
+import de.mpg.mpiwg.berlin.mpdl.util.Util;
+import de.mpg.mpiwg.berlin.mpdl.xml.xquery.XQueryEvaluator;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -124,7 +132,10 @@ public class CollectionManager {
       String docId = mdRecord.getDocId();
       String collectionId = mdRecord.getCollectionNames();
       counter++;
-      LOGGER.info(counter + ". " + "Collection: " + collectionId + ": Create resource: " + docUrl + " (" + docId + ")");
+      String logCreationStr = counter + ". " + "Collection: " + collectionId + ": Create resource: " + docUrl + " (" + docId + ")";
+      if (docUrl == null)
+        logCreationStr = counter + ". " + "Collection: " + collectionId + ": Create metadata resource: " + docId;
+      LOGGER.info(logCreationStr);
       CmsDocOperation docOp = new CmsDocOperation("create", docUrl, null, docId);
       docOp.setMdRecord(mdRecord);
       ArrayList<String> fields = collection.getFields();
@@ -147,7 +158,7 @@ public class CollectionManager {
   }
 
   private ArrayList<MetadataRecord> getMetadataRecords(Collection collection) throws ApplicationException {
-    ArrayList<MetadataRecord> mdRecords = null;
+    ArrayList<MetadataRecord> mdRecords = new ArrayList<MetadataRecord>();;
     try {
       String collectionId = collection.getId();
       String dataUrlPrefix = collection.getDataUrlPrefix();
@@ -158,7 +169,6 @@ public class CollectionManager {
       Hashtable<String, XQuery> xQueries = collection.getxQueries();
       if (metadataUrls != null) {
         if (metadataUrlType != null && metadataUrlType.equals("single")) {
-          mdRecords = new ArrayList<MetadataRecord>();
           for (int i=0; i<metadataUrls.length; i++) {
             String metadataUrl = metadataUrls[i];
             MetadataRecord mdRecord = new MetadataRecord();
@@ -199,12 +209,36 @@ public class CollectionManager {
               mdRecords.add(mdRecord);
             }
           }
-        } else {
-          // TODO
+        } else if (metadataUrlType != null && metadataUrlType.equals("many")) {
+          XQueryEvaluator xQueryEvaluator = new XQueryEvaluator();
+          for (int i=0; i<metadataUrls.length; i++) {
+            String metadataUrlStr = metadataUrls[i];
+            URL metadataUrl = new URL(metadataUrlStr);
+            String metadataUrlFileStr = metadataUrl.getFile();
+            File metadataUrlFile = new File(metadataUrlFileStr);
+            URL metadataUrlFileUrl = metadataUrlFile.toURI().toURL();
+            XdmValue xmdValueResources = xQueryEvaluator.evaluate(metadataUrlFileUrl, "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; /rdf:RDF/rdf:Description[ends-with(string(@rdf:about), 'Aggregation')]");
+            XdmSequenceIterator xmdValueResourcesIterator = xmdValueResources.iterator();
+            if (xmdValueResources != null && xmdValueResources.size() > 0) {
+              while (xmdValueResourcesIterator.hasNext()) {
+                XdmItem xdmItemResource = xmdValueResourcesIterator.next();
+                String xdmItemResourceStr = xdmItemResource.toString();
+                MetadataRecord mdRecord = getMdRecord(xQueryEvaluator, xdmItemResourceStr);
+                String identifier = mdRecord.getDocId();
+                String docId = "/" + collectionId + "/" + identifier;
+                mdRecord.setDocId(docId);
+                mdRecord.setCollectionNames(collectionId);
+                if (mdRecord.getLanguage() == null) {
+                  String mainLanguage = collection.getMainLanguage();
+                  mdRecord.setLanguage(mainLanguage);
+                }
+                mdRecords.add(mdRecord);
+              }
+            }
+          }          
         }
       }
-      if (metadataUrls == null && documentUrls != null) {
-        mdRecords = new ArrayList<MetadataRecord>();
+      if (documentUrls != null) {
         for (int i=0; i<documentUrls.size(); i++) {
           MetadataRecord mdRecord = new MetadataRecord();
           String docUrl = documentUrls.get(i);
@@ -259,7 +293,10 @@ public class CollectionManager {
     } catch (MalformedURLException e) {
       throw new ApplicationException(e);
     }
-    return mdRecords;
+    if (mdRecords.size() == 0)
+      return null;
+    else 
+      return mdRecords;
   }
   
   private void setUpdate(File configFile, boolean update) throws ApplicationException {
@@ -300,4 +337,40 @@ public class CollectionManager {
     return mimeType;
   }
 
+  private MetadataRecord getMdRecord(XQueryEvaluator xQueryEvaluator, String xmlRdfStr) throws ApplicationException {
+    MetadataRecord mdRecord = new MetadataRecord();
+    String identifier = xQueryEvaluator.evaluateAsString(xmlRdfStr, "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; declare namespace dcterms=\"http://purl.org/dc/terms/\"; /rdf:Description/dcterms:identifier/text()");
+    mdRecord.setDocId(identifier);
+    String webUri = xQueryEvaluator.evaluateAsString(xmlRdfStr, "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; declare namespace dc=\"http://purl.org/elements/1.1/\"; string(/rdf:Description/dc:identifier/@rdf:resource)");
+    mdRecord.setWebUri(webUri);
+    String creator = xQueryEvaluator.evaluateAsString(xmlRdfStr, "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; declare namespace dc=\"http://purl.org/elements/1.1/\"; /rdf:Description/dc:creator/text()");
+    mdRecord.setCreator(creator);
+    String title = xQueryEvaluator.evaluateAsString(xmlRdfStr, "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; declare namespace dc=\"http://purl.org/elements/1.1/\"; /rdf:Description/dc:title/text()");
+    mdRecord.setTitle(title);
+    String publisher = xQueryEvaluator.evaluateAsString(xmlRdfStr, "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; declare namespace dc=\"http://purl.org/elements/1.1/\"; /rdf:Description/dc:publisher/text()");
+    mdRecord.setPublisher(publisher);
+    String subject = xQueryEvaluator.evaluateAsStringValueJoined(xmlRdfStr, "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; declare namespace dc=\"http://purl.org/elements/1.1/\"; /rdf:Description/dc:subject", ", ");
+    mdRecord.setSubject(subject);
+    String dateStr = xQueryEvaluator.evaluateAsString(xmlRdfStr, "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; declare namespace dc=\"http://purl.org/elements/1.1/\"; /rdf:Description/dc:date/text()");
+    Date date = null;
+    if (dateStr != null && ! dateStr.equals("")) {
+      dateStr = StringUtils.deresolveXmlEntities(dateStr.trim());
+      dateStr = new Util().toYearStr(dateStr);  // test if possible etc
+      if (dateStr != null) {
+        try {
+          date = new Util().toDate(dateStr + "-01-01T00:00:00.000Z");
+        } catch (Exception e) {
+          // nothing
+        }
+      }
+    }
+    mdRecord.setDate(date);
+    String language = xQueryEvaluator.evaluateAsString(xmlRdfStr, "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; declare namespace dc=\"http://purl.org/elements/1.1/\"; declare namespace dcterms=\"http://purl.org/dc/terms/\"; /rdf:Description/dc:language/dcterms:ISO639-3/rdf:value/text()");
+    mdRecord.setLanguage(language);
+    String mimeType = xQueryEvaluator.evaluateAsString(xmlRdfStr, "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; declare namespace dc=\"http://purl.org/elements/1.1/\"; declare namespace dcterms=\"http://purl.org/dc/terms/\"; string(/rdf:Description/dc:format/dcterms:IMT/@rdf:value)");
+    mdRecord.setType(mimeType);
+    String abstractt = xQueryEvaluator.evaluateAsString(xmlRdfStr, "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; declare namespace dc=\"http://purl.org/elements/1.1/\"; /rdf:Description/dc:abstract/text()");
+    mdRecord.setDescription(abstractt);
+    return mdRecord;    
+  }
 }
