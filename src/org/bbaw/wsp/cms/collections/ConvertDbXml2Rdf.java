@@ -46,7 +46,7 @@ public class ConvertDbXml2Rdf {
       String dbName = db.getName();  // e.g. "avh_biblio";
       File outputRdfFile = new File(outputRdfDir + collectionId + "/" + dbName + ".rdf");
       StringBuilder rdfStrBuilder = new StringBuilder();
-      rdfStrBuilder.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+      rdfStrBuilder.append("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
       rdfStrBuilder.append("<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\" xmlns:ore=\"http://www.openarchives.org/ore/terms/\" xmlns:dc=\"http://purl.org/elements/1.1/\" xmlns:dcterms=\"http://purl.org/dc/terms/\" xmlns:foaf=\"http://xmlns.com/foaf/0.1/\" xmlns:edm=\"http://www.europeana.eu/schemas/edm/\" xmlns:xi=\"http://www.w3.org/2001/XInclude\">");
       URL xmlDumpFileUrl = inputXmlDumpFile.toURI().toURL();
       String mainResourcesTable = db.getMainResourcesTable();  // e.g. "titles";
@@ -119,16 +119,41 @@ public class ConvertDbXml2Rdf {
     rdfStrBuilder.append("<rdf:Description rdf:about=\"" + rdfAggregationId + "\">");
     rdfStrBuilder.append("<ore:describedBy rdf:resource=\"" + rdfWebId + "\"/>");
     rdfStrBuilder.append("<rdf:type rdf:resource=\"http://www.openarchives.org/ore/terms/Aggregation\"/>");
+    rdfStrBuilder.append("<dcterms:identifier>" + id + "</dcterms:identifier>");
     rdfStrBuilder.append("<dc:identifier rdf:resource=\"" + rdfWebId + "\"/>");
+    String dbFieldCreator = db.getDbField("creator");
+    if (dbFieldCreator != null) {
+      String creator = row.getFieldValue(dbFieldCreator);
+      if (creator != null && ! creator.isEmpty()) {
+        creator = StringUtils.deresolveXmlEntities(creator);
+        rdfStrBuilder.append("<dc:creator>" + creator + "</dc:creator>");
+      }
+    }
     String dbFieldTitle = db.getDbField("title");
     if (dbFieldTitle != null) {
       String title = row.getFieldValue(dbFieldTitle);
-      if (title != null) {
+      if (title != null && ! title.isEmpty()) {
         title = StringUtils.deresolveXmlEntities(title);
         rdfStrBuilder.append("<dc:title>" + title + "</dc:title>");
       }
     }
-    rdfStrBuilder.append("<dc:publisher rdf:resource=\"" + collectionRdfId + "\"/>");
+    String dbFieldPublisher = db.getDbField("publisher");
+    if (dbFieldPublisher != null) {
+      String publisher = row.getFieldValue(dbFieldPublisher);
+      if (publisher != null && ! publisher.isEmpty()) {
+        publisher = StringUtils.deresolveXmlEntities(publisher);
+        rdfStrBuilder.append("<dc:publisher>" + publisher + "</dc:publisher>");
+        // rdfStrBuilder.append("<dc:publisher rdf:resource=\"" + publisher + "\"/>");
+      }
+    }
+    String dbFieldDate = db.getDbField("date");
+    if (dbFieldDate != null) {
+      String date = row.getFieldValue(dbFieldDate);
+      if (date != null && ! date.isEmpty()) {
+        date = StringUtils.deresolveXmlEntities(date);
+        rdfStrBuilder.append("<dc:date>" + date + "</dc:date>");
+      }
+    }
     String dbFieldLanguage = db.getDbField("language");
     String language = row.getFieldValue(dbFieldLanguage);
     if (language == null && mainLanguage != null)
@@ -140,9 +165,23 @@ public class ConvertDbXml2Rdf {
     String dbFieldSubject = db.getDbField("subject");
     if (dbFieldSubject != null) {
       String subject = row.getFieldValue(dbFieldSubject);
-      if (subject != null) {
-        subject = StringUtils.deresolveXmlEntities(subject);
-        rdfStrBuilder.append("<dc:subject>" + subject + "</dc:subject>");
+      if (subject != null && ! subject.isEmpty()) {
+        String[] subjects = subject.split("###");
+        if (subjects != null) {
+          for (int i=0; i<subjects.length; i++) {
+            String s = subjects[i];
+            s = StringUtils.deresolveXmlEntities(s);
+            rdfStrBuilder.append("<dc:subject>" + s + "</dc:subject>");
+          }
+        }
+      }
+    }
+    String dbFieldAbstract = db.getDbField("description");
+    if (dbFieldAbstract != null) {
+      String abstractt = row.getFieldValue(dbFieldAbstract);
+      if (abstractt != null && ! abstractt.isEmpty()) {
+        abstractt = StringUtils.deresolveXmlEntities(abstractt);
+        rdfStrBuilder.append("<dc:abstract>" + abstractt + "</dc:abstract>");
       }
     }
     // TODO further dc fields
