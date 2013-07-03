@@ -13,8 +13,8 @@ SELECT
  tits.title as title,
  IF(CHAR_LENGTH(tits.pub_editor) = 0, IFNULL(tits.pub_location, ''), CONCAT(tits.pub_editor, ', ', IFNULL(tits.pub_location, ''))) as publisher,
  tits.pub_year as pub_date,
- tits.keywords as subject,
- tits.annotations as description
+ tits.pages as pages,
+ tits.keywords as subject
 FROM 
 (SELECT 
   titles.*, 
@@ -58,12 +58,12 @@ GROUP BY tits.title_id
           <db>pub_date</db>
         </field>
         <field>
-          <dc>subject</dc>
-          <db>subject</db>
+          <dc>extent</dc>
+          <db>pages</db>
         </field>
         <field>
-          <dc>description</dc>
-          <db>description</db>
+          <dc>subject</dc>
+          <db>subject</db>
         </field>
         <field>
           <dc>language</dc>
