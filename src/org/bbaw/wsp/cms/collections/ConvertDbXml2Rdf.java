@@ -154,6 +154,14 @@ public class ConvertDbXml2Rdf {
         rdfStrBuilder.append("<dc:date>" + date + "</dc:date>");
       }
     }
+    String dbFieldPages = db.getDbField("extent");
+    if (dbFieldPages != null) {
+      String pages = row.getFieldValue(dbFieldPages);
+      if (pages != null && ! pages.isEmpty()) {
+        pages = StringUtils.deresolveXmlEntities(pages);
+        rdfStrBuilder.append("<dc:pages>" + pages + "</dc:pages>");
+      }
+    }
     String dbFieldLanguage = db.getDbField("language");
     String language = row.getFieldValue(dbFieldLanguage);
     if (language == null && mainLanguage != null)
@@ -176,7 +184,7 @@ public class ConvertDbXml2Rdf {
         }
       }
     }
-    String dbFieldAbstract = db.getDbField("description");
+    String dbFieldAbstract = db.getDbField("abstract");
     if (dbFieldAbstract != null) {
       String abstractt = row.getFieldValue(dbFieldAbstract);
       if (abstractt != null && ! abstractt.isEmpty()) {
