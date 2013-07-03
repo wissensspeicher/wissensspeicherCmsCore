@@ -349,7 +349,7 @@ public class CollectionManager {
     mdRecord.setTitle(title);
     String publisher = xQueryEvaluator.evaluateAsString(xmlRdfStr, "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; declare namespace dc=\"http://purl.org/elements/1.1/\"; /rdf:Description/dc:publisher/text()");
     mdRecord.setPublisher(publisher);
-    String subject = xQueryEvaluator.evaluateAsStringValueJoined(xmlRdfStr, "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; declare namespace dc=\"http://purl.org/elements/1.1/\"; /rdf:Description/dc:subject", ", ");
+    String subject = xQueryEvaluator.evaluateAsStringValueJoined(xmlRdfStr, "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; declare namespace dc=\"http://purl.org/elements/1.1/\"; /rdf:Description/dc:subject", "###");
     mdRecord.setSubject(subject);
     String dateStr = xQueryEvaluator.evaluateAsString(xmlRdfStr, "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; declare namespace dc=\"http://purl.org/elements/1.1/\"; /rdf:Description/dc:date/text()");
     Date date = null;
@@ -371,6 +371,15 @@ public class CollectionManager {
     mdRecord.setType(mimeType);
     String abstractt = xQueryEvaluator.evaluateAsString(xmlRdfStr, "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; declare namespace dc=\"http://purl.org/elements/1.1/\"; /rdf:Description/dc:abstract/text()");
     mdRecord.setDescription(abstractt);
+    String pagesStr = xQueryEvaluator.evaluateAsString(xmlRdfStr, "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; declare namespace dc=\"http://purl.org/elements/1.1/\"; /rdf:Description/dc:extent/text()");
+    if (pagesStr != null && ! pagesStr.isEmpty()) {
+      try {
+        int pages = Integer.parseInt(pagesStr);
+        mdRecord.setPageCount(pages);
+      } catch (NumberFormatException e) {
+        // nothing
+      }
+    }
     return mdRecord;    
   }
 }
