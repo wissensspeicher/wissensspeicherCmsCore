@@ -26,18 +26,27 @@ public class RdfMetadataExtractor extends MetadataExtractor {
   /**
    * Key to access the *:description (* should match a dc - hopefully ;) )
    */
-  private static final String DESCRIPTION = "description";
+  public static final String DESCRIPTION = "description";
   /**
    * Key to access the *:functionOrRole (* should match gnd...)
    */
-  private static final String FUNCTION_OR_ROLE = "functionOrRole";
+  public static final String FUNCTION_OR_ROLE = "functionOrRole";
   /**
-   * The URI which identifies a project.
+   * The URI (normdata.rdf) which identifies a project.
    */
-  private static final String TYPE_PROJECT = "http://xmlns.com/foaf/0.1/Project";
-  private static final String TYPE_PERSON = "http://xmlns.com/foaf/0.1/Person";
-  private static final String DESCRIPTION_HISTORICAL_PERSON = "Historische Person";
-  private static final String DESCRIPTION_WORK_LEADER = "Arbeitsstellenleiter";
+  public static final String TYPE_PROJECT = "http://xmlns.com/foaf/0.1/Project";
+  /**
+   * The URI (normdata.rdf) which identifies a person.
+   */
+  public static final String TYPE_PERSON = "http://xmlns.com/foaf/0.1/Person";
+  /**
+   * The literal (normdata.rdf) which identifies a historical person.
+   */
+  public static final String DESCRIPTION_HISTORICAL_PERSON = "Historische Person";
+  /**
+   * The literal (normdata.rdf) which identifies an Arbeitsstellenleiter.
+   */
+  public static final String DESCRIPTION_WORK_LEADER = "Arbeitsstellenleiter";
 
   ArrayList<ConceptQueryResult> targetList;
 
@@ -247,7 +256,8 @@ public class RdfMetadataExtractor extends MetadataExtractor {
     for (final String mdField : target.getAllMDFields()) {
       final ArrayList<String> nodeValues = target.getValue(mdField);
       for (final String nodeValue : nodeValues) {
-        if (nodeValue.contains(matchingElement)) { // user's term is contained in nodeValue
+        // consider: nodeValue is lowered, so lower matchingElement, too
+        if (nodeValue.toLowerCase().equals(matchingElement) && !target.hasPriority()) { // user's term is contained in nodeValue
           target.setPriority(ConceptIdentifierPriority.FIRST);
           elementFound = true;
         }
@@ -273,13 +283,24 @@ public class RdfMetadataExtractor extends MetadataExtractor {
       highestPriority = highestPriority.getNextPriority();
     }
 
+    handleType(target, highestPriority);
+  }
+
+  /**
+   * Handle a {@link ConceptQueryResult} by analyzing the type (*:type) of the contained rdf node.
+   * 
+   * @param target
+   * @param highestPriority
+   */
+  private void handleType(final ConceptQueryResult target, final ConceptIdentifierPriority highestPriority) {
     final ArrayList<String> type = target.getValue(TYPE);
     if (type != null) {
       for (final String typeNode : type) {
+        // why contains? -> because the typeNode could be wrapped by control characters or something
         if (typeNode.contains(TYPE_PERSON)) {
           handlePerson(target, highestPriority);
           // no person
-        } else if (typeNode.contains(TYPE_PROJECT)) { // third highest priority
+        } else if (typeNode.contains(TYPE_PROJECT) && !target.hasPriority()) { // third highest priority
           target.setPriority(ConceptIdentifierPriority.THIRD);
         }
       }
@@ -296,9 +317,9 @@ public class RdfMetadataExtractor extends MetadataExtractor {
     final ArrayList<String> description = target.getValue(DESCRIPTION);
     if (description != null) {
       for (final String descriptionNode : description) {
-        if (descriptionNode.contains(DESCRIPTION_HISTORICAL_PERSON)) { // highest priority
+        if (descriptionNode.contains(DESCRIPTION_HISTORICAL_PERSON) && !target.hasPriority()) { // highest priority
           target.setPriority(highestPriority);
-        } else if (descriptionNode.contains(DESCRIPTION_WORK_LEADER)) { // second highest priority
+        } else if (descriptionNode.contains(DESCRIPTION_WORK_LEADER) && !target.hasPriority()) { // second highest priority
           target.setPriority(highestPriority.getNextPriority());
         }
       }
@@ -306,7 +327,7 @@ public class RdfMetadataExtractor extends MetadataExtractor {
     final ArrayList<String> functionOrRole = target.getValue(FUNCTION_OR_ROLE);
     if (functionOrRole != null) {
       for (final String functionOrRoleNode : functionOrRole) {
-        if (functionOrRoleNode.contains(DESCRIPTION_HISTORICAL_PERSON)) {
+        if (functionOrRoleNode.contains(DESCRIPTION_HISTORICAL_PERSON) && !target.hasPriority()) {
           target.setPriority(highestPriority);
         }
       }
