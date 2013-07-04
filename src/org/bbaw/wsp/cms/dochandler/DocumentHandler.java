@@ -84,13 +84,15 @@ public class DocumentHandler {
       }
       File docDestFile = new File(docDestFileName);
       // perform operation on file system
-      if (protocol.equals("file")) {
+      if (protocol != null && protocol.equals("file")) {
         docOperation.setStatus("upload file: " + srcUrlStr + " to CMS");
-      } else {
+      } else if (protocol != null) {
         docOperation.setStatus("download file from: " + srcUrlStr + " to CMS");
       }
       try {
-        FileUtils.copyURLToFile(srcUrl, docDestFile, 5000, 5000);
+        if (srcUrl != null) {
+          FileUtils.copyURLToFile(srcUrl, docDestFile, 5000, 5000);
+        }
       } catch (SocketTimeoutException e) {
         LOGGER.error("Operation failed. Read timeout for: " + srcUrl);
         FileUtils.deleteQuietly(docDestFile);
@@ -115,7 +117,7 @@ public class DocumentHandler {
       if (docType == null) {
         docType = mimeType;
       }
-      if (docType == null) {
+      if (srcUrl != null && docType == null) {
         FileUtils.deleteQuietly(docDestFile);
         docOperation.setErrorMessage(srcUrlStr + " is not created: mime type is not supported");
         LOGGER.info(srcUrlStr + " is not created: mime type is not supported");
@@ -188,7 +190,7 @@ public class DocumentHandler {
           mdRecord.setLanguage(mainLanguage);
       } 
       // build the documents fulltext fields
-      if (! docType.equals("mets"))
+      if (srcUrl != null && docType != null && ! docType.equals("mets"))
         buildFulltextFields(docOperation);
       // perform operation on Lucene
       docOperation.setStatus(operationName + " document: " + docId + " in CMS");
