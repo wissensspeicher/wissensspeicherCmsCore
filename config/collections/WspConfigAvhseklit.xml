@@ -2,20 +2,72 @@
 <wsp>
   <collection>
     <id>avhseklit</id>
-    <rdfId>http://wsp.normdata.rdf/AvHForschungsstelle/Sekundärliteratur</rdfId>
+    <rdfId>http://wsp.normdata.rdf/AvHForschungsstelle/Sekundaerliteratur</rdfId>
     <db>
       <name>avh_biblio</name>
-      <xmlDumpFileName>/home/joey/dataWsp/documentsExtern/avhseklit/avh_biblio.xml</xmlDumpFileName>
+      <xmlDump>
+        <sql>
+SELECT 
+ tits.title_id as id,
+ GROUP_CONCAT(persons.last_name, ', ', persons.first_name ORDER BY persons.last_name SEPARATOR ' ') as creator,
+ tits.title as title,
+ IF(CHAR_LENGTH(tits.pub_editor) = 0, IFNULL(tits.pub_location, ''), CONCAT(tits.pub_editor, ', ', IFNULL(tits.pub_location, ''))) as publisher,
+ tits.pub_year as pub_date,
+ tits.pages as pages,
+ tits.keywords as subject
+FROM 
+(SELECT 
+  titles.*, 
+  GROUP_CONCAT(keywords.keyword ORDER BY keywords.keyword SEPARATOR '###') as keywords
+ FROM titles, titles_keywords, keywords
+ WHERE 
+  titles.title_id = 100001
+ AND
+  titles_keywords.title_id = titles.title_id
+ AND
+  titles_keywords.keyword_id = keywords.keyword_id
+ GROUP BY titles.title_id
+) as tits, 
+titles_persons, 
+persons
+WHERE
+ titles_persons.title_id = tits.title_id
+AND
+ titles_persons.person_id = persons.person_id
+GROUP BY tits.title_id
+        </sql>
+        <fileName>/home/joey/dataWsp/documentsExtern/avhseklit/test_avh_biblio.xml</fileName>
+      </xmlDump>
       <mainResourcesTable>
-        <name>titles</name>
-        <idField>title_id</idField>
+        <name>titles_persons</name>
+        <idField>id</idField>
+        <field>
+          <dc>creator</dc>
+          <db>creator</db>
+        </field>
         <field>
           <dc>title</dc>
           <db>title</db>
         </field>
         <field>
+          <dc>publisher</dc>
+          <db>publisher</db>
+        </field>
+        <field>
+          <dc>date</dc>
+          <db>pub_date</db>
+        </field>
+        <field>
+          <dc>extent</dc>
+          <db>pages</db>
+        </field>
+        <field>
+          <dc>subject</dc>
+          <db>subject</db>
+        </field>
+        <field>
           <dc>language</dc>
-          <db>language</db>
+          <db>language</db> 
         </field>
       </mainResourcesTable>
       <webId>

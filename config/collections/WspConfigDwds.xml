@@ -2,7 +2,7 @@
 <wsp>
   <collection>
     <id>dwds</id>
-    <rdfId>http://wsp.normdata.rdf/DigitalesWörterbuch</rdfId>
+    <rdfId>http://wsp.normdata.rdf/DigitalesWoerterbuch</rdfId>
     <name>Digitales Wörterbuch der deutschen Sprache (DWDS)</name>
     <url>
     	<webBaseUrl>http://www.dwds.de/</webBaseUrl>

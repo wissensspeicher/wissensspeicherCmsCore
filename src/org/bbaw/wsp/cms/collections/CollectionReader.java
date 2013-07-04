@@ -88,7 +88,7 @@ public class CollectionReader {
           if (dbName != null) {
             Database database = new Database();
             database.setName(dbName);
-            String xmlDumpFileName = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/db/xmlDumpFileName/text()");
+            String xmlDumpFileName = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/db/xmlDump/fileName/text()");
             if (xmlDumpFileName != null)
               database.setXmlDumpFileName(xmlDumpFileName);
             String mainResourcesTable = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/db/mainResourcesTable/name/text()");
