@@ -84,6 +84,10 @@ public class ConceptQueryResult {
    * <strong>For example:</strong> if you enter Marx, the resulting concept can be a project or a historical person. The historical person has the highest / first priority.
    * </p>
    * 
+   * <p>
+   * <strong>Behaviour: </strong> if a priority was already set, the old priority will be replaced! Use hasPriority() to check whether a priority was already set.
+   * </p>
+   * 
    * @param priority
    *          , see the {@link ConceptIdentifierPriority}.
    */
@@ -102,5 +106,14 @@ public class ConceptQueryResult {
    */
   public final ConceptIdentifierPriority getResultPriority() {
     return resultPriority;
+  }
+
+  /**
+   * Check whether a priority was already set.
+   * 
+   * @return true
+   */
+  public boolean hasPriority() {
+    return (resultPriority != null && !resultPriority.equals(ConceptIdentifierPriority.UNDEFINED));
   }
 }
