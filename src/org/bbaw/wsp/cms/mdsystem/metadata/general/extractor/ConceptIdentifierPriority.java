@@ -21,7 +21,7 @@ public enum ConceptIdentifierPriority {
   /**
    * Highest priority, descending.
    */
-  FIRST, SECOND, THIRD, FOURTH, FIVTH,
+  HIGH, MIDDLE, LOW,
   /**
    * End of the road.
    */
@@ -38,16 +38,12 @@ public enum ConceptIdentifierPriority {
   public ConceptIdentifierPriority getNextPriority() {
     switch (this) {
     case START:
-      return FIRST;
-    case FIRST:
-      return SECOND;
-    case SECOND:
-      return THIRD;
-    case THIRD:
-      return FOURTH;
-    case FOURTH:
-      return FIVTH;
-    case FIVTH:
+      return HIGH;
+    case HIGH:
+      return MIDDLE;
+    case MIDDLE:
+      return LOW;
+    case LOW:
       return END;
     default:
       throw new IllegalArgumentException("Illegal value for the parameter prevPriority. Must be an enum value");

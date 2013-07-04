@@ -3,6 +3,7 @@ package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.conceptsearch.ConceptIdentfierSearchMode;
 import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.conceptsearch.ConceptIdentifier;
@@ -54,9 +55,9 @@ public class MdSystemQueryHandler {
    * @param query
    * @return
    */
-  public ArrayList<ConceptQueryResult> getConcept(final String query) {
+  public List<ConceptQueryResult> getConcept(final String query) {
     identifier.initIdentifying(query, ConceptIdentfierSearchMode.METHODE_OR);
-    final ArrayList<ConceptQueryResult> results = identifier.getResultList();
+    final List<ConceptQueryResult> results = identifier.getResultList();
     return results;
   }
 

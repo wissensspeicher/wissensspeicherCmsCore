@@ -50,6 +50,8 @@ public class RdfMetadataExtractor extends MetadataExtractor {
 
   ArrayList<ConceptQueryResult> targetList;
 
+  HashMap<ConceptIdentifierPriority, ArrayList<ConceptQueryResult>> priorityTargetMap;
+
   /**
    * Create a new ModsMetadataParser instance.
    * 
@@ -63,6 +65,8 @@ public class RdfMetadataExtractor extends MetadataExtractor {
   public RdfMetadataExtractor(final String uri, final HashMap<String, String> namespaces) throws ApplicationException {
     super(uri, namespaces);
     targetList = new ArrayList<ConceptQueryResult>();
+    priorityTargetMap = new HashMap<>();
+
   }
 
   /**
@@ -101,6 +105,9 @@ public class RdfMetadataExtractor extends MetadataExtractor {
         final ConceptQueryResult target = new ConceptQueryResult();
         targetList.add(target);
 
+        /*
+         * Anmerkung: für jedes Element wird addToTarget() aufgerufen, selbst wenn es den Node nicht gibt. Erst in addToTarget() wird dann festgestellt, dass das Ergebnis von queryResult null ist. Sollte man aus Der Kontrollfluss könnte verbessert werden, wenn bereits vor dem Aufruf von addToTarget() überprüft wird.
+         */
         String query = "//rdf:Description[" + i + "]/@rdf:about";
         addToTarget("Description", queryExecute(query), target);
 
@@ -218,9 +225,30 @@ public class RdfMetadataExtractor extends MetadataExtractor {
 
         // new functionality: calculate score for the given target
         calculateScore(elements, target);
+
+        // add to target map, key is the priority. Why? -> Because we won't need an algorithm to sort the list.
+        addToPriorityMap(target);
       }
     }
 
+  }
+
+  /**
+   * Add the query result to the priority map. So we don't need to sort the queryResults by the priorities.
+   * 
+   * @param target
+   *          the queryResult
+   */
+  private void addToPriorityMap(final ConceptQueryResult target) {
+    final ConceptIdentifierPriority targetPriority = target.getResultPriority();
+    if (priorityTargetMap.get(targetPriority) == null) {
+      final ArrayList<ConceptQueryResult> newList = new ArrayList<>();
+      newList.add(target);
+      priorityTargetMap.put(targetPriority, newList);
+    } else { // list is available
+      final ArrayList<ConceptQueryResult> existingList = priorityTargetMap.get(targetPriority);
+      existingList.add(target);
+    }
   }
 
   /**
@@ -251,20 +279,27 @@ public class RdfMetadataExtractor extends MetadataExtractor {
    */
   private void calcForMultipleTerm(final String[] searchTerms, final ConceptQueryResult target) {
     // look, if there's a matching URI in the query result for the second element in searchTerms.
+    final String firstElement = searchTerms[0];
     final String matchingElement = searchTerms[1];
-    boolean elementFound = false;
+    boolean secondFound = false;
+    boolean firstFound = false;
     for (final String mdField : target.getAllMDFields()) {
       final ArrayList<String> nodeValues = target.getValue(mdField);
       for (final String nodeValue : nodeValues) {
+        if (nodeValue.toLowerCase().contains(firstElement)) {
+          firstFound = true;
+        }
         // consider: nodeValue is lowered, so lower matchingElement, too
         if (nodeValue.toLowerCase().equals(matchingElement) && !target.hasPriority()) { // user's term is contained in nodeValue
-          target.setPriority(ConceptIdentifierPriority.FIRST);
-          elementFound = true;
+          secondFound = true;
         }
       }
     }
+    if (firstFound && secondFound) {
+      target.setPriority(ConceptIdentifierPriority.HIGH);
+    }
 
-    if (!elementFound) { // no element found, so we just handle it like a single term
+    if (!secondFound) { // no element found, so we just handle it like a single term
       calcForSingleTerm(target, 1);
     }
   }
@@ -278,7 +313,7 @@ public class RdfMetadataExtractor extends MetadataExtractor {
    *          the gap (the minumum numbers of priorites) for the highest priority in here. E.g.: if you enter 1, than not FIRST will be the highest priority, but FIRST + 1 = SECOND ;)
    */
   private void calcForSingleTerm(final ConceptQueryResult target, final int priorityGap) {
-    ConceptIdentifierPriority highestPriority = ConceptIdentifierPriority.FIRST;
+    ConceptIdentifierPriority highestPriority = ConceptIdentifierPriority.HIGH;
     for (int i = 0; i < priorityGap; i++) {
       highestPriority = highestPriority.getNextPriority();
     }
@@ -301,7 +336,7 @@ public class RdfMetadataExtractor extends MetadataExtractor {
           handlePerson(target, highestPriority);
           // no person
         } else if (typeNode.contains(TYPE_PROJECT) && !target.hasPriority()) { // third highest priority
-          target.setPriority(ConceptIdentifierPriority.THIRD);
+          target.setPriority(ConceptIdentifierPriority.LOW);
         }
       }
     }
@@ -429,6 +464,13 @@ public class RdfMetadataExtractor extends MetadataExtractor {
       throw new ApplicationException("No attribute xml:base found. This is required for the authentification of the document!");
     }
     return erg;
+  }
+
+  /**
+   * @return the priorityTargetMap
+   */
+  public final HashMap<ConceptIdentifierPriority, ArrayList<ConceptQueryResult>> getPriorityTargetMap() {
+    return priorityTargetMap;
   }
 
 }

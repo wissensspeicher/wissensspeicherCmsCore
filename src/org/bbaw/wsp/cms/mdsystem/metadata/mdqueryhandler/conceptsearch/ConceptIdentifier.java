@@ -3,6 +3,8 @@ package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.conceptsearch;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.bbaw.wsp.cms.general.Constants;
@@ -26,6 +28,7 @@ public class ConceptIdentifier {
   // final String path = new
   // String(MdSystemConfigReader.getInstance().getConfig().getNormdataPath());
   ArrayList<ConceptQueryResult> results;
+  private HashMap<ConceptIdentifierPriority, ArrayList<ConceptQueryResult>> sortedResultsMap;
 
   /**
    * 
@@ -40,6 +43,7 @@ public class ConceptIdentifier {
 
     logger.info("urlToConfFile : " + normdataFile);
     results = new ArrayList<ConceptQueryResult>();
+    RdfMetadataExtractor extractor;
     URL queryAsUrl = null;
     if (query != null && query.toLowerCase().startsWith("http")) {
       try {
@@ -47,10 +51,13 @@ public class ConceptIdentifier {
       } catch (final MalformedURLException e) {
         e.printStackTrace();
       }
-      results = scanForElement(Constants.getInstance().getMdsystemNormdataFile(), queryAsUrl, methode);
+      extractor = scanForElement(Constants.getInstance().getMdsystemNormdataFile(), queryAsUrl, methode);
     } else {
-      results = scanForElement(Constants.getInstance().getMdsystemNormdataFile(), query, methode);
+      extractor = scanForElement(Constants.getInstance().getMdsystemNormdataFile(), query, methode);
     }
+    results = extractor.getResultList();
+    sortedResultsMap = extractor.getPriorityTargetMap();
+
     /*
      * for (ConceptQueryResult target : this.results) { System.out.println(target); }
      */
@@ -70,14 +77,14 @@ public class ConceptIdentifier {
    * @param element
    * @return
    */
-  private ArrayList<ConceptQueryResult> scanForElement(final String file, final String element, final int methode) {
+  private RdfMetadataExtractor scanForElement(final String file, final String element, final int methode) {
     final Logger logger = Logger.getLogger(ConceptIdentifier.class);
     try {
       final RdfMetadataExtractor extractor = MetadataExtractorFactory.newRdfMetadataParser(file);
       extractor.searchElements(element, methode);
       final ArrayList<ConceptQueryResult> resultList = extractor.getResultList();
 
-      return resultList;
+      return extractor;
     } catch (final ApplicationException e) {
       logger.info("Couldn't identify document: " + file + " - " + e.getMessage());
       return null;
@@ -91,23 +98,32 @@ public class ConceptIdentifier {
    * @param element
    * @return
    */
-  private ArrayList<ConceptQueryResult> scanForElement(final String file, final URL element, final int methode) {
+  private RdfMetadataExtractor scanForElement(final String file, final URL element, final int methode) {
     final Logger logger = Logger.getLogger(ConceptIdentifier.class);
     try {
       final RdfMetadataExtractor extractor = MetadataExtractorFactory.newRdfMetadataParser(file);
       // extractor.searchElements(element, methode);
       final ArrayList<ConceptQueryResult> resultList = extractor.getResultList();
 
-      return resultList;
+      return extractor;
     } catch (final ApplicationException e) {
       logger.info("Couldn't identify document: " + file + " - " + e.getMessage());
       return null;
     }
   }
 
-  public ArrayList<ConceptQueryResult> getResultList() {
+  public List<ConceptQueryResult> getResultList() {
     // easier QueryLibary.getInstance().getAllElements();
-    return _sortResultList(results);
+    final List<ConceptQueryResult> mergedResultList = new ArrayList<>();
+    ConceptIdentifierPriority priority = ConceptIdentifierPriority.HIGH;
+    while (priority != ConceptIdentifierPriority.END) {
+      if (sortedResultsMap.get(priority) != null) {
+        mergedResultList.addAll(sortedResultsMap.get(priority));
+      }
+      priority = priority.getNextPriority();
+    }
+    return mergedResultList;
+    // return _sortResultList(results);
   }
 
   /**
@@ -121,7 +137,9 @@ public class ConceptIdentifier {
    * @param results
    *          the results returned by the extractor.
    * @return
+   * @deprecated replaced by priorities map now.
    */
+  @Deprecated
   private ArrayList<ConceptQueryResult> _sortResultList(final ArrayList<ConceptQueryResult> results) {
     final ArrayList<ConceptQueryResult> sortedResults = new ArrayList<>();
     ConceptIdentifierPriority currentPriority = ConceptIdentifierPriority.START.getNextPriority();
