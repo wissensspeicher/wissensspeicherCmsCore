@@ -97,7 +97,7 @@
 		<dcterms:identifier rdf:resource="http://d-nb.info/gnd/113717652"/>
 		<dcterms:identifier rdf:resource="http://viaf.org/viaf/15454334"/>
 	</rdf:Description>
-	<rdf:Description rdf:about="http://wsp.normdata.rdf/ProduktionssystemeZukünftige">
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/ProduktionssystemeZukuenftige">
 		<dc:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">interdisziplinäre Arbeitsgruppe</dc:description>
 		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
 		<dcterms:valid rdf:datatype="http://purl.org/dc/terms/Period">start=1994; end=1997; name=Laufzeit</dcterms:valid>
@@ -698,12 +698,12 @@ Das "Griechische Münzwerk" kann bei seiner Arbeit auf reiches eigenes Material 
 		<!-- TODO: is a resource allowed here allowed here? -->
 		<dcterms:coverage rdf:resource="http://wsp.normdata.rdf/Orinoco" />
 	</rdf:Description>
-	<rdf:Description rdf:about="http://wsp.normdata.rdf/AvHForschungsstelle/Sekundärliteratur">
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/AvHForschungsstelle/Sekundaerliteratur">
 		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Sekundärliteraturdatenbank zu Alexander von Humboldt</foaf:name>
 		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle" />	
 		<foaf:homepage rdf:resource="http://avh.bbaw.de/biblio/" />
 	</rdf:Description>
-	<rdf:Description rdf:about="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften">
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbststaendigeSchriften">
 		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Die unselbständigen Schriften Alexander von Humboldts</foaf:name>
 		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle" />	
 		<foaf:homepage rdf:resource="http://telota.bbaw.de/avh/uns/" />
@@ -978,7 +978,7 @@ Damit sollen gemeinsame historische Vermächtnisse sowie die Mobilität von Pers
 		<dc:coverage rdf:resource="http://wsp.normdata.rdf/Gegenwart"/>
 		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Die Herausforderung durch das Fremde</foaf:name>
 		<dc:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">interdisziplinäre Arbeitsgruppe</dc:description>
-		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Meßlinger"/>
+		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Messlinger"/>
 		<dcterms:abstract rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Die Arbeitsgruppe hat untersucht, wie verschiedene Gruppen und Gesellschaften mit Fremden und Fremdheit verfahren, welche Grenzen sie ziehen, welche Reaktionen sie zeigen und welche Rückwirkungen die Verarbeitung von Fremdheit auf die Strukturen und Selbstverständnisse des "Eigenen" zeitigt. Die Ergebnisse der Arbeitsgruppe sind in der Reihe "Forschungsberichte der Interdisziplinären Arbeitsgruppen der Berlin-Brandenburgischen Akademie der Wissenschaften", Band 5, erschienen.</dcterms:abstract>
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Charlier"/>
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Ladwig"/>
@@ -1932,7 +1932,7 @@ Normativität beeinflusst die Interaktion von Menschen miteinander und den Umgan
 		<foaf:title rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Prof. Dr.</foaf:title>
 		<foaf:givenName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Dieter</foaf:givenName>
 	</rdf:Description>
-	<rdf:Description rdf:about="http://wsp.normdata.rdf/Faßbender">
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/Fassbender">
 		<foaf:familyName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Faßbender</foaf:familyName>
 		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
 		<gnd:functionOrRole>Wissenschaftlicher Mitarbeiter</gnd:functionOrRole>
@@ -1944,7 +1944,7 @@ Normativität beeinflusst die Interaktion von Menschen miteinander und den Umgan
 	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/GriechischChristlichSchriftsteller">
 		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
-		<dcterms:isReplacedBy rdf:resource="http://wsp.normdata.rdf/BiblexegeseSpätantike"/>
+		<dcterms:isReplacedBy rdf:resource="http://wsp.normdata.rdf/BiblexegeseSpaetantike"/>
 		<dc:coverage rdf:resource="http://wsp.normdata.rdf/Antike"/>
 		<dc:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Vorhaben</dc:description>
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Collatz"/>
@@ -2586,7 +2586,7 @@ Die interdisziplinäre Arbeitsgruppe befasst sich mit dem Grundthema „Attrakti
 		<dcterms:abstract rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Das Ziel der vom BMBF geförderten AG besteht darin, eine gesellschaftstheoretisch fundierte interdisziplinäre Elitenforschung in Deutschland zu initiieren. „Eliten-Integration“ als konflikthafter Prozess hat zwei Dimensionen: Einerseits ist Eliten-Handeln ein Element sozialer Integration, andererseits müssen in einer demokratischen Gesellschaft Eliten ihrerseits sozial integriert werden. Der Akzent des Projektes lag daher gleichzeitig auf der horizontalen Integration sektoraler Eliten und der vertikalen Integration dieser Eliten in die Gesellschaft.</dcterms:abstract>
 		<dc:coverage rdf:resource="http://wsp.normdata.rdf/Gegenwart"/>
 		<foaf:fundedBy rdf:resource="http://www.bmbf.de"/>
-		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Straßenberger"/>
+		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Strassenberger"/>
 		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Eliten-Integration</foaf:name>
 		<dc:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">interdisziplinäre Arbeitsgruppe</dc:description>
 		<gnd:definition>Expertise</gnd:definition>
@@ -2897,7 +2897,7 @@ Die interdisziplinäre Arbeitsgruppe befasst sich mit dem Grundthema „Attrakti
 		<rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Antike</rdfs:label>
 		<rdf:type rdf:resource="http://purl.org/dc/terms/PeriodOfTime"/>
 	</rdf:Description>
-	<rdf:Description rdf:about="http://wsp.normdata.rdf/Wörterbuch">
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/Woerterbuch">
 		<rdf:type rdf:resource="http://purl.org/dc/terms/MediaType"/>
 	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/AkademieVerlag">
@@ -3215,7 +3215,7 @@ Hauptaufgabe ist die Edition des türkischen und iranischen Teils der Berliner T
 		<foaf:mbox rdf:datatype="http://www.w3.org/2001/XMLSchema#string">lueke@bbaw.de</foaf:mbox>
 		<gnd:functionOrRole>Wissenschaftlich-technische Mitarbeiterin</gnd:functionOrRole>
 	</rdf:Description>
-	<rdf:Description rdf:about="http://wsp.normdata.rdf/PreußenAlsKulturstaat">
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/PreussenAlsKulturstaat">
 		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ZentrumPreussenBerlin"/>
 		<dc:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Vorhaben</dc:description>
 		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
@@ -3233,7 +3233,7 @@ Das modulartig angelegte Vorhaben beginnt mit einer Geschichte des preußischen 
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Neugebauer"/>
 		<gnd:definition>Edition</gnd:definition>
 		<dcterms:valid rdf:datatype="http://purl.org/dc/terms/Period">start=2004; name=Laufzeit</dcterms:valid>
-		<dcterms:replaces rdf:resource="http://wsp.normdata.rdf/ProtokollePreußischesStaatsministerium"/>
+		<dcterms:replaces rdf:resource="http://wsp.normdata.rdf/ProtokollePreussischesStaatsministerium"/>
 		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Acta Borussica - Preußen als Kulturstaat</foaf:name>
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Zilch"/>
 	</rdf:Description>
@@ -3259,7 +3259,7 @@ Das modulartig angelegte Vorhaben beginnt mit einer Geschichte des preußischen 
 		<foaf:familyName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Baleva</foaf:familyName>
 		<foaf:givenName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Martina</foaf:givenName>
 	</rdf:Description>
-	<rdf:Description rdf:about="http://wsp.normdata.rdf/Strauß">
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/Strauss">
 		<foaf:title rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Dr.</foaf:title>
 		<gnd:functionOrRole>Wissenschaftlicher Mitarbeiter</gnd:functionOrRole>
 		<foaf:mbox rdf:datatype="http://www.w3.org/2001/XMLSchema#string">strauss@bbaw.de</foaf:mbox>
@@ -3276,7 +3276,7 @@ Das modulartig angelegte Vorhaben beginnt mit einer Geschichte des preußischen 
 		<foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">JDG</foaf:nick>
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Becker"/>
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/SchubertM"/>
-		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Cornelißen"/>
+		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Cornelissen"/>
 		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Jahresberichte für deutsche Geschichte</foaf:name>
 		<dcterms:abstract rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Bibliografie zur deutschen Geschichte von den Anfängen bis zur Gegenwart.</dcterms:abstract>
 		<dc:coverage rdf:resource="http://wsp.normdata.rdf/Gegenwart"/>
@@ -3346,7 +3346,7 @@ Das modulartig angelegte Vorhaben beginnt mit einer Geschichte des preußischen 
 		<foaf:homepage rdf:resource="http://zentrumpreussen.bbaw.de/"/>
 		<dcterms:hasPart rdf:resource="http://wsp.normdata.rdf/LeibnizEditionBerlin"/>
 		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Zentrum Preussen-Berlin</foaf:name>
-		<dcterms:hasPart rdf:resource="http://wsp.normdata.rdf/PreußenAlsKulturstaat"/>
+		<dcterms:hasPart rdf:resource="http://wsp.normdata.rdf/PreussenAlsKulturstaat"/>
 		<dcterms:hasPart rdf:resource="http://wsp.normdata.rdf/WilhelmVonHumboldt"/>
 		<dcterms:hasPart rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle"/>
 		<dcterms:hasPart rdf:resource="http://wsp.normdata.rdf/SchleiermacherGesamtausgabe"/>
@@ -3404,7 +3404,7 @@ Das modulartig angelegte Vorhaben beginnt mit einer Geschichte des preußischen 
 		<dcterms:valid rdf:datatype="http://purl.org/dc/terms/Period">end=2004-12-31; name=Laufzeit</dcterms:valid>
 		<gnd:topic rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Geschichte</gnd:topic>
 	</rdf:Description>
-	<rdf:Description rdf:about="http://wsp.normdata.rdf/QualitätsbeurteilungWissenschaft">
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/QualitaetsbeurteilungWissenschaft">
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Neidhardt"/>
 		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
 		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Qualitätsbeurteilung in der Wissenschaft</foaf:name>
@@ -4025,7 +4025,7 @@ Die IAG wird der zentralen Frage nachgehen, ob wassertechnische Großprojekte ei
 		<dcterms:identifier rdf:resource="http://d-nb.info/gnd/118584162"/>
 		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
 	</rdf:Description>
-	<rdf:Description rdf:about="http://wsp.normdata.rdf/ProtokollePreußischesStaatsministerium">
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/ProtokollePreussischesStaatsministerium">
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Paetau"/>
 		<gnd:definition>Edition</gnd:definition>
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Huch"/>
@@ -4043,7 +4043,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
 		<dcterms:valid rdf:datatype="http://purl.org/dc/terms/Period">end=2003; name=Laufzeit</dcterms:valid>
 		<gnd:definition>Forschungsbericht</gnd:definition>
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Spenkuch"/>
-		<dcterms:isReplacedBy rdf:resource="http://wsp.normdata.rdf/PreußenAlsKulturstaat"/>
+		<dcterms:isReplacedBy rdf:resource="http://wsp.normdata.rdf/PreussenAlsKulturstaat"/>
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Schaffranke"/>
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Rathgeber"/>
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Holtz"/>
@@ -4236,7 +4236,7 @@ Vierte Abteilung: Exzerpte. Notizen. Marginalien.</dcterms:abstract>
 		<dc:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Vorhaben</dc:description>
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Hubmann"/>
 		<gnd:contributingPerson rdf:resource="http://wsp.normdata.rdf/EngelsFriedrich"/>
-		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Strauß"/>
+		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Strauss"/>
 		<foaf:homepage rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mgh/mega/de/Startseite"/>
 		<gnd:definition>Edition</gnd:definition>
 		<gnd:contributingCorporateBody rdf:resource="http://www.uni-bremen.de/archiv/mega.html"/>
@@ -4268,7 +4268,7 @@ Vierte Abteilung: Exzerpte. Notizen. Marginalien.</dcterms:abstract>
 		<dcterms:identifier rdf:resource="http://d-nb.info/gnd/121180646"/>
 		<dcterms:identifier rdf:resource="http://viaf.org/viaf/266876859"/>
 	</rdf:Description>
-	<rdf:Description rdf:about="http://wsp.normdata.rdf/Cornelißen">
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/Cornelissen">
 		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
 		<foaf:familyName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Cornelißen</foaf:familyName>
 		<foaf:givenName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Christoph</foaf:givenName>
@@ -4553,7 +4553,7 @@ Im Zentrum steht jeweils eine intensive gemeinsame Arbeitswoche mit parallelen W
 		<foaf:familyName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Fülöp</foaf:familyName>
 		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
 	</rdf:Description>
-	<rdf:Description rdf:about="http://wsp.normdata.rdf/BiblexegeseSpätantike">
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/BiblexegeseSpaetantike">
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Wyrwa"/>
 		<dc:coverage rdf:resource="http://wsp.normdata.rdf/Antike"/>
 		<dc:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Vorhaben</dc:description>
@@ -5160,7 +5160,7 @@ Erfasst werden die in der Renaissance bekannten antiken Monumente mit den zugeh�
 		<dcterms:hasPart rdf:resource="http://wsp.normdata.rdf/Turfan"/>
 		<dcterms:hasPart rdf:resource="http://wsp.normdata.rdf/CommentariaAristotelem"/>
 		<dcterms:hasPart rdf:resource="http://wsp.normdata.rdf/CorpusCoranicum"/>
-		<dcterms:hasPart rdf:resource="http://wsp.normdata.rdf/BiblexegeseSpätantike"/>
+		<dcterms:hasPart rdf:resource="http://wsp.normdata.rdf/BiblexegeseSpaetantike"/>
 		<dcterms:hasPart rdf:resource="http://wsp.normdata.rdf/ProsopographiaImperiiRomani"/>
 	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/Summa">
@@ -5534,7 +5534,7 @@ Erfasst werden die in der Renaissance bekannten antiken Monumente mit den zugeh�
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Virmond"/>
 		<dcterms:isReplacedBy rdf:resource="http://wsp.normdata.rdf/Schleiermacher"/>
 		<foaf:homepage rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/schleiermacher/de/Startseite"/>
-		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Voßkamp"/>
+		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Vosskamp"/>
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/GerberS"/>
 		<dc:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Vorhaben</dc:description>
 		<dc:coverage rdf:resource="http://wsp.normdata.rdf/Neuzeit"/>
@@ -5592,7 +5592,7 @@ Mit der im Juni 2000 durchgeführten internationalen Konferenz »Die Arbeit der 
 		<foaf:mbox rdf:datatype="http://www.w3.org/2001/XMLSchema#string">uvoigt@bbaw.de</foaf:mbox>
 		<foaf:givenName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ursula</foaf:givenName>
 	</rdf:Description>
-	<rdf:Description rdf:about="http://wsp.normdata.rdf/Straßenberger">
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/Strassenberger">
 		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
 		<foaf:title rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Dr.</foaf:title>
 		<foaf:givenName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Grit</foaf:givenName>
@@ -5600,7 +5600,7 @@ Mit der im Juni 2000 durchgeführten internationalen Konferenz »Die Arbeit der 
 		<foaf:familyName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Straßenberger</foaf:familyName>
 		<dcterms:identifier rdf:resource="http://viaf.org/viaf/12613496"/>
 	</rdf:Description>
-	<rdf:Description rdf:about="http://wsp.normdata.rdf/DigitalesWörterbuch">
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/DigitalesWoerterbuch">
 		<rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Digitales Wörterbuch</rdfs:label>
 		<rdf:type rdf:resource="http://purl.org/dc/terms/MediaType"/>
 		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DWB"/>
@@ -5732,7 +5732,7 @@ Mit der im Juni 2000 durchgeführten internationalen Konferenz »Die Arbeit der 
 		<foaf:status rdf:datatype="http://www.w3.org/2001/XMLSchema#string">aktiv</foaf:status>
 		<gnd:topic rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Klassische Altertumswissenschaft</gnd:topic>
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Dohnicht"/>
-		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Faßbender"/>
+		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Fassbender"/>
 		<dc:coverage rdf:resource="http://wsp.normdata.rdf/Antike"/>
 		<gnd:topic rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Geschichte</gnd:topic>
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Glock"/>
@@ -5865,7 +5865,7 @@ Mit der im Juni 2000 durchgeführten internationalen Konferenz »Die Arbeit der 
 		<dcterms:identifier rdf:resource="http://d-nb.info/gnd/110389581"/>
 		<dcterms:identifier rdf:resource="http://viaf.org/viaf/41859587"/>
 	</rdf:Description>
-	<rdf:Description rdf:about="http://wsp.normdata.rdf/Meßlinger">
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/Messlinger">
 		<foaf:givenName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Kathrin</foaf:givenName>
 		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
 		<foaf:familyName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Meßlinger</foaf:familyName>
@@ -6116,7 +6116,7 @@ Mit der im Juni 2000 durchgeführten internationalen Konferenz »Die Arbeit der 
 		<foaf:familyName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ash</foaf:familyName>
 		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
 	</rdf:Description>
-	<rdf:Description rdf:about="http://wsp.normdata.rdf/Voßkamp">
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/Vosskamp">
 		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
 		<foaf:familyName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Voßkamp</foaf:familyName>
 		<foaf:givenName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Wilhelm</foaf:givenName>

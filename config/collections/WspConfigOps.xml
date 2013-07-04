@@ -2,7 +2,7 @@
 <wsp>
   <collection>
     <id>ops</id>
-    <rdfId>http://wsp.normdata.rdf/ProduktionssystemeZukünftige</rdfId>
+    <rdfId>http://wsp.normdata.rdf/ProduktionssystemeZukuenftige</rdfId>
     <name>Optionen zukünftiger industrieller Produktionssysteme</name>
     <url>
       <webBaseUrl>http://optionenproduktionssysteme.bbaw.de/</webBaseUrl>

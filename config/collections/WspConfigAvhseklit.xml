@@ -2,7 +2,7 @@
 <wsp>
   <collection>
     <id>avhseklit</id>
-    <rdfId>http://wsp.normdata.rdf/AvHForschungsstelle/Sekundärliteratur</rdfId>
+    <rdfId>http://wsp.normdata.rdf/AvHForschungsstelle/Sekundaerliteratur</rdfId>
     <db>
       <name>avh_biblio</name>
       <xmlDumpFileName>/home/joey/dataWsp/documentsExtern/avhseklit/avh_biblio.xml</xmlDumpFileName>
