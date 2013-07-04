@@ -3,11 +3,79 @@
   <collection>
     <id>avhunselbst</id>
     <rdfId>http://wsp.normdata.rdf/AvHForschungsstelle/UnselbststaendigeSchriften</rdfId>
+    <db>
+      <name>avh_uns</name>
+      <xmlDump>
+        <sql>
+SELECT 
+ tits.publication_id as id,
+ GROUP_CONCAT(DISTINCT persons.last_name, ', ', persons.first_name ORDER BY persons.last_name SEPARATOR ' ') as creator,
+ tits.title as title,
+ tits.year as pub_date,
+ tits.keywords as subject
+FROM 
+(SELECT 
+  publications.*, 
+  GROUP_CONCAT(DISTINCT keywords.name ORDER BY keywords.name SEPARATOR '###') as keywords
+ FROM publications, articles_publications, articles_keywords, keywords
+ WHERE 
+  articles_publications.publication_id = publications.publication_id
+ AND
+  articles_keywords.article_id = articles_publications.article_id
+ AND
+  articles_keywords.keyword_id = keywords.keyword_id
+ GROUP BY publications.publication_id
+) as tits,
+articles_publications, 
+articles_persons, 
+persons
+WHERE
+ articles_publications.publication_id = tits.publication_id
+AND
+ articles_publications.article_id = articles_persons.article_id
+AND
+ articles_persons.person_id = persons.person_id
+GROUP BY tits.publication_id
+        </sql>
+        <fileName>/home/joey/dataWsp/documentsExtern/avhunselbst/avh_uns.xml</fileName>
+      </xmlDump>
+      <mainResourcesTable>
+        <name>articles_publications</name>
+        <idField>id</idField>
+        <field>
+          <dc>creator</dc>
+          <db>creator</db>
+        </field>
+        <field>
+          <dc>title</dc>
+          <db>title</db>
+        </field>
+        <field>
+          <dc>date</dc>
+          <db>pub_date</db>
+        </field>
+        <field>
+          <dc>subject</dc>
+          <db>subject</db>
+        </field>
+        <field>
+          <dc>language</dc>
+          <db>language</db> 
+        </field>
+      </mainResourcesTable>
+      <webId>
+        <preStr>http://telota.bbaw.de/avh/uns/publications.php?id=</preStr>
+      </webId>
+    </db>
     <name>Alexander von Humboldt Forschungsstelle: Die unselbständigen Schriften Alexander von Humboldts</name>
     <url>
       <webBaseUrl>http://telota.bbaw.de/avh/uns/</webBaseUrl>
       <dataUrl>http://telota.bbaw.de/avh/uns/</dataUrl>
     </url>
+    <metadata>
+      <url>file:/home/joey/dataWsp/documentsExtern/avhunselbst/avh_uns.rdf</url>
+      <urlType>many</urlType>
+    </metadata>
     <languages>ger,lat,fra,eng</languages>
     <mainLanguage>ger</mainLanguage>
     <formats>
