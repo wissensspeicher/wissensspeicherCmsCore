@@ -38,12 +38,14 @@ public enum MdSystemResultType {
    */
   ALL_TRIPLES_NAMED_GRAPH,
   /**
+   */
+  ALL_TRIPLES_NAMED_GRAPH_AND_GIVEN_SUBJECT,
+  /**
    * @see ISparqlAdapter, result from querying the default graph by a given subject (buildSparqlQuery(subject)).
    */
   ALL_TRIPLES_GIVEN_SUBJECT,
   /**
    * @see ISparqlAdapter, result from querying the default graph for related concepts (findRelatedConcepts(node, minNumberTriples, maxNumberTriples).
    */
-  RELATED_CONCEPTS,
-
+  RELATED_CONCEPTS;
 }

@@ -21,6 +21,8 @@ public class HitGraph {
   private double avgScore;
   private double highestScore;
 
+  public static final double DEFAULT_SCORE = 0;
+
   /**
    * Create a new {@link HitGraph}.
    * 
@@ -30,8 +32,8 @@ public class HitGraph {
   public HitGraph(final URL namedGraphUrl) {
     this.namedGraphUrl = namedGraphUrl;
     hitStatements = new ArrayList<HitStatement>();
-    avgScore = 0;
-    highestScore = 0;
+    avgScore = DEFAULT_SCORE;
+    highestScore = DEFAULT_SCORE;
   }
 
   public URL getNamedGraphUrl() {
