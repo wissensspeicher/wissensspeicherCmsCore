@@ -3,6 +3,8 @@
  */
 package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.detailedsearch;
 
+import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.MdSystemResultType;
+
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.impl.ResourceImpl;
 
@@ -21,6 +23,7 @@ public class HitStatement {
   protected final RDFNode subjParent;
   protected final RDFNode predParent;
   protected final double score;
+  private MdSystemResultType resultType;
 
   /**
    * Create a new HitStatement to represent results of the {@link SparqlAdapter}
@@ -111,7 +114,7 @@ public class HitStatement {
    */
   @Override
   public String toString() {
-    return "\t\tHitStatement [subject=" + subject + ", predicate=" + predicate + ", literal=" + object + ", score=" + score + ", subjectParent=" + subjParent + ", predicateParent=" + predParent + "]\n";
+    return "HitStatement [subject=" + subject + ", predicate=" + predicate + ", object=" + object + ", subjParent=" + subjParent + ", predParent=" + predParent + ", score=" + score + ", resultType=" + resultType + "]";
   }
 
   /*
@@ -190,6 +193,23 @@ public class HitStatement {
       return false;
     }
     return true;
+  }
+
+  /**
+   * Set the result type so a client can differ the way, the result was fetched.
+   * 
+   * @param resultType
+   */
+  public void setResultType(final MdSystemResultType resultType) {
+    this.resultType = resultType;
+
+  }
+
+  /**
+   * @return the resultType
+   */
+  public final MdSystemResultType getResultType() {
+    return resultType;
   }
 
 }
