@@ -44,6 +44,11 @@ public enum MdSystemResultType {
   /**
    * @see ISparqlAdapter, result from querying the default graph for related concepts (findRelatedConcepts(node, minNumberTriples, maxNumberTriples).
    */
-  RELATED_CONCEPTS,
+  RELATED_CONCEPTS;
+
+  @Override
+  public String toString() {
+    return "" + this;
+  }
 
 }
