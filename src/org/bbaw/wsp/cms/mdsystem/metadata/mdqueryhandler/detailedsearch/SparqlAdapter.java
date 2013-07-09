@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.MdSystemResultType;
 import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.detailedsearch.RelatedHitStatement.Relationship;
 
 import com.hp.hpl.jena.query.QuerySolution;
@@ -137,7 +138,7 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
         literal = solution.getLiteral("lit");
       }
       if (solution.get("o") != null) {
-        literal = solution.get("0");
+        literal = solution.get("o");
       }
       double score = 0;
       if (solution.getLiteral("score") != null) {
@@ -153,6 +154,17 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
       }
       final HitStatement statement = new HitStatement(subject, predicate, literal, score, subjParent, predParent);
       hitGraph.addStatement(statement);
+
+      // set result type
+      if (score == 0) { // no literal/LARQ search (because a score would be returned)
+        statement.setResultType(MdSystemResultType.ALL_TRIPLES_GIVEN_SUBJECT);
+      } else {
+        if (namedGraphUrl == null) {
+          statement.setResultType(MdSystemResultType.LITERAL_DEFAULT_GRAPH);
+        } else {
+          statement.setResultType(MdSystemResultType.LITERAL_NAMED_GRAPH);
+        }
+      }
 
     } catch (final MalformedURLException e) {
       logger.error("SparQlAdapter: not a valid URL (should be one): " + e.getMessage());
@@ -229,6 +241,7 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
         final RDFNode subject = solution.get("s");
         final HitStatement hitStatement = new HitStatement(subject, predicate, object, 0, null, null);
         hitGraph.addStatement(hitStatement);
+        hitStatement.setResultType(MdSystemResultType.ALL_TRIPLES_NAMED_GRAPH);
       }
     }
 
@@ -279,6 +292,7 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
         final RDFNode subject = new ResourceImpl(pSubject);
         final HitStatement hitStatement = new HitStatement(subject, predicate, object, 0, null, null);
         hitGraph.addStatement(hitStatement);
+        hitStatement.setResultType(MdSystemResultType.ALL_TRIPLES_NAMED_GRAPH);
       }
     }
     container.addHitRecord(namedGraphUrl, hitGraph);
@@ -302,6 +316,7 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
             final RelatedHitStatement relatedStatement = new RelatedHitStatement(topDownRelatedSubj, topwDownRelatedPred, topDownRelatedNode, 0, null, null, i, Relationship.CHILD);
             if (!resultStatements.contains(relatedStatement)) {
               resultStatements.add(relatedStatement);
+              relatedStatement.setResultType(MdSystemResultType.RELATED_CONCEPTS);
             }
           }
 
@@ -314,6 +329,7 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
             final RelatedHitStatement bottomRelatedStatement = new RelatedHitStatement(bottomRelatedSubj, bottomDownRelatedPred, bottomRelatedNode, 0, null, null, i, Relationship.PARENT);
             if (!resultStatements.contains(bottomRelatedStatement)) {
               resultStatements.add(bottomRelatedStatement);
+              bottomRelatedStatement.setResultType(MdSystemResultType.RELATED_CONCEPTS);
             }
           }
         }
