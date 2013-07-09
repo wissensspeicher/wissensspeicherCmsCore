@@ -292,7 +292,7 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
         final RDFNode subject = new ResourceImpl(pSubject);
         final HitStatement hitStatement = new HitStatement(subject, predicate, object, 0, null, null);
         hitGraph.addStatement(hitStatement);
-        hitStatement.setResultType(MdSystemResultType.ALL_TRIPLES_NAMED_GRAPH);
+        hitStatement.setResultType(MdSystemResultType.ALL_TRIPLES_NAMED_GRAPH_AND_GIVEN_SUBJECT);
       }
     }
     container.addHitRecord(namedGraphUrl, hitGraph);
