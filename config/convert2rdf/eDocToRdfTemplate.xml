@@ -21,15 +21,11 @@
 				<dc:identifier rdf:resource="%%resource_identifier%%"/>
 				<dc:identifier rdf:resource="%%resource_urn_identifier%%"/>
 				<dc:source>%%source%%</dc:source>
-				<dcterms:created>
-					<dcterms:W3CDTF>
-						<rdf:value>%%date_created%%</rdf:value>
-					</dcterms:W3CDTF>
+				<dcterms:created rdf:datatype="http://www.w3.org/2001/XMLSchema#date">			
+						<rdf:value>%%date_created%%</rdf:value>			
 				</dcterms:created>
-				<dcterms:issued>
-					<dcterms:W3CDTF>						
+				<dcterms:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">							
 						<rdf:value>%%date_issued%%</rdf:value>
-					</dcterms:W3CDTF>
 				</dcterms:issued>			
 				<dc:publisher rdf:value="%%publisher%%"/>
 				<dc:language>
