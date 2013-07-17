@@ -316,12 +316,21 @@ public class IndexHandler {
           XQuery xQueryWebId = xqueriesHashtable.get("webId");
           if (xQueryWebId != null) {
             String webId = xQueryWebId.getResult();
+            // Hack: if xQuery code is "fileName"
+            boolean codeIsFileName = false;
+            if (xQueryWebId.getCode() != null && xQueryWebId.getCode().equals("xxxFileName"))
+              codeIsFileName = true;
+            if (codeIsFileName) {
+              int from = docId.lastIndexOf("/");
+              String fileName = docId.substring(from + 1);
+              webId = fileName;
+            }
             if (webId != null) {
               webId = webId.trim();
               if (! webId.isEmpty()) {
                 String xQueryPreStr = xQueryWebId.getPreStr();
                 if (xQueryPreStr != null)
-                  webUri = xQueryPreStr + "/" + webId;
+                  webUri = xQueryPreStr + webId;
                 String xQueryAfterStr = xQueryWebId.getAfterStr();
                 if (xQueryAfterStr != null)
                   webUri = webUri + xQueryAfterStr;
@@ -765,10 +774,15 @@ public class IndexHandler {
         if (retToken == null)
           retToken = new ArrayList<Token>();
         Term termContent = terms.term();
-        Token token = new Token(termContent);
-        retToken.add(token);
-        counter++;
-        if (!terms.next())
+        String termContentStr = termContent.text();
+        if (termContentStr.startsWith(value)) {
+          int docFreq = terms.docFreq();
+          Token token = new Token(termContent);
+          token.setFreq(docFreq);
+          retToken.add(token);
+          counter++;
+        }
+        if (! terms.next() || ! termContentStr.startsWith(value))
           break;
       }
     } catch (Exception e) {
@@ -820,6 +834,7 @@ public class IndexHandler {
               }
               if (counter >= count)
                 break;
+              success = false;
             }
           }
         }
@@ -1241,7 +1256,7 @@ public class IndexHandler {
       documentsFieldAnalyzers.put("license", new StandardAnalyzer(Version.LUCENE_35));
       documentsFieldAnalyzers.put("accessRights", new StandardAnalyzer(Version.LUCENE_35));
       documentsFieldAnalyzers.put("type", new KeywordAnalyzer()); // e.g. mime type "text/xml"
-      documentsFieldAnalyzers.put("pageCount", new KeywordAnalyzer());
+      documentsFieldAnalyzers.put("pageCount", new KeywordAnalyzer()); 
       documentsFieldAnalyzers.put("schemaName", new StandardAnalyzer(Version.LUCENE_35));
       documentsFieldAnalyzers.put("lastModified", new KeywordAnalyzer());
       documentsFieldAnalyzers.put("tokenOrig", new StandardAnalyzer(Version.LUCENE_35));
@@ -1481,7 +1496,7 @@ public class IndexHandler {
   }
 
   private String toTokenizedXmlString(String xmlStr, String language) throws ApplicationException {
-    String xmlPre = "<tokenized xmlns:xhtml=\"http://www.w3.org/1999/xhtml\" xmlns:mml=\"http://www.w3.org/1998/Math/MathML\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">";
+    String xmlPre = "<tokenized xmlns:xhtml=\"http://www.w3.org/1999/xhtml\" xmlns:m=\"http://www.w3.org/1998/Math/MathML\" xmlns:mml=\"http://www.w3.org/1998/Math/MathML\" xmlns:svg=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">";
     String xmlPost = "</tokenized>";
     String xmlStrTmp = xmlPre + xmlStr + xmlPost;
     StringReader xmlInputStringReader = new StringReader(xmlStrTmp);
