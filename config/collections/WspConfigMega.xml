@@ -71,8 +71,8 @@
     <xqueries>
       <xquery>
         <name>webId</name>
-        <code>concat('mega', '')</code>
-        <preStr>http://telota.bbaw.de</preStr>
+        <code>xxxFileName</code>  <!-- special field: delivers the fileName of the xml file -->
+        <preStr>http://telota.bbaw.de/mega/#?doc=</preStr>
       </xquery>
     </xqueries>
     <update>false</update>
