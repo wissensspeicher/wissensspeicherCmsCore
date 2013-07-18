@@ -12,6 +12,7 @@ import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.KeywordAnalyzer;
 import org.apache.lucene.analysis.PerFieldAnalyzerWrapper;
@@ -54,6 +55,7 @@ import org.apache.lucene.search.highlight.SimpleHTMLFormatter;
 import org.apache.lucene.search.highlight.TextFragment;
 import org.apache.lucene.search.highlight.TokenSources;
 import org.apache.lucene.search.similar.MoreLikeThis;
+import org.apache.lucene.search.suggest.tst.TSTLookup;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
@@ -63,6 +65,7 @@ import org.bbaw.wsp.cms.dochandler.DocumentHandler;
 import org.bbaw.wsp.cms.document.Hits;
 import org.bbaw.wsp.cms.document.MetadataRecord;
 import org.bbaw.wsp.cms.document.Token;
+import org.bbaw.wsp.cms.document.TokenArrayListIterator;
 import org.bbaw.wsp.cms.document.XQuery;
 import org.bbaw.wsp.cms.general.Constants;
 import org.bbaw.wsp.cms.scheduler.CmsDocOperation;
@@ -80,6 +83,7 @@ import de.mpg.mpiwg.berlin.mpdl.util.Util;
 
 public class IndexHandler {
   private static IndexHandler instance;
+  private static Logger LOGGER = Logger.getLogger(IndexHandler.class);
   private IndexWriter documentsIndexWriter;
   private IndexWriter nodesIndexWriter;
   private SearcherManager documentsSearcherManager;
@@ -87,6 +91,7 @@ public class IndexHandler {
   private IndexReader documentsIndexReader;
   private PerFieldAnalyzerWrapper documentsPerFieldAnalyzer;
   private PerFieldAnalyzerWrapper nodesPerFieldAnalyzer;
+  private TSTLookup suggester;
   // private TaxonomyWriter taxonomyWriter;  // TODO facet
   // private TaxonomyReader taxonomyReader;  // TODO facet
   
@@ -106,6 +111,15 @@ public class IndexHandler {
     documentsSearcherManager = getNewSearcherManager(documentsIndexWriter);
     nodesSearcherManager = getNewSearcherManager(nodesIndexWriter);
     documentsIndexReader = getDocumentsReader();
+    // init of the suggester
+    ArrayList<Token> tokens = getToken("tokenOrig", "", 10000000); // get all token: needs 5 sec
+    suggester = new TSTLookup();
+    try {
+      suggester.build(new TokenArrayListIterator(tokens));  // put all tokens into the suggester
+      LOGGER.info("Suggester successfully started with: " + tokens.size() + " tokens");
+    } catch (IOException e) {
+      throw new ApplicationException(e);
+    }
     // taxonomyWriter = getTaxonomyWriter();  // TODO facet
     // taxonomyReader = getTaxonomyReader();  // TODO facet
   }
@@ -458,6 +472,10 @@ public class IndexHandler {
     }
   }
 
+  public TSTLookup getSuggester() {
+    return suggester;  
+  }
+  
   private void deleteDocumentLocal(CmsDocOperation docOperation) throws ApplicationException {
     String docId = docOperation.getDocIdentifier();
     try {
