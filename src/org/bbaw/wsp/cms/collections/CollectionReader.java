@@ -221,6 +221,20 @@ public class CollectionReader {
 						}
 						collection.setxQueries(xqueriesHashtable);
 					}
+          Hits urlParams = (Hits) xQueryEvaluator.evaluate(configFileUrl, "/wsp/collection/urlParams/*", 0, 9, "hits");
+          if (urlParams != null) {
+            Hashtable<String, String> urlParamsHashtable = new Hashtable<String, String>();
+            for (int i = 0; i < urlParams.getSize(); i++) {
+              Hit urlParamsHit = urlParams.getHits().get(i);
+              String urlParamsStr = urlParamsHit.getContent();
+              String paramName = xQueryEvaluator.evaluateAsStringValueJoined(urlParamsStr, "*/name()");
+              String paramNameValue = xQueryEvaluator.evaluateAsStringValueJoined(urlParamsStr, paramName);
+              if (paramName != null && paramNameValue != null) {
+                urlParamsHashtable.put(paramName, paramNameValue);
+              }
+            }
+            collection.setUrlParamters(urlParamsHashtable);
+          }
 					String excludesStr = xQueryEvaluator.evaluateAsStringValueJoined(configFileUrl, "/wsp/collection/url/exclude");
 					if (excludesStr != null) {
 						collection.setExcludesStr(excludesStr);
