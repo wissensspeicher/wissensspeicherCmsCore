@@ -111,15 +111,6 @@ public class IndexHandler {
     documentsSearcherManager = getNewSearcherManager(documentsIndexWriter);
     nodesSearcherManager = getNewSearcherManager(nodesIndexWriter);
     documentsIndexReader = getDocumentsReader();
-    // init of the suggester
-    ArrayList<Token> tokens = getToken("tokenOrig", "", 10000000); // get all token: needs 5 sec
-    suggester = new TSTLookup();
-    try {
-      suggester.build(new TokenArrayListIterator(tokens));  // put all tokens into the suggester
-      LOGGER.info("Suggester successfully started with: " + tokens.size() + " tokens");
-    } catch (IOException e) {
-      throw new ApplicationException(e);
-    }
     // taxonomyWriter = getTaxonomyWriter();  // TODO facet
     // taxonomyReader = getTaxonomyReader();  // TODO facet
   }
@@ -472,7 +463,18 @@ public class IndexHandler {
     }
   }
 
-  public TSTLookup getSuggester() {
+  public TSTLookup getSuggester() throws ApplicationException {
+    // one time init of the suggester, if it is null (needs ca. 5 sec. for 1 Mio. token)
+    if (suggester == null) {
+      ArrayList<Token> tokens = getToken("tokenOrig", "", 10000000); // get all token
+      suggester = new TSTLookup();
+      try {
+        suggester.build(new TokenArrayListIterator(tokens));  // put all tokens into the suggester
+        LOGGER.info("Suggester successfully started with: " + tokens.size() + " tokens");
+      } catch (IOException e) {
+        throw new ApplicationException(e);
+      }
+    }
     return suggester;  
   }
   
