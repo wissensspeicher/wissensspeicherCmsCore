@@ -554,6 +554,28 @@ public class IndexHandler {
             if (! hitFragments.isEmpty())
               doc.setHitFragments(hitFragments);
           }
+          // if xml document: try to add pageNumber to resulting doc
+          DocumentHandler docHandler = new DocumentHandler();
+          Fieldable docIdField = luceneDoc.getFieldable("docId");
+          if (docIdField != null) {
+            String docId = docIdField.stringValue();
+            boolean docIsXml = docHandler.isDocXml(docId);
+            if (docIsXml) {
+              Hits firstHit = queryDocument(docId, queryStr, 1, 1);
+              if (firstHit != null && firstHit.getSize() > 0) {
+                ArrayList<org.bbaw.wsp.cms.document.Document> firstHitHits = firstHit.getHits();
+                if (firstHitHits != null && firstHitHits.size() > 0) {
+                  org.bbaw.wsp.cms.document.Document firstHitDoc = firstHitHits.get(0);
+                  Document firstHitLuceneDoc = firstHitDoc.getDocument();
+                  Fieldable pageNumberField = firstHitLuceneDoc.getFieldable("pageNumber");
+                  if (pageNumberField != null) {
+                    String pageNumber = pageNumberField.stringValue();
+                    doc.setFirstHitPageNumber(pageNumber);
+                  }
+                }
+              }
+            }
+          }
           docs.add(doc);
         }
         int sizeTotalDocuments = documentsIndexReader.numDocs();
@@ -619,7 +641,14 @@ public class IndexHandler {
           FieldSelector nodeFieldSelector = getNodeFieldSelector();
           Document luceneDoc = searcher.doc(docID, nodeFieldSelector);
           org.bbaw.wsp.cms.document.Document doc = new org.bbaw.wsp.cms.document.Document(luceneDoc);
-          docs.add(doc);
+          String pageNumber = "-1";
+          Fieldable fPageNumber = doc.getFieldable("pageNumber");
+          if (fPageNumber != null) {
+            pageNumber = fPageNumber.stringValue();
+          }
+          if (! pageNumber.equals("0")) {
+            docs.add(doc);
+          }
         }
         if (docs != null) {
           hits = new Hits(docs, from, to);
