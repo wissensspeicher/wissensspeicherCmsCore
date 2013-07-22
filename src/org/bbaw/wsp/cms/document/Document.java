@@ -7,6 +7,7 @@ import org.apache.lucene.document.Fieldable;
 public class Document {
   private org.apache.lucene.document.Document document;
   private ArrayList<String> hitFragments;
+  private String firstHitPageNumber;  // page number of first hit
   
   public Document(org.apache.lucene.document.Document luceneDocument) {
     this.document = luceneDocument;
@@ -34,5 +35,14 @@ public class Document {
   public void setHitFragments(ArrayList<String> hitFragments) {
     this.hitFragments = hitFragments;
   }
+
+  public String getFirstHitPageNumber() {
+    return firstHitPageNumber;
+  }
+
+  public void setFirstHitPageNumber(String firstHitPageNumber) {
+    this.firstHitPageNumber = firstHitPageNumber;
+  }
+
 
 }

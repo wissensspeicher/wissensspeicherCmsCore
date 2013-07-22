@@ -12,6 +12,7 @@ import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.KeywordAnalyzer;
 import org.apache.lucene.analysis.PerFieldAnalyzerWrapper;
@@ -54,6 +55,7 @@ import org.apache.lucene.search.highlight.SimpleHTMLFormatter;
 import org.apache.lucene.search.highlight.TextFragment;
 import org.apache.lucene.search.highlight.TokenSources;
 import org.apache.lucene.search.similar.MoreLikeThis;
+import org.apache.lucene.search.suggest.tst.TSTLookup;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
@@ -63,6 +65,7 @@ import org.bbaw.wsp.cms.dochandler.DocumentHandler;
 import org.bbaw.wsp.cms.document.Hits;
 import org.bbaw.wsp.cms.document.MetadataRecord;
 import org.bbaw.wsp.cms.document.Token;
+import org.bbaw.wsp.cms.document.TokenArrayListIterator;
 import org.bbaw.wsp.cms.document.XQuery;
 import org.bbaw.wsp.cms.general.Constants;
 import org.bbaw.wsp.cms.scheduler.CmsDocOperation;
@@ -80,6 +83,7 @@ import de.mpg.mpiwg.berlin.mpdl.util.Util;
 
 public class IndexHandler {
   private static IndexHandler instance;
+  private static Logger LOGGER = Logger.getLogger(IndexHandler.class);
   private IndexWriter documentsIndexWriter;
   private IndexWriter nodesIndexWriter;
   private SearcherManager documentsSearcherManager;
@@ -87,6 +91,7 @@ public class IndexHandler {
   private IndexReader documentsIndexReader;
   private PerFieldAnalyzerWrapper documentsPerFieldAnalyzer;
   private PerFieldAnalyzerWrapper nodesPerFieldAnalyzer;
+  private TSTLookup suggester;
   // private TaxonomyWriter taxonomyWriter;  // TODO facet
   // private TaxonomyReader taxonomyReader;  // TODO facet
   
@@ -316,12 +321,21 @@ public class IndexHandler {
           XQuery xQueryWebId = xqueriesHashtable.get("webId");
           if (xQueryWebId != null) {
             String webId = xQueryWebId.getResult();
+            // Hack: if xQuery code is "fileName"
+            boolean codeIsFileName = false;
+            if (xQueryWebId.getCode() != null && xQueryWebId.getCode().equals("xxxFileName"))
+              codeIsFileName = true;
+            if (codeIsFileName) {
+              int from = docId.lastIndexOf("/");
+              String fileName = docId.substring(from + 1);
+              webId = fileName;
+            }
             if (webId != null) {
               webId = webId.trim();
               if (! webId.isEmpty()) {
                 String xQueryPreStr = xQueryWebId.getPreStr();
                 if (xQueryPreStr != null)
-                  webUri = xQueryPreStr + "/" + webId;
+                  webUri = xQueryPreStr + webId;
                 String xQueryAfterStr = xQueryWebId.getAfterStr();
                 if (xQueryAfterStr != null)
                   webUri = webUri + xQueryAfterStr;
@@ -449,6 +463,21 @@ public class IndexHandler {
     }
   }
 
+  public TSTLookup getSuggester() throws ApplicationException {
+    // one time init of the suggester, if it is null (needs ca. 5 sec. for 1 Mio. token)
+    if (suggester == null) {
+      ArrayList<Token> tokens = getToken("tokenOrig", "", 10000000); // get all token
+      suggester = new TSTLookup();
+      try {
+        suggester.build(new TokenArrayListIterator(tokens));  // put all tokens into the suggester
+        LOGGER.info("Suggester successfully started with: " + tokens.size() + " tokens");
+      } catch (IOException e) {
+        throw new ApplicationException(e);
+      }
+    }
+    return suggester;  
+  }
+  
   private void deleteDocumentLocal(CmsDocOperation docOperation) throws ApplicationException {
     String docId = docOperation.getDocIdentifier();
     try {
@@ -525,6 +554,28 @@ public class IndexHandler {
             if (! hitFragments.isEmpty())
               doc.setHitFragments(hitFragments);
           }
+          // if xml document: try to add pageNumber to resulting doc
+          DocumentHandler docHandler = new DocumentHandler();
+          Fieldable docIdField = luceneDoc.getFieldable("docId");
+          if (docIdField != null) {
+            String docId = docIdField.stringValue();
+            boolean docIsXml = docHandler.isDocXml(docId);
+            if (docIsXml) {
+              Hits firstHit = queryDocument(docId, queryStr, 1, 1);
+              if (firstHit != null && firstHit.getSize() > 0) {
+                ArrayList<org.bbaw.wsp.cms.document.Document> firstHitHits = firstHit.getHits();
+                if (firstHitHits != null && firstHitHits.size() > 0) {
+                  org.bbaw.wsp.cms.document.Document firstHitDoc = firstHitHits.get(0);
+                  Document firstHitLuceneDoc = firstHitDoc.getDocument();
+                  Fieldable pageNumberField = firstHitLuceneDoc.getFieldable("pageNumber");
+                  if (pageNumberField != null) {
+                    String pageNumber = pageNumberField.stringValue();
+                    doc.setFirstHitPageNumber(pageNumber);
+                  }
+                }
+              }
+            }
+          }
           docs.add(doc);
         }
         int sizeTotalDocuments = documentsIndexReader.numDocs();
@@ -590,7 +641,14 @@ public class IndexHandler {
           FieldSelector nodeFieldSelector = getNodeFieldSelector();
           Document luceneDoc = searcher.doc(docID, nodeFieldSelector);
           org.bbaw.wsp.cms.document.Document doc = new org.bbaw.wsp.cms.document.Document(luceneDoc);
-          docs.add(doc);
+          String pageNumber = "-1";
+          Fieldable fPageNumber = doc.getFieldable("pageNumber");
+          if (fPageNumber != null) {
+            pageNumber = fPageNumber.stringValue();
+          }
+          if (! pageNumber.equals("0")) {
+            docs.add(doc);
+          }
         }
         if (docs != null) {
           hits = new Hits(docs, from, to);
@@ -765,10 +823,15 @@ public class IndexHandler {
         if (retToken == null)
           retToken = new ArrayList<Token>();
         Term termContent = terms.term();
-        Token token = new Token(termContent);
-        retToken.add(token);
-        counter++;
-        if (!terms.next())
+        String termContentStr = termContent.text();
+        if (termContentStr.startsWith(value)) {
+          int docFreq = terms.docFreq();
+          Token token = new Token(termContent);
+          token.setFreq(docFreq);
+          retToken.add(token);
+          counter++;
+        }
+        if (! terms.next() || ! termContentStr.startsWith(value))
           break;
       }
     } catch (Exception e) {
@@ -820,6 +883,7 @@ public class IndexHandler {
               }
               if (counter >= count)
                 break;
+              success = false;
             }
           }
         }
@@ -1241,7 +1305,7 @@ public class IndexHandler {
       documentsFieldAnalyzers.put("license", new StandardAnalyzer(Version.LUCENE_35));
       documentsFieldAnalyzers.put("accessRights", new StandardAnalyzer(Version.LUCENE_35));
       documentsFieldAnalyzers.put("type", new KeywordAnalyzer()); // e.g. mime type "text/xml"
-      documentsFieldAnalyzers.put("pageCount", new KeywordAnalyzer());
+      documentsFieldAnalyzers.put("pageCount", new KeywordAnalyzer()); 
       documentsFieldAnalyzers.put("schemaName", new StandardAnalyzer(Version.LUCENE_35));
       documentsFieldAnalyzers.put("lastModified", new KeywordAnalyzer());
       documentsFieldAnalyzers.put("tokenOrig", new StandardAnalyzer(Version.LUCENE_35));
@@ -1481,7 +1545,7 @@ public class IndexHandler {
   }
 
   private String toTokenizedXmlString(String xmlStr, String language) throws ApplicationException {
-    String xmlPre = "<tokenized xmlns:xhtml=\"http://www.w3.org/1999/xhtml\" xmlns:mml=\"http://www.w3.org/1998/Math/MathML\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">";
+    String xmlPre = "<tokenized xmlns:xhtml=\"http://www.w3.org/1999/xhtml\" xmlns:m=\"http://www.w3.org/1998/Math/MathML\" xmlns:mml=\"http://www.w3.org/1998/Math/MathML\" xmlns:svg=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">";
     String xmlPost = "</tokenized>";
     String xmlStrTmp = xmlPre + xmlStr + xmlPost;
     StringReader xmlInputStringReader = new StringReader(xmlStrTmp);

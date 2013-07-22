@@ -26,9 +26,9 @@
       <dataUrl>http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B011-00_ETX.xml</dataUrl>
       <dataUrl>http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B012-00_ETX.xml</dataUrl>
       <dataUrl>http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B013-00_ETX.xml</dataUrl>
-      <!--  neuer Mega-Band demnächst verfügbar
-        <dataUrl>http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B015-00_ETX.xml</dataUrl>
-      -->
+      <dataUrl>http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B015-00_ETX.xml</dataUrl>
+
+
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/II_11einf.pdf</dataUrl>
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/II12.pdf</dataUrl>
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/II_13einf.pdf</dataUrl>
@@ -63,6 +63,9 @@
     <formats>
       <format>xml</format>
     </formats>
+    <urlParams>
+      <pageNumber>pageNr</pageNumber>
+    </urlParams>
     <fields>
       <field>p</field>
       <field>s</field>
@@ -71,8 +74,8 @@
     <xqueries>
       <xquery>
         <name>webId</name>
-        <code>concat('mega', '')</code>
-        <preStr>http://telota.bbaw.de</preStr>
+        <code>xxxFileName</code>  <!-- special field: delivers the fileName of the xml file -->
+        <preStr>http://telota.bbaw.de/mega/#?doc=</preStr>
       </xquery>
     </xqueries>
     <update>false</update>

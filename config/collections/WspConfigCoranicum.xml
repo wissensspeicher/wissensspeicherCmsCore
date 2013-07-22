@@ -44,7 +44,7 @@
       <xquery>
         <name>webId</name>
         <code>/*[1]/*[1]/string(@id)</code>
-        <preStr>http://corpuscoranicum.de/kommentar/index/sure</preStr>
+        <preStr>http://corpuscoranicum.de/kommentar/index/sure/</preStr>
         <afterStr>/vers/1</afterStr>
       </xquery>
     </xqueries>
