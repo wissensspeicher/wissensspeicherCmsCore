@@ -63,6 +63,9 @@
     <formats>
       <format>xml</format>
     </formats>
+    <urlParams>
+      <pageNumber>pageNr</pageNumber>
+    </urlParams>
     <fields>
       <field>p</field>
       <field>s</field>
