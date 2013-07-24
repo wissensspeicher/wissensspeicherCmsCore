@@ -3,7 +3,7 @@ package org.bbaw.wsp.cms.query.rf;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import org.bbaw.wsp.cms.mdsystem.util.WspJsonEncoder;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 /**
@@ -57,7 +57,6 @@ public class QuerySqlProvider extends Tablenames {
     public void updateQueries(String query) throws SQLException {
 
 	String queryWord = query.split("[ ]+")[0];
-	System.out.println(queryWord);
 
 	con.inserSingelElementToTable(QUERY_WORDS, QUERY_WORDS_COL, queryWord);
 
@@ -116,16 +115,25 @@ public class QuerySqlProvider extends Tablenames {
      * @throws SQLException
      */
     public JSONObject getQueries(String queryWord) throws SQLException {
-	ArrayList<String> temp = con.getQueries(queryWord);
+	ArrayList<String[]> temp = con.getQueries(queryWord);
 
-	WspJsonEncoder coder = new WspJsonEncoder();
+	JSONObject jobject = new JSONObject();
+	jobject.put("query", queryWord);
+	jobject.put("size", temp.size());
 
-	int i = 0;
-	for (String string : temp) {
-	    coder.putStrings("" + ++i, string);
+	JSONArray jarray = new JSONArray();
+
+	for (String[] string : revert(temp)) {
+
+	    JSONObject jsonobj = new JSONObject();
+	    jsonobj.put("query", string[0]);
+	    jsonobj.put("frequency", string[1]);
+
+	    jarray.add(jsonobj);
 	}
 
-	return coder.getJsonObject();
+	jobject.put("result", jarray);
+	return jobject;
 
     }
 
@@ -138,18 +146,42 @@ public class QuerySqlProvider extends Tablenames {
      * @return
      * @throws SQLException
      */
+
     public JSONObject getDocuments(String query) throws SQLException {
-	ArrayList<String> temp = con.getDocmuents(query);
+	ArrayList<String[]> temp = con.getDocmuents(query);
 
-	WspJsonEncoder coder = new WspJsonEncoder();
+	JSONObject jobject = new JSONObject();
+	jobject.put("query", query);
+	jobject.put("size", temp.size());
 
-	int i = 0;
-	for (String string : temp) {
-	    coder.putStrings("" + ++i, string);
+	JSONArray jarray = new JSONArray();
+
+	for (String[] string : revert(temp)) {
+
+	    JSONObject jsonobj = new JSONObject();
+	    jsonobj.put("doc", string[0]);
+	    jsonobj.put("frequency", string[1]);
+
+	    jarray.add(jsonobj);
 	}
 
-	return coder.getJsonObject();
+	jobject.put("result", jarray);
+	return jobject;
 
     }
 
+    /**
+     * Methode reverts a given ArrayList
+     * 
+     * @param array
+     * @return
+     */
+    private ArrayList<String[]> revert(ArrayList<String[]> array) {
+	ArrayList<String[]> temp = new ArrayList<String[]>();
+
+	for (int i = array.size() - 1; i >= 0; i--) {
+	    temp.add(array.get(i));
+	}
+	return temp;
+    }
 }

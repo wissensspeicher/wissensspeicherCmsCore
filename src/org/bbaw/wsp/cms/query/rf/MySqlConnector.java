@@ -73,9 +73,6 @@ public class MySqlConnector extends Tablenames {
 
 	    // Result set get the result of the SQL query
 
-	    // resultSet = statement.executeQuery("select * from ");
-	    // System.out.println(resultSet);
-
 	} catch (Exception e) {
 	    throw e;
 	}
@@ -107,7 +104,6 @@ public class MySqlConnector extends Tablenames {
 	conn = DriverManager.getConnection("jdbc:" + "mysql" + "://" + server
 		+ ":" + port + "/" + database, connectionProps);
 
-	System.out.println("Connected to database");
 	return conn;
     }
 
@@ -130,7 +126,6 @@ public class MySqlConnector extends Tablenames {
 	ResultSet resultSet = null;
 	PreparedStatement preparedStatement = null;
 
-	System.out.println("inserSingelElementToTable an stelle queries");
 	if (table == Tablenames.QUERIES) {
 	    resultSet = statement
 		    .executeQuery("select requests from Queries where query="
@@ -140,7 +135,6 @@ public class MySqlConnector extends Tablenames {
 	    while (resultSet.next()) {
 		temp = Integer.parseInt(resultSet.getString(1));
 	    }
-	    System.out.println(temp);
 
 	    if (temp > 0) {
 		updateSingelValueInTable(table, "requests", element, ""
@@ -153,14 +147,13 @@ public class MySqlConnector extends Tablenames {
 			+ table + " (" + element + ",requests) " + " values "
 			+ "(" + value + ",1);");
 		preparedStatement.executeUpdate();
-		System.out.println("Database updated");
+
 	    }
 
 	}
 
 	else if (table == Tablenames.QUERY_WORDS) {
-	    System.out
-		    .println("inserSingelElementToTable an stelle querywords");
+
 	    resultSet = statement.executeQuery("select id from "
 		    + Tablenames.QUERY_WORDS + " where queryWord=" + value);
 
@@ -168,7 +161,6 @@ public class MySqlConnector extends Tablenames {
 	    while (resultSet.next()) {
 		temp = Integer.parseInt(resultSet.getString(1));
 	    }
-	    System.out.println(temp);
 
 	    if (!(temp > 0)) {
 
@@ -181,8 +173,6 @@ public class MySqlConnector extends Tablenames {
 
 	else if (table == Tablenames.RELEVANT_DOCS) {
 
-	    System.out
-		    .println("inserSingelElementToTable an stelle relevant docs");
 	    resultSet = statement.executeQuery("select requests from "
 		    + RELEVANT_DOCS + " where " + RELEVANT_DOCS_COL + " = "
 		    + value);
@@ -191,7 +181,6 @@ public class MySqlConnector extends Tablenames {
 	    while (resultSet.next()) {
 		temp = Integer.parseInt(resultSet.getString(1));
 	    }
-	    System.out.println(temp);
 
 	    if (temp > 0) {
 		updateSingelValueInTable(table, "requests", element, ""
@@ -224,9 +213,6 @@ public class MySqlConnector extends Tablenames {
 	String id_doc = createValidSQLString(getID(RELEVANT_DOCS, docUrl));
 	String id_query = createValidSQLString(getID(QUERIES, query));
 
-	System.out.println("id_doc = " + id_doc);
-	System.out.println("id_query = " + id_query);
-
 	if (id_doc == null || id_query == null)
 	    return;
 
@@ -243,8 +229,6 @@ public class MySqlConnector extends Tablenames {
 		+ " and " + RELEVANT_DOCS_CONNECTION_QUERY_COL + " = "
 		+ id_query + ";";
 
-	System.out.println(request);
-
 	resultSet = statement.executeQuery(request);
 
 	while (resultSet.next()) {
@@ -255,7 +239,6 @@ public class MySqlConnector extends Tablenames {
 	resultSet.close();
 	statement.close();
 
-	System.out.println(temp);
 	if (temp == 0) {
 
 	    request = "insert into " + RELEVANT_DOCS_CONNECTION + " ("
@@ -263,7 +246,6 @@ public class MySqlConnector extends Tablenames {
 		    + RELEVANT_DOCS_CONNECTION_QUERY_COL + ") values ("
 		    + id_doc + ", " + id_query + ");";
 
-	    System.out.println(request);
 	    preparedStatement = connect.prepareStatement(request);
 
 	    preparedStatement.executeUpdate();
@@ -342,19 +324,13 @@ public class MySqlConnector extends Tablenames {
 
 	    String temp = resultSet.getString(1);
 
-	    System.out.println("comparetemp: " + temp);
-	    System.out.println("value: " + value);
-
-	    if (temp.startsWith(value) || temp.equals(value)) {
+	    if (temp.contains(value)) {
 
 		String id_q = getID(QUERIES, temp);
-		System.out.println(id_q);
-		System.out.println(id_qword);
 
 		inserQueryWordConnection(id_qword, id_q);
 
 	    }
-	    System.out.println("Ende des Durchlaufes");
 
 	}
 	resultSet.close();
@@ -371,7 +347,6 @@ public class MySqlConnector extends Tablenames {
     private void inserQueryWordConnection(String queryWord_id, String query_id)
 	    throws SQLException {
 
-	System.out.println("inserQueryWordConnection");
 	queryWord_id = createValidSQLString(queryWord_id);
 	query_id = createValidSQLString(query_id);
 
@@ -398,7 +373,7 @@ public class MySqlConnector extends Tablenames {
 		    + QUERY_WORD_CONNECTION_QUERY_COL + ") " + " values ("
 		    + queryWord_id + ", " + query_id + ");");
 	    preparedStatement.executeUpdate();
-	    System.out.println("Database updated");
+
 	}
 
     }
@@ -411,7 +386,9 @@ public class MySqlConnector extends Tablenames {
      * @return
      * @throws SQLException
      */
-    public ArrayList<String> getDocmuents(String query) throws SQLException {
+    public ArrayList<String[]> getDocmuents(String query) throws SQLException {
+
+	ArrayList<String[]> list = new ArrayList<String[]>();
 
 	String id_query = createValidSQLString(getID(QUERIES, query));
 
@@ -426,7 +403,6 @@ public class MySqlConnector extends Tablenames {
 	String request = "select " + RELEVANT_DOCS_CONNECTION_DOC_COL
 		+ " from " + RELEVANT_DOCS_CONNECTION + " where "
 		+ RELEVANT_DOCS_CONNECTION_QUERY_COL + " = " + id_query + ";";
-	System.out.println(request);
 
 	resultSet = statement.executeQuery(request);
 
@@ -438,11 +414,11 @@ public class MySqlConnector extends Tablenames {
 	}
 
 	if (temp.isEmpty()) {
-	    return temp;
+	    return list;
 	}
 
-	request = "select " + RELEVANT_DOCS_COL + " from " + RELEVANT_DOCS
-		+ " where ";
+	request = "select " + RELEVANT_DOCS_COL + ",requests from "
+		+ RELEVANT_DOCS + " where ";
 
 	for (int i = 0; i < temp.size(); i++) {
 	    if (i == temp.size() - 1) {
@@ -453,8 +429,6 @@ public class MySqlConnector extends Tablenames {
 	}
 	request += " order by requests ASC;";
 
-	System.out.println(request);
-
 	temp.clear();
 	statement.close();
 
@@ -463,12 +437,15 @@ public class MySqlConnector extends Tablenames {
 	set = stat.executeQuery(request);
 
 	while (set.next()) {
-	    temp.add(set.getString(1));
+	    String[] array = new String[2];
+	    array[0] = set.getString(1);
+	    array[1] = set.getString(2);
+	    list.add(array);
 	}
 	set.close();
 	stat.close();
 
-	return temp;
+	return list;
 
     }
 
@@ -492,7 +469,7 @@ public class MySqlConnector extends Tablenames {
 		+ " set " + columnToUpdate + " = " + value + " where "
 		+ columnConditionToUpdate + " = " + conditionValue + ";");
 	preparedStatement.executeUpdate();
-	System.out.println("Database updated");
+
 	preparedStatement.close();
 
     }
@@ -505,19 +482,17 @@ public class MySqlConnector extends Tablenames {
      * @return
      * @throws SQLException
      */
-    public ArrayList<String> getQueries(String value) throws SQLException {
+    public ArrayList<String[]> getQueries(String value) throws SQLException {
+
+	ArrayList<String[]> list = new ArrayList<String[]>();
 
 	value = createValidSQLString(value);
-
-	System.out.println("getQueries");
 
 	String request = "select " + QUERY_WORD_CONNECTION_QUERY_COL + " from "
 		+ QUERY_WORD_CONNECTION + " where "
 		+ QUERY_WORD_CONNECTION_WORD_COL + " = (select id from "
 		+ QUERY_WORDS + " where " + QUERY_WORDS_COL + " = " + value
 		+ ");";
-
-	System.out.println(request);
 
 	ArrayList<String> temp = new ArrayList<String>();
 
@@ -534,9 +509,10 @@ public class MySqlConnector extends Tablenames {
 	resultSet.close();
 
 	if (temp.isEmpty())
-	    return temp;
+	    return list;
 
-	request = "select " + QUERIES_COL + " from " + QUERIES + " where ";
+	request = "select " + QUERIES_COL + ",requests from " + QUERIES
+		+ " where ";
 
 	for (int i = 0; i < temp.size(); i++) {
 	    if (i == temp.size() - 1) {
@@ -547,8 +523,6 @@ public class MySqlConnector extends Tablenames {
 	}
 	request += " order by requests ASC;";
 
-	System.out.println(request);
-
 	temp.clear();
 	statement.close();
 
@@ -557,12 +531,15 @@ public class MySqlConnector extends Tablenames {
 	set = stat.executeQuery(request);
 
 	while (set.next()) {
-	    temp.add(set.getString(1));
+	    String[] array = new String[2];
+	    array[0] = set.getString(1);
+	    array[1] = set.getString(2);
+	    list.add(array);
 	}
 	set.close();
 	stat.close();
 
-	return temp;
+	return list;
 
     }
 
