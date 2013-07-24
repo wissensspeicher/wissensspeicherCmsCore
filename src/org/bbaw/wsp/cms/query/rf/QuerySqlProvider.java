@@ -159,7 +159,7 @@ public class QuerySqlProvider extends Tablenames {
 	for (String[] string : revert(temp)) {
 
 	    JSONObject jsonobj = new JSONObject();
-	    jsonobj.put("doc", string[0]);
+	    jsonobj.put("resource", string[0]);
 	    jsonobj.put("frequency", string[1]);
 
 	    jarray.add(jsonobj);
