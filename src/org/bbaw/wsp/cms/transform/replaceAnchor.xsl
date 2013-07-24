@@ -16,6 +16,21 @@
   </xsl:copy>
 </xsl:template>
 
+<!-- remove the page breaks of type manuscript: MEGA project -->
+<xsl:template match="*:pb">
+  <xsl:variable name="ed" select="@ed"/>
+  <xsl:choose>
+    <xsl:when test="$ed = 'manuscript'">
+      <!-- nothing -->
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:copy>
+        <xsl:apply-templates select="@*|node()"/>
+      </xsl:copy>
+    </xsl:otherwise>
+  </xsl:choose>
+</xsl:template>
+
 <!-- insert figure number  -->
 <xsl:template match="*:figure">
   <xsl:variable name="number" select="count(./preceding::*:figure) + 1"/>
