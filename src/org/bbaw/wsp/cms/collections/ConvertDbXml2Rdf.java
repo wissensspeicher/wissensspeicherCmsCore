@@ -18,7 +18,7 @@ import de.mpg.mpiwg.berlin.mpdl.xml.xquery.XQueryEvaluator;
 
 public class ConvertDbXml2Rdf {
   private CollectionReader collectionReader;
-  private String outputRdfDir = "/home/joey/dataWsp/documentsExtern/";
+  private String outputRdfDir = "/home/juergens/wspEtc/rdfData/transformFromSqlDump/";
   private XQueryEvaluator xQueryEvaluator;
 
   public static void main(String[] args) throws ApplicationException {
@@ -47,7 +47,7 @@ public class ConvertDbXml2Rdf {
       File outputRdfFile = new File(outputRdfDir + collectionId + "/" + dbName + ".rdf");
       StringBuilder rdfStrBuilder = new StringBuilder();
       rdfStrBuilder.append("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
-      rdfStrBuilder.append("<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\" xmlns:ore=\"http://www.openarchives.org/ore/terms/\" xmlns:dc=\"http://purl.org/elements/1.1/\" xmlns:dcterms=\"http://purl.org/dc/terms/\" xmlns:foaf=\"http://xmlns.com/foaf/0.1/\" xmlns:edm=\"http://www.europeana.eu/schemas/edm/\" xmlns:xi=\"http://www.w3.org/2001/XInclude\">");
+      rdfStrBuilder.append("<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\" xmlns:ore=\"http://www.openarchives.org/ore/terms/\" xmlns:dc=\"http://purl.org/elements/1.1/\" xmlns:dcterms=\"http://purl.org/dc/terms/\" xmlns:foaf=\"http://xmlns.com/foaf/0.1/\" xmlns:edm=\"http://www.europeana.eu/schemas/edm/\" xmlns:xi=\"http://www.w3.org/2001/XInclude\" xml:base=\""+collection.getRdfId()+"\">");
       URL xmlDumpFileUrl = inputXmlDumpFile.toURI().toURL();
       String mainResourcesTable = db.getMainResourcesTable();  // e.g. "titles";
       String mainResourcesTableId = db.getMainResourcesTableId();  // e.g. "title_id";
@@ -104,7 +104,8 @@ public class ConvertDbXml2Rdf {
     if (webIdAfterStr != null)
       rdfWebId = rdfWebId + webIdAfterStr;
     String rdfAggregationId = rdfId + "/Aggregation";
-    rdfStrBuilder.append("<rdf:Description xml:base=\"" + rdfWebId + "\" rdf:about=\"" + rdfWebId + "\">");
+    //TODO delete xml:base
+    rdfStrBuilder.append("<rdf:Description rdf:about=\"" + rdfWebId + "\">");
     rdfStrBuilder.append("<ore:describedBy rdf:resource=\"" + collectionRdfId + "\"/>");
     rdfStrBuilder.append("<ore:describes rdf:resource=\"" + rdfAggregationId + "\"/>");
     rdfStrBuilder.append("<rdf:type rdf:resource=\"http://www.openarchives.org/ore/terms/ResourceMap\"/>");
