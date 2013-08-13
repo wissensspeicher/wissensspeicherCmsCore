@@ -339,6 +339,8 @@ public class IndexHandler {
                 String xQueryAfterStr = xQueryWebId.getAfterStr();
                 if (xQueryAfterStr != null)
                   webUri = webUri + xQueryAfterStr;
+                if (xQueryPreStr == null && xQueryAfterStr == null)
+                  webUri = webId;
               }
             }
           }
@@ -560,8 +562,8 @@ public class IndexHandler {
           if (docIdField != null) {
             String docId = docIdField.stringValue();
             boolean docIsXml = docHandler.isDocXml(docId);
-            if (docIsXml) {
-              Hits firstHit = queryDocument(docId, queryStr, 1, 1);
+            if (docIsXml && ! queryStr.equals("*")) {
+              Hits firstHit = queryDocument(docId, queryStr, 0, 0);
               if (firstHit != null && firstHit.getSize() > 0) {
                 ArrayList<org.bbaw.wsp.cms.document.Document> firstHitHits = firstHit.getHits();
                 if (firstHitHits != null && firstHitHits.size() > 0) {
