@@ -19,7 +19,7 @@ import com.hp.hpl.jena.graph.Node;
 import com.hp.hpl.jena.query.Dataset;
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QueryExecutionFactory;
-import com.hp.hpl.jena.query.QueryFactory;
+import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
 import com.hp.hpl.jena.query.ResultSetFormatter;
 import com.hp.hpl.jena.rdf.model.Literal;
@@ -28,6 +28,7 @@ import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
+import com.hp.hpl.jena.rdf.model.impl.LiteralImpl;
 import com.hp.hpl.jena.shared.PrefixMapping;
 import com.hp.hpl.jena.sparql.core.DatasetGraph;
 import com.hp.hpl.jena.update.GraphStore;
@@ -137,24 +138,6 @@ public class RdfHandler {
     final UpdateRequest request = UpdateFactory.create(queryString);
     final UpdateProcessor proc = UpdateExecutionFactory.create(request, graphStore);
     proc.execute();
-  }
-
-  /**
-   * counts triple in a defaultgraph of the dataset
-   * 
-   * @param dataset
-   */
-  public void count(final Dataset dataset) {
-    final QueryExecution qExec = QueryExecutionFactory.create("SELECT (count(*) AS ?count) { ?s ?p ?o} LIMIT 10", dataset);
-    final ResultSet rs = qExec.execSelect();
-    System.out.println("");
-    System.out.println("_____________triples im defaultgraph_______________");
-    try {
-      ResultSetFormatter.out(rs);
-    } finally {
-      qExec.close();
-    }
-
   }
 
   /**
