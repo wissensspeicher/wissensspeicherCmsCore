@@ -74,10 +74,14 @@
 
 <xsl:template match="*:persName">
   <xsl:variable name="name" select="@name"/>
+  <xsl:variable name="surname" select="*:surname"/>
+  <xsl:variable name="forename" select="*:forename"/>
   <xsl:variable name="nymRef" select="@nymRef"/>
   <xsl:variable name="value" select="string-join(text(), ' ')"/>
   <item>
     <xsl:choose>
+      <xsl:when test="not(empty($surname)) and not(empty($forename))"><xsl:value-of select="concat($surname, ', ', $forename)"/></xsl:when>
+      <xsl:when test="not(empty($surname)) and empty($forename)"><xsl:value-of select="$surname"/></xsl:when>
       <xsl:when test="not(empty($name))"><xsl:value-of select="normalize-space(replace($name, '&lt;|&gt;', ''))"/></xsl:when>
       <xsl:when test="not(empty($nymRef))"><xsl:value-of select="normalize-space(replace($nymRef, '&lt;|&gt;', ''))"/></xsl:when> 
       <xsl:when test="not(empty($value))"><xsl:value-of select="normalize-space(replace($value, '&lt;|&gt;', ''))"/></xsl:when>
