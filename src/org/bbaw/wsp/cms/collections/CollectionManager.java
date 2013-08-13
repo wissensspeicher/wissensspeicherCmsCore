@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.FileNameMap;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -21,6 +20,7 @@ import net.sf.saxon.s9api.XdmSequenceIterator;
 import net.sf.saxon.s9api.XdmValue;
 
 import org.apache.log4j.Logger;
+import org.apache.tika.Tika;
 import org.bbaw.wsp.cms.dochandler.DocumentHandler;
 import org.bbaw.wsp.cms.dochandler.parser.text.parser.EdocIndexMetadataFetcherTool;
 import org.bbaw.wsp.cms.document.MetadataRecord;
@@ -239,6 +239,7 @@ public class CollectionManager {
         }
       }
       if (documentUrls != null) {
+        Tika tika = new Tika();
         for (int i=0; i<documentUrls.size(); i++) {
           MetadataRecord mdRecord = new MetadataRecord();
           String docUrl = documentUrls.get(i);
@@ -254,11 +255,14 @@ public class CollectionManager {
           if (! uriPath.toLowerCase().matches(".*\\.csv$|.*\\.gif$|.*\\.jpg$|.*\\.jpeg$|.*\\.html$|.*\\.htm$|.*\\.log$|.*\\.mp3$|.*\\.pdf$|.*\\.txt$|.*\\.xml$")) {
             String mimeType = null;
             try {
+              mimeType = tika.detect(uri); // much faster with tika
+              /* old code which is slow, when the files behind the url's are large 
               HttpURLConnection connection = (HttpURLConnection) uri.openConnection();
               connection.setConnectTimeout(5000);
               connection.setReadTimeout(5000);
               connection.connect();
               mimeType = connection.getContentType();
+              */
             } catch (IOException e) {
               LOGGER.error("get mime type failed for: " + docUrl);
               e.printStackTrace();
