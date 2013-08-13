@@ -8,13 +8,22 @@
       <webBaseUrl>http://www.deutschestextarchiv.de/</webBaseUrl>
       <!-- Homepage -->
       <dataUrl>http://www.deutschestextarchiv.de/</dataUrl>
+      <!-- veröffentlichte XML-Texte -->
+      <dataUrl>http://www.deutschestextarchiv.de/book/download_xml/abel_leibmedicus_1699</dataUrl>
       
-      <!-- Software, alle unter der URL zu finden -->
+      <!-- diverses -->
+      <dataUrl>http://www.deutschestextarchiv.de/doku/ueberblick</dataUrl>
+      <dataUrl>http://www.deutschestextarchiv.de/doku</dataUrl>
+      <dataUrl>http://www.deutschestextarchiv.de/doku/leitlinien</dataUrl>
+      <dataUrl>http://www.deutschestextarchiv.de/doku/software</dataUrl>
       <dataUrl>http://www.deutschestextarchiv.de/documentation/resources/</dataUrl>
     </url>
     <mainLanguage>ger</mainLanguage>
-      <format>html</format>
-      <format>jpeg</format>
-      <format>Software</format>
+    <xqueries>
+      <xquery>
+        <name>webId</name>
+        <code>//*:idno[@type="URLWeb"]/text()</code>
+      </xquery>
+    </xqueries>
   </collection>
 </wsp>
