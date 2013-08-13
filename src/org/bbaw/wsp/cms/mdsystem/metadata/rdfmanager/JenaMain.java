@@ -64,7 +64,7 @@ public class JenaMain {
    */
   private void doYourWork() {
     wspStore.setForce(true);
-    createNamedModelsFromOreSets("/home/juergens/wspEtc/rdfData/projektRdf/Normdata/");
+    createNamedModelsFromOreSets("/home/juergens/wspEtc/rdfData/projektRdf/projects/ModsToRdf/");
     // createNewModelFromSingleOre(oreBiblioNeu);
     // getAllNamedModelsInDataset();
     // wspStore.openDataset();
@@ -99,11 +99,11 @@ public class JenaMain {
       final Model freshsModel = wspStore.getFreshModel();
       final Model m = rdfHandler.fillModelFromFile(freshsModel, string);
       logger.info("File path: " + string);
-      final String modsRdfAbout = rdfHandler.scanID(string);
-      if (modsRdfAbout != null) {
+      final String rdfAbout = rdfHandler.scanID(string);
+      if (rdfAbout != null) {
         try {
-          wspStore.addNamedModelToWspStore(modsRdfAbout, m);
-          logger.info(modsRdfAbout + " successfully added.");
+          wspStore.addNamedModelToWspStore(rdfAbout, m);
+          logger.info(rdfAbout + " successfully added.");
         } catch (final ApplicationException e) {
           // TODO Auto-generated catch block
           e.printStackTrace();
