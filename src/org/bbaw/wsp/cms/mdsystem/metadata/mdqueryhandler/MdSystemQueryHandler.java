@@ -101,4 +101,33 @@ public class MdSystemQueryHandler {
         System.out.println("number : "+number);
     return number;
   }
+  
+  /**
+   * get number of Named Graphs
+   * @return
+   */
+  public String getNumberOfGraphs(){
+    URL datasetUrl = null;
+    try {
+      datasetUrl = new URL("http://localhost:3030/ds");
+    } catch (MalformedURLException e) {
+      e.printStackTrace();
+    }
+    FusekiClient fusekiCl = FusekiClient.getInstance();
+    ResultSet rs = fusekiCl.performSelect(datasetUrl.toExternalForm(), "SELECT (Count(DISTINCT ?g) AS ?numGraphs) WHERE { GRAPH ?g { ?s ?p ?o } }");
+    //can only be one result, but nonetheless
+    List<String> rsList = new ArrayList<String>();
+    while(rs.hasNext()){
+      rsList.add(rs.next().getLiteral("?numGraphs").getString());
+    }
+    System.out.println("rsList.size() : "+rsList.size());
+    String number = null;  
+    if(rsList.size() == 1){
+      number = rsList.get(0);
+    }else{
+      number = "No counting of triples possible.";
+    }
+        System.out.println("number : "+number);
+    return number;
+  }
 }
