@@ -31,6 +31,13 @@
       <field>head</field>
       <exclude/>
     </fields>
+    <xqueries>
+      <xquery>
+        <name>webId</name>
+        <code>replace(//*:msIdentifyer/*:idno/text(), 'Hs|ABBAW|NL|Ehrenberg|ID|DES|MANUSKRIPTS|[ ;:,.]', '')</code>
+        <preStr>http://telota.bbaw.de/AvHBriefedition/#/</preStr>
+      </xquery>
+    </xqueries>
     <update>false</update>
   </collection>
 </wsp>
