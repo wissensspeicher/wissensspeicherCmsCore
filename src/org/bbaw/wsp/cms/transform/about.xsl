@@ -26,6 +26,7 @@
 <xsl:param name="type"></xsl:param>
 <xsl:param name="language"></xsl:param>
 
+<xsl:variable name="error" select="//error/text()"/>
 <xsl:variable name="dbPediaKey" select="/about/query/key"/>
 <xsl:variable name="ddc" select="/about/query/ddc"/>
 <xsl:variable name="baseUrl" select="/about/query/baseUrl"/>
@@ -83,7 +84,7 @@
   <xsl:if test="empty($label) and empty($pdrPitHits) and empty($pdrConcordancerHits)">
     <div class="result">Query delivers no results</div>
   </xsl:if>
-  <xsl:if test="not(empty($label))">
+  <xsl:if test="not(empty($label)) or not(empty($error))">
     <div class="label">
        <xsl:sequence select="$typeLogo"/>
        <xsl:apply-templates select="$label"/>
@@ -99,15 +100,22 @@
           <img src="../images/cc.svg" width="18" height="18" border="0" alt="cc license"/>
         </a>
       </span>
-	    <div class="resource">
-	      <xsl:variable name="dbPediaUrl" select="concat($dbpediaServerName, '/resource/', $dbPediaKey)"/>
-	      <span class="bold"><xsl:value-of select="'Resource '"/></span>
-	      <ul class="urls">
-	        <li class="url">
-	          <a class="url" href="{$dbPediaUrl}"><xsl:value-of select="$dbPediaUrl"/></a>
-	        </li>
-	      </ul> 
-	    </div>
+      <xsl:if test="not(empty($error))">
+        <div>
+          <span class="error">Error: </span><xsl:value-of select="$error"/>
+        </div>
+      </xsl:if>
+      <xsl:if test="empty($error)">
+  	    <div class="resource">
+	        <xsl:variable name="dbPediaUrl" select="concat($dbpediaServerName, '/resource/', $dbPediaKey)"/>
+	        <span class="bold"><xsl:value-of select="'Resource '"/></span>
+	        <ul class="urls">
+	          <li class="url">
+	            <a class="url" href="{$dbPediaUrl}"><xsl:value-of select="$dbPediaUrl"/></a>
+	          </li>
+	        </ul> 
+	      </div>
+	    </xsl:if>
 	    <xsl:if test="not(empty($dbpediaDisambiguations))">
 	      <div class="disambiguations">
 	        <span class="bold"><xsl:value-of select="'Disambiguations: '"/></span>
