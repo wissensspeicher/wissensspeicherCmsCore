@@ -91,6 +91,7 @@ public class IndexHandler {
   private IndexReader documentsIndexReader;
   private PerFieldAnalyzerWrapper documentsPerFieldAnalyzer;
   private PerFieldAnalyzerWrapper nodesPerFieldAnalyzer;
+  private ArrayList<Token> tokens; // all tokens in tokenOrig
   private TSTLookup suggester;
   // private TaxonomyWriter taxonomyWriter;  // TODO facet
   // private TaxonomyReader taxonomyReader;  // TODO facet
@@ -111,6 +112,10 @@ public class IndexHandler {
     documentsSearcherManager = getNewSearcherManager(documentsIndexWriter);
     nodesSearcherManager = getNewSearcherManager(nodesIndexWriter);
     documentsIndexReader = getDocumentsReader();
+    Date before = new Date();
+    tokens = getToken("tokenOrig", "", 10000000); // get all token: needs ca. 4 sec. for 3 Mio tokens
+    Date after = new Date();
+    LOGGER.info("Reading of all tokens in Lucene index successfully with: " + tokens.size() + " tokens (" + "elapsed time: " + (after.getTime() - before.getTime()) + " ms)");
     // taxonomyWriter = getTaxonomyWriter();  // TODO facet
     // taxonomyReader = getTaxonomyReader();  // TODO facet
   }
@@ -466,9 +471,8 @@ public class IndexHandler {
   }
 
   public TSTLookup getSuggester() throws ApplicationException {
-    // one time init of the suggester, if it is null (needs ca. 5 sec. for 1 Mio. token)
+    // one time init of the suggester, if it is null (needs ca. 2 sec. for 3 Mio. token)
     if (suggester == null) {
-      ArrayList<Token> tokens = getToken("tokenOrig", "", 10000000); // get all token
       suggester = new TSTLookup();
       try {
         suggester.build(new TokenArrayListIterator(tokens));  // put all tokens into the suggester
@@ -581,10 +585,12 @@ public class IndexHandler {
           docs.add(doc);
         }
         int sizeTotalDocuments = documentsIndexReader.numDocs();
+        int sizeTotalTerms = tokens.size(); // term count over tokenOrig
         if (docs != null) {
           hits = new Hits(docs, from, to);
           hits.setSize(resultDocs.scoreDocs.length);
           hits.setSizeTotalDocuments(sizeTotalDocuments);
+          hits.setSizeTotalTerms(sizeTotalTerms);
           hits.setQuery(morphQuery);
         }
       }
