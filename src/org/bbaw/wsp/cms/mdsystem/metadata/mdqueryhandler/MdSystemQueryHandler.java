@@ -3,26 +3,20 @@ package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Timer;
 
-import org.apache.jena.fuseki.http.DatasetAdapter;
 import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.conceptsearch.ConceptIdentfierSearchMode;
 import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.conceptsearch.ConceptIdentifier;
 import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.conceptsearch.ConceptQueryResult;
 import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.detailedsearch.ISparqlAdapter;
 import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.detailedsearch.SparqlAdapterFactory;
-import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.JenaMain;
-import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.RdfHandler;
 import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.WspRdfStore;
 import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.fuseki.FusekiClient;
-import org.bbaw.wsp.cms.mdsystem.util.MdSystemConfigReader;
+import org.bbaw.wsp.cms.mdsystem.util.StatisticsScheduler;
 
-import com.hp.hpl.jena.query.Dataset;
 import com.hp.hpl.jena.query.ResultSet;
-import com.hp.hpl.jena.rdf.model.RDFNode;
-import com.hp.hpl.jena.sparql.util.DatasetUtils;
-
-import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 
 /**
  * handles the JSON-query sent from the GUI and delegates to @SparqlAdapter and @ConceptIdentifier
@@ -37,7 +31,8 @@ public class MdSystemQueryHandler {
   private ISparqlAdapter sparqlAdapter;
   private static MdSystemQueryHandler mdSystemQueryHandler;
   private WspRdfStore store;
-
+  private boolean statTimerFlag = false;
+  
   private MdSystemQueryHandler() {
   }
 
@@ -60,6 +55,19 @@ public class MdSystemQueryHandler {
       e.printStackTrace();
     }
     // sparqlAdapter = new SparqlAdapter(store.getDataset());
+    
+    //check statistics once per week, so it won't decrease performance so much
+    long oncePerWeek = 1000 * 60 * 60 * 24 * 7;
+    if(statTimerFlag != false){
+      Timer timer = new Timer();
+      Calendar date = Calendar.getInstance();
+          date.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+          date.set(Calendar.HOUR, 12);
+          date.set(Calendar.MINUTE, 0);
+          date.set(Calendar.SECOND, 0);
+          date.set(Calendar.MILLISECOND, 0);
+          timer.schedule(new StatisticsScheduler(), date.getTime(), oncePerWeek);
+    }
   }
 
   /**
