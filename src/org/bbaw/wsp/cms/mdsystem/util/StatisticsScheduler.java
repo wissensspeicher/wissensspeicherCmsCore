@@ -9,6 +9,7 @@ public class StatisticsScheduler extends TimerTask {
 
   private String totalNumberOfGraphs;
   private String totalNumberOfTriple;
+  private static StatisticsScheduler statSched;
   
   @Override
   public void run() {
@@ -19,6 +20,15 @@ public class StatisticsScheduler extends TimerTask {
     this.totalNumberOfGraphs = mdQueryHandler.getNumberOfGraphs();
   }
 
+  /**
+   * Singleton
+   */
+  public static StatisticsScheduler getInstance(){
+    if(statSched == null)
+      statSched = new StatisticsScheduler(); 
+    return statSched;
+  }
+  
   public String getTotalNumberOfGraphs() {
     return totalNumberOfGraphs;
   }
