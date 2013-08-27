@@ -61,9 +61,9 @@ public class MdSystemQueryHandler {
     if(statTimerFlag != false){
       Timer timer = new Timer();
       Calendar date = Calendar.getInstance();
-          date.set(Calendar.DAY_OF_WEEK, Calendar.TUESDAY);
-          date.set(Calendar.HOUR, 11);
-          date.set(Calendar.MINUTE, 20);
+          date.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
+          date.set(Calendar.HOUR, 12);
+          date.set(Calendar.MINUTE, 0);
           date.set(Calendar.SECOND, 0);
           date.set(Calendar.MILLISECOND, 0);
           timer.schedule(new StatisticsScheduler(), date.getTime(), oncePerWeek);
