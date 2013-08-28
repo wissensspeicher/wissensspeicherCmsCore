@@ -20,7 +20,7 @@ public class Collection {
   private String excludesStr; // excludes below dataUrl separated by a blank
   private String mainLanguage;
   private ArrayList<String> fields;
-  private Hashtable<String, String> urlParamters;
+  private Hashtable<String, Service> services;
   private Hashtable<String, XQuery> xQueries;
   private List<String> excludeField;
   private List<String> formats;
@@ -194,13 +194,20 @@ public class Collection {
     this.configFileName = configFileName;
   }
 
-  public Hashtable<String, String> getUrlParamters() {
-    return urlParamters;
+  public Hashtable<String, Service> getServices() {
+    return services;
   }
 
-  public void setUrlParamters(Hashtable<String, String> urlParamters) {
-    this.urlParamters = urlParamters;
+  public void setServices(Hashtable<String, Service> services) {
+    this.services = services;
   }
 
+  public Service getService(String serviceName) {
+    Service service = null;
+    if (services != null) {
+      service = services.get(serviceName);
+    }
+    return service;
+  }
 
 }
