@@ -804,6 +804,23 @@
       <dataUrl>http://www.deutschestextarchiv.de/book/download_xml/20868</dataUrl>      
     </url>
     <mainLanguage>ger</mainLanguage>
+    <services>
+      <service>
+        <id>queryResource</id>
+        <host>deutschestextarchiv.de</host>      
+        <name>/search/ddc/search</name>
+        <parameters>
+          <param>
+            <name>query</name>
+            <value>q</value>
+          </param>
+          <param>
+            <name>resource</name>
+            <value>book</value>
+          </param>
+        </parameters>
+      </service>
+    </services>
     <xqueries>
       <xquery>
         <name>webId</name>
