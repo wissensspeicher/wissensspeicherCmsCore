@@ -63,9 +63,17 @@
     <formats>
       <format>xml</format>
     </formats>
-    <urlParams>
-      <pageNumber>pageNr</pageNumber>
-    </urlParams>
+    <services>
+      <service>
+        <id>pageView</id>
+        <parameters>
+          <param>
+            <name>page</name>
+            <value>pageNr</value>
+          </param>
+        </parameters>
+      </service>
+    </services>
     <fields>
       <field>p</field>
       <field>s</field>
