@@ -221,19 +221,35 @@ public class CollectionReader {
 						}
 						collection.setxQueries(xqueriesHashtable);
 					}
-          Hits urlParams = (Hits) xQueryEvaluator.evaluate(configFileUrl, "/wsp/collection/urlParams/*", 0, 9, "hits");
-          if (urlParams != null) {
-            Hashtable<String, String> urlParamsHashtable = new Hashtable<String, String>();
-            for (int i = 0; i < urlParams.getSize(); i++) {
-              Hit urlParamsHit = urlParams.getHits().get(i);
-              String urlParamsStr = urlParamsHit.getContent();
-              String paramName = xQueryEvaluator.evaluateAsStringValueJoined(urlParamsStr, "*/name()");
-              String paramNameValue = xQueryEvaluator.evaluateAsStringValueJoined(urlParamsStr, paramName);
-              if (paramName != null && paramNameValue != null) {
-                urlParamsHashtable.put(paramName, paramNameValue);
+          Hits services = (Hits) xQueryEvaluator.evaluate(configFileUrl, "/wsp/collection/services/*", 0, 9, "hits");
+          if (services != null) {
+            Hashtable<String, Service> servicesHashtable = new Hashtable<String, Service>();
+            for (int i = 0; i < services.getSize(); i++) {
+              Hit serviceHit = services.getHits().get(i);
+              String serviceStr = serviceHit.getContent();
+              String serviceId = xQueryEvaluator.evaluateAsString(serviceStr, "service/id/text()");
+              String serviceHost = xQueryEvaluator.evaluateAsString(serviceStr, "service/host/text()");
+              String serviceName = xQueryEvaluator.evaluateAsString(serviceStr, "service/name/text()");
+              Hits serviceParameters = (Hits) xQueryEvaluator.evaluate(serviceStr, "service/parameters/param", 0, 9, "hits");
+              Hashtable<String, String> serviceParametersHashtable = null;
+              if (serviceParameters != null) {
+                serviceParametersHashtable = new Hashtable<String, String>();
+                for (int j = 0; j < serviceParameters.getSize(); j++) {
+                  Hit paramHit = serviceParameters.getHits().get(j);
+                  String paramStr = paramHit.getContent();
+                  String paramName = xQueryEvaluator.evaluateAsString(paramStr, "param/name/text()");
+                  String paramValue = xQueryEvaluator.evaluateAsString(paramStr, "param/value/text()");
+                  serviceParametersHashtable.put(paramName, paramValue);
+                }
               }
+              Service service = new Service();
+              service.setId(serviceId);
+              service.setHostName(serviceHost);
+              service.setName(serviceName);
+              service.setParameters(serviceParametersHashtable);
+              servicesHashtable.put(serviceId, service);
             }
-            collection.setUrlParamters(urlParamsHashtable);
+            collection.setServices(servicesHashtable);
           }
 					String excludesStr = xQueryEvaluator.evaluateAsStringValueJoined(configFileUrl, "/wsp/collection/url/exclude");
 					if (excludesStr != null) {
