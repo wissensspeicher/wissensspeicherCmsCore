@@ -809,6 +809,12 @@
         <id>queryResource</id>
         <host>deutschestextarchiv.de</host>      
         <name>/search/ddc/search</name>
+        <properties>
+          <property>
+            <name>queryLanguage</name>
+            <value>ddc</value>
+          </property>
+        </properties>
         <parameters>
           <param>
             <name>query</name>
