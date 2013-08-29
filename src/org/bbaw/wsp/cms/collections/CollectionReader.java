@@ -230,6 +230,18 @@ public class CollectionReader {
               String serviceId = xQueryEvaluator.evaluateAsString(serviceStr, "service/id/text()");
               String serviceHost = xQueryEvaluator.evaluateAsString(serviceStr, "service/host/text()");
               String serviceName = xQueryEvaluator.evaluateAsString(serviceStr, "service/name/text()");
+              Hits serviceProperties = (Hits) xQueryEvaluator.evaluate(serviceStr, "service/properties/property", 0, 9, "hits");
+              Hashtable<String, String> servicePropertiesHashtable = null;
+              if (serviceProperties != null) {
+                servicePropertiesHashtable = new Hashtable<String, String>();
+                for (int j = 0; j < serviceProperties.getSize(); j++) {
+                  Hit propertyHit = serviceProperties.getHits().get(j);
+                  String propertyStr = propertyHit.getContent();
+                  String paramName = xQueryEvaluator.evaluateAsString(propertyStr, "property/name/text()");
+                  String paramValue = xQueryEvaluator.evaluateAsString(propertyStr, "property/value/text()");
+                  servicePropertiesHashtable.put(paramName, paramValue);
+                }
+              }
               Hits serviceParameters = (Hits) xQueryEvaluator.evaluate(serviceStr, "service/parameters/param", 0, 9, "hits");
               Hashtable<String, String> serviceParametersHashtable = null;
               if (serviceParameters != null) {
@@ -246,6 +258,7 @@ public class CollectionReader {
               service.setId(serviceId);
               service.setHostName(serviceHost);
               service.setName(serviceName);
+              service.setProperties(servicePropertiesHashtable);
               service.setParameters(serviceParametersHashtable);
               servicesHashtable.put(serviceId, service);
             }
