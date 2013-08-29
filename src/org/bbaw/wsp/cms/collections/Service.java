@@ -6,6 +6,7 @@ public class Service {
   private String id;
   private String hostName;
   private String name;
+  private Hashtable<String, String> properties;
   private Hashtable<String, String> parameters;
 
   public String toUrlStr() {
@@ -49,10 +50,24 @@ public class Service {
     this.parameters = parameters;
   }
 
+  public Hashtable<String, String> getProperties() {
+    return properties;
+  }
+
+  public void setProperties(Hashtable<String, String> properties) {
+    this.properties = properties;
+  }
+
   public String getParamValue(String paramName) {
     if (parameters == null)
       return null;
     else return parameters.get(paramName);
+  }
+  
+  public String getPropertyValue(String propName) {
+    if (properties == null)
+      return null;
+    else return properties.get(propName);
   }
   
 }
