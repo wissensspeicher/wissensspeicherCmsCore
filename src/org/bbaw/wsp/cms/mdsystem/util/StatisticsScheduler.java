@@ -1,40 +1,46 @@
 package org.bbaw.wsp.cms.mdsystem.util;
 
-import java.util.TimerTask;
 
-import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.MdSystemQueryHandler;
-
-
-public class StatisticsScheduler extends TimerTask {
+public class StatisticsScheduler {
 
   private String totalNumberOfGraphs;
   private String totalNumberOfTriple;
-  private static StatisticsScheduler statSched;
+  private static StatisticsScheduler scheduler;
+ 
+  private long timeStamp;
   
-  @Override
-  public void run() {
-
-    MdSystemQueryHandler mdQueryHandler = MdSystemQueryHandler.getInstance();
-    
-    this.totalNumberOfTriple = mdQueryHandler.getTripleCount().toString();
-    this.totalNumberOfGraphs = mdQueryHandler.getNumberOfGraphs();
+  private StatisticsScheduler(){
+  }
+  
+  public static StatisticsScheduler getInstance(){
+    if(scheduler == null){
+      scheduler = new StatisticsScheduler();
+    }
+    return scheduler;
+  }
+  
+  public long getTimeStamp(){
+    return this.timeStamp;
   }
 
-  /**
-   * Singleton
-   */
-  public static StatisticsScheduler getInstance(){
-    if(statSched == null)
-      statSched = new StatisticsScheduler(); 
-    return statSched;
+  public void setNewTimeStamp(long currentTime){
+    this.timeStamp = currentTime;
   }
   
   public String getTotalNumberOfGraphs() {
     return totalNumberOfGraphs;
   }
-
+  
+  public void setTotalNumberOfGraphs(String totalNumberOfGraphs) {
+    this.totalNumberOfGraphs = totalNumberOfGraphs;
+  }
+  
   public String getTotalNumberOfTriple() {
     return totalNumberOfTriple;
+  }
+  
+  public void setTotalNumberOfTriple(String totalNumberOfTriple) {
+    this.totalNumberOfTriple = totalNumberOfTriple;
   }
   
 }
