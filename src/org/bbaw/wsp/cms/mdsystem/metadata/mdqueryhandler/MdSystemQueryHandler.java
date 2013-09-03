@@ -2,8 +2,10 @@ package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Timer;
 
@@ -56,17 +58,17 @@ public class MdSystemQueryHandler {
     }
     // sparqlAdapter = new SparqlAdapter(store.getDataset());
     
-    //check statistics once per week, so it won't decrease performance so much
-    long oncePerWeek = 1000 * 60 * 60 * 24 * 7;
-    if(statTimerFlag != false){
-      Timer timer = new Timer();
-      Calendar date = Calendar.getInstance();
-          date.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
-          date.set(Calendar.HOUR, 12);
-          date.set(Calendar.MINUTE, 0);
-          date.set(Calendar.SECOND, 0);
-          date.set(Calendar.MILLISECOND, 0);
-          timer.schedule(new StatisticsScheduler(), date.getTime(), oncePerWeek);
+    StatisticsScheduler sched = StatisticsScheduler.getInstance();
+    Calendar cal = Calendar.getInstance();  
+    int intervall = 30;
+    cal.add(Calendar.DAY_OF_MONTH, intervall * -1);
+    //Wenn das aktuelle Datum -30 Tage kleiner ist als der TimeStamp, dann werden die statistiken aufgefrischt
+//    System.out.println("sched.getTimeStamp() : "+sched.getTimeStamp());
+    if(cal.getTimeInMillis() < sched.getTimeStamp() || sched.getTimeStamp() == 0){
+      System.out.println("refreshing statistics");
+      sched.setTotalNumberOfGraphs(getNumberOfGraphs());
+      sched.setTotalNumberOfTriple(getTripleCount());
+      sched.setNewTimeStamp(System.currentTimeMillis());
     }
   }
 
