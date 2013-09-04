@@ -95,6 +95,16 @@ public class CollectionManager {
     updateCollection(collection, forceUpdate);
   }
 
+  public void deleteCollection(String collectionId) throws ApplicationException {
+    DocumentHandler docHandler = new DocumentHandler();
+    CmsDocOperation docOp = new CmsDocOperation("deleteCollection", null, null, collectionId);
+    try {
+      docHandler.doOperation(docOp);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+  
   private void updateCollection(Collection collection, boolean forceUpdate) throws ApplicationException {
     boolean isUpdateNecessary = collection.isUpdateNecessary();
     if (isUpdateNecessary || forceUpdate) {
