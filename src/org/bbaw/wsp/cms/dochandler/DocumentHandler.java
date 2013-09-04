@@ -59,6 +59,8 @@ public class DocumentHandler {
       create(docOperation);
     } else if (operationName.equals("delete")) {
       delete(docOperation);
+    } else if (operationName.equals("deleteCollection")) {
+      deleteCollection(docOperation);
     }
   }
   
@@ -219,6 +221,27 @@ public class DocumentHandler {
     // perform operation on Lucene
     IndexHandler indexHandler = IndexHandler.getInstance();
     indexHandler.deleteDocument(docOperation);
+  }
+  
+  private void deleteCollection(CmsDocOperation docOperation) throws ApplicationException {
+    String collectionId = docOperation.getDocIdentifier();  // collectionId
+    if (collectionId == null || collectionId.trim().equals(""))
+      throw new ApplicationException("Delete collection: Your collection id is empty. Please specify a collection id");
+    String documentsDirectory = Constants.getInstance().getDocumentsDir();
+    File collectionDir = new File(documentsDirectory + "/" + collectionId);
+    boolean collectionDirExists = collectionDir.exists();
+    if (! collectionDirExists) {
+      throw new ApplicationException("Collection directory:" + collectionDir + " does not exist. Please use a name that exists and perform the operation \"Delete collection\" again.");
+    }
+    // perform operation on Lucene
+    IndexHandler indexHandler = IndexHandler.getInstance();
+    int countDeletedDocs = indexHandler.deleteCollection(collectionId);
+    LOGGER.info(countDeletedDocs + " lucene documents in collection: \"" + collectionId + "\" successfully deleted");
+
+    // perform operation on file system
+    docOperation.setStatus("Delete collection directory: " + collectionDir + " in CMS");
+    FileUtils.deleteQuietly(collectionDir);
+    LOGGER.info("Collection directory: " + collectionDir + " successfully deleted");
   }
   
   private void buildFulltextFields(CmsDocOperation docOperation) throws ApplicationException {
