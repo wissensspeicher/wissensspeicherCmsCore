@@ -470,6 +470,24 @@ public class IndexHandler {
     }
   }
 
+  public int deleteCollection(String collectionName) throws ApplicationException {
+    int countDeletedDocs = -1;
+    try {
+      countDeletedDocs = deleteCollectionLocal(collectionName);
+      documentsIndexWriter.commit();
+      nodesIndexWriter.commit();
+    } catch (Exception e) {
+      try {
+        documentsIndexWriter.rollback();
+        nodesIndexWriter.rollback();
+      } catch (Exception ex) {
+        // nothing
+      }
+      throw new ApplicationException(e);
+    }
+    return countDeletedDocs;
+  }
+
   public TSTLookup getSuggester() throws ApplicationException {
     // one time init of the suggester, if it is null (needs ca. 2 sec. for 3 Mio. token)
     if (suggester == null) {
@@ -493,6 +511,30 @@ public class IndexHandler {
     } catch (Exception e) {
       throw new ApplicationException(e);
     }
+  }
+
+  private int deleteCollectionLocal(String collectionName) throws ApplicationException {
+    int countDeletedDocs = -1;
+    try {
+      String queryDocumentsByCollectionName = "collectionNames:" + collectionName;
+      Hits collectionDocHits = queryDocuments(queryDocumentsByCollectionName, null, null, 0, 100000, false, false);
+      ArrayList<org.bbaw.wsp.cms.document.Document> collectionDocs = collectionDocHits.getHits();
+      countDeletedDocs = collectionDocHits.getSize();
+      // delete all nodes of each document in collection
+      for (int i=0; i<collectionDocs.size(); i++) {
+        org.bbaw.wsp.cms.document.Document doc = collectionDocs.get(i);
+        Fieldable docIdFieldable = doc.getFieldable("docId");
+        String docId = docIdFieldable.stringValue();
+        Term termDocId = new Term("docId", docId);
+        nodesIndexWriter.deleteDocuments(termDocId);
+      }
+      // delete all documents in collection
+      Term termCollectionName = new Term("collectionNames", collectionName);
+      documentsIndexWriter.deleteDocuments(termCollectionName);
+    } catch (Exception e) {
+      throw new ApplicationException(e);
+    }
+    return countDeletedDocs;
   }
 
   public Hits queryDocuments(String queryStr, String[] sortFieldNames, String language, int from, int to, boolean withHitFragments, boolean translate) throws ApplicationException {
