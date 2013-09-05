@@ -22,6 +22,7 @@ import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.FieldSelector;
 import org.apache.lucene.document.Fieldable;
+import org.apache.lucene.document.NumericField;
 import org.apache.lucene.document.SetBasedFieldSelector;
 import org.apache.lucene.facet.taxonomy.TaxonomyReader;
 import org.apache.lucene.facet.taxonomy.TaxonomyWriter;
@@ -40,6 +41,7 @@ import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.FuzzyQuery;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.MatchAllDocsQuery;
+import org.apache.lucene.search.NumericRangeQuery;
 import org.apache.lucene.search.PhraseQuery;
 import org.apache.lucene.search.PrefixQuery;
 import org.apache.lucene.search.Query;
@@ -143,9 +145,14 @@ public class IndexHandler {
   private void indexDocumentLocal(CmsDocOperation docOperation) throws ApplicationException {
     try {
       MetadataRecord mdRecord = docOperation.getMdRecord();
-      String docId = mdRecord.getDocId();
       // List<CategoryPath> categories = new ArrayList<CategoryPath>(); // TODO facet
       Document doc = new Document();
+      int id = generateId(); // short id (auto increment)
+      NumericField idField = new NumericField("id", Field.Store.YES, true);
+      idField.setIntValue(id);
+      doc.add(idField);
+      mdRecord.setId(id);
+      String docId = mdRecord.getDocId();
       Field docIdField = new Field("docId", docId, Field.Store.YES, Field.Index.ANALYZED);
       doc.add(docIdField);
       String docIdSortedStr = docId.toLowerCase();  // so that sorting is lower case
@@ -725,6 +732,12 @@ public class IndexHandler {
     MetadataRecord mdRecord = null;
     Document doc = getDocument(docId);
     if (doc != null) {
+      int id = -1;
+      Fieldable idField = doc.getFieldable("id");
+      if (idField != null) {
+        String idStr = idField.stringValue();
+        id = Integer.valueOf(idStr);
+      }
       String identifier = null;
       Fieldable identifierField = doc.getFieldable("identifier");
       if (identifierField != null)
@@ -834,6 +847,7 @@ public class IndexHandler {
       }
       mdRecord = new MetadataRecord();
       mdRecord.setDocId(docId);
+      mdRecord.setId(id);
       mdRecord.setUri(uri);
       mdRecord.setWebUri(webUri);
       mdRecord.setIdentifier(identifier);
@@ -1273,6 +1287,56 @@ public class IndexHandler {
     return doc;
   }
 
+  private int generateId() throws ApplicationException {
+    int maxId = -1;
+    String maxIdStr = findMaxId();
+    if (maxIdStr == null) {
+      return 1;  
+    } else {
+      maxId = Integer.valueOf(maxIdStr).intValue() + 1;
+    }
+    return maxId;
+  }
+  
+  private String findMaxId() throws ApplicationException {
+    String maxId = null;
+    IndexSearcher searcher = null;
+    try {
+      makeDocumentsSearcherManagerUpToDate();
+      searcher = documentsSearcherManager.acquire();
+      String fieldNameId = "id";
+      String idQuery = "[* TO *]";
+      Query queryId = new QueryParser(Version.LUCENE_35, fieldNameId, documentsPerFieldAnalyzer).parse(idQuery);
+      queryId = NumericRangeQuery.newIntRange(fieldNameId, 0, 1000000, false, false);
+      Sort sortByIdReverse = new Sort(new SortField("id", SortField.INT, true));  // reverse order
+      TopDocs topDocs = searcher.search(queryId, 1, sortByIdReverse);
+      topDocs.setMaxScore(1);
+      if (topDocs != null && topDocs.scoreDocs != null && topDocs.scoreDocs.length > 0) {
+        int docID = topDocs.scoreDocs[0].doc;
+        FieldSelector docFieldSelector = getDocFieldSelector();
+        Document doc = searcher.doc(docID, docFieldSelector);
+        if (doc != null) {
+          Fieldable maxIdField = doc.getFieldable("id");
+          maxId = maxIdField.stringValue();
+        }
+      }
+      
+      searcher.close();
+    } catch (Exception e) {
+      throw new ApplicationException(e);
+    } finally {
+      try {
+        if (searcher != null)
+          documentsSearcherManager.release(searcher);
+      } catch (IOException e) {
+        // nothing
+      }
+    }
+    // Do not use searcher after this!
+    searcher = null;
+    return maxId;
+  }
+  
   public Hits moreLikeThis(String docId, int from, int to) throws ApplicationException {
     Hits hits = null;
     ArrayList<org.bbaw.wsp.cms.document.Document>  wspDocs = null;
@@ -1337,6 +1401,7 @@ public class IndexHandler {
     File luceneDocsDirectory = new File(luceneDocsDirectoryStr);
     try {
       Map<String, Analyzer> documentsFieldAnalyzers = new HashMap<String, Analyzer>();
+      documentsFieldAnalyzers.put("id", new KeywordAnalyzer());
       documentsFieldAnalyzers.put("docId", new KeywordAnalyzer());
       documentsFieldAnalyzers.put("identifier", new KeywordAnalyzer()); 
       documentsFieldAnalyzers.put("uri", new KeywordAnalyzer());
@@ -1461,6 +1526,7 @@ public class IndexHandler {
 
   private FieldSelector getDocFieldSelector() {
     HashSet<String> fields = new HashSet<String>();
+    fields.add("id");
     fields.add("docId");
     fields.add("identifier");
     fields.add("uri");
