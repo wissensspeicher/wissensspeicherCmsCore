@@ -11,6 +11,7 @@ import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -231,10 +232,6 @@ public class DocumentHandler {
       throw new ApplicationException("Delete collection: Your collection id is empty. Please specify a collection id");
     String documentsDirectory = Constants.getInstance().getDocumentsDir();
     File collectionDir = new File(documentsDirectory + "/" + collectionId);
-    boolean collectionDirExists = collectionDir.exists();
-    if (! collectionDirExists) {
-      throw new ApplicationException("Collection directory:" + collectionDir + " does not exist. Please use a name that exists and perform the operation \"Delete collection\" again.");
-    }
     // perform operation on Lucene
     IndexHandler indexHandler = IndexHandler.getInstance();
     int countDeletedDocs = indexHandler.deleteCollection(collectionId);
@@ -245,51 +242,71 @@ public class DocumentHandler {
     FileUtils.deleteQuietly(collectionDir);
     LOGGER.info("Collection directory: " + collectionDir + " successfully deleted");
     String oaiproviderDirStr = Constants.getInstance().getOaiproviderDir() + "/" + collectionId;
-    File oaiproviderDir = new File(documentsDirectory + "/" + collectionId);
+    File oaiproviderDir = new File(oaiproviderDirStr);
     FileUtils.deleteQuietly(oaiproviderDir);
     LOGGER.info("OAI provider directory: " + oaiproviderDirStr + " successfully deleted");
   }
   
   private void writeOaiproviderFile(MetadataRecord mdRecord) throws ApplicationException {
     StringBuilder dcStrBuilder = new StringBuilder();  // Dublin core content string builder
-    dcStrBuilder.append("        <oai_dc:dc xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:oai_dc=\"http://www.openarchives.org/OAI/2.0/oai_dc/\">\n");
-    String projectUrl = "";  // TODO
-    dcStrBuilder.append("          <dc:identifier>" + projectUrl + "</dc:identifier>\n");
-    String creator = "";  // TODO
-    dcStrBuilder.append("          <dc:creator>" + creator + "</dc:creator>\n"); 
-    String title = "";  // TODO
-    dcStrBuilder.append("          <dc:title>" + title + "</dc:title>\n");
-    String publisher = "";  // TODO
-    dcStrBuilder.append("          <dc:publisher>" + publisher + "</dc:publisher>\n");
-    String language = "";  // TODO
-    dcStrBuilder.append("          <dc:language>" + language + "</dc:language>\n");
-    String subject = "";  // TODO
-    dcStrBuilder.append("          <dc:subject>" + subject + "</dc:subject>\n");  // e.g. "Wissenschaft: Medizin"
-    /*
-    int hours = cal.get(Calendar.HOUR_OF_DAY);
-    String hoursStr = String.valueOf(hours);
-    if (hours < 10)
-      hoursStr = "0" + hoursStr;
-    int minutes = cal.get(Calendar.MINUTE);
-    String minutesStr = String.valueOf(minutes);
-    if (minutes < 10)
-      minutesStr = "0" + minutesStr;
-    int seconds = cal.get(Calendar.SECOND);
-    String secondsStr = String.valueOf(seconds);
-    if (seconds < 10)
-      secondsStr = "0" + secondsStr;
-    String timeStr = hoursStr + ":" + minutesStr + ":" + secondsStr;
-    */
-    String dateStr = "";  // TODO
-    String timeStr = "";  // TODO
-    dcStrBuilder.append("          <dc:date>" + dateStr + "T" + timeStr + "Z" + "</dc:date>\n"); // e.g. "2013-07-03T12:09:59Z"
-    String type = "";  // TODO
-    dcStrBuilder.append("          <dc:type>" + type + "</dc:type>\n"); // "Text"
-    String rights = "";  // TODO e.g. "Distributed under the Creative Commons Attribution-NonCommercial 3.0 Unported License.";
-    dcStrBuilder.append("          <dc:rights>" + rights + "</dc:rights>\n"); // e.g. "Distributed under the Creative Commons Attribution-NonCommercial 3.0 Unported License."
-    String source = "";  // TODO
-    dcStrBuilder.append("          <dc:source>" + source + "</dc:source>\n");
-    dcStrBuilder.append("       </oai_dc:dc>\n");
+    dcStrBuilder.append("<oai_dc:dc xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:oai_dc=\"http://www.openarchives.org/OAI/2.0/oai_dc/\">\n");
+    String projectUrl = mdRecord.getWebUri();
+    if (projectUrl == null)
+      projectUrl = mdRecord.getIdentifier();
+    if (projectUrl == null)
+      projectUrl = mdRecord.getDocId();
+    if (projectUrl != null && ! projectUrl.trim().isEmpty())
+      dcStrBuilder.append("  <dc:identifier>" + projectUrl + "</dc:identifier>\n");
+    String creator = mdRecord.getCreator();
+    if (creator != null)
+      dcStrBuilder.append("  <dc:creator>" + creator + "</dc:creator>\n"); 
+    String title = mdRecord.getTitle();
+    if (title != null)
+      dcStrBuilder.append("  <dc:title>" + title + "</dc:title>\n");
+    String publisher = mdRecord.getPublisher();
+    if (publisher != null)
+      dcStrBuilder.append("  <dc:publisher>" + publisher + "</dc:publisher>\n");
+    String language = mdRecord.getLanguage();
+    if (language != null)
+      dcStrBuilder.append("  <dc:language>" + language + "</dc:language>\n");
+    String subject = mdRecord.getSubject();
+    if (subject != null)
+      dcStrBuilder.append("  <dc:subject>" + subject + "</dc:subject>\n");
+    Date pubDate = mdRecord.getDate();
+    if (pubDate != null) {
+      Calendar cal = Calendar.getInstance();
+      cal.setTime(pubDate);
+      int year = cal.get(Calendar.YEAR);
+      int month = cal.get(Calendar.MONTH) + 1;
+      String monthStr = String.valueOf(month);
+      if (month < 10)
+        monthStr = "0" + monthStr;
+      int day = cal.get(Calendar.DAY_OF_MONTH);
+      String dayStr = String.valueOf(day);
+      if (day < 10)
+        dayStr = "0" + dayStr;
+      String dateStr = year + "-" + monthStr + "-" + dayStr;
+      int hours = cal.get(Calendar.HOUR_OF_DAY);
+      String hoursStr = String.valueOf(hours);
+      if (hours < 10)
+        hoursStr = "0" + hoursStr;
+      int minutes = cal.get(Calendar.MINUTE);
+      String minutesStr = String.valueOf(minutes);
+      if (minutes < 10)
+        minutesStr = "0" + minutesStr;
+      int seconds = cal.get(Calendar.SECOND);
+      String secondsStr = String.valueOf(seconds);
+      if (seconds < 10)
+        secondsStr = "0" + secondsStr;
+      String timeStr = hoursStr + ":" + minutesStr + ":" + secondsStr;
+      dcStrBuilder.append("  <dc:date>" + dateStr + "T" + timeStr + "Z" + "</dc:date>\n"); // e.g. "2013-07-03T12:09:59Z"
+    }
+    String type = "Text";
+    dcStrBuilder.append("  <dc:type>" + type + "</dc:type>\n");
+    String rights = mdRecord.getRights();
+    if (rights != null)
+      dcStrBuilder.append("  <dc:rights>" + rights + "</dc:rights>\n"); 
+    dcStrBuilder.append("</oai_dc:dc>\n");
     String dcStr = dcStrBuilder.toString();
     String collectionId = mdRecord.getCollectionNames();
     String oaiproviderDirStr = Constants.getInstance().getOaiproviderDir();
