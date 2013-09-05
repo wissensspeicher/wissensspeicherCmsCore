@@ -198,6 +198,8 @@ public class DocumentHandler {
       docOperation.setStatus(operationName + " document: " + docId + " in CMS");
       IndexHandler indexHandler = IndexHandler.getInstance();
       indexHandler.indexDocument(docOperation);
+      // write oaiprovider file: has to be after indexing because the id field is set in indexing procedure
+      writeOaiproviderFile(mdRecord);
     } catch (IOException e) {
       throw new ApplicationException(e);
     }
@@ -242,6 +244,67 @@ public class DocumentHandler {
     docOperation.setStatus("Delete collection directory: " + collectionDir + " in CMS");
     FileUtils.deleteQuietly(collectionDir);
     LOGGER.info("Collection directory: " + collectionDir + " successfully deleted");
+    String oaiproviderDirStr = Constants.getInstance().getOaiproviderDir() + "/" + collectionId;
+    File oaiproviderDir = new File(documentsDirectory + "/" + collectionId);
+    FileUtils.deleteQuietly(oaiproviderDir);
+    LOGGER.info("OAI provider directory: " + oaiproviderDirStr + " successfully deleted");
+  }
+  
+  private void writeOaiproviderFile(MetadataRecord mdRecord) throws ApplicationException {
+    StringBuilder dcStrBuilder = new StringBuilder();  // Dublin core content string builder
+    dcStrBuilder.append("        <oai_dc:dc xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:oai_dc=\"http://www.openarchives.org/OAI/2.0/oai_dc/\">\n");
+    String projectUrl = "";  // TODO
+    dcStrBuilder.append("          <dc:identifier>" + projectUrl + "</dc:identifier>\n");
+    String creator = "";  // TODO
+    dcStrBuilder.append("          <dc:creator>" + creator + "</dc:creator>\n"); 
+    String title = "";  // TODO
+    dcStrBuilder.append("          <dc:title>" + title + "</dc:title>\n");
+    String publisher = "";  // TODO
+    dcStrBuilder.append("          <dc:publisher>" + publisher + "</dc:publisher>\n");
+    String language = "";  // TODO
+    dcStrBuilder.append("          <dc:language>" + language + "</dc:language>\n");
+    String subject = "";  // TODO
+    dcStrBuilder.append("          <dc:subject>" + subject + "</dc:subject>\n");  // e.g. "Wissenschaft: Medizin"
+    /*
+    int hours = cal.get(Calendar.HOUR_OF_DAY);
+    String hoursStr = String.valueOf(hours);
+    if (hours < 10)
+      hoursStr = "0" + hoursStr;
+    int minutes = cal.get(Calendar.MINUTE);
+    String minutesStr = String.valueOf(minutes);
+    if (minutes < 10)
+      minutesStr = "0" + minutesStr;
+    int seconds = cal.get(Calendar.SECOND);
+    String secondsStr = String.valueOf(seconds);
+    if (seconds < 10)
+      secondsStr = "0" + secondsStr;
+    String timeStr = hoursStr + ":" + minutesStr + ":" + secondsStr;
+    */
+    String dateStr = "";  // TODO
+    String timeStr = "";  // TODO
+    dcStrBuilder.append("          <dc:date>" + dateStr + "T" + timeStr + "Z" + "</dc:date>\n"); // e.g. "2013-07-03T12:09:59Z"
+    String type = "";  // TODO
+    dcStrBuilder.append("          <dc:type>" + type + "</dc:type>\n"); // "Text"
+    String rights = "";  // TODO e.g. "Distributed under the Creative Commons Attribution-NonCommercial 3.0 Unported License.";
+    dcStrBuilder.append("          <dc:rights>" + rights + "</dc:rights>\n"); // e.g. "Distributed under the Creative Commons Attribution-NonCommercial 3.0 Unported License."
+    String source = "";  // TODO
+    dcStrBuilder.append("          <dc:source>" + source + "</dc:source>\n");
+    dcStrBuilder.append("       </oai_dc:dc>\n");
+    String dcStr = dcStrBuilder.toString();
+    String collectionId = mdRecord.getCollectionNames();
+    String oaiproviderDirStr = Constants.getInstance().getOaiproviderDir();
+    int id = mdRecord.getId();
+    String docId = mdRecord.getDocId();
+    String fileIdentifier = docId;
+    if (id != -1)
+      fileIdentifier = "" + id;
+    String oaiDcFileName = fileIdentifier + "_oai_dc.xml";
+    File oaiDcFile = new File(oaiproviderDirStr + "/" + collectionId + "/" + oaiDcFileName);
+    try {
+      FileUtils.writeStringToFile(oaiDcFile, dcStr, "utf-8");
+    } catch (IOException e) {
+      throw new ApplicationException(e);
+    }
   }
   
   private void buildFulltextFields(CmsDocOperation docOperation) throws ApplicationException {
