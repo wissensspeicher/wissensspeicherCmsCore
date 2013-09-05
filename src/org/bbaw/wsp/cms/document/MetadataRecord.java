@@ -8,6 +8,7 @@ import java.util.Hashtable;
 import de.mpg.mpiwg.berlin.mpdl.lt.text.tokenize.XmlTokenizerContentHandler;
 
 public class MetadataRecord {
+  private int id = -1; // local id: auto incremented integer value (one higher than the last created integer value in lucene field "id", e.g. 1
   private String docId; // local id: resource identifier in index system, e.g. "/edoc/2011/1591/pdf/08_VI.Dokumente.pdf"
   private String identifier; // local id: identifier field in resource metadata: e.g. <meta name="DC.identifier" content="47114711">
   private String uri; // global id: resource URI (uniform resource identifier), e.g. http://de.wikipedia.org/wiki/Ramones
@@ -50,6 +51,14 @@ public class MetadataRecord {
   private ArrayList<XmlTokenizerContentHandler.Element> xmlElements; // xml elements of resource
   private Hashtable<String, XQuery> xQueries; // dynamic xQueries of xml resources (with name, code, result)
   private String realDocUrl; // e.g. the URL to the eDoc (not the index.html)
+
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
+  }
 
   public String getRealDocUrl() {
     return realDocUrl;
