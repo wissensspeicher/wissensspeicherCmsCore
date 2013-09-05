@@ -358,6 +358,7 @@ public class IndexHandler {
           }
         }
       }
+      mdRecord.setWebUri(webUri);
       if (webUri != null) {
         Field webUriField = new Field("webUri", webUri, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
         doc.add(webUriField);
