@@ -183,4 +183,12 @@ public class Constants {
 		}
 	}
 
+  public String getOaiproviderDir() {
+    if (properties != null) {
+      return properties.getProperty("oaiproviderDir");
+    } else {
+      return "no properties file";
+    }
+  }
+
 }
