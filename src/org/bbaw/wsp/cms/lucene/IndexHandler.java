@@ -16,7 +16,6 @@ import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.KeywordAnalyzer;
 import org.apache.lucene.analysis.PerFieldAnalyzerWrapper;
-import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
@@ -51,13 +50,10 @@ import org.apache.lucene.search.SortField;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TermRangeQuery;
 import org.apache.lucene.search.TopDocs;
-import org.apache.lucene.search.highlight.Highlighter;
-import org.apache.lucene.search.highlight.QueryScorer;
-import org.apache.lucene.search.highlight.SimpleHTMLFormatter;
-import org.apache.lucene.search.highlight.TextFragment;
-import org.apache.lucene.search.highlight.TokenSources;
 import org.apache.lucene.search.similar.MoreLikeThis;
 import org.apache.lucene.search.suggest.tst.TSTLookup;
+import org.apache.lucene.search.vectorhighlight.FastVectorHighlighter;
+import org.apache.lucene.search.vectorhighlight.FieldQuery;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
@@ -564,9 +560,7 @@ public class IndexHandler {
       if (query instanceof PhraseQuery || query instanceof PrefixQuery || query instanceof FuzzyQuery || query instanceof TermRangeQuery) {
         highlighterQuery = query;  // TODO wenn sie rekursiv enthalten sind 
       }
-      SimpleHTMLFormatter htmlFormatter = new SimpleHTMLFormatter();
-      QueryScorer queryScorer = new QueryScorer(highlighterQuery);
-      Highlighter highlighter = new Highlighter(htmlFormatter, queryScorer);
+      FastVectorHighlighter highlighter = new FastVectorHighlighter(true, false);
 
       // TODO facet
       // TopScoreDocCollector topDocsCollector = TopScoreDocCollector.create(10, true);
@@ -598,9 +592,8 @@ public class IndexHandler {
             ArrayList<String> hitFragments = new ArrayList<String>();
             Fieldable docContentField = luceneDoc.getFieldable("content");
             if (docContentField != null) {
-              String docContent = docContentField.stringValue();
-              TokenStream tokenStream = TokenSources.getAnyTokenStream(this.documentsIndexReader, docID, docContentField.name(), documentsPerFieldAnalyzer);
-              TextFragment[] textfragments = highlighter.getBestTextFragments(tokenStream, docContent, true, 3);
+              FieldQuery highlighterFieldQuery = highlighter.getFieldQuery(highlighterQuery);
+              String[] textfragments = highlighter.getBestFragments(highlighterFieldQuery, documentsIndexReader, docID, docContentField.name(), 100, 2);
               if (textfragments.length > 0) {
                 for (int j=0; j<textfragments.length; j++) {
                   hitFragments.add(checkHitFragment(textfragments[j].toString()));
