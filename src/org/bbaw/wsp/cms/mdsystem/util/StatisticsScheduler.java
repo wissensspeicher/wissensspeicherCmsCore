@@ -1,5 +1,7 @@
 package org.bbaw.wsp.cms.mdsystem.util;
 
+import java.util.Date;
+
 
 public class StatisticsScheduler {
 
@@ -7,9 +9,9 @@ public class StatisticsScheduler {
   private String totalNumberOfTriple;
   private static StatisticsScheduler scheduler;
  
-  private long timeStamp;
+  private long timeStamp = -1;
   
-  private StatisticsScheduler(){
+  private StatisticsScheduler() {
   }
   
   public static StatisticsScheduler getInstance(){
