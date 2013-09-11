@@ -415,8 +415,10 @@ public class DocumentHandler {
               mdRecord.setTitle(tikaMDRecord.getTitle());
             if (mdRecord.getLanguage() == null) {
               String tikaLang = tikaMDRecord.getLanguage();
-              if (tikaLang != null) 
-                mdRecord.setLanguage(tikaLang);
+              if (tikaLang != null) {
+                String isoLang = Language.getInstance().getISO639Code(tikaLang);
+                mdRecord.setLanguage(isoLang);
+              }
             }
             if (mdRecord.getPublisher() == null)
               mdRecord.setPublisher(tikaMDRecord.getPublisher());
