@@ -18,9 +18,11 @@ import java.util.Hashtable;
 
 import net.sf.saxon.s9api.Axis;
 import net.sf.saxon.s9api.QName;
+import net.sf.saxon.s9api.XdmAtomicValue;
 import net.sf.saxon.s9api.XdmNode;
 import net.sf.saxon.s9api.XdmNodeKind;
 import net.sf.saxon.s9api.XdmSequenceIterator;
+import net.sf.saxon.s9api.XdmValue;
 
 import org.apache.log4j.Logger;
 import org.apache.commons.io.FileUtils;
@@ -339,14 +341,21 @@ public class DocumentHandler {
       XmlTokenizer docXmlTokenizer = null;
       if (docIsXml) {
         docFileName = getDocFullFileName(docId) + ".upgrade";
+        // remove the header part of the xml fulltext so that is is not indexed in Lucene
+        XslResourceTransformer removeElemTransformer = new XslResourceTransformer("removeElement.xsl");
+        QName elemNameQName = new QName("elemName");
+        XdmValue elemNameXdmValue = new XdmAtomicValue("teiHeader");  // TODO fetch name from collection configuration
+        removeElemTransformer.setParameter(elemNameQName, elemNameXdmValue);
+        String contentXmlRemovedHeader = removeElemTransformer.transform(docFileName);
+        File docFile = new File(docFileName);
+        FileUtils.writeStringToFile(docFile, contentXmlRemovedHeader, "utf-8");
         InputStreamReader docFileReader = new InputStreamReader(new FileInputStream(docFileName), "utf-8");
         // to guarantee that utf-8 is used (if not done, it does not work on Tomcat which has another default charset)
         docXmlTokenizer = new XmlTokenizer(docFileReader);
         docXmlTokenizer.setDocIdentifier(docId);
         docXmlTokenizer.setLanguage(language);
         docXmlTokenizer.setOutputFormat("string");
-        String[] outputOptionsWithLemmas = { "withLemmas" }; // so all tokens are
-        // fetched with lemmas (costs performance)
+        String[] outputOptionsWithLemmas = { "withLemmas" }; // so all tokens are fetched with lemmas (costs performance)
         docXmlTokenizer.setOutputOptions(outputOptionsWithLemmas);
         String[] normFunctionNone = { "none" };
         docXmlTokenizer.setNormFunctions(normFunctionNone);
@@ -366,7 +375,6 @@ public class DocumentHandler {
         docXmlTokenizer.setOutputOptions(outputOptionsWithLemmas);
         docTokensMorph = docXmlTokenizer.getStringResult();
         // fetch original xml content of the documents file
-        File docFile = new File(docFileName);
         contentXml = FileUtils.readFileToString(docFile, "utf-8");
         // fetch original content of the documents file (without xml tags)
         XslResourceTransformer charsTransformer = new XslResourceTransformer("chars.xsl");
