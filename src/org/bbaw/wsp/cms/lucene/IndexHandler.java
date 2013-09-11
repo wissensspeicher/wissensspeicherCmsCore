@@ -596,7 +596,10 @@ public class IndexHandler {
               String[] textfragments = highlighter.getBestFragments(highlighterFieldQuery, documentsIndexReader, docID, docContentField.name(), 100, 2);
               if (textfragments.length > 0) {
                 for (int j=0; j<textfragments.length; j++) {
-                  hitFragments.add(checkHitFragment(textfragments[j].toString()));
+                  String textFragment = textfragments[j];
+                  textFragment = textFragment.trim();  
+                  textFragment = checkHitFragment(textFragment);
+                  hitFragments.add(textFragment);
                 }
               }
             }
