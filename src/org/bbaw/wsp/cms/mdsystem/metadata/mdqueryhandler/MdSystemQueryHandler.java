@@ -64,7 +64,7 @@ public class MdSystemQueryHandler {
     cal.add(Calendar.DAY_OF_MONTH, intervall * -1);
     //Wenn das aktuelle Datum -30 Tage kleiner ist als der TimeStamp, dann werden die statistiken aufgefrischt
 //    System.out.println("sched.getTimeStamp() : "+sched.getTimeStamp());
-    if(cal.getTimeInMillis() < sched.getTimeStamp() || sched.getTimeStamp() == 0){
+    if(cal.getTimeInMillis() > sched.getTimeStamp() || sched.getTimeStamp() == -1) {
       System.out.println("refreshing statistics");
       sched.setTotalNumberOfGraphs(getNumberOfGraphs());
       sched.setTotalNumberOfTriple(getTripleCount());
