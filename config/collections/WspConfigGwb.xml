@@ -12,8 +12,6 @@
       <dataUrl>http://www.gwb.uni-trier.de/</dataUrl>
       <!-- Goethe-Wörterbuch -->
       <dataUrl>http://telota.bbaw.de/gwb</dataUrl>
-      <!-- XML-Texte -->
-      <dataUrl type="eXistDir">http://telota.bbaw.de/exist/rest/db/gwb/</dataUrl>
       <exclude>scripts</exclude>
       <exclude>test</exclude>
     </url>
