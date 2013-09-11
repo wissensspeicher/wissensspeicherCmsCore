@@ -524,10 +524,18 @@ public class DocumentHandler {
         language = StringUtils.deresolveXmlEntities(language.trim());
         language = Language.getInstance().getISO639Code(language);
       }
-      String publisher = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:publicationStmt/*:publisher", ", ");
+      String publisher = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:sourceDesc/*:biblFull/*:publicationStmt/*:publisher/*:name", ", ");
+      if (publisher == null || publisher.isEmpty())
+        publisher = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:sourceDesc/*:biblFull/*:publicationStmt/*:publisher", ", ");
+      if (publisher == null || publisher.isEmpty())
+        publisher = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:publicationStmt/*:publisher", ", ");
+      if (publisher == null || publisher.isEmpty())
+        publisher = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:sourceDesc/*:bibl/*:publisher", ", ");
       if (publisher != null)
         publisher = StringUtils.deresolveXmlEntities(publisher.trim());
-      String place = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:publicationStmt/*:pubPlace");
+      String place = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:sourceDesc/*:biblFull/*:publicationStmt/*:pubPlace", ", ");
+      if (place == null || place.isEmpty())
+        place = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:publicationStmt/*:pubPlace");
       if (place != null)
         place = StringUtils.deresolveXmlEntities(place.trim());
       String publisherStr = null;
@@ -542,7 +550,11 @@ public class DocumentHandler {
         publisherStr = publisher + " " + place;
       else if (publisher != null && place != null && ! publisherEndsWithComma)
         publisherStr = publisher + ", " + place;
-      String yearStr = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:publicationStmt/*:date");
+      String yearStr = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:sourceDesc/*:biblFull/*:publicationStmt/*:date");
+      if (yearStr == null || yearStr.isEmpty())
+        yearStr = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:publicationStmt/*:date");
+      if (yearStr == null || yearStr.isEmpty())
+        yearStr = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:sourceDesc/*:bibl/*:date", ", ");
       Date date = null; 
       if (yearStr != null && ! yearStr.equals("")) {
         yearStr = StringUtils.deresolveXmlEntities(yearStr.trim());
