@@ -984,6 +984,17 @@ public class IndexHandler {
     }
   }
 
+  public void optimize() throws ApplicationException {
+    try {
+      if (documentsIndexWriter != null)
+        documentsIndexWriter.optimize();
+      if (nodesIndexWriter != null)
+        nodesIndexWriter.optimize();
+    } catch (IOException e) {
+      throw new ApplicationException(e);
+    }
+  }
+  
   private Query buildMorphQuery(Query query, String language) throws ApplicationException {
     return buildMorphQuery(query, language, false, false);
   }
@@ -1430,6 +1441,7 @@ public class IndexHandler {
       IndexWriterConfig conf = new IndexWriterConfig(Version.LUCENE_35, documentsPerFieldAnalyzer);
       conf.setOpenMode(OpenMode.CREATE_OR_APPEND);
       conf.setRAMBufferSizeMB(300);  // 300 MB because some documents are big; 16 MB is default 
+      conf.setMaxBufferedDeleteTerms(1);  // so that indexReader.terms() delivers immediately and without optimize() the correct number of terms
       FSDirectory fsDirectory = FSDirectory.open(luceneDocsDirectory);
       writer = new IndexWriter(fsDirectory, conf);
       writer.commit(); // when directory is empty this creates init files
