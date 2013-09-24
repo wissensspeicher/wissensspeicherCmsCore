@@ -10,6 +10,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -23,6 +24,12 @@ import org.apache.lucene.document.FieldSelector;
 import org.apache.lucene.document.Fieldable;
 import org.apache.lucene.document.NumericField;
 import org.apache.lucene.document.SetBasedFieldSelector;
+import org.apache.lucene.facet.index.CategoryDocumentBuilder;
+import org.apache.lucene.facet.search.FacetsCollector;
+import org.apache.lucene.facet.search.params.CountFacetRequest;
+import org.apache.lucene.facet.search.params.FacetSearchParams;
+import org.apache.lucene.facet.search.results.FacetResult;
+import org.apache.lucene.facet.taxonomy.CategoryPath;
 import org.apache.lucene.facet.taxonomy.TaxonomyReader;
 import org.apache.lucene.facet.taxonomy.TaxonomyWriter;
 import org.apache.lucene.facet.taxonomy.directory.DirectoryTaxonomyReader;
@@ -37,9 +44,11 @@ import org.apache.lucene.index.TermFreqVector;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.Collector;
 import org.apache.lucene.search.FuzzyQuery;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.MatchAllDocsQuery;
+import org.apache.lucene.search.MultiCollector;
 import org.apache.lucene.search.NumericRangeQuery;
 import org.apache.lucene.search.PhraseQuery;
 import org.apache.lucene.search.PrefixQuery;
@@ -50,6 +59,7 @@ import org.apache.lucene.search.SortField;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TermRangeQuery;
 import org.apache.lucene.search.TopDocs;
+import org.apache.lucene.search.TopFieldCollector;
 import org.apache.lucene.search.similar.MoreLikeThis;
 import org.apache.lucene.search.suggest.tst.TSTLookup;
 import org.apache.lucene.search.vectorhighlight.FastVectorHighlighter;
@@ -60,6 +70,7 @@ import org.apache.lucene.util.Version;
 import org.bbaw.wsp.cms.collections.Collection;
 import org.bbaw.wsp.cms.collections.CollectionReader;
 import org.bbaw.wsp.cms.dochandler.DocumentHandler;
+import org.bbaw.wsp.cms.document.Facets;
 import org.bbaw.wsp.cms.document.Hits;
 import org.bbaw.wsp.cms.document.MetadataRecord;
 import org.bbaw.wsp.cms.document.Token;
@@ -91,8 +102,9 @@ public class IndexHandler {
   private PerFieldAnalyzerWrapper nodesPerFieldAnalyzer;
   private ArrayList<Token> tokens; // all tokens in tokenOrig
   private TSTLookup suggester;
-  // private TaxonomyWriter taxonomyWriter;  // TODO facet
-  // private TaxonomyReader taxonomyReader;  // TODO facet
+  private TaxonomyWriter taxonomyWriter;
+  private TaxonomyReader taxonomyReader;
+  private CategoryDocumentBuilder categoryDocBuilder;
   
   public static IndexHandler getInstance() throws ApplicationException {
     if (instance == null) {
@@ -110,12 +122,13 @@ public class IndexHandler {
     documentsSearcherManager = getNewSearcherManager(documentsIndexWriter);
     nodesSearcherManager = getNewSearcherManager(nodesIndexWriter);
     documentsIndexReader = getDocumentsReader();
+    taxonomyWriter = getTaxonomyWriter();
+    taxonomyReader = getTaxonomyReader();
+    categoryDocBuilder = getCategoryDocumentBuilder();
     Date before = new Date();
     tokens = getToken("tokenOrig", "", 10000000); // get all token: needs ca. 4 sec. for 3 Mio tokens
     Date after = new Date();
     LOGGER.info("Reading of all tokens in Lucene index successfully with: " + tokens.size() + " tokens (" + "elapsed time: " + (after.getTime() - before.getTime()) + " ms)");
-    // taxonomyWriter = getTaxonomyWriter();  // TODO facet
-    // taxonomyReader = getTaxonomyReader();  // TODO facet
   }
 
   public void indexDocument(CmsDocOperation docOperation) throws ApplicationException {
@@ -123,12 +136,12 @@ public class IndexHandler {
       // first delete document in documentsIndex and nodesIndex
       deleteDocumentLocal(docOperation);
       indexDocumentLocal(docOperation);
-      // taxonomyWriter.commit();  // TODO facet
+      taxonomyWriter.commit();
       documentsIndexWriter.commit();
       nodesIndexWriter.commit();
     } catch (Exception e) {
       try {
-        // taxonomyWriter.rollback();  // TODO facet
+        taxonomyWriter.rollback();
         documentsIndexWriter.rollback();
         nodesIndexWriter.rollback();
       } catch (Exception ex) {
@@ -141,7 +154,7 @@ public class IndexHandler {
   private void indexDocumentLocal(CmsDocOperation docOperation) throws ApplicationException {
     try {
       MetadataRecord mdRecord = docOperation.getMdRecord();
-      // List<CategoryPath> categories = new ArrayList<CategoryPath>(); // TODO facet
+      List<CategoryPath> categories = new ArrayList<CategoryPath>();
       Document doc = new Document();
       int id = generateId(); // short id (auto increment)
       NumericField idField = new NumericField("id", Field.Store.YES, true);
@@ -168,11 +181,12 @@ public class IndexHandler {
       }
       String collectionNames = mdRecord.getCollectionNames();
       if (collectionNames != null) {
+        categories.add(new CategoryPath("collectionNames", collectionNames));
         Field collectionNamesField = new Field("collectionNames", collectionNames, Field.Store.YES, Field.Index.ANALYZED);
         doc.add(collectionNamesField);
       }
       if (mdRecord.getCreator() != null) {
-        // categories.add(new CategoryPath("author", mdRecord.getCreator()));  // TODO facet
+        categories.add(new CategoryPath("author", mdRecord.getCreator()));
         Field authorField = new Field("author", mdRecord.getCreator(), Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
         doc.add(authorField);
         String authorStr = mdRecord.getCreator();
@@ -191,6 +205,7 @@ public class IndexHandler {
         doc.add(titleFieldSorted);
       }
       if (mdRecord.getPublisher() != null) {
+        categories.add(new CategoryPath("publisher", mdRecord.getPublisher()));
         Field publisherField = new Field("publisher", mdRecord.getPublisher(), Field.Store.YES, Field.Index.ANALYZED);
         doc.add(publisherField);
         String publisherStr = mdRecord.getPublisher();
@@ -210,6 +225,7 @@ public class IndexHandler {
         }
       }
       if (yearStr != null) {
+        categories.add(new CategoryPath("date", yearStr));
         Field dateField = new Field("date", yearStr, Field.Store.YES, Field.Index.ANALYZED);
         doc.add(dateField);
         Field dateFieldSorted = new Field("dateSorted", yearStr, Field.Store.YES, Field.Index.NOT_ANALYZED);
@@ -220,14 +236,17 @@ public class IndexHandler {
         doc.add(descriptionField);
       }
       if (mdRecord.getSubject() != null) {
+        categories.add(new CategoryPath("subject", mdRecord.getSubject()));
         Field subjectField = new Field("subject", mdRecord.getSubject(), Field.Store.YES, Field.Index.ANALYZED);
         doc.add(subjectField);
       }
       if (mdRecord.getSwd() != null) {
+        categories.add(new CategoryPath("swd", mdRecord.getSwd()));
         Field swdField = new Field("swd", mdRecord.getSwd(), Field.Store.YES, Field.Index.ANALYZED);
         doc.add(swdField);
       }
       if (mdRecord.getDdc() != null) {
+        categories.add(new CategoryPath("ddc", mdRecord.getDdc()));
         Field ddcField = new Field("ddc", mdRecord.getDdc(), Field.Store.YES, Field.Index.ANALYZED);
         doc.add(ddcField);
       }
@@ -263,6 +282,7 @@ public class IndexHandler {
         doc.add(schemaFieldSorted);
       }
       if (mdRecord.getType() != null) {
+        categories.add(new CategoryPath("type", mdRecord.getType()));
         Field typeField = new Field("type", mdRecord.getType(), Field.Store.YES, Field.Index.ANALYZED);
         doc.add(typeField);
       }
@@ -276,6 +296,7 @@ public class IndexHandler {
       }
       String language = mdRecord.getLanguage();
       if (language != null) {
+        categories.add(new CategoryPath("language", mdRecord.getLanguage()));
         Field languageField = new Field("language", mdRecord.getLanguage(), Field.Store.YES, Field.Index.ANALYZED);
         doc.add(languageField);
         String langStr = mdRecord.getLanguage();
@@ -360,11 +381,9 @@ public class IndexHandler {
         doc.add(webUriField);
       }
 
-      // TODO facet
       // facet creation
-      // CategoryDocumentBuilder categoryDocBuilder = new CategoryDocumentBuilder(taxonomyWriter);
-      // categoryDocBuilder.setCategoryPaths(categories);
-      // categoryDocBuilder.build(doc);
+      categoryDocBuilder.setCategoryPaths(categories);
+      categoryDocBuilder.build(doc);
 
       documentsIndexWriter.addDocument(doc);
 
@@ -523,18 +542,20 @@ public class IndexHandler {
       String queryDocumentsByCollectionName = "collectionNames:" + collectionName;
       Hits collectionDocHits = queryDocuments(queryDocumentsByCollectionName, null, null, 0, 100000, false, false);
       ArrayList<org.bbaw.wsp.cms.document.Document> collectionDocs = collectionDocHits.getHits();
-      countDeletedDocs = collectionDocHits.getSize();
-      // delete all nodes of each document in collection
-      for (int i=0; i<collectionDocs.size(); i++) {
-        org.bbaw.wsp.cms.document.Document doc = collectionDocs.get(i);
-        Fieldable docIdFieldable = doc.getFieldable("docId");
-        String docId = docIdFieldable.stringValue();
-        Term termDocId = new Term("docId", docId);
-        nodesIndexWriter.deleteDocuments(termDocId);
+      if (collectionDocs != null) {
+        countDeletedDocs = collectionDocHits.getSize();
+        // delete all nodes of each document in collection
+        for (int i=0; i<collectionDocs.size(); i++) {
+          org.bbaw.wsp.cms.document.Document doc = collectionDocs.get(i);
+          Fieldable docIdFieldable = doc.getFieldable("docId");
+          String docId = docIdFieldable.stringValue();
+          Term termDocId = new Term("docId", docId);
+          nodesIndexWriter.deleteDocuments(termDocId);
+        }
+        // delete all documents in collection
+        Term termCollectionName = new Term("collectionNames", collectionName);
+        documentsIndexWriter.deleteDocuments(termCollectionName);
       }
-      // delete all documents in collection
-      Term termCollectionName = new Term("collectionNames", collectionName);
-      documentsIndexWriter.deleteDocuments(termCollectionName);
     } catch (Exception e) {
       throw new ApplicationException(e);
     }
@@ -561,22 +582,31 @@ public class IndexHandler {
         highlighterQuery = query;  // TODO wenn sie rekursiv enthalten sind 
       }
       FastVectorHighlighter highlighter = new FastVectorHighlighter(true, false);
-
-      // TODO facet
-      // TopScoreDocCollector topDocsCollector = TopScoreDocCollector.create(10, true);
-      // FacetSearchParams facetSearchParams = new FacetSearchParams();
-      // facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("author"), 10));
-      // FacetsCollector facetsCollector = new FacetsCollector(facetSearchParams, documentsIndexReader, taxonomyReader);
-      // searcher.search(morphQuery, MultiCollector.wrap(topDocsCollector, facetsCollector));
-      // List<FacetResult> facetResult = facetsCollector.getFacetResults();      
-
-      TopDocs resultDocs = null;
+      Sort sort = new Sort();
+      SortField scoreSortField = new SortField(null, SortField.SCORE); // default sort
+      sort.setSort(scoreSortField);
       if (sortFieldNames != null) {
-        Sort sort = buildSort(sortFieldNames, "doc");  // build sort criteria 
-        resultDocs = searcher.search(morphQuery, 100000, sort);
-      } else {
-        resultDocs = searcher.search(morphQuery, 100000);
+        sort = buildSort(sortFieldNames, "doc");  // build sort criteria
       }
+      TopFieldCollector topFieldCollector = TopFieldCollector.create(sort, 100000, true, true, true, true); // default topFieldCollector for TopDocs results
+      FacetSearchParams facetSearchParams = new FacetSearchParams();
+      facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("collectionNames"), 10));
+      facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("language"), 10));
+      facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("author"), 10));
+      facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("publisher"), 10));
+      facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("date"), 10));
+      facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("subject"), 10));
+      facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("swd"), 10));
+      facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("ddc"), 10));
+      facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("type"), 10));
+      FacetsCollector facetsCollector = new FacetsCollector(facetSearchParams, documentsIndexReader, taxonomyReader);
+      Collector facetsCollectorWrapper = MultiCollector.wrap(topFieldCollector, facetsCollector);
+      searcher.search(morphQuery, facetsCollectorWrapper);
+      TopDocs resultDocs = topFieldCollector.topDocs();
+      Facets facets = null;
+      List<FacetResult> tmpFacetResult = facetsCollector.getFacetResults();
+      if (tmpFacetResult != null && ! tmpFacetResult.isEmpty())
+        facets = new Facets(tmpFacetResult);
       resultDocs.setMaxScore(1);
       int toTmp = to;
       if (resultDocs.scoreDocs.length <= to)
@@ -638,6 +668,7 @@ public class IndexHandler {
           hits.setSizeTotalDocuments(sizeTotalDocuments);
           hits.setSizeTotalTerms(sizeTotalTerms);
           hits.setQuery(morphQuery);
+          hits.setFacets(facets);
         }
       }
     } catch (Exception e) {
@@ -966,9 +997,8 @@ public class IndexHandler {
 
   public void end() throws ApplicationException {
     try {
-      // TODO facet
-      // if (taxonomyWriter != null)
-      //   taxonomyWriter.close();
+      if (taxonomyWriter != null)
+        taxonomyWriter.close();
       if (documentsIndexWriter != null)
         documentsIndexWriter.close();
       if (nodesIndexWriter != null)
@@ -1505,7 +1535,7 @@ public class IndexHandler {
       SortField sortField1 = sortFields.get(0);
       SortField sortField2 = sortFields.get(1);
       sort.setSort(sortField1, sortField2);
-    } else if (sortFieldNames.length == 2) {
+    } else if (sortFieldNames.length == 3) {
       SortField sortField1 = sortFields.get(0);
       SortField sortField2 = sortFields.get(1);
       SortField sortField3 = sortFields.get(2);
@@ -1605,7 +1635,6 @@ public class IndexHandler {
     return reader;
   }
 
-  // TODO facet
   private TaxonomyWriter getTaxonomyWriter() throws ApplicationException {
     TaxonomyWriter taxonomyWriter = null;
     String taxonomyDirStr = Constants.getInstance().getLuceneTaxonomyDir();
@@ -1620,7 +1649,6 @@ public class IndexHandler {
     return taxonomyWriter;
   }
   
-  // TODO facet
   private TaxonomyReader getTaxonomyReader() throws ApplicationException {
     TaxonomyReader taxonomyReader = null;
     String taxonomyDirStr = Constants.getInstance().getLuceneTaxonomyDir();
@@ -1634,13 +1662,23 @@ public class IndexHandler {
     return taxonomyReader;
   }
 
+  private CategoryDocumentBuilder getCategoryDocumentBuilder() throws ApplicationException {
+    CategoryDocumentBuilder categoryDocumentBuilder = null;
+    try {
+      categoryDocumentBuilder = new CategoryDocumentBuilder(taxonomyWriter);
+    } catch (IOException e) {
+      throw new ApplicationException(e);
+    }
+    return categoryDocumentBuilder;
+  }
+  
   private void makeIndexReaderUpToDate() throws ApplicationException {
     try {
       boolean isCurrent = documentsIndexReader.isCurrent();
       if (!isCurrent) {
         documentsIndexReader = IndexReader.openIfChanged(documentsIndexReader);
       }
-      // taxonomyReader.refresh();  // TODO facet
+      taxonomyReader.refresh();
     } catch (Exception e) {
       throw new ApplicationException(e);
     }
@@ -1652,7 +1690,7 @@ public class IndexHandler {
       if (!isCurrent) {
         documentsSearcherManager.maybeReopen();
       }
-      // taxonomyReader.refresh();  // TODO facet
+      taxonomyReader.refresh(); 
     } catch (Exception e) {
       throw new ApplicationException(e);
     }
