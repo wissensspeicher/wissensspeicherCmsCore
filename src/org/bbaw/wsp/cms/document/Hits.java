@@ -12,6 +12,7 @@ public class Hits {
   private int size = 0;
   private int sizeTotalDocuments;
   private int sizeTotalTerms;
+  private Facets facets;
   
   public Hits(ArrayList<Document> hits, int from, int to) {
     this.hits = hits;
@@ -73,6 +74,14 @@ public class Hits {
 
   public void setTo(int to) {
     this.to = to;
+  }
+
+  public Facets getFacets() {
+    return facets;
+  }
+
+  public void setFacets(Facets facets) {
+    this.facets = facets;
   }
 
 
