@@ -59,6 +59,8 @@ public class Facets {
   }
 
   public String toString() {
+    if (facets == null || facets.values() == null)
+      return "";
     String retStr = "";
     ArrayList<Facet> facetList = new ArrayList<Facet>(facets.values());
     Comparator<Facet> facetComparator = new Comparator<Facet>() {
@@ -88,6 +90,8 @@ public class Facets {
   }
 
   public String toHtmlString() {
+    if (facets == null || facets.values() == null)
+      return "";
     String retStr = "<ul>";
     ArrayList<Facet> facetList = new ArrayList<Facet>(facets.values());
     Comparator<Facet> facetComparator = new Comparator<Facet>() {
@@ -120,6 +124,8 @@ public class Facets {
 
   public JSONArray toJsonArray() {
     JSONArray retJsonArray = new JSONArray();
+    if (facets == null || facets.values() == null)
+      return retJsonArray;
     ArrayList<Facet> facetList = new ArrayList<Facet>(facets.values());
     Comparator<Facet> facetComparator = new Comparator<Facet>() {
       public int compare(Facet f1, Facet f2) {
