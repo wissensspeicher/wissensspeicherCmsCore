@@ -1,12 +1,18 @@
 package org.bbaw.wsp.cms.document;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 
 import org.apache.lucene.facet.search.results.FacetResult;
 import org.apache.lucene.facet.search.results.FacetResultNode;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
+import de.mpg.mpiwg.berlin.mpdl.util.StringUtils;
 
 public class Facets {
   private Hashtable<String, Facet> facets;
@@ -21,13 +27,14 @@ public class Facets {
         for ( Iterator<? extends FacetResultNode> facetIterator = facetResultRootNode.getSubResults().iterator(); facetIterator.hasNext(); ) {
           FacetResultNode facetResultNode = facetIterator.next();
           String facetName = facetResultNode.getLabel().getComponent(0);  // e.g. "collectionNames"
-          String facetValue = facetResultNode.getLabel().getComponent(1);  // e.g. "gcs"
-          double facetCountHits = facetResultNode.getValue();
+          String facetValue = facetResultNode.getLabel().getComponent(1);  // e.g. "mega"
+          int facetCountHits = (int) facetResultNode.getValue();
           if (facet.getId() == null)
             facet.setId(facetName);
           FacetValue facetNameValue = new FacetValue();
           facetNameValue.setName(facetValue);
           facetNameValue.setValue(String.valueOf(facetCountHits));
+          facetNameValue.setCount(facetCountHits);
           facetValues.add(facetNameValue);
         }
         if (! facetValues.isEmpty()) {
@@ -53,12 +60,25 @@ public class Facets {
 
   public String toString() {
     String retStr = "";
-    for ( Iterator<Facet> facetIterator = facets.values().iterator(); facetIterator.hasNext(); ) {
-      Facet facet = facetIterator.next();
+    ArrayList<Facet> facetList = new ArrayList<Facet>(facets.values());
+    Comparator<Facet> facetComparator = new Comparator<Facet>() {
+      public int compare(Facet f1, Facet f2) {
+        return f1.getId().compareTo(f2.getId());
+      }
+    };
+    Collections.sort(facetList, facetComparator);
+    Comparator<FacetValue> facetValueComparator = new Comparator<FacetValue>() {
+      public int compare(FacetValue fv1, FacetValue fv2) {
+        return fv2.getCount().compareTo(fv1.getCount());
+      }
+    };
+    for (int i=0; i<facetList.size(); i++) {
+      Facet facet = facetList.get(i);
       retStr = retStr + facet.getId() + ": ";
-      ArrayList<FacetValue> values = facet.getValues();
-      for (int i=0; i<values.size(); i++) {
-        FacetValue facetValue = values.get(i);
+      ArrayList<FacetValue> facetValues = facet.getValues();
+      Collections.sort(facetValues, facetValueComparator);
+      for (int j=0; j<facetValues.size(); j++) {
+        FacetValue facetValue = facetValues.get(j);
         retStr = retStr + facetValue.toString() + ", ";
       }
       retStr = retStr.substring(0, retStr.length() - 2);  // remove last ", "
@@ -67,16 +87,74 @@ public class Facets {
     return retStr;
   }
 
-  public String toJsonString() {
-    // TODO
-    String retStr = "";
-    for ( Iterator<Facet> facetIterator = facets.values().iterator(); facetIterator.hasNext(); ) {
-      Facet facet = facetIterator.next();
-      retStr = retStr + facet.getId() + ": ";
-      retStr = retStr + facet.getValues().toString();
-      retStr = retStr + ";";
+  public String toHtmlString() {
+    String retStr = "<ul>";
+    ArrayList<Facet> facetList = new ArrayList<Facet>(facets.values());
+    Comparator<Facet> facetComparator = new Comparator<Facet>() {
+      public int compare(Facet f1, Facet f2) {
+        return f1.getId().compareTo(f2.getId());
+      }
+    };
+    Collections.sort(facetList, facetComparator);
+    Comparator<FacetValue> facetValueComparator = new Comparator<FacetValue>() {
+      public int compare(FacetValue fv1, FacetValue fv2) {
+        return fv2.getCount().compareTo(fv1.getCount());
+      }
+    };
+    for (int i=0; i<facetList.size(); i++) {
+      Facet facet = facetList.get(i);
+      ArrayList<FacetValue> facetValues = facet.getValues();
+      Collections.sort(facetValues, facetValueComparator);
+      retStr = retStr + "<li>" + facet.getId();
+      retStr = retStr + "<ul>";
+      for (int j=0; j<facetValues.size(); j++) {
+        FacetValue facetValue = facetValues.get(j);
+        retStr = retStr + "<li>" + facetValue.toString() + "</li>";
+      }
+      retStr = retStr + "</ul>";
+      retStr = retStr + "</li>";
     }
+    retStr = retStr + "</ul>";
     return retStr;
+  }
+
+  public JSONArray toJsonArray() {
+    JSONArray retJsonArray = new JSONArray();
+    ArrayList<Facet> facetList = new ArrayList<Facet>(facets.values());
+    Comparator<Facet> facetComparator = new Comparator<Facet>() {
+      public int compare(Facet f1, Facet f2) {
+        return f1.getId().compareTo(f2.getId());
+      }
+    };
+    Collections.sort(facetList, facetComparator);
+    Comparator<FacetValue> facetValueComparator = new Comparator<FacetValue>() {
+      public int compare(FacetValue fv1, FacetValue fv2) {
+        return fv2.getCount().compareTo(fv1.getCount());
+      }
+    };
+    for (int i=0; i<facetList.size(); i++) {
+      Facet facet = facetList.get(i);
+      ArrayList<FacetValue> facetValues = facet.getValues();
+      Collections.sort(facetValues, facetValueComparator);
+      JSONObject jsonFacetObject = new JSONObject();
+      jsonFacetObject.put("overallCount", String.valueOf(facetValues.size()));
+      JSONArray jsonValuesFacets = new JSONArray();
+      for (int j=0; j<facetValues.size(); j++) {
+        FacetValue facetValue = facetValues.get(j);
+        String facetValueName = facetValue.getName();
+        String facetValueValue = facetValue.getValue();
+        facetValueValue = StringUtils.resolveXmlEntities(facetValueValue);
+        JSONObject jsonFacetValue = new JSONObject();
+        jsonFacetValue.put("value", facetValueName);
+        jsonFacetValue.put("count", facetValueValue); 
+        jsonValuesFacets.add(jsonFacetValue);
+      }
+      jsonFacetObject.put("values", jsonValuesFacets);
+      JSONObject jsonFacet = new JSONObject();
+      jsonFacet.put(facet.getId(), jsonFacetObject);
+      retJsonArray.add(jsonFacet);
+    }
+    return retJsonArray;
   }
 
 }
