@@ -13,7 +13,7 @@
       <dataUrl>http://kompetenzzentrum.uni-trier.de/de/projekte/projekte/der-digitale-grimm/</dataUrl>
       <!-- Belegzettel von Jacob und Wilhelm Grimm -->
       <dataUrl>http://digilib.bbaw.de/digitallibrary/greyskin/diginew.jsp?fn=dwb/&amp;pn=1</dataUrl>
-      <!-- Alexander Czmiel: die folgende URL soll nicht in den Index aufgenommen werden
+      <!-- Alex Czmiel: die folgende URL soll nicht in den Index aufgenommen werden
         <dataUrl>http://telota.bbaw.de:8088/exist/servlet/db/dwb/dwb.xml</dataUrl>
       -->
     </url>
