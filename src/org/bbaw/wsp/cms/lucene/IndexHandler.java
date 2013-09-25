@@ -1017,9 +1017,9 @@ public class IndexHandler {
   public void optimize() throws ApplicationException {
     try {
       if (documentsIndexWriter != null)
-        documentsIndexWriter.optimize();
+        documentsIndexWriter.forceMerge(1);
       if (nodesIndexWriter != null)
-        nodesIndexWriter.optimize();
+        nodesIndexWriter.forceMerge(1);
     } catch (IOException e) {
       throw new ApplicationException(e);
     }
