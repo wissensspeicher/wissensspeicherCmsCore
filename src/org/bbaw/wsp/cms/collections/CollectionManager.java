@@ -164,6 +164,9 @@ public class CollectionManager {
       } catch (Exception e) {
         e.printStackTrace();
       }
+      // without that, there would be a memory leak (with many big documents in one collection)
+      // with that the main big fields (content etc.) could be garbaged
+      mdRecord.setAllNull();  
     }
   }
 
