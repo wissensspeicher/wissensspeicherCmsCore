@@ -10,6 +10,7 @@ import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -94,15 +95,9 @@ public class DocumentHandler {
       } else if (protocol != null) {
         docOperation.setStatus("download file from: " + srcUrlStr + " to CMS");
       }
-      try {
-        if (srcUrl != null) {
-          FileUtils.copyURLToFile(srcUrl, docDestFile, 5000, 5000);
-        }
-      } catch (SocketTimeoutException e) {
-        LOGGER.error("Operation failed. Read timeout for: " + srcUrl);
-        FileUtils.deleteQuietly(docDestFile);
+      boolean success = copyUrlToFile(srcUrl, docDestFile);  // several tries with delay
+      if (! success)
         return;
-      }
       MetadataRecord mdRecord = docOperation.getMdRecord();
       mdRecord.setLastModified(new Date());
       String mimeType = mdRecord.getType();
@@ -756,6 +751,39 @@ public class DocumentHandler {
   private String getPlaces(String tocString, XQueryEvaluator xQueryEvaluator) throws ApplicationException {
     String places = xQueryEvaluator.evaluateAsStringValueJoined(tocString, "/list/list[@type='places']/item[not(. = preceding::item)]", "###"); 
     return places;
+  }
+
+  private boolean copyUrlToFile(URL srcUrl, File docDestFile) {
+    try {
+      if (srcUrl != null) {
+        FileUtils.copyURLToFile(srcUrl, docDestFile, 5000, 5000);
+      }
+    } catch (UnknownHostException e) {
+      LOGGER.error("1. try: copyUrlToFile failed. UnknownHostException: " + e.getMessage() + " for Url: " + srcUrl);
+      try {
+        Thread.sleep(10000); // 10 secs delay
+        FileUtils.copyURLToFile(srcUrl, docDestFile, 5000, 5000);
+      } catch (IOException | InterruptedException e2) {
+        LOGGER.error("2. try: copyUrlToFile failed. " + e2.getClass().getName() + " : " + e.getMessage() + " for Url: " + srcUrl);
+        try {
+          Thread.sleep(10000); // another 10 secs delay
+          FileUtils.copyURLToFile(srcUrl, docDestFile, 5000, 5000);
+        } catch (IOException | InterruptedException e3) {
+          LOGGER.error("3. try: copyUrlToFile failed. " + e3.getClass().getName() + " : " + e.getMessage() + " for Url: " + srcUrl);
+          FileUtils.deleteQuietly(docDestFile);
+          return false;
+        }
+      }
+    } catch (SocketTimeoutException e) {
+      LOGGER.error("copyUrlToFile failed. Socket timeout for: " + srcUrl);
+      FileUtils.deleteQuietly(docDestFile);
+      return false;
+    } catch (IOException e) {
+      LOGGER.error("copyUrlToFile failed. IOException: " + e.getMessage() + " for Url: " + srcUrl);
+      FileUtils.deleteQuietly(docDestFile);
+      return false;
+    }
+    return true;
   }
   
   private String getNodeType(XdmNode node) {
