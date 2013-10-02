@@ -86,7 +86,6 @@ import de.mpg.mpiwg.berlin.mpdl.lt.morph.app.Form;
 import de.mpg.mpiwg.berlin.mpdl.lt.morph.app.Lemma;
 import de.mpg.mpiwg.berlin.mpdl.lt.text.norm.Normalizer;
 import de.mpg.mpiwg.berlin.mpdl.lt.text.tokenize.XmlTokenizer;
-import de.mpg.mpiwg.berlin.mpdl.lt.text.tokenize.XmlTokenizerContentHandler;
 import de.mpg.mpiwg.berlin.mpdl.util.StringUtils;
 import de.mpg.mpiwg.berlin.mpdl.util.Util;
 
@@ -386,7 +385,9 @@ public class IndexHandler {
       categoryDocBuilder.build(doc);
 
       documentsIndexWriter.addDocument(doc);
-
+      
+      // to save Lucene disk space and to gain performance the document nodes index is set off:
+      /* 
       DocumentHandler docHandler = new DocumentHandler();
       boolean docIsXml = docHandler.isDocXml(docId);
       if (docIsXml) {
@@ -472,6 +473,7 @@ public class IndexHandler {
           }
         }
       }
+      */
     } catch (Exception e) {
       throw new ApplicationException(e);
     }
