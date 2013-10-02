@@ -410,4 +410,17 @@ public class MetadataRecord {
   public String toString() {
     return "MetadataRecord [docId=" + docId + ", identifier=" + identifier + ", uri=" + uri + ", webUri=" + webUri + ", collectionNames=" + collectionNames + ", schemaName=" + schemaName + ", language=" + language + ", creator=" + creator + ", title=" + title + ", publisher=" + publisher + ", date=" + date + ", description=" + description + ", subject=" + subject + ", contributor=" + contributor + ", coverage=" + coverage + ", ddc=" + ddc + ", swd=" + swd + ", persons=" + persons + ", places=" + places + ", type=" + type + ", rights=" + rights + ", license=" + license + ", accessRights=" + accessRights + ", lastModified=" + lastModified + ", encoding=" + encoding + ", pageCount=" + pageCount + ", urn=" + urn + ", documentType=" + documentType + ", isbn=" + isbn + ", creationDate=" + creationDate + ", publishingDate=" + publishingDate + ", inPublication=" + inPublication + ", tokenOrig=" + tokenOrig + ", tokenReg=" + tokenReg + ", tokenNorm=" + tokenNorm + ", tokenMorph=" + tokenMorph + ", contentXml=" + contentXml + ", content=" + content + ", xmlElements=" + xmlElements + ", xQueries=" + xQueries + ", realDocUrl=" + realDocUrl + "]";
   }
+  
+  public void setAllNull() {
+    persons = null;
+    places = null;
+    tokenOrig = null; 
+    tokenReg = null; 
+    tokenNorm = null; 
+    tokenMorph = null; 
+    contentXml = null; 
+    content = null; 
+    xmlElements = null;
+  }
+  
 }
