@@ -258,7 +258,7 @@
           </a>
         </span>
         <xsl:variable name="pdrPitResultSize" select="count($pdrPitHits)"/>
-        <xsl:variable name="pdrGetAspectsUrl" select="concat('http://pdrdev.bbaw.de/pit/2-1/getAspects.php?content=', $query)"/>
+        <xsl:variable name="pdrGetAspectsUrl" select="concat('http://pdrprod.bbaw.de/pit/2-2/getAspects.php?content=', $query)"/>
         <xsl:variable name="pdrPitHitsText">
           <xsl:choose>
             <xsl:when test="$pdrPitResultSize = 1"><xsl:value-of select="'1 hit'"/></xsl:when>
@@ -351,7 +351,7 @@
     </div>
     <xsl:if test="not(empty($description)) and $description != $name"><div class="description"><xsl:value-of select="$description"/></div></xsl:if>
     <xsl:if test="not(empty($pdrId))">
-      <xsl:variable name="pdrGetPersonUrl" select="concat('http://pdrdev.bbaw.de/pit/2-1/getPerson.php?personId=', $pdrId, '&amp;format=html')"/>
+      <xsl:variable name="pdrGetPersonUrl" select="concat('http://pdrprod.bbaw.de/pit/2-2/getPerson.php?personId=', $pdrId, '&amp;format=html')"/>
       <ul class="pitPersonLink">
         <li class="provider"><a class="url" href="{$pdrGetPersonUrl}"><xsl:value-of select="'Details'"/></a></li>
       </ul>
