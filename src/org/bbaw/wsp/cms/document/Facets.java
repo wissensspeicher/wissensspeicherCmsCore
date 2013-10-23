@@ -122,10 +122,10 @@ public class Facets {
     return retStr;
   }
 
-  public JSONArray toJsonArray() {
-    JSONArray retJsonArray = new JSONArray();
+  public JSONObject toJsonObject() {
+    JSONObject retJsonObject = new JSONObject();
     if (facets == null || facets.values() == null)
-      return retJsonArray;
+      return retJsonObject;
     ArrayList<Facet> facetList = new ArrayList<Facet>(facets.values());
     Comparator<Facet> facetComparator = new Comparator<Facet>() {
       public int compare(Facet f1, Facet f2) {
@@ -142,8 +142,6 @@ public class Facets {
       Facet facet = facetList.get(i);
       ArrayList<FacetValue> facetValues = facet.getValues();
       Collections.sort(facetValues, facetValueComparator);
-      JSONObject jsonFacetObject = new JSONObject();
-      jsonFacetObject.put("overallCount", String.valueOf(facetValues.size()));
       JSONArray jsonValuesFacets = new JSONArray();
       for (int j=0; j<facetValues.size(); j++) {
         FacetValue facetValue = facetValues.get(j);
@@ -155,12 +153,9 @@ public class Facets {
         jsonFacetValue.put("count", facetValueValue); 
         jsonValuesFacets.add(jsonFacetValue);
       }
-      jsonFacetObject.put("values", jsonValuesFacets);
-      JSONObject jsonFacet = new JSONObject();
-      jsonFacet.put(facet.getId(), jsonFacetObject);
-      retJsonArray.add(jsonFacet);
+      retJsonObject.put(facet.getId(), jsonValuesFacets);
     }
-    return retJsonArray;
+    return retJsonObject;
   }
 
 }
