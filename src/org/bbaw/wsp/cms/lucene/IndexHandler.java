@@ -194,6 +194,10 @@ public class IndexHandler {
         Field authorFieldSorted = new Field("authorSorted", authorStr, Field.Store.YES, Field.Index.NOT_ANALYZED);
         doc.add(authorFieldSorted);
       }
+      if (mdRecord.getCreatorDetails() != null) {
+        Field authorDetailsField = new Field("authorDetails", mdRecord.getCreatorDetails(), Field.Store.YES, Field.Index.NOT_ANALYZED);
+        doc.add(authorDetailsField);
+      }
       if (mdRecord.getTitle() != null) {
         Field titleField = new Field("title", mdRecord.getTitle(), Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
         doc.add(titleField);
@@ -788,6 +792,10 @@ public class IndexHandler {
       Fieldable authorField = doc.getFieldable("author");
       if (authorField != null)
         author = authorField.stringValue();
+      String authorDetails = null;
+      Fieldable authorDetailsField = doc.getFieldable("authorDetails");
+      if (authorDetailsField != null)
+        authorDetails = authorDetailsField.stringValue();
       String title = null;
       Fieldable titleField = doc.getFieldable("title");
       if (titleField != null)
@@ -883,6 +891,7 @@ public class IndexHandler {
       mdRecord.setIdentifier(identifier);
       mdRecord.setCollectionNames(collectionNames);
       mdRecord.setCreator(author);
+      mdRecord.setCreatorDetails(authorDetails);
       mdRecord.setTitle(title);
       mdRecord.setDate(yearDate);
       mdRecord.setLanguage(language);
@@ -1574,6 +1583,7 @@ public class IndexHandler {
     fields.add("webUri");
     fields.add("collectionNames");
     fields.add("author");
+    fields.add("authorDetails");
     fields.add("title");
     fields.add("language");
     fields.add("publisher");
