@@ -20,16 +20,19 @@ import java.util.Hashtable;
 import net.sf.saxon.s9api.Axis;
 import net.sf.saxon.s9api.QName;
 import net.sf.saxon.s9api.XdmAtomicValue;
+import net.sf.saxon.s9api.XdmItem;
 import net.sf.saxon.s9api.XdmNode;
 import net.sf.saxon.s9api.XdmNodeKind;
 import net.sf.saxon.s9api.XdmSequenceIterator;
 import net.sf.saxon.s9api.XdmValue;
+import net.sf.saxon.trans.XPathException;
 
 import org.apache.log4j.Logger;
 import org.apache.commons.io.FileUtils;
 import org.bbaw.wsp.cms.dochandler.parser.document.IDocument;
 import org.bbaw.wsp.cms.dochandler.parser.text.parser.DocumentParser;
 import org.bbaw.wsp.cms.document.MetadataRecord;
+import org.bbaw.wsp.cms.document.Person;
 import org.bbaw.wsp.cms.document.XQuery;
 import org.bbaw.wsp.cms.general.Constants;
 import org.bbaw.wsp.cms.lucene.IndexHandler;
@@ -506,10 +509,65 @@ public class DocumentHandler {
       String identifier = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:publicationStmt/*:idno");
       if (identifier != null)
         identifier = StringUtils.deresolveXmlEntities(identifier.trim());
-      String creator = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:titleStmt/*:author");
-      if (creator != null)
+      String creator = null;
+      String creatorDetails = null;
+      XdmValue xmdValueAuthors = xQueryEvaluator.evaluate(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:titleStmt/*:author");
+      if (xmdValueAuthors != null && xmdValueAuthors.size() > 0) {
+        XdmSequenceIterator xmdValueAuthorsIterator = xmdValueAuthors.iterator();
+        ArrayList<Person> authors = new ArrayList<Person>();
+        while (xmdValueAuthorsIterator.hasNext()) {
+          Person author = new Person();
+          XdmItem xdmItemAuthor = xmdValueAuthorsIterator.next();
+          String xdmItemAuthorStr = xdmItemAuthor.toString();
+          String name = xdmItemAuthor.getStringValue();
+          if (name != null) {
+            name = name.replaceAll("\n|\\s\\s+", " ").trim();
+          }
+          String reference = xQueryEvaluator.evaluateAsString(xdmItemAuthorStr, "string(/*:author/*:persName/@ref)");
+          if (reference != null && ! reference.isEmpty())
+            author.setGndLink(reference);
+          String forename = xQueryEvaluator.evaluateAsString(xdmItemAuthorStr, "string(/*:author/*:persName/*:forename)");
+          if (forename != null && ! forename.isEmpty())
+            author.setForename(forename.trim());
+          String surname = xQueryEvaluator.evaluateAsString(xdmItemAuthorStr, "string(/*:author/*:persName/*:surname)");
+          if (surname != null && ! surname.isEmpty())
+            author.setSurname(surname.trim());
+          if (surname != null && ! surname.isEmpty() && forename != null && ! forename.isEmpty())
+            name = surname.trim() + ", " + forename.trim();
+          else if (surname != null && ! surname.isEmpty() && (forename == null || forename.isEmpty()))
+            name = surname.trim();
+          author.setName(name);
+          authors.add(author);
+        }
+        creator = "";
+        creatorDetails = "<persons>";
+        for (int i=0; i<authors.size(); i++) {
+          Person author = authors.get(i);
+          creator = creator + author.getName();
+          if (authors.size() != 1)
+            creator = creator + ". ";
+          creatorDetails = creatorDetails + "\n" + author.toXmlStr();
+        }
         creator = StringUtils.deresolveXmlEntities(creator.trim());
+        creatorDetails = creatorDetails + "\n</persons>";
+      }
       String title = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:titleStmt/*:title");
+      XdmValue xdmValueTitleMain = xQueryEvaluator.evaluate(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:titleStmt/*:title[@type='main']");
+      XdmValue xdmValueTitleSub = xQueryEvaluator.evaluate(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:titleStmt/*:title[@type='sub']");
+      XdmValue xdmValueTitleShort = xQueryEvaluator.evaluate(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:titleStmt/*:title[@type='short']");
+      if (xdmValueTitleShort != null && xdmValueTitleShort.size() > 0) {
+        try {
+          title = xdmValueTitleShort.getUnderlyingValue().getStringValue();
+        } catch (XPathException e) {
+          // nothing
+        }
+      } else if (xdmValueTitleMain != null && xdmValueTitleMain.size() > 0 && xdmValueTitleSub != null && xdmValueTitleSub.size() > 0) {
+        try {
+          title = xdmValueTitleSub.getUnderlyingValue().getStringValue() + ": " + xdmValueTitleSub.getUnderlyingValue().getStringValue();
+        } catch (XPathException e) {
+          // nothing
+        }
+      }
       if (title != null)
         title = StringUtils.deresolveXmlEntities(title.trim());
       String language = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/*:teiHeader/*:profileDesc/*:langUsage/*:language[1]/@ident)");
@@ -577,6 +635,7 @@ public class DocumentHandler {
       mdRecord.setIdentifier(identifier);
       mdRecord.setLanguage(language);
       mdRecord.setCreator(creator);
+      mdRecord.setCreatorDetails(creatorDetails);
       mdRecord.setTitle(title);
       mdRecord.setPublisher(publisherStr);
       mdRecord.setRights(rights);
