@@ -17,6 +17,7 @@ public class MetadataRecord {
   private String schemaName; // schema name of resource, e.g. TEI, html, quran etc.
   private String language; // language: ISO 639-3 with 3 characters, e.g. "ger" or "eng"
   private String creator; // author(s) of resource
+  private String creatorDetails; // author(s) details (xml format) 
   private String title; // title(s) of resource
   private String publisher; // publisher with place: e.g. Springer, New York
   private Date date; // publication date, e.g. 1958
@@ -210,6 +211,14 @@ public class MetadataRecord {
 
   public void setCreator(final String creator) {
     this.creator = creator;
+  }
+
+  public String getCreatorDetails() {
+    return creatorDetails;
+  }
+
+  public void setCreatorDetails(String creatorDetails) {
+    this.creatorDetails = creatorDetails;
   }
 
   public String getTitle() {
