@@ -193,6 +193,8 @@ public class IndexHandler {
           authorStr = authorStr.toLowerCase();  // so that sorting is lower case
         Field authorFieldSorted = new Field("authorSorted", authorStr, Field.Store.YES, Field.Index.NOT_ANALYZED);
         doc.add(authorFieldSorted);
+      } else {
+        categories.add(new CategoryPath("author", "unbekannt"));
       }
       if (mdRecord.getCreatorDetails() != null) {
         Field authorDetailsField = new Field("authorDetails", mdRecord.getCreatorDetails(), Field.Store.YES, Field.Index.NOT_ANALYZED);
@@ -216,6 +218,8 @@ public class IndexHandler {
           publisherStr = publisherStr.toLowerCase();  // so that sorting is lower case
         Field publisherFieldSorted = new Field("publisherSorted", publisherStr, Field.Store.YES, Field.Index.NOT_ANALYZED);
         doc.add(publisherFieldSorted);
+      } else {
+        categories.add(new CategoryPath("publisher", "unbekannt"));
       }
       String yearStr = mdRecord.getYear();
       if (yearStr == null) {
@@ -233,6 +237,8 @@ public class IndexHandler {
         doc.add(dateField);
         Field dateFieldSorted = new Field("dateSorted", yearStr, Field.Store.YES, Field.Index.NOT_ANALYZED);
         doc.add(dateFieldSorted);
+      } else {
+        categories.add(new CategoryPath("date", "unbekannt"));
       }
       if (mdRecord.getDescription() != null) {
         Field descriptionField = new Field("description", mdRecord.getDescription(), Field.Store.YES, Field.Index.ANALYZED);
@@ -242,16 +248,22 @@ public class IndexHandler {
         categories.add(new CategoryPath("subject", mdRecord.getSubject()));
         Field subjectField = new Field("subject", mdRecord.getSubject(), Field.Store.YES, Field.Index.ANALYZED);
         doc.add(subjectField);
+      } else {
+        categories.add(new CategoryPath("subject", "unbekannt"));
       }
       if (mdRecord.getSwd() != null) {
         categories.add(new CategoryPath("swd", mdRecord.getSwd()));
         Field swdField = new Field("swd", mdRecord.getSwd(), Field.Store.YES, Field.Index.ANALYZED);
         doc.add(swdField);
+      } else {
+        categories.add(new CategoryPath("swd", "unbekannt"));
       }
       if (mdRecord.getDdc() != null) {
         categories.add(new CategoryPath("ddc", mdRecord.getDdc()));
         Field ddcField = new Field("ddc", mdRecord.getDdc(), Field.Store.YES, Field.Index.ANALYZED);
         doc.add(ddcField);
+      } else {
+        categories.add(new CategoryPath("ddc", "unbekannt"));
       }
       if (mdRecord.getRights() != null) {
         Field rightsField = new Field("rights", mdRecord.getRights(), Field.Store.YES, Field.Index.ANALYZED);
@@ -288,6 +300,8 @@ public class IndexHandler {
         categories.add(new CategoryPath("type", mdRecord.getType()));
         Field typeField = new Field("type", mdRecord.getType(), Field.Store.YES, Field.Index.ANALYZED);
         doc.add(typeField);
+      } else {
+        categories.add(new CategoryPath("type", "unbekannt"));
       }
       if (mdRecord.getPersons() != null) {
         Field personsField = new Field("persons", mdRecord.getPersons(), Field.Store.YES, Field.Index.ANALYZED);
@@ -311,6 +325,8 @@ public class IndexHandler {
           langStr = langStr.toLowerCase();  // so that sorting is lower case
         Field languageFieldSorted = new Field("languageSorted", langStr, Field.Store.YES, Field.Index.NOT_ANALYZED);
         doc.add(languageFieldSorted);
+      } else {
+        categories.add(new CategoryPath("language", "unbekannt"));
       }
       int pageCount = mdRecord.getPageCount();
       if (pageCount != -1) {
