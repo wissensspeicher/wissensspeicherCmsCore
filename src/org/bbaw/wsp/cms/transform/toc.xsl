@@ -76,9 +76,10 @@
   <xsl:variable name="name" select="@name"/>
   <xsl:variable name="surname" select="*:surname"/>
   <xsl:variable name="forename" select="*:forename"/>
+  <xsl:variable name="ref" select="@ref"/>
   <xsl:variable name="nymRef" select="@nymRef"/>
   <xsl:variable name="value" select="string-join(text(), ' ')"/>
-  <item>
+  <xsl:variable name="fullName">
     <xsl:choose>
       <xsl:when test="not(empty($surname)) and not(empty($forename))"><xsl:value-of select="concat($surname, ', ', $forename)"/></xsl:when>
       <xsl:when test="not(empty($surname)) and empty($forename)"><xsl:value-of select="$surname"/></xsl:when>
@@ -87,6 +88,30 @@
       <xsl:when test="not(empty($value))"><xsl:value-of select="normalize-space(replace($value, '&lt;|&gt;', ''))"/></xsl:when>
       <xsl:otherwise></xsl:otherwise>
     </xsl:choose>
+  </xsl:variable>
+  <xsl:variable name="role">
+    <xsl:choose>
+      <xsl:when test="not(empty(ancestor::*:author))"><xsl:value-of select="'author'"/></xsl:when>
+      <xsl:when test="not(empty(ancestor::*:editor))"><xsl:value-of select="'editor'"/></xsl:when>
+      <xsl:otherwise><xsl:value-of select="'mentioned'"/></xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
+  <item>
+    <person>
+      <xsl:if test="not(empty($role)) and $role != ''">
+        <role><xsl:value-of select="$role"/></role>
+      </xsl:if>
+      <xsl:if test="not(empty($forename))">
+        <forename><xsl:value-of select="$forename"/></forename>
+      </xsl:if>
+      <xsl:if test="not(empty($surname))">
+        <surname><xsl:value-of select="$surname"/></surname>
+      </xsl:if>
+      <name><xsl:value-of select="$fullName"/></name>
+      <xsl:if test="not(empty($ref))">
+        <ref><xsl:value-of select="$ref"/></ref>
+      </xsl:if>
+    </person>
   </item>
 </xsl:template>
 
