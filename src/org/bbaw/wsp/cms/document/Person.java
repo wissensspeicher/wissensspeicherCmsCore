@@ -19,11 +19,12 @@ public class Person {
   public static int EDITOR = 1; 
   public static int TECHNICAL_WRITER = 2; 
   public static int ACTOR = 3; 
+  public static int MENTIONED = 4;  // person which is marked in a document (e.g. persName without parent editor) 
   private int role = AUTHOR;  // default
   private String name;  // whole name: built from: surname, forename if they exists
   private String surname;
   private String forename;
-  private String gndLink;
+  private String ref;
   private String aboutLink;
   private String language;
 
@@ -62,18 +63,20 @@ public class Person {
           person.setRole(TECHNICAL_WRITER);
         else if (role != null && role.equals("actor"))
           person.setRole(ACTOR);
+        else if (role != null && role.equals("mentioned"))
+          person.setRole(MENTIONED);
         String name = xQueryEvaluator.evaluateAsString(xdmItemPersonStr, "string(/person/name)");
-        if (name != null)
+        if (name != null && ! name.isEmpty())
           person.setName(name);
         String forename = xQueryEvaluator.evaluateAsString(xdmItemPersonStr, "string(/person/forename)");
-        if (forename != null)
+        if (forename != null & ! forename.isEmpty())
           person.setForename(forename);
         String surname = xQueryEvaluator.evaluateAsString(xdmItemPersonStr, "string(/person/surname)");
-        if (surname != null)
+        if (surname != null && ! surname.isEmpty())
           person.setSurname(surname);
-        String gndLink = xQueryEvaluator.evaluateAsString(xdmItemPersonStr, "string(/person/gndLink)");
-        if (gndLink != null)
-          person.setGndLink(gndLink);
+        String ref = xQueryEvaluator.evaluateAsString(xdmItemPersonStr, "string(/person/ref)");
+        if (ref != null && ! ref.isEmpty())
+          person.setRef(ref);
         retPersons.add(person);
       }
     }
@@ -112,12 +115,12 @@ public class Person {
     this.forename = forename;
   }
 
-  public String getGndLink() {
-    return gndLink;
+  public String getRef() {
+    return ref;
   }
 
-  public void setGndLink(String gndLink) {
-    this.gndLink = gndLink;
+  public void setRef(String ref) {
+    this.ref = ref;
   }
 
   public String getAboutLink() {
@@ -148,6 +151,8 @@ public class Person {
       roleStr = "technical_writer";
     else if (role == ACTOR)
       roleStr = "actor";
+    else if (role == MENTIONED)
+      roleStr = "mentioned";
     String retStr = "<person>";
     if (roleStr != null)
       retStr = retStr + "\n<role>" + roleStr + "</role>";
@@ -157,8 +162,10 @@ public class Person {
       retStr = retStr + "\n<surname>" + StringUtils.deresolveXmlEntities(surname) + "</surname>";
     if (name != null)
       retStr = retStr + "\n<name>" + StringUtils.deresolveXmlEntities(name) + "</name>";  // redundant
-    if (gndLink != null)
-      retStr = retStr + "\n<gndLink>" + StringUtils.deresolveXmlEntities(gndLink) + "</gndLink>";
+    if (ref != null)
+      retStr = retStr + "\n<ref>" + StringUtils.deresolveXmlEntities(ref) + "</ref>";
+    if (aboutLink != null)
+      retStr = retStr + "\n<referenceAbout>" + StringUtils.deresolveXmlEntities(aboutLink) + "</referenceAbout>";
     retStr = retStr + "\n</person>";
     return retStr;
   }
@@ -166,15 +173,36 @@ public class Person {
   public String toHtmlStr() {
     if (name == null)
       return null;
-    String retStr = "<span class=\"author\">";
-    String gndLinkHtmlStr = "";
+    String roleStr = "author";
+    String roleAbrStr = "author";
+    if (role == AUTHOR) {
+      roleStr = "author";
+      roleAbrStr = "author";
+    } else if (role == EDITOR) {
+      roleStr = "editor";
+      roleAbrStr = "eds.";
+    } else if (role == TECHNICAL_WRITER) {
+      roleStr = "technical_writer";
+      roleAbrStr = "techn.";
+    } else if (role == ACTOR) {
+      roleStr = "actor";
+      roleAbrStr = "actor";
+    } else if (role == MENTIONED) {
+      roleStr = "mentioned";
+      roleAbrStr = null;
+    }
+    String retStr = "<span class=\"" + roleStr + "\">";
+    String refHtmlStr = "";
     String aboutLinkHtmlStr = "";
+    String roleAbrStrHtml = "";
+    if (roleAbrStr != null)
+      roleAbrStrHtml = roleAbrStr + ", ";
     if (aboutLink != null)
       aboutLinkHtmlStr = "<a href=\"" + StringUtils.deresolveXmlEntities(aboutLink) + "\"><img src=\"../images/persons.png\" alt=\"Person\" border=\"0\" height=\"12\" width=\"12\"></a>";
-    if (gndLink != null)
-      gndLinkHtmlStr = "<a href=\"" + StringUtils.deresolveXmlEntities(gndLink) + "\"><img src=\"../images/person.png\" alt=\"Person\" border=\"0\" height=\"12\" width=\"12\"></a>";
+    if (ref != null)
+      refHtmlStr = "<a href=\"" + StringUtils.deresolveXmlEntities(ref) + "\"><img src=\"../images/person.png\" alt=\"Person\" border=\"0\" height=\"12\" width=\"12\"></a>";
     if (name != null)
-      retStr = retStr + "<span class=\"name\">" + StringUtils.deresolveXmlEntities(name) + " (" + aboutLinkHtmlStr + gndLinkHtmlStr + ")" + "</span>";
+      retStr = retStr + "<span class=\"name\">" + StringUtils.deresolveXmlEntities(name) + " [" + roleAbrStrHtml + aboutLinkHtmlStr + refHtmlStr + "]" + "</span>";
     retStr = retStr + "</span>";
     return retStr;
   }
@@ -192,6 +220,8 @@ public class Person {
       roleStr = "technical_writer";
     else if (role == ACTOR)
       roleStr = "actor";
+    else if (role == MENTIONED)
+      roleStr = "mentioned";
     if (roleStr != null)
       retJsonObject.put("role", roleStr);
     if (forename != null)
@@ -200,16 +230,16 @@ public class Person {
       retJsonObject.put("surname", surname);
     if (name != null)
       retJsonObject.put("name", name);
-    if (gndLink != null) {
+    if (ref != null) {
       try {
-        String gndLinkEnc = URIUtil.encodeQuery(gndLink);
-        retJsonObject.put("gndLink", gndLinkEnc);
+        String refEnc = URIUtil.encodeQuery(ref);
+        retJsonObject.put("reference", refEnc);
       } catch (URIException e) {}
     }
     if (aboutLink != null) {
       try {
         String aboutLinkEnc = URIUtil.encodeQuery(aboutLink);
-        retJsonObject.put("aboutLink", aboutLinkEnc);
+        retJsonObject.put("referenceAbout", aboutLinkEnc);
       } catch (URIException e) {}
     }
     return retJsonObject;
