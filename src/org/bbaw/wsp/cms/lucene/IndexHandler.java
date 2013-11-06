@@ -293,6 +293,10 @@ public class IndexHandler {
         Field personsField = new Field("persons", mdRecord.getPersons(), Field.Store.YES, Field.Index.ANALYZED);
         doc.add(personsField);
       }
+      if (mdRecord.getPersonsDetails() != null) {
+        Field personsDetailsField = new Field("personsDetails", mdRecord.getPersonsDetails(), Field.Store.YES, Field.Index.NOT_ANALYZED);
+        doc.add(personsDetailsField);
+      }
       if (mdRecord.getPlaces() != null) {
         Field placesField = new Field("places", mdRecord.getPlaces(), Field.Store.YES, Field.Index.ANALYZED);
         doc.add(placesField);
@@ -868,6 +872,11 @@ public class IndexHandler {
       if (personsField != null) {
         personsStr = personsField.stringValue();
       }
+      String personsDetailsStr = null;
+      Fieldable personsDetailsField = doc.getFieldable("personsDetails");
+      if (personsDetailsField != null) {
+        personsDetailsStr = personsDetailsField.stringValue();
+      }
       String placesStr = null;
       Fieldable placesField = doc.getFieldable("places");
       if (placesField != null) {
@@ -905,6 +914,7 @@ public class IndexHandler {
       mdRecord.setPageCount(pageCount);
       mdRecord.setType(type);
       mdRecord.setPersons(personsStr);
+      mdRecord.setPersonsDetails(personsDetailsStr);
       mdRecord.setPlaces(placesStr);
       mdRecord.setSchemaName(schemaName);
       mdRecord.setLastModified(lastModified);
@@ -1599,6 +1609,7 @@ public class IndexHandler {
     fields.add("schemaName");
     fields.add("lastModified");
     fields.add("persons");
+    fields.add("personsDetails");
     fields.add("places");
     fields.add("content");
     FieldSelector fieldSelector = new SetBasedFieldSelector(fields, fields);
