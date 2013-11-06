@@ -27,8 +27,9 @@ public class MetadataRecord {
   private String coverage; // spatial and temporal coverages, e.g. "13th century" or "Grand Canyon, Arizona"
   private String ddc; // subject keywords of DDC (Dewey Decimal Classification), e.g. "Philosophie" 
   private String swd; // subject keywords of SWD (Schlagwortnormdatei), normally separated by commas
-  private String persons; // main persons in resource (e.g. as list in xml format)
-  private String places; // main places in resource (e.g. as list in xml format)
+  private String persons; // main person names in resource (separated by "###")
+  private String personsDetails; // main persons details in resource (xml format)
+  private String places; // main place names in resource (separated by "###")
   private String type; // mime type: e.g. text/xml
   private String rights; // rights string, e.g. open access
   private String license; // license string, e.g. "CC-BY-SA"
@@ -382,6 +383,14 @@ public class MetadataRecord {
 
   public void setPersons(final String persons) {
     this.persons = persons;
+  }
+
+  public String getPersonsDetails() {
+    return personsDetails;
+  }
+
+  public void setPersonsDetails(String personsDetails) {
+    this.personsDetails = personsDetails;
   }
 
   public String getPlaces() {
