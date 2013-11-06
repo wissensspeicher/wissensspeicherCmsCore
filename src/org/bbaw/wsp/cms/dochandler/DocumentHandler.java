@@ -142,10 +142,12 @@ public class DocumentHandler {
         String tocResult = tocTransformer.transform(docDestFileNameUpgrade);
         FileUtils.writeStringToFile(tocFile, tocResult, "utf-8");
         String persons = getPersons(tocResult, xQueryEvaluator); 
+        String personsDetails = getPersonsDetails(tocResult, xQueryEvaluator); 
         String places = getPlaces(tocResult, xQueryEvaluator);
   
         // Get metadata info out of the xml document
         mdRecord.setPersons(persons);
+        mdRecord.setPersonsDetails(personsDetails);
         mdRecord.setPlaces(places);
         docOperation.setStatus("extract metadata of: " + srcUrlStr + " to CMS");
         mdRecord = getMetadataRecord(docDestFileUpgrade, docType, mdRecord, xQueryEvaluator);
@@ -525,7 +527,7 @@ public class DocumentHandler {
           }
           String reference = xQueryEvaluator.evaluateAsString(xdmItemAuthorStr, "string(/*:author/*:persName/@ref)");
           if (reference != null && ! reference.isEmpty())
-            author.setGndLink(reference);
+            author.setRef(reference);
           String forename = xQueryEvaluator.evaluateAsString(xdmItemAuthorStr, "string(/*:author/*:persName/*:forename)");
           if (forename != null && ! forename.isEmpty())
             author.setForename(forename.trim());
@@ -803,8 +805,24 @@ public class DocumentHandler {
   }
 
   private String getPersons(String tocString, XQueryEvaluator xQueryEvaluator) throws ApplicationException {
-    String persons = xQueryEvaluator.evaluateAsStringValueJoined(tocString, "/list/list[@type='persons']/item[not(. = preceding::item)]", "###"); // [not(. = preceding::item)] removes duplicates
+    String persons = xQueryEvaluator.evaluateAsStringValueJoined(tocString, "/list/list[@type='persons']/item/person/name[not(. = preceding::person/name)]", "###"); // [not(. = preceding::person/name)] removes duplicates
     return persons;
+  }
+  
+  private String getPersonsDetails(String tocString, XQueryEvaluator xQueryEvaluator) throws ApplicationException {
+    String personsDetails = null;
+    XdmValue xmdValuePersons = xQueryEvaluator.evaluate(tocString, "/list/list[@type='persons']/item/person[not(name = preceding::person/name)]"); // [not(name = preceding::person/name)] removes duplicates
+    if (xmdValuePersons != null && xmdValuePersons.size() > 0) {
+      XdmSequenceIterator xmdValuePersonsIterator = xmdValuePersons.iterator();
+      personsDetails = "<persons>\n";
+      while (xmdValuePersonsIterator.hasNext()) {
+        XdmItem xdmItemPerson = xmdValuePersonsIterator.next();
+        String xdmItemPersonStr = xdmItemPerson.toString();
+        personsDetails = personsDetails + xdmItemPersonStr + "\n";
+      }
+      personsDetails = personsDetails + "</persons>";
+    }
+    return personsDetails;
   }
   
   private String getPlaces(String tocString, XQueryEvaluator xQueryEvaluator) throws ApplicationException {
