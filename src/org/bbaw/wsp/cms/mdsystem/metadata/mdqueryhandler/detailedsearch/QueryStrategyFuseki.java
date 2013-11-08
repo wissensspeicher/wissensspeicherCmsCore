@@ -61,7 +61,7 @@ public class QueryStrategyFuseki implements IQueryStrategy<ResultSet> {
    * @see org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter.IQueryStrategy #queryLiteral(java.lang.String)
    */
   public ResultSet queryLiteral(final String literal) {
-    final String query = SparqlCommandBuilder.SELECT_USING_INDEX_CONTAINING_NAMED_GRAPH.getSelectQueryString("*", null, literal);
+    final String query = SparqlCommandBuilder.SELECT_USING_INDEX_CONTAINING_NAMED_GRAPH.getSelectQueryString("*", null, literal, null);
     return delegateQuery(query);
   }
 
@@ -83,7 +83,7 @@ public class QueryStrategyFuseki implements IQueryStrategy<ResultSet> {
    * @see org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.detailedsearch.IQueryStrategy#querySubject(java.net.URL)
    */
   public ResultSet querySubject(final Resource subject) {
-    final String query = SparqlCommandBuilder.SELECT_CONTAINING_NAMED_GRAPH.getSelectQueryString("*", null, subject.getURI() + " ?p ?o");
+    final String query = SparqlCommandBuilder.SELECT_CONTAINING_NAMED_GRAPH.getSelectQueryString("*", null, subject.getURI() + " ?p ?o", null);
     logger.info("querySubject: query builded -> " + query);
     return delegateQuery(query);
   }
@@ -95,7 +95,7 @@ public class QueryStrategyFuseki implements IQueryStrategy<ResultSet> {
    * @see org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.detailedsearch.IQueryStrategy#queryGraph(java.net.URL)
    */
   public ResultSet queryGraph(final URL namedGraphUrl) {
-    final String query = SparqlCommandBuilder.SELECT_NAMED.getSelectQueryString("*", namedGraphUrl, "?s ?p ?o");
+    final String query = SparqlCommandBuilder.SELECT_NAMED.getSelectQueryString("*", namedGraphUrl, "?s ?p ?o", null);
     return delegateQuery(query);
   }
 
@@ -119,8 +119,14 @@ public class QueryStrategyFuseki implements IQueryStrategy<ResultSet> {
    * @see org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.detailedsearch.IQueryStrategy#queryGraph(java.net.URL, java.lang.String)
    */
   public ResultSet queryGraph(final URL namedGraphUrl, final String subject) {
-    final String query = SparqlCommandBuilder.SELECT_NAMED.getSelectQueryString("*", namedGraphUrl, subject + " ?p ?o");
+    final String query = SparqlCommandBuilder.SELECT_NAMED.getSelectQueryString("*", namedGraphUrl, subject + " ?p ?o", null);
     logger.info("queryGraph_namedGraphUrl_subject: query builded -> " + query);
+    return delegateQuery(query);
+  }
+
+  @Override
+  public ResultSet queryAllProjectInfo(String projectId, boolean isProjectId) {
+    final String query = SparqlCommandBuilder.SELECT_ALL_PROJECT_INFO_FOR_GIVEN_ID.getSelectQueryString("?s ?p ?o", null, null, projectId);
     return delegateQuery(query);
   }
 }
