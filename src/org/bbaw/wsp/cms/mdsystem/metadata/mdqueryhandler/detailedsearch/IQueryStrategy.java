@@ -45,6 +45,15 @@ public interface IQueryStrategy<T> {
    * @return the generic type as specified in the concrete strategy class. Mostly it's a {@link ResultSet}.
    */
   T querySubject(Resource subject);
+  
+  /**
+   * Delegate a sparqlQuery to a useful handler instance and execute it. Use the {@link SparqlCommandBuilder} to build a valid sparql statement.
+   * 
+   * @param id
+   *          the projectId as String
+   * @return the generic type as specified in the concrete strategy class. Mostly it's a {@link ResultSet}.
+   */
+  T queryAllProjectInfo(String projectId, boolean isProjectId);
 
   /**
    * Query a single named graph.
