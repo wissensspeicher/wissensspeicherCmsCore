@@ -11,7 +11,7 @@ import java.net.URL;
  *       Last change: 15.11.2012 -> select queries added
  */
 public enum SparqlCommandBuilder {
-  CLEAR_DATASET, CLEAR_GRAPH, CLEAR_DEFAULT, SELECT_DEFAULT, SELECT_NAMED, SELECT_USING_INDEX, SELECT_NAMED_USING_INDEX, SELECT_USING_INDEX_CONTAINING_NAMED_GRAPH, SELECT_CONTAINING_NAMED_GRAPH;
+  CLEAR_DATASET, CLEAR_GRAPH, CLEAR_DEFAULT, SELECT_DEFAULT, SELECT_NAMED, SELECT_USING_INDEX, SELECT_NAMED_USING_INDEX, SELECT_USING_INDEX_CONTAINING_NAMED_GRAPH, SELECT_CONTAINING_NAMED_GRAPH, SELECT_ALL_PROJECT_INFO_FOR_GIVEN_ID;
 
   /**
    * @return the spaql command as {@link String}.
@@ -32,7 +32,7 @@ public enum SparqlCommandBuilder {
   /**
    * @return the sparql query command as {@link String}
    */
-  public String getSelectQueryString(final String toSelect, final URL graphName, final String graphPattern) {
+  public String getSelectQueryString(final String toSelect, final URL graphName, final String graphPattern, final String projectId) {
     switch (this) {
     case SELECT_DEFAULT:
       return "SELECT " + toSelect + " { " + graphPattern + "}";
@@ -52,6 +52,9 @@ public enum SparqlCommandBuilder {
       // return "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n" +
       // "SELECT " + toSelect + " {  ?o pf:textMatch '" + graphPattern +
       // "'. GRAPH ?g { ?s ?p ?o}  }";
+    case SELECT_ALL_PROJECT_INFO_FOR_GIVEN_ID:
+      return "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n prefix foaf: <http://xmlns.com/foaf/0.1/> \n" + "SELECT " + toSelect + " { ?sbjct  pf:textMatch '"+ projectId +"'.\n ?s foaf:nick ?sbjct. \n ?s ?p ?o.\n } ";
+
     default:
       return "";
     }
