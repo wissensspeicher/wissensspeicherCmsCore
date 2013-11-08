@@ -36,6 +36,16 @@ public interface ISparqlAdapter {
    *          the literal String.
    */
   HitGraphContainer buildSparqlQuery(URL namedGraphUrl, String subject);
+  
+  /**
+   * Build a sparql query from  a literal and a projectId. Here, the pf:textmatch method is used.
+   * 
+   * @param projectId
+   *          the String of projectId to be queried.
+   * @param subject
+   *          the literal String.
+   */
+  HitGraphContainer buildSparqlQuery(String projectId, boolean isProjectId);
 
   /**
    * Build a sparql query to receive all data in a specific graph
