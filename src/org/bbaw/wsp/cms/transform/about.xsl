@@ -341,8 +341,8 @@
 
 <!--  PDR PIT person matches -->
 <xsl:template match="*:item">
-  <xsl:variable name="name" select="relatedPersons/person"/>
-  <xsl:variable name="pdrId" select="relatedPersons/person/@id"/>
+  <xsl:variable name="name" select="relatedPersons/person[1]"/>
+  <xsl:variable name="pdrId" select="relatedPersons/person[1]/@id"/> 
   <xsl:variable name="description" select="content"/>
   <div class="person"> 
     <div class="name">
