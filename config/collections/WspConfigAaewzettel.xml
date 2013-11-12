@@ -5,8 +5,8 @@
     <rdfId>http://wsp.normdata.rdf/AltaegyptWB/Zettelarchiv</rdfId>     
     <name>Altägyptisches Wörterbuch: Das Digitalisierte Zettelarchiv</name>
     <url>
-      <webBaseUrl>http://aaew.bbaw.de/dateien/dza/dza.html</webBaseUrl>
-      <dataUrl>http://aaew.bbaw.de/dateien/dza/dza.html</dataUrl>
+      <webBaseUrl>http://aaew.bbaw.de/archive/das-digitalisierte-zettelarchiv/einfuehrung/einfuehrung_dza</webBaseUrl>
+      <dataUrl>http://aaew.bbaw.de/archive/das-digitalisierte-zettelarchiv/einfuehrung/einfuehrung_dza</dataUrl>
     </url>
     <languages>ger,eng,egy</languages>
     <mainLanguage>ger</mainLanguage>
