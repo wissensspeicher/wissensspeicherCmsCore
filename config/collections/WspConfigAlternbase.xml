@@ -5,8 +5,8 @@
     <rdfId>http://wsp.normdata.rdf/AlternGesellschaft/BASE</rdfId>   
     <name>Altern und gesellschaftliche Entwicklung: Berlin Aging Study (BASE)</name>
     <url>
-      <webBaseUrl>http://www.base-berlin.mpg.de/de/BASE_II.html</webBaseUrl>
-      <dataUrl>http://www.base-berlin.mpg.de/de/BASE_II.html</dataUrl>
+      <webBaseUrl>http://www.base-berlin.mpg.de</webBaseUrl>
+      <dataUrl>http://www.base-berlin.mpg.de</dataUrl>
     </url>
     <mainLanguage>ger</mainLanguage>
     <formats>
