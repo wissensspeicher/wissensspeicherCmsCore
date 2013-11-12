@@ -136,37 +136,39 @@ public class CollectionManager {
   private void addDocuments(Collection collection) throws ApplicationException {
     DocumentHandler docHandler = new DocumentHandler();
     ArrayList<MetadataRecord> mdRecords = getMetadataRecords(collection);
-    for (int i=0; i<mdRecords.size(); i++) {
-      MetadataRecord mdRecord = mdRecords.get(i);
-      String docUrl = mdRecord.getUri();
-      String docId = mdRecord.getDocId();
-      String collectionId = mdRecord.getCollectionNames();
-      counter++;
-      String logCreationStr = counter + ". " + "Collection: " + collectionId + ": Create resource: " + docUrl + " (" + docId + ")";
-      if (docUrl == null)
-        logCreationStr = counter + ". " + "Collection: " + collectionId + ": Create metadata resource: " + docId;
-      LOGGER.info(logCreationStr);
-      CmsDocOperation docOp = new CmsDocOperation("create", docUrl, null, docId);
-      docOp.setMdRecord(mdRecord);
-      ArrayList<String> fields = collection.getFields();
-      if (fields != null && ! fields.isEmpty()) {
-        String[] fieldsArray = new String[fields.size()];
-        for (int j=0;j<fields.size();j++) {
-          String f = fields.get(j);
-          fieldsArray[j] = f;
+    if (mdRecords != null) {
+      for (int i=0; i<mdRecords.size(); i++) {
+        MetadataRecord mdRecord = mdRecords.get(i);
+        String docUrl = mdRecord.getUri();
+        String docId = mdRecord.getDocId();
+        String collectionId = mdRecord.getCollectionNames();
+        counter++;
+        String logCreationStr = counter + ". " + "Collection: " + collectionId + ": Create resource: " + docUrl + " (" + docId + ")";
+        if (docUrl == null)
+          logCreationStr = counter + ". " + "Collection: " + collectionId + ": Create metadata resource: " + docId;
+        LOGGER.info(logCreationStr);
+        CmsDocOperation docOp = new CmsDocOperation("create", docUrl, null, docId);
+        docOp.setMdRecord(mdRecord);
+        ArrayList<String> fields = collection.getFields();
+        if (fields != null && ! fields.isEmpty()) {
+          String[] fieldsArray = new String[fields.size()];
+          for (int j=0;j<fields.size();j++) {
+            String f = fields.get(j);
+            fieldsArray[j] = f;
+          }
+          docOp.setElementNames(fieldsArray);
         }
-        docOp.setElementNames(fieldsArray);
+        String mainLanguage = collection.getMainLanguage();
+        docOp.setMainLanguage(mainLanguage);
+        try {
+          docHandler.doOperation(docOp);
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
+        // without that, there would be a memory leak (with many big documents in one collection)
+        // with that the main big fields (content etc.) could be garbaged
+        mdRecord.setAllNull();
       }
-      String mainLanguage = collection.getMainLanguage();
-      docOp.setMainLanguage(mainLanguage);
-      try {
-        docHandler.doOperation(docOp);
-      } catch (Exception e) {
-        e.printStackTrace();
-      }
-      // without that, there would be a memory leak (with many big documents in one collection)
-      // with that the main big fields (content etc.) could be garbaged
-      mdRecord.setAllNull();  
     }
   }
 
