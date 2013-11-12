@@ -939,7 +939,7 @@ public class IndexHandler {
   }
 
   public ArrayList<Token> getToken(String fieldName, String value, int count) throws ApplicationException {
-    ArrayList<Token> retToken = null;
+    ArrayList<Token> retToken = new ArrayList<Token>();
     int counter = 0;
     TermEnum terms = null;
     try {
@@ -948,9 +948,7 @@ public class IndexHandler {
       Term term = new Term(fieldName, value);
       makeIndexReaderUpToDate();
       terms = documentsIndexReader.terms(term);
-      while (terms != null && fieldName != null && fieldName.equals(terms.term().field()) && counter < count) {
-        if (retToken == null)
-          retToken = new ArrayList<Token>();
+      while (terms != null && fieldName != null && terms.term() != null && fieldName.equals(terms.term().field()) && counter < count) {
         Term termContent = terms.term();
         String termContentStr = termContent.text();
         if (termContentStr.startsWith(value)) {
