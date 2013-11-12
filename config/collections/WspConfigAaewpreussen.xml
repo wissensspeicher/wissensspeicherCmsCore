@@ -5,8 +5,9 @@
     <rdfId>http://wsp.normdata.rdf/AltaegyptWB/Preussen</rdfId>
     <name>Altägyptisches Wörterbuch: Preußen in Ägypten-Ägypten in Preußen</name>
     <url>
-      <webBaseUrl>http://aaew.bbaw.de/</webBaseUrl>
-      <dataUrl> http://aaew.bbaw.de/dateien/weitere%20archive/Lepsius-Ausstellung/FuehrungPreussAeg.pdf</dataUrl>
+      <webBaseUrl>http://aaew.bbaw.de/archive/lepsius-archiv/archiv-startseite_lepsius</webBaseUrl>
+      <dataUrl>http://aaew.bbaw.de/archive/lepsius-archiv/archiv-startseite_lepsius</dataUrl>
+      <dataUrl>http://aaew.bbaw.de/dateien/fuehrungpreussaeg.pdf</dataUrl>
     </url>
     <languages>ger,eng,egy</languages>
     <mainLanguage>ger</mainLanguage>
