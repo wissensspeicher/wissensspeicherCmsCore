@@ -18,7 +18,7 @@ import de.mpg.mpiwg.berlin.mpdl.xml.xquery.XQueryEvaluator;
 
 public class ConvertDbXml2Rdf {
   private CollectionReader collectionReader;
-  private String outputRdfDir = "/home/juergens/wspEtc/rdfData/transformFromSqlDump/";
+  private String outputRdfDir = "/home/joey/dataWsp/documentsExtern/";
   private XQueryEvaluator xQueryEvaluator;
 
   public static void main(String[] args) throws ApplicationException {
@@ -26,6 +26,7 @@ public class ConvertDbXml2Rdf {
       ConvertDbXml2Rdf convertDbXml2Rdf = new ConvertDbXml2Rdf();
       convertDbXml2Rdf.init();
       convertDbXml2Rdf.convert("avhseklit");
+      // convertDbXml2Rdf.convert("avhunselbst");
     } catch (Exception e) {
       e.printStackTrace();
     }
