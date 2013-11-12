@@ -5,12 +5,11 @@
     <rdfId>http://wsp.normdata.rdf/MarxEngelsGA</rdfId>
     <name>Marx-Engels-Gesamtausgabe</name>
     <url> 
-      <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/de/Startseite</webBaseUrl>
+      <webBaseUrl>http://mega.bbaw.de</webBaseUrl>
 
       <!-- Homepages -->
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/de/Startseite</dataUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/en/Startseite</dataUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/de/Ueberblick/index.html</dataUrl>
+      <dataUrl>http://mega.bbaw.de</dataUrl>
+      <dataUrl>http://mega.bbaw.de/megadigital</dataUrl>
       <dataUrl>http://telota.bbaw.de/mega</dataUrl>
       
       <!-- Abteilung 1   -->
