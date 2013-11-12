@@ -13,10 +13,12 @@
       <dataUrl>http://telota.bbaw.de/mega</dataUrl>
       
       <!-- Abteilung 1   -->
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/i21_inhalt.pdf</dataUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/I_30_inhalt_einf.pdf</dataUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/I_32_inhalt_einf.pdf</dataUrl>
-
+      <dataUrl>http://mega.bbaw.de/struktur/abteilung_i/dateien/mega_I-14_inhalt-einf.pdf</dataUrl>
+      <dataUrl>http://mega.bbaw.de/struktur/abteilung_i/dateien/i21_inhalt.pdf</dataUrl>
+      <dataUrl>http://mega.bbaw.de/struktur/abteilung_i/dateien/mega_I_30_inhalt_einf.pdf</dataUrl>
+      <dataUrl>http://mega.bbaw.de/struktur/abteilung_i/dateien/mega_I-31_inhalt-einf.pdf</dataUrl>
+      <dataUrl>http://mega.bbaw.de/struktur/abteilung_i/dateien/mega_I_32_inhalt_einf.pdf</dataUrl>
+      
       <!-- Abteilung 2   -->
       <dataUrl>http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B001-01_ETX.xml</dataUrl>
       <dataUrl>http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B001-02_ETX.xml</dataUrl>
@@ -28,33 +30,44 @@
       <dataUrl>http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B015-00_ETX.xml</dataUrl>
 
 
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/II_11einf.pdf</dataUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/II12.pdf</dataUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/II_13einf.pdf</dataUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/mega8.pdf</dataUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/mega10.pdf</dataUrl>
+      <dataUrl>http://mega.bbaw.de/struktur/abteilung_ii/dateien/mega_II-11_inhalt-einf.pdf</dataUrl>
+      <dataUrl>http://mega.bbaw.de/struktur/abteilung_ii/dateien/mega_II-12_inhalt-einf.pdf</dataUrl>
+      <dataUrl>http://mega.bbaw.de/struktur/abteilung_ii/dateien/mega_II-13_inhalt-einf.pdf</dataUrl>
+      <dataUrl>http://mega.bbaw.de/struktur/abteilung_ii/dateien/mega_II-14_inhalt-einf.pdf</dataUrl>
+      <dataUrl>http://mega.bbaw.de/struktur/abteilung_ii/dateien/mega_II-15_inhalt-einf.pdf</dataUrl>
+      <dataUrl>http://mega.bbaw.de/struktur/abteilung_ii/dateien/MEGA_II-43_inhalt-einf.pdf</dataUrl>
+      <dataUrl>http://mega.bbaw.de/struktur/abteilung_ii/dateien/mega_II-11_beschreibung.doc</dataUrl>
+      <dataUrl>http://mega.bbaw.de/struktur/abteilung_ii/dateien/mega_II-12_beschreibung.doc</dataUrl>
+      <dataUrl>http://mega.bbaw.de/struktur/abteilung_ii/dateien/mega_II-13_beschreibung.doc</dataUrl>
+      <dataUrl>http://mega.bbaw.de/struktur/abteilung_ii/dateien/mega_II-14_beschreibung.doc</dataUrl>
+      <dataUrl>http://mega.bbaw.de/struktur/abteilung_ii/dateien/mega_II-15_beschreibung.doc</dataUrl>
 
       <!-- Abteilung 3   -->
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/mega9.pdf</dataUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/mega4.pdf</dataUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/III11.pdf</dataUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/mega7.pdf</dataUrl>
+      <dataUrl>http://mega.bbaw.de/struktur/abteilung_iii/dateien/mega9.pdf</dataUrl>
+      <dataUrl>http://mega.bbaw.de/struktur/abteilung_iii/dateien/mega_III-10_inhalt-einf.pdf</dataUrl>
+      <dataUrl>http://mega.bbaw.de/struktur/abteilung_iii/dateien/mega_III-11_inhalt-einf.pdf</dataUrl>
+      <dataUrl>http://mega.bbaw.de/struktur/abteilung_iii/dateien/mega_III-13_inhalt-einf.pdf</dataUrl>
+      <dataUrl>http://mega.bbaw.de/struktur/abteilung_iii/dateien/mega_III-9_inhalt-einf.pdf</dataUrl>
 
       <!-- Abteilung 4   -->
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/de/bilder/IV3.pdf</dataUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/IV31.pdf</dataUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/mega3.pdf</dataUrl>
+      <dataUrl>http://mega.bbaw.de/struktur/abteilung_iv/dateien/mega_IV-26_Inhalt_einf.pdf</dataUrl>
+      <dataUrl>http://mega.bbaw.de/struktur/abteilung_iv/dateien/mega_IV-31_Inhalt_einf.pdf</dataUrl>
+      <dataUrl>http://mega.bbaw.de/struktur/abteilung_iv/dateien/mega_IV-32_Inhalt_einf.pdf</dataUrl>
+      <dataUrl>http://mega.bbaw.de/struktur/abteilung_iv/dateien/mega_IV-32_Seiten.pdf</dataUrl>
+      <dataUrl>http://mega.bbaw.de/struktur/abteilung_iv/dateien/mega_IV-3_inhalt_einf.pdf</dataUrl>
+      <dataUrl>http://mega.bbaw.de/struktur/abteilung_iv/dateien/mega_IV-12_inhalt-einf.pdf</dataUrl>
+      <dataUrl>http://mega.bbaw.de/struktur/abteilung_iv/dateien/IV3_Seiten.pdf</dataUrl>
 
       <!-- Jahrbuecher -->
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/JB_11.pdf</dataUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/JB_10.pdf</dataUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/JB_09.pdf</dataUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/JB_08.pdf</dataUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/JB_07.pdf</dataUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/JB_06.pdf</dataUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/JB_05.pdf</dataUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/JB_04.pdf</dataUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mega/bilder/JB_03.pdf</dataUrl>
+      <dataUrl>http://mega.bbaw.de/begleitende-publikationen/dateien/JB_11.pdf</dataUrl>
+      <dataUrl>http://mega.bbaw.de/begleitende-publikationen/dateien/JB_10.pdf</dataUrl>
+      <dataUrl>http://mega.bbaw.de/begleitende-publikationen/dateien/JB_09.pdf</dataUrl>
+      <dataUrl>http://mega.bbaw.de/begleitende-publikationen/dateien/JB_08.pdf</dataUrl>
+      <dataUrl>http://mega.bbaw.de/begleitende-publikationen/dateien/JB_07.pdf</dataUrl>
+      <dataUrl>http://mega.bbaw.de/begleitende-publikationen/dateien/JB_06.pdf</dataUrl>
+      <dataUrl>http://mega.bbaw.de/begleitende-publikationen/dateien/JB_05.pdf</dataUrl>
+      <dataUrl>http://mega.bbaw.de/begleitende-publikationen/dateien/JB_04.pdf</dataUrl>
+      <dataUrl>http://mega.bbaw.de/begleitende-publikationen/dateien/JB_03.pdf</dataUrl>
 
     </url>
     <languages>ger</languages>
