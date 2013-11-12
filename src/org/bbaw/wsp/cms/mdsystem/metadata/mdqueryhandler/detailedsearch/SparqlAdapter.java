@@ -108,14 +108,17 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
    */
   private void handleSolution(final HitGraphContainer container, final QuerySolution solution, final URL namedGraphUrl, final RDFNode pSubject) {
     try {
+      System.out.println("solution : "+solution);
       final URL graphUrl;
-      if (namedGraphUrl == null) { // means: sparql query contains the graph name
+      if (namedGraphUrl == null && solution.getResource("g") != null) { // means: sparql query contains the graph name
+        System.out.println("g : ");
         graphUrl = new URL(solution.getResource("g").getURI());
       } else { // means: sparql query was executed on a single named graph -> the graph name is passed as argument
         graphUrl = namedGraphUrl;
       }
       final HitGraph hitGraph;
       if (!container.contains(graphUrl)) { // create new hit graph
+        System.out.println("new hitGraph : ");
         hitGraph = new HitGraph(graphUrl);
         container.addHitRecord(graphUrl, hitGraph);
       } else {
@@ -124,6 +127,7 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
       RDFNode subject = null;
       if (pSubject == null) { // didn't the client pass a subject node?
         if (solution.getResource("s") != null) {
+          System.out.println("s : ");
           subject = solution.getResource("s");
         }
       } else {
@@ -131,13 +135,16 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
       }
       RDFNode predicate = null;
       if (solution.getResource("p") != null) {
+        System.out.println("p : ");
         predicate = solution.getResource("p");
       }
       RDFNode literal = null;
       if (solution.getLiteral("lit") != null) {
+        System.out.println("lit : ");
         literal = solution.getLiteral("lit");
       }
       if (solution.get("o") != null) {
+        System.out.println("o : ");
         literal = solution.get("o");
       }
       double score = 0;
@@ -153,7 +160,9 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
         predParent = solution.getResource("pParent");
       }
       final HitStatement statement = new HitStatement(subject, predicate, literal, score, subjParent, predParent);
+      System.out.println("HitStatement : ");
       hitGraph.addStatement(statement);
+      System.out.println("hitGraph : ");
 
       // set result type
       if (score == 0) { // no literal/LARQ search (because a score would be returned)
@@ -167,6 +176,7 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
       }
 
     } catch (final MalformedURLException e) {
+      System.out.println("SparQlAdapter: not a valid URL (should be one): " + e.getMessage());
       logger.error("SparQlAdapter: not a valid URL (should be one): " + e.getMessage());
     }
   }
@@ -555,6 +565,39 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
         while (realResults.hasNext()) {
           final QuerySolution solution = realResults.next();
           this.handleSolution(container, solution, namedGraph, subject);
+        }
+      }
+    }
+
+    return container;
+  }
+
+  @Override
+  public HitGraphContainer buildSparqlQuery(String projectId, boolean isProjectId) {
+    final T results = queryStrategy.queryAllProjectInfo(projectId, isProjectId);
+    freeQueryStrategy();
+    return this.handleProjectIdResults(results);
+  }
+
+  private HitGraphContainer handleProjectIdResults(T results) {
+    final HitGraphContainer container = new HitGraphContainer(new Date()); // result
+    // container
+    if (results instanceof ResultSet) { // QueryStrategyFuseki
+      System.out.println("ResultSet ");
+      final ResultSet realResults = (ResultSet) results;
+      while (realResults.hasNext()) {
+        final QuerySolution solution = realResults.next();
+        this.handleSolution(container, solution, null, null);
+      }
+    } else if (results instanceof HashMap<?, ?>) { // query strategy returns hash map in the form named graph url - value
+      System.out.println("HashMap");
+      @SuppressWarnings("unchecked")
+      final Map<URL, ResultSet> resultMap = (HashMap<URL, ResultSet>) results;
+      for (final URL namedGraph : resultMap.keySet()) {
+        final ResultSet realResults = resultMap.get(namedGraph);
+        while (realResults.hasNext()) {
+          final QuerySolution solution = realResults.next();
+          this.handleSolution(container, solution, namedGraph, null);
         }
       }
     }

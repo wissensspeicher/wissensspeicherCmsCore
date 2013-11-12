@@ -64,7 +64,7 @@ public class JenaMain {
    */
   private void doYourWork() {
     wspStore.setForce(true);
-    createNamedModelsFromOreSets("/home/juergens/wspEtc/rdfData/projektRdf/projects/ModsToRdf/");
+    createNamedModelsFromOreSets("/home/juergens/wspEtc/rdfData/projektRdf/gesammelteRdfFuerImport");
     // createNewModelFromSingleOre(oreBiblioNeu);
     // getAllNamedModelsInDataset();
     // wspStore.openDataset();

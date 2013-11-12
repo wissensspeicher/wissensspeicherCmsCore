@@ -76,7 +76,7 @@ public class QueryStrategyJena implements IQueryStrategy<Map<URL, ResultSet>> {
    * @see org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter.IQueryStrategy #queryLiteral(java.lang.String)
    */
   public Map<URL, ResultSet> queryLiteral(final String literal) {
-    final String query = SparqlCommandBuilder.SELECT_USING_INDEX.getSelectQueryString("*", null, literal);
+    final String query = SparqlCommandBuilder.SELECT_USING_INDEX.getSelectQueryString("*", null, literal, null);
     logger.info("QueryStrategyJena: builded sparql query: " + query);
     return delegateQuery(query);
   }
@@ -94,7 +94,7 @@ public class QueryStrategyJena implements IQueryStrategy<Map<URL, ResultSet>> {
   @Override
   public Map<URL, ResultSet> queryGraph(final URL namedGraphUrl) {
     final Map<URL, ResultSet> map = new HashMap<URL, ResultSet>();
-    final String query = SparqlCommandBuilder.SELECT_NAMED.getSelectQueryString("*", namedGraphUrl, "?s ?p ?o");
+    final String query = SparqlCommandBuilder.SELECT_NAMED.getSelectQueryString("*", namedGraphUrl, "?s ?p ?o", null);
     logger.info("queryGraph: " + query);
     final ResultSet resultSet = delegateNamedGraphQuery(namedGraphUrl, query);
     map.put(namedGraphUrl, resultSet);
@@ -110,8 +110,14 @@ public class QueryStrategyJena implements IQueryStrategy<Map<URL, ResultSet>> {
 
   @Override
   public Map<URL, ResultSet> querySubject(final Resource subject) {
-    final String query = SparqlCommandBuilder.SELECT_CONTAINING_NAMED_GRAPH.getSelectQueryString("*", null, subject.getURI() + " ?p ?o");
+    final String query = SparqlCommandBuilder.SELECT_CONTAINING_NAMED_GRAPH.getSelectQueryString("*", null, subject.getURI() + " ?p ?o", null);
     logger.info("querySubject: query builded -> " + query);
     return delegateQuery(query);
+  }
+
+  @Override
+  public Map<URL, ResultSet> queryAllProjectInfo(String projectId, boolean isProjectId) {
+    // TODO Auto-generated method stub
+    return null;
   }
 }
