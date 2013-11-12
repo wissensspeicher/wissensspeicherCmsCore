@@ -13,8 +13,8 @@ import net.sf.saxon.s9api.XdmItem;
 import net.sf.saxon.s9api.XdmSequenceIterator;
 import net.sf.saxon.s9api.XdmValue;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
-import org.bbaw.wsp.cms.document.Facet;
 import org.bbaw.wsp.cms.document.XQuery;
 import org.bbaw.wsp.cms.general.Constants;
 
@@ -293,5 +293,43 @@ public class CollectionReader {
 			throw new ApplicationException(e);
 		}
 	}
+	
+	public void testDataUrls() throws ApplicationException {
+	  ArrayList<Collection> collections = getCollections();
+    String documentsDirectory = Constants.getInstance().getDocumentsDir();
+	  File dummyFile = new File(documentsDirectory + "/testDataUrls/test.bla");
+	  int counter = 0;
+	  Integer counterError = 0;
+	  for (int i=0; i<collections.size(); i++) {
+	    Collection collection = collections.get(i);
+	    WspUrl[] dataUrls = collection.getDataUrls();
+	    if (dataUrls != null) {
+	      String collectionId = collection.getId();
+	      LOGGER.info(i + ". Testing project " + collectionId + " with " + dataUrls.length + " dataUrls");
+	      for (int j=0; j<dataUrls.length; j++) {
+	        WspUrl wspDataUrl = dataUrls[j];
+	        String dataUrlStr = wspDataUrl.getUrl();
+	        if (dataUrlStr != null) {
+	          counter++;
+  	        copyUrlToFile(collectionId, dataUrlStr, dummyFile, counterError);
+	        }
+	      }
+	    }
+	  }
+    File dummyFileDir = new File(documentsDirectory + "/testDataUrls");
+    FileUtils.deleteQuietly(dummyFileDir);
+    int counterOk = counter - counterError;
+	  LOGGER.info("Summary: " + collections.size() + " projects were tested. " + counterError + " dataUrls have errors and " + counterOk + " dataUrls are ok.");
+	}
 
+  private void copyUrlToFile(String collectionId, String srcUrlStr, File docDestFile, Integer counterError) {
+    try {
+      URL srcUrl = new URL(srcUrlStr);
+      FileUtils.copyURLToFile(srcUrl, docDestFile, 5000, 5000);
+    } catch (Exception e) {
+      counterError = counterError + 1;
+      LOGGER.error(collectionId + ": dataUrl: " + srcUrlStr + " failed: " + e.getMessage());
+    }
+  }
+  
 }
