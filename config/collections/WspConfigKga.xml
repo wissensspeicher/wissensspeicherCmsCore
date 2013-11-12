@@ -5,8 +5,8 @@
     <rdfId>http://wsp.normdata.rdf/SchleiermacherGesamtausgabe</rdfId>
     <name>Schleiermacher: Kritische Gesamtausgabe</name>
     <url>
-      <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/schleiermacher/de/Startseite</webBaseUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/schleiermacher/de/Startseite</dataUrl>
+      <webBaseUrl>http://schleiermacher.bbaw.de/</webBaseUrl>
+      <dataUrl>http://schleiermacher.bbaw.de/</dataUrl>
     </url>
     <mainLanguage>ger</mainLanguage>
     <formats>

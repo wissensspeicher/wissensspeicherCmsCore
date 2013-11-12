@@ -5,8 +5,8 @@
     <rdfId>http://wsp.normdata.rdf/ZukunftMitKindern</rdfId>
     <name>Zukunft mit Kindern - Fertilität und gesellschaftliche Entwicklung</name>
     <url>
-    <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/Fertilitaet/de/Startseite</webBaseUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/Fertilitaet/de/Startseite</dataUrl>
+      <webBaseUrl>http://www.bbaw.de/forschung/Fertilitaet</webBaseUrl>
+      <dataUrl>http://www.bbaw.de/forschung/Fertilitaet</dataUrl>
       <dataUrl>http://www.zukunft-mit-kindern.eu/</dataUrl>
       
       <!-- Why have birth rates dropped? For medical reasons? -->
