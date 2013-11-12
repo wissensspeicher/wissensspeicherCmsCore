@@ -3,6 +3,8 @@ package org.bbaw.wsp.cms.collections;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
@@ -12,6 +14,7 @@ import net.sf.saxon.s9api.XdmSequenceIterator;
 import net.sf.saxon.s9api.XdmValue;
 
 import org.apache.log4j.Logger;
+import org.bbaw.wsp.cms.document.Facet;
 import org.bbaw.wsp.cms.document.XQuery;
 import org.bbaw.wsp.cms.general.Constants;
 
@@ -46,6 +49,12 @@ public class CollectionReader {
 			for (Collection collection : values) {
 				collections.add(collection);
 			}
+	    Comparator<Collection> collectionComparator = new Comparator<Collection>() {
+	      public int compare(Collection c1, Collection c2) {
+	        return c1.getId().compareTo(c2.getId());
+	      }
+	    };
+	    Collections.sort(collections, collectionComparator);
 		}
 		return collections;
 	}
