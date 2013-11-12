@@ -5,9 +5,9 @@
     <rdfId>http://wsp.normdata.rdf/AltaegyptWB/Erbkam</rdfId>
     <name>Georg Gustav Erbkam: Tagebuch meiner egyptischen Reise</name>
     <url>
-      <webBaseUrl>http://aaew.bbaw.de/dateien/weitere%20archive/erbkam/Erbkam.html</webBaseUrl>
+      <webBaseUrl>http://aaew.bbaw.de/archive/erbkam-tagebuch</webBaseUrl>
       <!-- Homepages -->
-      <dataUrl>http://aaew.bbaw.de/dateien/weitere%20archive/erbkam/Erbkam.html</dataUrl>
+      <dataUrl>http://aaew.bbaw.de/archive/erbkam-tagebuch</dataUrl>
       <dataUrl>http://telota.bbaw.de/erbkam/</dataUrl>
       <!-- XML-Texte -->
       <dataUrl type="eXistDir">http://telota.bbaw.de:8088/exist/servlet/db/aaew/erbkam</dataUrl>
