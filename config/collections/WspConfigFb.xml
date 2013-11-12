@@ -5,8 +5,8 @@
     <rdfId>http://wsp.normdata.rdf/FunktionenBewusstsein</rdfId>
     <name>Funktionen des Bewußtseins</name>
     <url>
-    	<webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/Bewusstsein/de/Startseite</webBaseUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/Bewusstsein/de/Startseite</dataUrl>
+    	<webBaseUrl>http://bewusstsein.bbaw.de/</webBaseUrl>
+      <dataUrl>http://bewusstsein.bbaw.de/</dataUrl>
     </url>
     <mainLanguage>ger</mainLanguage>
     <formats>

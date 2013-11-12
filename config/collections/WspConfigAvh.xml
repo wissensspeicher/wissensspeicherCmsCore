@@ -5,8 +5,8 @@
     <rdfId>http://wsp.normdata.rdf/AvHForschungsstelle</rdfId>
     <name>Alexander von Humboldt Forschungsstelle</name>
     <url>
-      <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/avh/de/Startseite</webBaseUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/avh/de/Startseite</dataUrl>
+      <webBaseUrl>http://avh.bbaw.de/</webBaseUrl>
+      <dataUrl>http://avh.bbaw.de/</dataUrl>
     </url>
     <languages>ger,lat,fra,eng</languages>
     <mainLanguage>ger</mainLanguage>

@@ -83,10 +83,5 @@ GROUP BY tits.title_id
     </metadata>
     <languages>ger,lat,fra,eng</languages>
     <mainLanguage>ger</mainLanguage>
-    <formats>
-      <format>html</format>
-      <format>php</format>
-    </formats>
-    <update>false</update>
   </collection>
 </wsp>

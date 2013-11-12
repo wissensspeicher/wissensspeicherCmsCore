@@ -5,8 +5,8 @@
     <rdfId>http://wsp.normdata.rdf/AvHForschungsstelle/Chronologie</rdfId>   
     <name>Alexander von Humboldt Forschungsstelle: Alexander von Humboldt Chronologie</name>
     <url>
-      <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/avh/de/Blanko.2004-12-14.3730549301</webBaseUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/avh/de/Blanko.2004-12-14.3730549301</dataUrl>
+      <webBaseUrl>http://avh.bbaw.de/chronologie</webBaseUrl>
+      <dataUrl>http://avh.bbaw.de/chronologie</dataUrl>
     </url>
     <languages>ger,lat,fra,eng</languages>
     <mainLanguage>ger</mainLanguage>

@@ -5,8 +5,8 @@
     <rdfId>http://wsp.normdata.rdf/DTM</rdfId>
     <name>Deutsche Texte des Mittelalters</name>
     <url>
-      <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/dtm/de/Startseite</webBaseUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/dtm/de/Startseite</dataUrl>
+      <webBaseUrl>http://dtm.bbaw.de/</webBaseUrl>
+      <dataUrl>http://dtm.bbaw.de/</dataUrl>
     </url>
     <languages>ger</languages>
     <mainLanguage>ger</mainLanguage>

@@ -5,8 +5,8 @@
     <rdfId>http://wsp.normdata.rdf/DTM/Editionsbericht</rdfId>
     <name>Deutsche Texte des Mittelalters: Editionsbericht</name>
     <url>
-      <webBaseUrl>http://dtm.bbaw.de/E_Bericht/Editionsbericht-internet.html</webBaseUrl>
-      <dataUrl>http://dtm.bbaw.de/E_Bericht/Editionsbericht-internet.html</dataUrl>
+      <webBaseUrl>http://www.handschriftencensus.de/editionsbericht/</webBaseUrl>
+      <dataUrl>http://www.handschriftencensus.de/editionsbericht/</dataUrl>
     </url>
     <languages>ger</languages>
     <mainLanguage>ger</mainLanguage>

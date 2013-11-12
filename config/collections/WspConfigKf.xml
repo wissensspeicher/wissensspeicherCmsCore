@@ -5,9 +5,10 @@
     <rdfId>http://wsp.normdata.rdf/KlinischeForschungPopulation</rdfId>
     <name>Klinische Forschung in vulnerablen Populationen</name>
     <url>
-      <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/kfvp/de/Startseite</webBaseUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/kfvp/de/Startseite</dataUrl>
-      <dataUrl>http://www.ea-aw.de/fileadmin/downloads/Graue_Reihe/GR_46_ClinicalResearchInMinors_112008.pdf</dataUrl>
+      <webBaseUrl>http://www.bbaw.de/forschung/kfvp</webBaseUrl>
+      <dataUrl>http://www.bbaw.de/forschung/kfvp</dataUrl>
+      <dataUrl>http://kfvp.bbaw.de/</dataUrl>
+      <dataUrl>http://www.ea-aw.de/publikationen/graue-reihe.html</dataUrl>
     </url>
     <mainLanguage>ger</mainLanguage>
     <formats>

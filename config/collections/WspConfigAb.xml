@@ -5,14 +5,15 @@
     <rdfId>http://wsp.normdata.rdf/PreussenAlsKulturstaat</rdfId>
     <name>Protokolle des Preußischen Staatsministeriums Acta Borussica</name>
     <url>
-    	<webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/actaborussica/de/Startseite/</webBaseUrl>
-      <dataUrl> http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/actaborussica/de/Startseite/</dataUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/actaborussica/de/Projektbericht</dataUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/actaborussica/de/Projektbericht%202005</dataUrl>
-    	<dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/actaborussica/de/Projektbericht%202006</dataUrl>
-    	<dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/actaborussica/de/blanko.2009-01-12.7288943857</dataUrl>
-    	<dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/actaborussica/de/blanko.2009-06-30.5311768302</dataUrl>
-    	<dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/actaborussica/de/blanko.2011-04-11.3959427800</dataUrl>
+    	<webBaseUrl>http://actaborussica.bbaw.de/</webBaseUrl>
+      <dataUrl>http://actaborussica.bbaw.de/</dataUrl>
+      <dataUrl>http://actaborussica.bbaw.de/ueberblick</dataUrl>
+      <dataUrl>http://actaborussica.bbaw.de/projektberichte/projektbericht-2004</dataUrl>
+      <dataUrl>http://actaborussica.bbaw.de/projektberichte/projektbericht-2005</dataUrl>
+      <dataUrl>http://actaborussica.bbaw.de/projektberichte/projektbericht-2006</dataUrl>
+      <dataUrl>http://actaborussica.bbaw.de/projektberichte/projektbericht-2007</dataUrl>
+      <dataUrl>http://actaborussica.bbaw.de/projektberichte/projektbericht-2008</dataUrl>
+      <dataUrl>http://actaborussica.bbaw.de/projektberichte/projektbericht-2009</dataUrl>
     </url>
     <mainLanguage>ger</mainLanguage>
     <formats>

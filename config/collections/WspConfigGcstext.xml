@@ -5,8 +5,8 @@
     <rdfId>http://wsp.normdata.rdf/GriechischChristlichSchriftsteller/Text</rdfId>
     <name>GCS-Texte zum Download</name>
     <url>
-      <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/de/blanko.2005-08-13.0693530036</webBaseUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/de/blanko.2005-08-13.0693530036</dataUrl>       
+      <webBaseUrl>http://gcs.bbaw.de/gcs-texte-zum-download</webBaseUrl>
+      <dataUrl>http://gcs.bbaw.de/gcs-texte-zum-download</dataUrl>       
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/ProkopOnline.pdf</dataUrl>
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/anonyme_kirchengeschichte.pdf</dataUrl>
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/daniel.pdf</dataUrl>

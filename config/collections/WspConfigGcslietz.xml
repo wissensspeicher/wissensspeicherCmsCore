@@ -5,8 +5,9 @@
     <rdfId>http://wsp.normdata.rdf/GriechischChristlichSchriftsteller/Lietzmann</rdfId>
     <name>GCS: Hans Lietzmann Vorlesung</name>
     <url>
-      <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/de/blanko.2005-11-04.9010533261</webBaseUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/sHLV.pdf</dataUrl>
+      <webBaseUrl>http://gcs.bbaw.de/hans-lietzmann-vorlesung</webBaseUrl>
+      <dataUrl>http://gcs.bbaw.de/hans-lietzmann-vorlesung</dataUrl>
+      <dataUrl>http://gcs.bbaw.de/bilder/shlv.pdf</dataUrl>
     </url>
     <mainLanguage>ger</mainLanguage>
     <formats>

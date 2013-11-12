@@ -7,7 +7,6 @@
     <url>
       <webBaseUrl>http://www.bbaw.de/forschung/dtm/HSA/startseite-hsa.html</webBaseUrl>
       <dataUrl>http://www.bbaw.de/forschung/dtm/HSA/startseite-hsa.html</dataUrl>
-      <dataUrl>http://telota.bbaw.de/dtm/search.html</dataUrl>
 
       <!-- XML-Texte -->
       <!-- folgendes eXist-verzeichnis ist problematisch, da es sehr viele singles gibt und sie keine Resourcen darstellen -->

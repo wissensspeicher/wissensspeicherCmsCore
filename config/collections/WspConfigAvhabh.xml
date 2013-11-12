@@ -5,8 +5,8 @@
     <rdfId>http://wsp.normdata.rdf/AlternGesellschaft/BASE</rdfId>   
     <name>Alexander von Humboldt Forschungsstelle: Abhandlungen</name>
     <url>
-      <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/avh/de/blanko.2006-09-05.1987595560</webBaseUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/avh/de/blanko.2006-09-05.1987595560</dataUrl>
+      <webBaseUrl>http://avh.bbaw.de/publikationen/digitale-veroeffentlichungen/abhandlungen-nach-vortraegen-an-der-koeniglich-preussischen-akademie-der-wissenschaften-zu-berlin</webBaseUrl>
+      <dataUrl>http://avh.bbaw.de/publikationen/digitale-veroeffentlichungen/abhandlungen-nach-vortraegen-an-der-koeniglich-preussischen-akademie-der-wissenschaften-zu-berlin</dataUrl>
       <!--  Abhandlungen -->
       <dataUrl type="eXistDir">http://telota.bbaw.de:8088/exist/servlet/db/avh/</dataUrl>
       <exclude>pages</exclude>
