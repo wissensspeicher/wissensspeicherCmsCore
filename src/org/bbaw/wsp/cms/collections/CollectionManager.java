@@ -28,6 +28,7 @@ import org.bbaw.wsp.cms.document.XQuery;
 import org.bbaw.wsp.cms.scheduler.CmsDocOperation;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
+import de.mpg.mpiwg.berlin.mpdl.lt.general.Language;
 import de.mpg.mpiwg.berlin.mpdl.util.StringUtils;
 import de.mpg.mpiwg.berlin.mpdl.util.Util;
 import de.mpg.mpiwg.berlin.mpdl.xml.xquery.XQueryEvaluator;
@@ -192,6 +193,10 @@ public class CollectionManager {
             String webUri = null;
             if (collectionId.equals("edoc")) {
               EdocIndexMetadataFetcherTool.fetchHtmlDirectly(metadataUrl, mdRecord);
+              if (mdRecord.getLanguage() != null) {
+                String isoLang = Language.getInstance().getISO639Code(mdRecord.getLanguage());
+                mdRecord.setLanguage(isoLang);
+              }
               String httpEdocUrl = mdRecord.getRealDocUrl();
               String uriEdoc = mdRecord.getUri();  // e.g.: http://edoc.bbaw.de/volltexte/2009/1070/
               if (httpEdocUrl != null) {             
@@ -217,8 +222,10 @@ public class CollectionManager {
               mdRecord.setWebUri(webUri);
               if (mdRecord.getCollectionNames() == null)
                 mdRecord.setCollectionNames(collectionId);
-              String mainLanguage = collection.getMainLanguage();
-              mdRecord.setLanguage(mainLanguage);
+              if (mdRecord.getLanguage() == null) {
+                String mainLanguage = collection.getMainLanguage();
+                mdRecord.setLanguage(mainLanguage);
+              }
               mdRecord.setSchemaName(null);
               mdRecord.setxQueries(xQueries);
               mdRecords.add(mdRecord);
