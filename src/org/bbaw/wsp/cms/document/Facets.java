@@ -14,8 +14,8 @@ import org.json.simple.JSONObject;
 
 import de.mpg.mpiwg.berlin.mpdl.util.StringUtils;
 
-public class Facets {
-  private Hashtable<String, Facet> facets;
+public class Facets implements Iterable<Facet> {
+  protected Hashtable<String, Facet> facets;
 
   public Facets(List<FacetResult> facetResults) {
     for (int i=0; i<facetResults.size(); i++) {
@@ -157,5 +157,10 @@ public class Facets {
     }
     return retJsonObject;
   }
+
+	@Override
+	public Iterator<Facet> iterator() {
+		return facets.values().iterator();
+	}
 
 }
