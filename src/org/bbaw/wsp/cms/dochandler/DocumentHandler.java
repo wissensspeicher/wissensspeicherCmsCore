@@ -908,6 +908,11 @@ public class DocumentHandler {
       fileName = fileName.toLowerCase();
       FileNameMap fileNameMap = URLConnection.getFileNameMap();
       mimeType = fileNameMap.getContentTypeFor(fileName);
+      if (mimeType == null) {
+        // Microsoft word .doc is not in the fileNameMap
+        if (fileName.endsWith(".doc"))
+          mimeType = "application/msword";
+      }
     }
     return mimeType;
   }
