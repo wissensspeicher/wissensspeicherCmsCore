@@ -3,6 +3,7 @@ package org.bbaw.wsp.cms.test.clusterer;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.lucene.facet.search.results.FacetResult;
@@ -99,7 +100,9 @@ public class YearClustererTest {
 
 	@Test
 	public void testYearClusteringList() {
+		long beginningTime = new Date().getTime();
 		List<FacetValue> resultingValues = this.yearClusterer.clusterYears(this.facetsMock);
+		long endingTime = new Date().getTime();
 		int i = 0;
 		for (FacetValue expectedValue : this.getExpectedResultData()) {
 			FacetValue resultingValue = resultingValues.get(i);
@@ -107,6 +110,10 @@ public class YearClustererTest {
 			assertEquals(expectedValue.getValue(), resultingValue.getValue());
 			i++;
 		}
+		
+		// assert execution time of less than 1 second
+		long elapsedTime = endingTime - beginningTime;
+		assertTrue( elapsedTime < 1000);
 		
 	}
 }

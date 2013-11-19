@@ -33,7 +33,7 @@ public class YearClusterer {
 		List<Facet> yearFacets = this.yearMapper.filterYears(facets);		
 					
 		List<List<FacetValue>> resultingClusters = performClustering(yearFacets.get(0));
-		List<FacetValue> mergedFacetValues = mergeClusters(resultingClusters);
+		List<FacetValue> mergedFacetValues = mergeClusters(resultingClusters, this.yearMapper.getOuttakenFacetValues());
 		System.out.println(resultingClusters);
 		System.out.println(mergedFacetValues);
 		
@@ -44,10 +44,11 @@ public class YearClusterer {
 	/**
 	 * Merge the resulting clusters.
 	 * @param resultingClusters the {@link List} in which the elements are {@link List} of {@link FacetValue} 
+	 * @param excludedValues a {@link List} of {@link FacetValue} which where excluded from the clustering.
 	 * @return 
 	 */
 	private List<FacetValue> mergeClusters(
-			List<List<FacetValue>> resultingClusters) {
+			List<List<FacetValue>> resultingClusters, List<FacetValue> excludedValues) {
 		List<FacetValue> mergedFacetValues = new ArrayList<FacetValue>();
 		
 		for (List<FacetValue> cluster : resultingClusters) {
@@ -62,6 +63,9 @@ public class YearClusterer {
 				mergedFacetValues.add(cluster.get(0));
 			}
 		}
+		// append excluded facet values
+		mergedFacetValues.addAll(excludedValues);
+		
 		return mergedFacetValues;
 	}
 
