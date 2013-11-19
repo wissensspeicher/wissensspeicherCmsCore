@@ -305,6 +305,14 @@ public class CollectionManager {
           }
           String docId = "/" + collectionId + uriPath;
           String mimeType = getMimeType(docId);
+          if (mimeType == null) {  // last chance: try it with tika
+            try {
+              mimeType = tika.detect(uri);
+            } catch (IOException e) {
+              LOGGER.error("get mime type failed for: " + docUrl);
+              e.printStackTrace();
+            }
+          }
           mdRecord.setType(mimeType);
           mdRecord.setDocId(docId);
           mdRecord.setUri(docUrl);
