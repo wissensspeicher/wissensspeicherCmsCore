@@ -6,6 +6,7 @@ package org.bbaw.wsp.cms.test.clusterer;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.lucene.facet.search.results.FacetResult;
 import org.bbaw.wsp.cms.document.Facet;
@@ -30,16 +31,16 @@ public class FacetsMock extends Facets {
 	
 	/**
 	 * Fill the facets with the given test data.
-	 * @param years a {@link List} of String. Each entry is a year.
+	 * @param map.keySet() a {@link List} of String. Each entry is a year.
 	 */
-	public void fillWithYears(List<String> years) {
+	public void fillWithYears(Map<String, Integer> map) {
 		facets = new Hashtable<String, Facet>();
 		
 		ArrayList<FacetValue> facetValues = new ArrayList<FacetValue>();
 		
-		for (String year : years) {
+		for (String year : map.keySet()) {
 			FacetValue facetValue = new FacetValue();
-			facetValue.setCount(1);
+			facetValue.setCount(map.get(year));
 			facetValue.setName(YearMapper.FACET_DATE);
 			facetValue.setValue(year);
 			

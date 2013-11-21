@@ -4,7 +4,9 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.lucene.facet.search.results.FacetResult;
 import org.bbaw.wsp.cms.document.FacetValue;
@@ -51,28 +53,30 @@ public class YearClustererTest {
 	 * Get the test data to be used as FacetValues.
 	 * @return
 	 */
-	protected List<String> getTestData() {
-		List<String> testList = new ArrayList<String>();
+	protected Map<String, Integer> getTestData() {
+		Map<String, Integer> testMap = new HashMap<String, Integer>();
 		
 		// prepend invalid values
-		testList.add("19. Jahrhundert");
-		testList.add("20th century");
+		testMap.put("19. Jahrhundert", 1);
+		testMap.put("20th century", 1);
 		
-		testList.add("2010");
-		testList.add("2011");
-		testList.add("2007");
-		testList.add("2006");
-		testList.add("unbekannt");
-		testList.add("2009");
-		testList.add("2012");
-		testList.add("2008");
-		testList.add("1893");
-		testList.add("1894");
+		testMap.put("2010", 406);
+		testMap.put("2011", 334);
+		testMap.put("2007", 173);
+		testMap.put("2006", 107);
+		testMap.put("unbekannt", 102);
+		testMap.put("2009", 83);
+		testMap.put("2012", 31);
+		testMap.put("2008", 24);
+		testMap.put("1920", 2);
+		testMap.put("1940", 3);
+		testMap.put("1893", 7);
+		testMap.put("1894", 5);
 		
 		// append invalid values
-		testList.add("20. Jahrhundert");
+		testMap.put("20. Jahrhundert", 1);
 		
-		return testList;
+		return testMap;
 	}
 	
 	/**
@@ -84,16 +88,22 @@ public class YearClustererTest {
 		FacetValue expectedValue = new FacetValue();
 		
 		expectedValue = new FacetValue();
-		expectedValue.setCount(2);
+		expectedValue.setCount(17);
 		expectedValue.setName(YearMapper.FACET_DATE);
-		expectedValue.setValue("1893 - 1894");
+		expectedValue.setValue("1893 - 1940");
 		expectedList.add(expectedValue );
 		
 		expectedValue = new FacetValue();
-		expectedValue.setCount(2);
+		expectedValue.setCount(1158);
 		expectedValue.setName(YearMapper.FACET_DATE);
 		expectedValue.setValue("2006 - 2012");
 		expectedList.add(expectedValue );				
+		
+		expectedValue = new FacetValue();
+		expectedValue.setCount(102);
+		expectedValue.setName(YearMapper.FACET_DATE);
+		expectedValue.setValue("unbekannt");
+		expectedList.add(expectedValue );
 		
 		expectedValue = new FacetValue();
 		expectedValue.setCount(1);
@@ -104,20 +114,14 @@ public class YearClustererTest {
 		expectedValue = new FacetValue();
 		expectedValue.setCount(1);
 		expectedValue.setName(YearMapper.FACET_DATE);
-		expectedValue.setValue("20th century");
-		expectedList.add(expectedValue );
-		
-		expectedValue = new FacetValue();
-		expectedValue.setCount(1);
-		expectedValue.setName(YearMapper.FACET_DATE);
-		expectedValue.setValue("unbekannt");
-		expectedList.add(expectedValue );
-		
-		expectedValue = new FacetValue();
-		expectedValue.setCount(1);
-		expectedValue.setName(YearMapper.FACET_DATE);
 		expectedValue.setValue("20. Jahrhundert");
 		expectedList.add(expectedValue );
+		
+		expectedValue = new FacetValue();
+		expectedValue.setCount(1);
+		expectedValue.setName(YearMapper.FACET_DATE);
+		expectedValue.setValue("20th century");
+		expectedList.add(expectedValue );		
 		
 		return expectedList;
 	}
@@ -133,7 +137,10 @@ public class YearClustererTest {
 	@Test
 	public void testYearClusteringList() {
 		long beginningTime = new Date().getTime();
+		System.out.println("Input Facets: " + this.facetsMock);
 		List<FacetValue> resultingValues = this.yearClusterer.clusterYears(this.facetsMock, 10);
+		System.out.println("resulting clusters (List of FacetValue): " + resultingValues);
+		
 		long endingTime = new Date().getTime();
 		int i = 0;
 		for (FacetValue expectedValue : this.getExpectedResultData()) {
@@ -141,7 +148,7 @@ public class YearClustererTest {
 			
 			assertEquals(expectedValue.getValue(), resultingValue.getValue());
 			i++;
-		}
+		}		
 		
 		// assert execution time of less than 1 second
 		long elapsedTime = endingTime - beginningTime;
