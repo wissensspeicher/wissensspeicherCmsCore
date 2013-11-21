@@ -31,6 +31,8 @@ public class YearMapper {
 	 * @return the corrected year facet
 	 */
 	public FacetValue mapYear(FacetValue yearFacet) {
+		String modifiedValue = yearFacet.getValue().trim();
+		yearFacet.setValue(modifiedValue );
 		return yearFacet;
 	}
 
