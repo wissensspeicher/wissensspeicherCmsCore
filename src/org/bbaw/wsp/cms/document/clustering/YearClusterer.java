@@ -33,7 +33,7 @@ public class YearClusterer {
 		List<Facet> yearFacets = this.yearMapper.filterYears(facets);		
 					
 		List<List<FacetValue>> resultingClusters = performClustering(yearFacets.get(0));
-		List<FacetValue> mergedFacetValues = mergeClusters(resultingClusters, this.yearMapper.getOuttakenFacetValues());
+		List<FacetValue> mergedFacetValues = mergeClusters(resultingClusters, this.yearMapper.getExcludedFacetValues());
 		System.out.println(resultingClusters);
 		System.out.println(mergedFacetValues);
 		
@@ -69,6 +69,13 @@ public class YearClusterer {
 		return mergedFacetValues;
 	}
 
+	/**
+	 * Concatenante the clusters' values.
+	 * The concatenated String will be:
+	 * "minimumYear - maximumYear" (within the builded cluster)
+	 * @param cluster
+	 * @return
+	 */
 	private String getClusterConcatValue(List<FacetValue> cluster) {		
 		int minVal = Integer.parseInt(cluster.get(0).getValue());
 		int maxVal = Integer.parseInt(cluster.get(0).getValue());
@@ -87,6 +94,11 @@ public class YearClusterer {
 		return newConcatValue;
 	}
 
+	/**
+	 * Calculate the new sum for the clusters' count values.
+	 * @param cluster
+	 * @return
+	 */
 	private Integer getClusterCountSum(List<FacetValue> cluster) {
 		int sum = 0;
 		
@@ -97,6 +109,11 @@ public class YearClusterer {
 		return sum;
 	}
 
+	/**
+	 * Perform the clustering process for a given {@link Facet}.
+	 * @param facet
+	 * @return
+	 */
 	private List<List<FacetValue>> performClustering(Facet facet) {
 		List<List<FacetValue>> clusterList = new ArrayList<List<FacetValue>>();
 		List<FacetValue> facetValuesCopy = new ArrayList<>(facet.getValues());
@@ -108,6 +125,13 @@ public class YearClusterer {
 		return clusterList;				
 	}
 
+	/**
+	 * Build a cluster for all {@link FacetValue}.
+	 * It's neccessary to use a copy of the given {@link List} for the comparison of the values.
+	 * @param referenceValue
+	 * @param facetValuesCopy
+	 * @param clusterList
+	 */
 	private void buildCluster(FacetValue referenceValue,
 			List<FacetValue> facetValuesCopy, List<List<FacetValue>> clusterList) {
 		if (isInCluster(referenceValue, clusterList)) {
@@ -130,6 +154,12 @@ public class YearClusterer {
 		}
 	}
 
+	/**
+	 * Distance function which compares two {@link FacetValue}s and decides if they belong to the same cluster.
+	 * @param referenceValue
+	 * @param facetValueCopy
+	 * @return
+	 */
 	private boolean hasCloseDistance(FacetValue referenceValue,
 			FacetValue facetValueCopy) {
 		int referenceValueInt = Integer.parseInt(referenceValue.getValue());
@@ -140,6 +170,13 @@ public class YearClusterer {
 		return false;
 	}
 
+	/**
+	 * Check if a given {@link FacetValue} is already contained in a cluster.
+	 * This is checked to avoid overlapping.
+	 * @param facetValueCopy
+	 * @param clusterList
+	 * @return
+	 */
 	private boolean isInCluster(FacetValue facetValueCopy,
 			List<List<FacetValue>> clusterList) {
 		for (List<FacetValue> list : clusterList) {

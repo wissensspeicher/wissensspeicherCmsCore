@@ -54,11 +54,18 @@ public class YearClustererTest {
 	protected List<String> getTestData() {
 		List<String> testList = new ArrayList<String>();
 		
+		// prepend invalid values
+		testList.add("19. Jahrhundert");
+		testList.add("20th century");
+		
 		testList.add("1933");
 		testList.add("1905");
 		testList.add("1914");
 		testList.add("1921");
 		testList.add("1928");
+		
+		// append invalid values
+		testList.add("20. Jahrhundert");
 		
 		return testList;
 	}
@@ -85,6 +92,24 @@ public class YearClustererTest {
 		expectedValue.setCount(1);
 		expectedValue.setName(YearMapper.FACET_DATE);
 		expectedValue.setValue("1921");
+		expectedList.add(expectedValue );
+		
+		expectedValue = new FacetValue();
+		expectedValue.setCount(1);
+		expectedValue.setName(YearMapper.FACET_DATE);
+		expectedValue.setValue("19. Jahrhundert");
+		expectedList.add(expectedValue );
+		
+		expectedValue = new FacetValue();
+		expectedValue.setCount(1);
+		expectedValue.setName(YearMapper.FACET_DATE);
+		expectedValue.setValue("20th century");
+		expectedList.add(expectedValue );
+		
+		expectedValue = new FacetValue();
+		expectedValue.setCount(1);
+		expectedValue.setName(YearMapper.FACET_DATE);
+		expectedValue.setValue("20. Jahrhundert");
 		expectedList.add(expectedValue );
 		
 		return expectedList;
