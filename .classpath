@@ -56,5 +56,6 @@
 	<classpathentry kind="lib" path="lib/mysql-connector-java-5.0.8-bin.jar"/>
 	<classpathentry kind="lib" path="lib/lucene-spellchecker-3.5.0.jar"/>
 	<classpathentry kind="lib" path="lib/tika-1.2-poi.jar"/>
+	<classpathentry kind="lib" path="lib/org.hamcrest.core_1.1.0.v20090501071000.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
