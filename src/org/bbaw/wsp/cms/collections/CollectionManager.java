@@ -274,7 +274,7 @@ public class CollectionManager {
             uriPath = uriPath.substring(prefix.length());
           }
           // no file with extension (such as a.xml or b.pdf) but a directory: then a special default file-name is used in docId
-          if (! uriPath.toLowerCase().matches(".*\\.csv$|.*\\.gif$|.*\\.jpg$|.*\\.jpeg$|.*\\.html$|.*\\.htm$|.*\\.log$|.*\\.mp3$|.*\\.pdf$|.*\\.txt$|.*\\.xml$")) {
+          if (! uriPath.toLowerCase().matches(".*\\.csv$|.*\\.gif$|.*\\.jpg$|.*\\.jpeg$|.*\\.html$|.*\\.htm$|.*\\.log$|.*\\.mp3$|.*\\.pdf$|.*\\.txt$|.*\\.xml$|.*\\.doc$")) {
             String mimeType = null;
             try {
               mimeType = tika.detect(uri); // much faster with tika
@@ -305,6 +305,14 @@ public class CollectionManager {
           }
           String docId = "/" + collectionId + uriPath;
           String mimeType = getMimeType(docId);
+          if (mimeType == null) {  // last chance: try it with tika
+            try {
+              mimeType = tika.detect(uri);
+            } catch (IOException e) {
+              LOGGER.error("get mime type failed for: " + docUrl);
+              e.printStackTrace();
+            }
+          }
           mdRecord.setType(mimeType);
           mdRecord.setDocId(docId);
           mdRecord.setUri(docUrl);
