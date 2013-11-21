@@ -58,11 +58,16 @@ public class YearClustererTest {
 		testList.add("19. Jahrhundert");
 		testList.add("20th century");
 		
-		testList.add("1933");
-		testList.add("1905");
-		testList.add("1914");
-		testList.add("1921");
-		testList.add("1928");
+		testList.add("2010");
+		testList.add("2011");
+		testList.add("2007");
+		testList.add("2006");
+		testList.add("unbekannt");
+		testList.add("2009");
+		testList.add("2012");
+		testList.add("2008");
+		testList.add("1893");
+		testList.add("1894");
 		
 		// append invalid values
 		testList.add("20. Jahrhundert");
@@ -77,22 +82,18 @@ public class YearClustererTest {
 	protected List<FacetValue> getExpectedResultData() {
 		List<FacetValue> expectedList = new ArrayList<FacetValue>();
 		FacetValue expectedValue = new FacetValue();
+		
+		expectedValue = new FacetValue();
 		expectedValue.setCount(2);
 		expectedValue.setName(YearMapper.FACET_DATE);
-		expectedValue.setValue("1928 - 1933");
+		expectedValue.setValue("1893 - 1894");
 		expectedList.add(expectedValue );
 		
 		expectedValue = new FacetValue();
 		expectedValue.setCount(2);
 		expectedValue.setName(YearMapper.FACET_DATE);
-		expectedValue.setValue("1905 - 1914");
-		expectedList.add(expectedValue );
-		
-		expectedValue = new FacetValue();
-		expectedValue.setCount(1);
-		expectedValue.setName(YearMapper.FACET_DATE);
-		expectedValue.setValue("1921");
-		expectedList.add(expectedValue );
+		expectedValue.setValue("2006 - 2012");
+		expectedList.add(expectedValue );				
 		
 		expectedValue = new FacetValue();
 		expectedValue.setCount(1);
@@ -104,6 +105,12 @@ public class YearClustererTest {
 		expectedValue.setCount(1);
 		expectedValue.setName(YearMapper.FACET_DATE);
 		expectedValue.setValue("20th century");
+		expectedList.add(expectedValue );
+		
+		expectedValue = new FacetValue();
+		expectedValue.setCount(1);
+		expectedValue.setName(YearMapper.FACET_DATE);
+		expectedValue.setValue("unbekannt");
 		expectedList.add(expectedValue );
 		
 		expectedValue = new FacetValue();
@@ -126,7 +133,7 @@ public class YearClustererTest {
 	@Test
 	public void testYearClusteringList() {
 		long beginningTime = new Date().getTime();
-		List<FacetValue> resultingValues = this.yearClusterer.clusterYears(this.facetsMock);
+		List<FacetValue> resultingValues = this.yearClusterer.clusterYears(this.facetsMock, 10);
 		long endingTime = new Date().getTime();
 		int i = 0;
 		for (FacetValue expectedValue : this.getExpectedResultData()) {

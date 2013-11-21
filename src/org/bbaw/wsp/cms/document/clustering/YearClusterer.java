@@ -4,6 +4,8 @@
 package org.bbaw.wsp.cms.document.clustering;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.bbaw.wsp.cms.document.Facet;
@@ -18,6 +20,7 @@ import org.bbaw.wsp.cms.document.Facets;
  */
 public class YearClusterer {
 	protected static final int DISTANCE = 10;
+	protected int clusterDistance;
 	protected YearMapper yearMapper;
 	
 	public YearClusterer() {
@@ -25,12 +28,37 @@ public class YearClusterer {
 	}
 	
 	/**
+	 * Get the cluster distance.
+	 * @return
+	 */
+	protected int getClusterDistance() {
+		return clusterDistance;
+	}
+
+	/**
+	 * Set the cluster distance.
+	 * @see clusterYears for a detailed description.
+	 * @param clusterDistance
+	 */
+	protected void setClusterDistance(int clusterDistance) {
+		this.clusterDistance = clusterDistance;
+	}
+	
+	/**
 	 * Create a cluster for the facet containing the years.
+	 * This algorithm uses reference values to determine if other elements belong to the same cluster.
+	 * The distance function realizes a "Complete Linkage" condition.
 	 * @param facets
+	 * @param clusterDistance {@link Integer} the maximum (arithmetic) distance between each element of a cluster. 
+	 * For example: a cluster distance of 10 would result in a valid cluster: (1910,1912,1915,1920)  
 	 * @return a list of {@link FacetValue}
 	 */
-	public List<FacetValue> clusterYears(Facets facets) {
-		List<Facet> yearFacets = this.yearMapper.filterYears(facets);		
+	public List<FacetValue> clusterYears(Facets facets, int clusterDistance) {
+		// set the cluster distance first
+		this.setClusterDistance(clusterDistance);
+		
+		List<Facet> yearFacets = this.yearMapper.filterYears(facets);	
+		this.sortYearValues(yearFacets);
 					
 		List<List<FacetValue>> resultingClusters = performClustering(yearFacets.get(0));
 		List<FacetValue> mergedFacetValues = mergeClusters(resultingClusters, this.yearMapper.getExcludedFacetValues());
@@ -39,6 +67,31 @@ public class YearClusterer {
 		
 		
 		return mergedFacetValues;		
+	}
+
+	/**
+	 * Sort the filtered years ascending.
+	 * @param yearFacets
+	 */
+	protected void sortYearValues(List<Facet> yearFacets) { 
+		List<FacetValue> yearValues = yearFacets.get(0).getValues();
+		Comparator<FacetValue> yearComparator = new Comparator<FacetValue>() {
+			@Override
+			public int compare(FacetValue lValue, FacetValue rValue) {
+				// convert for integer comparison
+				int iLValue = Integer.parseInt(lValue.getValue());
+				int iRValue = Integer.parseInt(rValue.getValue());
+				
+				if (iLValue < iRValue ) {
+					return -1;
+				}
+				if (iLValue > iRValue) {
+					return 1;
+				}
+				return 0; // iLValue == iRvalue
+			}
+		};
+		Collections.sort(yearValues, yearComparator);
 	}
 
 	/**
@@ -164,7 +217,7 @@ public class YearClusterer {
 			FacetValue facetValueCopy) {
 		int referenceValueInt = Integer.parseInt(referenceValue.getValue());
 		int facetValueCopyInt = Integer.parseInt(facetValueCopy.getValue());
-		if ( Math.abs( referenceValueInt - facetValueCopyInt ) < DISTANCE) {
+		if ( Math.abs( referenceValueInt - facetValueCopyInt ) < this.getClusterDistance()) {
 			return true;
 		}
 		return false;
