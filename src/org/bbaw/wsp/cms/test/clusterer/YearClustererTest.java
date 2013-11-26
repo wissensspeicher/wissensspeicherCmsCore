@@ -42,6 +42,10 @@ public class YearClustererTest {
 		this.facetsMock.fillWithYears(this.getTestData());
 		
 		this.yearClusterer = new YearClusterer();
+		// set the number of iterations done within the defragmentation
+		this.yearClusterer.setOptimizationCount(3);
+		// set the distance multiplier for fragmented clusters
+		this.yearClusterer.setFragmentDistanceFactor(4);
 	}
 
 	@After
@@ -70,8 +74,17 @@ public class YearClustererTest {
 		testMap.put("2008", 24);
 		testMap.put("1920", 2);
 		testMap.put("1940", 3);
+		testMap.put("1950", 2);
+		testMap.put("1960", 20);
 		testMap.put("1893", 7);
+		testMap.put("1895", 3);
 		testMap.put("1894", 5);
+		testMap.put("1500", 1);
+		testMap.put("1501", 1);
+		testMap.put("1502", 1);
+		testMap.put("1520", 1);
+		testMap.put("1540", 1);
+		testMap.put("1600", 1);
 		
 		// append invalid values
 		testMap.put("20. Jahrhundert", 1);
@@ -88,10 +101,28 @@ public class YearClustererTest {
 		FacetValue expectedValue = new FacetValue();
 		
 		expectedValue = new FacetValue();
+		expectedValue.setCount(5);
+		expectedValue.setName(YearMapper.FACET_DATE);
+		expectedValue.setValue("1500 - 1540");
+		expectedList.add(expectedValue );
+		
+		expectedValue = new FacetValue();
+		expectedValue.setCount(1);
+		expectedValue.setName(YearMapper.FACET_DATE);
+		expectedValue.setValue("1600");
+		expectedList.add(expectedValue );				
+		
+		expectedValue = new FacetValue();
 		expectedValue.setCount(17);
 		expectedValue.setName(YearMapper.FACET_DATE);
-		expectedValue.setValue("1893 - 1940");
-		expectedList.add(expectedValue );
+		expectedValue.setValue("1893 - 1920");
+		expectedList.add(expectedValue );		
+		
+		expectedValue = new FacetValue();
+		expectedValue.setCount(25);
+		expectedValue.setName(YearMapper.FACET_DATE);
+		expectedValue.setValue("1940 - 1960");
+		expectedList.add(expectedValue );				
 		
 		expectedValue = new FacetValue();
 		expectedValue.setCount(1158);

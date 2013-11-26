@@ -48,7 +48,7 @@ public class YearClusterer {
 	 * </p>
 	 * @return
 	 */
-	protected int getOptimizationCount() {
+	public int getOptimizationCount() {
 		return optimizationCount;
 	}
 
@@ -61,7 +61,7 @@ public class YearClusterer {
 	 * </p>
 	 * @param optimizationCount
 	 */
-	protected void setOptimizationCount(int optimizationCount) {
+	public void setOptimizationCount(int optimizationCount) {
 		this.optimizationCount = optimizationCount;
 	}
 
@@ -74,7 +74,7 @@ public class YearClusterer {
 	 * </p>
 	 * @return
 	 */
-	protected int getFragmentDistanceFactor() {
+	public int getFragmentDistanceFactor() {
 		return fragmentDistanceFactor;
 	}
 
@@ -87,7 +87,7 @@ public class YearClusterer {
 	 * </p>
 	 * @param fragmentDistanceFactor
 	 */
-	protected void setFragmentDistanceFactor(int fragmentDistanceFactor) {
+	public void setFragmentDistanceFactor(int fragmentDistanceFactor) {
 		this.fragmentDistanceFactor = fragmentDistanceFactor;
 	}
 
