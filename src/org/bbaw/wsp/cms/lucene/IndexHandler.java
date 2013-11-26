@@ -41,6 +41,7 @@ import org.apache.lucene.index.IndexWriterConfig.OpenMode;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.index.TermEnum;
 import org.apache.lucene.index.TermFreqVector;
+import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.queryParser.QueryParser;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
@@ -92,6 +93,8 @@ import de.mpg.mpiwg.berlin.mpdl.util.Util;
 public class IndexHandler {
   private static IndexHandler instance;
   private static Logger LOGGER = Logger.getLogger(IndexHandler.class);
+  private static final String[] QUERY_EXPANSION_FIELDS_ALL = {"author", "title", "description", "subject", "swd", "ddc", "persons", "places", "tokenOrig"};
+  private static final String[] QUERY_EXPANSION_FIELDS_ALL_MORPH = {"author", "title", "description", "subject", "swd", "ddc", "persons", "places", "tokenMorph"};
   private IndexWriter documentsIndexWriter;
   private IndexWriter nodesIndexWriter;
   private SearcherManager documentsSearcherManager;
@@ -566,7 +569,7 @@ public class IndexHandler {
     int countDeletedDocs = -1;
     try {
       String queryDocumentsByCollectionName = "collectionNames:" + collectionName;
-      Hits collectionDocHits = queryDocuments(queryDocumentsByCollectionName, null, null, 0, 100000, false, false);
+      Hits collectionDocHits = queryDocuments(queryDocumentsByCollectionName, null, null, null, 0, 100000, false, false);
       ArrayList<org.bbaw.wsp.cms.document.Document> collectionDocs = collectionDocHits.getHits();
       if (collectionDocs != null) {
         countDeletedDocs = collectionDocHits.getSize();
@@ -588,7 +591,7 @@ public class IndexHandler {
     return countDeletedDocs;
   }
 
-  public Hits queryDocuments(String queryStr, String[] sortFieldNames, String language, int from, int to, boolean withHitFragments, boolean translate) throws ApplicationException {
+  public Hits queryDocuments(String queryStr, String[] sortFieldNames, String fieldExpansion, String language, int from, int to, boolean withHitFragments, boolean translate) throws ApplicationException {
     Hits hits = null;
     IndexSearcher searcher = null;
     try {
@@ -600,7 +603,7 @@ public class IndexHandler {
       if (queryStr.equals("*")) {
         query = new MatchAllDocsQuery();
       } else {
-        query = queryParser.parse(queryStr);
+        query = buildFieldExpandedQuery(queryParser, queryStr, fieldExpansion);
       }
       Query morphQuery = buildMorphQuery(query, language, false, translate);
       Query highlighterQuery = buildMorphQuery(query, language, true, translate);
@@ -1060,6 +1063,49 @@ public class IndexHandler {
     }
   }
   
+  private Query buildFieldExpandedQuery(QueryParser queryParser, String queryStr, String fieldExpansion) throws ApplicationException {
+    Query retQuery = null;
+    /*
+    Set<Term> queryTerms = new HashSet<Term>();
+    query.extractTerms(queryTerms);
+    // if original query contains fields then the original query is returned
+    if (queryTerms != null && ! queryTerms.isEmpty())
+      return query;
+    */
+    try {
+      if (fieldExpansion != null) {
+        if (fieldExpansion.equals("all")) {
+          BooleanQuery boolQuery = new BooleanQuery();
+          for (int i=0; i < QUERY_EXPANSION_FIELDS_ALL.length; i++) {
+            String expansionField = QUERY_EXPANSION_FIELDS_ALL[i];  // e.g. "author"
+            String expansionFieldQueryStr = expansionField + ":(" + queryStr + ")";
+            Query q = queryParser.parse(expansionFieldQueryStr);
+            boolQuery.add(q, BooleanClause.Occur.SHOULD);
+          }
+          retQuery = boolQuery;
+        } else if (fieldExpansion.equals("allMorph")) {
+          BooleanQuery boolQuery = new BooleanQuery();
+          for (int i=0; i < QUERY_EXPANSION_FIELDS_ALL_MORPH.length; i++) {
+            String expansionField = QUERY_EXPANSION_FIELDS_ALL_MORPH[i];  // e.g. "author"
+            String expansionFieldQueryStr = expansionField + ":(" + queryStr + ")";
+            Query q = queryParser.parse(expansionFieldQueryStr);
+            boolQuery.add(q, BooleanClause.Occur.SHOULD);
+          }
+          retQuery = boolQuery;
+        } else if (fieldExpansion.equals("none")) {
+          Query q = queryParser.parse(queryStr);
+          retQuery = q;
+        }
+      } else {
+        Query q = queryParser.parse(queryStr);
+        retQuery = q;
+      }
+    } catch (ParseException e) {
+      throw new ApplicationException(e);
+    }
+    return retQuery;
+  }
+  
   private Query buildMorphQuery(Query query, String language) throws ApplicationException {
     return buildMorphQuery(query, language, false, false);
   }
@@ -1169,7 +1215,7 @@ public class IndexHandler {
           queryTerms.add(translatedTermQueryInTokenOrig);
         }
       } else {
-        queryTerms.add(inputTermQuery);
+        return inputTermQuery;
       }
       //TODO ?? perhaps other fields should also be queried morphological e.g. title etc.
     }
