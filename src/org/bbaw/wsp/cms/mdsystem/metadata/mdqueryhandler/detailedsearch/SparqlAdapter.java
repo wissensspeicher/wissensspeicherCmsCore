@@ -14,8 +14,10 @@ import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.detailedsearch.RelatedH
 
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
+import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
+import com.hp.hpl.jena.rdf.model.impl.LiteralImpl;
 import com.hp.hpl.jena.rdf.model.impl.ResourceImpl;
 
 /**
@@ -108,17 +110,15 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
    */
   private void handleSolution(final HitGraphContainer container, final QuerySolution solution, final URL namedGraphUrl, final RDFNode pSubject) {
     try {
-      System.out.println("solution : "+solution);
+//      System.out.println("solution : "+solution);
       final URL graphUrl;
       if (namedGraphUrl == null && solution.getResource("g") != null) { // means: sparql query contains the graph name
-        System.out.println("g : ");
         graphUrl = new URL(solution.getResource("g").getURI());
       } else { // means: sparql query was executed on a single named graph -> the graph name is passed as argument
         graphUrl = namedGraphUrl;
       }
       final HitGraph hitGraph;
       if (!container.contains(graphUrl)) { // create new hit graph
-        System.out.println("new hitGraph : ");
         hitGraph = new HitGraph(graphUrl);
         container.addHitRecord(graphUrl, hitGraph);
       } else {
@@ -126,43 +126,78 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
       }
       RDFNode subject = null;
       if (pSubject == null) { // didn't the client pass a subject node?
-        if (solution.getResource("s") != null) {
-          System.out.println("s : ");
-          subject = solution.getResource("s");
+        if (solution.get("s") != null) {
+          subject = solution.get("s");
         }
       } else {
         subject = pSubject;
       }
       RDFNode predicate = null;
-      if (solution.getResource("p") != null) {
-        System.out.println("p : ");
-        predicate = solution.getResource("p");
+      if (solution.get("p") != null) {
+//        logger.info("p : "+solution.getLiteral("p"));
+        predicate = solution.get("p");
       }
       RDFNode literal = null;
       if (solution.getLiteral("lit") != null) {
-        System.out.println("lit : ");
         literal = solution.getLiteral("lit");
       }
       if (solution.get("o") != null) {
-        System.out.println("o : ");
-        literal = solution.get("o");
+        
+          literal = solution.get("o");
+        
+      }
+      logger.info("passiert ");
+      RDFNode resolvedPer = null;
+      if (solution.get("resolvedPer") != null) {
+        resolvedPer = solution.get("resolvedPer");
+      }
+      RDFNode resolvedProj = null;
+      if (solution.get("resolvedProj") != null) {
+        resolvedProj = solution.get("resolvedProj");
+      }
+      RDFNode resolvedLoc = null;
+      if (solution.get("resolvedLoc") != null) {
+        resolvedLoc = solution.get("resolvedLoc");
+      }
+      RDFNode resolvedTime = null;
+      if (solution.get("resolvedTime") != null) {
+        resolvedTime = solution.get("resolvedTime");
+      }
+      RDFNode resolvedLing = null;
+      if (solution.get("resolvedLing") != null) {
+        resolvedLing = solution.get("resolvedLing");
+      }
+      RDFNode resolvedOrg = null;
+      if (solution.get("resolvedOrg") != null) {
+        logger.info("resolvedOrg : "+solution.get("resolvedOrg"));
+        System.out.println("resolvedOrg : ");
+        resolvedOrg = solution.get("resolvedOrg");
+      }
+      RDFNode resolvedMed = null;
+      if (solution.get("resolvedMed") != null) {
+        resolvedMed = solution.get("resolvedMed");
+      }
+      RDFNode resolvedEvnt = null;
+      if (solution.get("resolvedEvnt") != null) {
+        resolvedEvnt = solution.get("resolvedEvnt");
       }
       double score = 0;
       if (solution.getLiteral("score") != null) {
         score = solution.getLiteral("score").getDouble();
       }
       RDFNode subjParent = null;
-      if (solution.getResource("sParent") != null) {
-        subjParent = solution.getResource("sParent");
+      if (solution.get("sParent") != null) {
+        subjParent = solution.get("sParent");
       }
       RDFNode predParent = null;
-      if (solution.getResource("pParent") != null) {
-        predParent = solution.getResource("pParent");
+      if (solution.get("pParent") != null) {
+        predParent = solution.get("pParent");
       }
-      final HitStatement statement = new HitStatement(subject, predicate, literal, score, subjParent, predParent);
-      System.out.println("HitStatement : ");
+//      logger.info("vor statement ");
+      final HitStatement statement = new HitStatement(subject, predicate, literal, score, subjParent, predParent, resolvedPer, resolvedLing,  resolvedTime, resolvedProj, resolvedLoc, resolvedOrg, resolvedMed, resolvedEvnt);
+//      System.out.println("HitStatement  ");
       hitGraph.addStatement(statement);
-      System.out.println("hitGraph : ");
+//      System.out.println("hitGraph : "+hitGraph);
 
       // set result type
       if (score == 0) { // no literal/LARQ search (because a score would be returned)
@@ -249,7 +284,7 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
         final RDFNode object = solution.get("o");
         final RDFNode predicate = solution.get("p");
         final RDFNode subject = solution.get("s");
-        final HitStatement hitStatement = new HitStatement(subject, predicate, object, 0, null, null);
+        final HitStatement hitStatement = new HitStatement(subject, predicate, object, 0, null, null, null, null, null, null, null, null, null, null);
         hitGraph.addStatement(hitStatement);
         hitStatement.setResultType(MdSystemResultType.ALL_TRIPLES_NAMED_GRAPH);
       }
@@ -300,7 +335,7 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
         final RDFNode predicate = solution.get("p");
         // subject is given by the client (who uses the SparqlAdapter)
         final RDFNode subject = new ResourceImpl(pSubject);
-        final HitStatement hitStatement = new HitStatement(subject, predicate, object, 0, null, null);
+        final HitStatement hitStatement = new HitStatement(subject, predicate, object, 0, null, null, null, null, null, null, null, null, null, null);
         hitGraph.addStatement(hitStatement);
         hitStatement.setResultType(MdSystemResultType.ALL_TRIPLES_NAMED_GRAPH_AND_GIVEN_SUBJECT);
       }
@@ -323,7 +358,7 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
 
           // the subject (object of the parent statement) doesn't need to be part of another statement
           if (topDownRelatedSubj != null && topDownRelatedSubj.isResource() && topwDownRelatedPred != null && topDownRelatedNode != null) {
-            final RelatedHitStatement relatedStatement = new RelatedHitStatement(topDownRelatedSubj, topwDownRelatedPred, topDownRelatedNode, 0, null, null, i, Relationship.CHILD);
+            final RelatedHitStatement relatedStatement = new RelatedHitStatement(topDownRelatedSubj, topwDownRelatedPred, topDownRelatedNode, 0, null, null, null, null, null, null, null, null, null, null, i, Relationship.CHILD);
             if (!resultStatements.contains(relatedStatement)) {
               resultStatements.add(relatedStatement);
               relatedStatement.setResultType(MdSystemResultType.RELATED_CONCEPTS);
@@ -336,7 +371,7 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
           final RDFNode bottomRelatedNode = solution.get("s1" + (i - 1)); // object is subject in the child statement
 
           if (bottomRelatedNode != null && bottomRelatedNode.isResource() && bottomDownRelatedPred != null && bottomRelatedSubj != null) {
-            final RelatedHitStatement bottomRelatedStatement = new RelatedHitStatement(bottomRelatedSubj, bottomDownRelatedPred, bottomRelatedNode, 0, null, null, i, Relationship.PARENT);
+            final RelatedHitStatement bottomRelatedStatement = new RelatedHitStatement(bottomRelatedSubj, bottomDownRelatedPred, bottomRelatedNode, 0, null, null, null, null, null, null, null, null, null, null, i, Relationship.PARENT);
             if (!resultStatements.contains(bottomRelatedStatement)) {
               resultStatements.add(bottomRelatedStatement);
               bottomRelatedStatement.setResultType(MdSystemResultType.RELATED_CONCEPTS);
@@ -573,8 +608,9 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
   }
 
   @Override
-  public HitGraphContainer buildSparqlQuery(String projectId, boolean isProjectId) {
-    final T results = queryStrategy.queryAllProjectInfo(projectId, isProjectId);
+  public HitGraphContainer buildSparqlQuery(String projectUri, boolean isProjectId) {
+    System.out.println("buildSparqlQuery");
+    final T results = queryStrategy.queryAllProjectInfoAndResolveUris(projectUri, isProjectId);
     freeQueryStrategy();
     return this.handleProjectIdResults(results);
   }

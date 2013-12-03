@@ -22,6 +22,14 @@ public class HitStatement {
   protected final RDFNode object;
   protected final RDFNode subjParent;
   protected final RDFNode predParent;
+  protected final RDFNode resolvedPer;
+  protected final RDFNode resolvedLing;
+  protected final RDFNode resolvedTime;
+  protected final RDFNode resolvedProj;
+  protected final RDFNode resolvedLoc;
+  protected final RDFNode resolvedOrg;
+  protected final RDFNode resolvedMed;
+  protected final RDFNode resolvedEvnt;
   protected final double score;
   private MdSystemResultType resultType;
 
@@ -40,8 +48,26 @@ public class HitStatement {
    *          an {@link RDFNode}
    * @param predParent
    *          an {@link RDFNode}
+   * @param resolvedPer
+   *          an {@link RDFNode}
+   * @param resolvedLing
+   *          an {@link RDFNode}
+   * @param resolvedTime
+   *          an {@link RDFNode}
+   * @param resolvedProj
+   *          an {@link RDFNode}
+   * @param resolvedLoc
+   *          an {@link RDFNode}
+   * @param resolvedOrg
+   *          an {@link RDFNode}
+   * @param resolvedMed
+   *          an {@link RDFNode}
+   * @param resolvedEvnt
+   *          an {@link RDFNode}
    */
-  public HitStatement(final RDFNode subject, final RDFNode predicate, final RDFNode object, final double score, final RDFNode subjParent, final RDFNode predParent) {
+  public HitStatement(final RDFNode subject, final RDFNode predicate, final RDFNode object, final double score, final RDFNode subjParent, final RDFNode predParent, 
+      final RDFNode resolvedPer, final RDFNode resolvedLing, final RDFNode resolvedTime, final RDFNode resolvedProj, final RDFNode resolvedLoc,
+      final RDFNode resolvedOrg, final RDFNode resolvedMed, final RDFNode resolvedEvnt) {
 
     this.subject = removeSparqlBrackets(subject);
     this.predicate = removeSparqlBrackets(predicate);
@@ -49,6 +75,14 @@ public class HitStatement {
     this.score = score;
     this.subjParent = removeSparqlBrackets(subjParent);
     this.predParent = removeSparqlBrackets(predParent);
+    this.resolvedPer = removeSparqlBrackets(resolvedPer);
+    this.resolvedLing = removeSparqlBrackets(resolvedLing);
+    this.resolvedTime = removeSparqlBrackets(resolvedTime);
+    this.resolvedProj = removeSparqlBrackets(resolvedProj);
+    this.resolvedLoc = removeSparqlBrackets(resolvedLoc);
+    this.resolvedOrg = removeSparqlBrackets(resolvedOrg);
+    this.resolvedMed = removeSparqlBrackets(resolvedMed);
+    this.resolvedEvnt = removeSparqlBrackets(resolvedEvnt);
   }
 
   private RDFNode removeSparqlBrackets(final RDFNode rdfnode) {
@@ -106,6 +140,54 @@ public class HitStatement {
   public RDFNode getPredParent() {
     return predParent;
   }
+  /**
+   * @return the resolved Person
+   */
+  public RDFNode getResolvedPer() {
+    return resolvedPer;
+  }
+  /**
+   * @return the resolved Linguistic System
+   */
+  public RDFNode getResolvedLing() {
+    return resolvedLing;
+  }
+  /**
+   * @return the resolved Time
+   */
+  public RDFNode getResolvedTime() {
+    return resolvedTime;
+  }
+  /**
+   * @return the resolved Project
+   */
+  public RDFNode getResolvedProj() {
+    return resolvedProj;
+  }
+  /**
+   * @return the resolved Location
+   */
+  public RDFNode getResolvedLoc() {
+    return resolvedLoc;
+  }
+  /**
+   * @return the resolved Organization
+   */
+  public RDFNode getResolvedOrg() {
+    return resolvedOrg;
+  }
+  /**
+   * @return the resolved MediaType
+   */
+  public RDFNode getResolvedMed() {
+    return resolvedMed;
+  }
+  /**
+   * @return the resolved Event
+   */
+  public RDFNode getResolvedEvnt() {
+    return resolvedEvnt;
+  }
 
   /*
    * (non-Javadoc)
@@ -114,7 +196,7 @@ public class HitStatement {
    */
   @Override
   public String toString() {
-    return "HitStatement [subject=" + subject + ", predicate=" + predicate + ", object=" + object + ", subjParent=" + subjParent + ", predParent=" + predParent + ", score=" + score + ", resultType=" + resultType + "]";
+    return "HitStatement [subject=" + subject + ", predicate=" + predicate + ", object=" + object + ", subjParent=" + subjParent + ", predParent=" + predParent + ", score=" + score + ", resultType=" + resultType + ", resolvedEvent=" + resolvedEvnt + ", resolved Ling=" + resolvedLing + ", resolved Location=" + resolvedLoc + ", resolved Media Type=" + resolvedMed + ", resolved Organization=" + resolvedOrg + ", resolved Person=" + resolvedPer + ", resolved Project=" + resolvedProj + ", resolved Period Of Time=" + resolvedTime + "]";
   }
 
   /*

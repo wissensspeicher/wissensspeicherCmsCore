@@ -46,6 +46,15 @@ public interface IQueryStrategy<T> {
    */
   T querySubject(Resource subject);
   
+//  /**
+//   * Delegate a sparqlQuery to a useful handler instance and execute it. Use the {@link SparqlCommandBuilder} to build a valid sparql statement.
+//   * 
+//   * @param id
+//   *          the projectId as String
+//   * @return the generic type as specified in the concrete strategy class. Mostly it's a {@link ResultSet}.
+//   */
+//  T queryAllProjectInfo(String projectId, boolean isProjectId);
+
   /**
    * Delegate a sparqlQuery to a useful handler instance and execute it. Use the {@link SparqlCommandBuilder} to build a valid sparql statement.
    * 
@@ -53,8 +62,8 @@ public interface IQueryStrategy<T> {
    *          the projectId as String
    * @return the generic type as specified in the concrete strategy class. Mostly it's a {@link ResultSet}.
    */
-  T queryAllProjectInfo(String projectId, boolean isProjectId);
-
+  T queryAllProjectInfoAndResolveUris(String projectUri, boolean isProjectId);
+  
   /**
    * Query a single named graph.
    * 
@@ -87,4 +96,5 @@ public interface IQueryStrategy<T> {
    * Free the subsystem of the concrete QueryStrategy (e.g. close an index...). The SparqlAdapter will call this method after a query to ensure, that the {@link IQueryStrategy} does its work to return to a fresh state.
    */
   void free();
+
 }

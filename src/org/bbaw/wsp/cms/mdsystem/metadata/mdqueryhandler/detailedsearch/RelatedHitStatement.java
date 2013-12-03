@@ -53,11 +53,11 @@ public class RelatedHitStatement extends HitStatement {
    * @return the distance (to a the the input Node).
    */
   public final int getDistance() {
-    return distance;
+    return distance; 
   }
 
-  public RelatedHitStatement(final RDFNode subject, final RDFNode predicate, final RDFNode object, final double score, final RDFNode subjParent, final RDFNode predParent, final int distance, final Relationship relationship) {
-    super(subject, predicate, object, score, subjParent, predParent);
+  public RelatedHitStatement(final RDFNode subject, final RDFNode predicate, final RDFNode object, final double score, final RDFNode subjParent, final RDFNode predParent, final RDFNode resolvedPer,final RDFNode resolvedLing, final RDFNode resolvedTime, final RDFNode resolvedProj, final RDFNode resolvedLoc,final RDFNode resolvedOrg, final RDFNode resolvedMed, final RDFNode resolvedEvnt, final int distance, final Relationship relationship) {
+    super(subject, predicate, object, score, subjParent, predParent, resolvedPer, resolvedLing,  resolvedTime, resolvedProj, resolvedLoc, resolvedOrg, resolvedMed, resolvedEvnt);
     this.distance = distance;
     this.relationship = relationship;
   }
