@@ -81,9 +81,11 @@ public class MicrosoftTranslator {
       String toLangId = de.mpg.mpiwg.berlin.mpdl.lt.general.Language.getInstance().getLanguageId(toLanguageStr);  // e.g. "de" is delivered from "deu"
       Language fromLanguage = Language.fromString(fromLangId);
       Language toLanguage = Language.fromString(toLangId);
-      translation = Translate.execute(query, fromLanguage, toLanguage);
-      for (int i=0; i<translation.length; i++) {
-        translation[i] = translation[i].toLowerCase();
+      if (query != null && fromLanguage != null && toLanguage != null) {
+        translation = Translate.execute(query, fromLanguage, toLanguage);
+        for (int i=0; i<translation.length; i++) {
+          translation[i] = translation[i].toLowerCase();
+        }
       }
     } catch (Exception e) {
       throw new ApplicationException(e);
