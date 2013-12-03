@@ -113,7 +113,9 @@ public class Facets implements Iterable<Facet> {
       retStr = retStr + "<ul>";
       for (int j=0; j<facetValues.size(); j++) {
         FacetValue facetValue = facetValues.get(j);
-        retStr = retStr + "<li>" + facetValue.toString() + "</li>";
+        String facetValueName = facetValue.getName();
+        String facetValueValue = facetValue.getValue();
+        retStr = retStr + "<li>" + facetValueName + ": " + facetValueValue + "</li>";
       }
       retStr = retStr + "</ul>";
       retStr = retStr + "</li>";
