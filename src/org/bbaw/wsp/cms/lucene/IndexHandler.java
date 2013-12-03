@@ -79,7 +79,7 @@ import org.bbaw.wsp.cms.document.TokenArrayListIterator;
 import org.bbaw.wsp.cms.document.XQuery;
 import org.bbaw.wsp.cms.general.Constants;
 import org.bbaw.wsp.cms.scheduler.CmsDocOperation;
-import org.bbaw.wsp.cms.translator.MicrosoftTranslator;
+import org.bbaw.wsp.cms.translator.LanguageHandler;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 import de.mpg.mpiwg.berlin.mpdl.lt.dict.db.LexHandler;
@@ -605,8 +605,13 @@ public class IndexHandler {
       } else {
         query = buildFieldExpandedQuery(queryParser, queryStr, fieldExpansion);
       }
-      Query morphQuery = buildMorphQuery(query, language, false, translate);
-      Query highlighterQuery = buildMorphQuery(query, language, true, translate);
+      LanguageHandler languageHandler = new LanguageHandler();
+      if (translate) {
+        ArrayList<String> queryTerms = fetchTerms(query);
+        languageHandler.translate(queryTerms, language);
+      }
+      Query morphQuery = buildMorphQuery(query, language, false, translate, languageHandler);
+      Query highlighterQuery = buildMorphQuery(query, language, true, translate, languageHandler);
       if (query instanceof PhraseQuery || query instanceof PrefixQuery || query instanceof FuzzyQuery || query instanceof TermRangeQuery) {
         highlighterQuery = query;  // TODO wenn sie rekursiv enthalten sind 
       }
@@ -738,7 +743,8 @@ public class IndexHandler {
             language = mainLang;
         } 
       }
-      Query morphQuery = buildMorphQuery(query, language);
+      LanguageHandler languageHandler = new LanguageHandler();
+      Query morphQuery = buildMorphQuery(query, language, languageHandler);
       BooleanQuery queryDoc = new BooleanQuery();
       queryDoc.add(queryDocId, BooleanClause.Occur.MUST);
       queryDoc.add(morphQuery, BooleanClause.Occur.MUST);
@@ -1106,34 +1112,31 @@ public class IndexHandler {
     return retQuery;
   }
   
-  private Query buildMorphQuery(Query query, String language) throws ApplicationException {
-    return buildMorphQuery(query, language, false, false);
+  private Query buildMorphQuery(Query query, String language, LanguageHandler languageHandler) throws ApplicationException {
+    return buildMorphQuery(query, language, false, false, languageHandler);
   }
 
-  private Query buildMorphQuery(Query query, String language, boolean withAllForms, boolean translate) throws ApplicationException {
+  private Query buildMorphQuery(Query query, String language, boolean withAllForms, boolean translate, LanguageHandler languageHandler) throws ApplicationException {
     Query morphQuery = null;
     if (query instanceof TermQuery) {
       TermQuery termQuery = (TermQuery) query;
-      morphQuery = buildMorphQuery(termQuery, language, withAllForms, translate);
+      morphQuery = buildMorphQuery(termQuery, language, withAllForms, translate, languageHandler);
     } else if (query instanceof BooleanQuery) {
       BooleanQuery booleanQuery = (BooleanQuery) query;
-      morphQuery = buildMorphQuery(booleanQuery, language, withAllForms, translate);
+      morphQuery = buildMorphQuery(booleanQuery, language, withAllForms, translate, languageHandler);
     } else {
       morphQuery = query; // all other cases: PrefixQuery, PhraseQuery, FuzzyQuery, TermRangeQuery, ...
     }
     return morphQuery;
   }
 
-  private Query buildMorphQuery(TermQuery inputTermQuery, String fromLang, boolean withAllForms, boolean translate) throws ApplicationException {
-    String[] toLanguages = {"deu", "eng", "fra"};  // TODO
+  private Query buildMorphQuery(TermQuery inputTermQuery, String fromLang, boolean withAllForms, boolean translate, LanguageHandler languageHandler) throws ApplicationException {
     String fromLanguage = null;
     String inputTerm = inputTermQuery.getTerm().text();
     if (fromLang == null || fromLang.isEmpty()) {
-      if (translate) { // detect only language when translate = true
-        String detectedLang = MicrosoftTranslator.detectLanguageCode(inputTerm);
-        if (detectedLang != null)
-          fromLanguage = detectedLang;
-      }
+      String detectedLang = languageHandler.detectLanguage(inputTerm);
+      if (detectedLang != null)
+        fromLanguage = detectedLang;
     } else {
       fromLanguage = fromLang;
     }
@@ -1144,8 +1147,11 @@ public class IndexHandler {
       ArrayList<Lemma> lemmas = lexHandler.getLemmas(inputTerm, "form", fromLanguage, Normalizer.DICTIONARY, true);
       if (lemmas == null) {  // if no lemmas are found then do a query in tokenOrig TODO should this really be done ?
         if (translate) {
-          String[] terms = {inputTerm};
-          ArrayList<String> translatedTerms = MicrosoftTranslator.translate(terms, fromLanguage, toLanguages);
+          ArrayList<String> terms = new ArrayList<String>();
+          terms.add(inputTerm);
+          ArrayList<String> translatedTerms = languageHandler.getTranslations(terms, fromLanguage);
+          if (translatedTerms == null || translatedTerms.isEmpty())
+            translatedTerms = terms;
           for (int i=0; i<translatedTerms.size(); i++) {
             String translatedTerm = translatedTerms.get(i);
             Term translatedTermTokenOrig = new Term("tokenOrig", translatedTerm);
@@ -1174,8 +1180,9 @@ public class IndexHandler {
               morphTerms.add(lemmaName);
             }
           }
-          String[] morphTermsArray = morphTerms.toArray(new String[morphTerms.size()]);
-          ArrayList<String> translatedMorphTerms = MicrosoftTranslator.translate(morphTermsArray, fromLanguage, toLanguages);
+          ArrayList<String> translatedMorphTerms = languageHandler.getTranslations(morphTerms, fromLanguage); 
+          if (translatedMorphTerms == null || translatedMorphTerms.isEmpty())
+            translatedMorphTerms = morphTerms;
           for (int i=0; i<translatedMorphTerms.size(); i++) {
             String translatedMorphTermStr = translatedMorphTerms.get(i);
             Term translatedMorphTerm = new Term(fieldName, translatedMorphTermStr);
@@ -1205,9 +1212,11 @@ public class IndexHandler {
       // if it is not the morph field then do a normal query 
       if (translate) {
         String inputTermQueryField = inputTermQuery.getTerm().field();
-        String inputTermQueryStr = inputTermQuery.getTerm().text();
-        String[] terms = {inputTermQueryStr};
-        ArrayList<String> translatedTerms = MicrosoftTranslator.translate(terms, fromLanguage, toLanguages);
+        ArrayList<String> terms = new ArrayList<String>();
+        terms.add(inputTerm);
+        ArrayList<String> translatedTerms = languageHandler.getTranslations(terms, fromLanguage);
+        if (translatedTerms == null || translatedTerms.isEmpty())
+          translatedTerms = terms;
         for (int i=0; i<translatedTerms.size(); i++) {
           String translatedTerm = translatedTerms.get(i);
           Term translatedTermTokenOrig = new Term(inputTermQueryField, translatedTerm);
@@ -1232,13 +1241,13 @@ public class IndexHandler {
     return retBooleanQuery;
   }
   
-  private Query buildMorphQuery(BooleanQuery query, String language, boolean withAllForms, boolean translate) throws ApplicationException {
+  private Query buildMorphQuery(BooleanQuery query, String language, boolean withAllForms, boolean translate, LanguageHandler languageHandler) throws ApplicationException {
     BooleanQuery morphBooleanQuery = new BooleanQuery();
     BooleanClause[] booleanClauses = query.getClauses();
     for (int i = 0; i < booleanClauses.length; i++) {
       BooleanClause boolClause = booleanClauses[i];
       Query q = boolClause.getQuery();
-      Query morphQuery = buildMorphQuery(q, language, withAllForms, translate);
+      Query morphQuery = buildMorphQuery(q, language, withAllForms, translate, languageHandler);
       BooleanClause.Occur occur = boolClause.getOccur();
       morphBooleanQuery.add(morphQuery, occur);
     }
@@ -1267,15 +1276,31 @@ public class IndexHandler {
     ArrayList<String> terms = new ArrayList<String>();
     if (query instanceof TermQuery) {
       TermQuery termQuery = (TermQuery) query;
-      String termQueryStr = termQuery.getTerm().text();
-      terms.add(termQueryStr);
+      String termText = termQuery.getTerm().text();
+      if (! terms.contains(termText))
+        terms.add(termText);
     } else if (query instanceof BooleanQuery) {
       BooleanQuery booleanQuery = (BooleanQuery) query;
       terms = fetchTerms(booleanQuery);
+    } else if (query instanceof PrefixQuery) {
+      PrefixQuery prefixQuery = (PrefixQuery) query;
+      String termText = prefixQuery.getPrefix().text();
+      if (! terms.contains(termText))
+        terms.add(termText);
+    } else if (query instanceof PhraseQuery) {
+      PhraseQuery phraseQuery = (PhraseQuery) query;
+      Term[] termsArray = phraseQuery.getTerms();
+      if (termsArray != null) {
+        for (int i=0; i<termsArray.length; i++) {
+          Term t = termsArray[i];
+          String termText = t.text();
+          if (! terms.contains(termText))
+            terms.add(t.text());
+        }
+      }
     } else {
       String queryStr = query.toString();
-      terms.add(queryStr); // all other cases: PrefixQuery, PhraseQuery,
-      // FuzzyQuery, TermRangeQuery, ...
+      terms.add(queryStr); // TODO: all other cases properly: FuzzyQuery, TermRangeQuery, ...
     }
     return terms;
   }
@@ -1288,8 +1313,13 @@ public class IndexHandler {
       Query q = boolClause.getQuery();
       ArrayList<String> qTerms = fetchTerms(q);
       BooleanClause.Occur occur = boolClause.getOccur();
-      if (occur == BooleanClause.Occur.SHOULD || occur == BooleanClause.Occur.MUST)
-        terms.addAll(qTerms);
+      if (occur == BooleanClause.Occur.SHOULD || occur == BooleanClause.Occur.MUST) {
+        for (int j=0; j<qTerms.size(); j++) {
+          String qTerm = qTerms.get(j);
+          if (! terms.contains(qTerm))
+            terms.add(qTerm);
+        }
+      }
     }
     return terms;
   }
