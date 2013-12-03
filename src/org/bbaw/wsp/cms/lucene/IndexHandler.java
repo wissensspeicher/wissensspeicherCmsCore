@@ -624,15 +624,15 @@ public class IndexHandler {
       }
       TopFieldCollector topFieldCollector = TopFieldCollector.create(sort, 100000, true, true, true, true); // default topFieldCollector for TopDocs results
       FacetSearchParams facetSearchParams = new FacetSearchParams();
-      facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("collectionNames"), 10));
-      facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("language"), 10));
+      facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("collectionNames"), 1000));
+      facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("language"), 1000));
       facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("author"), 10));
       facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("publisher"), 10));
       facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("date"), 10));
       facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("subject"), 10));
       facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("swd"), 10));
       facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("ddc"), 10));
-      facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("type"), 10));
+      facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("type"), 1000));
       FacetsCollector facetsCollector = new FacetsCollector(facetSearchParams, documentsIndexReader, taxonomyReader);
       Collector facetsCollectorWrapper = MultiCollector.wrap(topFieldCollector, facetsCollector);
       searcher.search(morphQuery, facetsCollectorWrapper);
