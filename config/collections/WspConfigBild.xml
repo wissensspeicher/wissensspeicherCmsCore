@@ -5,9 +5,8 @@
     <rdfId>http://wsp.normdata.rdf/Bildkulturen</rdfId>
     <name>Bildkulturen</name>
     <url>
-    	<webBaseUrl>http://www.bbaw.de/forschung/Bildkulturen</webBaseUrl>
-      <dataUrl>http://www.bbaw.de/forschung/Bildkulturen</dataUrl>
-      <dataUrl>http://bildkulturen.bbaw.de/</dataUrl>
+    	<webBaseUrl>http://bildkulturen.bbaw.de</webBaseUrl>
+      <dataUrl>http://bildkulturen.bbaw.de</dataUrl>
     </url>
     <mainLanguage>ger</mainLanguage>
     <formats>

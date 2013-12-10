@@ -5,8 +5,9 @@
     <rdfId>http://wsp.normdata.rdf/Archiv</rdfId>
     <name>Akademiearchiv</name>
     <url>
-      <webBaseUrl>http://archiv.bbaw.de/archiv</webBaseUrl>
-      <dataUrl>http://archiv.bbaw.de/archiv</dataUrl>
+      <webBaseUrl>http://archiv.bbaw.de</webBaseUrl>
+      <dataUrl>http://archiv.bbaw.de</dataUrl>
+      <dataUrl>http://archiv.bbaw.de/archiv/einfuehrung</dataUrl>
     </url>
     <languages>ger,eng</languages>
     <mainLanguage>ger</mainLanguage>

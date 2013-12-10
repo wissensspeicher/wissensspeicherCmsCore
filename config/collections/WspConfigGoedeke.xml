@@ -5,9 +5,8 @@
     <rdfId>http://wsp.normdata.rdf/Goedeke</rdfId>
     <name>Goedekes Grundriss</name>
     <url>
-    	<webBaseUrl>http://www.bbaw.de/forschung/goedeke</webBaseUrl>
-      <dataUrl>http://www.bbaw.de/forschung/goedeke</dataUrl>
-      <dataUrl>http://goedeke.bbaw.de/</dataUrl>
+    	<webBaseUrl>http://goedeke.bbaw.de</webBaseUrl>
+      <dataUrl>http://goedeke.bbaw.de</dataUrl>
     </url>
     <mainLanguage>ger</mainLanguage>
     <formats>

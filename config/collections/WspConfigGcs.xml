@@ -5,10 +5,9 @@
     <rdfId>http://wsp.normdata.rdf/GriechischChristlichSchriftsteller</rdfId>
     <name>Die Griechischen Christlichen Schriftsteller</name>
     <url>	
-      <webBaseUrl>http://www.bbaw.de/forschung/gcs</webBaseUrl>
+      <webBaseUrl>http://gcs.bbaw.de</webBaseUrl>
       <!-- Homepage -->
-      <dataUrl>http://www.bbaw.de/forschung/gcs</dataUrl>
-      <dataUrl>http://www.bbaw.de/forschung/gcs/projektdarstellung</dataUrl>
+      <dataUrl>http://gcs.bbaw.de</dataUrl>
       <!-- weitere Texte -->
       <dataUrl>http://telota.bbaw.de/gcs</dataUrl>
       <!-- GCS-Filmdatenbank: Homepage -->

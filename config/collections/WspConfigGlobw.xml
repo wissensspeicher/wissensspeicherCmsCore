@@ -5,9 +5,8 @@
     <rdfId>http://wsp.normdata.rdf/GlobalerWandel</rdfId>
     <name>Globaler Wandel- Regionale Entwicklung</name>
     <url>
-    	<webBaseUrl>http://www.bbaw.de/forschung/wandel</webBaseUrl>
-      <dataUrl>http://www.bbaw.de/forschung/wandel</dataUrl>
-      <dataUrl>http://globalerwandel.bbaw.de/</dataUrl>
+    	<webBaseUrl>http://globalerwandel.bbaw.de</webBaseUrl>
+      <dataUrl>http://globalerwandel.bbaw.de</dataUrl>
     </url>
     <mainLanguage>ger</mainLanguage>
     <formats>

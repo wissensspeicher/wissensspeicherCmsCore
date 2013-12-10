@@ -6,9 +6,9 @@
     <name>Jahresberichte fuer deutsche Geschichte</name>
     <!-- if dataUrl is not a directory but a file, it should end with a forward slash -->
     <url>
-      <webBaseUrl>http://www.jdg-online.de</webBaseUrl>
+      <webBaseUrl>http://www.bbaw.de/forschung/jdg</webBaseUrl>
       <!-- Homepage -->
-      <dataUrl>http://www.jdg-online.de</dataUrl>
+      <dataUrl>http://www.bbaw.de/forschung/jdg</dataUrl>
       
       <!-- Jahresberichte für deutsche Geschichte -->
       <dataUrl>http://jdgdb.bbaw.de/cgi-bin/jdg?lang=de</dataUrl>

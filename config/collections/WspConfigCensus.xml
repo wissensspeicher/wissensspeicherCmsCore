@@ -5,8 +5,8 @@
     <rdfId>http://wsp.normdata.rdf/CensusOfAntiqueWorks</rdfId>
     <name>Census of Antique Works of Art and Architecture Known in the Renaissance</name>
     <url>
-      <webBaseUrl>http://www.census.de/census/</webBaseUrl>
-      <dataUrl>http://www.census.de/census/</dataUrl>
+      <webBaseUrl>http://www.census.de</webBaseUrl>
+      <dataUrl>http://www.census.de</dataUrl>
       <dataUrl>http://telota.bbaw.de/census</dataUrl>
     </url>  
     <languages>ger,ita,eng</languages>

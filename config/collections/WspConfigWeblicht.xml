@@ -5,9 +5,8 @@
     <rdfId>http://wsp.normdata.rdf/Clarin</rdfId>
     <name>WebLicht</name>
     <url>
-    	<webBaseUrl>http://weblicht.sfs.uni-tuebingen.de/index.shtml</webBaseUrl>
-    	<dataUrl>http://weblicht.sfs.uni-tuebingen.de/index.shtml</dataUrl>
-    	<dataUrl>http://weblicht.sfs.uni-tuebingen.de/weblicht.shtml</dataUrl>
+    	<webBaseUrl>http://clarin.bbaw.de/web.html</webBaseUrl>
+    	<dataUrl>http://clarin.bbaw.de/web.html</dataUrl>
     </url>
     <languages>deu, eng, fin, fra, ita, ron, spa</languages>
     <mainLanguage>ger</mainLanguage>

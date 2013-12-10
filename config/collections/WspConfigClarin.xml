@@ -5,8 +5,8 @@
     <rdfId>http://wsp.normdata.rdf/ClarinD</rdfId>
     <name>CLARIN-D</name>
     <url>
-      <webBaseUrl>http://www.bbaw.de/forschung/clarin</webBaseUrl>
-      <dataUrl>http://www.bbaw.de/forschung/clarin</dataUrl>
+      <webBaseUrl>http://clarin.bbaw.de</webBaseUrl>
+      <dataUrl>http://clarin.bbaw.de</dataUrl>
     </url>
     <languages>ger</languages>
     <mainLanguage>ger</mainLanguage>

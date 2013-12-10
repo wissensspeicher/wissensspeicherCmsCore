@@ -5,9 +5,8 @@
     <rdfId>http://wsp.normdata.rdf/WeltAlsBild</rdfId>
     <name>Die Welt als Bild</name>
     <url>
-      <webBaseUrl>http://www.bbaw.de/forschung/Weltbilder</webBaseUrl>
-      <dataUrl>http://www.bbaw.de/forschung/Weltbilder</dataUrl>
-      <dataUrl>http://weltbilder.bbaw.de/</dataUrl>
+      <webBaseUrl>http://weltbilder.bbaw.de</webBaseUrl>
+      <dataUrl>http://weltbilder.bbaw.de</dataUrl>
     </url>
     <languages>ger</languages>
     <mainLanguage>ger</mainLanguage>
