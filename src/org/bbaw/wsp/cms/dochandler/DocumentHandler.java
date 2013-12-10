@@ -555,7 +555,6 @@ public class DocumentHandler {
       }
       String title = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:titleStmt/*:title");
       XdmValue xdmValueTitleMain = xQueryEvaluator.evaluate(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:titleStmt/*:title[@type='main']");
-      XdmValue xdmValueTitleSub = xQueryEvaluator.evaluate(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:titleStmt/*:title[@type='sub']");
       XdmValue xdmValueTitleShort = xQueryEvaluator.evaluate(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:titleStmt/*:title[@type='short']");
       if (xdmValueTitleShort != null && xdmValueTitleShort.size() > 0) {
         try {
@@ -563,9 +562,9 @@ public class DocumentHandler {
         } catch (XPathException e) {
           // nothing
         }
-      } else if (xdmValueTitleMain != null && xdmValueTitleMain.size() > 0 && xdmValueTitleSub != null && xdmValueTitleSub.size() > 0) {
+      } else if (xdmValueTitleMain != null && xdmValueTitleMain.size() > 0) {
         try {
-          title = xdmValueTitleSub.getUnderlyingValue().getStringValue() + ": " + xdmValueTitleSub.getUnderlyingValue().getStringValue();
+          title = xdmValueTitleMain.getUnderlyingValue().getStringValue();
         } catch (XPathException e) {
           // nothing
         }
