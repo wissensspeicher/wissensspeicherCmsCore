@@ -9,6 +9,10 @@
       <!-- Homepage -->
       <dataUrl>http://www.jdg-online.de/projekte/die-jahresberichte-der-zwischenkriegszeit</dataUrl>
       <dataUrl>http://telota.bbaw.de/JDG/</dataUrl>      
+      
+      <!-- ToDo -->
+      <!-- DB einbinden -->
+      
       <!-- XML-Texte -->
       <dataUrl type="eXistDir">http://telota.bbaw.de/exist/servlet/db/JDG/</dataUrl>
     </url>
