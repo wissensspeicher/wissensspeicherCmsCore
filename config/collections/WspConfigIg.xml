@@ -5,11 +5,11 @@
     <rdfId>http://wsp.normdata.rdf/InscriptionesGraecae</rdfId>
     <name>Inscriptiones Graecae</name>
     <url>
-      <webBaseUrl>http://telota.bbaw.de/ig</webBaseUrl>
+      <webBaseUrl>http://ig.bbaw.de</webBaseUrl>
       <!-- HTML-Texte -->
+      <dataUrl>http://ig.bbaw.de</dataUrl>
+      <dataUrl>http://ig.bbaw.de/ueberblick</dataUrl>
       <dataUrl>http://telota.bbaw.de/ig</dataUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/ig/de/Startseite/</dataUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/ig/de/Ueberblick</dataUrl>
       <!-- XML-Texte -->
       <dataUrl type="eXistDir">http://telota.bbaw.de/exist/rest/db/ig/texts/</dataUrl>
       <exclude>pages</exclude>

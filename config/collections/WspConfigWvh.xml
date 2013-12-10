@@ -5,10 +5,12 @@
     <rdfId>http://wsp.normdata.rdf/WilhelmVonHumboldt</rdfId>
     <name>Wilhelm von Humboldt: Schriften zur Sprachwissenschaft</name>
     <url>
-    	<webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/wvhumboldt/de/Startseite</webBaseUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/wvhumboldt/de/Startseite</dataUrl>
+    	<webBaseUrl>http://wvh.bbaw.de</webBaseUrl>
+      <dataUrl>http://wvh.bbaw.de</dataUrl>
+      <dataUrl>http://wvh.bbaw.de/ueberblick</dataUrl>
+      
       <!-- Bibliographie der neueren Sekundärliteratur zu Wilhelm von Humboldt -->
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/wvhumboldt/de/blanko.2005-02-23.7610561414/materialien/</dataUrl>
+      <dataUrl>http://wvh.bbaw.de/bilder/gkatlv5r.pdf</dataUrl>
     </url>
 	  <languages>ger</languages>
     <mainLanguage>ger</mainLanguage>

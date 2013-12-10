@@ -5,8 +5,8 @@
     <rdfId>http://wsp.normdata.rdf/LeibnizEditionPotsdam/RitterKatalog</rdfId>
     <name>Leibniz-Edition Potsdam: Ritter Katalog</name>
     <url>
-    	<webBaseUrl>http://leibniz.bbaw.de</webBaseUrl>
-      <dataUrl>http://leibniz.bbaw.de</dataUrl>
+    	<webBaseUrl>http://ritter.bbaw.de</webBaseUrl>
+      <dataUrl>http://ritter.bbaw.de</dataUrl>
     </url>
     <languages>ger,lat,eng</languages>
     <mainLanguage>ger</mainLanguage>

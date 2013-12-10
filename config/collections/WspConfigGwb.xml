@@ -5,11 +5,9 @@
     <rdfId>http://wsp.normdata.rdf/GoetheWB</rdfId>
     <name>Goethe-Wörterbuch</name>
     <url>
-      <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gwb/de/Startseite</webBaseUrl>
+      <webBaseUrl>http://gwb.bbaw.de</webBaseUrl>
       <!-- Homepage -->
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gwb/de/Startseite/index.html</dataUrl>
-      <!-- Das Goethe-Wörterbuch im Internet -->
-      <dataUrl>http://www.gwb.uni-trier.de/</dataUrl>
+      <dataUrl>http://gwb.bbaw.de</dataUrl>
       <!-- Goethe-Wörterbuch -->
       <dataUrl>http://telota.bbaw.de/gwb</dataUrl>
       <exclude>scripts</exclude>

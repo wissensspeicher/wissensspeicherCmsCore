@@ -5,8 +5,8 @@
     <rdfId>http://wsp.normdata.rdf/JeanPaul</rdfId>
     <name>Jean Paul Edition</name>
     <url>
-    	<webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/jean_paul/de/Startseite</webBaseUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/jean_paul/de/Startseite</dataUrl>
+    	<webBaseUrl>http://www.bbaw.de/forschung/jean_paul</webBaseUrl>
+      <dataUrl>http://www.bbaw.de/forschung/jean_paul</dataUrl>
     </url>
     <mainLanguage>ger</mainLanguage>
     <formats>

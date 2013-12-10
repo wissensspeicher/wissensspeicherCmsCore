@@ -5,12 +5,11 @@
     <rdfId>http://wsp.normdata.rdf/CorpusVitrearumMediiAevi</rdfId>
     <name>Corpus Vitrearum Medii Aevi. Glasmalereiforschung</name>
     <url>
-      <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/cvma/de/Startseite</webBaseUrl>
+      <webBaseUrl>http://cvma.bbaw.de</webBaseUrl>
       <!-- Homepage -->
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/cvma/de/Startseite/index.html</dataUrl>
+      <dataUrl>http://cvma.bbaw.de</dataUrl>
 
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/cvma/de/Blanko.2005-01-06.1930917637</dataUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/cvma/de/Konservierung</dataUrl>
+      <dataUrl>http://cvma.bbaw.de/ueberblick</dataUrl>
       
       <!-- XML-Texte -->
       <dataUrl type="eXistDir">http://telota.bbaw.de/exist/rest/db/cvma/</dataUrl>

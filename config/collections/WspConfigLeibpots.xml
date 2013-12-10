@@ -5,9 +5,8 @@
     <rdfId>http://wsp.normdata.rdf/LeibnizEditionPotsdam</rdfId>
     <name>Leibniz-Edition Potsdam</name>
     <url>
-    	<webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/de/Startseite</webBaseUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/de/Startseite</dataUrl>
-      <dataUrl>http://www.bbaw.de/forschung/leibniz_potsdam</dataUrl>
+    	<webBaseUrl>http://leibniz-potsdam.bbaw.de</webBaseUrl>
+      <dataUrl>http://leibniz-potsdam.bbaw.de</dataUrl>
       <dataUrl>http://leibnizviii.bbaw.de/</dataUrl>
     </url>
     <languages>ger,lat,eng</languages>

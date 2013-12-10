@@ -5,9 +5,9 @@
     <rdfId>http://wsp.normdata.rdf/LeibnizEditionBerlin/Baende</rdfId>
     <name>Leibniz-Edition Berlin: Bände</name>
     <url>
-    	<webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_berlin/de/Startseite</webBaseUrl>
-      <dataUrl>http://telotadev.bbaw.de/leibniz8_2/upload/web/Leibniz_Reihe_8/leibniz8_2_gesamt.pdf</dataUrl>
+    	<webBaseUrl>http://leibniz-berlin.bbaw.de</webBaseUrl>
       <dataUrl>http://edoc.bbaw.de/volltexte/2009/1167/</dataUrl>
+    	<dataUrl>http://leibniz-berlin.bbaw.de/bilder/2013-10-23-leibniz8-2-gesamt.pdf</dataUrl>
     </url>
     <languages>ger,lat,eng</languages>
     <mainLanguage>ger</mainLanguage>

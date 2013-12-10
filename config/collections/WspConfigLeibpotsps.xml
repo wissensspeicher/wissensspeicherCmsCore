@@ -5,7 +5,7 @@
     <rdfId>http://wsp.normdata.rdf/LeibnizEditionPotsdam/PersonenUndSachindex</rdfId>
     <name>Leibniz-Edition Potsdam: Personen- und Sachindex der Ausgaben von Erdmann (Opera philosophica) und Grua (Textes inédits)</name>
     <url>
-    	<webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/de/Startseite</webBaseUrl>
+    	<webBaseUrl>http://leibniz-potsdam.bbaw.de</webBaseUrl>
     	<!-- ToDo Access DB -->
     </url>
     <languages>ger</languages>

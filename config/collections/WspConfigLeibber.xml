@@ -5,8 +5,8 @@
     <rdfId>http://wsp.normdata.rdf/LeibnizEditionBerlin</rdfId>
     <name>Leibniz-Edition Berlin</name>
     <url>
-    	<webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_berlin/de/Startseite</webBaseUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_berlin/de/Startseite</dataUrl>
+    	<webBaseUrl>http://leibniz-berlin.bbaw.de</webBaseUrl>
+      <dataUrl>http://leibniz-berlin.bbaw.de</dataUrl>
     </url>
     <languages>ger,lat,eng</languages>
     <mainLanguage>ger</mainLanguage>

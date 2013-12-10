@@ -5,8 +5,9 @@
     <rdfId>http://wsp.normdata.rdf/RegestaImperii</rdfId>
     <name>Regesta Imperii – Regesten Kaiser Friedrichs III.</name>
     <url>
-      <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/regestaimperii/de/Startseite</webBaseUrl>
-      <dataUrl>http://www.bbaw.de/forschung/regestaimperii/uebersicht</dataUrl>
+      <webBaseUrl>http://ri.bbaw.de</webBaseUrl>
+      <dataUrl>http://ri.bbaw.de</dataUrl>
+      <dataUrl>http://ri.bbaw.de/uebersicht</dataUrl>
     </url>
     <mainLanguage>ger</mainLanguage>
     <formats>

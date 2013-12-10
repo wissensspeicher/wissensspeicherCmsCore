@@ -5,7 +5,7 @@
     <rdfId>http://wsp.normdata.rdf/LeibnizEditionBerlin/Sachregister</rdfId>
     <name>Leibniz-Edition Berlin: Sachregister</name>
     <url>
-    	<webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_berlin/de/Startseite</webBaseUrl>
+    	<webBaseUrl>http://leibniz-berlin.bbaw.de</webBaseUrl>
     	<dataUrl>http://telota.bbaw.de/leibniziv/Sachregister/sachreg_start.html</dataUrl>
     </url>
     <languages>ger,lat,eng</languages>

@@ -5,9 +5,10 @@
     <rdfId>http://wsp.normdata.rdf/MonumentaGermaniaeHistorica</rdfId>
     <name>Monumenta Germaniae Historica</name>
     <url>
-      <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mgh/de/Startseite</webBaseUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mgh/de/Startseite/index.html</dataUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/mgh/bilder/broschuere_mgh_ri.pdf</dataUrl>
+      <webBaseUrl>http://mgh.bbaw.de</webBaseUrl>
+      <dataUrl>http://mgh.bbaw.de</dataUrl>
+      <dataUrl>http://mgh.bbaw.de/ueberblick</dataUrl>
+      <dataUrl>http://mgh.bbaw.de/bilder/broschuere_mgh_ri.pdf</dataUrl>
     </url>
     <languages>ger, lat, gmh</languages>
     <mainLanguage>ger</mainLanguage>

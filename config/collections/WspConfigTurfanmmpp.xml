@@ -8,8 +8,7 @@
       <!-- Published Manichaean Middle Persian and Parthian Texts (MIRTEXT) -->
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/turfanforschung/de/MIRTEXT</dataUrl>
     </url>
-    <languages></languages>
-    <mainLanguage>ger,eng,fra,ira,chi,rus,kor,jpn,chi,san,xto,xtq,txg,txb,xbc,sog,xct,syc,kho,cmg,oui,mnc,xmn,xpr,otk,per</mainLanguage>
+    <mainLanguage>ger</mainLanguage>
     <formats>
       <format>html</format>
       <format>pdf</format>
