@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 import org.apache.pdfbox.util.PDFTextStripper;
 import org.apache.tika.parser.pdf.PDFParser;
 import org.bbaw.wsp.cms.dochandler.parser.document.PdfDocument;
@@ -77,12 +78,19 @@ public class PdfParserImpl extends ResourceParser {
       }
       
       document.close();
-
+      PDDocumentInformation docInfo = document.getDocumentInformation();
+      MetadataRecord mdRecord = new MetadataRecord();
+      if (docInfo != null) {
+        if (docInfo.getAuthor() != null && ! docInfo.getAuthor().isEmpty())
+          mdRecord.setCreator(docInfo.getAuthor());
+        if (docInfo.getTitle() != null && ! docInfo.getTitle().isEmpty())
+          mdRecord.setTitle(docInfo.getTitle());
+        if (docInfo.getCreationDate() != null)
+          mdRecord.setDate(docInfo.getCreationDate().getTime());
+      }
       input.close();
       PdfDocument doc = (PdfDocument) this.saveStrategy.generateDocumentModel(uri, uri, pagesTexts);
-      doc.setMetadata(new MetadataRecord()); // Set the standard metadata (page
-                                             // count, mimetype,...)
-
+      doc.setMetadata(mdRecord); // Set the standard metadata (page count, mimetype,...)
       return doc;
     } catch (IOException e) {
       throw new ApplicationException("Problem while parsing file " + uri + "  -- exception: " + e.getMessage() + "\n");
