@@ -9,6 +9,8 @@ import java.util.List;
 
 import org.apache.lucene.facet.search.results.FacetResult;
 import org.apache.lucene.facet.search.results.FacetResultNode;
+import org.bbaw.wsp.cms.collections.Collection;
+import org.bbaw.wsp.cms.collections.CollectionReader;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -142,6 +144,7 @@ public class Facets implements Iterable<Facet> {
     };
     for (int i=0; i<facetList.size(); i++) {
       Facet facet = facetList.get(i);
+      String facetId = facet.getId();
       ArrayList<FacetValue> facetValues = facet.getValues();
       Collections.sort(facetValues, facetValueComparator);
       JSONArray jsonValuesFacets = new JSONArray();
@@ -151,6 +154,15 @@ public class Facets implements Iterable<Facet> {
         String facetValueValue = facetValue.getValue();
         facetValueValue = StringUtils.resolveXmlEntities(facetValueValue);
         JSONObject jsonFacetValue = new JSONObject();
+        if (facetId != null && facetId.equals("collectionNames")) {
+          try {
+            Collection coll = CollectionReader.getInstance().getCollection(facetValueName);
+            String rdfId = coll.getRdfId();
+            jsonFacetValue.put("rdfUri", rdfId); 
+          } catch (Exception e) {
+            // nothing
+          }
+        }
         jsonFacetValue.put("value", facetValueName);
         jsonFacetValue.put("count", facetValueValue); 
         jsonValuesFacets.add(jsonFacetValue);
