@@ -66,8 +66,10 @@ public class Person {
         else if (role != null && role.equals("mentioned"))
           person.setRole(MENTIONED);
         String name = xQueryEvaluator.evaluateAsString(xdmItemPersonStr, "string(/person/name)");
-        if (name != null && ! name.isEmpty())
+        if (name != null && ! name.isEmpty()) {
+          name = name.replaceAll("-\\s([^u]?)|\\.|^-", "$1");
           person.setName(name);
+        }
         String forename = xQueryEvaluator.evaluateAsString(xdmItemPersonStr, "string(/person/forename)");
         if (forename != null & ! forename.isEmpty())
           person.setForename(forename);
@@ -77,7 +79,8 @@ public class Person {
         String ref = xQueryEvaluator.evaluateAsString(xdmItemPersonStr, "string(/person/ref)");
         if (ref != null && ! ref.isEmpty())
           person.setRef(ref);
-        retPersons.add(person);
+        if ((name != null && ! name.isEmpty()) || (forename != null && ! forename.isEmpty()) || (surname != null && ! surname.isEmpty()))
+          retPersons.add(person);
       }
     }
     return retPersons;
