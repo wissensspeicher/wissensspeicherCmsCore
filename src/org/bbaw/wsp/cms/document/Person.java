@@ -67,7 +67,8 @@ public class Person {
           person.setRole(MENTIONED);
         String name = xQueryEvaluator.evaluateAsString(xdmItemPersonStr, "string(/person/name)");
         if (name != null && ! name.isEmpty()) {
-          name = name.replaceAll("-\\s([^u]?)|\\.|^-", "$1");
+          name = name.trim();
+          name = name.replaceAll("-\\s([^u]?)|^\\.|^-", "$1");
           person.setName(name);
         }
         String forename = xQueryEvaluator.evaluateAsString(xdmItemPersonStr, "string(/person/forename)");
