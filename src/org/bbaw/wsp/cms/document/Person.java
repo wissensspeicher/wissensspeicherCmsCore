@@ -1,9 +1,12 @@
 package org.bbaw.wsp.cms.document;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 
 import org.apache.commons.httpclient.URIException;
 import org.apache.commons.httpclient.util.URIUtil;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.json.simple.JSONObject;
 
 import net.sf.saxon.s9api.XdmItem;
@@ -14,7 +17,7 @@ import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 import de.mpg.mpiwg.berlin.mpdl.util.StringUtils;
 import de.mpg.mpiwg.berlin.mpdl.xml.xquery.XQueryEvaluator;
 
-public class Person {
+public class Person implements Comparable<Person> {
   public static int AUTHOR = 0; 
   public static int EDITOR = 1; 
   public static int TECHNICAL_WRITER = 2; 
@@ -50,6 +53,7 @@ public class Person {
     if (xmdValuePersons != null && xmdValuePersons.size() > 0) {
       XdmSequenceIterator xmdValuePersonsIterator = xmdValuePersons.iterator();
       retPersons = new ArrayList<Person>();
+      HashSet<Person> persons = new HashSet<Person>();
       while (xmdValuePersonsIterator.hasNext()) {
         XdmItem xdmItemPerson = xmdValuePersonsIterator.next();
         String xdmItemPersonStr = xdmItemPerson.toString();
@@ -68,7 +72,7 @@ public class Person {
         String name = xQueryEvaluator.evaluateAsString(xdmItemPersonStr, "string(/person/name)");
         if (name != null && ! name.isEmpty()) {
           name = name.trim();
-          name = name.replaceAll("-\\s([^u]?)|^\\.|^-", "$1");
+          name = name.replaceAll("-\\s([^u]?)|^\\.|^-|[()]", "$1");
           person.setName(name);
         }
         String forename = xQueryEvaluator.evaluateAsString(xdmItemPersonStr, "string(/person/forename)");
@@ -80,9 +84,12 @@ public class Person {
         String ref = xQueryEvaluator.evaluateAsString(xdmItemPersonStr, "string(/person/ref)");
         if (ref != null && ! ref.isEmpty())
           person.setRef(ref);
-        if ((name != null && ! name.isEmpty()) || (forename != null && ! forename.isEmpty()) || (surname != null && ! surname.isEmpty()))
-          retPersons.add(person);
+        if ((name != null && ! name.isEmpty()) || (forename != null && ! forename.isEmpty()) || (surname != null && ! surname.isEmpty())) {
+          persons.add(person);
+        }
       }
+      retPersons.addAll(persons);
+      Collections.sort(retPersons);
     }
     return retPersons;
   }
@@ -248,5 +255,41 @@ public class Person {
     }
     return retJsonObject;
   }
-  
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj)
+      return true;
+    if (obj == null)
+      return false;
+    if (getClass() != obj.getClass())
+      return false;
+    Person other = (Person) obj;
+    if (name == null) {
+      if (other.name != null)
+        return false;
+    } else if (! name.equals(other.name))
+      return false;
+    return true;
+  }
+
+  @Override
+  public int hashCode() {
+    return new HashCodeBuilder(17, 31).append(name).toHashCode(); // two randomly chosen prime numbers
+  }
+
+  @Override
+  public int compareTo(Person p) {  
+    if (role == p.role) {
+      return name.compareToIgnoreCase(p.name);
+    } else {
+      Integer thisRole = new Integer(role);
+      Integer otherRole = new Integer(p.role);
+      return thisRole.compareTo(otherRole);
+    }
+  }  
+
+  public String toString() {
+    return name + "[" + role + "]";
+  }
 }
