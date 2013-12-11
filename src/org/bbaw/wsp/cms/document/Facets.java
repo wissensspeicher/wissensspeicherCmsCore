@@ -158,9 +158,11 @@ public class Facets implements Iterable<Facet> {
           try {
             Collection coll = CollectionReader.getInstance().getCollection(facetValueName);
             String rdfId = coll.getRdfId();
+            if (rdfId == null)
+              rdfId = "none";
             jsonFacetValue.put("rdfUri", rdfId); 
           } catch (Exception e) {
-            // nothing
+            jsonFacetValue.put("rdfUri", "none"); 
           }
         }
         jsonFacetValue.put("value", facetValueName);
