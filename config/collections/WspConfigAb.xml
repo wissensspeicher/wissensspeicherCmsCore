@@ -2,7 +2,7 @@
 <wsp>
   <collection>
     <id>ab</id>
-    <rdfId>http://wsp.normdata.rdf/PreussenAlsKulturstaat</rdfId>
+    <rdfId>http://wsp.normdata.rdf/PreußenAlsKulturstaat</rdfId>
     <name>Protokolle des Preußischen Staatsministeriums Acta Borussica</name>
     <url>
     	<webBaseUrl>http://actaborussica.bbaw.de/</webBaseUrl>

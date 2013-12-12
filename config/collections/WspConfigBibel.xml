@@ -2,7 +2,7 @@
 <wsp>
   <collection>
     <id>bibel</id>
-    <rdfId>http://wsp.normdata.rdf/BiblexegeseSpaetantike</rdfId>
+    <rdfId>http://wsp.normdata.rdf/BiblexegeseSpätantike</rdfId>
     <name>Die alexandrinische und antiochenische Bibelexegese in der Spätantike</name>
     <url>
       <webBaseUrl>http://www.bbaw.de/forschung/bibelexegese</webBaseUrl>
