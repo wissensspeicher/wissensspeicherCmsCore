@@ -33,11 +33,13 @@ public class Facets implements Iterable<Facet> {
           int facetCountHits = (int) facetResultNode.getValue();
           if (facet.getId() == null)
             facet.setId(facetName);
-          FacetValue facetNameValue = new FacetValue();
-          facetNameValue.setName(facetValue);
-          facetNameValue.setValue(String.valueOf(facetCountHits));
-          facetNameValue.setCount(facetCountHits);
-          facetValues.add(facetNameValue);
+          if (facetName != null && ! facetValue.trim().isEmpty()) {
+            FacetValue facetNameValue = new FacetValue();
+            facetNameValue.setName(facetValue);
+            facetNameValue.setValue(String.valueOf(facetCountHits));
+            facetNameValue.setCount(facetCountHits);
+            facetValues.add(facetNameValue);
+          }
         }
         if (! facetValues.isEmpty()) {
           facet.setValues(facetValues);
