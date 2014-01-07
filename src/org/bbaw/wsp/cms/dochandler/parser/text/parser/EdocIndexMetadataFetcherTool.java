@@ -112,7 +112,10 @@ public class EdocIndexMetadataFetcherTool {
           } else { // more creators are separated by ';'
             creatorBuilder.append(" ; " + content);
           }
-          mdRecord.setCreator(creatorBuilder.toString());
+          String creatorStr = creatorBuilder.toString();
+          creatorStr = creatorStr.trim();
+          if (! creatorStr.isEmpty())
+            mdRecord.setCreator(creatorStr);
         } else if (tag.equals("DC.Subject")) {
           mdRecord.setSubject(content); // DC.Subject follows the
           // Schlagwortnormdatei
