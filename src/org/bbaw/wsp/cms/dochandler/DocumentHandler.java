@@ -538,8 +538,10 @@ public class DocumentHandler {
             name = surname.trim() + ", " + forename.trim();
           else if (surname != null && ! surname.isEmpty() && (forename == null || forename.isEmpty()))
             name = surname.trim();
-          author.setName(name);
-          authors.add(author);
+          if (! name.isEmpty()) {
+            author.setName(name);
+            authors.add(author);
+          }
         }
         creator = "";
         creatorDetails = "<persons>";
@@ -569,8 +571,11 @@ public class DocumentHandler {
           // nothing
         }
       }
-      if (title != null)
+      if (title != null) {
         title = StringUtils.deresolveXmlEntities(title.trim());
+        if (title.isEmpty())
+          title = null;
+      }
       String language = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/*:teiHeader/*:profileDesc/*:langUsage/*:language[1]/@ident)");
       if (language != null && language.isEmpty())
         language = null;
@@ -585,13 +590,19 @@ public class DocumentHandler {
         publisher = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:publicationStmt/*:publisher", ", ");
       if (publisher == null || publisher.isEmpty())
         publisher = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:sourceDesc/*:bibl/*:publisher", ", ");
-      if (publisher != null)
+      if (publisher != null) {
         publisher = StringUtils.deresolveXmlEntities(publisher.trim());
+        if (publisher.isEmpty())
+          publisher = null;
+      }
       String place = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:sourceDesc/*:biblFull/*:publicationStmt/*:pubPlace", ", ");
       if (place == null || place.isEmpty())
         place = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:publicationStmt/*:pubPlace");
-      if (place != null)
+      if (place != null) {
         place = StringUtils.deresolveXmlEntities(place.trim());
+        if (place.isEmpty())
+          place = null;
+      }
       String publisherStr = null;
       boolean publisherEndsWithComma = false;
       if (publisher != null)
@@ -622,15 +633,16 @@ public class DocumentHandler {
         }
       }
       String subject = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:profileDesc/*:textClass/*:keywords/*:term");
-      if (subject != null)
+      if (subject != null) {
         subject = StringUtils.deresolveXmlEntities(subject.trim());
+      }
       String rights = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:publicationStmt/*:availability");
-      if (rights == null)
+      if (rights == null || rights.trim().isEmpty())
         rights = "open access";
       rights = StringUtils.deresolveXmlEntities(rights.trim());
       String license = "http://echo.mpiwg-berlin.mpg.de/policy/oa_basics/declaration";
       String accessRights = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/*:teiHeader/*:fileDesc/*:publicationStmt/*:availability/@status)");
-      if (accessRights == null) 
+      if (accessRights == null || accessRights.trim().isEmpty()) 
         accessRights = "free";
       accessRights = StringUtils.deresolveXmlEntities(accessRights.trim());
       mdRecord.setIdentifier(identifier);
@@ -663,8 +675,11 @@ public class DocumentHandler {
       if (webUri != null)
         webUri = StringUtils.deresolveXmlEntities(webUri.trim());
       String creator = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStrDmd, "/*:dmdSec/*:mdWrap/*:xmlData/*:mods/*:name");
-      if (creator != null)
+      if (creator != null) {
         creator = StringUtils.deresolveXmlEntities(creator.trim());
+        if (creator.isEmpty())
+          creator = null;
+      }
       String title = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStrDmd, "/*:dmdSec/*:mdWrap/*:xmlData/*:mods/*:titleInfo");
       if (title != null)
         title = StringUtils.deresolveXmlEntities(title.trim());
@@ -741,11 +756,17 @@ public class DocumentHandler {
       if (identifier != null && ! identifier.isEmpty())
         identifier = StringUtils.deresolveXmlEntities(identifier.trim());
       String creator = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/meta[@name = 'DC.creator']/@content)");
-      if (creator != null && ! creator.isEmpty())
+      if (creator != null && ! creator.isEmpty()) {
         creator = StringUtils.deresolveXmlEntities(creator.trim());
+        if (creator.isEmpty())
+          creator = null;
+      }      
       String title = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/meta[@name = 'DC.title']/@content)");
-      if (title != null && ! title.isEmpty())
+      if (title != null && ! title.isEmpty()) {
         title = StringUtils.deresolveXmlEntities(title.trim());
+        if (title.isEmpty())
+          title = null;
+      }
       String language = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/meta[@name = 'DC.language']/@content)");
       if (language != null && language.isEmpty())
         language = null;
@@ -754,8 +775,11 @@ public class DocumentHandler {
         language = Language.getInstance().getISO639Code(language);
       }
       String publisher = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/meta[@name = 'DC.publisher']/@content)");
-      if (publisher != null)
+      if (publisher != null) {
         publisher = StringUtils.deresolveXmlEntities(publisher.trim());
+        if (publisher.isEmpty())
+          publisher = null;
+      }
       String yearStr = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/meta[@name = 'DC.date']/@content)");
       Date date = null; 
       if (yearStr != null && ! yearStr.equals("")) {
@@ -770,20 +794,35 @@ public class DocumentHandler {
         }
       }
       String subject = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/meta[@name = 'DC.subject']/@content)");
-      if (subject != null)
+      if (subject != null) {
         subject = StringUtils.deresolveXmlEntities(subject.trim());
+        if (subject.isEmpty())
+          subject = null;
+      }
       String description = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/meta[@name = 'DC.description']/@content)");
-      if (description != null)
+      if (description != null) {
         description = StringUtils.deresolveXmlEntities(description.trim());
+        if (description.isEmpty())
+          description = null;
+      }
       String rights = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/meta[@name = 'DC.rights']/@content)");
-      if (rights != null && ! rights.isEmpty())
+      if (rights != null && ! rights.isEmpty()) {
         rights = StringUtils.deresolveXmlEntities(rights.trim());
+        if (rights.isEmpty())
+          rights = null;
+      }
       String license = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/meta[@name = 'DC.license']/@content)");
-      if (license != null && ! license.isEmpty())
+      if (license != null && ! license.isEmpty()) {
         license = StringUtils.deresolveXmlEntities(license.trim());
+        if (license.isEmpty())
+          license = null;
+      }
       String accessRights = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/meta[@name = 'DC.accessRights']/@content)");
-      if (accessRights != null && ! accessRights.isEmpty())
+      if (accessRights != null && ! accessRights.isEmpty()) {
         accessRights = StringUtils.deresolveXmlEntities(accessRights.trim());
+        if (accessRights.isEmpty())
+          accessRights = null;
+      }
       mdRecord.setIdentifier(identifier);
       mdRecord.setLanguage(language);
       mdRecord.setCreator(creator);
