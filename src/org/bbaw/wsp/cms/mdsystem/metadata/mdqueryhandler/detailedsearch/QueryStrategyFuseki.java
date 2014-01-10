@@ -4,8 +4,10 @@
 package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.detailedsearch;
 
 import java.net.URL;
+import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
+import org.bbaw.wsp.cms.collections.Collection;
 import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.fuseki.FusekiClient;
 import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.tools.SparqlCommandBuilder;
 
@@ -133,6 +135,12 @@ public class QueryStrategyFuseki implements IQueryStrategy<ResultSet> {
   @Override
   public ResultSet queryAllProjectInfoAndResolveUris(String projectUri, boolean isProjectId) {
     final String query = SparqlCommandBuilder.SELECT_ALL_PROJECT_INFO_AND_RESOlVE_FOR_GIVEN_ID.getSelectQueryString(null, null, null, null, projectUri);
+    return delegateQuery(query);
+  }
+
+  @Override
+  public ResultSet preloadAllProjectInfoAndResolveUris(String collectionIdPattern) {
+    final String query = SparqlCommandBuilder.SELECT_ALL_PROJECT_INFO_AND_RESOlVE_FOR_GIVEN_ID.getSelectQueryString(null, null, null, null, collectionIdPattern);
     return delegateQuery(query);
   }
 }

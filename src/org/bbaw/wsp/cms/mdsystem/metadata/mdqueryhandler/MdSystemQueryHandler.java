@@ -2,23 +2,31 @@ package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Timer;
+import java.util.Map;
 
+import org.apache.log4j.Logger;
+import org.bbaw.wsp.cms.collections.Collection;
+import org.bbaw.wsp.cms.collections.CollectionReader;
 import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.conceptsearch.ConceptIdentfierSearchMode;
 import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.conceptsearch.ConceptIdentifier;
 import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.conceptsearch.ConceptQueryResult;
+import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.detailedsearch.HitGraphContainer;
+import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.detailedsearch.IQueryStrategy;
 import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.detailedsearch.ISparqlAdapter;
+import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.detailedsearch.QueryStrategyJena;
+import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.detailedsearch.SparqlAdapter;
 import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.detailedsearch.SparqlAdapterFactory;
+import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.JenaMain;
 import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.WspRdfStore;
 import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.fuseki.FusekiClient;
 import org.bbaw.wsp.cms.mdsystem.util.StatisticsScheduler;
 
 import com.hp.hpl.jena.query.ResultSet;
+
+import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 
 /**
  * handles the JSON-query sent from the GUI and delegates to @SparqlAdapter and @ConceptIdentifier
@@ -36,21 +44,14 @@ public class MdSystemQueryHandler {
   private boolean statTimerFlag = false;
   
   private MdSystemQueryHandler() {
-  }
-
-  public static MdSystemQueryHandler getInstance() {
-    if (mdSystemQueryHandler == null) {
-      mdSystemQueryHandler = new MdSystemQueryHandler();
-    }
-    return mdSystemQueryHandler;
-  }
-
-  public void init() {
     this.store = WspRdfStore.getInstance();
     URL datasetUrl;
+    final Logger logger = Logger.getLogger(MdSystemQueryHandler.class);
     try {
+      //default case is to use Fuseki
       datasetUrl = new URL("http://localhost:3030/ds");
       sparqlAdapter = SparqlAdapterFactory.getDefaultAdapter(datasetUrl);
+      logger.info("sparql adapter startet, uses fuseki");
       identifier = new ConceptIdentifier();
     } catch (final MalformedURLException e) {
       // TODO Auto-generated catch block
@@ -73,6 +74,48 @@ public class MdSystemQueryHandler {
   }
 
   /**
+   * singleton
+   * @return
+   */
+  public static MdSystemQueryHandler getInstance() {
+    if (mdSystemQueryHandler == null) {
+      mdSystemQueryHandler = new MdSystemQueryHandler();
+    }
+    return mdSystemQueryHandler;
+  }
+
+  private ArrayList<Collection> getCollectionIds(){
+    ArrayList<Collection> collectionList = null;
+    try {
+      collectionList = CollectionReader.getInstance().getCollections();
+    } catch (ApplicationException e) {
+      e.printStackTrace();
+    }
+    return collectionList;
+  }
+  
+  public HitGraphContainer preloadAllProjectInf(){
+    ArrayList<Collection> collectionIds = getCollectionIds();
+    StringBuilder sb = new StringBuilder();
+    sb.append("SELECT DISTINCT ?projectId ?pr ?ob \n ?resolvedPer ?resolvedLing  ?resolvedTime \n ?resolvedProj ?resolvedLoc ?resolvedOrg ?resolvedMed ?resolvedEvnt \n"+
+    "WHERE {\n"+
+    "?projectId ?pr ?ob .\n"+
+    "?projectId rdf:type foaf:Project .\n"+
+    "FILTER (");
+    for (int i = 0; i < collectionIds.size(); i++) {
+      String cId = collectionIds.get(i).getId();
+      sb.append("?projectId = "+cId);
+      if(i < collectionIds.size()){
+        sb.append(" || \n");
+      }
+    }
+    sb.append(").\n");
+    String sparqlPattern = sb.toString();
+    return sparqlAdapter.sparqlAllProjectInf(sparqlPattern);
+  }
+  
+  
+  /**
    * use locally
    * 
    * @param query
@@ -84,6 +127,7 @@ public class MdSystemQueryHandler {
     return results;
   }
 
+ 
   /**
    * get number of triples 
    */
@@ -140,4 +184,36 @@ public class MdSystemQueryHandler {
         System.out.println("number : "+number);
     return number;
   }
+  
+  public ISparqlAdapter getSparqlAdapter(){
+    return this.sparqlAdapter;
+  }
+  
+  public static ISparqlAdapter useFuseki() {
+    URL fusekiDatasetUrl;
+    try {
+      fusekiDatasetUrl = new URL("http://localhost:3030/ds");
+      return SparqlAdapterFactory.getDefaultAdapter(fusekiDatasetUrl);
+    } catch (final MalformedURLException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+      return null;
+    }
+  }
+
+  public static ISparqlAdapter useJena() {
+    final JenaMain jenamain = new JenaMain();
+    try {
+      jenamain.initStore();
+      final IQueryStrategy<Map<URL, ResultSet>> queryStrategy = new QueryStrategyJena(jenamain);
+      final ISparqlAdapter adapter = new SparqlAdapter<>(queryStrategy);
+      return adapter;
+    } catch (final ApplicationException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+      return null;
+    }
+    // jenamain.makeDefaultGraphUnion();
+  }
+
 }

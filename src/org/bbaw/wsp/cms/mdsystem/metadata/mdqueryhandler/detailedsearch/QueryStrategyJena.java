@@ -4,10 +4,12 @@
 package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.detailedsearch;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.bbaw.wsp.cms.collections.Collection;
 import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.JenaMain;
 import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.RdfHandler;
 import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.tools.SparqlCommandBuilder;
@@ -117,6 +119,12 @@ public class QueryStrategyJena implements IQueryStrategy<Map<URL, ResultSet>> {
 
   @Override
   public Map<URL, ResultSet> queryAllProjectInfoAndResolveUris(String projectUri, boolean isProjectId) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public Map<URL, ResultSet> preloadAllProjectInfoAndResolveUris(String collectionIds) {
     // TODO Auto-generated method stub
     return null;
   }

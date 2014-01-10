@@ -4,7 +4,10 @@
 package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.detailedsearch;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
+
+import org.bbaw.wsp.cms.collections.Collection;
 
 import com.hp.hpl.jena.rdf.model.Resource;
 
@@ -47,6 +50,14 @@ public interface ISparqlAdapter {
    */
   HitGraphContainer buildSparqlQuery(String projectId, boolean isProjectId);
 
+  /**
+   * Build a sparql query to preload all project Infos on application startup.
+   * 
+   */
+  HitGraphContainer sparqlAllProjectInf(String collectionIdPattern);
+  
+  
+  
   /**
    * Build a sparql query to receive all data in a specific graph
    * 

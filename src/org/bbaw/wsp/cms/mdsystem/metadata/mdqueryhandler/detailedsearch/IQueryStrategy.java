@@ -4,7 +4,9 @@
 package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.detailedsearch;
 
 import java.net.URL;
+import java.util.ArrayList;
 
+import org.bbaw.wsp.cms.collections.Collection;
 import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.tools.SparqlCommandBuilder;
 
 import com.hp.hpl.jena.query.ResultSet;
@@ -63,6 +65,15 @@ public interface IQueryStrategy<T> {
    * @return the generic type as specified in the concrete strategy class. Mostly it's a {@link ResultSet}.
    */
   T queryAllProjectInfoAndResolveUris(String projectUri, boolean isProjectId);
+  
+  /**
+   * Delegate a sparqlQuery to a useful handler instance and execute it. Use the {@link SparqlCommandBuilder} to build a valid sparql statement.
+   * 
+   * @param id
+   *          the projectId as String
+   * @return the generic type as specified in the concrete strategy class. Mostly it's a {@link ResultSet}.
+   */
+  T preloadAllProjectInfoAndResolveUris(String collectionIds);
   
   /**
    * Query a single named graph.

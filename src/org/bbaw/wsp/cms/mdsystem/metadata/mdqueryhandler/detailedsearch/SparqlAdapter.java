@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.bbaw.wsp.cms.collections.Collection;
 import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.MdSystemResultType;
 import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.detailedsearch.RelatedHitStatement.Relationship;
 
@@ -609,7 +610,7 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
 
   @Override
   public HitGraphContainer buildSparqlQuery(String projectUri, boolean isProjectId) {
-    System.out.println("buildSparqlQuery");
+    logger.info("buildSparqlQuery");
     final T results = queryStrategy.queryAllProjectInfoAndResolveUris(projectUri, isProjectId);
     freeQueryStrategy();
     return this.handleProjectIdResults(results);
@@ -639,5 +640,13 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
     }
 
     return container;
+  }
+
+  @Override
+  public HitGraphContainer sparqlAllProjectInf(String collectionsIdPattern) {
+    logger.info("sparqlAllProjectInf");
+    final T results = queryStrategy.preloadAllProjectInfoAndResolveUris(collectionsIdPattern);
+    freeQueryStrategy();
+    return this.handleProjectIdResults(results);
   }
 }
