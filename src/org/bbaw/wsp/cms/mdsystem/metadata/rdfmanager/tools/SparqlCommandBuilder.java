@@ -11,7 +11,7 @@ import java.net.URL;
  *       Last change: 15.11.2012 -> select queries added
  */
 public enum SparqlCommandBuilder {
-  CLEAR_DATASET, CLEAR_GRAPH, CLEAR_DEFAULT, SELECT_DEFAULT, SELECT_NAMED, SELECT_USING_INDEX, SELECT_NAMED_USING_INDEX, SELECT_USING_INDEX_CONTAINING_NAMED_GRAPH, SELECT_CONTAINING_NAMED_GRAPH, SELECT_ALL_PROJECT_INFO_FOR_GIVEN_ID, SELECT_ALL_PROJECT_INFO_AND_RESOlVE_FOR_GIVEN_ID;
+  CLEAR_DATASET, CLEAR_GRAPH, CLEAR_DEFAULT, SELECT_DEFAULT, SELECT_NAMED, SELECT_USING_INDEX, SELECT_NAMED_USING_INDEX, SELECT_USING_INDEX_CONTAINING_NAMED_GRAPH, SELECT_CONTAINING_NAMED_GRAPH, SELECT_ALL_PROJECT_INFO_FOR_GIVEN_ID, SELECT_ALL_PROJECT_INFO_AND_RESOlVE_FOR_GIVEN_ID, SELECT_AND_RESOlVE_PROJECT_INF_FOR_PRELOAD;
 
   /**
    * @return the spaql command as {@link String}.
@@ -79,7 +79,30 @@ public enum SparqlCommandBuilder {
       + "  ?o ?resolvedPredTime ?resolvedTime }\n" 
       + "OPTIONAL { ?o rdf:type gnd:ConferenceOrEvent.\n" 
       + " ?o ?resolvedPredEvnt ?resolvedEvnt } \n}";
-
+    case SELECT_AND_RESOlVE_PROJECT_INF_FOR_PRELOAD:
+      return "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n " 
+          + "PREFIX dc:  <http://purl.org/dc/elements/1.1/>\n" 
+          + "PREFIX dcterms: <http://purl.org/dc/terms/>\n" 
+        + "PREFIX foaf: <http://xmlns.com/foaf/0.1/>\n" 
+          + "PREFIX dc:  <http://purl.org/dc/elements/1.1/>\n" 
+        + "PREFIX gnd: <http://d-nb.info/standards/elementset/gnd#>\n" 
+          + projectUri 
+        + "OPTIONAL { ?o rdf:type foaf:Person.\n" 
+          + "?o ?resolvedPredPer ?resolvedPer }\n" 
+          + "OPTIONAL { ?o rdf:type foaf:Project.\n" 
+          + "  ?o ?resolvedProj ?resolvedProj } \n " 
+        + "OPTIONAL { ?o rdf:type dcterms:Location.\n" 
+          + "  ?o ?resolvedPredLoc ?resolvedLoc }\n" 
+          + "OPTIONAL { ?o rdf:type foaf:Organization.\n" 
+          + "  ?o ?resolvedPredOrg ?resolvedOrg }\n"
+        + "OPTIONAL { ?o rdf:type dcterms:LinguisticSystem.\n" 
+          + "  ?o ?resolvedPredLin ?resolvedLing }\n" 
+          + "OPTIONAL { ?o rdf:type dcterms:MediaType.\n" 
+          + "  ?o ?resolvedPredMed ?resolvedMed }\n" 
+        + "OPTIONAL { ?o rdf:type dcterms:PeriodOfTime.\n" 
+          + "  ?o ?resolvedPredTime ?resolvedTime }\n" 
+          + "OPTIONAL { ?o rdf:type gnd:ConferenceOrEvent.\n" 
+          + " ?o ?resolvedPredEvnt ?resolvedEvnt } \n}";
     default:
       return "";
     }
