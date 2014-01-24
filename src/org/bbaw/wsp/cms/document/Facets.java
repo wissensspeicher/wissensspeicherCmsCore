@@ -33,7 +33,8 @@ public class Facets implements Iterable<Facet> {
           int facetCountHits = (int) facetResultNode.getValue();
           if (facet.getId() == null)
             facet.setId(facetName);
-          if (facetName != null && ! facetValue.trim().isEmpty()) {
+          boolean isFacetValueProper = isProperValue(facetValue);
+          if (facetName != null && isFacetValueProper) {
             FacetValue facetNameValue = new FacetValue();
             facetNameValue.setName(facetValue);
             facetNameValue.setValue(String.valueOf(facetCountHits));
@@ -51,6 +52,21 @@ public class Facets implements Iterable<Facet> {
     }
   }
 
+  private boolean isProperValue(String val) {
+    if (val == null)
+      return false;
+    if (val.trim().isEmpty())
+      return false;
+    String regExprSpecialChars = "[@\"%!#\\$\\^&\\*\\?<>\\|_~=\\+\\-\\.:,;/\\(\\)\\[\\]]";  
+    String newVal = val.replaceAll(regExprSpecialChars, ""); // remove all special characters
+    newVal = newVal.trim();
+    if (newVal.isEmpty())
+      return false;
+    if (newVal.toLowerCase().equals("null"))
+      return false;
+    return true;
+  }
+  
   public int size() {
     if (facets != null)
       return facets.size();
