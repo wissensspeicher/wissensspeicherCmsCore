@@ -2,6 +2,7 @@
 <wsp>
   <collection>
     <id>pir</id>
+    <rdfId>http://wsp.normdata.rdf/ProsopographiaImperiiRomani</rdfId>
     <name>Prosopographia Imperii Romani</name>
     <url>
       <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/pir/de/Startseite</webBaseUrl>
