@@ -2,7 +2,8 @@
 <wsp>
   <collection>
     <id>test</id>
-    <name>test</name>
+    <rdfId>http://wsp.normdata.rdf/Wissensspeicher</rdfId>
+    <name>Testprojekt (nicht beachten)</name>
     <url>
       <!-- if dataUrl is not a directory but a file, it should end with a forward slash -->
       <dataUrl>http://wspdev/test/Test_1789.xml</dataUrl>
