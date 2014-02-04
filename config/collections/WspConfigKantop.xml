@@ -2,7 +2,7 @@
 <wsp>
   <collection>
     <id>kantop</id>
-    <rdfIf>http://wsp.normdata.rdf/KantSchriften/OpusPostumum</rdfIf>
+    <rdfId>http://wsp.normdata.rdf/KantSchriften/OpusPostumum</rdfId>
     <name>Kant’s gesammelte Schriften: Opus Postumum</name>
     <url>
       <webBaseUrl>http://kant.bbaw.de/opus-postumum</webBaseUrl>
