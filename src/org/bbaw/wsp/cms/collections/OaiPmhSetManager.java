@@ -4,7 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpException;
+import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.io.FileUtils;
+import org.apache.log4j.Logger;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 import de.mpg.mpiwg.berlin.mpdl.xml.xquery.XQueryEvaluator;
@@ -17,6 +21,8 @@ public class OaiPmhSetManager {
   private XQueryEvaluator xQueryEvaluator;
   private ArrayList<Collection> collections;
 
+  private static final Logger logger = Logger.getLogger(OaiPmhSetManager.class);
+  
   public static void main(String[] args) throws ApplicationException {
     OaiPmhSetManager setManager = new OaiPmhSetManager();
     setManager.init();
@@ -91,6 +97,41 @@ public class OaiPmhSetManager {
     }catch (IOException e) {
       throw new ApplicationException(e);
     }
+    
+  }
+  
+  /**
+   * bundles metadata to a set by Http POST
+   * 
+   */
+  public void createSets() {
+    try {
+      CollectionReader collectionReader = CollectionReader.getInstance();
+      ArrayList<Collection> collList = collectionReader.getCollections();
+      
+      for (Collection collection : collList) {
+        String resultStr = null; 
+        String currentSet = collection.getId();
+        HttpClient client = new HttpClient();
+        String params = "command=addMetadataDir&dirNickname="+currentSet+"&dirMetadataFormat=oai_dc&dirPath=/opt/wsp/data/oaiprovider/"+currentSet+"&metadataNamespace=http://www.openarchives.org/OAI/2.0/oai_dc/&metadataSchema=http://www.openarchives.org/OAI/2.0/oai_dc.xsd";
+        PostMethod postmethod = new PostMethod("http://wspdev.bbaw.de/oai/admin/metadata_dir-validate.do?"+params);
+      
+        int statusCode = client.executeMethod(postmethod);
+        if (statusCode<  400) {
+          byte[] resultBytes = postmethod.getResponseBody();
+          resultStr = new String(resultBytes, "utf-8");
+          logger.info("indexing oai-pmh set '"+currentSet+"'. status code : "+statusCode);
+        } 
+        client.executeMethod(postmethod);
+        postmethod.releaseConnection();
+      }
+    } catch (HttpException e) {
+      e.printStackTrace();
+    } catch (IOException e) {
+      e.printStackTrace();
+    } catch (ApplicationException e) {
+      e.printStackTrace();
+    }  
     
   }
 }
