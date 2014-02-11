@@ -374,16 +374,28 @@ public class CollectionManager {
   private MetadataRecord getMdRecord(XQueryEvaluator xQueryEvaluator, String xmlRdfStr) throws ApplicationException {
     MetadataRecord mdRecord = new MetadataRecord();
     String identifier = xQueryEvaluator.evaluateAsString(xmlRdfStr, "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; declare namespace dcterms=\"http://purl.org/dc/terms/\"; /rdf:Description/dcterms:identifier/text()");
+    if (identifier != null)
+      identifier = StringUtils.deresolveXmlEntities(identifier.trim());
     mdRecord.setDocId(identifier);
     String webUri = xQueryEvaluator.evaluateAsString(xmlRdfStr, "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; declare namespace dc=\"http://purl.org/elements/1.1/\"; string(/rdf:Description/dc:identifier/@rdf:resource)");
+    if (webUri != null)
+      webUri = StringUtils.deresolveXmlEntities(webUri.trim());
     mdRecord.setWebUri(webUri);
     String creator = xQueryEvaluator.evaluateAsString(xmlRdfStr, "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; declare namespace dc=\"http://purl.org/elements/1.1/\"; /rdf:Description/dc:creator/text()");
+    if (creator != null)
+      creator = StringUtils.deresolveXmlEntities(creator.trim());
     mdRecord.setCreator(creator);
     String title = xQueryEvaluator.evaluateAsString(xmlRdfStr, "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; declare namespace dc=\"http://purl.org/elements/1.1/\"; /rdf:Description/dc:title/text()");
+    if (title != null)
+      title = StringUtils.deresolveXmlEntities(title.trim());
     mdRecord.setTitle(title);
     String publisher = xQueryEvaluator.evaluateAsString(xmlRdfStr, "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; declare namespace dc=\"http://purl.org/elements/1.1/\"; /rdf:Description/dc:publisher/text()");
+    if (publisher != null)
+      publisher = StringUtils.deresolveXmlEntities(publisher.trim());
     mdRecord.setPublisher(publisher);
     String subject = xQueryEvaluator.evaluateAsStringValueJoined(xmlRdfStr, "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; declare namespace dc=\"http://purl.org/elements/1.1/\"; /rdf:Description/dc:subject", "###");
+    if (subject != null)
+      subject = StringUtils.deresolveXmlEntities(subject.trim());
     mdRecord.setSubject(subject);
     String dateStr = xQueryEvaluator.evaluateAsString(xmlRdfStr, "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; declare namespace dc=\"http://purl.org/elements/1.1/\"; /rdf:Description/dc:date/text()");
     Date date = null;
@@ -404,6 +416,8 @@ public class CollectionManager {
     String mimeType = xQueryEvaluator.evaluateAsString(xmlRdfStr, "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; declare namespace dc=\"http://purl.org/elements/1.1/\"; declare namespace dcterms=\"http://purl.org/dc/terms/\"; string(/rdf:Description/dc:format/dcterms:IMT/@rdf:value)");
     mdRecord.setType(mimeType);
     String abstractt = xQueryEvaluator.evaluateAsString(xmlRdfStr, "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; declare namespace dc=\"http://purl.org/elements/1.1/\"; /rdf:Description/dc:abstract/text()");
+    if (abstractt != null)
+      abstractt = StringUtils.deresolveXmlEntities(abstractt.trim());
     mdRecord.setDescription(abstractt);
     String pagesStr = xQueryEvaluator.evaluateAsString(xmlRdfStr, "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; declare namespace dc=\"http://purl.org/elements/1.1/\"; /rdf:Description/dc:extent/text()");
     if (pagesStr != null && ! pagesStr.isEmpty()) {
