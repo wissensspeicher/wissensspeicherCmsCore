@@ -25,8 +25,8 @@ public class OaiPmhSetManager {
   
   public static void main(String[] args) throws ApplicationException {
     OaiPmhSetManager setManager = new OaiPmhSetManager();
-    setManager.init();
-    setManager.convert();
+//    setManager.init();
+    setManager.createSets();
   }
 
   public OaiPmhSetManager() {
@@ -42,21 +42,27 @@ public class OaiPmhSetManager {
 		}
 	}
   
+  /**
+   * creates 
+   * @throws ApplicationException
+   */
   private void convert() throws ApplicationException{
 
     File outputRdfFile = new File(outputDir + "/" + "ListSets-config_TEST.xml");
     StringBuilder builder = new StringBuilder();
     try {
+      builder.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+      builder.append(System.getProperty("line.separator"));
+      builder.append("<ListSets>");
+      builder.append(System.getProperty("line.separator"));
       for (Collection c : collections) {
-      System.out.println(c.getId()); 
+//      System.out.println(c.getId()); 
       
-        builder.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-        builder.append(System.getProperty("line.separator"));
-        builder.append("<ListSets>");
-        builder.append(System.getProperty("line.separator"));
         builder.append("<set>");
         builder.append(System.getProperty("line.separator"));
         builder.append("<setSpec>"+c.getId()+"</setSpec>");
+        builder.append(System.getProperty("line.separator"));
+        builder.append("<setName>"+c.getId()+"</setName>");
         builder.append(System.getProperty("line.separator"));
         builder.append("<setDescription>");
         builder.append(System.getProperty("line.separator"));
@@ -66,7 +72,7 @@ public class OaiPmhSetManager {
         builder.append(System.getProperty("line.separator"));
         builder.append("<virtualSearchField field=\"setSpec\">");
         builder.append(System.getProperty("line.separator"));
-        builder.append("<virtualSearchTermDefinition term=\"avhbriefe\">");
+        builder.append("<virtualSearchTermDefinition term=\""+c.getId()+"\">");
         builder.append(System.getProperty("line.separator"));
         builder.append("<Query>");
         builder.append(System.getProperty("line.separator"));
@@ -74,11 +80,11 @@ public class OaiPmhSetManager {
         builder.append(System.getProperty("line.separator"));
         builder.append("<booleanQuery type=\"OR\" excludeOrRequire=\"require\">");
         builder.append(System.getProperty("line.separator"));
-        builder.append("textQuery field=\"docdir\" type=\"matchKeyword\""+/*c.getPmhDir+*/"</textQuery>");
+        builder.append("<textQuery field=\"docdir\" type=\"matchKeyword\">/opt/wsp/data/oaiprovider/"+c.getId()+"</textQuery>");
         builder.append(System.getProperty("line.separator"));
-        builder.append("</booleanQuery >");
+        builder.append("</booleanQuery>");
         builder.append(System.getProperty("line.separator"));
-        builder.append("</booleanQuery >");
+        builder.append("</booleanQuery>");
         builder.append(System.getProperty("line.separator"));
         builder.append("</Query>");
         builder.append(System.getProperty("line.separator"));
@@ -88,20 +94,24 @@ public class OaiPmhSetManager {
         builder.append(System.getProperty("line.separator"));
         builder.append("</set>");
         builder.append(System.getProperty("line.separator"));
-        builder.append("</ListSets>");
-        builder.append(System.getProperty("line.separator"));
         builder.append(System.getProperty("line.separator"));
 
       } 
-    FileUtils.writeStringToFile(outputRdfFile, builder.toString());
+      builder.append("</ListSets>");
+      builder.append(System.getProperty("line.separator"));
+      FileUtils.writeStringToFile(outputRdfFile, builder.toString());
+      logger.info("ListSets created");
     }catch (IOException e) {
       throw new ApplicationException(e);
     }
     
   }
   
-  /**
-   * bundles metadata to a set by Http POST
+  /** 
+   * bundles metadata to a set by Http POST and indexes them
+   * there is (at this time) no possibility to index a bundle of sets automatically. 
+   * as you don't want to manually index 150 projects, this is a method to index by a HTTP post.
+   * this is kind of a hack and should be handled with care 
    * 
    */
   public void createSets() {
