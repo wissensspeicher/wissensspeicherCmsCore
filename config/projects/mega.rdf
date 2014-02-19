@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF
+    xmlns="http://wsp.normdata.rdf/"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:foaf="http://xmlns.com/foaf/0.1/"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:ore="http://www.openarchives.org/ore/terms/"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:dcterms="http://purl.org/dc/terms/"
+    xmlns:gnd="http://d-nb.info/standards/elementset/gnd#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"> 
+<!-- internal: RDF-Id of project -->
+<rdf:Description rdf:about="http://wsp.normdata.rdf/MarxEngelsGA">
+  <!-- internal: always Project -->
+  <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
+  <!-- internal: Id of project -->
+  <foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mega</foaf:nick>
+  <!-- Id of project -->
+  <foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Marx-Engels-Gesamtausgabe</foaf:name>
+  <!-- abstract description of project -->
+  <dcterms:abstract rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Die "Marx-Engels-Gesamtausgabe" (MEGA) ist gemäß den 1992 revidierten Editionsrichtlinien die vollständige, historisch-kritische Ausgabe der Veröffentlichungen, der Handschriften und des Briefwechsels von Karl Marx (1818–1883) und Friedrich Engels (1820–1895). Sie gliedert sich in vier Abteilungen: Erste Abteilung: Werke. Artikel. Entwürfe; Zweite Abteilung: "Das Kapital" und Vorarbeiten; Dritte Abteilung: Briefwechsel; Vierte Abteilung: Exzerpte. Notizen. Marginalien.</dcterms:abstract>
+  <!-- Main homepage (URL) of the project -->
+  <foaf:homepage rdf:resource="http://mega.bbaw.de"/>
+  <!-- main language of project (ISO 639-3 code with 3 letters): e.g. ger, eng, fra, lat, ara -->
+  <dc:language><dcterms:ISO639-3><rdf:value>ger</rdf:value></dcterms:ISO639-3></dc:language>
+  <!-- project type: possible values: Vorhaben, Drittmittelprojekt, interdisziplinäre Arbeitsgruppe, Initiative -->
+  <dc:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Vorhaben</dc:description>
+  <foaf:status rdf:datatype="http://www.w3.org/2001/XMLSchema#string">aktiv</foaf:status>
+  <!-- start and end of the project (from, to): e.g. start=2007; end=2012; name=Laufzeit -->
+  <dcterms:valid rdf:datatype="http://purl.org/dc/terms/Period">start=1999; name=Laufzeit</dcterms:valid>
+  <!-- coverage of the project: possible values: http://wsp.normdata.rdf/Gegenwart, http://wsp.normdata.rdf/Neuzeit, http://wsp.normdata.rdf/Mittelalter, http://wsp.normdata.rdf/Antike  -->
+  <dc:coverage rdf:resource="http://wsp.normdata.rdf/Neuzeit"/>
+  <!-- working staff of the project: each entry has a separate RDF entry (see below) -->
+  <dc:contributor rdf:resource="http://wsp.normdata.rdf/Bluhm"/>
+  <dc:contributor rdf:resource="http://wsp.normdata.rdf/Vollgraf"/>
+  <dc:contributor rdf:resource="http://wsp.normdata.rdf/NoetzoldtH"/>
+  <dc:contributor rdf:resource="http://wsp.normdata.rdf/Hubmann"/>
+  <dc:contributor rdf:resource="http://wsp.normdata.rdf/Strauß"/>
+  <dc:contributor rdf:resource="http://wsp.normdata.rdf/Weckwerth"/>
+  <dc:contributor rdf:resource="http://wsp.normdata.rdf/Pagel"/>
+  <dc:contributor rdf:resource="http://wsp.normdata.rdf/Roth"/>
+  <dc:contributor rdf:resource="http://wsp.normdata.rdf/Herres"/>
+  <!-- ?? additional project fields: why gnd ?? -->
+  <gnd:contributingPerson rdf:resource="http://wsp.normdata.rdf/EngelsFriedrich"/>
+  <gnd:contributingPerson rdf:resource="http://wsp.normdata.rdf/MarxKarl"/>
+  <gnd:topic rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Geschichte</gnd:topic>
+  <gnd:definition>Edition</gnd:definition>
+  <gnd:contributingCorporateBody rdf:resource="http://www.uni-bremen.de/archiv/mega.html"/>
+</rdf:Description>
+
+<!-- working staff of the project -->
+<rdf:Description rdf:about="http://wsp.normdata.rdf/Bluhm">
+  <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
+  <foaf:title rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Dr.</foaf:title>
+  <foaf:givenName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Harald</foaf:givenName>
+  <foaf:familyName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Bluhm</foaf:familyName>
+  <dcterms:identifier rdf:resource="http://d-nb.info/gnd/12326569X"/>
+  <dcterms:identifier rdf:resource="http://viaf.org/viaf/97684605"/>
+  <gnd:functionOrRole>Projektleiter</gnd:functionOrRole>
+</rdf:Description>
+<rdf:Description rdf:about="http://wsp.normdata.rdf/Herres">
+  <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
+  <foaf:mbox rdf:datatype="http://www.w3.org/2001/XMLSchema#string">herres@bbaw.de</foaf:mbox>
+  <foaf:title rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Dr.</foaf:title>
+  <foaf:givenName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Jürgen</foaf:givenName>
+  <foaf:familyName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Herres</foaf:familyName>
+  <dcterms:identifier rdf:resource="http://d-nb.info/gnd/120127911"/>
+  <dcterms:identifier rdf:resource="http://viaf.org/viaf/40201835"/>
+  <gnd:functionOrRole>Wissenschaftlicher Mitarbeiter</gnd:functionOrRole>
+</rdf:Description>
+<rdf:Description rdf:about="http://wsp.normdata.rdf/Hubmann">
+  <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
+  <foaf:title rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Dr.</foaf:title>
+  <foaf:mbox rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hubmann@bbaw.de</foaf:mbox>
+  <foaf:givenName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Gerald</foaf:givenName>
+  <foaf:familyName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Hubmann</foaf:familyName>
+  <dcterms:identifier rdf:resource="http://d-nb.info/gnd/115250514"/>
+  <dcterms:identifier rdf:resource="http://viaf.org/viaf/737763"/>
+  <gnd:functionOrRole>Arbeitsstellenleiter</gnd:functionOrRole>
+</rdf:Description>
+<rdf:Description rdf:about="http://wsp.normdata.rdf/NoetzoldtH">
+  <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
+  <foaf:mbox rdf:datatype="http://www.w3.org/2001/XMLSchema#string">hnoetzoldt@bbaw.de</foaf:mbox>
+  <foaf:givenName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Henriette</foaf:givenName>
+  <foaf:familyName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Nötzoldt</foaf:familyName>
+  <gnd:functionOrRole>Wissenschaftlich-technische Mitarbeiterin</gnd:functionOrRole>
+</rdf:Description>
+<rdf:Description rdf:about="http://wsp.normdata.rdf/Pagel">
+  <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
+  <foaf:mbox rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pagel@bbaw.de</foaf:mbox>
+  <foaf:givenName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ulrich</foaf:givenName>
+  <foaf:familyName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Pagel</foaf:familyName>
+  <gnd:functionOrRole>Wissenschaftlicher Mitarbeiter</gnd:functionOrRole>
+</rdf:Description>
+<rdf:Description rdf:about="http://wsp.normdata.rdf/Roth">
+  <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
+  <foaf:mbox rdf:datatype="http://www.w3.org/2001/XMLSchema#string">roth@bbaw.de</foaf:mbox>
+  <foaf:title rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Dr.</foaf:title>
+  <foaf:givenName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Regina</foaf:givenName>
+  <foaf:familyName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Roth</foaf:familyName>
+  <dcterms:identifier rdf:resource="http://d-nb.info/gnd/11568896X"/>
+  <dcterms:identifier rdf:resource="http://viaf.org/viaf/37077691"/>
+  <gnd:functionOrRole>Wissenschaftliche Mitarbeiterin</gnd:functionOrRole>
+</rdf:Description>
+<rdf:Description rdf:about="http://wsp.normdata.rdf/Strauß">
+  <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
+  <foaf:title rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Dr.</foaf:title>
+  <foaf:mbox rdf:datatype="http://www.w3.org/2001/XMLSchema#string">strauss@bbaw.de</foaf:mbox>
+  <foaf:givenName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Hanno</foaf:givenName>
+  <foaf:familyName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Strauß</foaf:familyName>
+  <dcterms:identifier rdf:resource="http://d-nb.info/gnd/111886910"/>
+  <dcterms:identifier rdf:resource="http://viaf.org/viaf/54782636"/>
+  <gnd:functionOrRole>Wissenschaftlicher Mitarbeiter</gnd:functionOrRole>
+</rdf:Description>
+<rdf:Description rdf:about="http://wsp.normdata.rdf/Vollgraf">
+  <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
+  <foaf:title rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Dr. sc.</foaf:title>
+  <foaf:mbox rdf:datatype="http://www.w3.org/2001/XMLSchema#string">vollgraf@bbaw.de</foaf:mbox>
+  <foaf:givenName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Erich</foaf:givenName>
+  <foaf:familyName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Vollgraf</foaf:familyName>
+  <dcterms:identifier rdf:resource="http://d-nb.info/gnd/109353072"/>
+  <dcterms:identifier rdf:resource="http://viaf.org/viaf/71606445"/>
+  <gnd:functionOrRole>Wissenschaftlicher Mitarbeiter</gnd:functionOrRole>
+</rdf:Description>
+<rdf:Description rdf:about="http://wsp.normdata.rdf/Weckwerth">
+  <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
+  <foaf:mbox rdf:datatype="http://www.w3.org/2001/XMLSchema#string">weckwerth@bbaw.de</foaf:mbox>
+  <foaf:familyName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Weckwerth</foaf:familyName>
+  <foaf:givenName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Christine</foaf:givenName>
+  <foaf:title rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Dr.</foaf:title>
+  <dcterms:identifier rdf:resource="http://d-nb.info/gnd/123697611"/>
+  <dcterms:identifier rdf:resource="http://viaf.org/viaf/265495137"/>
+  <gnd:functionOrRole>Wissenschaftliche Mitarbeiterin</gnd:functionOrRole>
+</rdf:Description>
+
+
+<!-- project resources
+  each resource consists of 2 rdf-descriptions: 
+  1. the metadata of the resource and 
+  2. the resource itself as an aggregation 
+-->
+<rdf:Description rdf:about="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B001-01_ETX.xml">
+  <!-- internal: link to resource itself -->
+  <ore:describes rdf:resource="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B001-01_ETX.xml/Aggregation"/>
+  <!-- internal: creator is the project itself -->
+  <dcterms:creator rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
+  <!-- creation dateTime of the resource: dateTime schema -->
+  <dcterms:created rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2014-04-01T00:00:00Z</dcterms:created>
+  <!-- modified dateTime of the resource: dateTime schema -->
+  <dcterms:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2014-04-01T00:00:00Z</dcterms:modified>
+  <!-- see all possible rights here: http://creativecommons.org/licenses -->
+  <dcterms:rights rdf:resource="http://creativecommons.org/licenses/by-sa/4.0"/>
+</rdf:Description>
+<!-- resource itself -->
+<rdf:Description rdf:about="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B001-01_ETX.xml/Aggregation">
+  <ore:isDescribedBy rdf:resource="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B001-01_ETX.xml"/>
+  <!-- see possible values here: http://purl.org/eprint/type/ -->
+  <rdf:type rdf:resource="http://purl.org/eprint/type/Book"/>
+  <!-- URL of the resource -->
+  <dc:identifier rdf:resource="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B001-01_ETX.xml"/>
+  <!-- creator/author of the resource -->
+  <dc:creator>Marx, Karl</dc:creator>
+  <!-- title of the resource -->
+  <dc:title>Karl Marx Friedrich Engels Gesamtausgabe (MEGA), Zweite Abteilung "Das Kapital" und Vorarbeiten, Band 1, Karl Marx: Ökonomische Manuskripte 1857/58. Teil 1</dc:title>
+  <!-- publishing date of the resource -->
+  <dc:date>1996</dc:date>
+  <!-- main language of the resource -->
+  <dc:language><dcterms:ISO639-3><rdf:value>ger</rdf:value></dcterms:ISO639-3></dc:language>
+  <!-- mime type of the resource -->
+  <dc:format><dcterms:IMT rdf:value="text/xml"/></dc:format>
+  <!-- extent of the resource -->
+  <dcterms:extent rdf:datatype="http://www.w3.org/2001/XMLSchema#string">888 pages</dcterms:extent>
+  <!-- controlled vocabulary: dbPedia categories: persons, places, concepts --> <!-- auch geonames (aktuell), pleiades (Antik) -->
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Karl_Marx"/> 
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Berlin"/>
+  <!-- controlled vocabulary: GND persons, places and concepts -->
+  <dcterms:subject rdf:type="http://d-nb.info/standards/elementset/gnd#Person" rdf:resource="http://d-nb.info/gnd/118578537"/><!-- GND person "Karl Marx" -->
+  <dcterms:subject rdf:type="http://d-nb.info/standards/elementset/gnd#PlaceOrGeographicName" rdf:resource=" http://d-nb.info/gnd/4005728-8"/><!-- GND place "Berlin" -->
+  <dcterms:subject rdf:type="http://d-nb.info/standards/elementset/gnd#SubjectHeading" rdf:resource="http://d-nb.info/gnd/4037764-7"/><!-- GND concept "Marxismus" -->
+  <!-- controlled vocabulary: DDC -->
+  <dc:subject rdf:datatype="http://purl.org/dc/terms/DDC">335</dc:subject> <!-- 335 in DDC is "Sozialismus und verwandte Systeme"  -->
+  <dc:subject rdf:datatype="http://purl.org/dc/terms/DDC">320.5315</dc:subject> <!-- 320.5315 in DDC is "Marxian socialism (Democratic socialism, Social democracy)"  -->
+  <!-- free vocabulary -->
+  <dc:subject>Marx</dc:subject>
+  <dc:subject>Engels</dc:subject>
+  <dc:subject>Kapital</dc:subject>
+  <dc:subject>Ökonomische Manuskripte</dc:subject>
+</rdf:Description>
+
+
+
+</rdf:RDF>
