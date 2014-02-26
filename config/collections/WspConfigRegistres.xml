@@ -35,6 +35,13 @@
       <field>head</field>
       <exclude/>
     </fields>
+    <xqueries>
+      <xquery>
+        <name>webId</name>
+        <code>xxxFileName</code>  <!-- special field: delivers the fileName of the xml file -->
+        <preStr>http://akademieregistres.bbaw.de/exist/rest/db/registres/protokolle/</preStr>
+      </xquery>
+    </xqueries>
     <update>false</update>
   </collection>
 </wsp>
