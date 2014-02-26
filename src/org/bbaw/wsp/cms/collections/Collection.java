@@ -13,9 +13,9 @@ public class Collection {
   private String name;
   private String webBaseUrl;  // web base url 
   private WspUrl[] dataUrls;  // urls of data (could also be starting url (with type "eXist")
-  private String dataUrlPrefix;  // prefix of url which is not relevant as id 
   private String[] metadataUrls;  // metadata urls for fetching records
   private String metadataUrlPrefix;  // prefix of metadataUrl which is not relevant as id
+  private String metadataRedundantUrlPrefix;  // prefix of metadataUrl which is not relevant as id 
   private String metadataUrlType;  // metadata url type e.g. "single" (url delivers single metadata record) or "many" (url delivers many metadata records)
   private String excludesStr; // excludes below dataUrl separated by a blank
   private String mainLanguage;
@@ -90,12 +90,12 @@ public class Collection {
     this.dataUrls = dataUrls;
   }
 
-  public String getDataUrlPrefix() {
-    return dataUrlPrefix;
+  public String getMetadataRedundantUrlPrefix() {
+    return metadataRedundantUrlPrefix;
   }
 
-  public void setDataUrlPrefix(String dataUrlPrefix) {
-    this.dataUrlPrefix = dataUrlPrefix;
+  public void setMetadataRedundantUrlPrefix(String metadataRedundantUrlPrefix) {
+    this.metadataRedundantUrlPrefix = metadataRedundantUrlPrefix;
   }
 
   public String[] getMetadataUrls() {
