@@ -20,6 +20,7 @@
       <exclude>protokolle/Sitzungsprotokolle.rng</exclude>
       <exclude>protokolle/Sitzungsprotokolle_alt.rng</exclude>
       <exclude>verzeichnisse/personenkorrektur.xml</exclude>
+      <exclude>verzeichnisse/Personenverzeichnis.xml</exclude>
       <exclude>verzeichnisse/Personenverzeichnis2.xml</exclude>
     </url>
     <languages>ger, fra</languages>
