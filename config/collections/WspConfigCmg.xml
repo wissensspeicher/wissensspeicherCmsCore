@@ -13,7 +13,6 @@
       <!-- XML-Texte -->
       <dataUrl type="eXistDir">http://telota.bbaw.de/exist/servlet/db/cmg</dataUrl> 
       
-      <dataUrlPrefix>/CMG/METS</dataUrlPrefix>
       <dataUrl>https://telotadev.bbaw.de/CMG/METS/cmg_06_02_02.xml</dataUrl>
       <dataUrl>https://telotadev.bbaw.de/CMG/METS/cmg_04.xml</dataUrl>
       <dataUrl>https://telotadev.bbaw.de/CMG/METS/cmg_05_10_02_03.xml</dataUrl>
@@ -112,4 +111,3 @@
     </formats> 
   </collection>
 </wsp>
-
