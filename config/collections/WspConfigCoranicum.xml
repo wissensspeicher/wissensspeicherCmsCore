@@ -10,14 +10,8 @@
       <dataUrl>http://www.corpuscoranicum.de</dataUrl>
       <dataUrl>http://corpuscoranicum.de/kommentar/index/sure</dataUrl>
       <dataUrl>http://koran.bbaw.de/materialien/bergstrasser-original-indexklein.pdf</dataUrl>
-      
       <!-- XML-Texte -->
       <dataUrl type="eXistDir">http://telotadev.bbaw.de:8085/exist/rest/db/Koran/</dataUrl>
-      <!-- this user is only needed for the parent directory: http://telotadev.bbaw.de:8085/exist/rest/db/   -->
-      <user>
-        <name>koran</name>
-        <pw>koran4ll</pw>
-      </user> 
       <exclude>ms-data</exclude>
       <exclude>test.xql</exclude>
       <exclude>Kommentar/bibelbuecher.txt</exclude>

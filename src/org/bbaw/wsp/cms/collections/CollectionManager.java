@@ -177,7 +177,7 @@ public class CollectionManager {
     ArrayList<MetadataRecord> mdRecords = new ArrayList<MetadataRecord>();;
     try {
       String collectionId = collection.getId();
-      String dataUrlPrefix = collection.getDataUrlPrefix();
+      String metadataRedundantUrlPrefix = collection.getMetadataRedundantUrlPrefix();
       String metadataUrlPrefix = collection.getMetadataUrlPrefix();
       List<String> documentUrls = collection.getDocumentUrls();
       String[] metadataUrls = collection.getMetadataUrls();
@@ -202,7 +202,7 @@ public class CollectionManager {
               if (httpEdocUrl != null) {             
                 String docIdTmp = httpEdocUrl.replaceAll(metadataUrlPrefix, "");
                 docId = "/" + collectionId + docIdTmp;
-                String fileEdocUrl = "file:" + dataUrlPrefix + docIdTmp;
+                String fileEdocUrl = "file:" + metadataRedundantUrlPrefix + docIdTmp;
                 uri = fileEdocUrl;
                 if (uriEdoc == null) {
                   String edocId = docIdTmp.replaceAll("pdf/.*$", "");
@@ -267,9 +267,7 @@ public class CollectionManager {
           String docUrl = documentUrls.get(i);
           URL uri = new URL(docUrl);
           String uriPath = uri.getPath();
-          String prefix = collection.getDataUrlPrefix();
-          if (prefix == null)
-            prefix = "/exist/rest/db";
+          String prefix = "/exist/rest/db";
           if (uriPath.startsWith(prefix)) {
             uriPath = uriPath.substring(prefix.length());
           }
