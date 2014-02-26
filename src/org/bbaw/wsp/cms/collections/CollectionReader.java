@@ -183,9 +183,9 @@ public class CollectionReader {
 					if (webBaseUrl != null) {
 						collection.setWebBaseUrl(webBaseUrl);
 					}
-					String collectionDataUrlPrefix = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/url/dataUrlPrefix/text()");
-					if (collectionDataUrlPrefix != null) {
-						collection.setDataUrlPrefix(collectionDataUrlPrefix);
+					String collectionMetadataRedundantUrlPrefix = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/metadata/redundantUrlPrefix/text()");
+					if (collectionMetadataRedundantUrlPrefix != null) {
+						collection.setMetadataRedundantUrlPrefix(collectionMetadataRedundantUrlPrefix);
 					}
 					String formatsStr = xQueryEvaluator.evaluateAsStringValueJoined(configFileUrl, "/wsp/collection/formats/format", "###");
 					ArrayList<String> formatsArrayList = new ArrayList<String>();
