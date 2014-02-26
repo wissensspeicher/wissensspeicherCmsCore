@@ -5,9 +5,11 @@
     <name>Akademiebibliothek: Elektronischer Dokumentenserver (EDOC)</name>
     <url>
       <webBaseUrl>http://edoc.bbaw.de</webBaseUrl>
-      <dataUrlPrefix>/home/joey/dataWsp/documentsExtern/edoc</dataUrlPrefix>
     </url>
     <metadata>
+      <urlPrefix>http://edoc.bbaw.de/volltexte</urlPrefix>
+      <redundantUrlPrefix>/home/joey/dataWsp/documentsExtern/edoc</redundantUrlPrefix>
+      <urlType>single</urlType>
       <url>file:/home/joey/dataWsp/documentsExtern/edoc/2009/1111/index.html</url>
       <url>file:/home/joey/dataWsp/documentsExtern/edoc/2009/1070/index.html</url>
       <url>file:/home/joey/dataWsp/documentsExtern/edoc/2009/1219/index.html</url>
@@ -1948,8 +1950,6 @@
       <url>file:/home/joey/dataWsp/documentsExtern/edoc/2010/1714/index.html</url>
       <url>file:/home/joey/dataWsp/documentsExtern/edoc/2010/1373/index.html</url>
       <url>file:/home/joey/dataWsp/documentsExtern/edoc/2010/907/index.html</url>      
-      <urlPrefix>http://edoc.bbaw.de/volltexte</urlPrefix>
-      <urlType>single</urlType>
     </metadata>
     <languages>ger</languages>
     <mainLanguage>ger</mainLanguage>
