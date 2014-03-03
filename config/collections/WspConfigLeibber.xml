@@ -7,6 +7,7 @@
     <url>
     	<webBaseUrl>http://leibniz-berlin.bbaw.de</webBaseUrl>
       <dataUrl>http://leibniz-berlin.bbaw.de</dataUrl>
+      <dataUrl>http://www.leibniz-edition.de</dataUrl>
     </url>
     <languages>ger,lat,eng</languages>
     <mainLanguage>ger</mainLanguage>
