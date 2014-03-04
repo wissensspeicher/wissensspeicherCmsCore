@@ -41,11 +41,11 @@ public class EdocFieldValueMapper implements IFieldValueMapper {
   private static Map<String, InstitutMapping> fillInstitutMap() {
     final Map<String, InstitutMapping> mapping = new HashMap<String, InstitutMapping>();
     // without concrete institute: map to root node "edoc"
-    mapping.put("Berlin-Brandenburgische Akademie der Wissenschaften", new InstitutMapping("Akademiebibliothek: Elektronischer Dokumentenserver (EDOC)", "edoc"));
-    mapping.put("Veröffentlichungen von Akademiemitgliedern", new InstitutMapping("Akademiebibliothek: Elektronischer Dokumentenserver (EDOC)", "edoc"));
-    mapping.put("Veröffentlichungen von Akademiemitarbeitern", new InstitutMapping("Akademiebibliothek: Elektronischer Dokumentenserver (EDOC)", "edoc"));
-    mapping.put("Veröffentlichungen der Vorgängerinstitutionen der Berlin-Brandenburgischen Akademie der Wissenschaften", new InstitutMapping("Akademiebibliothek: Elektronischer Dokumentenserver (EDOC)", "edoc"));
-    mapping.put("Veröffentlichungen externer Institutionen", new InstitutMapping("Akademiebibliothek: Elektronischer Dokumentenserver (EDOC)", "edoc"));
+    mapping.put("Berlin-Brandenburgische Akademie der Wissenschaften", new InstitutMapping("Veröffentlichungen der Berlin-Brandenburgischen Akademie der Wissenschaften", "akademiepublikationen1"));
+    mapping.put("Veröffentlichungen von Akademiemitgliedern", new InstitutMapping("Berlin-Brandenburgische Akademie der Wissenschaften: Veröffentlichungen von Akademiemitgliedern", "akademiepublikationen2"));
+    mapping.put("Veröffentlichungen von Akademiemitarbeitern", new InstitutMapping("Berlin-Brandenburgische Akademie der Wissenschaften: Veröffentlichungen von Akademiemitarbeitern", "akademiepublikationen3"));
+    mapping.put("Veröffentlichungen der Vorgängerinstitutionen der Berlin-Brandenburgischen Akademie der Wissenschaften", new InstitutMapping("Berlin-Brandenburgische Akademie der Wissenschaften: Veröffentlichungen der Vorgängerinstitutionen der BBAW", "akademiepublikationen4"));
+    mapping.put("Veröffentlichungen externer Institutionen", new InstitutMapping("Berlin-Brandenburgische Akademie der Wissenschaften: Veröffentlichungen externer Institutionen", "akademiepublikationen5"));
     // mappings to institutes
     // institutmapping changed to "Psychologisches Denken und psychologische Praxis" to match name in the wsp.normdata.rdf
     mapping.put("Interdisziplinäre Arbeitsgruppe Psychologisches Denken und psychologische Praxis", new InstitutMapping("Psychologisches Denken und psychologische Praxis", "pd"));

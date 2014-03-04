@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp>
+  <collection>
+    <id>akademiepublikationen3</id>
+    <rdfId>http://wsp.normdata.rdf/Akademiepublikationen3</rdfId>
+    <name>Berlin-Brandenburgische Akademie der Wissenschaften: Veröffentlichungen von Akademiemitarbeitern</name>
+    <url>
+      <webBaseUrl>http://edoc.bbaw.de</webBaseUrl>
+    </url>
+    <mainLanguage>ger</mainLanguage>
+  </collection>
+</wsp>
