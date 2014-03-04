@@ -3214,13 +3214,15 @@ Hauptaufgabe ist die Edition des türkischen und iranischen Teils der Berliner T
 		<gnd:functionOrRole>Wissenschaftlich-technische Mitarbeiterin</gnd:functionOrRole>
 	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/PreußenAlsKulturstaat">
+    <dc:language>ger</dc:language>
+    <foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ab</foaf:nick>
 		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ZentrumPreussenBerlin"/>
 		<dc:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Vorhaben</dc:description>
 		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Huch"/>
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Rathgeber"/>
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Jobst"/>
-		<foaf:homepage rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/actaborussica/de/Startseite"/>
+		<foaf:homepage rdf:resource="http://actaborussica.bbaw.de/"/>
 		<foaf:status rdf:datatype="http://www.w3.org/2001/XMLSchema#string">aktiv</foaf:status>
 		<dc:coverage rdf:resource="http://wsp.normdata.rdf/Neuzeit"/>
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Holtz"/>
@@ -6260,7 +6262,8 @@ Das Projekt konzentrierte sich auf einen ausgewählten Bereich im weiten Spektru
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/AltaegyptWB">
 		<gnd:topic rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Philologie</gnd:topic>
 		<dcterms:abstract rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ziel des Projekts ist die Schaffung eines digitalen Corpus der aus dem pharaonischen Ägypten überlieferten Texte, das durch eine lexikalische Datenbank erschlossen ist; das Material soll im Internet zur Recherche präsentiert werden.</dcterms:abstract>
-		<foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">AAEW</foaf:nick>
+		<foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">aaew</foaf:nick>
+		<dc:language>ger</dc:language>
 		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ZentrumAlteWelt"/>
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Schweitzer"/>
 		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
@@ -6274,39 +6277,54 @@ Das Projekt konzentrierte sich auf einen ausgewählten Bereich im weiten Spektru
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Seidlmayer"/>
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Sperveslage"/>
 		<foaf:mbox rdf:datatype="http://www.w3.org/2001/XMLSchema#string">aegypt@bbaw.de</foaf:mbox>
-		<foaf:homepage rdf:resource="http://aaew.bbaw.de"/>
+		<foaf:homepage rdf:resource="http://aaew.bbaw.de/"/>
 		<gnd:definition>Wörterbuch</gnd:definition>
 		<foaf:status rdf:datatype="http://www.w3.org/2001/XMLSchema#string">aktiv</foaf:status>
 		<gnd:gndIdentifier rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://d-nb.info/gnd/5512624-8</gnd:gndIdentifier>
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Grunert"/>
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Feder"/>
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Boehme"/>
-		<foaf:homepage rdf:resource="http://aaew.bbaw.de/"/>	
 	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/AltaegyptWB/Erbkam">
+    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
+    <dc:language>ger</dc:language>
+    <foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">aaewerbkam</foaf:nick>
 		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Georg Gustav Erbkam: Tagebuch meiner egyptischen Reise</foaf:name>
 		<gnd:contributingPerson rdf:resource="http://wsp.normdata.rdf/ErbkamGeorg"/>	
 		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AltaegyptWB"/>
-		<foaf:homepage rdf:resource="http://aaew.bbaw.de/dateien/weitere%20archive/erbkam/Erbkam.html"/>		
+		<foaf:homepage rdf:resource="http://aaew.bbaw.de/archive/erbkam-tagebuch"/>		
 	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/AltaegyptWB/Preussen">
-		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Preußen in Ägypten-Ägypten in Preußen</foaf:name>
+    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
+    <dc:language>ger</dc:language>
+    <foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">aaewpreussen</foaf:nick>
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Altägyptisches Wörterbuch: Preußen in Ägypten-Ägypten in Preußen</foaf:name>
 		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AltaegyptWB"/>	
+    <foaf:homepage rdf:resource="http://aaew.bbaw.de/archive/lepsius-archiv/archiv-startseite_lepsius"/>   
 	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/AltaegyptWB/TLA">
-		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Thesaurus Linguae Aegyptiae (TLA)</foaf:name>
+    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
+    <dc:language>ger</dc:language>
+    <foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">aaewtla</foaf:nick>
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Altägyptisches Wörterbuch: Thesaurus Linguae Aegyptiae (TLA)</foaf:name>
 		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AltaegyptWB"/>	
 		<foaf:homepage rdf:resource="http://aaew.bbaw.de/tla/"/>
 	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/AltaegyptWB/Vormanuskript">
-		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Das Vormanuskript des Wörterbuchs der Ägyptischen Sprache</foaf:name>
+    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
+    <dc:language>ger</dc:language>
+    <foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">aaewvor</foaf:nick>
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Altägyptisches Wörterbuch: Das Vormanuskript des Wörterbuchs der Ägyptischen Sprache</foaf:name>
 		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AltaegyptWB"/>	
 		<foaf:homepage rdf:resource="http://aaew.bbaw.de/tla/servlet/S05?d=d003&amp;h=h017" />
 	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/AltaegyptWB/Zettelarchiv">
-		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Das Digitalisierte Zettelarchiv</foaf:name>
+    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
+    <dc:language>ger</dc:language>
+    <foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">aaewzettel</foaf:nick>
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Altägyptisches Wörterbuch: Das Digitalisierte Zettelarchiv</foaf:name>
 		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AltaegyptWB"/>	
-		<foaf:homepage rdf:resource="http://aaew.bbaw.de/dateien/dza/dza.html" />
+		<foaf:homepage rdf:resource="http://aaew.bbaw.de/archive/das-digitalisierte-zettelarchiv/einfuehrung/einfuehrung_dza" />
 	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/Wolz">
 		<gnd:functionOrRole>Wissenschaftlicher Mitarbeiter</gnd:functionOrRole>
@@ -6373,54 +6391,64 @@ Das Projekt konzentrierte sich auf einen ausgewählten Bereich im weiten Spektru
 		<foaf:mbox rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thomassen@bbaw.de</foaf:mbox>
 	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/Akademiepublikationen1">
+    <dc:language>ger</dc:language>
 		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
 		<gnd:definition>NA</gnd:definition>
 		<dc:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NA</dc:description>
 		<dcterms:abstract rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NA</dcterms:abstract>
 		<dcterms:valid rdf:datatype="http://purl.org/dc/terms/Period">NA</dcterms:valid>
 		<gnd:topic rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NA</gnd:topic>
-		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Publikation der Berlin-Brandenburgischen Akademie der Wissenschaften</foaf:name>
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Veröffentlichungen der Berlin-Brandenburgischen Akademie der Wissenschaften</foaf:name>
 		<foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">akademiepublikationen1</foaf:nick>
+    <foaf:homepage rdf:resource="http://edoc.bbaw.de"/>
 	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/Akademiepublikationen2">
+    <dc:language>ger</dc:language>
 		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
 		<gnd:definition>NA</gnd:definition>
 		<dc:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NA</dc:description>
 		<dcterms:abstract rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NA</dcterms:abstract>
 		<dcterms:valid rdf:datatype="http://purl.org/dc/terms/Period">NA</dcterms:valid>
 		<gnd:topic rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NA</gnd:topic>
-		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Berlin-Brandenburgischen Akademie der Wissenschaften: Publikation von Akademiemitgliedern</foaf:name>
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Berlin-Brandenburgische Akademie der Wissenschaften: Veröffentlichungen von Akademiemitgliedern</foaf:name>
 		<foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">akademiepublikationen2</foaf:nick>
+    <foaf:homepage rdf:resource="http://edoc.bbaw.de"/>
 	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/Akademiepublikationen3">
+    <dc:language>ger</dc:language>
 		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
 		<gnd:definition>NA</gnd:definition>
 		<dc:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NA</dc:description>
 		<dcterms:abstract rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NA</dcterms:abstract>
 		<dcterms:valid rdf:datatype="http://purl.org/dc/terms/Period">NA</dcterms:valid>
 		<gnd:topic rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NA</gnd:topic>
-		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Berlin-Brandenburgischen Akademie der Wissenschaften: Publikation von Akademiemitarbeitern</foaf:name>
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Berlin-Brandenburgische Akademie der Wissenschaften: Veröffentlichungen von Akademiemitarbeitern</foaf:name>
 		<foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">akademiepublikationen3</foaf:nick>
+    <foaf:homepage rdf:resource="http://edoc.bbaw.de"/>
 	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/Akademiepublikationen4">
+    <dc:language>ger</dc:language>
 		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
 		<gnd:definition>NA</gnd:definition>
 		<dc:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NA</dc:description>
 		<dcterms:abstract rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NA</dcterms:abstract>
 		<dcterms:valid rdf:datatype="http://purl.org/dc/terms/Period">NA</dcterms:valid>
 		<gnd:topic rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NA</gnd:topic>
-		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Berlin-Brandenburgischen Akademie der Wissenschaften: Publikation der Vorgängerinstitutionen der BBAW</foaf:name>
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Berlin-Brandenburgische Akademie der Wissenschaften: Veröffentlichungen der Vorgängerinstitutionen der BBAW</foaf:name>
 		<foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">akademiepublikationen4</foaf:nick>
+    <foaf:homepage rdf:resource="http://edoc.bbaw.de"/>
 	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/Akademiepublikationen5">
+    <dc:language>ger</dc:language>
 		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
 		<gnd:definition>NA</gnd:definition>
 		<dc:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NA</dc:description>
 		<dcterms:abstract rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NA</dcterms:abstract>
 		<dcterms:valid rdf:datatype="http://purl.org/dc/terms/Period">NA</dcterms:valid>
 		<gnd:topic rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NA</gnd:topic>
-		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Berlin-Brandenburgischen Akademie der Wissenschaften: Publikation externer Institutionen</foaf:name>
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Berlin-Brandenburgische Akademie der Wissenschaften: Veröffentlichungen externer Institutionen</foaf:name>
 		<foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">akademiepublikationen5</foaf:nick>
+    <foaf:homepage rdf:resource="http://edoc.bbaw.de"/>
 	</rdf:Description>
 </rdf:RDF>
 
