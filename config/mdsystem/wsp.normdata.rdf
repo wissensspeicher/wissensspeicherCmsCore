@@ -324,11 +324,6 @@ Das modulartig angelegte Vorhaben beginnt mit einer Geschichte des preußischen 
 		<dcterms:abstract rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Das Vorhaben befasst sich als selbständige Forschungseinrichtung eingehend mit der Edition, Übersetzung, Kommentierung und historischen Kontextualisierung Galenischer Werke. Im Mittelpunkt des Vorhabens steht die Erforschung von Galens Werken und ihrer Rolle als entscheidender Instanz im medizinischen Wissenstransfer von der Antike in das Mittelalter und in die Neuzeit sowie zwischen Europa und dem Orient. Dabei wird die Arbeit an der Arbeitsstelle auf einige Kernthemen fokussiert, für die sowohl die kritische Herausgabe umfangreicher Schlüsseltexte als auch deren inhaltliche Erschließung angestrebt wird.</dcterms:abstract>
 		<dc:coverage rdf:resource="http://wsp.normdata.rdf/Antike"/>
 	</rdf:Description>
-	<rdf:Description rdf:about="http://wsp.normdata.rdf/Galen/GreekIntoArabic">
-		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Greek into Arabic - Philosophical Concepts and Linguistic Bridges</foaf:name>
-		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Galen" />	
-		<foaf:homepage rdf:resource="http://www.greekintoarabic.eu/" />
-	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/Mohr">
 		<foaf:familyName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Mohr</foaf:familyName>
 		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
@@ -964,7 +959,7 @@ Damit sollen gemeinsame historische Vermächtnisse sowie die Mobilität von Pers
 		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
 		<dc:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Koordination</dc:description>
 	</rdf:Description>
-	<rdf:Description rdf:about="http://wsp.normdata.rdf/HerausforderungDruchDasFremde">
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/HerausforderungDurchDasFremde">
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Meyer"/>
 		<dcterms:valid rdf:datatype="http://purl.org/dc/terms/Period">start=1996; end=2006; name=Laufzeit</dcterms:valid>
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Stenger"/>
@@ -974,6 +969,7 @@ Damit sollen gemeinsame historische Vermächtnisse sowie die Mobilität von Pers
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Naguschewski"/>
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Bogner"/>
 		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
+		<foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">fremde</foaf:nick>
 		<foaf:status rdf:datatype="http://www.w3.org/2001/XMLSchema#string">abgeschlossen</foaf:status>
 		<dc:coverage rdf:resource="http://wsp.normdata.rdf/Gegenwart"/>
 		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Die Herausforderung durch das Fremde</foaf:name>
@@ -1033,6 +1029,7 @@ Damit sollen gemeinsame historische Vermächtnisse sowie die Mobilität von Pers
 		<dcterms:valid rdf:datatype="http://purl.org/dc/terms/Period">start=2003; name=Laufzeit</dcterms:valid>
 		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Wörterbuchportal</foaf:name>
 		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
+		<foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">WBP</foaf:nick>
 		<dc:coverage rdf:resource="http://wsp.normdata.rdf/Gegenwart"/>
 		<dc:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Initiative</dc:description>
 		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ZentrumSprache"/>
@@ -1053,6 +1050,7 @@ Damit sollen gemeinsame historische Vermächtnisse sowie die Mobilität von Pers
 		<dc:coverage rdf:resource="http://wsp.normdata.rdf/Gegenwart"/>
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Ginnow"/>
 		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
+		<foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">WW</foaf:nick>
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Wolz"/>
 		<dc:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">interdisziplinäre Arbeitsgruppe</dc:description>
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Meinicke"/>
@@ -6017,7 +6015,7 @@ Mit der im Juni 2000 durchgeführten internationalen Konferenz »Die Arbeit der 
 		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KarlPhilippMoritz" />	
 		<foaf:homepage rdf:resource="http://telota.bbaw.de/mze" />
 	</rdf:Description>
-	<rdf:Description rdf:about="http://wsp.normdata.rdf/BiblioraphischeAnnalen">
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/BibliographischeAnnalen">
 		<gnd:topic rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Philologie</gnd:topic>
 		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Bibliographische Annalen</foaf:name>
 		<dcterms:abstract rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Das Vorhaben hat die Aufgabe, das bibliographische Handbuch Literatur in der DDR weiterzuführen und abzuschließen. Zwei Bände des Handbuchs sind bereits 1986 vom Zentralinstitut für Literaturgeschichte der Akademie der Wissenschaften der DDR herausgegeben worden. Sie umfassen den Berichtszeitraum 1945-1962.</dcterms:abstract>
@@ -6373,6 +6371,56 @@ Das Projekt konzentrierte sich auf einen ausgewählten Bereich im weiten Spektru
 		<foaf:title rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Dr.</foaf:title>
 		<gnd:functionOrRole>Leiter</gnd:functionOrRole>
 		<foaf:mbox rdf:datatype="http://www.w3.org/2001/XMLSchema#string">thomassen@bbaw.de</foaf:mbox>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/Akademiepublikationen1">
+		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
+		<gnd:definition>NA</gnd:definition>
+		<dc:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NA</dc:description>
+		<dcterms:abstract rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NA</dcterms:abstract>
+		<dcterms:valid rdf:datatype="http://purl.org/dc/terms/Period">NA</dcterms:valid>
+		<gnd:topic rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NA</gnd:topic>
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Publikation der Berlin-Brandenburgischen Akademie der Wissenschaften</foaf:name>
+		<foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">akademiepublikationen1</foaf:nick>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/Akademiepublikationen2">
+		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
+		<gnd:definition>NA</gnd:definition>
+		<dc:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NA</dc:description>
+		<dcterms:abstract rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NA</dcterms:abstract>
+		<dcterms:valid rdf:datatype="http://purl.org/dc/terms/Period">NA</dcterms:valid>
+		<gnd:topic rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NA</gnd:topic>
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Berlin-Brandenburgischen Akademie der Wissenschaften: Publikation von Akademiemitgliedern</foaf:name>
+		<foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">akademiepublikationen2</foaf:nick>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/Akademiepublikationen3">
+		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
+		<gnd:definition>NA</gnd:definition>
+		<dc:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NA</dc:description>
+		<dcterms:abstract rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NA</dcterms:abstract>
+		<dcterms:valid rdf:datatype="http://purl.org/dc/terms/Period">NA</dcterms:valid>
+		<gnd:topic rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NA</gnd:topic>
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Berlin-Brandenburgischen Akademie der Wissenschaften: Publikation von Akademiemitarbeitern</foaf:name>
+		<foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">akademiepublikationen3</foaf:nick>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/Akademiepublikationen4">
+		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
+		<gnd:definition>NA</gnd:definition>
+		<dc:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NA</dc:description>
+		<dcterms:abstract rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NA</dcterms:abstract>
+		<dcterms:valid rdf:datatype="http://purl.org/dc/terms/Period">NA</dcterms:valid>
+		<gnd:topic rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NA</gnd:topic>
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Berlin-Brandenburgischen Akademie der Wissenschaften: Publikation der Vorgängerinstitutionen der BBAW</foaf:name>
+		<foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">akademiepublikationen4</foaf:nick>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/Akademiepublikationen5">
+		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
+		<gnd:definition>NA</gnd:definition>
+		<dc:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NA</dc:description>
+		<dcterms:abstract rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NA</dcterms:abstract>
+		<dcterms:valid rdf:datatype="http://purl.org/dc/terms/Period">NA</dcterms:valid>
+		<gnd:topic rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NA</gnd:topic>
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Berlin-Brandenburgischen Akademie der Wissenschaften: Publikation externer Institutionen</foaf:name>
+		<foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">akademiepublikationen5</foaf:nick>
 	</rdf:Description>
 </rdf:RDF>
 
