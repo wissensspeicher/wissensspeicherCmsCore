@@ -5,8 +5,8 @@
     <rdfId>http://wsp.normdata.rdf/KollokationImWB</rdfId>
     <name>Kollokationen im Wörterbuch</name>
     <url>
-    	<webBaseUrl>http://www.bbaw.de/forschung/kollokationen</webBaseUrl>
-      <dataUrl>http://www.bbaw.de/forschung/kollokationen</dataUrl>
+    	<webBaseUrl>http://kollokationen.bbaw.de</webBaseUrl>
+      <dataUrl>http://kollokationen.bbaw.de</dataUrl>
     </url>
     <mainLanguage>ger</mainLanguage>
     <formats>
