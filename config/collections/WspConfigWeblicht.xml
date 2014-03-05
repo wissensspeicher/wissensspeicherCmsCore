@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <wsp>
   <collection>
-    <id>clarin</id>
+    <id>weblicht</id>
     <rdfId>http://wsp.normdata.rdf/Clarin</rdfId>
     <name>Deutsche Sprachressourcen-Infrastruktur</name>
     <url>
