@@ -26,8 +26,8 @@ public class ConvertConfigXml2Rdf {
     try {
       ConvertConfigXml2Rdf convertConfigXml2Rdf = new ConvertConfigXml2Rdf();
       convertConfigXml2Rdf.init();
-      convertConfigXml2Rdf.convertAll();
-      // convertConfigXml2Rdf.proofRdfProjects();
+      // convertConfigXml2Rdf.convertAll();
+      convertConfigXml2Rdf.proofRdfProjects();
       // convertConfigXml2Rdf.convert("mega");
     } catch (Exception e) {
       e.printStackTrace();
