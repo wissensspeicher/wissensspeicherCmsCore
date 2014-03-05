@@ -5,16 +5,14 @@
     <rdfId>http://wsp.normdata.rdf/SpracheDesRechts</rdfId>
     <name>Sprache des Rechts, Vermitteln, Verstehen, Verwechseln</name>
     <url>
-      <webBaseUrl>http://www.bbaw.de/forschung/sdr/uebersicht</webBaseUrl>
-      <dataUrl>http://www.bbaw.de/forschung/sdr/uebersicht</dataUrl>
-      
+      <webBaseUrl>http://www.bbaw.de/forschung/sdr</webBaseUrl>
+      <dataUrl>http://www.bbaw.de/forschung/sdr</dataUrl>
     </url>
     <languages>ger</languages>
     <mainLanguage>ger</mainLanguage>
     <formats>
       <format>pdf</format>
     </formats> 
-   
   </collection>
 </wsp>
 
