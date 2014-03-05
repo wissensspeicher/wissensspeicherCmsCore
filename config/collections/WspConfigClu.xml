@@ -3,7 +3,7 @@
   <collection>
     <id>clu</id>
     <rdfId>http://wsp.normdata.rdf/ClusterWissensforschung</rdfId>
-    <name>Cluster Wissensforschung Berlin/Brandenbur</name>
+    <name>Cluster Wissensforschung Berlin/Brandenburg</name>
     <url>
       <webBaseUrl>http://www.bbaw.de/forschung/clu</webBaseUrl>
       <dataUrl>http://www.bbaw.de/forschung/clu</dataUrl>
