@@ -5,15 +5,12 @@
     <rdfId>http://wsp.normdata.rdf/GesellschaftWasserTechnik</rdfId>
     <name>Gesellschaft - Wasser - Technik</name>
     <url>
-      <webBaseUrl>http://www.bbaw.de/forschung/gwt/uebersicht</webBaseUrl>
-      <dataUrl>http://www.bbaw.de/forschung/gwt/uebersicht</dataUrl>
-     
-     
+      <webBaseUrl>http://www.bbaw.de/forschung/gwt</webBaseUrl>
+      <dataUrl>http://www.bbaw.de/forschung/gwt</dataUrl>
     </url>
     <languages>ger</languages>
     <mainLanguage>ger</mainLanguage>
     <formats>
-      
       <format>html</format>
     </formats> 
    
