@@ -2,7 +2,7 @@
 <wsp>
   <collection>
     <id>avhabh</id>
-    <rdfId>http://wsp.normdata.rdf/AlternGesellschaft/BASE</rdfId>   
+    <rdfId>http://wsp.normdata.rdf/AvHForschungsstelle/Abhandlungen</rdfId>   
     <name>Alexander von Humboldt Forschungsstelle: Abhandlungen</name>
     <url>
       <webBaseUrl>http://avh.bbaw.de/publikationen/digitale-veroeffentlichungen/abhandlungen-nach-vortraegen-an-der-koeniglich-preussischen-akademie-der-wissenschaften-zu-berlin</webBaseUrl>
