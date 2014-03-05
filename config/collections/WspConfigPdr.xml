@@ -5,6 +5,8 @@
     <rdfId>http://wsp.normdata.rdf/PDR</rdfId>
     <name>Personendaten-Repositorium</name>
     <url>
+      <webBaseUrl>http://pdr.bbaw.de</webBaseUrl>
+
       <!-- Archiv-Editior -->
       <dataUrl>http://pdr.bbaw.de/downloads/ae</dataUrl>
 
