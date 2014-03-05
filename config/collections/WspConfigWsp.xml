@@ -11,8 +11,8 @@
       <!-- Digital Knowledge Store – Technical Reader -->
       <dataUrl>http://wsp.bbaw.de/project/resources/digital-knowledge-store-technical-reader</dataUrl>
     </url>
-	  <languages>ger</languages>
-    <mainLanguage>ger</mainLanguage>
+	  <languages>eng</languages>
+    <mainLanguage>eng</mainLanguage>
     <formats>
     	<format>software</format>
       <format>jpeg</format>
