@@ -5,8 +5,7 @@
     <rdfId>http://wsp.normdata.rdf/JeanPaul/Onlineregister</rdfId>
     <name>Jean Paul Edition: Online-Register des Jean Paul Briefwechsels</name>
     <url>
-    	<webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/jean_paul/de/Startseite</webBaseUrl>
-      <dataUrl>http://telota.bbaw.de/jeanpaul/</dataUrl>
+    	<webBaseUrl>http://www.bbaw.de/forschung/jean_paul</webBaseUrl>
     </url>
     <mainLanguage>ger</mainLanguage>
     <formats>
