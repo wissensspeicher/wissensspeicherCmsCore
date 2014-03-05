@@ -3,7 +3,7 @@
   <collection>
     <id>virt</id>
     <rdfId>http://wsp.normdata.rdf/Virtualitaet</rdfId>
-    <name>Virtualität</name>
+    <name>Virtualität in Technik und Organisation - Chancen und Risiken für die Arbeitswelt</name>
     <url>
     	<webBaseUrl>http://www.bbaw.de/forschung/virtualitaet</webBaseUrl>
       <dataUrl>http://www.bbaw.de/forschung/virtualitaet</dataUrl>
