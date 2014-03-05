@@ -3,7 +3,7 @@
   <collection>
     <id>justiz</id>
     <rdfId>http://wsp.normdata.rdf/Justizgewaehrung</rdfId>
-    <name>Justizgewährung, Staatsräson und Geheimdienste </name>
+    <name>Justizgewährung, Staatsräson und Geheimdienste</name>
     <url>
       <webBaseUrl>http://www.bbaw.de/forschung/JuStGe</webBaseUrl>
       <dataUrl>http://www.bbaw.de/forschung/JuStGe</dataUrl>
