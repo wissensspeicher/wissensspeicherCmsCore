@@ -3,7 +3,7 @@
   <collection>
     <id>ostwald</id>
     <rdfId>http://wsp.normdata.rdf/WilhelmOstwaldSymposium</rdfId>
-    <name>Wilhelm-Ostwald-Syposium 2004</name>
+    <name>Wilhelm-Ostwald-Symposium</name>
     <url>
     	<webBaseUrl>http://ostwald.bbaw.de</webBaseUrl>
       <dataUrl>http://ostwald.bbaw.de</dataUrl>
