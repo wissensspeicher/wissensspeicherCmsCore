@@ -3,7 +3,7 @@
   <collection>
     <id>turfanit</id>
     <rdfId>http://wsp.normdata.rdf/Turfan/IranischeTexte</rdfId>
-    <name>Iranische Texte in der Turfansammlung</name>
+    <name>Turfanforschung: Iranische Texte in der Turfansammlung</name>
     <url>
       <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/turfanforschung/de/iranischeTexte</webBaseUrl>
       <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/turfanforschung/de/iranischeTexte</dataUrl>
