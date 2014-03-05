@@ -3,12 +3,11 @@
   <collection>
     <id>techcult</id>
     <rdfId>http://wsp.normdata.rdf/Techcultures</rdfId>
-    <name>TECHcultures</name>
+    <name>TECHcultures - Interkultureller Vergleich des Wissenschafts- und Technikverständnisses in ausgewählten Ländern</name>
     <url>
-    	<webBaseUrl>http://www.bbaw.de/forschung/techcultures/uebersicht</webBaseUrl>
-      <dataUrl>http://www.bbaw.de/forschung/techcultures/uebersicht</dataUrl>
+    	<webBaseUrl>http://www.bbaw.de/forschung/techcultures</webBaseUrl>
+      <dataUrl>http://www.bbaw.de/forschung/techcultures</dataUrl>
     </url>
-
     <mainLanguage>ger</mainLanguage>
     <formats>
     <format>html</format>
