@@ -5,6 +5,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 
+import net.sf.saxon.s9api.XdmItem;
+import net.sf.saxon.s9api.XdmSequenceIterator;
+import net.sf.saxon.s9api.XdmValue;
+
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.bbaw.wsp.cms.general.Constants;
@@ -17,13 +21,14 @@ public class ConvertConfigXml2Rdf {
   private CollectionReader collectionReader;
   private String outputRdfDir = "/home/joey/dataWsp/projects/";
   private XQueryEvaluator xQueryEvaluator;
-
+  private File inputNormdataFile;
   public static void main(String[] args) throws ApplicationException {
     try {
       ConvertConfigXml2Rdf convertConfigXml2Rdf = new ConvertConfigXml2Rdf();
       convertConfigXml2Rdf.init();
-      // convertConfigXml2Rdf.convert("mega");
       convertConfigXml2Rdf.convertAll();
+      // convertConfigXml2Rdf.proofRdfProjects();
+      // convertConfigXml2Rdf.convert("mega");
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -32,6 +37,8 @@ public class ConvertConfigXml2Rdf {
   private void init() throws ApplicationException {
     collectionReader = CollectionReader.getInstance();
     xQueryEvaluator = new XQueryEvaluator();
+    String inputNormdataFileName = Constants.getInstance().getMdsystemNormdataFile();
+    inputNormdataFile = new File(inputNormdataFileName);      
   }
   
   private void convertAll() throws ApplicationException {
@@ -50,8 +57,6 @@ public class ConvertConfigXml2Rdf {
     String collectionId = collection.getId();
     String collectionRdfId = collection.getRdfId();
     try {
-      String inputNormdataFileName = Constants.getInstance().getMdsystemNormdataFile();
-      File inputNormdataFile = new File(inputNormdataFileName);      
       File outputRdfFile = new File(outputRdfDir + collectionId + "-resources.rdf");
       StringBuilder rdfStrBuilder = new StringBuilder();
       rdfStrBuilder.append("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
@@ -98,7 +103,7 @@ public class ConvertConfigXml2Rdf {
           }
         }
       } else {
-        LOGGER.error("Error in wsp.normadata.rdf: RdfId: \"" + collectionRdfId + "\" out of config file with id: \"" + collectionId + "\" does not exist");
+        LOGGER.error("Project: \"" + collectionRdfId + "\" (configId: \"" + collectionId + "\") does not exist");
       }
       rdfStrBuilder.append("</rdf:RDF>");
       FileUtils.writeStringToFile(outputRdfFile, rdfStrBuilder.toString());
@@ -118,38 +123,63 @@ public class ConvertConfigXml2Rdf {
     String countDcLanguage = xQueryEvaluator.evaluateAsString(projectRdfStr, "count(/*:Description/*:language)");
     String countFoafHomepage = xQueryEvaluator.evaluateAsString(projectRdfStr, "count(/*:Description/*:homepage/@*:resource)");
     if (countFoafNickName != null && ! countFoafNickName.contains("0") && ! countFoafNickName.contains("1"))
-      LOGGER.error("Error in wsp.normadata.rdf: RdfId: \"" + collectionRdfId + "\": Field <foaf:nick> exists " + countFoafNickName + " times");
+      LOGGER.error("Project: \"" + collectionRdfId + "\": Field <foaf:nick> exists " + countFoafNickName + " times");
     if (countFoafName != null && ! countFoafName.contains("0") && ! countFoafName.contains("1"))
-      LOGGER.error("Error in wsp.normadata.rdf: RdfId: \"" + collectionRdfId + "\": Field <foaf:name> exists " + countFoafName + " times");
+      LOGGER.error("Project: \"" + collectionRdfId + "\": Field <foaf:name> exists " + countFoafName + " times");
     if (countDcLanguage != null && ! countDcLanguage.contains("0") && ! countDcLanguage.contains("1"))
-      LOGGER.error("Error in wsp.normadata.rdf: RdfId: \"" + collectionRdfId + "\": Field <dc:language> exists " + countDcLanguage + " times");
+      LOGGER.error("Project: \"" + collectionRdfId + "\": Field <dc:language> exists " + countDcLanguage + " times");
     if (countFoafHomepage != null && ! countFoafHomepage.contains("0") && ! countFoafHomepage.contains("1"))
-      LOGGER.error("Error in wsp.normadata.rdf: RdfId: \"" + collectionRdfId + "\": Field <foaf:homepage> exists " + countFoafHomepage + " times");
+      LOGGER.error("Project: \"" + collectionRdfId + "\": Field <foaf:homepage> exists " + countFoafHomepage + " times");
     String foafNickName = xQueryEvaluator.evaluateAsString(projectRdfStr, "/*:Description/*:nick[1]/text()");
     String foafName = xQueryEvaluator.evaluateAsString(projectRdfStr, "/*:Description/*:name[1]/text()");
     String dcLanguage = xQueryEvaluator.evaluateAsString(projectRdfStr, "/*:Description/*:language[1]/text()");
     String foafHomepage = xQueryEvaluator.evaluateAsString(projectRdfStr, "string(/*:Description/*:homepage[1]/@*:resource)");
     String rdfType = xQueryEvaluator.evaluateAsString(projectRdfStr, "string(/*:Description/*:type[1]/@*:resource)");
     if (foafNickName == null || foafNickName.isEmpty())
-      LOGGER.error("Error in wsp.normadata.rdf: RdfId: \"" + collectionRdfId + "\": Mandatory field <foaf:nick> does not exist. /wsp/collection/id = \"" + collectionId + "\"");
+      LOGGER.error("Project: \"" + collectionRdfId + "\": Insert mandatory field <foaf:nick rdf:datatype=\"http://www.w3.org/2001/XMLSchema#string\">" + collectionId + "</foaf:nick>");
     else if (! foafNickName.equals(collectionId))
-      LOGGER.error("Error in wsp.normadata.rdf: RdfId: \"" + collectionRdfId + "\": \"<foaf:nick>" + foafNickName + "</foaf:nick>\" is not equal to /wsp/collection/id = \"" + collectionId + "\"");
+      LOGGER.error("Project: \"" + collectionRdfId + "\": Change \"<foaf:nick>" + foafNickName + "</foaf:nick>\" to <foaf:nick rdf:datatype=\"http://www.w3.org/2001/XMLSchema#string\">" + collectionId + "</foaf:nick>");
     if (foafName == null || foafName.isEmpty())
-      LOGGER.error("Error in wsp.normadata.rdf: RdfId: \"" + collectionRdfId + "\": Mandatory field <foaf:name> does not exist. /wsp/collection/name = \"" + collectionName + "\"");
+      LOGGER.error("Project: \"" + collectionRdfId + "\": Insert mandatory field <foaf:name rdf:datatype=\"http://www.w3.org/2001/XMLSchema#string\">" + collectionName + "</foaf:name>");
     else if (! foafName.equals(collectionName))
-      LOGGER.error("Error in wsp.normadata.rdf: RdfId: \"" + collectionRdfId + "\": \"<foaf:name>" + foafName + "</foaf:name>\" is not equal to /wsp/collection/name = \"" + collectionName + "\" (out of config file with id: \"" + collectionId + "\")");
+      LOGGER.error("Project: \"" + collectionRdfId + "\": Change \"<foaf:name>" + foafName + "</foaf:name>\" to <foaf:name rdf:datatype=\"http://www.w3.org/2001/XMLSchema#string\">" + collectionName + "</foaf:name>");
     if (dcLanguage == null || dcLanguage.isEmpty())
-      LOGGER.error("Error in wsp.normadata.rdf: RdfId: \"" + collectionRdfId + "\": Mandatory field <dc:language> does not exist. /wsp/collection/mainLanguage = \"" + mainLanguage + "\"");
+      LOGGER.error("Project: \"" + collectionRdfId + "\": Insert mandatory field <dc:language>" + mainLanguage + "</dc:language>");
     else if (! dcLanguage.equals(mainLanguage))
-      LOGGER.error("Error in wsp.normadata.rdf: RdfId: \"" + collectionRdfId + "\": \"<dc:language>" + dcLanguage + "</dc:language>\" is not equal to /wsp/collection/mainLanguage = \"" + mainLanguage + "\" (out of config file with id: \"" + collectionId + "\")");
+      LOGGER.error("Project: \"" + collectionRdfId + "\": Change \"<dc:language>" + dcLanguage + "</dc:language>\" to <dc:language>" + mainLanguage + "</dc:language>");
     if (foafHomepage == null || foafHomepage.isEmpty())
-      LOGGER.error("Error in wsp.normadata.rdf: RdfId: \"" + collectionRdfId + "\": Mandatory field <foaf:homepage> does not exist. /wsp/collection/url/webBaseUrl = \"" + webBaseUrl + "\"");
+      LOGGER.error("Project: \"" + collectionRdfId + "\": Insert mandatory field <foaf:homepage rdf:resource=\"" + webBaseUrl + "\"/>");
     else if (! foafHomepage.equals(webBaseUrl))
-      LOGGER.error("Error in wsp.normadata.rdf: RdfId: \"" + collectionRdfId + "\": \"<foaf:homepage>" + foafHomepage + "</foaf:homepage>\" is not equal to /wsp/collection/url/webBaseUrl = \"" + webBaseUrl + "\" (out of config file with id: \"" + collectionId + "\")");
+      LOGGER.error("Project: \"" + collectionRdfId + "\": Change \"<foaf:homepage rdf:resource=\"" + foafHomepage + "\"/>\" to <foaf:homepage rdf:resource=\"" + webBaseUrl + "\"/>");
     if (rdfType == null || rdfType.isEmpty())
-      LOGGER.error("Error in wsp.normadata.rdf: RdfId: \"" + collectionRdfId + "\": Mandatory field <rdf:type> does not exist");
+      LOGGER.error("Project: \"" + collectionRdfId + "\": Insert mandatory field <rdf:type rdf:resource=\"http://xmlns.com/foaf/0.1/Project\"/>");
     else if (! rdfType.equals("http://xmlns.com/foaf/0.1/Project"))
-      LOGGER.error("Error in wsp.normadata.rdf: RdfId: \"" + collectionRdfId + "\": \"<rdf:type>" + rdfType + "</rdf:type>\" is not equal to \"" + "http://xmlns.com/foaf/0.1/Project" + "\" (out of config file with id: \"" + collectionId + "\")");
+      LOGGER.error("Project: \"" + collectionRdfId + "\": Change <rdf:type> to <rdf:type rdf:resource=\"http://xmlns.com/foaf/0.1/Project\"/>");
   }
-  
+
+  private void proofRdfProjects() throws ApplicationException {
+    try {
+      URL inputNormdataFileUrl = inputNormdataFile.toURI().toURL();
+      String rdfTypeProject = "http://xmlns.com/foaf/0.1/Project"; 
+      XdmValue xmdValueProjects = xQueryEvaluator.evaluate(inputNormdataFileUrl, "/*:RDF/*:Description[*:type[@*:resource='" + rdfTypeProject + "']]");
+      XdmSequenceIterator xmdValueProjectsIterator = xmdValueProjects.iterator();
+      if (xmdValueProjects != null && xmdValueProjects.size() > 0) {
+        while (xmdValueProjectsIterator.hasNext()) {
+          XdmItem xdmItemProject = xmdValueProjectsIterator.next();
+          String xdmItemProjectStr = xdmItemProject.toString();
+          String projectRdfId = xQueryEvaluator.evaluateAsString(xdmItemProjectStr, "string(/*:Description/@*:about)");
+          String foafNickName = xQueryEvaluator.evaluateAsString(xdmItemProjectStr, "/*:Description/*:nick[1]/text()");
+          if (foafNickName == null || foafNickName.isEmpty()) {
+            LOGGER.error("Project: \"" + projectRdfId + "\" has no \"<foaf:nick> entry");
+          } else {
+            Collection coll = collectionReader.getCollection(foafNickName);
+            if (coll == null)
+              LOGGER.error("Project: \"" + projectRdfId + "\" with \"<foaf:nick>" + foafNickName + "</foaf:nick>\"" + " has no config file");
+          }
+        }
+      }
+    } catch (IOException e) {
+      throw new ApplicationException(e);
+    }
+  }
 }
