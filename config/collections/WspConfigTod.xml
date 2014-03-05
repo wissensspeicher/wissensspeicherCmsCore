@@ -5,9 +5,8 @@
     <rdfId>http://wsp.normdata.rdf/Tod</rdfId>
     <name>Der Tod</name>
     <url>
-      <webBaseUrl>http://www.bbaw.de/forschung/tod/uebersicht</webBaseUrl>
-      <dataUrl>http://www.bbaw.de/forschung/tod/uebersicht</dataUrl>
-      
+      <webBaseUrl>http://www.bbaw.de/forschung/tod</webBaseUrl>
+      <dataUrl>http://www.bbaw.de/forschung/tod</dataUrl>
     </url>
     <languages>ger</languages>
     <mainLanguage>ger</mainLanguage>
