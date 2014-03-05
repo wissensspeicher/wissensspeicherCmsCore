@@ -3,7 +3,7 @@
   <collection>
     <id>jdg</id>
     <rdfId>http://wsp.normdata.rdf/JahresberichteDeutscheGeschichte</rdfId>
-    <name>Jahresberichte fuer deutsche Geschichte</name>
+    <name>Jahresberichte für deutsche Geschichte</name>
     <!-- if dataUrl is not a directory but a file, it should end with a forward slash -->
     <url>
       <webBaseUrl>http://www.bbaw.de/forschung/jdg</webBaseUrl>
