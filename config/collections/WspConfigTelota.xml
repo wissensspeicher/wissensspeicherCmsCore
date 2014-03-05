@@ -3,20 +3,17 @@
   <collection>
     <id>telota</id>
     <rdfId>http://wsp.normdata.rdf/Telota</rdfId>
-    <name>Telota</name>
+    <name>Telota: The Electronic Life Of The Academy</name>
     <url>
       <webBaseUrl>http://www.telota.de</webBaseUrl>
       <dataUrl>http://www.telota.de</dataUrl>
       <dataUrl>http://www.bbaw.de/telota/</dataUrl>
-     
     </url>
     <languages>ger</languages>
     <mainLanguage>ger</mainLanguage>
     <formats>
-      
       <format>html</format>
     </formats> 
-   
   </collection>
 </wsp>
 
