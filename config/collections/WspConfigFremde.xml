@@ -2,7 +2,7 @@
 <wsp>
   <collection>
     <id>fremde</id>
-    <rdfId>http://wsp.normdata.rdf/HerausforderungDruchDasFremde</rdfId>
+    <rdfId>http://wsp.normdata.rdf/HerausforderungDurchDasFremde</rdfId>
     <name>Die Herausforderung durch das Fremde</name>
     <url>
       <webBaseUrl>http://www.bbaw.de/forschung/fremde</webBaseUrl>
