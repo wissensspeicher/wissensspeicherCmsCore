@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<wsp>
+  <collection>
+    <id>kyoto</id>
+    <rdfId>http://wsp.normdata.rdf/Kyoto</rdfId>
+    <name>Knowledge Yielding Ontologies for Transition-based Organization</name>
+    <url>
+      <webBaseUrl>http://www.kyoto-project.eu</webBaseUrl>
+      <dataUrl>http://www.kyoto-project.eu</dataUrl>
+    </url>
+    <mainLanguage>eng</mainLanguage>
+    <formats>
+      <format>jpeg</format>
+      <format>html</format>
+    </formats>
+    <update>false</update>
+  </collection>
+</wsp>
