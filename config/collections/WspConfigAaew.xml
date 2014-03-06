@@ -2,9 +2,8 @@
 <wsp>
   <collection>
     <id>aaew</id>
-    <!-- ID (an URL) to the related node in the normdata.rdf file -->
-    <rdfId>http://wsp.normdata.rdf/AltaegyptWB</rdfId>
-    <name>Altägyptisches Wörterbuch</name>
+    <rdfId>http://wsp.normdata.rdf/StrukturenTransformationAEW</rdfId>
+    <name>Strukturen und Transformationen des Wortschatzes der ägyptischen Sprache: Text- und Wissenskultur im Alten Ägypten</name>
     <url>
       <webBaseUrl>http://aaew.bbaw.de/</webBaseUrl>
       <dataUrl>http://aaew.bbaw.de/</dataUrl>
