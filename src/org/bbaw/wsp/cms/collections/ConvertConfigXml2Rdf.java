@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 import net.sf.saxon.s9api.XdmItem;
 import net.sf.saxon.s9api.XdmSequenceIterator;
@@ -26,8 +27,9 @@ public class ConvertConfigXml2Rdf {
     try {
       ConvertConfigXml2Rdf convertConfigXml2Rdf = new ConvertConfigXml2Rdf();
       convertConfigXml2Rdf.init();
-      // convertConfigXml2Rdf.convertAll();
-      convertConfigXml2Rdf.proofRdfProjects();
+      convertConfigXml2Rdf.convertAll();
+      // convertConfigXml2Rdf.proofRdfProjects();
+      // convertConfigXml2Rdf.proofCollectionProjects();
       // convertConfigXml2Rdf.convert("mega");
     } catch (Exception e) {
       e.printStackTrace();
@@ -157,11 +159,29 @@ public class ConvertConfigXml2Rdf {
       LOGGER.error("Project: \"" + collectionRdfId + "\": Change <rdf:type> to <rdf:type rdf:resource=\"http://xmlns.com/foaf/0.1/Project\"/>");
   }
 
+  private void proofCollectionProjects() throws ApplicationException {
+    try {
+      URL inputNormdataFileUrl = inputNormdataFile.toURI().toURL();
+      ArrayList<Collection> collections = collectionReader.getCollections();
+      for (int i=0; i<collections.size(); i++) {
+        Collection coll = collections.get(i);
+        String id = coll.getId();
+        String rdfId = coll.getRdfId();
+        String projectRdfStr = xQueryEvaluator.evaluateAsString(inputNormdataFileUrl, "/*:RDF/*:Description[@*:about='" + rdfId + "']/*:nick");
+        if (projectRdfStr == null || projectRdfStr.isEmpty())
+          LOGGER.error("Collection with id:" + id + " has no nickName");
+      }
+    } catch (IOException e) {
+      throw new ApplicationException(e);
+    }
+  }
+  
   private void proofRdfProjects() throws ApplicationException {
     try {
       URL inputNormdataFileUrl = inputNormdataFile.toURI().toURL();
       String rdfTypeProject = "http://xmlns.com/foaf/0.1/Project"; 
       XdmValue xmdValueProjects = xQueryEvaluator.evaluate(inputNormdataFileUrl, "/*:RDF/*:Description[*:type[@*:resource='" + rdfTypeProject + "']]");
+      LOGGER.info("Proof " + inputNormdataFileUrl + " (with " + xmdValueProjects.size() + " projects) against ConfigFiles (with " + collectionReader.getCollections().size() + " projects)");
       XdmSequenceIterator xmdValueProjectsIterator = xmdValueProjects.iterator();
       if (xmdValueProjects != null && xmdValueProjects.size() > 0) {
         while (xmdValueProjectsIterator.hasNext()) {
@@ -169,7 +189,7 @@ public class ConvertConfigXml2Rdf {
           String xdmItemProjectStr = xdmItemProject.toString();
           String projectRdfId = xQueryEvaluator.evaluateAsString(xdmItemProjectStr, "string(/*:Description/@*:about)");
           String foafNickName = xQueryEvaluator.evaluateAsString(xdmItemProjectStr, "/*:Description/*:nick[1]/text()");
-          if (foafNickName == null || foafNickName.isEmpty()) {
+          if (foafNickName == null || foafNickName.trim().isEmpty()) {
             LOGGER.error("Project: \"" + projectRdfId + "\" has no \"<foaf:nick> entry");
           } else {
             Collection coll = collectionReader.getCollection(foafNickName);
