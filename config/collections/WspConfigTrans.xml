@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<wsp>
+  <collection>
+    <id>trans</id>
+    <rdfId>http://wsp.normdata.rdf/TranslatioNummorum</rdfId>
+    <name>Translatio Nummorum</name>
+    <url>
+      <webBaseUrl>http://www.census.de/census/translatio-nummorum</webBaseUrl>
+      <dataUrl>http://www.census.de/census/translatio-nummorum</dataUrl>
+    </url>
+    <languages>ger</languages>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>html</format>
+    </formats>
+    <update>false</update>
+  </collection>
+</wsp>
