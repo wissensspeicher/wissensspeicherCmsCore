@@ -6,13 +6,6 @@
     <name>Kant’s gesammelte Schriften</name>
     <url>
       <webBaseUrl>http://kant.bbaw.de</webBaseUrl>
-      <dataUrl>http://kant.bbaw.de</dataUrl>
-      <dataUrl>http://telota.bbaw.de/kant</dataUrl>
-      <!-- XML-Texte -->
-      <!-- 
-      <dataUrl type="eXistDir">http://telota.bbaw.de/exist/rest/db/kant/</dataUrl>
-      <exclude>xquery</exclude>
-      -->
     </url>
     <languages>ger</languages>
     <mainLanguage>ger</mainLanguage>
