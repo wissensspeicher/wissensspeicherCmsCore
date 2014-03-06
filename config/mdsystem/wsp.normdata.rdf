@@ -250,6 +250,8 @@ Das modulartig angelegte Vorhaben beginnt mit einer Geschichte des preußischen 
 		<dcterms:identifier rdf:resource="http://viaf.org/viaf/93041860"/>
 	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/Kyoto">
+    <dc:language>eng</dc:language>
+    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
 		<dcterms:valid rdf:datatype="http://purl.org/dc/terms/Period">start=2008; end=2011; name=Laufzeit</dcterms:valid>
 		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Knowledge Yielding Ontologies for Transition-based Organization</foaf:name>
 		<gnd:contributingCorporateBody rdf:resource="http://www.ilc.cnr.it/indexflash.html"/>
@@ -267,11 +269,10 @@ Das modulartig angelegte Vorhaben beginnt mit einer Geschichte des preußischen 
 		<gnd:contributingCorporateBody rdf:resource="http://www.synthema.it/"/>
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Fellbaum"/>
 		<dc:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Drittmittelprojekt</dc:description>
-		<foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">KYOTO</foaf:nick>
+		<foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kyoto</foaf:nick>
 		<foaf:homepage rdf:resource="http://www.kyoto-project.eu"/>
 		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ZentrumSprache"/>
 		<gnd:contributingCorporateBody rdf:resource="http://www.let.vu.nl/nl/index.asp"/>
-		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
 		<gnd:contributingCorporateBody rdf:resource="http://www.ecnc.org/"/>
 	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/Willenborg">
@@ -573,19 +574,6 @@ Ziel ist es, in einem „State of the art“-Bericht bisher erhobene Daten und v
 		<gnd:functionOrRole>Wissenschaftlicher Mitarbeiter</gnd:functionOrRole>
 		<dcterms:identifier rdf:resource="http://d-nb.info/gnd/108923517"/>
 		<dcterms:identifier rdf:resource="http://viaf.org/viaf/9972700"/>
-	</rdf:Description>
-	<rdf:Description rdf:about="http://wsp.normdata.rdf/Schuelerlabor">
-		<gnd:definition>Veranstaltungsreihe</gnd:definition>
-		<dcterms:isPartOf rdf:resource="http://wsp.bbaw.de#AkademieSchule"/>
-		<foaf:status rdf:datatype="http://www.w3.org/2001/XMLSchema#string">aktiv</foaf:status>
-		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Pauly"/>
-		<dc:relation rdf:resource="http://wsp.normdata.rdf/SchuelerlaborKrupp"/>
-		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Schülerlabor Geisteswissenschaften</foaf:name>
-		<dc:relation rdf:resource="http://wsp.normdata.rdf/SchuelerlaborHamburg"/>
-		<dc:relation rdf:resource="http://wsp.normdata.rdf/NetzwerkGenau"/>
-		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
-		<dcterms:abstract rdf:datatype="http://www.w3.org/2001/XMLSchema#string">In Workshops, die sich besonders an Leistungskurse der Oberstufe wenden, machen sich Jugendliche mit den Arbeitsabläufen aktueller geisteswissenschaftlicher Forschung vertraut. Für einen Schultag übernehmen sie selbst die Aufgaben eines Historikers oder einer Literaturwissenschaftlerin, um die Entscheidung für oder gegen ein solches Studium später mit größerer Verantwortung und Sicherheit treffen zu können. Bearbeitet werden stets „echte“ ergebnisoffene Probleme, in der Regel auch mit Bezug zu den unmittelbaren Tätigkeitsschwerpunkten in den Akademienvorhaben und interdisziplinären Arbeitsgruppen, an die das Schülerlabor anknüpft.</dcterms:abstract>
-		<foaf:homepage rdf:resource="http://www.bbaw.de/AuS/Schuelerlabor/"/>
 	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/Orinoco">
 		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Colombia"/>
@@ -1085,7 +1073,7 @@ Damit sollen gemeinsame historische Vermächtnisse sowie die Mobilität von Pers
 		<gnd:topic rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Philologie</gnd:topic>
 		<dcterms:valid rdf:datatype="http://purl.org/dc/terms/Period">start=2003; name=Laufzeit</dcterms:valid>
 		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Wörterbuchportal</foaf:name>
-		<foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">WBP</foaf:nick>
+		<foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">wbp</foaf:nick>
 		<dc:coverage rdf:resource="http://wsp.normdata.rdf/Gegenwart"/>
 		<dc:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Initiative</dc:description>
 		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ZentrumSprache"/>
@@ -1213,13 +1201,6 @@ Damit sollen gemeinsame historische Vermächtnisse sowie die Mobilität von Pers
 		<foaf:homepage rdf:resource="http://www.bbaw.de/telota/projekte/digitale-editionen/sade"/>
 		<dc:coverage rdf:resource="http://wsp.normdata.rdf/Gegenwart"/>	
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Neumann"/>
-	</rdf:Description>
-	<rdf:Description rdf:about="http://wsp.normdata.rdf/Sonnentaler">		
-		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Sonnentaler (La main à la pâte (Lamap))</foaf:name>
-		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AkademieSchule"/>
-		<foaf:homepage rdf:resource="http://www.sonnentaler.net"/>
-		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
-		<dc:coverage rdf:resource="http://wsp.normdata.rdf/Gegenwart"/>			
 	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/ProsopographiaImperiiRomani">
     <dc:language>ger</dc:language>
@@ -1435,11 +1416,6 @@ Damit sollen gemeinsame historische Vermächtnisse sowie die Mobilität von Pers
 		<gnd:fieldOfActivity rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Religion</gnd:fieldOfActivity>
 		<dcterms:identifier rdf:resource="http://viaf.org/viaf/68926330"/>
 		<foaf:homepage rdf:resource="http://dbpedia.org/page/Martin_Buber"/>
-	</rdf:Description>
-	<rdf:Description rdf:about="http://wsp.normdata.rdf/SchuelerlaborHamburg">
-    <dc:language>ger</dc:language>
-    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
-		<foaf:homepage rdf:resource="http://www.awhamburg.de/schueler/schuelerlabor.html"/>
 	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/GoetheWB">
     <dc:language>ger</dc:language>
@@ -1824,6 +1800,7 @@ Damit sollen gemeinsame historische Vermächtnisse sowie die Mobilität von Pers
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/NeueditionKant">
     <dc:language>ger</dc:language>
     <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
+    <foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">kantneu</foaf:nick>
 		<dcterms:abstract rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Der Schwerpunkt der Editionsarbeit liegt auf drei Vorhaben: der Neuedition der Critik der reinen Vernunft, der Critik der practischen Vernunft und der Critik der Urtheilskraft (Abteilung I), der Neuedition des unter dem Titel Opus postumum bekannt gewordenen Nachlasswerks Kants (Abteilung III) und der noch ausstehenden Edition der kantischen Vorlesungen über Physische Geographie (Abteilung IV).</dcterms:abstract>
 		<dcterms:valid rdf:datatype="http://purl.org/dc/terms/Period">start=2011; name=Laufzeit</dcterms:valid>
 		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Neuedition, Revision und Abschluss der Werke Immanuel Kants</foaf:name>
@@ -2774,13 +2751,6 @@ Die interdisziplinäre Arbeitsgruppe befasst sich mit dem Grundthema „Attrakti
 		<dcterms:identifier rdf:resource="http://d-nb.info/gnd/120551721"/>
 		<dcterms:identifier rdf:resource="http://viaf.org/viaf/27349700"/>
 	</rdf:Description>
-	<rdf:Description rdf:about="http://wsp.normdata.rdf/NetzwerkGenau">
-    <dc:language>ger</dc:language>
-    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
-		<foaf:homepage rdf:resource="http://www.genau-bb.de/"/>
-		<gnd:definition>Veranstaltungsreihe</gnd:definition>
-		<dcterms:abstract rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Im Netzwerk GenaU haben sich Schülerlabore an Forschungseinrichtungen und Hochschulen in Berlin und Brandenburg zusammengeschlossen. Für jede Altersstufe und jedes MINT-Fach (Mathematik-Informatik-Naturwissenschaft-Technik) lassen sich hier Experimentierkurse für ganze Schulklassen finden. Sie werden ergänzt durch weiterführende Arbeitsgemeinschaften und Lehrerfortbildungen.</dcterms:abstract>
-	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/Gerber">
 		<gnd:functionOrRole>Wissenschaftlich-technische Mitarbeiterin</gnd:functionOrRole>
 		<foaf:title rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Dipl.-Dok.</foaf:title>
@@ -3086,19 +3056,6 @@ Die interdisziplinäre Arbeitsgruppe befasst sich mit dem Grundthema „Attrakti
 		<foaf:homepage rdf:resource="http://www.oldenbourg-verlag.de/akademie-verlag"/>
 		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Akademie Verlag</foaf:name>
 		<dc:coverage rdf:resource="http://wsp.normdata.rdf/Berlin"/>
-	</rdf:Description>
-	<rdf:Description rdf:about="http://wsp.normdata.rdf/Akademievortraege">
-    <dc:language>ger</dc:language>
-    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
-		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Akademievorträge an brandenburgischen Schulen</foaf:name>
-		<foaf:status rdf:datatype="http://www.w3.org/2001/XMLSchema#string">aktiv</foaf:status>
-		<dc:coverage rdf:resource="http://wsp.normdata.rdf/Gegenwart"/>
-		<dcterms:abstract rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Mitglieder und Mitarbeiter der Akademie besuchen regelmäßig die Schulen des Landes und vermitteln Schülerinnen und Schülern der Oberstufe in ihren Vorträgen die Faszination von Wissenschaft, bauen Hemmschwellen ab und ermöglichen Einblicke in spannende Forschungsgebiete.</dcterms:abstract>
-		<dcterms:valid rdf:datatype="http://purl.org/dc/terms/Period">start=2001</dcterms:valid>
-		<foaf:homepage rdf:resource="http://www.bbaw.de/AuS/akademievortraege/vortraege"/>
-		<gnd:definition>Veranstaltungsreihe</gnd:definition>
-		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Schroeder"/>
-		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AkademieSchule"/>
 	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/Turfan">
     <dc:language>ger</dc:language>
@@ -3573,22 +3530,6 @@ Das modulartig angelegte Vorhaben beginnt mit einer Geschichte des preußischen 
 		<dcterms:identifier rdf:resource="http://d-nb.info/gnd/110396901"/>
 		<dcterms:identifier rdf:resource="http://viaf.org/viaf/606907"/>
 	</rdf:Description>
-	<rdf:Description rdf:about="http://wsp.normdata.rdf/VerhaeltnisWissenschaftMedien">
-    <dc:language>ger</dc:language>
-    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
-		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Zum Verhältnis von Wissenschaft, Öffentlichkeit und Medien</foaf:name>
-		<foaf:status rdf:datatype="http://www.w3.org/2001/XMLSchema#string">aktiv</foaf:status>
-		<gnd:contributingCorporateBody rdf:resource="http://leopoldina-halle.de/de/home"/>
-		<dc:coverage rdf:resource="http://wsp.normdata.rdf/Gegenwart"/>
-		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Weingart"/>
-		<foaf:homepage rdf:resource="http://www.acatech.de/?id=1829"/>
-		<dcterms:valid rdf:datatype="http://purl.org/dc/terms/Period">start=2012-01; end=20132-09; name=Laufzeit</dcterms:valid>
-		<gnd:definition>Expertise</gnd:definition>
-		<gnd:topic rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Gesellschaftsforschung</gnd:topic>
-		<dc:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">interdisziplinäre Arbeitsgruppe</dc:description>
-		<dc:contributor rdf:resource="http://wsp.normdata.rdf/SchulzP"/>
-		<gnd:contributingCorporateBody rdf:resource="http://www.acatech.de"/>
-	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/Feuerbach">
     <dc:language>ger</dc:language>
     <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
@@ -3885,11 +3826,6 @@ Sie baute dabei zum Teil auf den Ergebnissen der IAG Zukunftsorientierte Nutzung
 		<rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Edition</rdfs:label>
 		<rdf:type rdf:resource="http://purl.org/dc/terms/MediaType"/>
 	</rdf:Description>
-	<rdf:Description rdf:about="http://wsp.normdata.rdf/SchuelerlaborKrupp">
-    <dc:language>ger</dc:language>
-    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
-		<foaf:homepage rdf:resource="http://www.aks.rub.de/index.php?aktueller_pfad=gsl"/>
-	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/Wiedemann">
 		<dc:coverage rdf:resource="http://wsp.normdata.rdf/Neuzeit"/>
 		<dcterms:identifier rdf:resource="http://viaf.org/viaf/100650533"/>
@@ -3982,8 +3918,9 @@ Sie baute dabei zum Teil auf den Ergebnissen der IAG Zukunftsorientierte Nutzung
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/WissenFuerEntscheidung">
     <dc:language>ger</dc:language>
     <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
+    <foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">wfe</foaf:nick>
 		<foaf:status rdf:datatype="http://www.w3.org/2001/XMLSchema#string">abgeschlossen</foaf:status>
-		<foaf:homepage rdf:resource="http://www.sciencepolicystudies.de"/>
+		<foaf:homepage rdf:resource="http://www.bbaw.de/forschung/wie"/>
 		<dcterms:replaces rdf:resource="http://wsp.normdata.rdf/PolitikWissenschaftGesellschaft"/>
 		<gnd:topic rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Wissenschaftsforschung</gnd:topic>
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Moeller"/>
@@ -4016,19 +3953,6 @@ Sie baute dabei zum Teil auf den Ergebnissen der IAG Zukunftsorientierte Nutzung
 		<foaf:title rdf:datatype="http://www.w3.org/2001/XMLSchema#string">PD Dr.</foaf:title>
 		<dcterms:identifier rdf:resource="http://d-nb.info/gnd/113854633"/>
 		<dcterms:identifier rdf:resource="http://viaf.org/viaf/57303444"/>
-	</rdf:Description>
-	<rdf:Description rdf:about="http://wsp.normdata.rdf/ZukunftsportalAntike">
-    <dc:language>ger</dc:language>
-    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
-		<foaf:status rdf:datatype="http://www.w3.org/2001/XMLSchema#string">abgeschlossen</foaf:status>
-		<dcterms:valid rdf:datatype="http://purl.org/dc/terms/Period">start=2012-01-24; end=2012-01-26; name=Laufzeit</dcterms:valid>
-		<foaf:homepage rdf:resource="http://www.bbaw.de/AuS/zukunftsportal-antike"/>
-		<foaf:fundedBy rdf:resource="http://www.berlin.de/sen/bjw/"/>
-		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Zukunftsportal Antike</foaf:name>
-		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AkademieSchule"/>
-		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Lerch"/>
-		<gnd:definition>Zukunftsfragen</gnd:definition>
-		<dcterms:abstract rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Das Projekt „Zukunftsportal: ANTIKE“ ließ die Antike als Grundlage unserer europäischen Kultur für Berliner Schülerinnen und Schüler lebendig werden. Drei Tage lang sind circa 100 Schülerinnen und Schüler der Oberstufe aus sieben Schulen in die Berliner Antike-Forschung eingetaucht, um im Anschluss ihren eigenen Antike-Kongress zu planen, der am 9. März 2012 stattfand. So führte das „Zukunftsportal: ANTIKE“ auf neue und nachhaltige Weise an geisteswissenschaftliche Arbeitstechniken, Forschungs- und Berufsfelder heran.</dcterms:abstract>
 	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/WilhelmVonHumboldt">
     <dc:language>ger</dc:language>
@@ -4370,6 +4294,8 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/StrukturenTransformationAEW">
     <dc:language>ger</dc:language>
     <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
+    <foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">aaew</foaf:nick>
+    <foaf:homepage rdf:resource="http://aaew.bbaw.de/"/>
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Hafemann"/>
 		<foaf:status rdf:datatype="http://www.w3.org/2001/XMLSchema#string">aktiv</foaf:status>
 		<dc:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Vorhaben</dc:description>
@@ -4378,12 +4304,10 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
 		<dcterms:abstract rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Im Vorhaben wird ein Corpus ägyptischer Texte erarbeitet, das Online-Recherchen zum Wortschatz über alle Epochen der ägyptischen Sprachgeschichte ermöglicht.</dcterms:abstract>
 		<gnd:topic rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Linguistik</gnd:topic>
 		<dcterms:replaces rdf:resource="http://wsp.normdata.rdf/AltaegyptWB"/>
-		<foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">AEW</foaf:nick>
 		<dcterms:valid rdf:datatype="http://purl.org/dc/terms/Period">start=2013; name=Laufzeit</dcterms:valid>
 		<gnd:topic rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Kulturwissenschaft</gnd:topic>
 		<gnd:topic rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Orientalistik</gnd:topic>
 		<dc:coverage rdf:resource="http://wsp.normdata.rdf/Antike"/>
-		<foaf:homepage rdf:resource="http://www.bbaw.de/forschung/aew"/>
 		<gnd:definition>Wörterbuch</gnd:definition>
 	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/Ohnesorge">
@@ -4775,22 +4699,6 @@ Vierte Abteilung: Exzerpte. Notizen. Marginalien.</dcterms:abstract>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/Workshop">
 		<rdfs:label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Workshop</rdfs:label>
 		<rdf:type rdf:resource="http://purl.org/dc/terms/MediaType"/>
-	</rdf:Description>
-	<rdf:Description rdf:about="http://wsp.normdata.rdf/Geisteswerkstatt">
-    <dc:language>ger</dc:language>
-    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
-		<gnd:definition>Veranstaltungsreihe</gnd:definition>
-		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AkademieSchule"/>
-		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Pauly"/>
-		<dcterms:abstract rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Mit der „GeistesWERKstatt“ verfügt die Akademie seit 2009 über ein weiteres innovatives Angebot an der Schnittstelle von Schule und Wissenschaft, das sich nicht an ganze Klassen, sondern an einzelne besonders interessierte und qualifizierte Schülerinnen und Schüler der Oberstufe wendet.&#xD;
-Zielgruppe sind Jugendliche, die auf ein geisteswissenschaftliches Studium hinarbeiten und entsprechend erwägen, die Prüfungsleistungen im Rahmen der propädeutisch ausgerichteten Fünften Prüfungskomponente des Abiturs in einem einschlägigen Themenbereich bzw. Unterrichtsfach zu erbringen. Die Akademie möchte den mit dieser Prüfungsform eröffneten Spielraum nutzen und bietet bis zu fünfzig ausgewählten Schülern pro Jahr die Gelegenheit, ein komplexes Schwerpunktthema aus unterschiedlichen disziplinären Perspektiven in engem Kontakt mit professionellen Forschern zu erkunden.&#xD;
-Im Zentrum steht jeweils eine intensive gemeinsame Arbeitswoche mit parallelen Workshops, die kurz vor oder nach den Sommerferien stattfindet.</dcterms:abstract>
-		<gnd:relatedCorporateBody rdf:resource="http://www.bosch-stiftung.de/content/language1/html/24029.asp"/>
-		<foaf:status rdf:datatype="http://www.w3.org/2001/XMLSchema#string">aktiv</foaf:status>
-		<dcterms:valid rdf:datatype="http://purl.org/dc/terms/Period">start=2009;</dcterms:valid>
-		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">GeistesWERKstatt</foaf:name>
-		<dc:subject rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Sommerakademie für Schülerinnen und Schüler der Oberstufe</dc:subject>
-		<foaf:homepage rdf:resource="http://www.bbaw.de/AuS/geisteswerkstatt/"/>
 	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/Fueloep">
 		<foaf:givenName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Attila</foaf:givenName>
@@ -5300,6 +5208,7 @@ Erfasst werden die in der Renaissance bekannten antiken Monumente mit den zugeh�
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/TranslatioNummorum">
     <dc:language>ger</dc:language>
     <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
+    <foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">trans</foaf:nick>
 		<foaf:homepage rdf:resource="http://www.census.de/census/translatio-nummorum"/>
 		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
 		<gnd:relatedCorporateBody rdf:resource="http://www.smb.museum/ikmk"/>
@@ -5467,13 +5376,6 @@ Erfasst werden die in der Renaissance bekannten antiken Monumente mit den zugeh�
 		<dcterms:abstract rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Das Projekt erforscht die kulturelle Blütezeit Berlins 1786-1815. Es betreibt einerseits Quellenerschließung, andererseits Auswertung und Kontextualisierung der Rechercheergebnisse in monographischen Arbeiten.</dcterms:abstract>
 		<dc:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Vorhaben</dc:description>
 		<foaf:status rdf:datatype="http://www.w3.org/2001/XMLSchema#string">aktiv</foaf:status>
-	</rdf:Description>
-	<rdf:Description rdf:about="http://wsp.normdata.rdf/BerlinerKlassik/Stadtplan">
-    <dc:language>ger</dc:language>
-    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
-		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Stadtplan</foaf:name>
-		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik" />	
-		<foaf:homepage rdf:resource="http://www.berliner-klassik.de/bk_stadtplan/gui/index.html" />
 	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/Sturm">
 		<gnd:functionOrRole>Wissenschaftlicher Mitarbeiter</gnd:functionOrRole>
@@ -5951,14 +5853,6 @@ Mit der im Juni 2000 durchgeführten internationalen Konferenz »Die Arbeit der 
 		<dc:coverage rdf:resource="http://wsp.normdata.rdf/Neuzeit"/>
 		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Telota"/>
 	</rdf:Description>
-	<rdf:Description rdf:about="http://wsp.normdata.rdf/InstitutionenOeffentlicheGueter">		
-    <dc:language>ger</dc:language>
-    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
-		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Institutionen und öffentliche Güter in der Landwirtschaft</foaf:name>
-		<foaf:homepage rdf:resource="http://www.netzwerk-laendlicher-raum.de/"/>
-		<dc:coverage rdf:resource="http://wsp.normdata.rdf/Gegenwart"/>		
-		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Schleyer"/>
-	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/Pauly">
 		<foaf:title rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Dr.</foaf:title>
 		<foaf:familyName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Pauly</foaf:familyName>
@@ -6115,19 +6009,15 @@ Mit der im Juni 2000 durchgeführten internationalen Konferenz »Die Arbeit der 
 		<gnd:definition>Veranstaltungsreihe</gnd:definition>
 		<dc:coverage rdf:resource="http://wsp.normdata.rdf/Gegenwart"/>
 		<dcterms:abstract rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ein wesentliches Anliegen der Berlin-Brandenburgischen Akademie der Wissenschaften ist die Förderung des wissenschaftlichen Nachwuchses. Denn der Grundstein für das spätere Interesse und die Begeisterung für Wissenschaft wird bei Kindern und Jugendlichen bereits sehr früh gelegt. Die Akademie hat daher ein vielfältiges Spektrum von Angeboten für Schülerinnen und Schüler aller Altersgruppen entwickelt.</dcterms:abstract>
-		<dcterms:hasPart rdf:resource="http://wsp.normdata.rdf/ZukunftsportalAntike"/>
 		<gnd:topic rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Philologie</gnd:topic>
 		<gnd:topic rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Orientalistik</gnd:topic>
 		<foaf:homepage rdf:resource="http://www.bbaw.de/AuS/"/>
 		<gnd:topic rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Geschichte</gnd:topic>
 		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Akademie und Schule</foaf:name>
-		<dcterms:hasPart rdf:resource="http://wsp.normdata.rdf/Akademievortraege"/>
 		<foaf:status rdf:datatype="http://www.w3.org/2001/XMLSchema#string">aktiv</foaf:status>
 		<dc:coverage rdf:resource="http://wsp.normdata.rdf/Mittelalter"/>
-		<dcterms:hasPart rdf:resource="http://wsp.normdata.rdf/Schuelerlabor"/>
 		<gnd:topic rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Klassische Altertumswissenschaft</gnd:topic>
 		<gnd:topic rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Linguistik</gnd:topic>
-		<dcterms:hasPart rdf:resource="http://wsp.normdata.rdf/Geisteswerkstatt"/>
 	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/Niedermeier">
 		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
@@ -6584,9 +6474,10 @@ Das Projekt konzentrierte sich auf einen ausgewählten Bereich im weiten Spektru
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/AltaegyptWB">
     <dc:language>ger</dc:language>
     <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
+    <foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">altaegyptwb</foaf:nick>
+    <foaf:homepage rdf:resource="http://www.bbaw.de/forschung/altaegyptwb"/>
 		<gnd:topic rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Philologie</gnd:topic>
 		<dcterms:abstract rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ziel des Projekts ist die Schaffung eines digitalen Corpus der aus dem pharaonischen Ägypten überlieferten Texte, das durch eine lexikalische Datenbank erschlossen ist; das Material soll im Internet zur Recherche präsentiert werden.</dcterms:abstract>
-		<foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">aaew</foaf:nick>
 		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ZentrumAlteWelt"/>
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Schweitzer"/>
 		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Altägyptisches Wörterbuch</foaf:name>
@@ -6599,9 +6490,8 @@ Das Projekt konzentrierte sich auf einen ausgewählten Bereich im weiten Spektru
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Seidlmayer"/>
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Sperveslage"/>
 		<foaf:mbox rdf:datatype="http://www.w3.org/2001/XMLSchema#string">aegypt@bbaw.de</foaf:mbox>
-		<foaf:homepage rdf:resource="http://aaew.bbaw.de/"/>
 		<gnd:definition>Wörterbuch</gnd:definition>
-		<foaf:status rdf:datatype="http://www.w3.org/2001/XMLSchema#string">aktiv</foaf:status>
+		<foaf:status rdf:datatype="http://www.w3.org/2001/XMLSchema#string">abgeschlossen</foaf:status>
 		<gnd:gndIdentifier rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://d-nb.info/gnd/5512624-8</gnd:gndIdentifier>
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Grunert"/>
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Feder"/>
