@@ -5,6 +5,7 @@
     <rdfId>http://wsp.normdata.rdf/Test</rdfId>
     <name>Testprojekt (nicht beachten)</name>
     <url>
+      <webBaseUrl>http://wspdev/test/</webBaseUrl>
       <!-- if dataUrl is not a directory but a file, it should end with a forward slash -->
       <dataUrl>http://wspdev/test/Test_1789.xml</dataUrl>
       <dataUrl>http://wspdev/test/Test_1789-2.xml</dataUrl>
