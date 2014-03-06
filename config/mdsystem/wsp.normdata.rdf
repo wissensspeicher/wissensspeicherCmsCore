@@ -6668,5 +6668,29 @@ Das Projekt konzentrierte sich auf einen ausgewählten Bereich im weiten Spektru
 		<foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">akademiepublikationen5</foaf:nick>
     <foaf:homepage rdf:resource="http://edoc.bbaw.de"/>
 	</rdf:Description>
+  <rdf:Description rdf:about="http://wsp.normdata.rdf/Edoc">
+    <dc:language>ger</dc:language>
+    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
+    <foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">edoc</foaf:nick>
+    <foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Akademiebibliothek: Elektronischer Dokumentenserver (EDOC)</foaf:name>
+    <foaf:homepage rdf:resource="http://edoc.bbaw.de"/>
+    <gnd:definition>NA</gnd:definition>
+    <dc:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NA</dc:description>
+    <dcterms:abstract rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NA</dcterms:abstract>
+    <dcterms:valid rdf:datatype="http://purl.org/dc/terms/Period">NA</dcterms:valid>
+    <gnd:topic rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NA</gnd:topic>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://wsp.normdata.rdf/Test">
+    <dc:language>eng</dc:language>
+    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
+    <foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">test</foaf:nick>
+    <foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Testprojekt (nicht beachten)</foaf:name>
+    <foaf:homepage rdf:resource="http://wspdev/test/"/>
+    <gnd:definition>NA</gnd:definition>
+    <dc:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NA</dc:description>
+    <dcterms:abstract rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NA</dcterms:abstract>
+    <dcterms:valid rdf:datatype="http://purl.org/dc/terms/Period">NA</dcterms:valid>
+    <gnd:topic rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NA</gnd:topic>
+  </rdf:Description>
 </rdf:RDF>
 
