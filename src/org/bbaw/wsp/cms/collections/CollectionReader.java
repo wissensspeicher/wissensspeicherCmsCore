@@ -86,11 +86,15 @@ public class CollectionReader {
 							collection.setUpdateNecessary(true);
 					}
 					String collectionId = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/id/text()");
-					if (collectionId != null) {
+          if (collectionId == null || collectionId.trim().isEmpty()) {
+            LOGGER.error("No collectionId found in: " + collection.getConfigFileName());
+          } else {
 						collection.setId(collectionId);
-					}
+					} 
           String rdfId = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/rdfId/text()");
-          if (rdfId != null) {
+          if (rdfId == null || rdfId.trim().isEmpty()) {
+            LOGGER.error("No rdfId found in: " + collection.getConfigFileName());
+          } else {
             collection.setRdfId(rdfId);
           }
           String dbName = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/db/name/text()");
@@ -106,7 +110,6 @@ public class CollectionReader {
             String mainResourcesTableId = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/db/mainResourcesTable/idField/text()");
             if (mainResourcesTableId != null)
               database.setMainResourcesTableId(mainResourcesTableId);
-            
             XdmValue mainResourcesTableFields = xQueryEvaluator.evaluate(configFileUrl, "/wsp/collection/db/mainResourcesTable/field");
             XdmSequenceIterator mainResourcesTableFieldsIterator = mainResourcesTableFields.iterator();
             if (mainResourcesTableFields != null && mainResourcesTableFields.size() > 0) {
@@ -144,6 +147,10 @@ public class CollectionReader {
 					if (metadataUrlPrefix != null) {
 						collection.setMetadataUrlPrefix(metadataUrlPrefix);
 					}
+          String collectionMetadataRedundantUrlPrefix = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/metadata/redundantUrlPrefix/text()");
+          if (collectionMetadataRedundantUrlPrefix != null) {
+            collection.setMetadataRedundantUrlPrefix(collectionMetadataRedundantUrlPrefix);
+          }
 					String metadataUrlType = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/metadata/urlType/text()");
 					if (metadataUrlType != null) {
 						collection.setMetadataUrlType(metadataUrlType);
@@ -182,10 +189,6 @@ public class CollectionReader {
 					String webBaseUrl = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/url/webBaseUrl/text()");
 					if (webBaseUrl != null) {
 						collection.setWebBaseUrl(webBaseUrl);
-					}
-					String collectionMetadataRedundantUrlPrefix = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/metadata/redundantUrlPrefix/text()");
-					if (collectionMetadataRedundantUrlPrefix != null) {
-						collection.setMetadataRedundantUrlPrefix(collectionMetadataRedundantUrlPrefix);
 					}
 					String formatsStr = xQueryEvaluator.evaluateAsStringValueJoined(configFileUrl, "/wsp/collection/formats/format", "###");
 					ArrayList<String> formatsArrayList = new ArrayList<String>();
