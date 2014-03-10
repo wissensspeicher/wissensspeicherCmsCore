@@ -37,7 +37,7 @@ AND
  articles_persons.person_id = persons.person_id
 GROUP BY tits.publication_id
         </sql>
-        <fileName>/home/joey/dataWsp/documentsExtern/avhunselbst/avh_uns.xml</fileName>
+        <fileName>config/mdsystem/db-resources/avhunselbst.xml</fileName>
       </xmlDump>
       <mainResourcesTable>
         <name>articles_publications</name>
@@ -73,7 +73,7 @@ GROUP BY tits.publication_id
       <dataUrl>http://telota.bbaw.de/avh/uns/</dataUrl>
     </url>
     <metadata>
-      <url>file:/home/joey/dataWsp/documentsExtern/avhunselbst/avh_uns.rdf</url>
+      <url>config/mdsystem/resources/avhunselbst.rdf</url>
       <urlType>many</urlType>
     </metadata>
     <languages>ger,lat,fra,eng</languages>
