@@ -58,42 +58,24 @@ public class CollectionManager {
   }
   
   /**
-   * Update of all collections (if update parameter in configuration is true)
-   */
-  public void updateCollections() throws ApplicationException {
-    updateCollections(false);
-  }
-  
-  /**
    * Update of all collections
-   * @param forceUpdate if true then update is always done (also if update parameter in configuration is false)
    * @throws ApplicationException
    */
-  public void updateCollections(boolean forceUpdate) throws ApplicationException {
+  public void updateCollections() throws ApplicationException {
     ArrayList<Collection> collections = collectionReader.getCollections();
     for (Collection collection : collections) {
-      updateCollection(collection, forceUpdate);
+      updateCollection(collection);
     }
   }
 
   /**
-   * Update of the collection with that collectionId (if update parameter in configuration is true)
+   * Update of the collection with that collectionId
    * @param collectionId
    * @throws ApplicationException
    */
   public void updateCollection(String collectionId) throws ApplicationException {
-    updateCollection(collectionId, false);
-  }
-  
-  /**
-   * Update of the collection with that collectionId
-   * @param collectionId
-   * @param forceUpdate if true then update is always done (also if update parameter in configuration is false)
-   * @throws ApplicationException
-   */
-  public void updateCollection(String collectionId, boolean forceUpdate) throws ApplicationException {
     Collection collection = collectionReader.getCollection(collectionId);
-    updateCollection(collection, forceUpdate);
+    updateCollection(collection);
   }
 
   public void deleteCollection(String collectionId) throws ApplicationException {
@@ -106,32 +88,26 @@ public class CollectionManager {
     }
   }
   
-  private void updateCollection(Collection collection, boolean forceUpdate) throws ApplicationException {
-    boolean isUpdateNecessary = collection.isUpdateNecessary();
-    if (isUpdateNecessary || forceUpdate) {
-      WspUrl[] collectionDataUrls = collection.getDataUrls();
-      String excludesStr = collection.getExcludesStr();
-      if (collectionDataUrls != null) {
-        List<String> collectionDocumentUrls = new ArrayList<String>();
-        for (int i=0; i<collectionDataUrls.length; i++) {
-          WspUrl wspUrl = collectionDataUrls[i];
-          String urlStr = wspUrl.getUrl();
-          if (wspUrl.isEXistDir()) {
-            if (urlStr.endsWith("/"))
-              urlStr = urlStr.substring(0, urlStr.length() - 1);
-            List<String> collectionDocumentUrlsTemp = extractDocumentUrls(urlStr, excludesStr);
-            collectionDocumentUrls.addAll(collectionDocumentUrlsTemp);
-          } else {
-            collectionDocumentUrls.add(urlStr);
-          }
+  private void updateCollection(Collection collection) throws ApplicationException {
+    WspUrl[] collectionDataUrls = collection.getDataUrls();
+    String excludesStr = collection.getExcludesStr();
+    if (collectionDataUrls != null) {
+      List<String> collectionDocumentUrls = new ArrayList<String>();
+      for (int i=0; i<collectionDataUrls.length; i++) {
+        WspUrl wspUrl = collectionDataUrls[i];
+        String urlStr = wspUrl.getUrl();
+        if (wspUrl.isEXistDir()) {
+          if (urlStr.endsWith("/"))
+            urlStr = urlStr.substring(0, urlStr.length() - 1);
+          List<String> collectionDocumentUrlsTemp = extractDocumentUrls(urlStr, excludesStr);
+          collectionDocumentUrls.addAll(collectionDocumentUrlsTemp);
+        } else {
+          collectionDocumentUrls.add(urlStr);
         }
-        collection.setDocumentUrls(collectionDocumentUrls);
       }
-      addDocuments(collection); 
-      String configFileName = collection.getConfigFileName();
-      File configFile = new File(configFileName);
-      setUpdate(configFile, false);
+      collection.setDocumentUrls(collectionDocumentUrls);
     }
+    addDocuments(collection); 
   }
   
   private void addDocuments(Collection collection) throws ApplicationException {
@@ -331,28 +307,6 @@ public class CollectionManager {
       return mdRecords;
   }
   
-  private void setUpdate(File configFile, boolean update) throws ApplicationException {
-    try {
-      // flag im Konfigurations-File auf false setzen durch Serialisierung in das File
-      DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-      DocumentBuilder builder = docFactory.newDocumentBuilder();
-      Document configFileDocument = builder.parse(configFile);
-      NodeList updateNodeList = configFileDocument.getElementsByTagName("update");
-      Node n = updateNodeList.item(0);
-      if (n != null) {
-        if (update)
-          n.setTextContent("true");
-        else 
-          n.setTextContent("false");
-        FileOutputStream os = new FileOutputStream(configFile);
-        XMLSerializer ser = new XMLSerializer(os, null);
-        ser.serialize(configFileDocument);  //  Vorsicht: wenn es auf true ist: es wird alles neu indexiert
-      }
-    } catch (Exception e) {
-      throw new ApplicationException(e);
-    }
-  }
-  
   private List<String> extractDocumentUrls(String collectionDataUrl, String excludesStr) {
     List<String> documentUrls = null;
     if (! collectionDataUrl.equals("")){
@@ -427,5 +381,30 @@ public class CollectionManager {
       }
     }
     return mdRecord;    
+  }
+  
+  /*
+   * wird nicht mehr verwendet: nur noch als Demo
+   */
+  private void setUpdate(File configFile, boolean update) throws ApplicationException {
+    try {
+      // flag im Konfigurations-File auf false setzen durch Serialisierung in das File
+      DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+      DocumentBuilder builder = docFactory.newDocumentBuilder();
+      Document configFileDocument = builder.parse(configFile);
+      NodeList updateNodeList = configFileDocument.getElementsByTagName("update");
+      Node n = updateNodeList.item(0);
+      if (n != null) {
+        if (update)
+          n.setTextContent("true");
+        else 
+          n.setTextContent("false");
+        FileOutputStream os = new FileOutputStream(configFile);
+        XMLSerializer ser = new XMLSerializer(os, null);
+        ser.serialize(configFileDocument);  //  Vorsicht: wenn es auf true ist: es wird alles neu indexiert
+      }
+    } catch (Exception e) {
+      throw new ApplicationException(e);
+    }
   }
 }
