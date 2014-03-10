@@ -34,7 +34,7 @@ AND
  titles_persons.person_id = persons.person_id
 GROUP BY tits.title_id
         </sql>
-        <fileName>/home/joey/dataWsp/documentsExtern/avhseklit/avh_biblio.xml</fileName>
+        <fileName>config/mdsystem/db-resources/avhseklit.xml</fileName>
       </xmlDump>
       <mainResourcesTable>
         <name>titles_persons</name>
@@ -78,7 +78,7 @@ GROUP BY tits.title_id
       <dataUrl>http://avh.bbaw.de/biblio/</dataUrl>
     </url>
     <metadata>
-      <url>file:/home/joey/dataWsp/documentsExtern/avhseklit/avh_biblio.rdf</url>
+      <url>config/mdsystem/resources/avhseklit.rdf</url>
       <urlType>many</urlType>
     </metadata>
     <languages>ger,lat,fra,eng</languages>
