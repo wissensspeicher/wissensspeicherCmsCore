@@ -24,7 +24,6 @@ public class Collection {
   private Hashtable<String, XQuery> xQueries;
   private List<String> excludeField;
   private List<String> formats;
-  private boolean updateNecessary;
   private List<String> documentUrls; // list of document urls (fetched e.g. by an harvester) 
   private String configFileName;  // configuration file name
   
@@ -37,7 +36,6 @@ public class Collection {
     fields = new ArrayList<String>();
     excludeField = new ArrayList<String>();
     formats = new ArrayList<String>();
-    updateNecessary = false;
     documentUrls = new ArrayList<String>();
     configFileName = "";
   }
@@ -176,14 +174,6 @@ public class Collection {
 
   public void setWebBaseUrl(String webBaseUrl) {
     this.webBaseUrl = webBaseUrl;
-  }
-
-  public boolean isUpdateNecessary() {
-    return updateNecessary;
-  }
-
-  public void setUpdateNecessary(boolean updateNecessary) {
-    this.updateNecessary = updateNecessary;
   }
 
   public String getConfigFileName() {
