@@ -15,12 +15,13 @@ import org.apache.log4j.Logger;
 import org.bbaw.wsp.cms.general.Constants;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
+import de.mpg.mpiwg.berlin.mpdl.util.StringUtils;
 import de.mpg.mpiwg.berlin.mpdl.xml.xquery.XQueryEvaluator;
 
 public class ConvertConfigXml2Rdf {
   private static Logger LOGGER = Logger.getLogger(ConvertConfigXml2Rdf.class);
   private CollectionReader collectionReader;
-  private String outputRdfDir = "/home/joey/dataWsp/projects/";
+  private String outputRdfDir = "config/mdsystem/resources/";
   private XQueryEvaluator xQueryEvaluator;
   private File inputNormdataFile;
   public static void main(String[] args) throws ApplicationException {
@@ -51,15 +52,11 @@ public class ConvertConfigXml2Rdf {
     }
   }
   
-  private void convert(String collectionId) throws ApplicationException {
-    convert(collectionReader.getCollection(collectionId));
-  }
-  
   private void convert(Collection collection) throws ApplicationException {
     String collectionId = collection.getId();
     String collectionRdfId = collection.getRdfId();
     try {
-      File outputRdfFile = new File(outputRdfDir + collectionId + "-resources.rdf");
+      File outputRdfFile = new File(outputRdfDir + collectionId + ".rdf");
       StringBuilder rdfStrBuilder = new StringBuilder();
       rdfStrBuilder.append("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
       rdfStrBuilder.append("<rdf:RDF \n");
@@ -88,17 +85,6 @@ public class ConvertConfigXml2Rdf {
             rdfStrBuilder.append("  <dc:identifier rdf:resource=\"" + dataUrlStr + "\"/>\n");
             if (dataUrl.isEXistDir()) {
               rdfStrBuilder.append("  <dc:type>eXistDir</dc:type>\n");
-              rdfStrBuilder.append("  <!-- special use of this field to express exclusions of directories -->\n");
-              String excludesStr = collection.getExcludesStr();
-              if (excludesStr != null) {
-                String[] exludesStrArray = excludesStr.split(" ");            
-                rdfStrBuilder.append("  <dc:coverage>\n");
-                for (int j=0; j<exludesStrArray.length; j++) {
-                  String exludeStr = exludesStrArray[j];
-                  rdfStrBuilder.append("    <exclude>" + exludeStr + "</exclude>\n");
-                }
-                rdfStrBuilder.append("  </dc:coverage>\n");
-              }
             }
             rdfStrBuilder.append("  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>\n");
             rdfStrBuilder.append("</rdf:Description>\n");
@@ -106,6 +92,12 @@ public class ConvertConfigXml2Rdf {
         }
       } else {
         LOGGER.error("Project: \"" + collectionRdfId + "\" (configId: \"" + collectionId + "\") does not exist");
+      }
+      // if collection is a database: insert also from xml db file
+      Database collectionDB = collection.getDatabase();
+      if (collectionDB != null) {
+      	rdfStrBuilder.append("<!-- Resources of database: " + collectionDB.getName() + "(" + collectionDB.getXmlDumpFileName() + ") -->\n");
+      	convertDbXml(rdfStrBuilder, collection);
       }
       rdfStrBuilder.append("</rdf:RDF>");
       FileUtils.writeStringToFile(outputRdfFile, rdfStrBuilder.toString());
@@ -202,4 +194,143 @@ public class ConvertConfigXml2Rdf {
       throw new ApplicationException(e);
     }
   }
+  
+  private void convertDbXml(StringBuilder rdfStrBuilder, Collection collection) throws ApplicationException {
+    Database db = collection.getDatabase();
+    Hashtable<String, Row> resources = new Hashtable<String, Row>();
+    try {
+      String inputXmlDumpFileName = db.getXmlDumpFileName();
+      File inputXmlDumpFile = new File(inputXmlDumpFileName);      
+      String dbName = db.getName();  // e.g. "avh_biblio";
+      URL xmlDumpFileUrl = inputXmlDumpFile.toURI().toURL();
+      String mainResourcesTable = db.getMainResourcesTable();  // e.g. "titles";
+      String mainResourcesTableId = db.getMainResourcesTableId();  // e.g. "title_id";
+      XdmValue xmdValueMainResources = xQueryEvaluator.evaluate(xmlDumpFileUrl, "/" + dbName + "/" + mainResourcesTable);
+      XdmSequenceIterator xmdValueMainResourcesIterator = xmdValueMainResources.iterator();
+      if (xmdValueMainResources != null && xmdValueMainResources.size() > 0) {
+        while (xmdValueMainResourcesIterator.hasNext()) {
+          XdmItem xdmItemMainResource = xmdValueMainResourcesIterator.next();
+          String xdmItemMainResourceStr = xdmItemMainResource.toString();
+          Row row = xml2row(xdmItemMainResourceStr);
+          appendRow2rdf(rdfStrBuilder, collection, row);
+          String id = row.getFieldValue(mainResourcesTableId);
+          resources.put(id, row);
+        }
+      }
+    } catch (IOException e) {
+      throw new ApplicationException(e);
+    }
+  }
+
+  private Row xml2row(String xmlStr) throws ApplicationException {
+    Row row = new Row();
+    XdmValue xmdValueFields = xQueryEvaluator.evaluate(xmlStr, "/*/*"); // e.g. /titles/title
+    XdmSequenceIterator xmdValueFieldsIterator = xmdValueFields.iterator();
+    if (xmdValueFields != null && xmdValueFields.size() > 0) {
+      while (xmdValueFieldsIterator.hasNext()) {
+        XdmItem xdmItemField = xmdValueFieldsIterator.next();
+        String fieldStr = xdmItemField.toString();
+        String fieldName = xQueryEvaluator.evaluateAsString(fieldStr, "*/name()");
+        String fieldValue = xdmItemField.getStringValue();
+        row.addField(fieldName, fieldValue);
+      }
+    }
+    return row;  
+  }
+
+  private void appendRow2rdf(StringBuilder rdfStrBuilder, Collection collection, Row row) {
+    String collectionId = collection.getId();
+    String collectionRdfId = collection.getRdfId();
+    String mainLanguage = collection.getMainLanguage();
+    Database db = collection.getDatabase();
+    String mainResourcesTableId = db.getMainResourcesTableId();
+    String webIdPreStr = db.getWebIdPreStr();
+    String webIdAfterStr = db.getWebIdAfterStr();
+    String id = row.getFieldValue(mainResourcesTableId);
+    String rdfId = "http://" + collectionId + ".bbaw.de/id/" + id;
+    String rdfWebId = rdfId;
+    if (webIdPreStr != null)
+      rdfWebId = webIdPreStr + id;
+    if (webIdAfterStr != null)
+      rdfWebId = rdfWebId + webIdAfterStr;
+    rdfStrBuilder.append("<rdf:Description rdf:about=\"" + rdfWebId + "\">\n");
+    rdfStrBuilder.append("  <rdf:type rdf:resource=\"http://purl.org/dc/terms/BibliographicResource\"/>\n");
+    rdfStrBuilder.append("  <dcterms:isPartOf rdf:resource=\"" + collectionRdfId + "\"/>\n");
+    rdfStrBuilder.append("  <dc:identifier rdf:resource=\"" + rdfWebId + "\">" + id + "</dc:identifier>\n");
+    String dbFieldCreator = db.getDbField("creator");
+    if (dbFieldCreator != null) {
+      String creator = row.getFieldValue(dbFieldCreator);
+      if (creator != null && ! creator.isEmpty()) {
+        creator = StringUtils.deresolveXmlEntities(creator);
+        rdfStrBuilder.append("  <dc:creator>" + creator + "</dc:creator>\n");
+      }
+    }
+    String dbFieldTitle = db.getDbField("title");
+    if (dbFieldTitle != null) {
+      String title = row.getFieldValue(dbFieldTitle);
+      if (title != null && ! title.isEmpty()) {
+        title = StringUtils.deresolveXmlEntities(title);
+        rdfStrBuilder.append("  <dc:title>" + title + "</dc:title>\n");
+      }
+    }
+    String dbFieldPublisher = db.getDbField("publisher");
+    if (dbFieldPublisher != null) {
+      String publisher = row.getFieldValue(dbFieldPublisher);
+      if (publisher != null && ! publisher.isEmpty()) {
+        publisher = StringUtils.deresolveXmlEntities(publisher);
+        rdfStrBuilder.append("  <dc:publisher>" + publisher + "</dc:publisher>\n");
+        // rdfStrBuilder.append("  <dc:publisher rdf:resource=\"" + publisher + "\"/>\n");
+      }
+    }
+    String dbFieldDate = db.getDbField("date");
+    if (dbFieldDate != null) {
+      String date = row.getFieldValue(dbFieldDate);
+      if (date != null && ! date.isEmpty()) {
+        date = StringUtils.deresolveXmlEntities(date);
+        rdfStrBuilder.append("  <dc:date>" + date + "</dc:date>\n");
+      }
+    }
+    String dbFieldPages = db.getDbField("extent");
+    if (dbFieldPages != null) {
+      String pages = row.getFieldValue(dbFieldPages);
+      if (pages != null && ! pages.isEmpty()) {
+        pages = StringUtils.deresolveXmlEntities(pages);
+        rdfStrBuilder.append("  <dc:extent>" + pages + "</dc:extent>\n");
+      }
+    }
+    String dbFieldLanguage = db.getDbField("language");
+    String language = row.getFieldValue(dbFieldLanguage);
+    if (language == null && mainLanguage != null)
+      language = mainLanguage;
+    else if (language == null && mainLanguage == null)
+      language = "deu";
+    rdfStrBuilder.append("  <dc:language>" + language + "</dc:language>\n");
+    rdfStrBuilder.append("  <dc:format>text/html</dc:format>\n");
+    String dbFieldSubject = db.getDbField("subject");
+    if (dbFieldSubject != null) {
+      String subject = row.getFieldValue(dbFieldSubject);
+      if (subject != null && ! subject.isEmpty()) {
+        String[] subjects = subject.split("###");
+        if (subjects != null) {
+          for (int i=0; i<subjects.length; i++) {
+            String s = subjects[i];
+            s = StringUtils.deresolveXmlEntities(s);
+            rdfStrBuilder.append("  <dc:subject>" + s + "</dc:subject>\n");
+          }
+        }
+      }
+    }
+    String dbFieldAbstract = db.getDbField("abstract");
+    if (dbFieldAbstract != null) {
+      String abstractt = row.getFieldValue(dbFieldAbstract);
+      if (abstractt != null && ! abstractt.isEmpty()) {
+        abstractt = StringUtils.deresolveXmlEntities(abstractt);
+        rdfStrBuilder.append("  <dc:abstract>" + abstractt + "</dc:abstract>\n");
+      }
+    }
+    rdfStrBuilder.append("  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>\n");
+    // TODO further dc fields
+    rdfStrBuilder.append("</rdf:Description>\n");
+  }
+  
 }
