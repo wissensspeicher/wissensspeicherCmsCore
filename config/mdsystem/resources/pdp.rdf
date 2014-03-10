@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF 
+   xmlns="http://wsp.normdata.rdf/ProtokollePreußischesStaatsministerium" 
+   xml:base="http://wsp.normdata.rdf/ProtokollePreußischesStaatsministerium" 
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
+   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" 
+   xmlns:dc="http://purl.org/elements/1.1/" 
+   xmlns:dcterms="http://purl.org/dc/terms/" 
+   xmlns:foaf="http://xmlns.com/foaf/0.1/" 
+   xmlns:gnd="http://d-nb.info/standards/elementset/gnd#" 
+   xmlns:ore="http://www.openarchives.org/ore/terms/" 
+>
+<rdf:Description rdf:about="http://preussenprotokolle.bbaw.de/">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ProtokollePreußischesStaatsministerium"/>
+  <dc:identifier rdf:resource="http://preussenprotokolle.bbaw.de/"/>
+  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
+</rdf:Description>
+<rdf:Description rdf:about="http://preussenprotokolle.bbaw.de/Publikationen/bilder/Band_1.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ProtokollePreußischesStaatsministerium"/>
+  <dc:identifier rdf:resource="http://preussenprotokolle.bbaw.de/Publikationen/bilder/Band_1.pdf"/>
+  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
+</rdf:Description>
+<rdf:Description rdf:about="http://preussenprotokolle.bbaw.de/Publikationen/bilder/Band_2.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ProtokollePreußischesStaatsministerium"/>
+  <dc:identifier rdf:resource="http://preussenprotokolle.bbaw.de/Publikationen/bilder/Band_2.pdf"/>
+  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
+</rdf:Description>
+<rdf:Description rdf:about="http://preussenprotokolle.bbaw.de/Publikationen/bilder/Band_3.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ProtokollePreußischesStaatsministerium"/>
+  <dc:identifier rdf:resource="http://preussenprotokolle.bbaw.de/Publikationen/bilder/Band_3.pdf"/>
+  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
+</rdf:Description>
+<rdf:Description rdf:about="http://preussenprotokolle.bbaw.de/Publikationen/bilder/BAND_41">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ProtokollePreußischesStaatsministerium"/>
+  <dc:identifier rdf:resource="http://preussenprotokolle.bbaw.de/Publikationen/bilder/BAND_41"/>
+  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
+</rdf:Description>
+<rdf:Description rdf:about="http://preussenprotokolle.bbaw.de/Publikationen/bilder/BAND_42">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ProtokollePreußischesStaatsministerium"/>
+  <dc:identifier rdf:resource="http://preussenprotokolle.bbaw.de/Publikationen/bilder/BAND_42"/>
+  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
+</rdf:Description>
+<rdf:Description rdf:about="http://preussenprotokolle.bbaw.de/Publikationen/bilder/PDFBd5">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ProtokollePreußischesStaatsministerium"/>
+  <dc:identifier rdf:resource="http://preussenprotokolle.bbaw.de/Publikationen/bilder/PDFBd5"/>
+  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
+</rdf:Description>
+<rdf:Description rdf:about="http://preussenprotokolle.bbaw.de/Publikationen/bilder/PDFBand61">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ProtokollePreußischesStaatsministerium"/>
+  <dc:identifier rdf:resource="http://preussenprotokolle.bbaw.de/Publikationen/bilder/PDFBand61"/>
+  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
+</rdf:Description>
+<rdf:Description rdf:about="http://preussenprotokolle.bbaw.de/Publikationen/bilder/PDFBand62">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ProtokollePreußischesStaatsministerium"/>
+  <dc:identifier rdf:resource="http://preussenprotokolle.bbaw.de/Publikationen/bilder/PDFBand62"/>
+  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
+</rdf:Description>
+<rdf:Description rdf:about="http://preussenprotokolle.bbaw.de/Publikationen/bilder/Band%207.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ProtokollePreußischesStaatsministerium"/>
+  <dc:identifier rdf:resource="http://preussenprotokolle.bbaw.de/Publikationen/bilder/Band%207.pdf"/>
+  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
+</rdf:Description>
+<rdf:Description rdf:about="http://preussenprotokolle.bbaw.de/Publikationen/bilder/Band%208-1.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ProtokollePreußischesStaatsministerium"/>
+  <dc:identifier rdf:resource="http://preussenprotokolle.bbaw.de/Publikationen/bilder/Band%208-1.pdf"/>
+  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
+</rdf:Description>
+<rdf:Description rdf:about="http://preussenprotokolle.bbaw.de/Publikationen/bilder/Band%208-2.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ProtokollePreußischesStaatsministerium"/>
+  <dc:identifier rdf:resource="http://preussenprotokolle.bbaw.de/Publikationen/bilder/Band%208-2.pdf"/>
+  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
+</rdf:Description>
+<rdf:Description rdf:about="http://preussenprotokolle.bbaw.de/Publikationen/bilder/Band%209.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ProtokollePreußischesStaatsministerium"/>
+  <dc:identifier rdf:resource="http://preussenprotokolle.bbaw.de/Publikationen/bilder/Band%209.pdf"/>
+  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
+</rdf:Description>
+<rdf:Description rdf:about="http://preussenprotokolle.bbaw.de/Publikationen/bilder/Band%2010.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ProtokollePreußischesStaatsministerium"/>
+  <dc:identifier rdf:resource="http://preussenprotokolle.bbaw.de/Publikationen/bilder/Band%2010.pdf"/>
+  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
+</rdf:Description>
+<rdf:Description rdf:about="http://preussenprotokolle.bbaw.de/Publikationen/bilder/Band%2011-1.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ProtokollePreußischesStaatsministerium"/>
+  <dc:identifier rdf:resource="http://preussenprotokolle.bbaw.de/Publikationen/bilder/Band%2011-1.pdf"/>
+  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
+</rdf:Description>
+<rdf:Description rdf:about="http://preussenprotokolle.bbaw.de/Publikationen/bilder/Band%2011-2.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ProtokollePreußischesStaatsministerium"/>
+  <dc:identifier rdf:resource="http://preussenprotokolle.bbaw.de/Publikationen/bilder/Band%2011-2.pdf"/>
+  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
+</rdf:Description>
+<rdf:Description rdf:about="http://preussenprotokolle.bbaw.de/Publikationen/bilder/Band%2012-1.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ProtokollePreußischesStaatsministerium"/>
+  <dc:identifier rdf:resource="http://preussenprotokolle.bbaw.de/Publikationen/bilder/Band%2012-1.pdf"/>
+  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
+</rdf:Description>
+<rdf:Description rdf:about="http://preussenprotokolle.bbaw.de/Publikationen/bilder/Band%2012-2.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ProtokollePreußischesStaatsministerium"/>
+  <dc:identifier rdf:resource="http://preussenprotokolle.bbaw.de/Publikationen/bilder/Band%2012-2.pdf"/>
+  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
+</rdf:Description>
+</rdf:RDF>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF 
+   xmlns="http://wsp.normdata.rdf/Turfan/IranischeTexte" 
+   xml:base="http://wsp.normdata.rdf/Turfan/IranischeTexte" 
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
+   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" 
+   xmlns:dc="http://purl.org/elements/1.1/" 
+   xmlns:dcterms="http://purl.org/dc/terms/" 
+   xmlns:foaf="http://xmlns.com/foaf/0.1/" 
+   xmlns:gnd="http://d-nb.info/standards/elementset/gnd#" 
+   xmlns:ore="http://www.openarchives.org/ore/terms/" 
+>
+<rdf:Description rdf:about="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/turfanforschung/de/iranischeTexte">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Turfan/IranischeTexte"/>
+  <dc:identifier rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/turfanforschung/de/iranischeTexte"/>
+  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/turfanforschung/bilder/Corpus%20Fontium%20Manichaeorum.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Turfan/IranischeTexte"/>
+  <dc:identifier rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/turfanforschung/bilder/Corpus%20Fontium%20Manichaeorum.pdf"/>
+  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/turfanforschung/bilder/PsalterBeispiel5v.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Turfan/IranischeTexte"/>
+  <dc:identifier rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/turfanforschung/bilder/PsalterBeispiel5v.pdf"/>
+  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
+</rdf:Description>
+<rdf:Description rdf:about="http://zopeman64.bbaw.de/bbaw/Forschung/Forschungsprojekte/turfanforschung/bilder/PsalterMPSyrGrEngversesGlossarySept2012.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Turfan/IranischeTexte"/>
+  <dc:identifier rdf:resource="http://zopeman64.bbaw.de/bbaw/Forschung/Forschungsprojekte/turfanforschung/bilder/PsalterMPSyrGrEngversesGlossarySept2012.pdf"/>
+  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/turfanforschung/bilder/TexteMPdeutsch.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Turfan/IranischeTexte"/>
+  <dc:identifier rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/turfanforschung/bilder/TexteMPdeutsch.pdf"/>
+  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/turfanforschung/bilder/TextePadeutsch.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Turfan/IranischeTexte"/>
+  <dc:identifier rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/turfanforschung/bilder/TextePadeutsch.pdf"/>
+  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
+</rdf:Description>
+</rdf:RDF>
