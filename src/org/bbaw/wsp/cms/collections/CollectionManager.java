@@ -211,11 +211,9 @@ public class CollectionManager {
           XQueryEvaluator xQueryEvaluator = new XQueryEvaluator();
           for (int i=0; i<metadataUrls.length; i++) {
             String metadataUrlStr = metadataUrls[i];
-            URL metadataUrl = new URL(metadataUrlStr);
-            String metadataUrlFileStr = metadataUrl.getFile();
-            File metadataUrlFile = new File(metadataUrlFileStr);
+            File metadataUrlFile = new File(metadataUrlStr);
             URL metadataUrlFileUrl = metadataUrlFile.toURI().toURL();
-            XdmValue xmdValueResources = xQueryEvaluator.evaluate(metadataUrlFileUrl, "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; /rdf:RDF/rdf:Description[ends-with(string(@rdf:about), 'Aggregation')]");
+            XdmValue xmdValueResources = xQueryEvaluator.evaluate(metadataUrlFileUrl, "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; /rdf:RDF/rdf:Description");
             XdmSequenceIterator xmdValueResourcesIterator = xmdValueResources.iterator();
             if (xmdValueResources != null && xmdValueResources.size() > 0) {
               while (xmdValueResourcesIterator.hasNext()) {
@@ -325,7 +323,7 @@ public class CollectionManager {
 
   private MetadataRecord getMdRecord(XQueryEvaluator xQueryEvaluator, String xmlRdfStr) throws ApplicationException {
     MetadataRecord mdRecord = new MetadataRecord();
-    String identifier = xQueryEvaluator.evaluateAsString(xmlRdfStr, "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; declare namespace dcterms=\"http://purl.org/dc/terms/\"; /rdf:Description/dcterms:identifier/text()");
+    String identifier = xQueryEvaluator.evaluateAsString(xmlRdfStr, "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; declare namespace dcterms=\"http://purl.org/dc/terms/\"; /rdf:Description/dc:identifier/text()");
     if (identifier != null)
       identifier = StringUtils.deresolveXmlEntities(identifier.trim());
     mdRecord.setDocId(identifier);
@@ -363,9 +361,9 @@ public class CollectionManager {
       }
     }
     mdRecord.setDate(date);
-    String language = xQueryEvaluator.evaluateAsString(xmlRdfStr, "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; declare namespace dc=\"http://purl.org/elements/1.1/\"; declare namespace dcterms=\"http://purl.org/dc/terms/\"; /rdf:Description/dc:language/dcterms:ISO639-3/rdf:value/text()");
+    String language = xQueryEvaluator.evaluateAsString(xmlRdfStr, "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; declare namespace dc=\"http://purl.org/elements/1.1/\"; /rdf:Description/dc:language/text()");
     mdRecord.setLanguage(language);
-    String mimeType = xQueryEvaluator.evaluateAsString(xmlRdfStr, "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; declare namespace dc=\"http://purl.org/elements/1.1/\"; declare namespace dcterms=\"http://purl.org/dc/terms/\"; string(/rdf:Description/dc:format/dcterms:IMT/@rdf:value)");
+    String mimeType = xQueryEvaluator.evaluateAsString(xmlRdfStr, "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; declare namespace dc=\"http://purl.org/elements/1.1/\"; string(/rdf:Description/dc:format/text())");
     mdRecord.setType(mimeType);
     String abstractt = xQueryEvaluator.evaluateAsString(xmlRdfStr, "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; declare namespace dc=\"http://purl.org/elements/1.1/\"; /rdf:Description/dc:abstract/text()");
     if (abstractt != null)
