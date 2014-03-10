@@ -80,11 +80,6 @@ public class CollectionReader {
 					URL configFileUrl = configFile.toURI().toURL();
 					Collection collection = new Collection();
 					collection.setConfigFileName(configFileName);
-					String update = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/update/text()");
-					if (update != null) {
-						if (update.equals("true"))
-							collection.setUpdateNecessary(true);
-					}
 					String collectionId = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/id/text()");
           if (collectionId == null || collectionId.trim().isEmpty()) {
             LOGGER.error("No collectionId found in: " + collection.getConfigFileName());
