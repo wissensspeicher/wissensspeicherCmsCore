@@ -41,9 +41,10 @@ import com.sun.org.apache.xml.internal.serialize.XMLSerializer;
 
 public class CollectionManager {
   private static Logger LOGGER = Logger.getLogger(CollectionManager.class);
+  private static CollectionManager confManager;
   private CollectionReader collectionReader;  // has the collection infos of the configuration files
   private int counter = 0;
-  private static CollectionManager confManager;
+  private String metadataRdfDir = "config/mdsystem/resources/";
 
   public static CollectionManager getInstance() throws ApplicationException {
     if(confManager == null) {
@@ -150,164 +151,200 @@ public class CollectionManager {
   }
 
   private ArrayList<MetadataRecord> getMetadataRecords(Collection collection) throws ApplicationException {
-    ArrayList<MetadataRecord> mdRecords = new ArrayList<MetadataRecord>();;
-    try {
-      String collectionId = collection.getId();
-      String metadataRedundantUrlPrefix = collection.getMetadataRedundantUrlPrefix();
-      String metadataUrlPrefix = collection.getMetadataUrlPrefix();
-      List<String> documentUrls = collection.getDocumentUrls();
-      String[] metadataUrls = collection.getMetadataUrls();
-      String metadataUrlType = collection.getMetadataUrlType();  // single or many
-      Hashtable<String, XQuery> xQueries = collection.getxQueries();
-      if (metadataUrls != null) {
-        if (metadataUrlType != null && metadataUrlType.equals("single")) {
-          for (int i=0; i<metadataUrls.length; i++) {
-            String metadataUrl = metadataUrls[i];
-            MetadataRecord mdRecord = new MetadataRecord();
-            String docId = null;
-            String uri = null;
-            String webUri = null;
-            if (collectionId.equals("edoc")) {
-              EdocIndexMetadataFetcherTool.fetchHtmlDirectly(metadataUrl, mdRecord);
-              if (mdRecord.getLanguage() != null) {
-                String isoLang = Language.getInstance().getISO639Code(mdRecord.getLanguage());
-                mdRecord.setLanguage(isoLang);
-              }
-              String httpEdocUrl = mdRecord.getRealDocUrl();
-              String uriEdoc = mdRecord.getUri();  // e.g.: http://edoc.bbaw.de/volltexte/2009/1070/
-              if (httpEdocUrl != null) {             
-                String docIdTmp = httpEdocUrl.replaceAll(metadataUrlPrefix, "");
-                docId = "/" + collectionId + docIdTmp;
-                String fileEdocUrl = "file:" + metadataRedundantUrlPrefix + docIdTmp;
-                uri = fileEdocUrl;
-                if (uriEdoc == null) {
-                  String edocId = docIdTmp.replaceAll("pdf/.*$", "");
-                  webUri = metadataUrlPrefix + edocId;
-                } else { 
-                  webUri = uriEdoc;
-                }
-              } else {
-                LOGGER.error("Fetching metadata failed for: " + metadataUrl + " (no url in index.html found)");
-              }
-            } else {
-              // TODO
-            }
-            if (docId != null && uri != null) {
-              mdRecord.setDocId(docId);
-              mdRecord.setUri(uri);
-              mdRecord.setWebUri(webUri);
-              if (mdRecord.getCollectionNames() == null)
-                mdRecord.setCollectionNames(collectionId);
-              if (mdRecord.getLanguage() == null) {
-                String mainLanguage = collection.getMainLanguage();
-                mdRecord.setLanguage(mainLanguage);
-              }
-              mdRecord.setSchemaName(null);
-              mdRecord.setxQueries(xQueries);
-              mdRecords.add(mdRecord);
-            }
-          }
-        } else if (metadataUrlType != null && metadataUrlType.equals("many")) {
-          String namespaceDeclaration = "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; declare namespace dc=\"http://purl.org/dc/elements/1.1/\"; declare namespace dcterms=\"http://purl.org/dc/terms/\"; ";
-          XQueryEvaluator xQueryEvaluator = new XQueryEvaluator();
-          for (int i=0; i<metadataUrls.length; i++) {
-            String metadataUrlStr = metadataUrls[i];
-            File metadataUrlFile = new File(metadataUrlStr);
-            URL metadataUrlFileUrl = metadataUrlFile.toURI().toURL();
-            XdmValue xmdValueResources = xQueryEvaluator.evaluate(metadataUrlFileUrl, namespaceDeclaration + "/rdf:RDF/rdf:Description");
-            XdmSequenceIterator xmdValueResourcesIterator = xmdValueResources.iterator();
-            if (xmdValueResources != null && xmdValueResources.size() > 0) {
-              while (xmdValueResourcesIterator.hasNext()) {
-                XdmItem xdmItemResource = xmdValueResourcesIterator.next();
-                String xdmItemResourceStr = xdmItemResource.toString();
-                MetadataRecord mdRecord = getMdRecord(xQueryEvaluator, xdmItemResourceStr);
-                if (mdRecord != null) {
-                  String identifier = mdRecord.getDocId();
-                  String docId = "/" + collectionId + "/" + identifier;
-                  mdRecord.setDocId(docId);
-                  mdRecord.setCollectionNames(collectionId);
-                  if (mdRecord.getLanguage() == null) {
-                    String mainLanguage = collection.getMainLanguage();
-                    mdRecord.setLanguage(mainLanguage);
-                  }
-                  mdRecords.add(mdRecord);
-                }
-              }
-            }
-          }          
-        }
-      }
-      if (documentUrls != null) {
-        Tika tika = new Tika();
-        for (int i=0; i<documentUrls.size(); i++) {
-          MetadataRecord mdRecord = new MetadataRecord();
-          String docUrl = documentUrls.get(i);
-          URL uri = new URL(docUrl);
-          String uriPath = uri.getPath();
-          String prefix = "/exist/rest/db";
-          if (uriPath.startsWith(prefix)) {
-            uriPath = uriPath.substring(prefix.length());
-          }
-          // no file with extension (such as a.xml or b.pdf) but a directory: then a special default file-name is used in docId
-          if (! uriPath.toLowerCase().matches(".*\\.csv$|.*\\.gif$|.*\\.jpg$|.*\\.jpeg$|.*\\.html$|.*\\.htm$|.*\\.log$|.*\\.mp3$|.*\\.pdf$|.*\\.txt$|.*\\.xml$|.*\\.doc$")) {
-            String mimeType = null;
-            try {
-              mimeType = tika.detect(uri); // much faster with tika
-              /* old code which is slow, when the files behind the url's are large 
-              HttpURLConnection connection = (HttpURLConnection) uri.openConnection();
-              connection.setConnectTimeout(5000);
-              connection.setReadTimeout(5000);
-              connection.connect();
-              mimeType = connection.getContentType();
-              */
-            } catch (IOException e) {
-              LOGGER.error("get mime type failed for: " + docUrl);
-              e.printStackTrace();
-            }
-            String fileExtension = "html";
-            if (mimeType != null && mimeType.contains("html"))
-              fileExtension = "html";
-            else if (mimeType != null && mimeType.contains("pdf"))
-              fileExtension = "pdf";
-            else if (mimeType != null && mimeType.contains("xml"))
-              fileExtension = "xml";
-            int pos = i + 1;
-            String fileName = "indexxx" + pos + "." + fileExtension;
-            if (uriPath.endsWith("/"))
-              uriPath = uriPath + fileName;
-            else
-              uriPath = uriPath + "/" + fileName;
-          }
-          String docId = "/" + collectionId + uriPath;
-          String mimeType = getMimeType(docId);
-          if (mimeType == null) {  // last chance: try it with tika
-            try {
-              mimeType = tika.detect(uri);
-            } catch (IOException e) {
-              LOGGER.error("get mime type failed for: " + docUrl);
-              e.printStackTrace();
-            }
-          }
-          mdRecord.setType(mimeType);
-          mdRecord.setDocId(docId);
-          mdRecord.setUri(docUrl);
-          // if mimeType is not xml then the docUrl is also the webUri
-          if (mimeType != null && ! mimeType.contains("xml"))
-            mdRecord.setWebUri(docUrl);
-          mdRecord.setCollectionNames(collectionId);
-          mdRecord.setxQueries(xQueries);
-          mdRecords.add(mdRecord);
-        }
-      }
-    } catch (MalformedURLException e) {
-      throw new ApplicationException(e);
+    ArrayList<MetadataRecord> mdRecords = new ArrayList<MetadataRecord>();
+    String collectionId = collection.getId();
+    List<String> documentUrls = collection.getDocumentUrls();
+    if (documentUrls != null) {
+      // TODO über RdfFiles einlesen
+      mdRecords = getMetadataRecordsByDocUrls(collection);
+    }
+    if (collectionId.equals("edoc")) {
+      mdRecords = getMetadataRecordsEdoc(collection);
+    } else if (collectionId.equals("avhseklit") || collectionId.equals("avhunselbst")) {  // TODO  alle Ressourcen so einlesen
+      mdRecords = getMetadataRecordsByRdfFile(collection);
     }
     if (mdRecords.size() == 0)
       return null;
     else 
       return mdRecords;
   }
+
+  private ArrayList<MetadataRecord> getMetadataRecordsByRdfFile(Collection collection) throws ApplicationException {
+    String collectionId = collection.getId();
+    ArrayList<MetadataRecord> mdRecords = new ArrayList<MetadataRecord>();
+    try {
+      File rdfRessourcesFile = new File(metadataRdfDir + collectionId + ".rdf");
+      URL rdfRessourcesFileUrl = rdfRessourcesFile.toURI().toURL();
+      String namespaceDeclaration = "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; declare namespace dc=\"http://purl.org/dc/elements/1.1/\"; declare namespace dcterms=\"http://purl.org/dc/terms/\"; ";
+      XQueryEvaluator xQueryEvaluator = new XQueryEvaluator();
+      XdmValue xmdValueResources = xQueryEvaluator.evaluate(rdfRessourcesFileUrl, namespaceDeclaration + "/rdf:RDF/rdf:Description");
+      XdmSequenceIterator xmdValueResourcesIterator = xmdValueResources.iterator();
+      if (xmdValueResources != null && xmdValueResources.size() > 0) {
+        while (xmdValueResourcesIterator.hasNext()) {
+          XdmItem xdmItemResource = xmdValueResourcesIterator.next();
+          String xdmItemResourceStr = xdmItemResource.toString();
+          MetadataRecord mdRecord = getMdRecord(xQueryEvaluator, xdmItemResourceStr);
+          if (mdRecord != null) {
+            String identifier = mdRecord.getDocId();
+            String docId = "/" + collectionId + "/" + identifier;
+            mdRecord.setDocId(docId);
+            mdRecord.setCollectionNames(collectionId);
+            if (mdRecord.getLanguage() == null) {
+              String mainLanguage = collection.getMainLanguage();
+              mdRecord.setLanguage(mainLanguage);
+            }
+            mdRecords.add(mdRecord);
+            // if it is an eXist directory then fetch all documents of that directory
+            if (mdRecord.isEXistDir()) {
+              String eXistUrl = mdRecord.getWebUri();
+              if (eXistUrl != null) {
+                /* TODO auskommentieren wenn fertig
+                ArrayList<MetadataRecord> mdRecordsEXist = new ArrayList<MetadataRecord>();
+                if (eXistUrl.endsWith("/"))
+                  eXistUrl = eXistUrl.substring(0, eXistUrl.length() - 1);
+                String excludesStr = collection.getExcludesStr();
+                List<String> eXistUrls = extractDocumentUrls(eXistUrl, excludesStr);
+                for (int i=0; i<eXistUrls.size(); i++) {
+                  MetadataRecord mdRecordEXist = new MetadataRecord();
+                  // TODO alle Felder aus mdRecord holen und setzen
+                  // TODO neue docId setzen
+                  mdRecordsEXist.add(mdRecordEXist);
+                }
+                mdRecords.addAll(mdRecordsEXist);
+                */
+              }
+            }
+          } 
+        }
+      }
+    } catch (MalformedURLException e) {
+      throw new ApplicationException(e);
+    }
+    return mdRecords;
+  }
   
+  private ArrayList<MetadataRecord> getMetadataRecordsByDocUrls(Collection collection) throws ApplicationException {
+    String collectionId = collection.getId();
+    List<String> documentUrls = collection.getDocumentUrls();
+    Hashtable<String, XQuery> xQueries = collection.getxQueries();
+    ArrayList<MetadataRecord> mdRecords = new ArrayList<MetadataRecord>();
+    try {
+      Tika tika = new Tika();
+      for (int i=0; i<documentUrls.size(); i++) {
+        MetadataRecord mdRecord = new MetadataRecord();
+        String docUrl = documentUrls.get(i);
+        URL uri = new URL(docUrl);
+        String uriPath = uri.getPath();
+        String prefix = "/exist/rest/db";
+        if (uriPath.startsWith(prefix)) {
+          uriPath = uriPath.substring(prefix.length());
+        }
+        // no file with extension (such as a.xml or b.pdf) but a directory: then a special default file-name is used in docId
+        if (! uriPath.toLowerCase().matches(".*\\.csv$|.*\\.gif$|.*\\.jpg$|.*\\.jpeg$|.*\\.html$|.*\\.htm$|.*\\.log$|.*\\.mp3$|.*\\.pdf$|.*\\.txt$|.*\\.xml$|.*\\.doc$")) {
+          String mimeType = null;
+          try {
+            mimeType = tika.detect(uri); // much faster with tika
+            /* old code which is slow, when the files behind the url's are large 
+            HttpURLConnection connection = (HttpURLConnection) uri.openConnection();
+            connection.setConnectTimeout(5000);
+            connection.setReadTimeout(5000);
+            connection.connect();
+            mimeType = connection.getContentType();
+            */
+          } catch (IOException e) {
+            LOGGER.error("get mime type failed for: " + docUrl);
+            e.printStackTrace();
+          }
+          String fileExtension = "html";
+          if (mimeType != null && mimeType.contains("html"))
+            fileExtension = "html";
+          else if (mimeType != null && mimeType.contains("pdf"))
+            fileExtension = "pdf";
+          else if (mimeType != null && mimeType.contains("xml"))
+            fileExtension = "xml";
+          int pos = i + 1;
+          String fileName = "indexxx" + pos + "." + fileExtension;
+          if (uriPath.endsWith("/"))
+            uriPath = uriPath + fileName;
+          else
+            uriPath = uriPath + "/" + fileName;
+        }
+        String docId = "/" + collectionId + uriPath;
+        String mimeType = getMimeType(docId);
+        if (mimeType == null) {  // last chance: try it with tika
+          try {
+            mimeType = tika.detect(uri);
+          } catch (IOException e) {
+            LOGGER.error("get mime type failed for: " + docUrl);
+            e.printStackTrace();
+          }
+        }
+        mdRecord.setType(mimeType);
+        mdRecord.setDocId(docId);
+        mdRecord.setUri(docUrl);
+        // if mimeType is not xml then the docUrl is also the webUri
+        if (mimeType != null && ! mimeType.contains("xml"))
+          mdRecord.setWebUri(docUrl);
+        mdRecord.setCollectionNames(collectionId);
+        mdRecord.setxQueries(xQueries);
+        mdRecords.add(mdRecord);
+      }
+    } catch (MalformedURLException e) {
+      throw new ApplicationException(e);
+    }
+    return mdRecords;
+  }
+  
+  
+  private ArrayList<MetadataRecord> getMetadataRecordsEdoc(Collection collection) throws ApplicationException {
+    ArrayList<MetadataRecord> mdRecords = new ArrayList<MetadataRecord>();
+    String metadataRedundantUrlPrefix = collection.getMetadataRedundantUrlPrefix();
+    String metadataUrlPrefix = collection.getMetadataUrlPrefix();
+    String[] metadataUrls = collection.getMetadataUrls();
+    for (int i=0; i<metadataUrls.length; i++) {
+      String metadataUrl = metadataUrls[i];
+      MetadataRecord mdRecord = new MetadataRecord();
+      String docId = null;
+      String uri = null;
+      String webUri = null;
+      EdocIndexMetadataFetcherTool.fetchHtmlDirectly(metadataUrl, mdRecord);
+      if (mdRecord.getLanguage() != null) {
+        String isoLang = Language.getInstance().getISO639Code(mdRecord.getLanguage());
+        mdRecord.setLanguage(isoLang);
+      }
+      String httpEdocUrl = mdRecord.getRealDocUrl();
+      String uriEdoc = mdRecord.getUri();  // e.g.: http://edoc.bbaw.de/volltexte/2009/1070/
+      if (httpEdocUrl != null) {             
+        String docIdTmp = httpEdocUrl.replaceAll(metadataUrlPrefix, "");
+        docId = "/edoc" + docIdTmp;
+        String fileEdocUrl = "file:" + metadataRedundantUrlPrefix + docIdTmp;
+        uri = fileEdocUrl;
+        if (uriEdoc == null) {
+          String edocId = docIdTmp.replaceAll("pdf/.*$", "");
+          webUri = metadataUrlPrefix + edocId;
+        } else { 
+          webUri = uriEdoc;
+        }
+      } else {
+        LOGGER.error("Fetching metadata failed for: " + metadataUrl + " (no url in index.html found)");
+      }
+      if (docId != null && uri != null) {
+        mdRecord.setDocId(docId);
+        mdRecord.setUri(uri);
+        mdRecord.setWebUri(webUri);
+        if (mdRecord.getCollectionNames() == null)
+          mdRecord.setCollectionNames("edoc");
+        if (mdRecord.getLanguage() == null) {
+          String mainLanguage = collection.getMainLanguage();
+          mdRecord.setLanguage(mainLanguage);
+        }
+        mdRecord.setSchemaName(null);
+        mdRecords.add(mdRecord);
+      }
+    }
+    return mdRecords;
+  }
+
   private List<String> extractDocumentUrls(String collectionDataUrl, String excludesStr) {
     List<String> documentUrls = null;
     if (! collectionDataUrl.equals("")){
@@ -345,6 +382,9 @@ public class CollectionManager {
       LOGGER.error("Malformed URL \"" +  resourceIdUrlStr + "\" in resource: \n\"" + xmlRdfStr + "\"");
       return null;
     }
+    String type = xQueryEvaluator.evaluateAsString(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dc:type/text()");
+    if (type != null && type.equals("eXistDir"))
+      mdRecord.setSystem(type);
     String creator = xQueryEvaluator.evaluateAsString(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dc:creator/text()");
     if (creator != null)
       creator = StringUtils.deresolveXmlEntities(creator.trim());
