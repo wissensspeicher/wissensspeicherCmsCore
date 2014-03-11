@@ -28,10 +28,11 @@ public class ConvertConfigXml2Rdf {
     try {
       ConvertConfigXml2Rdf convertConfigXml2Rdf = new ConvertConfigXml2Rdf();
       convertConfigXml2Rdf.init();
-      convertConfigXml2Rdf.convertAll();
+      // convertConfigXml2Rdf.convertAll();
       // convertConfigXml2Rdf.proofRdfProjects();
       // convertConfigXml2Rdf.proofCollectionProjects();
-      // convertConfigXml2Rdf.convert("mega");
+      // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("test");
+      // convertConfigXml2Rdf.convert(c);
     } catch (Exception e) {
       e.printStackTrace();
     }
