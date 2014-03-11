@@ -4,7 +4,7 @@
    xml:base="http://wsp.normdata.rdf/MarxEngelsGA" 
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" 
-   xmlns:dc="http://purl.org/elements/1.1/" 
+   xmlns:dc="http://purl.org/dc/elements/1.1/" 
    xmlns:dcterms="http://purl.org/dc/terms/" 
    xmlns:foaf="http://xmlns.com/foaf/0.1/" 
    xmlns:gnd="http://d-nb.info/standards/elementset/gnd#" 
@@ -14,288 +14,240 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://mega.bbaw.de"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://mega.bbaw.de/megadigital">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://mega.bbaw.de/megadigital"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://telota.bbaw.de/mega">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/mega"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://mega.bbaw.de/struktur/abteilung_i/dateien/mega_I-14_inhalt-einf.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://mega.bbaw.de/struktur/abteilung_i/dateien/mega_I-14_inhalt-einf.pdf"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://mega.bbaw.de/struktur/abteilung_i/dateien/i21_inhalt.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://mega.bbaw.de/struktur/abteilung_i/dateien/i21_inhalt.pdf"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://mega.bbaw.de/struktur/abteilung_i/dateien/mega_I-30_inhalt-einf.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://mega.bbaw.de/struktur/abteilung_i/dateien/mega_I-30_inhalt-einf.pdf"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://mega.bbaw.de/struktur/abteilung_i/dateien/mega_I-31_inhalt-einf.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://mega.bbaw.de/struktur/abteilung_i/dateien/mega_I-31_inhalt-einf.pdf"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://mega.bbaw.de/struktur/abteilung_i/dateien/mega_i-32_inhalt-einf.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://mega.bbaw.de/struktur/abteilung_i/dateien/mega_i-32_inhalt-einf.pdf"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B001-01_ETX.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B001-01_ETX.xml"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B001-02_ETX.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B001-02_ETX.xml"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B004-01_ETX.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B004-01_ETX.xml"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B005-00_ETX.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B005-00_ETX.xml"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B011-00_ETX.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B011-00_ETX.xml"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B012-00_ETX.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B012-00_ETX.xml"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B013-00_ETX.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B013-00_ETX.xml"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B015-00_ETX.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B015-00_ETX.xml"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://mega.bbaw.de/struktur/abteilung_ii/dateien/mega_II-11_inhalt-einf.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://mega.bbaw.de/struktur/abteilung_ii/dateien/mega_II-11_inhalt-einf.pdf"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://mega.bbaw.de/struktur/abteilung_ii/dateien/mega_II-12_inhalt-einf.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://mega.bbaw.de/struktur/abteilung_ii/dateien/mega_II-12_inhalt-einf.pdf"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://mega.bbaw.de/struktur/abteilung_ii/dateien/mega_II-13_inhalt-einf.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://mega.bbaw.de/struktur/abteilung_ii/dateien/mega_II-13_inhalt-einf.pdf"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://mega.bbaw.de/struktur/abteilung_ii/dateien/mega_II-14_inhalt-einf.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://mega.bbaw.de/struktur/abteilung_ii/dateien/mega_II-14_inhalt-einf.pdf"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://mega.bbaw.de/struktur/abteilung_ii/dateien/mega_II-15_inhalt-einf.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://mega.bbaw.de/struktur/abteilung_ii/dateien/mega_II-15_inhalt-einf.pdf"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://mega.bbaw.de/struktur/abteilung_ii/dateien/MEGA_II-43_inhalt-einf.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://mega.bbaw.de/struktur/abteilung_ii/dateien/MEGA_II-43_inhalt-einf.pdf"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://mega.bbaw.de/struktur/abteilung_ii/dateien/mega_II-11_beschreibung.doc">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://mega.bbaw.de/struktur/abteilung_ii/dateien/mega_II-11_beschreibung.doc"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://mega.bbaw.de/struktur/abteilung_ii/dateien/mega_II-12_beschreibung.doc">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://mega.bbaw.de/struktur/abteilung_ii/dateien/mega_II-12_beschreibung.doc"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://mega.bbaw.de/struktur/abteilung_ii/dateien/mega_II-13_beschreibung.doc">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://mega.bbaw.de/struktur/abteilung_ii/dateien/mega_II-13_beschreibung.doc"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://mega.bbaw.de/struktur/abteilung_ii/dateien/mega_II-14_beschreibung.doc">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://mega.bbaw.de/struktur/abteilung_ii/dateien/mega_II-14_beschreibung.doc"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://mega.bbaw.de/struktur/abteilung_ii/dateien/mega_II-15_beschreibung.doc">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://mega.bbaw.de/struktur/abteilung_ii/dateien/mega_II-15_beschreibung.doc"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://mega.bbaw.de/struktur/abteilung_iii/dateien/mega9.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://mega.bbaw.de/struktur/abteilung_iii/dateien/mega9.pdf"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://mega.bbaw.de/struktur/abteilung_iii/dateien/mega_III-10_inhalt-einf.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://mega.bbaw.de/struktur/abteilung_iii/dateien/mega_III-10_inhalt-einf.pdf"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://mega.bbaw.de/struktur/abteilung_iii/dateien/mega_III-11_inhalt-einf.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://mega.bbaw.de/struktur/abteilung_iii/dateien/mega_III-11_inhalt-einf.pdf"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://mega.bbaw.de/struktur/abteilung_iii/dateien/mega_III-13_inhalt-einf.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://mega.bbaw.de/struktur/abteilung_iii/dateien/mega_III-13_inhalt-einf.pdf"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://mega.bbaw.de/struktur/abteilung_iii/dateien/mega_III-9_inhalt-einf.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://mega.bbaw.de/struktur/abteilung_iii/dateien/mega_III-9_inhalt-einf.pdf"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://mega.bbaw.de/struktur/abteilung_iv/dateien/mega_IV-26_Inhalt_einf.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://mega.bbaw.de/struktur/abteilung_iv/dateien/mega_IV-26_Inhalt_einf.pdf"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://mega.bbaw.de/struktur/abteilung_iv/dateien/mega_IV-31_Inhalt_einf.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://mega.bbaw.de/struktur/abteilung_iv/dateien/mega_IV-31_Inhalt_einf.pdf"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://mega.bbaw.de/struktur/abteilung_iv/dateien/mega_IV-32_Inhalt_einf.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://mega.bbaw.de/struktur/abteilung_iv/dateien/mega_IV-32_Inhalt_einf.pdf"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://mega.bbaw.de/struktur/abteilung_iv/dateien/mega_IV-32_Seiten.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://mega.bbaw.de/struktur/abteilung_iv/dateien/mega_IV-32_Seiten.pdf"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://mega.bbaw.de/struktur/abteilung_iv/dateien/mega_IV-3_inhalt_einf.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://mega.bbaw.de/struktur/abteilung_iv/dateien/mega_IV-3_inhalt_einf.pdf"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://mega.bbaw.de/struktur/abteilung_iv/dateien/mega_IV-12_inhalt-einf.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://mega.bbaw.de/struktur/abteilung_iv/dateien/mega_IV-12_inhalt-einf.pdf"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://mega.bbaw.de/struktur/abteilung_iv/dateien/IV3_Seiten.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://mega.bbaw.de/struktur/abteilung_iv/dateien/IV3_Seiten.pdf"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://mega.bbaw.de/begleitende-publikationen/dateien/JB_11.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://mega.bbaw.de/begleitende-publikationen/dateien/JB_11.pdf"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://mega.bbaw.de/begleitende-publikationen/dateien/JB_10.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://mega.bbaw.de/begleitende-publikationen/dateien/JB_10.pdf"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://mega.bbaw.de/begleitende-publikationen/dateien/JB_09.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://mega.bbaw.de/begleitende-publikationen/dateien/JB_09.pdf"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://mega.bbaw.de/begleitende-publikationen/dateien/JB_08.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://mega.bbaw.de/begleitende-publikationen/dateien/JB_08.pdf"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://mega.bbaw.de/begleitende-publikationen/dateien/JB_07.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://mega.bbaw.de/begleitende-publikationen/dateien/JB_07.pdf"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://mega.bbaw.de/begleitende-publikationen/dateien/JB_06.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://mega.bbaw.de/begleitende-publikationen/dateien/JB_06.pdf"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://mega.bbaw.de/begleitende-publikationen/dateien/JB_05.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://mega.bbaw.de/begleitende-publikationen/dateien/JB_05.pdf"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://mega.bbaw.de/begleitende-publikationen/dateien/JB_04.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://mega.bbaw.de/begleitende-publikationen/dateien/JB_04.pdf"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://mega.bbaw.de/begleitende-publikationen/dateien/JB_03.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://mega.bbaw.de/begleitende-publikationen/dateien/JB_03.pdf"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 </rdf:RDF>

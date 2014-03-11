@@ -4,7 +4,7 @@
    xml:base="http://wsp.normdata.rdf/Gentechnologiebericht" 
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" 
-   xmlns:dc="http://purl.org/elements/1.1/" 
+   xmlns:dc="http://purl.org/dc/elements/1.1/" 
    xmlns:dcterms="http://purl.org/dc/terms/" 
    xmlns:foaf="http://xmlns.com/foaf/0.1/" 
    xmlns:gnd="http://d-nb.info/standards/elementset/gnd#" 
@@ -14,78 +14,65 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
   <dc:identifier rdf:resource="http://www.gentechnologiebericht.de/gen"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.gentechnologiebericht.de/bilder/Broschure_2012_online.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
   <dc:identifier rdf:resource="http://www.gentechnologiebericht.de/bilder/Broschure_2012_online.pdf"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.gentechnologiebericht.de/bilder/Datenblatt_Beispiel.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
   <dc:identifier rdf:resource="http://www.gentechnologiebericht.de/bilder/Datenblatt_Beispiel.pdf"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.gentechnologiebericht.de/bilder/Evaluationsbericht_2010.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
   <dc:identifier rdf:resource="http://www.gentechnologiebericht.de/bilder/Evaluationsbericht_2010.pdf"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://edoc.bbaw.de/volltexte/2007/375/pdf/25Go1yDTnpsqk.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
   <dc:identifier rdf:resource="http://edoc.bbaw.de/volltexte/2007/375/pdf/25Go1yDTnpsqk.pdf"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://edoc.bbaw.de/volltexte/2007/544/">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
   <dc:identifier rdf:resource="http://edoc.bbaw.de/volltexte/2007/544/"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://edoc.bbaw.de/volltexte/2008/824/">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
   <dc:identifier rdf:resource="http://edoc.bbaw.de/volltexte/2008/824/"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://edoc.bbaw.de/volltexte/2010/1315/">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
   <dc:identifier rdf:resource="http://edoc.bbaw.de/volltexte/2010/1315/"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://edoc.bbaw.de/volltexte/2009/832/">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
   <dc:identifier rdf:resource="http://edoc.bbaw.de/volltexte/2009/832/"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.gentechnologiebericht.de/gen/publikationen/resolveuid/0a42eccb7a76d98c4871cb315e08552d">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
   <dc:identifier rdf:resource="http://www.gentechnologiebericht.de/gen/publikationen/resolveuid/0a42eccb7a76d98c4871cb315e08552d"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.gentechnologiebericht.de/gen/themen/stammzellforschung/resolveuid/8d405415e8636b5d16359c29d91dac60">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
   <dc:identifier rdf:resource="http://www.gentechnologiebericht.de/gen/themen/stammzellforschung/resolveuid/8d405415e8636b5d16359c29d91dac60"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.gentechnologiebericht.de/gen/themen/gruene-gentechnologie/resolveuid/725d481877c7c24355c0c8e7e64963e4">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
   <dc:identifier rdf:resource="http://www.gentechnologiebericht.de/gen/themen/gruene-gentechnologie/resolveuid/725d481877c7c24355c0c8e7e64963e4"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.gentechnologiebericht.de/gen/themen/gentherapie/resolveuid/6f188886d421c7199877612ee80e364c">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
   <dc:identifier rdf:resource="http://www.gentechnologiebericht.de/gen/themen/gentherapie/resolveuid/6f188886d421c7199877612ee80e364c"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 </rdf:RDF>

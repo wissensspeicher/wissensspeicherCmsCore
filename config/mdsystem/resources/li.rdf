@@ -4,7 +4,7 @@
    xml:base="http://wsp.normdata.rdf/LandInnovation" 
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" 
-   xmlns:dc="http://purl.org/elements/1.1/" 
+   xmlns:dc="http://purl.org/dc/elements/1.1/" 
    xmlns:dcterms="http://purl.org/dc/terms/" 
    xmlns:foaf="http://xmlns.com/foaf/0.1/" 
    xmlns:gnd="http://d-nb.info/standards/elementset/gnd#" 
@@ -14,36 +14,30 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LandInnovation"/>
   <dc:identifier rdf:resource="http://landinnovation.bbaw.de"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://landinnovation.bbaw.de/resolveuid/20e4cd72a640633ad2b873b9d5655787">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LandInnovation"/>
   <dc:identifier rdf:resource="http://landinnovation.bbaw.de/resolveuid/20e4cd72a640633ad2b873b9d5655787"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://landinnovation.bbaw.de/resolveuid/2a99c69407ece97d986986b73d94ca97">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LandInnovation"/>
   <dc:identifier rdf:resource="http://landinnovation.bbaw.de/resolveuid/2a99c69407ece97d986986b73d94ca97"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://landinnovation.bbaw.de/resolveuid/0624b30d2da99c8a296e43236aeeb973">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LandInnovation"/>
   <dc:identifier rdf:resource="http://landinnovation.bbaw.de/resolveuid/0624b30d2da99c8a296e43236aeeb973"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://landinnovation.bbaw.de/resolveuid/8a4599bb3689a0f438b9beeeb8dd1842">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LandInnovation"/>
   <dc:identifier rdf:resource="http://landinnovation.bbaw.de/resolveuid/8a4599bb3689a0f438b9beeeb8dd1842"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://landinnovation.bbaw.de/resolveuid/0440d402c6c8adb615a0c9d45db41cf7">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LandInnovation"/>
   <dc:identifier rdf:resource="http://landinnovation.bbaw.de/resolveuid/0440d402c6c8adb615a0c9d45db41cf7"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 </rdf:RDF>

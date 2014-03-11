@@ -4,7 +4,7 @@
    xml:base="http://wsp.normdata.rdf/ElitenIntegration" 
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" 
-   xmlns:dc="http://purl.org/elements/1.1/" 
+   xmlns:dc="http://purl.org/dc/elements/1.1/" 
    xmlns:dcterms="http://purl.org/dc/terms/" 
    xmlns:foaf="http://xmlns.com/foaf/0.1/" 
    xmlns:gnd="http://d-nb.info/standards/elementset/gnd#" 
@@ -14,12 +14,10 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ElitenIntegration"/>
   <dc:identifier rdf:resource="http://elitenintegration.bbaw.de/"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://elitenintegration.bbaw.de/veranstaltungen">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ElitenIntegration"/>
   <dc:identifier rdf:resource="http://elitenintegration.bbaw.de/veranstaltungen"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 </rdf:RDF>

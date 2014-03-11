@@ -4,7 +4,7 @@
    xml:base="http://wsp.normdata.rdf/AvHForschungsstelle/Orinoco" 
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" 
-   xmlns:dc="http://purl.org/elements/1.1/" 
+   xmlns:dc="http://purl.org/dc/elements/1.1/" 
    xmlns:dcterms="http://purl.org/dc/terms/" 
    xmlns:foaf="http://xmlns.com/foaf/0.1/" 
    xmlns:gnd="http://d-nb.info/standards/elementset/gnd#" 
@@ -14,126 +14,105 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Orinoco"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/avh/orinoco/index.html"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.bbaw.de/forschung/avh/orinoco/texte/german.html">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Orinoco"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/avh/orinoco/texte/german.html"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.bbaw.de/forschung/avh/orinoco/texte/english.html">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Orinoco"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/avh/orinoco/texte/english.html"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.bbaw.de/forschung/avh/orinoco/texte/french.html">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Orinoco"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/avh/orinoco/texte/french.html"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_240.html">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Orinoco"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_240.html"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_241.html">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Orinoco"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_241.html"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_242.html">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Orinoco"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_242.html"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_243.html">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Orinoco"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_243.html"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_244.html">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Orinoco"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_244.html"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_245.html">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Orinoco"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_245.html"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_246.html">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Orinoco"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_246.html"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_247.html">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Orinoco"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_247.html"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_248.html">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Orinoco"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_248.html"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_249.html">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Orinoco"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_249.html"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_250.html">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Orinoco"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_250.html"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_251.html">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Orinoco"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_251.html"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_252.html">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Orinoco"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_252.html"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_253.html">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Orinoco"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_253.html"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_254.html">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Orinoco"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_254.html"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_255.html">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Orinoco"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_255.html"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_256.html">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Orinoco"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_256.html"/>
-  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>
 </rdf:Description>
 </rdf:RDF>
