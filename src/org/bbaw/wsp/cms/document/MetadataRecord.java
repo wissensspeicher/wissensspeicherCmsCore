@@ -53,6 +53,7 @@ public class MetadataRecord {
   private ArrayList<XmlTokenizerContentHandler.Element> xmlElements; // xml elements of resource
   private Hashtable<String, XQuery> xQueries; // dynamic xQueries of xml resources (with name, code, result)
   private String realDocUrl; // e.g. the URL to the eDoc (not the index.html)
+  private String system; // e.g. eXistDir or httpDir
 
   public int getId() {
     return id;
@@ -70,6 +71,21 @@ public class MetadataRecord {
     this.realDocUrl = realDocUrl;
   }
 
+  public String getSystem() {
+    return system;
+  }
+
+  public void setSystem(String system) {
+    this.system = system;
+  }
+
+  public boolean isEXistDir() {
+    if (system != null && system.equals("eXistDir"))
+      return true;
+    else 
+      return false;
+  }
+  
   public String getDocumentType() {
     return documentType;
   }
