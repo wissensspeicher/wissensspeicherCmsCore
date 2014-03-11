@@ -1,6 +1,7 @@
 package org.bbaw.wsp.cms.collections;
 
 import java.io.File;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,13 +26,17 @@ import de.mpg.mpiwg.berlin.mpdl.xml.xquery.XQueryEvaluator;
 
 public class CollectionReader {
   private static Logger LOGGER = Logger.getLogger(CollectionReader.class);
-  private static CollectionReader collectionReader;
+  private static CollectionReader collectionReader; 
+  private static String NAMESPACE_DECLARATION = "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; declare namespace dc=\"http://purl.org/dc/elements/1.1/\"; declare namespace dcterms=\"http://purl.org/dc/terms/\"; declare namespace foaf=\"http://xmlns.com/foaf/0.1/\"; ";
+  private XQueryEvaluator xQueryEvaluator;
+  private URL inputNormdataFileUrl;
 	private HashMap<String, Collection> collectionContainer;  // key is collectionId string and value is collection
   private HashMap<String, WspUrl> wspUrls;  // key is wspUrl string and value is wspUrl 
 	
 	private CollectionReader() throws ApplicationException {
 		collectionContainer = new HashMap<String, Collection>();
 		wspUrls = new HashMap<String, WspUrl>();
+		init();
 		readConfFiles();
 	}
 
@@ -41,6 +46,17 @@ public class CollectionReader {
 		return collectionReader;
 	}
 
+	private void init() throws ApplicationException {
+    try {
+  	  xQueryEvaluator = new XQueryEvaluator();
+      String inputNormdataFileName = Constants.getInstance().getMdsystemNormdataFile();
+      File inputNormdataFile = new File(inputNormdataFileName);
+      inputNormdataFileUrl = inputNormdataFile.toURI().toURL();
+    } catch (MalformedURLException e) {
+      throw new ApplicationException(e);
+    }
+	}
+	
 	public ArrayList<Collection> getCollections() {
 		ArrayList<Collection> collections = null;
 		if (collectionContainer != null) {
@@ -76,7 +92,6 @@ public class CollectionReader {
 				try {
 					File configFile = new File(configFileName);
 					name = configFile.getName();
-					XQueryEvaluator xQueryEvaluator = new XQueryEvaluator();
 					URL configFileUrl = configFile.toURI().toURL();
 					Collection collection = new Collection();
 					collection.setConfigFileName(configFileName);
@@ -125,13 +140,21 @@ public class CollectionReader {
               database.setWebIdAfterStr(webIdAfterStr);
             collection.setDatabase(database);
           }
-					String collectionName = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/name/text()");
-					if (collectionName != null) {
-						collection.setName(collectionName);
+          String projectRdfStr = xQueryEvaluator.evaluateAsString(inputNormdataFileUrl, NAMESPACE_DECLARATION + "/rdf:RDF/*:Description[@*:about='" + rdfId + "']");
+          if (projectRdfStr == null || projectRdfStr.trim().isEmpty()) {
+            LOGGER.error("Project: \"" + rdfId + "\" in: \"" + configFileUrl + "\" does not exist in: \"" + inputNormdataFileUrl + "\": Please insert this project");
+          }
+          String projectName = xQueryEvaluator.evaluateAsString(projectRdfStr, NAMESPACE_DECLARATION + "/rdf:Description/foaf:name/text()");
+					if (projectName != null) {
+						collection.setName(projectName);
+					} else {
+            LOGGER.error("Project: \"" + rdfId + "\" in: \"" + inputNormdataFileUrl + "\" has no name: Please provide a name for this project");
 					}
-          String mainLanguage = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/mainLanguage/text()");
+          String mainLanguage = xQueryEvaluator.evaluateAsString(projectRdfStr, NAMESPACE_DECLARATION + "/rdf:Description/dc:language/text()");
           if (mainLanguage != null) {
             collection.setMainLanguage(mainLanguage);
+          } else {
+            LOGGER.error("Project: \"" + rdfId + "\" in: \"" + inputNormdataFileUrl + "\" has no language: Please provide a main language for this project");
           }
 					String metadataUrlStr = xQueryEvaluator.evaluateAsStringValueJoined(configFileUrl, "/wsp/collection/metadata/url");
 					if (metadataUrlStr != null) {
@@ -181,10 +204,12 @@ public class CollectionReader {
 						WspUrl[] collectionWspUrlsArray = collectionWspUrls.toArray(new WspUrl[collectionWspUrls.size()]);
 						collection.setDataUrls(collectionWspUrlsArray);
 					}
-					String webBaseUrl = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/url/webBaseUrl/text()");
-					if (webBaseUrl != null) {
-						collection.setWebBaseUrl(webBaseUrl);
-					}
+          String projectHomepage = xQueryEvaluator.evaluateAsString(projectRdfStr, NAMESPACE_DECLARATION + "string(/rdf:Description/foaf:homepage/@rdf:resource)");
+          if (projectHomepage != null) {
+            collection.setWebBaseUrl(projectHomepage);
+          } else {
+            LOGGER.error("Project: \"" + rdfId + "\" in: \"" + inputNormdataFileUrl + "\" has no homepage: Please provide a homepage for this project");
+          }
 					String formatsStr = xQueryEvaluator.evaluateAsStringValueJoined(configFileUrl, "/wsp/collection/formats/format", "###");
 					ArrayList<String> formatsArrayList = new ArrayList<String>();
 					if (formatsStr != null) {
