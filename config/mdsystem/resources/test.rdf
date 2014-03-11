@@ -10,14 +10,14 @@
    xmlns:gnd="http://d-nb.info/standards/elementset/gnd#" 
    xmlns:ore="http://www.openarchives.org/ore/terms/" 
 >
-<rdf:Description rdf:about="http://wspdev/test/Test_1789.xml">
+<rdf:Description rdf:about="http://wspdev.bbaw.de/test/Test_1789.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Test"/>
-  <dc:identifier rdf:resource="http://wspdev/test/Test_1789.xml"/>
+  <dc:identifier rdf:resource="http://wspdev.bbaw.de/test/Test_1789.xml"/>
 </rdf:Description>
-<rdf:Description rdf:about="http://wspdev/test/Test_1789-2.xml">
+<rdf:Description rdf:about="http://wspdev.bbaw.de/test/Test_1789-2.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Test"/>
-  <dc:identifier rdf:resource="http://wspdev/test/Test_1789-2.xml"/>
+  <dc:identifier rdf:resource="http://wspdev.bbaw.de/test/Test_1789-2.xml"/>
 </rdf:Description>
 </rdf:RDF>
