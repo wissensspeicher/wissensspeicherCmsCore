@@ -64,7 +64,7 @@ public class ConvertConfigXml2Rdf {
       rdfStrBuilder.append("   xml:base=\"" + collectionRdfId + "\" \n");
       rdfStrBuilder.append("   xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" \n");
       rdfStrBuilder.append("   xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\" \n");
-      rdfStrBuilder.append("   xmlns:dc=\"http://purl.org/elements/1.1/\" \n");
+      rdfStrBuilder.append("   xmlns:dc=\"http://purl.org/dc/elements/1.1/\" \n");
       rdfStrBuilder.append("   xmlns:dcterms=\"http://purl.org/dc/terms/\" \n");
       rdfStrBuilder.append("   xmlns:foaf=\"http://xmlns.com/foaf/0.1/\" \n");
       rdfStrBuilder.append("   xmlns:gnd=\"http://d-nb.info/standards/elementset/gnd#\" \n");
@@ -86,7 +86,6 @@ public class ConvertConfigXml2Rdf {
             if (dataUrl.isEXistDir()) {
               rdfStrBuilder.append("  <dc:type>eXistDir</dc:type>\n");
             }
-            rdfStrBuilder.append("  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>\n");
             rdfStrBuilder.append("</rdf:Description>\n");
           }
         }
@@ -96,7 +95,7 @@ public class ConvertConfigXml2Rdf {
       // if collection is a database: insert also from xml db file
       Database collectionDB = collection.getDatabase();
       if (collectionDB != null) {
-      	rdfStrBuilder.append("<!-- Resources of database: " + collectionDB.getName() + "(" + collectionDB.getXmlDumpFileName() + ") -->\n");
+      	rdfStrBuilder.append("<!-- Resources of database: " + collectionDB.getName() + " (" + collectionDB.getXmlDumpFileName() + ") -->\n");
       	convertDbXml(rdfStrBuilder, collection);
       }
       rdfStrBuilder.append("</rdf:RDF>");
@@ -155,6 +154,7 @@ public class ConvertConfigXml2Rdf {
     try {
       URL inputNormdataFileUrl = inputNormdataFile.toURI().toURL();
       ArrayList<Collection> collections = collectionReader.getCollections();
+      LOGGER.info("Proof ConfigFiles" + " (with " + collections.size() + " projects) against" + inputNormdataFileUrl);
       for (int i=0; i<collections.size(); i++) {
         Collection coll = collections.get(i);
         String id = coll.getId();
@@ -328,7 +328,6 @@ public class ConvertConfigXml2Rdf {
         rdfStrBuilder.append("  <dc:abstract>" + abstractt + "</dc:abstract>\n");
       }
     }
-    rdfStrBuilder.append("  <dc:rights>http://creativecommons.org/licenses/by-sa/4.0/</dc:rights>\n");
     // TODO further dc fields
     rdfStrBuilder.append("</rdf:Description>\n");
   }
