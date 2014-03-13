@@ -370,7 +370,12 @@ public class IndexHandler {
       // save the webUrl field  
       String webUri = mdRecord.getWebUri();
       Hashtable<String, XQuery> xqueriesHashtable = mdRecord.getxQueries();
-      if (xqueriesHashtable != null) {
+      String mimeType = mdRecord.getType();
+      boolean isXml = false;
+      if (mimeType != null && mimeType.contains("xml"))
+        isXml = true;
+      // perform xQueries only on XML-Documents
+      if (isXml && xqueriesHashtable != null) {
         Enumeration<String> keys = xqueriesHashtable.keys();
         if (keys != null && keys.hasMoreElements()) {
           XQuery xQueryWebId = xqueriesHashtable.get("webId");
