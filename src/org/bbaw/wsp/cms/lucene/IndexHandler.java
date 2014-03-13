@@ -370,7 +370,7 @@ public class IndexHandler {
       // save the webUrl field  
       String webUri = mdRecord.getWebUri();
       Hashtable<String, XQuery> xqueriesHashtable = mdRecord.getxQueries();
-      if (webUri == null && xqueriesHashtable != null) {
+      if (xqueriesHashtable != null) {
         Enumeration<String> keys = xqueriesHashtable.keys();
         if (keys != null && keys.hasMoreElements()) {
           XQuery xQueryWebId = xqueriesHashtable.get("webId");
