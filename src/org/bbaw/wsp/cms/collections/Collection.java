@@ -12,7 +12,7 @@ public class Collection {
   private Database database;  // when collection is a database
   private String name;
   private String webBaseUrl;  // web base url 
-  private WspUrl[] dataUrls;  // urls of data (could also be starting url (with type "eXist")
+  private WspUrl[] dataUrls;  // urls of data (could also be starting url with type "eXist")
   private String[] metadataUrls;  // metadata urls for fetching records
   private String metadataUrlPrefix;  // prefix of metadataUrl which is not relevant as id
   private String metadataRedundantUrlPrefix;  // prefix of metadataUrl which is not relevant as id 
@@ -22,7 +22,6 @@ public class Collection {
   private Hashtable<String, Service> services;
   private Hashtable<String, XQuery> xQueries;
   private List<String> excludeField;
-  private List<String> documentUrls; // list of document urls (fetched e.g. by an harvester) 
   private String configFileName;  // configuration file name
   
   public Collection() {
@@ -33,7 +32,6 @@ public class Collection {
     mainLanguage = "";
     fields = new ArrayList<String>();
     excludeField = new ArrayList<String>();
-    documentUrls = new ArrayList<String>();
     configFileName = "";
   }
   
@@ -63,14 +61,6 @@ public class Collection {
 
   public void setDatabase(Database database) {
     this.database = database;
-  }
-
-  public List<String> getDocumentUrls() {
-    return documentUrls;
-  }
-
-  public void setDocumentUrls(List<String> documentUrls){
-    this.documentUrls = documentUrls;
   }
 
   public void setName(String name) {
