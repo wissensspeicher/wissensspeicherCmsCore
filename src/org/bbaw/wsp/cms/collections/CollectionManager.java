@@ -42,7 +42,7 @@ import com.sun.org.apache.xml.internal.serialize.XMLSerializer;
 public class CollectionManager {
   private static Logger LOGGER = Logger.getLogger(CollectionManager.class);
   private static CollectionManager confManager;
-  private CollectionReader collectionReader;  // has the collection infos of the configuration files
+  private CollectionReader collectionReader;
   private int counter = 0;
   private String metadataRdfDir = "config/mdsystem/resources/";
 
@@ -65,7 +65,7 @@ public class CollectionManager {
   public void updateCollections() throws ApplicationException {
     ArrayList<Collection> collections = collectionReader.getCollections();
     for (Collection collection : collections) {
-      updateCollection(collection);
+      addDocuments(collection);
     }
   }
 
@@ -76,7 +76,7 @@ public class CollectionManager {
    */
   public void updateCollection(String collectionId) throws ApplicationException {
     Collection collection = collectionReader.getCollection(collectionId);
-    updateCollection(collection);
+    addDocuments(collection);
   }
 
   public void deleteCollection(String collectionId) throws ApplicationException {
@@ -87,28 +87,6 @@ public class CollectionManager {
     } catch (Exception e) {
       e.printStackTrace();
     }
-  }
-  
-  private void updateCollection(Collection collection) throws ApplicationException {
-    WspUrl[] collectionDataUrls = collection.getDataUrls();
-    String excludesStr = collection.getExcludesStr();
-    if (collectionDataUrls != null) {
-      List<String> collectionDocumentUrls = new ArrayList<String>();
-      for (int i=0; i<collectionDataUrls.length; i++) {
-        WspUrl wspUrl = collectionDataUrls[i];
-        String urlStr = wspUrl.getUrl();
-        if (wspUrl.isEXistDir()) {
-          if (urlStr.endsWith("/"))
-            urlStr = urlStr.substring(0, urlStr.length() - 1);
-          List<String> collectionDocumentUrlsTemp = extractDocumentUrls(urlStr, excludesStr);
-          collectionDocumentUrls.addAll(collectionDocumentUrlsTemp);
-        } else {
-          collectionDocumentUrls.add(urlStr);
-        }
-      }
-      collection.setDocumentUrls(collectionDocumentUrls);
-    }
-    addDocuments(collection); 
   }
   
   private void addDocuments(Collection collection) throws ApplicationException {
@@ -153,14 +131,9 @@ public class CollectionManager {
   private ArrayList<MetadataRecord> getMetadataRecords(Collection collection) throws ApplicationException {
     ArrayList<MetadataRecord> mdRecords = new ArrayList<MetadataRecord>();
     String collectionId = collection.getId();
-    List<String> documentUrls = collection.getDocumentUrls();
-    if (documentUrls != null) {
-      // TODO über RdfFiles einlesen
-      mdRecords = getMetadataRecordsByDocUrls(collection);
-    }
     if (collectionId.equals("edoc")) {
       mdRecords = getMetadataRecordsEdoc(collection);
-    } else if (collectionId.equals("avhseklit") || collectionId.equals("avhunselbst")) {  // TODO  alle Ressourcen so einlesen
+    } else {
       mdRecords = getMetadataRecordsByRdfFile(collection);
     }
     if (mdRecords.size() == 0)
@@ -179,39 +152,37 @@ public class CollectionManager {
       XQueryEvaluator xQueryEvaluator = new XQueryEvaluator();
       XdmValue xmdValueResources = xQueryEvaluator.evaluate(rdfRessourcesFileUrl, namespaceDeclaration + "/rdf:RDF/rdf:Description");
       XdmSequenceIterator xmdValueResourcesIterator = xmdValueResources.iterator();
+      int counter = 0;
       if (xmdValueResources != null && xmdValueResources.size() > 0) {
         while (xmdValueResourcesIterator.hasNext()) {
+          counter++;
           XdmItem xdmItemResource = xmdValueResourcesIterator.next();
           String xdmItemResourceStr = xdmItemResource.toString();
-          MetadataRecord mdRecord = getMdRecord(xQueryEvaluator, xdmItemResourceStr);
+          MetadataRecord mdRecord = getMdRecord(xQueryEvaluator, xdmItemResourceStr);  // get the mdRecord out of rdf string
           if (mdRecord != null) {
-            String identifier = mdRecord.getDocId();
-            String docId = "/" + collectionId + "/" + identifier;
-            mdRecord.setDocId(docId);
             mdRecord.setCollectionNames(collectionId);
-            if (mdRecord.getLanguage() == null) {
-              String mainLanguage = collection.getMainLanguage();
-              mdRecord.setLanguage(mainLanguage);
-            }
+            mdRecord.setId(counter); // collection wide id
+            mdRecord = createMainFieldsMetadataRecord(mdRecord, collection);
             mdRecords.add(mdRecord);
-            // if it is an eXist directory then fetch all documents of that directory
+            // if it is an eXist directory then fetch all subUrls/mdRecords of that directory
             if (mdRecord.isEXistDir()) {
               String eXistUrl = mdRecord.getWebUri();
               if (eXistUrl != null) {
-                /* TODO auskommentieren wenn fertig
                 ArrayList<MetadataRecord> mdRecordsEXist = new ArrayList<MetadataRecord>();
                 if (eXistUrl.endsWith("/"))
                   eXistUrl = eXistUrl.substring(0, eXistUrl.length() - 1);
                 String excludesStr = collection.getExcludesStr();
                 List<String> eXistUrls = extractDocumentUrls(eXistUrl, excludesStr);
                 for (int i=0; i<eXistUrls.size(); i++) {
-                  MetadataRecord mdRecordEXist = new MetadataRecord();
-                  // TODO alle Felder aus mdRecord holen und setzen
-                  // TODO neue docId setzen
+                  counter++;
+                  String eXistSubUrlStr = eXistUrls.get(i);
+                  MetadataRecord mdRecordEXist = getNewMdRecord(eXistSubUrlStr); // with docId and webUri
+                  mdRecordEXist.setCollectionNames(collectionId);
+                  mdRecord.setId(counter); // collection wide id
+                  mdRecordEXist = createMainFieldsMetadataRecord(mdRecordEXist, collection);
                   mdRecordsEXist.add(mdRecordEXist);
                 }
                 mdRecords.addAll(mdRecordsEXist);
-                */
               }
             }
           } 
@@ -223,79 +194,76 @@ public class CollectionManager {
     return mdRecords;
   }
   
-  private ArrayList<MetadataRecord> getMetadataRecordsByDocUrls(Collection collection) throws ApplicationException {
-    String collectionId = collection.getId();
-    List<String> documentUrls = collection.getDocumentUrls();
-    Hashtable<String, XQuery> xQueries = collection.getxQueries();
-    ArrayList<MetadataRecord> mdRecords = new ArrayList<MetadataRecord>();
+  private MetadataRecord createMainFieldsMetadataRecord(MetadataRecord mdRecord, Collection collection) throws ApplicationException {
     try {
       Tika tika = new Tika();
-      for (int i=0; i<documentUrls.size(); i++) {
-        MetadataRecord mdRecord = new MetadataRecord();
-        String docUrl = documentUrls.get(i);
-        URL uri = new URL(docUrl);
-        String uriPath = uri.getPath();
-        String prefix = "/exist/rest/db";
-        if (uriPath.startsWith(prefix)) {
-          uriPath = uriPath.substring(prefix.length());
-        }
-        // no file with extension (such as a.xml or b.pdf) but a directory: then a special default file-name is used in docId
-        if (! uriPath.toLowerCase().matches(".*\\.csv$|.*\\.gif$|.*\\.jpg$|.*\\.jpeg$|.*\\.html$|.*\\.htm$|.*\\.log$|.*\\.mp3$|.*\\.pdf$|.*\\.txt$|.*\\.xml$|.*\\.doc$")) {
-          String mimeType = null;
-          try {
-            mimeType = tika.detect(uri); // much faster with tika
-            /* old code which is slow, when the files behind the url's are large 
-            HttpURLConnection connection = (HttpURLConnection) uri.openConnection();
-            connection.setConnectTimeout(5000);
-            connection.setReadTimeout(5000);
-            connection.connect();
-            mimeType = connection.getContentType();
-            */
-          } catch (IOException e) {
-            LOGGER.error("get mime type failed for: " + docUrl);
-            e.printStackTrace();
-          }
-          String fileExtension = "html";
-          if (mimeType != null && mimeType.contains("html"))
-            fileExtension = "html";
-          else if (mimeType != null && mimeType.contains("pdf"))
-            fileExtension = "pdf";
-          else if (mimeType != null && mimeType.contains("xml"))
-            fileExtension = "xml";
-          int pos = i + 1;
-          String fileName = "indexxx" + pos + "." + fileExtension;
-          if (uriPath.endsWith("/"))
-            uriPath = uriPath + fileName;
-          else
-            uriPath = uriPath + "/" + fileName;
-        }
-        String docId = "/" + collectionId + uriPath;
-        String mimeType = getMimeType(docId);
-        if (mimeType == null) {  // last chance: try it with tika
-          try {
-            mimeType = tika.detect(uri);
-          } catch (IOException e) {
-            LOGGER.error("get mime type failed for: " + docUrl);
-            e.printStackTrace();
-          }
-        }
-        mdRecord.setType(mimeType);
-        mdRecord.setDocId(docId);
-        mdRecord.setUri(docUrl);
-        // if mimeType is not xml then the docUrl is also the webUri
-        if (mimeType != null && ! mimeType.contains("xml"))
-          mdRecord.setWebUri(docUrl);
-        mdRecord.setCollectionNames(collectionId);
-        mdRecord.setxQueries(xQueries);
-        mdRecords.add(mdRecord);
+      String webUriStr = mdRecord.getWebUri();
+      URL uri = new URL(webUriStr);
+      String uriPath = uri.getPath();
+      String prefix = "/exist/rest/db";
+      if (uriPath.startsWith(prefix)) {
+        uriPath = uriPath.substring(prefix.length());
       }
+      // no file with extension (such as a.xml or b.pdf) but a directory: then a special default file-name is used in docId
+      if (! uriPath.toLowerCase().matches(".*\\.csv$|.*\\.gif$|.*\\.jpg$|.*\\.jpeg$|.*\\.html$|.*\\.htm$|.*\\.log$|.*\\.mp3$|.*\\.pdf$|.*\\.txt$|.*\\.xml$|.*\\.doc$")) {
+        String mimeType = null;
+        try {
+          mimeType = tika.detect(uri); // much faster with tika
+          /* old code which is slow, when the files behind the url's are large 
+          HttpURLConnection connection = (HttpURLConnection) uri.openConnection();
+          connection.setConnectTimeout(5000);
+          connection.setReadTimeout(5000);
+          connection.connect();
+          mimeType = connection.getContentType();
+          */
+        } catch (IOException e) {
+          LOGGER.error("get mime type failed for: " + webUriStr);
+          e.printStackTrace();
+        }
+        String fileExtension = "html";
+        if (mimeType != null && mimeType.contains("html"))
+          fileExtension = "html";
+        else if (mimeType != null && mimeType.contains("pdf"))
+          fileExtension = "pdf";
+        else if (mimeType != null && mimeType.contains("xml"))
+          fileExtension = "xml";
+        int recordId = mdRecord.getId();
+        String fileName = "indexxx" + recordId + "." + fileExtension;
+        if (uriPath.endsWith("/"))
+          uriPath = uriPath + fileName;
+        else
+          uriPath = uriPath + "/" + fileName;
+      }
+      String collectionId = collection.getId();
+      String docId = "/" + collectionId + uriPath;
+      String mimeType = getMimeType(docId);
+      if (mimeType == null) {  // last chance: try it with tika
+        try {
+          mimeType = tika.detect(uri);
+        } catch (IOException e) {
+          LOGGER.error("get mime type failed for: " + webUriStr);
+          e.printStackTrace();
+        }
+      }
+      mdRecord.setDocId(docId);
+      mdRecord.setUri(webUriStr);
+      mdRecord.setType(mimeType);
+      // if mimeType is not xml then the docUrl is also the webUri
+      if (mimeType != null && ! mimeType.contains("xml"))
+        mdRecord.setWebUri(webUriStr);
+      // if no language is set then take the mainLanguage of the project
+      if (mdRecord.getLanguage() == null) {
+        String mainLanguage = collection.getMainLanguage();
+        mdRecord.setLanguage(mainLanguage);
+      }
+      Hashtable<String, XQuery> xQueries = collection.getxQueries();
+      mdRecord.setxQueries(xQueries);
     } catch (MalformedURLException e) {
       throw new ApplicationException(e);
     }
-    return mdRecords;
+    return mdRecord;
   }
-  
-  
+
   private ArrayList<MetadataRecord> getMetadataRecordsEdoc(Collection collection) throws ApplicationException {
     ArrayList<MetadataRecord> mdRecords = new ArrayList<MetadataRecord>();
     String metadataRedundantUrlPrefix = collection.getMetadataRedundantUrlPrefix();
@@ -362,26 +330,11 @@ public class CollectionManager {
   }
 
   private MetadataRecord getMdRecord(XQueryEvaluator xQueryEvaluator, String xmlRdfStr) throws ApplicationException {
-    MetadataRecord mdRecord = new MetadataRecord();
     String namespaceDeclaration = "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; declare namespace dc=\"http://purl.org/dc/elements/1.1/\"; declare namespace dcterms=\"http://purl.org/dc/terms/\"; ";
     String resourceIdUrlStr = xQueryEvaluator.evaluateAsString(xmlRdfStr, namespaceDeclaration + "string(/rdf:Description/dc:identifier/@rdf:resource)");
     if (resourceIdUrlStr == null || resourceIdUrlStr.trim().isEmpty())
       LOGGER.error("No identifier given in resource: \"" + xmlRdfStr + "\"");
-    String identifier = null;
-    try {
-      URL resourceIdUrl = new URL(resourceIdUrlStr);
-      identifier = resourceIdUrl.getFile();
-      identifier = StringUtils.deresolveXmlEntities(identifier.trim());
-      if (identifier.startsWith("/"))
-        identifier = identifier.substring(1);
-      mdRecord.setDocId(identifier);
-      if (resourceIdUrlStr != null)
-        resourceIdUrlStr = StringUtils.deresolveXmlEntities(resourceIdUrlStr.trim());
-      mdRecord.setWebUri(resourceIdUrlStr);
-    } catch (MalformedURLException e) {
-      LOGGER.error("Malformed URL \"" +  resourceIdUrlStr + "\" in resource: \n\"" + xmlRdfStr + "\"");
-      return null;
-    }
+    MetadataRecord mdRecord = getNewMdRecord(resourceIdUrlStr);
     String type = xQueryEvaluator.evaluateAsString(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dc:type/text()");
     if (type != null && type.equals("eXistDir"))
       mdRecord.setSystem(type);
@@ -433,6 +386,25 @@ public class CollectionManager {
       }
     }
     return mdRecord;    
+  }
+
+  private MetadataRecord getNewMdRecord(String urlStr) {
+    MetadataRecord mdRecord = new MetadataRecord();
+    try {
+      URL resourceIdUrl = new URL(urlStr);
+      String identifier = resourceIdUrl.getFile();
+      identifier = StringUtils.deresolveXmlEntities(identifier.trim());
+      if (identifier.startsWith("/"))
+        identifier = identifier.substring(1);
+      mdRecord.setDocId(identifier);
+      if (urlStr != null)
+        urlStr = StringUtils.deresolveXmlEntities(urlStr.trim());
+      mdRecord.setWebUri(urlStr);
+    } catch (MalformedURLException e) {
+      LOGGER.error("Malformed Url \"" +  urlStr + "\" in resource");
+      return null;
+    }
+    return mdRecord;
   }
   
   /*
