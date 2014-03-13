@@ -16,14 +16,12 @@ public class Collection {
   private String[] metadataUrls;  // metadata urls for fetching records
   private String metadataUrlPrefix;  // prefix of metadataUrl which is not relevant as id
   private String metadataRedundantUrlPrefix;  // prefix of metadataUrl which is not relevant as id 
-  private String metadataUrlType;  // metadata url type e.g. "single" (url delivers single metadata record) or "many" (url delivers many metadata records)
   private String excludesStr; // excludes below dataUrl separated by a blank
   private String mainLanguage;
   private ArrayList<String> fields;
   private Hashtable<String, Service> services;
   private Hashtable<String, XQuery> xQueries;
   private List<String> excludeField;
-  private List<String> formats;
   private List<String> documentUrls; // list of document urls (fetched e.g. by an harvester) 
   private String configFileName;  // configuration file name
   
@@ -35,7 +33,6 @@ public class Collection {
     mainLanguage = "";
     fields = new ArrayList<String>();
     excludeField = new ArrayList<String>();
-    formats = new ArrayList<String>();
     documentUrls = new ArrayList<String>();
     configFileName = "";
   }
@@ -112,28 +109,12 @@ public class Collection {
     this.metadataUrlPrefix = metadataUrlPrefix;
   }
 
-  public String getMetadataUrlType() {
-    return metadataUrlType;
-  }
-
-  public void setMetadataUrlType(String metadataUrlType) {
-    this.metadataUrlType = metadataUrlType;
-  }
-
   public String getExcludesStr() {
     return excludesStr;
   }
 
   public void setExcludesStr(String excludesStr) {
     this.excludesStr = excludesStr;
-  }
-
-  public List<String> getFormats() {
-    return formats;
-  }
-
-  public void setFormats(List<String> formats) {
-    this.formats = formats;
   }
 
   public List<String> getExcludeField() {
