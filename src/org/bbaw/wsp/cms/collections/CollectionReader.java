@@ -156,7 +156,8 @@ public class CollectionReader {
           } else {
             LOGGER.error("Project: \"" + rdfId + "\" in: \"" + inputNormdataFileUrl + "\" has no language: Please provide a main language for this project");
           }
-					String metadataUrlStr = xQueryEvaluator.evaluateAsStringValueJoined(configFileUrl, "/wsp/collection/metadata/url");
+					// wsp/collection/metadata fields are only used in edoc-Collection
+          String metadataUrlStr = xQueryEvaluator.evaluateAsStringValueJoined(configFileUrl, "/wsp/collection/metadata/url");
 					if (metadataUrlStr != null) {
 						String[] metadataUrls = metadataUrlStr.split(" ");
 						collection.setMetadataUrls(metadataUrls);
@@ -169,10 +170,6 @@ public class CollectionReader {
           if (collectionMetadataRedundantUrlPrefix != null) {
             collection.setMetadataRedundantUrlPrefix(collectionMetadataRedundantUrlPrefix);
           }
-					String metadataUrlType = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/metadata/urlType/text()");
-					if (metadataUrlType != null) {
-						collection.setMetadataUrlType(metadataUrlType);
-					}
 					XdmValue xmdValueDataUrls = xQueryEvaluator.evaluate(configFileUrl, "/wsp/collection/url/dataUrl");
 					XdmSequenceIterator xmdValueDataUrlsIterator = xmdValueDataUrls.iterator();
 					if (xmdValueDataUrls != null && xmdValueDataUrls.size() > 0) {
@@ -210,17 +207,6 @@ public class CollectionReader {
           } else {
             LOGGER.error("Project: \"" + rdfId + "\" in: \"" + inputNormdataFileUrl + "\" has no homepage: Please provide a homepage for this project");
           }
-					String formatsStr = xQueryEvaluator.evaluateAsStringValueJoined(configFileUrl, "/wsp/collection/formats/format", "###");
-					ArrayList<String> formatsArrayList = new ArrayList<String>();
-					if (formatsStr != null) {
-						String[] formats = formatsStr.split("###");
-						for (int i = 0; i < formats.length; i++) {
-							String format = formats[i].trim().toLowerCase();
-							if (!format.isEmpty())
-								formatsArrayList.add(format);
-						}
-					}
-					collection.setFormats(formatsArrayList);
 					String fieldsStr = xQueryEvaluator.evaluateAsStringValueJoined(configFileUrl, "/wsp/collection/fields/field", "###");
 					ArrayList<String> fieldsArrayList = new ArrayList<String>();
 					if (fieldsStr != null) {
