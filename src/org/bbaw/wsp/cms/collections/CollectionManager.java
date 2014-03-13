@@ -248,9 +248,6 @@ public class CollectionManager {
       mdRecord.setDocId(docId);
       mdRecord.setUri(webUriStr);
       mdRecord.setType(mimeType);
-      // if mimeType is not xml then the docUrl is also the webUri
-      if (mimeType != null && ! mimeType.contains("xml"))
-        mdRecord.setWebUri(webUriStr);
       // if no language is set then take the mainLanguage of the project
       if (mdRecord.getLanguage() == null) {
         String mainLanguage = collection.getMainLanguage();
