@@ -6,7 +6,7 @@
 - http://www.phpmyadmin.net
 -
 - Host: sandbank.bbaw.de
-- Generation Time: Jul 04, 2013 at 02:18 PM
+- Generation Time: Mar 26, 2014 at 04:34 PM
 - Server version: 5.0.26
 - PHP Version: 5.2.0
 -->
@@ -102,7 +102,7 @@
     </articles_publications>
     <articles_publications>
         <id>100013</id>
-        <creator>Goedeking,  Humboldt, Alexander von</creator>
+        <creator>Goedeking,  ; Humboldt, Alexander von</creator>
         <title>Die Jugendbriefe Alexander von Humboldts 1787-1799. Hrsg. u. erläutert von Ilse Jahn u. Fritz G. Lange.  (Beiträge zur Alexander-von-Humboldt-Forschung. 2).</title>
         <pub_date>1973</pub_date>
         <subject>Amerikareise###Athmosphäre###Barometermessungen###Bergwerk###Berthollet, C.-L. C.###Botanik###Chemie###Deho'sche Methode###Elekrizität, tierische###Erde###Fichtelgebirge###Galvanismus###Geognosie###Höhlenbotanik###Inklination###Kryptogamen###Lagerung###Lalande###Luft###Magnetnadel###Medizin###Messungen###Messungen Höhenmessungen###Meter###</subject>
@@ -165,7 +165,7 @@
     </articles_publications>
     <articles_publications>
         <id>100022</id>
-        <creator>Humboldt, Alexander von Vauquelin, </creator>
+        <creator>Humboldt, Alexander von ; Vauquelin, </creator>
         <title>Humboldt, A. v. : Versuche über die chemische Zerlegung des Luftkreises.</title>
         <pub_date>1799</pub_date>
         <subject>Chemie###Luft###Physiologie###Salzburg###Sauerstoff</subject>
@@ -193,14 +193,14 @@
     </articles_publications>
     <articles_publications>
         <id>100026</id>
-        <creator>Humboldt, Alexander von Vauquelin, </creator>
+        <creator>Humboldt, Alexander von ; Vauquelin, </creator>
         <title>Ann. chimie 28 (an VII).</title>
         <pub_date>1798</pub_date>
         <subject>Chemie###Luft</subject>
     </articles_publications>
     <articles_publications>
         <id>100027</id>
-        <creator>Humboldt, Alexander von Vauquelin, </creator>
+        <creator>Humboldt, Alexander von ; Vauquelin, </creator>
         <title>Chem. Ann 2.</title>
         <pub_date>1800</pub_date>
         <subject>Chemie###Luft</subject>
@@ -221,7 +221,7 @@
     </articles_publications>
     <articles_publications>
         <id>100030</id>
-        <creator>Delamétherie, u. a. Humboldt, Alexander von</creator>
+        <creator>Delamétherie, u. a. ; Humboldt, Alexander von</creator>
         <title>J. phys., chim., hist. nat. et arts 47.</title>
         <pub_date>1798</pub_date>
         <subject>Athmosphäre###Chemie###Luft###Magnetismus###Magnetnadel###Pflanzenphysiologie</subject>
@@ -340,7 +340,7 @@
     </articles_publications>
     <articles_publications>
         <id>100047</id>
-        <creator>Goedeking,  Humboldt, Alexander von</creator>
+        <creator>Goedeking,  ; Humboldt, Alexander von</creator>
         <title>Alexander von Humboldt. Briefe aus Amerika 1799-1804. Hrsg. v. Ulrike Moheit.</title>
         <pub_date>1993</pub_date>
         <subject>Amerika###Amerikareise###Botanik###Chemie###Cuba###Cumana###Fallen und Streichen###Forschungsreise###Fraser###Gelbfieber###Geognosie###Havana###Instrumente###Kohlensäuremesser###Kolumbien###Luft###Magnetismus###Messungen, magnetsiche###Meteorologie###Mutis###Orinokoreise###Pico de Teide###Popayan###Reisebeschreibung###Reiseschilderung###Ri</subject>
@@ -354,70 +354,70 @@
     </articles_publications>
     <articles_publications>
         <id>100049</id>
-        <creator>Gay-Lussac,  Humboldt, Alexander von</creator>
+        <creator>Gay-Lussac,  ; Humboldt, Alexander von</creator>
         <title>J. phys., chim., hist. nat. et arts  60.</title>
         <pub_date>1805</pub_date>
         <subject>Chemie###Eudiometrie###Luft###Pimelodus###Vulkane###Zoologie</subject>
     </articles_publications>
     <articles_publications>
         <id>100050</id>
-        <creator>Gay-Lussac,  Humboldt, Alexander von</creator>
+        <creator>Gay-Lussac,  ; Humboldt, Alexander von</creator>
         <title>Ann. chimie 53.</title>
         <pub_date>1805</pub_date>
         <subject>Chemie###Eudiometrie###Luft</subject>
     </articles_publications>
     <articles_publications>
         <id>100051</id>
-        <creator>Gay-Lussac,  Humboldt, Alexander von</creator>
+        <creator>Gay-Lussac,  ; Humboldt, Alexander von</creator>
         <title>Humboldt, A. v.: Kleinere Schriften. Geognostische und physikalische Erinnerungen. Stuttgart u. Tübingen 1853. (Nr. 5.4)</title>
         <pub_date></pub_date>
         <subject>Amerikareise###Chemie###Chimborazo###Ecuador###Ekuador###Eudiometrie###Geognosie###Geologie###Luft###Messungen###Physik###Schallintensität###Vulkane</subject>
     </articles_publications>
     <articles_publications>
         <id>100052</id>
-        <creator>Gay-Lussac,  Humboldt, Alexander von</creator>
+        <creator>Gay-Lussac,  ; Humboldt, Alexander von</creator>
         <title>Ann. Physik 20.</title>
         <pub_date>1805</pub_date>
         <subject>Chemie###Eudiometrie###Luft</subject>
     </articles_publications>
     <articles_publications>
         <id>100053</id>
-        <creator>Gay-Lussac,  Humboldt, Alexander von</creator>
+        <creator>Gay-Lussac,  ; Humboldt, Alexander von</creator>
         <title>Bull. sc. Soc. philom. 94.</title>
         <pub_date>1805</pub_date>
         <subject>Chemie###Eudiometrie###Luft</subject>
     </articles_publications>
     <articles_publications>
         <id>100054</id>
-        <creator>Gay-Lussac,  Humboldt, Alexander von</creator>
+        <creator>Gay-Lussac,  ; Humboldt, Alexander von</creator>
         <title>Das Volumgesetz gasförmiger Verbindungen. Hrsg. v. W. Oswald.</title>
         <pub_date>1921</pub_date>
         <subject>Chemie###Eudiometrie###Luft</subject>
     </articles_publications>
     <articles_publications>
         <id>100055</id>
-        <creator>Gay-Lussac,  Humboldt, Alexander von</creator>
+        <creator>Gay-Lussac,  ; Humboldt, Alexander von</creator>
         <title>Ann. chimie 56 (an XIV), 1 du 30 vend. [22.10.].</title>
         <pub_date>1805</pub_date>
         <subject>Elektrizität###Elektrizität, tierische###Fische, elektrische###Galvanismus###torpille###Zitteraal</subject>
     </articles_publications>
     <articles_publications>
         <id>100056</id>
-        <creator>Gay-Lussac,  Humboldt, Alexander von</creator>
+        <creator>Gay-Lussac,  ; Humboldt, Alexander von</creator>
         <title>Neues allg. J. Chemie 3, H. 8 (=, H. 2).</title>
         <pub_date>1805</pub_date>
         <subject>Elektrizität###Elektrizität, tierische###Fische, elektrische###Galvanismus###torpille###Zitteraal</subject>
     </articles_publications>
     <articles_publications>
         <id>100057</id>
-        <creator>Gay-Lussac,  Humboldt, Alexander von</creator>
+        <creator>Gay-Lussac,  ; Humboldt, Alexander von</creator>
         <title>Phil. mag. 23.</title>
         <pub_date>1806</pub_date>
         <subject>Elektrizität###Elektrizität, tierische###Fische, elektrische###Galvanismus###torpille###Zitteraal</subject>
     </articles_publications>
     <articles_publications>
         <id>100058</id>
-        <creator>Gay-Lussac,  Humboldt, Alexander von</creator>
+        <creator>Gay-Lussac,  ; Humboldt, Alexander von</creator>
         <title>J. nat. phil., chem., arts 13.</title>
         <pub_date>1806</pub_date>
         <subject>Elektrizität###Elektrizität, tierische###Fische, elektrische###Galvanismus###torpille###Zitteraal</subject>
@@ -494,14 +494,14 @@
     </articles_publications>
     <articles_publications>
         <id>100069</id>
-        <creator>Gay-Lussac,  Humboldt, Alexander von</creator>
+        <creator>Gay-Lussac,  ; Humboldt, Alexander von</creator>
         <title>Mém. Soc. d'Arcueil 1. Taf.</title>
         <pub_date>1807</pub_date>
         <subject>Magnetismus</subject>
     </articles_publications>
     <articles_publications>
         <id>100070</id>
-        <creator>Gay-Lussac,  Humboldt, Alexander von</creator>
+        <creator>Gay-Lussac,  ; Humboldt, Alexander von</creator>
         <title>Ann. Physik 28.</title>
         <pub_date>1808</pub_date>
         <subject>Magnetismus</subject>
@@ -564,35 +564,35 @@
     </articles_publications>
     <articles_publications>
         <id>100079</id>
-        <creator>Gilbert, L. W. Humboldt, Alexander von</creator>
+        <creator>Gilbert, L. W. ; Humboldt, Alexander von</creator>
         <title>Ann. Physik 29.</title>
         <pub_date>1808</pub_date>
         <subject>Erman###Magnetnadel###Messungen###Prony</subject>
     </articles_publications>
     <articles_publications>
         <id>100080</id>
-        <creator>Humboldt, Alexander von Provençal, </creator>
+        <creator>Humboldt, Alexander von ; Provençal, </creator>
         <title>Notizen Natur- u. Heilkunde 1 v. Jan.</title>
         <pub_date>1822</pub_date>
         <subject>Biologie###Fische, Atmung###Physiologie</subject>
     </articles_publications>
     <articles_publications>
         <id>100081</id>
-        <creator>Bonpland, Aimé Humboldt, Alexander von Provençal, </creator>
+        <creator>Bonpland, Aimé ; Humboldt, Alexander von ; Provençal, </creator>
         <title>J. phys., chim., hist. nat. et arts 69.</title>
         <pub_date>1809</pub_date>
         <subject>Biologie###Chemie###Chinampas###Fische, Atmung###Jorullo###Mexiko###Neuspanien###Physiologie###Pyramiden###Schwimmende Gärten###Vulkane</subject>
     </articles_publications>
     <articles_publications>
         <id>100082</id>
-        <creator>Humboldt, Alexander von Provençal, </creator>
+        <creator>Humboldt, Alexander von ; Provençal, </creator>
         <title>J. Chemie Physik  1 1.</title>
         <pub_date>1811</pub_date>
         <subject>Biologie###Fische, Atmung###Physiologie</subject>
     </articles_publications>
     <articles_publications>
         <id>100083</id>
-        <creator>Humboldt, Alexander von Provençal, </creator>
+        <creator>Humboldt, Alexander von ; Provençal, </creator>
         <title>Mém. Soc. d'Arcueil  2.</title>
         <pub_date>1809</pub_date>
         <subject>Biologie###Fische, Atmung###Physiologie</subject>
@@ -984,21 +984,21 @@
     </articles_publications>
     <articles_publications>
         <id>100139</id>
-        <creator>Buch, L. v. Humboldt, Alexander von</creator>
+        <creator>Buch, L. v. ; Humboldt, Alexander von</creator>
         <title>Beiträge Geschichte Tirols 2.</title>
         <pub_date>1826</pub_date>
         <subject>Geognosie###Granit###Tirol</subject>
     </articles_publications>
     <articles_publications>
         <id>100140</id>
-        <creator>Buch, L. v. Humboldt, Alexander von</creator>
+        <creator>Buch, L. v. ; Humboldt, Alexander von</creator>
         <title>Mineralogisches Taschenbuch.</title>
         <pub_date>1824</pub_date>
         <subject>Geognosie###Granit###Neptunismus###Tirol###Vulkanismus</subject>
     </articles_publications>
     <articles_publications>
         <id>100141</id>
-        <creator>Buch, L. v. Humboldt, Alexander von</creator>
+        <creator>Buch, L. v. ; Humboldt, Alexander von</creator>
         <title>Ann. chimie physique 23.</title>
         <pub_date>1823</pub_date>
         <subject>Geognosie###Granit###Tirol</subject>
@@ -1173,7 +1173,7 @@
     </articles_publications>
     <articles_publications>
         <id>100166</id>
-        <creator>Humboldt, Alexander von Lichtenstein u.a., </creator>
+        <creator>Humboldt, Alexander von ; Lichtenstein u.a., </creator>
         <title>Hertha  9.</title>
         <pub_date>1927</pub_date>
         <subject>Ägypten###Clapperton###Forschungsreise</subject>
@@ -1320,7 +1320,7 @@
     </articles_publications>
     <articles_publications>
         <id>100187</id>
-        <creator>Humboldt, Alexander von Lichtenstein, </creator>
+        <creator>Humboldt, Alexander von ; Lichtenstein, </creator>
         <title>Separatum. Berlin: Trautwein 1829. IV, 55 S.</title>
         <pub_date></pub_date>
         <subject>Gesellschaften###Wissenschaftsorganisation</subject>
@@ -1482,14 +1482,14 @@
     </articles_publications>
     <articles_publications>
         <id>100210</id>
-        <creator>Arago,  Humboldt, Alexander von</creator>
+        <creator>Arago,  ; Humboldt, Alexander von</creator>
         <title>Comptes rendus  2.</title>
         <pub_date>1836</pub_date>
         <subject>Barometer###Elektrizität###Kontaktelektrizität###Messungen###Physik</subject>
     </articles_publications>
     <articles_publications>
         <id>100211</id>
-        <creator>Ehrenberg,  Humboldt, Alexander von</creator>
+        <creator>Ehrenberg,  ; Humboldt, Alexander von</creator>
         <title>Comptes rendus  3.</title>
         <pub_date>1836</pub_date>
         <subject>Karlsbad###Kieselgur###Porzellanmanufaktur</subject>
@@ -1937,7 +1937,7 @@
     </articles_publications>
     <articles_publications>
         <id>100275</id>
-        <creator>Humboldt, Alexander von Thunberg, </creator>
+        <creator>Humboldt, Alexander von ; Thunberg, </creator>
         <title>Gazette littéraire de Berlin 1789, Feuille 1270 v. 5. Jan. Feuille 1271 v. 12. Jan. 
 Feuille MCCLXXI Du Lundi 12. Janvier 1789.</title>
         <pub_date></pub_date>
@@ -2246,7 +2246,7 @@ Feuille MCCLXXI Du Lundi 12. Janvier 1789.</title>
     </articles_publications>
     <articles_publications>
         <id>100319</id>
-        <creator>Humboldt, Alexander von Kastner, </creator>
+        <creator>Humboldt, Alexander von ; Kastner, </creator>
         <title>Archiv gesammte Naturlehre 1 3.</title>
         <pub_date>1824</pub_date>
         <subject>Isothermen###Meteorologie</subject>
@@ -2463,21 +2463,21 @@ Feuille MCCLXXI Du Lundi 12. Janvier 1789.</title>
     </articles_publications>
     <articles_publications>
         <id>100350</id>
-        <creator>Humboldt, Alexander von Murchison, Roderick</creator>
+        <creator>Humboldt, Alexander von ; Murchison, Roderick</creator>
         <title>Literary gazette v. 12.3.</title>
         <pub_date>1853</pub_date>
         <subject>Buch, Leopold von</subject>
     </articles_publications>
     <articles_publications>
         <id>100351</id>
-        <creator>Humboldt, Alexander von Murchison, Roderick</creator>
+        <creator>Humboldt, Alexander von ; Murchison, Roderick</creator>
         <title>Dr. W. F. A. Zimmermann's Humboldt-Buch. 1. Abt.</title>
         <pub_date>1859</pub_date>
         <subject>Buch, Leopold von</subject>
     </articles_publications>
     <articles_publications>
         <id>100352</id>
-        <creator>Humboldt, Alexander von Murchison, Roderick</creator>
+        <creator>Humboldt, Alexander von ; Murchison, Roderick</creator>
         <title>Zs. Dt. geol. Ges. 5.</title>
         <pub_date>1853</pub_date>
         <subject>Buch, Leopold von</subject>
@@ -3261,21 +3261,21 @@ Feuille MCCLXXI Du Lundi 12. Janvier 1789.</title>
     </articles_publications>
     <articles_publications>
         <id>100464</id>
-        <creator>Biot,  Humboldt, Alexander von</creator>
+        <creator>Biot,  ; Humboldt, Alexander von</creator>
         <title>Balmer, H.: Beiträge zur Geschichte der Erkenntnis des Erdmagnetismus. Aarau 1956.</title>
         <pub_date></pub_date>
         <subject>Erdmagnetismus###Magnetismus</subject>
     </articles_publications>
     <articles_publications>
         <id>100465</id>
-        <creator>Biot,  Humboldt, Alexander von</creator>
+        <creator>Biot,  ; Humboldt, Alexander von</creator>
         <title>J. phys., chim., hist. nat. et arts  59. [nebst Falttaf.:] Hémisphère magnétique Boréal. Hémisphère magnétique Austral. [sowie] 2 Taf. nach.</title>
         <pub_date>1804</pub_date>
         <subject>Erdmagnetismus###Magnetismus</subject>
     </articles_publications>
     <articles_publications>
         <id>100466</id>
-        <creator>Biot,  Humboldt, Alexander von</creator>
+        <creator>Biot,  ; Humboldt, Alexander von</creator>
         <title>Variedades de ciencias, literatura y artes 2, T. 2.</title>
         <pub_date>1805</pub_date>
         <subject>Erdmagnetismus###Magnetismus</subject>
@@ -3492,35 +3492,35 @@ Feuille MCCLXXI Du Lundi 12. Janvier 1789.</title>
     </articles_publications>
     <articles_publications>
         <id>100497</id>
-        <creator>Humboldt, Alexander von Lichtenstein u.a., </creator>
+        <creator>Humboldt, Alexander von ; Lichtenstein u.a., </creator>
         <title>Abh. Kgl. Akad. Wiss.  Physik. Kl.</title>
         <pub_date>1823</pub_date>
         <subject>Ägypten###Geognosie###Klimatologie###Neptunismus###Temperatur###Vulkanismus</subject>
     </articles_publications>
     <articles_publications>
         <id>100498</id>
-        <creator>Humboldt, Alexander von Lichtenstein u.a., </creator>
+        <creator>Humboldt, Alexander von ; Lichtenstein u.a., </creator>
         <title>Nouv. ann. voyages 9, Oct.-Déc.</title>
         <pub_date>1827</pub_date>
         <subject>Ägypten</subject>
     </articles_publications>
     <articles_publications>
         <id>100499</id>
-        <creator>Humboldt, Alexander von Lichtenstein u.a., </creator>
+        <creator>Humboldt, Alexander von ; Lichtenstein u.a., </creator>
         <title>Separatum.  26 S.</title>
         <pub_date>1826</pub_date>
         <subject>Ägypten</subject>
     </articles_publications>
     <articles_publications>
         <id>100500</id>
-        <creator>Humboldt, Alexander von Lichtenstein u.a., </creator>
+        <creator>Humboldt, Alexander von ; Lichtenstein u.a., </creator>
         <title>Bull. soc. géogr.  7 48/49.</title>
         <pub_date>1827</pub_date>
         <subject>Ägypten</subject>
     </articles_publications>
     <articles_publications>
         <id>100501</id>
-        <creator>Humboldt, Alexander von Lichtenstein u.a., </creator>
+        <creator>Humboldt, Alexander von ; Lichtenstein u.a., </creator>
         <title>J. Land- u. Seereisen 58.</title>
         <pub_date>1828</pub_date>
         <subject>Ägypten</subject>
@@ -4166,7 +4166,7 @@ büchern, und Briefen von Varnhagen und Andern an Humboldt. 3. Aufl.</title>
     </articles_publications>
     <articles_publications>
         <id>100593</id>
-        <creator>Bonpland, Aimé Humboldt, Alexander von</creator>
+        <creator>Bonpland, Aimé ; Humboldt, Alexander von</creator>
         <title>Humboldt, A. v.: Essai politique sur le royaume de la Nouvelle Espagne.6.4.2, T. 1.</title>
         <pub_date></pub_date>
         <subject>Chinampas###Mexiko###Neuspanien###Pyramiden###Schwimmende Gärten</subject>
@@ -4586,7 +4586,7 @@ büchern, und Briefen von Varnhagen und Andern an Humboldt. 3. Aufl.</title>
     </articles_publications>
     <articles_publications>
         <id>100653</id>
-        <creator>Goedeking,  Humboldt, Alexander von</creator>
+        <creator>Goedeking,  ; Humboldt, Alexander von</creator>
         <title>Allg. Lit.-Ztg., Intell.bl v. 21. Dec.</title>
         <pub_date>1799</pub_date>
         <subject>Reiseschilderung</subject>
@@ -4929,14 +4929,14 @@ büchern, und Briefen von Varnhagen und Andern an Humboldt. 3. Aufl.</title>
     </articles_publications>
     <articles_publications>
         <id>100702</id>
-        <creator>Cotta, J.G. Humboldt, Alexander von Schöll, </creator>
+        <creator>Cotta, J.G. ; Humboldt, Alexander von ; Schöll, </creator>
         <title>Morgenbl. geb. Stände v. 27.4.</title>
         <pub_date>1807</pub_date>
         <subject>Amerikareise###Ankündigung</subject>
     </articles_publications>
     <articles_publications>
         <id>100703</id>
-        <creator>Cotta, J.G. Humboldt, Alexander von Schöll, </creator>
+        <creator>Cotta, J.G. ; Humboldt, Alexander von ; Schöll, </creator>
         <title>Allg. Dt. Justiz- und Polizeiblätter. Februar 1812. S. [unpaginiert].</title>
         <pub_date></pub_date>
         <subject>Amerikareise###Ankündigung</subject>
@@ -4957,7 +4957,7 @@ büchern, und Briefen von Varnhagen und Andern an Humboldt. 3. Aufl.</title>
     </articles_publications>
     <articles_publications>
         <id>100706</id>
-        <creator>Humboldt, Alexander von Möllhausen, Caroline</creator>
+        <creator>Humboldt, Alexander von ; Möllhausen, Caroline</creator>
         <title>Berl. Nachr. Staats- u. gel. Sachen v. 22.12.1957.</title>
         <pub_date></pub_date>
         <subject>Amerika###Möllhausen###Rio Colorado###Rio Gila</subject>
