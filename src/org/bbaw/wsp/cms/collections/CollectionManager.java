@@ -24,6 +24,7 @@ import org.apache.tika.Tika;
 import org.bbaw.wsp.cms.dochandler.DocumentHandler;
 import org.bbaw.wsp.cms.dochandler.parser.text.parser.EdocIndexMetadataFetcherTool;
 import org.bbaw.wsp.cms.document.MetadataRecord;
+import org.bbaw.wsp.cms.document.Person;
 import org.bbaw.wsp.cms.document.XQuery;
 import org.bbaw.wsp.cms.scheduler.CmsDocOperation;
 
@@ -336,9 +337,21 @@ public class CollectionManager {
     if (type != null && type.equals("eXistDir"))
       mdRecord.setSystem(type);
     String creator = xQueryEvaluator.evaluateAsString(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dc:creator/text()");
-    if (creator != null)
+    if (creator != null) {
       creator = StringUtils.deresolveXmlEntities(creator.trim());
-    mdRecord.setCreator(creator);
+      mdRecord.setCreator(creator);
+      if (creator.contains(";")) {
+        String[] creators = creator.split(";");
+        String creatorDetails = "<persons>";
+        for (int i=0; i<creators.length; i++) {
+          String cStr = creators[i];
+          Person c = new Person(cStr);
+          creatorDetails = creatorDetails + "\n" + c.toXmlStr();
+        }
+        creatorDetails = creatorDetails + "\n</persons>";
+        mdRecord.setCreatorDetails(creatorDetails);
+      }
+    }
     String title = xQueryEvaluator.evaluateAsString(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dc:title/text()");
     if (title != null)
       title = StringUtils.deresolveXmlEntities(title.trim());
