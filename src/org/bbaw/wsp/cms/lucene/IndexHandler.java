@@ -260,9 +260,12 @@ public class IndexHandler {
         String[] subjects = subject.split(",");
         if (subject.contains(";"))
           subjects = subject.split(";");
+        if (subject.contains("###"))
+          subjects = subject.split("###");
         for (int i=0; i<subjects.length; i++) {
           String s = subjects[i].trim();
-          categories.add(new CategoryPath("subject", s));
+          if (! s.isEmpty())
+            categories.add(new CategoryPath("subject", s));
         }
         Field subjectField = new Field("subject", subject, Field.Store.YES, Field.Index.ANALYZED);
         doc.add(subjectField);
