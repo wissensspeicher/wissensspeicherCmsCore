@@ -18,8 +18,10 @@ import org.bbaw.wsp.cms.dochandler.parser.text.parser.mapper.InstitutMapping;
 import org.bbaw.wsp.cms.dochandler.parser.text.reader.IResourceReader;
 import org.bbaw.wsp.cms.dochandler.parser.text.reader.ResourceReaderImpl;
 import org.bbaw.wsp.cms.document.MetadataRecord;
+import org.bbaw.wsp.cms.document.Person;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
+import de.mpg.mpiwg.berlin.mpdl.util.StringUtils;
 
 /**
  * This tool class provides methods to fetch DC fields into a given {@link MetadataRecord}. Last change: - Added fields documentType, isbn, creationDate, publishingDate - 06.09.12: throws {@link ApplicationException} now - Added methods to check if a file is an eDoc index.html file
@@ -109,13 +111,23 @@ public class EdocIndexMetadataFetcherTool {
         } else if (tag.equals("DC.Creator")) {
           if (creatorBuilder.toString().length() == 0) {
             creatorBuilder.append(content);
-          } else { // more creators are separated by ';'
+          } else { // more than one creators are separated by ';'
             creatorBuilder.append(" ; " + content);
           }
           String creatorStr = creatorBuilder.toString();
           creatorStr = creatorStr.trim();
-          if (! creatorStr.isEmpty())
+          if (! creatorStr.isEmpty()) {
             mdRecord.setCreator(creatorStr);
+            String[] creators = creatorStr.split(";");
+            String creatorDetails = "<persons>";
+            for (int i=0; i<creators.length; i++) {
+              String cStr = creators[i];
+              Person creator = new Person(cStr);
+              creatorDetails = creatorDetails + "\n" + creator.toXmlStr();
+            }
+            creatorDetails = creatorDetails + "\n</persons>";
+            mdRecord.setCreatorDetails(creatorDetails);
+          }
         } else if (tag.equals("DC.Subject")) {
           String subject = content;
           if (subject != null) {
