@@ -208,7 +208,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/avh/uns/publications.php?id=100013">100013</dc:identifier>
-  <dc:creator>Goedeking,  Humboldt, Alexander von</dc:creator>
+  <dc:creator>Goedeking,  ; Humboldt, Alexander von</dc:creator>
   <dc:title>Die Jugendbriefe Alexander von Humboldts 1787-1799. Hrsg. u. erläutert von Ilse Jahn u. Fritz G. Lange.  (Beiträge zur Alexander-von-Humboldt-Forschung. 2).</dc:title>
   <dc:date>1973</dc:date>
   <dc:language>ger</dc:language>
@@ -336,7 +336,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/avh/uns/publications.php?id=100022">100022</dc:identifier>
-  <dc:creator>Humboldt, Alexander von Vauquelin, </dc:creator>
+  <dc:creator>Humboldt, Alexander von ; Vauquelin, </dc:creator>
   <dc:title>Humboldt, A. v. : Versuche über die chemische Zerlegung des Luftkreises.</dc:title>
   <dc:date>1799</dc:date>
   <dc:language>ger</dc:language>
@@ -389,7 +389,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/avh/uns/publications.php?id=100026">100026</dc:identifier>
-  <dc:creator>Humboldt, Alexander von Vauquelin, </dc:creator>
+  <dc:creator>Humboldt, Alexander von ; Vauquelin, </dc:creator>
   <dc:title>Ann. chimie 28 (an VII).</dc:title>
   <dc:date>1798</dc:date>
   <dc:language>ger</dc:language>
@@ -401,7 +401,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/avh/uns/publications.php?id=100027">100027</dc:identifier>
-  <dc:creator>Humboldt, Alexander von Vauquelin, </dc:creator>
+  <dc:creator>Humboldt, Alexander von ; Vauquelin, </dc:creator>
   <dc:title>Chem. Ann 2.</dc:title>
   <dc:date>1800</dc:date>
   <dc:language>ger</dc:language>
@@ -440,7 +440,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/avh/uns/publications.php?id=100030">100030</dc:identifier>
-  <dc:creator>Delamétherie, u. a. Humboldt, Alexander von</dc:creator>
+  <dc:creator>Delamétherie, u. a. ; Humboldt, Alexander von</dc:creator>
   <dc:title>J. phys., chim., hist. nat. et arts 47.</dc:title>
   <dc:date>1798</dc:date>
   <dc:language>ger</dc:language>
@@ -672,7 +672,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/avh/uns/publications.php?id=100047">100047</dc:identifier>
-  <dc:creator>Goedeking,  Humboldt, Alexander von</dc:creator>
+  <dc:creator>Goedeking,  ; Humboldt, Alexander von</dc:creator>
   <dc:title>Alexander von Humboldt. Briefe aus Amerika 1799-1804. Hrsg. v. Ulrike Moheit.</dc:title>
   <dc:date>1993</dc:date>
   <dc:language>ger</dc:language>
@@ -722,7 +722,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/avh/uns/publications.php?id=100049">100049</dc:identifier>
-  <dc:creator>Gay-Lussac,  Humboldt, Alexander von</dc:creator>
+  <dc:creator>Gay-Lussac,  ; Humboldt, Alexander von</dc:creator>
   <dc:title>J. phys., chim., hist. nat. et arts  60.</dc:title>
   <dc:date>1805</dc:date>
   <dc:language>ger</dc:language>
@@ -738,7 +738,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/avh/uns/publications.php?id=100050">100050</dc:identifier>
-  <dc:creator>Gay-Lussac,  Humboldt, Alexander von</dc:creator>
+  <dc:creator>Gay-Lussac,  ; Humboldt, Alexander von</dc:creator>
   <dc:title>Ann. chimie 53.</dc:title>
   <dc:date>1805</dc:date>
   <dc:language>ger</dc:language>
@@ -751,7 +751,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/avh/uns/publications.php?id=100051">100051</dc:identifier>
-  <dc:creator>Gay-Lussac,  Humboldt, Alexander von</dc:creator>
+  <dc:creator>Gay-Lussac,  ; Humboldt, Alexander von</dc:creator>
   <dc:title>Humboldt, A. v.: Kleinere Schriften. Geognostische und physikalische Erinnerungen. Stuttgart u. Tübingen 1853. (Nr. 5.4)</dc:title>
   <dc:language>ger</dc:language>
   <dc:format>text/html</dc:format>
@@ -773,7 +773,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/avh/uns/publications.php?id=100052">100052</dc:identifier>
-  <dc:creator>Gay-Lussac,  Humboldt, Alexander von</dc:creator>
+  <dc:creator>Gay-Lussac,  ; Humboldt, Alexander von</dc:creator>
   <dc:title>Ann. Physik 20.</dc:title>
   <dc:date>1805</dc:date>
   <dc:language>ger</dc:language>
@@ -786,7 +786,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/avh/uns/publications.php?id=100053">100053</dc:identifier>
-  <dc:creator>Gay-Lussac,  Humboldt, Alexander von</dc:creator>
+  <dc:creator>Gay-Lussac,  ; Humboldt, Alexander von</dc:creator>
   <dc:title>Bull. sc. Soc. philom. 94.</dc:title>
   <dc:date>1805</dc:date>
   <dc:language>ger</dc:language>
@@ -799,7 +799,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/avh/uns/publications.php?id=100054">100054</dc:identifier>
-  <dc:creator>Gay-Lussac,  Humboldt, Alexander von</dc:creator>
+  <dc:creator>Gay-Lussac,  ; Humboldt, Alexander von</dc:creator>
   <dc:title>Das Volumgesetz gasförmiger Verbindungen. Hrsg. v. W. Oswald.</dc:title>
   <dc:date>1921</dc:date>
   <dc:language>ger</dc:language>
@@ -812,7 +812,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/avh/uns/publications.php?id=100055">100055</dc:identifier>
-  <dc:creator>Gay-Lussac,  Humboldt, Alexander von</dc:creator>
+  <dc:creator>Gay-Lussac,  ; Humboldt, Alexander von</dc:creator>
   <dc:title>Ann. chimie 56 (an XIV), 1 du 30 vend. [22.10.].</dc:title>
   <dc:date>1805</dc:date>
   <dc:language>ger</dc:language>
@@ -828,7 +828,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/avh/uns/publications.php?id=100056">100056</dc:identifier>
-  <dc:creator>Gay-Lussac,  Humboldt, Alexander von</dc:creator>
+  <dc:creator>Gay-Lussac,  ; Humboldt, Alexander von</dc:creator>
   <dc:title>Neues allg. J. Chemie 3, H. 8 (=, H. 2).</dc:title>
   <dc:date>1805</dc:date>
   <dc:language>ger</dc:language>
@@ -844,7 +844,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/avh/uns/publications.php?id=100057">100057</dc:identifier>
-  <dc:creator>Gay-Lussac,  Humboldt, Alexander von</dc:creator>
+  <dc:creator>Gay-Lussac,  ; Humboldt, Alexander von</dc:creator>
   <dc:title>Phil. mag. 23.</dc:title>
   <dc:date>1806</dc:date>
   <dc:language>ger</dc:language>
@@ -860,7 +860,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/avh/uns/publications.php?id=100058">100058</dc:identifier>
-  <dc:creator>Gay-Lussac,  Humboldt, Alexander von</dc:creator>
+  <dc:creator>Gay-Lussac,  ; Humboldt, Alexander von</dc:creator>
   <dc:title>J. nat. phil., chem., arts 13.</dc:title>
   <dc:date>1806</dc:date>
   <dc:language>ger</dc:language>
@@ -1001,7 +1001,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/avh/uns/publications.php?id=100069">100069</dc:identifier>
-  <dc:creator>Gay-Lussac,  Humboldt, Alexander von</dc:creator>
+  <dc:creator>Gay-Lussac,  ; Humboldt, Alexander von</dc:creator>
   <dc:title>Mém. Soc. d'Arcueil 1. Taf.</dc:title>
   <dc:date>1807</dc:date>
   <dc:language>ger</dc:language>
@@ -1012,7 +1012,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/avh/uns/publications.php?id=100070">100070</dc:identifier>
-  <dc:creator>Gay-Lussac,  Humboldt, Alexander von</dc:creator>
+  <dc:creator>Gay-Lussac,  ; Humboldt, Alexander von</dc:creator>
   <dc:title>Ann. Physik 28.</dc:title>
   <dc:date>1808</dc:date>
   <dc:language>ger</dc:language>
@@ -1130,7 +1130,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/avh/uns/publications.php?id=100079">100079</dc:identifier>
-  <dc:creator>Gilbert, L. W. Humboldt, Alexander von</dc:creator>
+  <dc:creator>Gilbert, L. W. ; Humboldt, Alexander von</dc:creator>
   <dc:title>Ann. Physik 29.</dc:title>
   <dc:date>1808</dc:date>
   <dc:language>ger</dc:language>
@@ -1144,7 +1144,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/avh/uns/publications.php?id=100080">100080</dc:identifier>
-  <dc:creator>Humboldt, Alexander von Provençal, </dc:creator>
+  <dc:creator>Humboldt, Alexander von ; Provençal, </dc:creator>
   <dc:title>Notizen Natur- u. Heilkunde 1 v. Jan.</dc:title>
   <dc:date>1822</dc:date>
   <dc:language>ger</dc:language>
@@ -1157,7 +1157,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/avh/uns/publications.php?id=100081">100081</dc:identifier>
-  <dc:creator>Bonpland, Aimé Humboldt, Alexander von Provençal, </dc:creator>
+  <dc:creator>Bonpland, Aimé ; Humboldt, Alexander von ; Provençal, </dc:creator>
   <dc:title>J. phys., chim., hist. nat. et arts 69.</dc:title>
   <dc:date>1809</dc:date>
   <dc:language>ger</dc:language>
@@ -1178,7 +1178,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/avh/uns/publications.php?id=100082">100082</dc:identifier>
-  <dc:creator>Humboldt, Alexander von Provençal, </dc:creator>
+  <dc:creator>Humboldt, Alexander von ; Provençal, </dc:creator>
   <dc:title>J. Chemie Physik  1 1.</dc:title>
   <dc:date>1811</dc:date>
   <dc:language>ger</dc:language>
@@ -1191,7 +1191,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/avh/uns/publications.php?id=100083">100083</dc:identifier>
-  <dc:creator>Humboldt, Alexander von Provençal, </dc:creator>
+  <dc:creator>Humboldt, Alexander von ; Provençal, </dc:creator>
   <dc:title>Mém. Soc. d'Arcueil  2.</dc:title>
   <dc:date>1809</dc:date>
   <dc:language>ger</dc:language>
@@ -1930,7 +1930,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/avh/uns/publications.php?id=100139">100139</dc:identifier>
-  <dc:creator>Buch, L. v. Humboldt, Alexander von</dc:creator>
+  <dc:creator>Buch, L. v. ; Humboldt, Alexander von</dc:creator>
   <dc:title>Beiträge Geschichte Tirols 2.</dc:title>
   <dc:date>1826</dc:date>
   <dc:language>ger</dc:language>
@@ -1943,7 +1943,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/avh/uns/publications.php?id=100140">100140</dc:identifier>
-  <dc:creator>Buch, L. v. Humboldt, Alexander von</dc:creator>
+  <dc:creator>Buch, L. v. ; Humboldt, Alexander von</dc:creator>
   <dc:title>Mineralogisches Taschenbuch.</dc:title>
   <dc:date>1824</dc:date>
   <dc:language>ger</dc:language>
@@ -1958,7 +1958,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/avh/uns/publications.php?id=100141">100141</dc:identifier>
-  <dc:creator>Buch, L. v. Humboldt, Alexander von</dc:creator>
+  <dc:creator>Buch, L. v. ; Humboldt, Alexander von</dc:creator>
   <dc:title>Ann. chimie physique 23.</dc:title>
   <dc:date>1823</dc:date>
   <dc:language>ger</dc:language>
@@ -2298,7 +2298,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/avh/uns/publications.php?id=100166">100166</dc:identifier>
-  <dc:creator>Humboldt, Alexander von Lichtenstein u.a., </dc:creator>
+  <dc:creator>Humboldt, Alexander von ; Lichtenstein u.a., </dc:creator>
   <dc:title>Hertha  9.</dc:title>
   <dc:date>1927</dc:date>
   <dc:language>ger</dc:language>
@@ -2591,7 +2591,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/avh/uns/publications.php?id=100187">100187</dc:identifier>
-  <dc:creator>Humboldt, Alexander von Lichtenstein, </dc:creator>
+  <dc:creator>Humboldt, Alexander von ; Lichtenstein, </dc:creator>
   <dc:title>Separatum. Berlin: Trautwein 1829. IV, 55 S.</dc:title>
   <dc:language>ger</dc:language>
   <dc:format>text/html</dc:format>
@@ -2930,7 +2930,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/avh/uns/publications.php?id=100210">100210</dc:identifier>
-  <dc:creator>Arago,  Humboldt, Alexander von</dc:creator>
+  <dc:creator>Arago,  ; Humboldt, Alexander von</dc:creator>
   <dc:title>Comptes rendus  2.</dc:title>
   <dc:date>1836</dc:date>
   <dc:language>ger</dc:language>
@@ -2945,7 +2945,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/avh/uns/publications.php?id=100211">100211</dc:identifier>
-  <dc:creator>Ehrenberg,  Humboldt, Alexander von</dc:creator>
+  <dc:creator>Ehrenberg,  ; Humboldt, Alexander von</dc:creator>
   <dc:title>Comptes rendus  3.</dc:title>
   <dc:date>1836</dc:date>
   <dc:language>ger</dc:language>
@@ -3795,7 +3795,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/avh/uns/publications.php?id=100275">100275</dc:identifier>
-  <dc:creator>Humboldt, Alexander von Thunberg, </dc:creator>
+  <dc:creator>Humboldt, Alexander von ; Thunberg, </dc:creator>
   <dc:title>Gazette littéraire de Berlin 1789, Feuille 1270 v. 5. Jan. Feuille 1271 v. 12. Jan. 
 Feuille MCCLXXI Du Lundi 12. Janvier 1789.</dc:title>
   <dc:language>ger</dc:language>
@@ -4383,7 +4383,7 @@ Feuille MCCLXXI Du Lundi 12. Janvier 1789.</dc:title>
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/avh/uns/publications.php?id=100319">100319</dc:identifier>
-  <dc:creator>Humboldt, Alexander von Kastner, </dc:creator>
+  <dc:creator>Humboldt, Alexander von ; Kastner, </dc:creator>
   <dc:title>Archiv gesammte Naturlehre 1 3.</dc:title>
   <dc:date>1824</dc:date>
   <dc:language>ger</dc:language>
@@ -4800,7 +4800,7 @@ Feuille MCCLXXI Du Lundi 12. Janvier 1789.</dc:title>
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/avh/uns/publications.php?id=100350">100350</dc:identifier>
-  <dc:creator>Humboldt, Alexander von Murchison, Roderick</dc:creator>
+  <dc:creator>Humboldt, Alexander von ; Murchison, Roderick</dc:creator>
   <dc:title>Literary gazette v. 12.3.</dc:title>
   <dc:date>1853</dc:date>
   <dc:language>ger</dc:language>
@@ -4811,7 +4811,7 @@ Feuille MCCLXXI Du Lundi 12. Janvier 1789.</dc:title>
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/avh/uns/publications.php?id=100351">100351</dc:identifier>
-  <dc:creator>Humboldt, Alexander von Murchison, Roderick</dc:creator>
+  <dc:creator>Humboldt, Alexander von ; Murchison, Roderick</dc:creator>
   <dc:title>Dr. W. F. A. Zimmermann's Humboldt-Buch. 1. Abt.</dc:title>
   <dc:date>1859</dc:date>
   <dc:language>ger</dc:language>
@@ -4822,7 +4822,7 @@ Feuille MCCLXXI Du Lundi 12. Janvier 1789.</dc:title>
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/avh/uns/publications.php?id=100352">100352</dc:identifier>
-  <dc:creator>Humboldt, Alexander von Murchison, Roderick</dc:creator>
+  <dc:creator>Humboldt, Alexander von ; Murchison, Roderick</dc:creator>
   <dc:title>Zs. Dt. geol. Ges. 5.</dc:title>
   <dc:date>1853</dc:date>
   <dc:language>ger</dc:language>
@@ -6203,7 +6203,7 @@ Feuille MCCLXXI Du Lundi 12. Janvier 1789.</dc:title>
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/avh/uns/publications.php?id=100464">100464</dc:identifier>
-  <dc:creator>Biot,  Humboldt, Alexander von</dc:creator>
+  <dc:creator>Biot,  ; Humboldt, Alexander von</dc:creator>
   <dc:title>Balmer, H.: Beiträge zur Geschichte der Erkenntnis des Erdmagnetismus. Aarau 1956.</dc:title>
   <dc:language>ger</dc:language>
   <dc:format>text/html</dc:format>
@@ -6214,7 +6214,7 @@ Feuille MCCLXXI Du Lundi 12. Janvier 1789.</dc:title>
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/avh/uns/publications.php?id=100465">100465</dc:identifier>
-  <dc:creator>Biot,  Humboldt, Alexander von</dc:creator>
+  <dc:creator>Biot,  ; Humboldt, Alexander von</dc:creator>
   <dc:title>J. phys., chim., hist. nat. et arts  59. [nebst Falttaf.:] Hémisphère magnétique Boréal. Hémisphère magnétique Austral. [sowie] 2 Taf. nach.</dc:title>
   <dc:date>1804</dc:date>
   <dc:language>ger</dc:language>
@@ -6226,7 +6226,7 @@ Feuille MCCLXXI Du Lundi 12. Janvier 1789.</dc:title>
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/avh/uns/publications.php?id=100466">100466</dc:identifier>
-  <dc:creator>Biot,  Humboldt, Alexander von</dc:creator>
+  <dc:creator>Biot,  ; Humboldt, Alexander von</dc:creator>
   <dc:title>Variedades de ciencias, literatura y artes 2, T. 2.</dc:title>
   <dc:date>1805</dc:date>
   <dc:language>ger</dc:language>
@@ -6616,7 +6616,7 @@ Feuille MCCLXXI Du Lundi 12. Janvier 1789.</dc:title>
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/avh/uns/publications.php?id=100497">100497</dc:identifier>
-  <dc:creator>Humboldt, Alexander von Lichtenstein u.a., </dc:creator>
+  <dc:creator>Humboldt, Alexander von ; Lichtenstein u.a., </dc:creator>
   <dc:title>Abh. Kgl. Akad. Wiss.  Physik. Kl.</dc:title>
   <dc:date>1823</dc:date>
   <dc:language>ger</dc:language>
@@ -6632,7 +6632,7 @@ Feuille MCCLXXI Du Lundi 12. Janvier 1789.</dc:title>
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/avh/uns/publications.php?id=100498">100498</dc:identifier>
-  <dc:creator>Humboldt, Alexander von Lichtenstein u.a., </dc:creator>
+  <dc:creator>Humboldt, Alexander von ; Lichtenstein u.a., </dc:creator>
   <dc:title>Nouv. ann. voyages 9, Oct.-Déc.</dc:title>
   <dc:date>1827</dc:date>
   <dc:language>ger</dc:language>
@@ -6643,7 +6643,7 @@ Feuille MCCLXXI Du Lundi 12. Janvier 1789.</dc:title>
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/avh/uns/publications.php?id=100499">100499</dc:identifier>
-  <dc:creator>Humboldt, Alexander von Lichtenstein u.a., </dc:creator>
+  <dc:creator>Humboldt, Alexander von ; Lichtenstein u.a., </dc:creator>
   <dc:title>Separatum.  26 S.</dc:title>
   <dc:date>1826</dc:date>
   <dc:language>ger</dc:language>
@@ -6654,7 +6654,7 @@ Feuille MCCLXXI Du Lundi 12. Janvier 1789.</dc:title>
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/avh/uns/publications.php?id=100500">100500</dc:identifier>
-  <dc:creator>Humboldt, Alexander von Lichtenstein u.a., </dc:creator>
+  <dc:creator>Humboldt, Alexander von ; Lichtenstein u.a., </dc:creator>
   <dc:title>Bull. soc. géogr.  7 48/49.</dc:title>
   <dc:date>1827</dc:date>
   <dc:language>ger</dc:language>
@@ -6665,7 +6665,7 @@ Feuille MCCLXXI Du Lundi 12. Janvier 1789.</dc:title>
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/avh/uns/publications.php?id=100501">100501</dc:identifier>
-  <dc:creator>Humboldt, Alexander von Lichtenstein u.a., </dc:creator>
+  <dc:creator>Humboldt, Alexander von ; Lichtenstein u.a., </dc:creator>
   <dc:title>J. Land- u. Seereisen 58.</dc:title>
   <dc:date>1828</dc:date>
   <dc:language>ger</dc:language>
@@ -7865,7 +7865,7 @@ büchern, und Briefen von Varnhagen und Andern an Humboldt. 3. Aufl.</dc:title>
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/avh/uns/publications.php?id=100593">100593</dc:identifier>
-  <dc:creator>Bonpland, Aimé Humboldt, Alexander von</dc:creator>
+  <dc:creator>Bonpland, Aimé ; Humboldt, Alexander von</dc:creator>
   <dc:title>Humboldt, A. v.: Essai politique sur le royaume de la Nouvelle Espagne.6.4.2, T. 1.</dc:title>
   <dc:language>ger</dc:language>
   <dc:format>text/html</dc:format>
@@ -8637,7 +8637,7 @@ büchern, und Briefen von Varnhagen und Andern an Humboldt. 3. Aufl.</dc:title>
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/avh/uns/publications.php?id=100653">100653</dc:identifier>
-  <dc:creator>Goedeking,  Humboldt, Alexander von</dc:creator>
+  <dc:creator>Goedeking,  ; Humboldt, Alexander von</dc:creator>
   <dc:title>Allg. Lit.-Ztg., Intell.bl v. 21. Dec.</dc:title>
   <dc:date>1799</dc:date>
   <dc:language>ger</dc:language>
@@ -9278,7 +9278,7 @@ büchern, und Briefen von Varnhagen und Andern an Humboldt. 3. Aufl.</dc:title>
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/avh/uns/publications.php?id=100702">100702</dc:identifier>
-  <dc:creator>Cotta, J.G. Humboldt, Alexander von Schöll, </dc:creator>
+  <dc:creator>Cotta, J.G. ; Humboldt, Alexander von ; Schöll, </dc:creator>
   <dc:title>Morgenbl. geb. Stände v. 27.4.</dc:title>
   <dc:date>1807</dc:date>
   <dc:language>ger</dc:language>
@@ -9290,7 +9290,7 @@ büchern, und Briefen von Varnhagen und Andern an Humboldt. 3. Aufl.</dc:title>
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/avh/uns/publications.php?id=100703">100703</dc:identifier>
-  <dc:creator>Cotta, J.G. Humboldt, Alexander von Schöll, </dc:creator>
+  <dc:creator>Cotta, J.G. ; Humboldt, Alexander von ; Schöll, </dc:creator>
   <dc:title>Allg. Dt. Justiz- und Polizeiblätter. Februar 1812. S. [unpaginiert].</dc:title>
   <dc:language>ger</dc:language>
   <dc:format>text/html</dc:format>
@@ -9325,7 +9325,7 @@ büchern, und Briefen von Varnhagen und Andern an Humboldt. 3. Aufl.</dc:title>
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/avh/uns/publications.php?id=100706">100706</dc:identifier>
-  <dc:creator>Humboldt, Alexander von Möllhausen, Caroline</dc:creator>
+  <dc:creator>Humboldt, Alexander von ; Möllhausen, Caroline</dc:creator>
   <dc:title>Berl. Nachr. Staats- u. gel. Sachen v. 22.12.1957.</dc:title>
   <dc:language>ger</dc:language>
   <dc:format>text/html</dc:format>
