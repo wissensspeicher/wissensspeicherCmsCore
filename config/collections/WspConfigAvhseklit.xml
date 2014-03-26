@@ -9,7 +9,7 @@
         <sql>
 SELECT 
  tits.title_id as id,
- GROUP_CONCAT(persons.last_name, ', ', persons.first_name ORDER BY persons.last_name SEPARATOR ' ') as creator,
+ GROUP_CONCAT(persons.last_name, ', ', persons.first_name ORDER BY persons.last_name SEPARATOR ' ; ') as creator,
  tits.title as title,
  IF(CHAR_LENGTH(tits.pub_editor) = 0, IFNULL(tits.pub_location, ''), CONCAT(tits.pub_editor, ', ', IFNULL(tits.pub_location, ''))) as publisher,
  tits.pub_year as pub_date,
