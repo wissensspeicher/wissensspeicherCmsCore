@@ -9,7 +9,7 @@
         <sql>
 SELECT 
  tits.publication_id as id,
- GROUP_CONCAT(DISTINCT persons.last_name, ', ', persons.first_name ORDER BY persons.last_name SEPARATOR ' ') as creator,
+ GROUP_CONCAT(DISTINCT persons.last_name, ', ', persons.first_name ORDER BY persons.last_name SEPARATOR ' ; ') as creator,
  tits.title as title,
  tits.year as pub_date,
  tits.keywords as subject
