@@ -187,14 +187,18 @@ public class IndexHandler {
         Field collectionNamesField = new Field("collectionNames", collectionNames, Field.Store.YES, Field.Index.ANALYZED);
         doc.add(collectionNamesField);
       }
-      if (mdRecord.getCreator() != null) {
-        categories.add(new CategoryPath("author", mdRecord.getCreator()));
-        Field authorField = new Field("author", mdRecord.getCreator(), Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
+      String author = mdRecord.getCreator();
+      if (author != null) {
+        String[] authors = author.split(";");
+        for (int i=0; i<authors.length; i++) {
+          String a = authors[i].trim();
+          categories.add(new CategoryPath("author", a));
+        }
+        Field authorField = new Field("author", author, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
         doc.add(authorField);
-        String authorStr = mdRecord.getCreator();
-        if (authorStr != null)
-          authorStr = authorStr.toLowerCase();  // so that sorting is lower case
-        Field authorFieldSorted = new Field("authorSorted", authorStr, Field.Store.YES, Field.Index.NOT_ANALYZED);
+        if (author != null)
+          author = author.toLowerCase();  // so that sorting is lower case
+        Field authorFieldSorted = new Field("authorSorted", author, Field.Store.YES, Field.Index.NOT_ANALYZED);
         doc.add(authorFieldSorted);
       } else {
         categories.add(new CategoryPath("author", "unbekannt"));
@@ -212,14 +216,18 @@ public class IndexHandler {
         Field titleFieldSorted = new Field("titleSorted", titleStr, Field.Store.YES, Field.Index.NOT_ANALYZED);
         doc.add(titleFieldSorted);
       }
-      if (mdRecord.getPublisher() != null) {
-        categories.add(new CategoryPath("publisher", mdRecord.getPublisher()));
-        Field publisherField = new Field("publisher", mdRecord.getPublisher(), Field.Store.YES, Field.Index.ANALYZED);
+      String publisher = mdRecord.getPublisher();
+      if (publisher != null) {
+        String[] publishers = publisher.split(";");
+        for (int i=0; i<publishers.length; i++) {
+          String p = publishers[i].trim();
+          categories.add(new CategoryPath("publisher", p));
+        }
+        Field publisherField = new Field("publisher", publisher, Field.Store.YES, Field.Index.ANALYZED);
         doc.add(publisherField);
-        String publisherStr = mdRecord.getPublisher();
-        if (publisherStr != null)
-          publisherStr = publisherStr.toLowerCase();  // so that sorting is lower case
-        Field publisherFieldSorted = new Field("publisherSorted", publisherStr, Field.Store.YES, Field.Index.NOT_ANALYZED);
+        if (publisher != null)
+          publisher = publisher.toLowerCase();  // so that sorting is lower case
+        Field publisherFieldSorted = new Field("publisherSorted", publisher, Field.Store.YES, Field.Index.NOT_ANALYZED);
         doc.add(publisherFieldSorted);
       } else {
         categories.add(new CategoryPath("publisher", "unbekannt"));
@@ -247,16 +255,30 @@ public class IndexHandler {
         Field descriptionField = new Field("description", mdRecord.getDescription(), Field.Store.YES, Field.Index.ANALYZED);
         doc.add(descriptionField);
       }
-      if (mdRecord.getSubject() != null) {
-        categories.add(new CategoryPath("subject", mdRecord.getSubject()));
-        Field subjectField = new Field("subject", mdRecord.getSubject(), Field.Store.YES, Field.Index.ANALYZED);
+      String subject = mdRecord.getSubject();
+      if (subject != null) {
+        String[] subjects = subject.split(",");
+        if (subject.contains(";"))
+          subjects = subject.split(";");
+        for (int i=0; i<subjects.length; i++) {
+          String s = subjects[i].trim();
+          categories.add(new CategoryPath("subject", s));
+        }
+        Field subjectField = new Field("subject", subject, Field.Store.YES, Field.Index.ANALYZED);
         doc.add(subjectField);
       } else {
         categories.add(new CategoryPath("subject", "unbekannt"));
       }
-      if (mdRecord.getSwd() != null) {
-        categories.add(new CategoryPath("swd", mdRecord.getSwd()));
-        Field swdField = new Field("swd", mdRecord.getSwd(), Field.Store.YES, Field.Index.ANALYZED);
+      String swd = mdRecord.getSwd();
+      if (swd != null) {
+        String[] swds = swd.split(",");
+        if (swd.contains(";"))
+          swds = swd.split(";");
+        for (int i=0; i<swds.length; i++) {
+          String s = swds[i].trim();
+          categories.add(new CategoryPath("swd", s));
+        }
+        Field swdField = new Field("swd", swd, Field.Store.YES, Field.Index.ANALYZED);
         doc.add(swdField);
       } else {
         categories.add(new CategoryPath("swd", "unbekannt"));
