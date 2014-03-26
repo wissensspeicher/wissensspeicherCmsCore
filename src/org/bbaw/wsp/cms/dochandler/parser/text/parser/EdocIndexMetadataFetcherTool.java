@@ -117,8 +117,14 @@ public class EdocIndexMetadataFetcherTool {
           if (! creatorStr.isEmpty())
             mdRecord.setCreator(creatorStr);
         } else if (tag.equals("DC.Subject")) {
-          mdRecord.setSubject(content); // DC.Subject follows the
-          // Schlagwortnormdatei
+          String subject = content;
+          if (subject != null) {
+            subject = subject.trim();
+            if (subject.startsWith(",")) {
+              subject = subject.substring(1).trim();
+            }
+            mdRecord.setSubject(subject); // DC.Subject follows the Schlagwortnormdatei
+          }
         } else if (tag.equals("DC.Description")) {
           mdRecord.setDescription(content);
         } else if (tag.equals("DC.Identifier")) {
@@ -135,11 +141,16 @@ public class EdocIndexMetadataFetcherTool {
       boolean matchNext = false;
       for (final Matcher m = pGermanSubjects.matcher(line); m.find();) {
         if (matchNext) {
-          mdRecord.setSwd(m.group(1));
+          String swds = m.group(1);
+          if (swds != null) {
+            swds = swds.trim();
+            if (swds.startsWith(",")) {
+              swds = swds.substring(1).trim();
+            }
+            mdRecord.setSwd(swds);
+          }
           break;
-        } else if (m.group(1).contains("SWD-Schlagwörter")) { // higher priority
-          // than Freie
-          // Schlagwörter...
+        } else if (m.group(1).contains("SWD-Schlagwörter")) { // higher priority than Freie Schlagwörter
           matchNext = true;
         } else if (m.group(1).contains("Freie Schlagwörter (Deutsch")) {
           matchNext = true;
@@ -150,7 +161,6 @@ public class EdocIndexMetadataFetcherTool {
       for (final Matcher m = p2.matcher(line); m.find();) {
         final String key = m.group(1);
         String value = m.group(2).trim();
-
         // set content to null if no results
         if (value.trim().equals("")) {
           value = null;
