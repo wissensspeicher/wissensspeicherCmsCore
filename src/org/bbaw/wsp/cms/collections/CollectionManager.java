@@ -338,36 +338,46 @@ public class CollectionManager {
       mdRecord.setSystem(type);
     String creator = xQueryEvaluator.evaluateAsString(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dc:creator/text()");
     if (creator != null) {
-      creator = StringUtils.deresolveXmlEntities(creator.trim());
+      creator = StringUtils.resolveXmlEntities(creator.trim());
       mdRecord.setCreator(creator);
-      if (creator.contains(";")) {
-        String[] creators = creator.split(";");
-        String creatorDetails = "<persons>";
-        for (int i=0; i<creators.length; i++) {
-          String cStr = creators[i];
-          Person c = new Person(cStr);
-          creatorDetails = creatorDetails + "\n" + c.toXmlStr();
-        }
-        creatorDetails = creatorDetails + "\n</persons>";
-        mdRecord.setCreatorDetails(creatorDetails);
+      String[] creators = creator.split(";");
+      String creatorDetails = "<persons>";
+      for (int i=0; i<creators.length; i++) {
+        String cStr = creators[i];
+        Person c = new Person(cStr);
+        creatorDetails = creatorDetails + "\n" + c.toXmlStr();
       }
+      creatorDetails = creatorDetails + "\n</persons>";
+      mdRecord.setCreatorDetails(creatorDetails);
     }
     String title = xQueryEvaluator.evaluateAsString(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dc:title/text()");
     if (title != null)
-      title = StringUtils.deresolveXmlEntities(title.trim());
+      title = StringUtils.resolveXmlEntities(title.trim());
     mdRecord.setTitle(title);
     String publisher = xQueryEvaluator.evaluateAsString(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dc:publisher/text()");
     if (publisher != null)
-      publisher = StringUtils.deresolveXmlEntities(publisher.trim());
+      publisher = StringUtils.resolveXmlEntities(publisher.trim());
     mdRecord.setPublisher(publisher);
     String subject = xQueryEvaluator.evaluateAsStringValueJoined(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dc:subject", "###");
     if (subject != null)
-      subject = StringUtils.deresolveXmlEntities(subject.trim());
+      subject = StringUtils.resolveXmlEntities(subject.trim());
     mdRecord.setSubject(subject);
+    XdmValue xmdValueDcTerms = xQueryEvaluator.evaluate(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dcterms:subject");
+    XdmSequenceIterator xmdValueDcTermsIterator = xmdValueDcTerms.iterator();
+    if (xmdValueDcTerms != null && xmdValueDcTerms.size() > 0) {
+      String subjectControlled = "<subjects>";
+      while (xmdValueDcTermsIterator.hasNext()) {
+        XdmItem xdmItemDcTerm = xmdValueDcTermsIterator.next();
+        String xdmItemDcTermStr = xdmItemDcTerm.toString(); // e.g. <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Karl_Marx"/>
+        subjectControlled = subjectControlled + "\n" + xdmItemDcTermStr;
+      }
+      subjectControlled = subjectControlled + "\n</subjects>";
+      mdRecord.setSubjectControlled(subjectControlled);
+    }
     String dateStr = xQueryEvaluator.evaluateAsString(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dc:date/text()");
     Date date = null;
     if (dateStr != null && ! dateStr.equals("")) {
-      dateStr = StringUtils.deresolveXmlEntities(dateStr.trim());
+      dateStr = StringUtils.resolveXmlEntities(dateStr.trim());
       dateStr = new Util().toYearStr(dateStr);  // test if possible etc
       if (dateStr != null) {
         try {
@@ -384,7 +394,7 @@ public class CollectionManager {
     mdRecord.setType(mimeType);
     String abstractt = xQueryEvaluator.evaluateAsString(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dc:abstract/text()");
     if (abstractt != null)
-      abstractt = StringUtils.deresolveXmlEntities(abstractt.trim());
+      abstractt = StringUtils.resolveXmlEntities(abstractt.trim());
     mdRecord.setDescription(abstractt);
     String pagesStr = xQueryEvaluator.evaluateAsString(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dc:extent/text()");
     if (pagesStr != null && ! pagesStr.isEmpty()) {
