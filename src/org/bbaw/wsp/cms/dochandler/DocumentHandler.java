@@ -647,15 +647,24 @@ public class DocumentHandler {
       accessRights = StringUtils.deresolveXmlEntities(accessRights.trim());
       mdRecord.setIdentifier(identifier);
       mdRecord.setLanguage(language);
-      mdRecord.setCreator(creator);
-      mdRecord.setCreatorDetails(creatorDetails);
-      mdRecord.setTitle(title);
-      mdRecord.setPublisher(publisherStr);
-      mdRecord.setRights(rights);
-      mdRecord.setDate(date);
-      mdRecord.setSubject(subject);
-      mdRecord.setLicense(license);
-      mdRecord.setAccessRights(accessRights);
+      if (mdRecord.getCreator() == null)
+        mdRecord.setCreator(creator);
+      if (mdRecord.getCreatorDetails() == null)
+        mdRecord.setCreatorDetails(creatorDetails);
+      if (mdRecord.getTitle() == null)
+        mdRecord.setTitle(title);
+      if (mdRecord.getPublisher() == null)
+        mdRecord.setPublisher(publisherStr);
+      if (mdRecord.getRights() == null)
+        mdRecord.setRights(rights);
+      if (mdRecord.getDate() == null)
+        mdRecord.setDate(date);
+      if (mdRecord.getSubject() == null)
+        mdRecord.setSubject(subject);
+      if (mdRecord.getLicense() == null)
+        mdRecord.setLicense(license);
+      if (mdRecord.getAccessRights() == null)
+        mdRecord.setAccessRights(accessRights);
     }
     String pageCountStr = xQueryEvaluator.evaluateAsString(srcUrl, "count(//*:pb)");
     int pageCount = Integer.valueOf(pageCountStr);
@@ -738,12 +747,18 @@ public class DocumentHandler {
       mdRecord.setIdentifier(identifier);
       mdRecord.setWebUri(webUri);
       mdRecord.setLanguage(language);
-      mdRecord.setCreator(creator);
-      mdRecord.setTitle(title);
-      mdRecord.setPublisher(publisherStr);
-      mdRecord.setRights(rights);
-      mdRecord.setDate(date);
-      mdRecord.setSubject(subject);
+      if (mdRecord.getCreator() == null)
+        mdRecord.setCreator(creator);
+      if (mdRecord.getTitle() == null)
+        mdRecord.setTitle(title);
+      if (mdRecord.getPublisher() == null)
+        mdRecord.setPublisher(publisherStr);
+      if (mdRecord.getRights() == null)
+        mdRecord.setRights(rights);
+      if (mdRecord.getDate() == null)
+        mdRecord.setDate(date);
+      if (mdRecord.getSubject() == null)
+        mdRecord.setSubject(subject);
     }
     mdRecord.setSchemaName("mets");
     return mdRecord;
@@ -825,15 +840,24 @@ public class DocumentHandler {
       }
       mdRecord.setIdentifier(identifier);
       mdRecord.setLanguage(language);
-      mdRecord.setCreator(creator);
-      mdRecord.setTitle(title);
-      mdRecord.setPublisher(publisher);
-      mdRecord.setRights(rights);
-      mdRecord.setDate(date);
-      mdRecord.setSubject(subject);
-      mdRecord.setDescription(description);
-      mdRecord.setLicense(license);
-      mdRecord.setAccessRights(accessRights);
+      if (mdRecord.getCreator() == null)
+        mdRecord.setCreator(creator);
+      if (mdRecord.getTitle() == null)
+        mdRecord.setTitle(title);
+      if (mdRecord.getPublisher() == null)
+        mdRecord.setPublisher(publisher);
+      if (mdRecord.getRights() == null)
+        mdRecord.setRights(rights);
+      if (mdRecord.getDate() == null)
+        mdRecord.setDate(date);
+      if (mdRecord.getSubject() == null)
+        mdRecord.setSubject(subject);
+      if (mdRecord.getDescription() == null)
+        mdRecord.setDescription(description);
+      if (mdRecord.getLicense() == null)
+        mdRecord.setLicense(license);
+      if (mdRecord.getAccessRights() == null)
+        mdRecord.setAccessRights(accessRights);
     }
     String pageCountStr = xQueryEvaluator.evaluateAsString(srcUrl, "count(//pb)");
     int pageCount = Integer.valueOf(pageCountStr);
