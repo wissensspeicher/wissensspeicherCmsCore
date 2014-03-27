@@ -10,9 +10,9 @@
    xmlns:gnd="http://d-nb.info/standards/elementset/gnd#" 
    xmlns:ore="http://www.openarchives.org/ore/terms/" 
 >
-<rdf:Description rdf:about="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/turfanforschung/de/DigitalesTurfanArchiv">
+<rdf:Description rdf:about="http://turfan.bbaw.de/dta-i-en">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Turfan/DigitalesArchiv"/>
-  <dc:identifier rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/turfanforschung/de/DigitalesTurfanArchiv"/>
+  <dc:identifier rdf:resource="http://turfan.bbaw.de/dta-i-en"/>
 </rdf:Description>
 </rdf:RDF>
