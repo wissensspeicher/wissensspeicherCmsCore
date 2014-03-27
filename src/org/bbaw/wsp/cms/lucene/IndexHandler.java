@@ -13,6 +13,8 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
+import net.sf.saxon.s9api.XdmValue;
+
 import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.KeywordAnalyzer;
@@ -89,6 +91,7 @@ import de.mpg.mpiwg.berlin.mpdl.lt.text.norm.Normalizer;
 import de.mpg.mpiwg.berlin.mpdl.lt.text.tokenize.XmlTokenizer;
 import de.mpg.mpiwg.berlin.mpdl.util.StringUtils;
 import de.mpg.mpiwg.berlin.mpdl.util.Util;
+import de.mpg.mpiwg.berlin.mpdl.xml.xquery.XQueryEvaluator;
 
 public class IndexHandler {
   private static IndexHandler instance;
@@ -107,6 +110,7 @@ public class IndexHandler {
   private TaxonomyWriter taxonomyWriter;
   private TaxonomyReader taxonomyReader;
   private CategoryDocumentBuilder categoryDocBuilder;
+  private XQueryEvaluator xQueryEvaluator;
   
   public static IndexHandler getInstance() throws ApplicationException {
     if (instance == null) {
@@ -127,6 +131,7 @@ public class IndexHandler {
     taxonomyWriter = getTaxonomyWriter();
     taxonomyReader = getTaxonomyReader();
     categoryDocBuilder = getCategoryDocumentBuilder();
+    xQueryEvaluator = new XQueryEvaluator();
     Date before = new Date();
     tokens = getToken("tokenOrig", "", 10000000); // get all token: needs ca. 4 sec. for 3 Mio tokens
     Date after = new Date();
@@ -271,6 +276,19 @@ public class IndexHandler {
         doc.add(subjectField);
       } else {
         categories.add(new CategoryPath("subject", "unbekannt"));
+      }
+      String subjectControlled = mdRecord.getSubjectControlled();
+      if (subjectControlled != null) {
+        String namespaceDeclaration = "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; declare namespace dc=\"http://purl.org/dc/elements/1.1/\"; declare namespace dcterms=\"http://purl.org/dc/terms/\"; ";
+        String dcTermsSubjectsStr = xQueryEvaluator.evaluateAsStringValueJoined(subjectControlled, namespaceDeclaration + "/subjects/dcterms:subject", "###");
+        String[] dcTermsSubjects = dcTermsSubjectsStr.split("###");
+        for (int i=0; i<dcTermsSubjects.length; i++) {
+          String s = dcTermsSubjects[i].trim();
+          if (! s.isEmpty())
+            categories.add(new CategoryPath("subjectControlled", s));
+        }
+        Field subjectControlledField = new Field("subjectControlled", subjectControlled, Field.Store.YES, Field.Index.NOT_ANALYZED);
+        doc.add(subjectControlledField);
       }
       String swd = mdRecord.getSwd();
       if (swd != null) {
@@ -660,6 +678,7 @@ public class IndexHandler {
       facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("publisher"), 10));
       facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("date"), 10));
       facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("subject"), 10));
+      facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("subjectControlled"), 10));
       facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("swd"), 10));
       facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("ddc"), 10));
       facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("type"), 1000));
@@ -1720,6 +1739,7 @@ public class IndexHandler {
     fields.add("date");
     fields.add("description");
     fields.add("subject");
+    fields.add("subjectControlled");
     fields.add("swd");
     fields.add("ddc");
     fields.add("rights");
