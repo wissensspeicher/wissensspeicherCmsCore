@@ -365,14 +365,14 @@ public class CollectionManager {
     XdmValue xmdValueDcTerms = xQueryEvaluator.evaluate(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dcterms:subject");
     XdmSequenceIterator xmdValueDcTermsIterator = xmdValueDcTerms.iterator();
     if (xmdValueDcTerms != null && xmdValueDcTerms.size() > 0) {
-      String subjectControlled = "<subjects>";
+      String subjectControlledDetails = "<subjects>";
       while (xmdValueDcTermsIterator.hasNext()) {
         XdmItem xdmItemDcTerm = xmdValueDcTermsIterator.next();
         String xdmItemDcTermStr = xdmItemDcTerm.toString(); // e.g. <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Karl_Marx"/>
-        subjectControlled = subjectControlled + "\n" + xdmItemDcTermStr;
+        subjectControlledDetails = subjectControlledDetails + "\n" + xdmItemDcTermStr;
       }
-      subjectControlled = subjectControlled + "\n</subjects>";
-      mdRecord.setSubjectControlled(subjectControlled);
+      subjectControlledDetails = subjectControlledDetails + "\n</subjects>";
+      mdRecord.setSubjectControlledDetails(subjectControlledDetails);
     }
     String dateStr = xQueryEvaluator.evaluateAsString(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dc:date/text()");
     Date date = null;
