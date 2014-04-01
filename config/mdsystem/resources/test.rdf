@@ -28,12 +28,12 @@
   <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Karl_Marx">Karl Marx</dcterms:subject>
   <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Berlin">Berlin</dcterms:subject>
   <!-- controlled vocabulary: GND persons, places and concepts -->
-  <dcterms:subject rdf:type="http://d-nb.info/standards/elementset/gnd#Person" rdf:resource="http://d-nb.info/gnd/118578537">Karl Marx</dcterms:subject><!-- GND person "Karl Marx" -->
-  <dcterms:subject rdf:type="http://d-nb.info/standards/elementset/gnd#PlaceOrGeographicName" rdf:resource=" http://d-nb.info/gnd/4005728-8">Berlin</dcterms:subject><!-- GND place "Berlin" -->
-  <dcterms:subject rdf:type="http://d-nb.info/standards/elementset/gnd#SubjectHeading" rdf:resource="http://d-nb.info/gnd/4037764-7">Marxismus</dcterms:subject><!-- GND concept "Marxismus" -->
+  <dcterms:subject rdf:type="http://d-nb.info/standards/elementset/gnd#Person" rdf:resource="http://d-nb.info/gnd/118578537">Karl Marx</dcterms:subject>
+  <dcterms:subject rdf:type="http://d-nb.info/standards/elementset/gnd#PlaceOrGeographicName" rdf:resource=" http://d-nb.info/gnd/4005728-8">Berlin</dcterms:subject>
+  <dcterms:subject rdf:type="http://d-nb.info/standards/elementset/gnd#SubjectHeading" rdf:resource="http://d-nb.info/gnd/4037764-7">Marxismus</dcterms:subject>
   <!-- controlled vocabulary: DDC -->
-  <dcterms:subject rdf:type="http://purl.org/dc/terms/DDC" rdf:resource="http://dewey.info/class/335/">Socialism &amp; related systems</dcterms:subject> <!-- 335 in DDC is "Sozialismus und verwandte Systeme"  -->
-  <dcterms:subject rdf:type="http://purl.org/dc/terms/DDC" rdf:resource="http://dewey.info/class/320.5315/">Marxian socialism (Democratic socialism, Social democracy)</dcterms:subject> <!-- 320.5315 in DDC is "Marxian socialism (Democratic socialism, Social democracy)"  -->
+  <dcterms:subject rdf:type="http://purl.org/dc/terms/DDC" rdf:resource="http://dewey.info/class/335/">Socialism &amp; related systems</dcterms:subject>
+  <dcterms:subject rdf:type="http://purl.org/dc/terms/DDC" rdf:resource="http://dewey.info/class/320.5315/">Marxian socialism (Democratic socialism, Social democracy)</dcterms:subject> 
   <!-- ToDo: geonames (aktuell), pleiades (Antik) -->
   <!-- free vocabulary -->
   <dc:subject>Marx</dc:subject>
