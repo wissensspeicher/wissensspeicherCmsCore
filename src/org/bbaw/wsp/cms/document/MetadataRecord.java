@@ -23,7 +23,8 @@ public class MetadataRecord implements Cloneable {
   private Date date; // publication date, e.g. 1958
   private String description; // description, abstract etc.
   private String subject; // free subject keywords (separated by "###", ";" or ","
-  private String subjectControlled; // subjects controlled (persons, places, concepts of dbPedia, gnd or ddc) (xml format)
+  private String subjectControlled; // subjects controlled keywords (separated by "###")
+  private String subjectControlledDetails; // subjects controlled (persons, places, concepts of dbPedia, gnd or ddc) (xml format)
   private String contributor; // additional contributors of the resource such as translators, layouters, designers. These could be persons or organizations.
   private String coverage; // spatial and temporal coverages, e.g. "13th century" or "Grand Canyon, Arizona"
   private String ddc; // subject keywords of DDC (Dewey Decimal Classification), e.g. "Philosophie" 
@@ -288,6 +289,14 @@ public class MetadataRecord implements Cloneable {
 
   public void setSubjectControlled(String subjectControlled) {
     this.subjectControlled = subjectControlled;
+  }
+
+  public String getSubjectControlledDetails() {
+    return subjectControlledDetails;
+  }
+
+  public void setSubjectControlledDetails(String subjectControlledDetails) {
+    this.subjectControlledDetails = subjectControlledDetails;
   }
 
   public String getCollectionNames() {
