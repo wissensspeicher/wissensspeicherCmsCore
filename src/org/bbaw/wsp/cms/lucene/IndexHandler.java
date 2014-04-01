@@ -13,8 +13,6 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-import net.sf.saxon.s9api.XdmValue;
-
 import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.KeywordAnalyzer;
@@ -96,8 +94,8 @@ import de.mpg.mpiwg.berlin.mpdl.xml.xquery.XQueryEvaluator;
 public class IndexHandler {
   private static IndexHandler instance;
   private static Logger LOGGER = Logger.getLogger(IndexHandler.class);
-  private static final String[] QUERY_EXPANSION_FIELDS_ALL = {"author", "title", "description", "subject", "swd", "ddc", "persons", "places", "tokenOrig"};
-  private static final String[] QUERY_EXPANSION_FIELDS_ALL_MORPH = {"author", "title", "description", "subject", "swd", "ddc", "persons", "places", "tokenMorph"};
+  private static final String[] QUERY_EXPANSION_FIELDS_ALL = {"author", "title", "description", "subject", "subjectControlled", "swd", "ddc", "persons", "places", "tokenOrig"};
+  private static final String[] QUERY_EXPANSION_FIELDS_ALL_MORPH = {"author", "title", "description", "subject", "subjectControlled", "swd", "ddc", "persons", "places", "tokenMorph"};
   private IndexWriter documentsIndexWriter;
   private IndexWriter nodesIndexWriter;
   private SearcherManager documentsSearcherManager;
@@ -277,18 +275,20 @@ public class IndexHandler {
       } else {
         categories.add(new CategoryPath("subject", "unbekannt"));
       }
-      String subjectControlled = mdRecord.getSubjectControlled();
-      if (subjectControlled != null) {
+      String subjectControlledDetails = mdRecord.getSubjectControlledDetails();
+      if (subjectControlledDetails != null) {
         String namespaceDeclaration = "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; declare namespace dc=\"http://purl.org/dc/elements/1.1/\"; declare namespace dcterms=\"http://purl.org/dc/terms/\"; ";
-        String dcTermsSubjectsStr = xQueryEvaluator.evaluateAsStringValueJoined(subjectControlled, namespaceDeclaration + "/subjects/dcterms:subject", "###");
+        String dcTermsSubjectsStr = xQueryEvaluator.evaluateAsStringValueJoined(subjectControlledDetails, namespaceDeclaration + "/subjects/dcterms:subject", "###");
         String[] dcTermsSubjects = dcTermsSubjectsStr.split("###");
         for (int i=0; i<dcTermsSubjects.length; i++) {
           String s = dcTermsSubjects[i].trim();
           if (! s.isEmpty())
             categories.add(new CategoryPath("subjectControlled", s));
         }
-        Field subjectControlledField = new Field("subjectControlled", subjectControlled, Field.Store.YES, Field.Index.NOT_ANALYZED);
+        Field subjectControlledField = new Field("subjectControlled", dcTermsSubjectsStr, Field.Store.YES, Field.Index.ANALYZED);
         doc.add(subjectControlledField);
+        Field subjectControlledDetailsField = new Field("subjectControlledDetails", subjectControlledDetails, Field.Store.YES, Field.Index.NOT_ANALYZED);
+        doc.add(subjectControlledDetailsField);
       }
       String swd = mdRecord.getSwd();
       if (swd != null) {
@@ -1612,6 +1612,7 @@ public class IndexHandler {
       documentsFieldAnalyzers.put("date", new StandardAnalyzer(Version.LUCENE_35));
       documentsFieldAnalyzers.put("description", new StandardAnalyzer(Version.LUCENE_35));
       documentsFieldAnalyzers.put("subject", new StandardAnalyzer(Version.LUCENE_35));
+      documentsFieldAnalyzers.put("subjectControlled", new StandardAnalyzer(Version.LUCENE_35));
       documentsFieldAnalyzers.put("swd", new StandardAnalyzer(Version.LUCENE_35));
       documentsFieldAnalyzers.put("ddc", new StandardAnalyzer(Version.LUCENE_35));
       documentsFieldAnalyzers.put("rights", new StandardAnalyzer(Version.LUCENE_35));
@@ -1740,6 +1741,7 @@ public class IndexHandler {
     fields.add("description");
     fields.add("subject");
     fields.add("subjectControlled");
+    fields.add("subjectControlledDetails");
     fields.add("swd");
     fields.add("ddc");
     fields.add("rights");
