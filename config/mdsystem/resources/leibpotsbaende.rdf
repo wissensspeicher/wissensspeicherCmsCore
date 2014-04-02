@@ -10,84 +10,84 @@
    xmlns:gnd="http://d-nb.info/standards/elementset/gnd#" 
    xmlns:ore="http://www.openarchives.org/ore/terms/" 
 >
-<rdf:Description rdf:about="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/IV1tit.pdf">
+<rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/bilder/IV1tit.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam/Baende"/>
-  <dc:identifier rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/IV1tit.pdf"/>
+  <dc:identifier rdf:resource="http://leibniz-potsdam.bbaw.de/bilder/IV1tit.pdf"/>
 </rdf:Description>
-<rdf:Description rdf:about="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/IV1text.pdf">
+<rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/bilder/IV1text.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam/Baende"/>
-  <dc:identifier rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/IV1text.pdf"/>
+  <dc:identifier rdf:resource="http://leibniz-potsdam.bbaw.de/bilder/IV1text.pdf"/>
 </rdf:Description>
-<rdf:Description rdf:about="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/IV2tit.pdf">
+<rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/bilder/IV2tit.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam/Baende"/>
-  <dc:identifier rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/IV2tit.pdf"/>
+  <dc:identifier rdf:resource="http://leibniz-potsdam.bbaw.de/bilder/IV2tit.pdf"/>
 </rdf:Description>
-<rdf:Description rdf:about="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/IV2text.pdf">
+<rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/bilder/IV2text.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam/Baende"/>
-  <dc:identifier rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/IV2text.pdf"/>
+  <dc:identifier rdf:resource="http://leibniz-potsdam.bbaw.de/bilder/IV2text.pdf"/>
 </rdf:Description>
-<rdf:Description rdf:about="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/IV3tit.pdf">
+<rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/bilder/IV3tit.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam/Baende"/>
-  <dc:identifier rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/IV3tit.pdf"/>
+  <dc:identifier rdf:resource="http://leibniz-potsdam.bbaw.de/bilder/IV3tit.pdf"/>
 </rdf:Description>
-<rdf:Description rdf:about="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/IV3text.pdf">
+<rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/bilder/IV3text.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam/Baende"/>
-  <dc:identifier rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/IV3text.pdf"/>
+  <dc:identifier rdf:resource="http://leibniz-potsdam.bbaw.de/bilder/IV3text.pdf"/>
 </rdf:Description>
-<rdf:Description rdf:about="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/IV4tit.pdf">
+<rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/bilder/IV4tit.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam/Baende"/>
-  <dc:identifier rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/IV4tit.pdf"/>
+  <dc:identifier rdf:resource="http://leibniz-potsdam.bbaw.de/bilder/IV4tit.pdf"/>
 </rdf:Description>
-<rdf:Description rdf:about="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/IV4text.pdf">
+<rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/bilder/IV4text.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam/Baende"/>
-  <dc:identifier rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/IV4text.pdf"/>
+  <dc:identifier rdf:resource="http://leibniz-potsdam.bbaw.de/bilder/IV4text.pdf"/>
 </rdf:Description>
-<rdf:Description rdf:about="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/IV5tit.pdf">
+<rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/bilder/IV5tit.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam/Baende"/>
-  <dc:identifier rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/IV5tit.pdf"/>
+  <dc:identifier rdf:resource="http://leibniz-potsdam.bbaw.de/bilder/IV5tit.pdf"/>
 </rdf:Description>
-<rdf:Description rdf:about="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/IV5text.pdf">
+<rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/bilder/IV5text.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam/Baende"/>
-  <dc:identifier rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/IV5text.pdf"/>
+  <dc:identifier rdf:resource="http://leibniz-potsdam.bbaw.de/bilder/IV5text.pdf"/>
 </rdf:Description>
-<rdf:Description rdf:about="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/IV6TITa.pdf">
+<rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/bilder/IV6TITa.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam/Baende"/>
-  <dc:identifier rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/IV6TITa.pdf"/>
+  <dc:identifier rdf:resource="http://leibniz-potsdam.bbaw.de/bilder/IV6TITa.pdf"/>
 </rdf:Description>
-<rdf:Description rdf:about="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/IV6TEXT.pdf">
+<rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/bilder/IV6text.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam/Baende"/>
-  <dc:identifier rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/IV6TEXT.pdf"/>
+  <dc:identifier rdf:resource="http://leibniz-potsdam.bbaw.de/bilder/IV6text.pdf"/>
 </rdf:Description>
-<rdf:Description rdf:about="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/IV7TIT.pdf">
+<rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/bilder/IV7TIT.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam/Baende"/>
-  <dc:identifier rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/IV7TIT.pdf"/>
+  <dc:identifier rdf:resource="http://leibniz-potsdam.bbaw.de/bilder/IV7TIT.pdf"/>
 </rdf:Description>
-<rdf:Description rdf:about="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/IV7text.pdf">
+<rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/bilder/IV7text.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam/Baende"/>
-  <dc:identifier rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/IV7text.pdf"/>
+  <dc:identifier rdf:resource="http://leibniz-potsdam.bbaw.de/bilder/IV7text.pdf"/>
 </rdf:Description>
-<rdf:Description rdf:about="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/Bibelindex.pdf">
+<rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/bilder/Bibelindex.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam/Baende"/>
-  <dc:identifier rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/Bibelindex.pdf"/>
+  <dc:identifier rdf:resource="http://leibniz-potsdam.bbaw.de/bilder/Bibelindex.pdf"/>
 </rdf:Description>
-<rdf:Description rdf:about="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/Feller_Konkordanz.pdf">
+<rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/bilder/Feller_Konkordanz.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam/Baende"/>
-  <dc:identifier rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/Feller_Konkordanz.pdf"/>
+  <dc:identifier rdf:resource="http://leibniz-potsdam.bbaw.de/bilder/Feller_Konkordanz.pdf"/>
 </rdf:Description>
 </rdf:RDF>
