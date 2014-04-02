@@ -895,18 +895,18 @@ public class DocumentHandler {
   private boolean copyUrlToFile(URL srcUrl, File docDestFile) {
     try {
       if (srcUrl != null) {
-        FileUtils.copyURLToFile(srcUrl, docDestFile, 5000, 5000);
+        FileUtils.copyURLToFile(srcUrl, docDestFile, 20000, 20000);
       }
     } catch (UnknownHostException e) {
       LOGGER.error("1. try: copyUrlToFile failed. UnknownHostException: " + e.getMessage() + " for Url: " + srcUrl);
       try {
         Thread.sleep(10000); // 10 secs delay
-        FileUtils.copyURLToFile(srcUrl, docDestFile, 5000, 5000);
+        FileUtils.copyURLToFile(srcUrl, docDestFile, 20000, 20000);
       } catch (IOException | InterruptedException e2) {
         LOGGER.error("2. try: copyUrlToFile failed. " + e2.getClass().getName() + " : " + e.getMessage() + " for Url: " + srcUrl);
         try {
           Thread.sleep(10000); // another 10 secs delay
-          FileUtils.copyURLToFile(srcUrl, docDestFile, 5000, 5000);
+          FileUtils.copyURLToFile(srcUrl, docDestFile, 20000, 20000);
         } catch (IOException | InterruptedException e3) {
           LOGGER.error("3. try: copyUrlToFile failed. " + e3.getClass().getName() + " : " + e.getMessage() + " for Url: " + srcUrl);
           FileUtils.deleteQuietly(docDestFile);
