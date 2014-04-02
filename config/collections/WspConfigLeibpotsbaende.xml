@@ -7,26 +7,26 @@
     <url>
       <webBaseUrl>http://leibniz-potsdam.bbaw.de</webBaseUrl>
       <!-- Politische Schriften -->
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/IV1tit.pdf</dataUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/IV1text.pdf</dataUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/IV2tit.pdf</dataUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/IV2text.pdf</dataUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/IV3tit.pdf</dataUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/IV3text.pdf</dataUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/IV4tit.pdf</dataUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/IV4text.pdf</dataUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/IV5tit.pdf</dataUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/IV5text.pdf</dataUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/IV6TITa.pdf</dataUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/IV6TEXT.pdf</dataUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/IV7TIT.pdf</dataUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/IV7text.pdf</dataUrl>
+      <dataUrl>http://leibniz-potsdam.bbaw.de/bilder/IV1tit.pdf</dataUrl>
+      <dataUrl>http://leibniz-potsdam.bbaw.de/bilder/IV1text.pdf</dataUrl>
+      <dataUrl>http://leibniz-potsdam.bbaw.de/bilder/IV2tit.pdf</dataUrl>
+      <dataUrl>http://leibniz-potsdam.bbaw.de/bilder/IV2text.pdf</dataUrl>
+      <dataUrl>http://leibniz-potsdam.bbaw.de/bilder/IV3tit.pdf</dataUrl>
+      <dataUrl>http://leibniz-potsdam.bbaw.de/bilder/IV3text.pdf</dataUrl>
+      <dataUrl>http://leibniz-potsdam.bbaw.de/bilder/IV4tit.pdf</dataUrl>
+      <dataUrl>http://leibniz-potsdam.bbaw.de/bilder/IV4text.pdf</dataUrl>
+      <dataUrl>http://leibniz-potsdam.bbaw.de/bilder/IV5tit.pdf</dataUrl>
+      <dataUrl>http://leibniz-potsdam.bbaw.de/bilder/IV5text.pdf</dataUrl>
+      <dataUrl>http://leibniz-potsdam.bbaw.de/bilder/IV6TITa.pdf</dataUrl>
+      <dataUrl>http://leibniz-potsdam.bbaw.de/bilder/IV6text.pdf</dataUrl>
+      <dataUrl>http://leibniz-potsdam.bbaw.de/bilder/IV7TIT.pdf</dataUrl>
+      <dataUrl>http://leibniz-potsdam.bbaw.de/bilder/IV7text.pdf</dataUrl>
 
-      <!-- <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/Corrigenda.pdf</dataUrl> -->
+      <!-- <dataUrl>http://leibniz-potsdam.bbaw.de/bilder/Corrigenda.pdf</dataUrl> -->
 
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/Bibelindex.pdf</dataUrl>
+      <dataUrl>http://leibniz-potsdam.bbaw.de/bilder/Bibelindex.pdf</dataUrl>
       
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/leibniz_potsdam/bilder/Feller_Konkordanz.pdf</dataUrl>
+      <dataUrl>http://leibniz-potsdam.bbaw.de/bilder/Feller_Konkordanz.pdf</dataUrl>
 
     </url>
     <languages>ger,lat,eng</languages>
