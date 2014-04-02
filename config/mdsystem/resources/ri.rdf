@@ -15,9 +15,9 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/RegestaImperii"/>
   <dc:identifier rdf:resource="http://ri.bbaw.de"/>
 </rdf:Description>
-<rdf:Description rdf:about="http://ri.bbaw.de/uebersicht">
+<rdf:Description rdf:about="http://ri.bbaw.de/ueberblick">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/RegestaImperii"/>
-  <dc:identifier rdf:resource="http://ri.bbaw.de/uebersicht"/>
+  <dc:identifier rdf:resource="http://ri.bbaw.de/ueberblick"/>
 </rdf:Description>
 </rdf:RDF>
