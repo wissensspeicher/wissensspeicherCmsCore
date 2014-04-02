@@ -7,7 +7,7 @@
     <url>
       <webBaseUrl>http://ri.bbaw.de</webBaseUrl>
       <dataUrl>http://ri.bbaw.de</dataUrl>
-      <dataUrl>http://ri.bbaw.de/uebersicht</dataUrl>
+      <dataUrl>http://ri.bbaw.de/ueberblick</dataUrl>
     </url>
     <mainLanguage>ger</mainLanguage>
     <formats>
