@@ -409,8 +409,9 @@ public class DocumentHandler {
             mdRecord.setPageCount(pageCount);
             if (mdRecord.getIdentifier() == null)
               mdRecord.setIdentifier(tikaMDRecord.getIdentifier());
-            if (mdRecord.getCreator() == null)
-              mdRecord.setCreator(tikaMDRecord.getCreator());
+            if (mdRecord.getCreator() == null) {
+              // nothing: tika creator is not the creator of the document in mostly all pdf-documents, so is not considered
+            }
             if (mdRecord.getTitle() == null)
               mdRecord.setTitle(tikaMDRecord.getTitle());
             if (mdRecord.getLanguage() == null) {
