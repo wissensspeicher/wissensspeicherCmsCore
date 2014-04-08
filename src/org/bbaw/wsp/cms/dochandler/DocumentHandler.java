@@ -410,7 +410,12 @@ public class DocumentHandler {
             if (mdRecord.getIdentifier() == null)
               mdRecord.setIdentifier(tikaMDRecord.getIdentifier());
             if (mdRecord.getCreator() == null) {
-              // nothing: tika creator is not the creator of the document in mostly all pdf-documents, so is not considered
+              String mimeType = mdRecord.getType();
+              if (mimeType != null && mimeType.equals("application/pdf")) {
+                // nothing: creator is not the creator of the document in mostly all pdf-documents, so is not considered
+              } else {
+                mdRecord.setCreator(tikaMDRecord.getCreator());
+              }
             }
             if (mdRecord.getTitle() == null)
               mdRecord.setTitle(tikaMDRecord.getTitle());
