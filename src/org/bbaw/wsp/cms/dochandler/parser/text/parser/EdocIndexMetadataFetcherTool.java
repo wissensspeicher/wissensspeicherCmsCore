@@ -21,7 +21,6 @@ import org.bbaw.wsp.cms.document.MetadataRecord;
 import org.bbaw.wsp.cms.document.Person;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
-import de.mpg.mpiwg.berlin.mpdl.util.StringUtils;
 
 /**
  * This tool class provides methods to fetch DC fields into a given {@link MetadataRecord}. Last change: - Added fields documentType, isbn, creationDate, publishingDate - 06.09.12: throws {@link ApplicationException} now - Added methods to check if a file is an eDoc index.html file
@@ -116,6 +115,9 @@ public class EdocIndexMetadataFetcherTool {
           }
           String creatorStr = creatorBuilder.toString();
           creatorStr = creatorStr.trim();
+          // hack: some creators have these entries
+          if (creatorStr.startsWith("-, -"))
+            creatorStr = creatorStr.substring(4).trim();
           if (! creatorStr.isEmpty()) {
             mdRecord.setCreator(creatorStr);
             String[] creators = creatorStr.split(";");
