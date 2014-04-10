@@ -582,7 +582,10 @@ public class DocumentHandler {
         if (title.isEmpty())
           title = null;
       }
-      String language = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/*:teiHeader/*:profileDesc/*:langUsage/*:language[1]/@ident)");
+      String language = null;
+      String countLanguages = xQueryEvaluator.evaluateAsString(metadataXmlStr, "string(count(/*:teiHeader/*:profileDesc/*:langUsage/*:language))");
+      if (countLanguages != null && countLanguages.equals("1"))
+        language = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/*:teiHeader/*:profileDesc/*:langUsage/*:language[1]/@ident)");
       if (language != null && language.isEmpty())
         language = null;
       if (language != null) {
@@ -652,7 +655,9 @@ public class DocumentHandler {
         accessRights = "free";
       accessRights = StringUtils.deresolveXmlEntities(accessRights.trim());
       mdRecord.setIdentifier(identifier);
-      mdRecord.setLanguage(language);
+      // set language onto mdRecord if it is not null else the mdReord language beware its language 
+      if (language != null)
+        mdRecord.setLanguage(language);
       if (mdRecord.getCreator() == null)
         mdRecord.setCreator(creator);
       if (mdRecord.getCreatorDetails() == null)
