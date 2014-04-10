@@ -31,7 +31,7 @@ public class ConvertConfigXml2Rdf {
       // convertConfigXml2Rdf.convertAll();
       // convertConfigXml2Rdf.proofRdfProjects();
       // convertConfigXml2Rdf.proofCollectionProjects();
-      // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("test");
+      // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("avhseklit");
       // convertConfigXml2Rdf.convert(c);
     } catch (Exception e) {
       e.printStackTrace();
@@ -189,6 +189,15 @@ public class ConvertConfigXml2Rdf {
             if (coll == null)
               LOGGER.error("Project: \"" + projectRdfId + "\" with \"<foaf:nick>" + foafNickName + "</foaf:nick>\"" + " has no config file");
           }
+          String status = xQueryEvaluator.evaluateAsString(xdmItemProjectStr, "/*:Description/*:status[1]/text()");
+          if (status == null || status.trim().isEmpty())
+            LOGGER.error("Project: \"" + projectRdfId + "\" has no status (abgeschlossen or aktiv)");
+          String description = xQueryEvaluator.evaluateAsString(xdmItemProjectStr, "/*:Description/*:description[1]/text()");
+          if (description == null || description.trim().isEmpty())
+            LOGGER.error("Project: \"" + projectRdfId + "\" has no description (Vorhaben etc.)");
+          String abstractStr = xQueryEvaluator.evaluateAsString(xdmItemProjectStr, "/*:Description/*:abstract[1]/text()");
+          if (abstractStr == null || abstractStr.trim().isEmpty())
+            LOGGER.error("Project: \"" + projectRdfId + "\" has no abstract");
         }
       }
     } catch (IOException e) {
