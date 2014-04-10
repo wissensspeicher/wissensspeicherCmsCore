@@ -30,5 +30,6 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/InscriptionesGraecae"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/exist/rest/db/ig/texts/"/>
   <dc:type>eXistDir</dc:type>
+  <dc:language>grc</dc:language>
 </rdf:Description>
 </rdf:RDF>
