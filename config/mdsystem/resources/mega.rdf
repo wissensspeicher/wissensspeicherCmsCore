@@ -14,17 +14,238 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://mega.bbaw.de"/>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Schriften_von_Karl_Marx_und_Friedrich_Engels">Schriften von Karl Marx und Friedrich Engels</dcterms:subject>
+  <dcterms:subject rdf:type="http://d-nb.info/standards/elementset/gnd#Work" rdf:resource="http://d-nb.info/gnd/4282733-4">Marx-Engels-Gesamtausgabe</dcterms:subject>
+  <dcterms:subject rdf:type="http://purl.org/dc/terms/DDC" rdf:resource="http://dewey.info/class/320.5315/">Marxian socialism (Democratic socialism, Social democracy)</dcterms:subject> 
 </rdf:Description>
 <rdf:Description rdf:about="http://mega.bbaw.de/megadigital">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://mega.bbaw.de/megadigital"/>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Schriften_von_Karl_Marx_und_Friedrich_Engels">Schriften von Karl Marx und Friedrich Engels</dcterms:subject>
+  <dcterms:subject rdf:type="http://d-nb.info/standards/elementset/gnd#Work" rdf:resource="http://d-nb.info/gnd/4282733-4">Marx-Engels-Gesamtausgabe</dcterms:subject>
+  <dcterms:subject rdf:type="http://purl.org/dc/terms/DDC" rdf:resource="http://dewey.info/class/320.5315/">Marxian socialism (Democratic socialism, Social democracy)</dcterms:subject> 
 </rdf:Description>
 <rdf:Description rdf:about="http://telota.bbaw.de/mega">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/mega"/>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Schriften_von_Karl_Marx_und_Friedrich_Engels">Schriften von Karl Marx und Friedrich Engels</dcterms:subject>
+  <dcterms:subject rdf:type="http://d-nb.info/standards/elementset/gnd#Work" rdf:resource="http://d-nb.info/gnd/4282733-4">Marx-Engels-Gesamtausgabe</dcterms:subject>
+  <dcterms:subject rdf:type="http://purl.org/dc/terms/DDC" rdf:resource="http://dewey.info/class/320.5315/">Marxian socialism (Democratic socialism, Social democracy)</dcterms:subject> 
 </rdf:Description>
+
+<!-- MEGA Baende -->
+<rdf:Description rdf:about="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B001-01_ETX.xml">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
+  <dc:identifier rdf:resource="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B001-01_ETX.xml"/>
+  <!-- controlled vocabulary: DBpedia -->
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Weltdokumentenerbe_(Deutschland)">Weltdokumentenerbe (Deutschland)</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Literarisches_Werk">Literarisches Werk</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Literatur_(19._Jahrhundert)">Literatur (19. Jahrhundert)</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Literatur_(Deutsch)">Literatur (Deutsch)</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Ökonomische_Literatur">Ökonomische Literatur</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Marxistische_Wirtschaftstheorie">Marxistische Wirtschaftstheorie</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Schriften_von_Karl_Marx_und_Friedrich_Engels">Schriften von Karl Marx und Friedrich Engels</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Werk_der_Politischen_Philosophie">Werk der Politischen Philosophie</dcterms:subject>
+  <!-- controlled vocabulary: GND -->
+  <dcterms:subject rdf:type="http://d-nb.info/standards/elementset/gnd#Person" rdf:resource="http://d-nb.info/gnd/118578537">Karl Marx</dcterms:subject>
+  <dcterms:subject rdf:type="http://d-nb.info/standards/elementset/gnd#PlaceOrGeographicName" rdf:resource=" http://d-nb.info/gnd/4005728-8">Berlin</dcterms:subject>
+  <dcterms:subject rdf:type="http://d-nb.info/standards/elementset/gnd#SubjectHeading" rdf:resource="http://d-nb.info/gnd/4037764-7">Marxismus</dcterms:subject>
+  <dcterms:subject rdf:type="http://d-nb.info/standards/elementset/gnd#Work" rdf:resource="d-nb.info/gnd/4099309-7">Das Kapital</dcterms:subject>
+  <!-- controlled vocabulary: DDC -->
+  <dcterms:subject rdf:type="http://purl.org/dc/terms/DDC" rdf:resource="http://dewey.info/class/335/">Socialism &amp; related systems</dcterms:subject>
+  <dcterms:subject rdf:type="http://purl.org/dc/terms/DDC" rdf:resource="http://dewey.info/class/320.5315/">Marxian socialism (Democratic socialism, Social democracy)</dcterms:subject> 
+  <!-- free vocabulary -->
+  <dc:subject>Marx</dc:subject>
+  <dc:subject>Engels</dc:subject>
+  <dc:subject>Kapital</dc:subject>
+</rdf:Description>
+<rdf:Description rdf:about="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B001-02_ETX.xml">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
+  <dc:identifier rdf:resource="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B001-02_ETX.xml"/>
+  <!-- controlled vocabulary: DBpedia -->
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Weltdokumentenerbe_(Deutschland)">Weltdokumentenerbe (Deutschland)</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Literarisches_Werk">Literarisches Werk</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Literatur_(19._Jahrhundert)">Literatur (19. Jahrhundert)</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Literatur_(Deutsch)">Literatur (Deutsch)</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Ökonomische_Literatur">Ökonomische Literatur</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Marxistische_Wirtschaftstheorie">Marxistische Wirtschaftstheorie</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Schriften_von_Karl_Marx_und_Friedrich_Engels">Schriften von Karl Marx und Friedrich Engels</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Werk_der_Politischen_Philosophie">Werk der Politischen Philosophie</dcterms:subject>
+  <!-- controlled vocabulary: GND -->
+  <dcterms:subject rdf:type="http://d-nb.info/standards/elementset/gnd#Person" rdf:resource="http://d-nb.info/gnd/118578537">Karl Marx</dcterms:subject>
+  <dcterms:subject rdf:type="http://d-nb.info/standards/elementset/gnd#PlaceOrGeographicName" rdf:resource=" http://d-nb.info/gnd/4005728-8">Berlin</dcterms:subject>
+  <dcterms:subject rdf:type="http://d-nb.info/standards/elementset/gnd#SubjectHeading" rdf:resource="http://d-nb.info/gnd/4037764-7">Marxismus</dcterms:subject>
+  <dcterms:subject rdf:type="http://d-nb.info/standards/elementset/gnd#Work" rdf:resource="d-nb.info/gnd/4099309-7">Das Kapital</dcterms:subject>
+  <!-- controlled vocabulary: DDC -->
+  <dcterms:subject rdf:type="http://purl.org/dc/terms/DDC" rdf:resource="http://dewey.info/class/335/">Socialism &amp; related systems</dcterms:subject>
+  <dcterms:subject rdf:type="http://purl.org/dc/terms/DDC" rdf:resource="http://dewey.info/class/320.5315/">Marxian socialism (Democratic socialism, Social democracy)</dcterms:subject> 
+  <!-- free vocabulary -->
+  <dc:subject>Marx</dc:subject>
+  <dc:subject>Engels</dc:subject>
+  <dc:subject>Kapital</dc:subject>
+</rdf:Description>
+<rdf:Description rdf:about="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B004-01_ETX.xml">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
+  <dc:identifier rdf:resource="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B004-01_ETX.xml"/>
+  <!-- controlled vocabulary: DBpedia -->
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Weltdokumentenerbe_(Deutschland)">Weltdokumentenerbe (Deutschland)</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Literarisches_Werk">Literarisches Werk</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Literatur_(19._Jahrhundert)">Literatur (19. Jahrhundert)</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Literatur_(Deutsch)">Literatur (Deutsch)</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Ökonomische_Literatur">Ökonomische Literatur</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Marxistische_Wirtschaftstheorie">Marxistische Wirtschaftstheorie</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Schriften_von_Karl_Marx_und_Friedrich_Engels">Schriften von Karl Marx und Friedrich Engels</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Werk_der_Politischen_Philosophie">Werk der Politischen Philosophie</dcterms:subject>
+  <!-- controlled vocabulary: GND -->
+  <dcterms:subject rdf:type="http://d-nb.info/standards/elementset/gnd#Person" rdf:resource="http://d-nb.info/gnd/118578537">Karl Marx</dcterms:subject>
+  <dcterms:subject rdf:type="http://d-nb.info/standards/elementset/gnd#PlaceOrGeographicName" rdf:resource=" http://d-nb.info/gnd/4005728-8">Berlin</dcterms:subject>
+  <dcterms:subject rdf:type="http://d-nb.info/standards/elementset/gnd#SubjectHeading" rdf:resource="http://d-nb.info/gnd/4037764-7">Marxismus</dcterms:subject>
+  <dcterms:subject rdf:type="http://d-nb.info/standards/elementset/gnd#Work" rdf:resource="d-nb.info/gnd/4099309-7">Das Kapital</dcterms:subject>
+  <!-- controlled vocabulary: DDC -->
+  <dcterms:subject rdf:type="http://purl.org/dc/terms/DDC" rdf:resource="http://dewey.info/class/335/">Socialism &amp; related systems</dcterms:subject>
+  <dcterms:subject rdf:type="http://purl.org/dc/terms/DDC" rdf:resource="http://dewey.info/class/320.5315/">Marxian socialism (Democratic socialism, Social democracy)</dcterms:subject> 
+  <!-- free vocabulary -->
+  <dc:subject>Marx</dc:subject>
+  <dc:subject>Engels</dc:subject>
+  <dc:subject>Kapital</dc:subject>
+</rdf:Description>
+<rdf:Description rdf:about="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B005-00_ETX.xml">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
+  <dc:identifier rdf:resource="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B005-00_ETX.xml"/>
+  <!-- controlled vocabulary: DBpedia -->
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Weltdokumentenerbe_(Deutschland)">Weltdokumentenerbe (Deutschland)</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Literarisches_Werk">Literarisches Werk</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Literatur_(19._Jahrhundert)">Literatur (19. Jahrhundert)</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Literatur_(Deutsch)">Literatur (Deutsch)</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Ökonomische_Literatur">Ökonomische Literatur</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Marxistische_Wirtschaftstheorie">Marxistische Wirtschaftstheorie</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Schriften_von_Karl_Marx_und_Friedrich_Engels">Schriften von Karl Marx und Friedrich Engels</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Werk_der_Politischen_Philosophie">Werk der Politischen Philosophie</dcterms:subject>
+  <!-- controlled vocabulary: GND -->
+  <dcterms:subject rdf:type="http://d-nb.info/standards/elementset/gnd#Person" rdf:resource="http://d-nb.info/gnd/118578537">Karl Marx</dcterms:subject>
+  <dcterms:subject rdf:type="http://d-nb.info/standards/elementset/gnd#PlaceOrGeographicName" rdf:resource=" http://d-nb.info/gnd/4005728-8">Berlin</dcterms:subject>
+  <dcterms:subject rdf:type="http://d-nb.info/standards/elementset/gnd#SubjectHeading" rdf:resource="http://d-nb.info/gnd/4037764-7">Marxismus</dcterms:subject>
+  <dcterms:subject rdf:type="http://d-nb.info/standards/elementset/gnd#Work" rdf:resource="d-nb.info/gnd/4099309-7">Das Kapital</dcterms:subject>
+  <!-- controlled vocabulary: DDC -->
+  <dcterms:subject rdf:type="http://purl.org/dc/terms/DDC" rdf:resource="http://dewey.info/class/335/">Socialism &amp; related systems</dcterms:subject>
+  <dcterms:subject rdf:type="http://purl.org/dc/terms/DDC" rdf:resource="http://dewey.info/class/320.5315/">Marxian socialism (Democratic socialism, Social democracy)</dcterms:subject> 
+  <!-- free vocabulary -->
+  <dc:subject>Marx</dc:subject>
+  <dc:subject>Engels</dc:subject>
+  <dc:subject>Kapital</dc:subject>
+</rdf:Description>
+<rdf:Description rdf:about="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B011-00_ETX.xml">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
+  <dc:identifier rdf:resource="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B011-00_ETX.xml"/>
+  <!-- controlled vocabulary: DBpedia -->
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Weltdokumentenerbe_(Deutschland)">Weltdokumentenerbe (Deutschland)</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Literarisches_Werk">Literarisches Werk</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Literatur_(19._Jahrhundert)">Literatur (19. Jahrhundert)</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Literatur_(Deutsch)">Literatur (Deutsch)</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Ökonomische_Literatur">Ökonomische Literatur</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Marxistische_Wirtschaftstheorie">Marxistische Wirtschaftstheorie</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Schriften_von_Karl_Marx_und_Friedrich_Engels">Schriften von Karl Marx und Friedrich Engels</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Werk_der_Politischen_Philosophie">Werk der Politischen Philosophie</dcterms:subject>
+  <!-- controlled vocabulary: GND -->
+  <dcterms:subject rdf:type="http://d-nb.info/standards/elementset/gnd#Person" rdf:resource="http://d-nb.info/gnd/118578537">Karl Marx</dcterms:subject>
+  <dcterms:subject rdf:type="http://d-nb.info/standards/elementset/gnd#PlaceOrGeographicName" rdf:resource=" http://d-nb.info/gnd/4005728-8">Berlin</dcterms:subject>
+  <dcterms:subject rdf:type="http://d-nb.info/standards/elementset/gnd#SubjectHeading" rdf:resource="http://d-nb.info/gnd/4037764-7">Marxismus</dcterms:subject>
+  <dcterms:subject rdf:type="http://d-nb.info/standards/elementset/gnd#Work" rdf:resource="d-nb.info/gnd/4099309-7">Das Kapital</dcterms:subject>
+  <!-- controlled vocabulary: DDC -->
+  <dcterms:subject rdf:type="http://purl.org/dc/terms/DDC" rdf:resource="http://dewey.info/class/335/">Socialism &amp; related systems</dcterms:subject>
+  <dcterms:subject rdf:type="http://purl.org/dc/terms/DDC" rdf:resource="http://dewey.info/class/320.5315/">Marxian socialism (Democratic socialism, Social democracy)</dcterms:subject> 
+  <!-- free vocabulary -->
+  <dc:subject>Marx</dc:subject>
+  <dc:subject>Engels</dc:subject>
+  <dc:subject>Kapital</dc:subject>
+</rdf:Description>
+<rdf:Description rdf:about="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B012-00_ETX.xml">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
+  <dc:identifier rdf:resource="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B012-00_ETX.xml"/>
+  <!-- controlled vocabulary: DBpedia -->
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Weltdokumentenerbe_(Deutschland)">Weltdokumentenerbe (Deutschland)</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Literarisches_Werk">Literarisches Werk</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Literatur_(19._Jahrhundert)">Literatur (19. Jahrhundert)</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Literatur_(Deutsch)">Literatur (Deutsch)</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Ökonomische_Literatur">Ökonomische Literatur</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Marxistische_Wirtschaftstheorie">Marxistische Wirtschaftstheorie</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Schriften_von_Karl_Marx_und_Friedrich_Engels">Schriften von Karl Marx und Friedrich Engels</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Werk_der_Politischen_Philosophie">Werk der Politischen Philosophie</dcterms:subject>
+  <!-- controlled vocabulary: GND -->
+  <dcterms:subject rdf:type="http://d-nb.info/standards/elementset/gnd#Person" rdf:resource="http://d-nb.info/gnd/118578537">Karl Marx</dcterms:subject>
+  <dcterms:subject rdf:type="http://d-nb.info/standards/elementset/gnd#PlaceOrGeographicName" rdf:resource=" http://d-nb.info/gnd/4005728-8">Berlin</dcterms:subject>
+  <dcterms:subject rdf:type="http://d-nb.info/standards/elementset/gnd#SubjectHeading" rdf:resource="http://d-nb.info/gnd/4037764-7">Marxismus</dcterms:subject>
+  <dcterms:subject rdf:type="http://d-nb.info/standards/elementset/gnd#Work" rdf:resource="d-nb.info/gnd/4099309-7">Das Kapital</dcterms:subject>
+  <!-- controlled vocabulary: DDC -->
+  <dcterms:subject rdf:type="http://purl.org/dc/terms/DDC" rdf:resource="http://dewey.info/class/335/">Socialism &amp; related systems</dcterms:subject>
+  <dcterms:subject rdf:type="http://purl.org/dc/terms/DDC" rdf:resource="http://dewey.info/class/320.5315/">Marxian socialism (Democratic socialism, Social democracy)</dcterms:subject> 
+  <!-- free vocabulary -->
+  <dc:subject>Marx</dc:subject>
+  <dc:subject>Engels</dc:subject>
+  <dc:subject>Kapital</dc:subject>
+</rdf:Description>
+<rdf:Description rdf:about="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B013-00_ETX.xml">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
+  <dc:identifier rdf:resource="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B013-00_ETX.xml"/>
+  <!-- controlled vocabulary: DBpedia -->
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Weltdokumentenerbe_(Deutschland)">Weltdokumentenerbe (Deutschland)</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Literarisches_Werk">Literarisches Werk</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Literatur_(19._Jahrhundert)">Literatur (19. Jahrhundert)</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Literatur_(Deutsch)">Literatur (Deutsch)</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Ökonomische_Literatur">Ökonomische Literatur</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Marxistische_Wirtschaftstheorie">Marxistische Wirtschaftstheorie</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Schriften_von_Karl_Marx_und_Friedrich_Engels">Schriften von Karl Marx und Friedrich Engels</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Werk_der_Politischen_Philosophie">Werk der Politischen Philosophie</dcterms:subject>
+  <!-- controlled vocabulary: GND -->
+  <dcterms:subject rdf:type="http://d-nb.info/standards/elementset/gnd#Person" rdf:resource="http://d-nb.info/gnd/118578537">Karl Marx</dcterms:subject>
+  <dcterms:subject rdf:type="http://d-nb.info/standards/elementset/gnd#PlaceOrGeographicName" rdf:resource=" http://d-nb.info/gnd/4005728-8">Berlin</dcterms:subject>
+  <dcterms:subject rdf:type="http://d-nb.info/standards/elementset/gnd#SubjectHeading" rdf:resource="http://d-nb.info/gnd/4037764-7">Marxismus</dcterms:subject>
+  <dcterms:subject rdf:type="http://d-nb.info/standards/elementset/gnd#Work" rdf:resource="d-nb.info/gnd/4099309-7">Das Kapital</dcterms:subject>
+  <!-- controlled vocabulary: DDC -->
+  <dcterms:subject rdf:type="http://purl.org/dc/terms/DDC" rdf:resource="http://dewey.info/class/335/">Socialism &amp; related systems</dcterms:subject>
+  <dcterms:subject rdf:type="http://purl.org/dc/terms/DDC" rdf:resource="http://dewey.info/class/320.5315/">Marxian socialism (Democratic socialism, Social democracy)</dcterms:subject> 
+  <!-- free vocabulary -->
+  <dc:subject>Marx</dc:subject>
+  <dc:subject>Engels</dc:subject>
+  <dc:subject>Kapital</dc:subject>
+</rdf:Description>
+<rdf:Description rdf:about="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B015-00_ETX.xml">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
+  <dc:identifier rdf:resource="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B015-00_ETX.xml"/>
+  <!-- controlled vocabulary: DBpedia -->
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Weltdokumentenerbe_(Deutschland)">Weltdokumentenerbe (Deutschland)</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Literarisches_Werk">Literarisches Werk</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Literatur_(19._Jahrhundert)">Literatur (19. Jahrhundert)</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Literatur_(Deutsch)">Literatur (Deutsch)</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Ökonomische_Literatur">Ökonomische Literatur</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Marxistische_Wirtschaftstheorie">Marxistische Wirtschaftstheorie</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Schriften_von_Karl_Marx_und_Friedrich_Engels">Schriften von Karl Marx und Friedrich Engels</dcterms:subject>
+  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Werk_der_Politischen_Philosophie">Werk der Politischen Philosophie</dcterms:subject>
+  <!-- controlled vocabulary: GND -->
+  <dcterms:subject rdf:type="http://d-nb.info/standards/elementset/gnd#Person" rdf:resource="http://d-nb.info/gnd/118578537">Karl Marx</dcterms:subject>
+  <dcterms:subject rdf:type="http://d-nb.info/standards/elementset/gnd#PlaceOrGeographicName" rdf:resource=" http://d-nb.info/gnd/4005728-8">Berlin</dcterms:subject>
+  <dcterms:subject rdf:type="http://d-nb.info/standards/elementset/gnd#SubjectHeading" rdf:resource="http://d-nb.info/gnd/4037764-7">Marxismus</dcterms:subject>
+  <dcterms:subject rdf:type="http://d-nb.info/standards/elementset/gnd#Work" rdf:resource="d-nb.info/gnd/4099309-7">Das Kapital</dcterms:subject>
+  <!-- controlled vocabulary: DDC -->
+  <dcterms:subject rdf:type="http://purl.org/dc/terms/DDC" rdf:resource="http://dewey.info/class/335/">Socialism &amp; related systems</dcterms:subject>
+  <dcterms:subject rdf:type="http://purl.org/dc/terms/DDC" rdf:resource="http://dewey.info/class/320.5315/">Marxian socialism (Democratic socialism, Social democracy)</dcterms:subject> 
+  <!-- free vocabulary -->
+  <dc:subject>Marx</dc:subject>
+  <dc:subject>Engels</dc:subject>
+  <dc:subject>Kapital</dc:subject>
+</rdf:Description>
+
+<!-- diverse Veroeffentlichungen -->
 <rdf:Description rdf:about="http://mega.bbaw.de/struktur/abteilung_i/dateien/mega_I-14_inhalt-einf.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
@@ -49,62 +270,6 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://mega.bbaw.de/struktur/abteilung_i/dateien/mega_i-32_inhalt-einf.pdf"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B001-01_ETX.xml">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
-  <dc:identifier rdf:resource="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B001-01_ETX.xml"/>
-  <!-- controlled vocabulary: dbPedia concepts: persons, places, concepts -->
-  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Karl_Marx">Karl Marx</dcterms:subject>
-  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Berlin">Berlin</dcterms:subject>
-  <!-- controlled vocabulary: GND persons, places and concepts -->
-  <dcterms:subject rdf:type="http://d-nb.info/standards/elementset/gnd#Person" rdf:resource="http://d-nb.info/gnd/118578537">Karl Marx</dcterms:subject>
-  <dcterms:subject rdf:type="http://d-nb.info/standards/elementset/gnd#PlaceOrGeographicName" rdf:resource=" http://d-nb.info/gnd/4005728-8">Berlin</dcterms:subject>
-  <dcterms:subject rdf:type="http://d-nb.info/standards/elementset/gnd#SubjectHeading" rdf:resource="http://d-nb.info/gnd/4037764-7">Marxismus</dcterms:subject>
-  <!-- controlled vocabulary: DDC -->
-  <dcterms:subject rdf:type="http://purl.org/dc/terms/DDC" rdf:resource="http://dewey.info/class/335/">Socialism &amp; related systems</dcterms:subject>
-  <dcterms:subject rdf:type="http://purl.org/dc/terms/DDC" rdf:resource="http://dewey.info/class/320.5315/">Marxian socialism (Democratic socialism, Social democracy)</dcterms:subject> 
-  <!-- ToDo: geonames (aktuell), pleiades (Antik) -->
-  <!-- free vocabulary -->
-  <dc:subject>Marx</dc:subject>
-  <dc:subject>Engels</dc:subject>
-  <dc:subject>Kapital</dc:subject>
-  <dc:subject>Ökonomische Manuskripte</dc:subject>
-</rdf:Description>
-<rdf:Description rdf:about="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B001-02_ETX.xml">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
-  <dc:identifier rdf:resource="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B001-02_ETX.xml"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B004-01_ETX.xml">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
-  <dc:identifier rdf:resource="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B004-01_ETX.xml"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B005-00_ETX.xml">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
-  <dc:identifier rdf:resource="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B005-00_ETX.xml"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B011-00_ETX.xml">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
-  <dc:identifier rdf:resource="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B011-00_ETX.xml"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B012-00_ETX.xml">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
-  <dc:identifier rdf:resource="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B012-00_ETX.xml"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B013-00_ETX.xml">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
-  <dc:identifier rdf:resource="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B013-00_ETX.xml"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B015-00_ETX.xml">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
-  <dc:identifier rdf:resource="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B015-00_ETX.xml"/>
 </rdf:Description>
 <rdf:Description rdf:about="http://mega.bbaw.de/struktur/abteilung_ii/dateien/mega_II-11_inhalt-einf.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
