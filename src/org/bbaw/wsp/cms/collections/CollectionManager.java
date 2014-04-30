@@ -368,7 +368,15 @@ public class CollectionManager {
       String subjectControlledDetails = "<subjects>";
       while (xmdValueDcTermsIterator.hasNext()) {
         XdmItem xdmItemDcTerm = xmdValueDcTermsIterator.next();
-        String xdmItemDcTermStr = xdmItemDcTerm.toString(); // e.g. <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Karl_Marx"/>
+        /* e.g.:
+         * <dcterms:subject>
+             <rdf:Description rdf:about="http://de.dbpedia.org/resource/Kategorie:Karl_Marx">
+               <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+               <rdfs:label>Karl Marx</rdfs:label>
+             </rdf:description>
+           </dcterms:subject>
+         */
+        String xdmItemDcTermStr = xdmItemDcTerm.toString();
         subjectControlledDetails = subjectControlledDetails + "\n" + xdmItemDcTermStr;
       }
       subjectControlledDetails = subjectControlledDetails + "\n</subjects>";
