@@ -24,16 +24,51 @@
   <dc:language>eng</dc:language>
   <!-- mime type of the resource -->
   <dc:format>text/xml</dc:format>
-  <!-- controlled vocabulary: dbPedia concepts: persons, places, concepts -->
-  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Karl_Marx">Karl Marx</dcterms:subject>
-  <dcterms:subject rdf:type="http://www.w3.org/2004/02/skos/core#Concept" rdf:resource="http://de.dbpedia.org/resource/Kategorie:Berlin">Berlin</dcterms:subject>
-  <!-- controlled vocabulary: GND persons, places and concepts -->
-  <dcterms:subject rdf:type="http://d-nb.info/standards/elementset/gnd#Person" rdf:resource="http://d-nb.info/gnd/118578537">Karl Marx</dcterms:subject>
-  <dcterms:subject rdf:type="http://d-nb.info/standards/elementset/gnd#PlaceOrGeographicName" rdf:resource=" http://d-nb.info/gnd/4005728-8">Berlin</dcterms:subject>
-  <dcterms:subject rdf:type="http://d-nb.info/standards/elementset/gnd#SubjectHeading" rdf:resource="http://d-nb.info/gnd/4037764-7">Marxismus</dcterms:subject>
+  <!-- controlled vocabulary: dbPedia -->
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://de.dbpedia.org/resource/Kategorie:Karl_Marx">
+      <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      <rdfs:label>Karl Marx</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://de.dbpedia.org/resource/Kategorie:Berlin">
+      <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      <rdfs:label>Berlin</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+  <!-- controlled vocabulary: GND -->
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://d-nb.info/gnd/118578537">
+      <rdf:type rdf:resource="http://d-nb.info/standards/elementset/gnd#Person"/>
+      <rdfs:label>Karl Marx</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://d-nb.info/gnd/4005728-8">
+      <rdf:type rdf:resource="http://d-nb.info/standards/elementset/gnd#PlaceOrGeographicName"/>
+      <rdfs:label>Berlin</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://d-nb.info/gnd/4037764-7">
+      <rdf:type rdf:resource="http://d-nb.info/standards/elementset/gnd#SubjectHeading"/>
+      <rdfs:label>Marxismus</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
   <!-- controlled vocabulary: DDC -->
-  <dcterms:subject rdf:type="http://purl.org/dc/terms/DDC" rdf:resource="http://dewey.info/class/335/">Socialism &amp; related systems</dcterms:subject>
-  <dcterms:subject rdf:type="http://purl.org/dc/terms/DDC" rdf:resource="http://dewey.info/class/320.5315/">Marxian socialism (Democratic socialism, Social democracy)</dcterms:subject> 
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://dewey.info/class/335/">
+      <rdf:type rdf:resource="http://purl.org/dc/terms/DDC"/>
+      <rdfs:label>Socialism &amp; related systems</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://dewey.info/class/320.5315/">
+      <rdf:type rdf:resource="http://purl.org/dc/terms/DDC"/>
+      <rdfs:label>Marxian socialism (Democratic socialism, Social democracy)</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
   <!-- ToDo: geonames (aktuell), pleiades (Antik) -->
   <!-- free vocabulary -->
   <dc:subject>Marx</dc:subject>
