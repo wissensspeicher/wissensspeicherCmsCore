@@ -26,6 +26,7 @@ import org.bbaw.wsp.cms.dochandler.parser.text.parser.EdocIndexMetadataFetcherTo
 import org.bbaw.wsp.cms.document.MetadataRecord;
 import org.bbaw.wsp.cms.document.Person;
 import org.bbaw.wsp.cms.document.XQuery;
+import org.bbaw.wsp.cms.general.Constants;
 import org.bbaw.wsp.cms.scheduler.CmsDocOperation;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
@@ -45,7 +46,22 @@ public class CollectionManager {
   private static CollectionManager confManager;
   private CollectionReader collectionReader;
   private int counter = 0;
-  private String metadataRdfDir = "config/mdsystem/resources/";
+
+  public static void main(String[] args) throws ApplicationException {
+    try {
+      if (args != null) {
+        String operation = args[0];
+        String collectionId = args[1];
+        CollectionManager collectionManager = getInstance();
+        if (operation.equals("update"))
+          collectionManager.updateCollection(collectionId);
+        else if (operation.equals("delete"))
+          collectionManager.deleteCollection(collectionId);
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
 
   public static CollectionManager getInstance() throws ApplicationException {
     if(confManager == null) {
@@ -147,6 +163,7 @@ public class CollectionManager {
     String collectionId = collection.getId();
     ArrayList<MetadataRecord> mdRecords = new ArrayList<MetadataRecord>();
     try {
+      String metadataRdfDir = Constants.getInstance().getMdsystemConfDir() + "/resources/";
       File rdfRessourcesFile = new File(metadataRdfDir + collectionId + ".rdf");
       URL rdfRessourcesFileUrl = rdfRessourcesFile.toURI().toURL();
       String namespaceDeclaration = "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; declare namespace dc=\"http://purl.org/dc/elements/1.1/\"; declare namespace dcterms=\"http://purl.org/dc/terms/\"; ";
