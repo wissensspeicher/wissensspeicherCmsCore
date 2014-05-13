@@ -12,6 +12,7 @@ public class CmsDocOperation implements Comparable<CmsDocOperation> {
   private String name;
   private String status;
   private String errorMessage;
+  private String collectionId;
   private String uploadFileName;
   private String srcUrl;   
   private String docIdentifier;
@@ -126,6 +127,14 @@ public class CmsDocOperation implements Comparable<CmsDocOperation> {
     this.srcUrl = srcUrl;
   }
 
+  public String getCollectionId() {
+    return collectionId;
+  }
+
+  public void setCollectionId(String collectionId) {
+    this.collectionId = collectionId;
+  }
+
   public String getUploadFileName() {
     return uploadFileName;
   }
@@ -145,6 +154,8 @@ public class CmsDocOperation implements Comparable<CmsDocOperation> {
   public String toString() {
     if (name.equals("delete"))
       return name + "(" + id + ", " + docIdentifier + ")";
+    else if (name.equals("updateCollection"))
+      return name + "(" + collectionId + ")";
     else 
       return name + "(" + id + ", " + uploadFileName + ", " + docIdentifier + ")";
   }
