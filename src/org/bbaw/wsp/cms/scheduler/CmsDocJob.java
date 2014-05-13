@@ -30,7 +30,7 @@ public class CmsDocJob implements Job {
       } else if (operationName.equals("delete")) {
         DocumentHandler docHandler = new DocumentHandler();
         docHandler.doOperation(docOperation);
-      } else if (operationName.equals("importDirectory")) {
+      } else if (operationName.equals("updateCollection")) {
         DocumentHandler docHandler = new DocumentHandler();
         docHandler.doOperation(docOperation);
       }
