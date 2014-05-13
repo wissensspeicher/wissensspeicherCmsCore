@@ -29,6 +29,7 @@ import net.sf.saxon.trans.XPathException;
 
 import org.apache.log4j.Logger;
 import org.apache.commons.io.FileUtils;
+import org.bbaw.wsp.cms.collections.CollectionManager;
 import org.bbaw.wsp.cms.dochandler.parser.document.IDocument;
 import org.bbaw.wsp.cms.dochandler.parser.text.parser.DocumentParser;
 import org.bbaw.wsp.cms.document.MetadataRecord;
@@ -66,6 +67,10 @@ public class DocumentHandler {
       create(docOperation);
     } else if (operationName.equals("delete")) {
       delete(docOperation);
+    } else if (operationName.equals("updateCollection")) {
+      CollectionManager collectionManager = CollectionManager.getInstance();
+      String collectionId = docOperation.getCollectionId();
+      collectionManager.updateCollection(collectionId);
     } else if (operationName.equals("deleteCollection")) {
       deleteCollection(docOperation);
     }
