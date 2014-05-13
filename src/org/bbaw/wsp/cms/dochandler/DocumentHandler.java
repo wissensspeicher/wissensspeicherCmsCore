@@ -257,23 +257,33 @@ public class DocumentHandler {
       projectUrl = mdRecord.getIdentifier();
     if (projectUrl == null)
       projectUrl = mdRecord.getDocId();
-    if (projectUrl != null && ! projectUrl.trim().isEmpty())
+    if (projectUrl != null && ! projectUrl.trim().isEmpty()) {
+      projectUrl = StringUtils.deresolveXmlEntities(projectUrl);
       dcStrBuilder.append("  <dc:identifier>" + projectUrl + "</dc:identifier>\n");
+    }
     String creator = mdRecord.getCreator();
-    if (creator != null)
-      dcStrBuilder.append("  <dc:creator>" + creator + "</dc:creator>\n"); 
+    if (creator != null) {
+      creator = StringUtils.deresolveXmlEntities(creator);
+      dcStrBuilder.append("  <dc:creator>" + creator + "</dc:creator>\n");
+    }
     String title = mdRecord.getTitle();
-    if (title != null)
+    if (title != null) {
+      title = StringUtils.deresolveXmlEntities(title);
       dcStrBuilder.append("  <dc:title>" + title + "</dc:title>\n");
+    }
     String publisher = mdRecord.getPublisher();
-    if (publisher != null)
+    if (publisher != null) {
+      publisher = StringUtils.deresolveXmlEntities(publisher);
       dcStrBuilder.append("  <dc:publisher>" + publisher + "</dc:publisher>\n");
+    }
     String language = mdRecord.getLanguage();
     if (language != null)
       dcStrBuilder.append("  <dc:language>" + language + "</dc:language>\n");
     String subject = mdRecord.getSubject();
-    if (subject != null)
+    if (subject != null) {
+      subject = StringUtils.deresolveXmlEntities(subject);
       dcStrBuilder.append("  <dc:subject>" + subject + "</dc:subject>\n");
+    }
     Date pubDate = mdRecord.getDate();
     if (pubDate != null) {
       Calendar cal = Calendar.getInstance();
