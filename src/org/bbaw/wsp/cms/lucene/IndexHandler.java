@@ -152,6 +152,7 @@ public class IndexHandler {
       } catch (Exception ex) {
         // nothing
       }
+      LOGGER.error("indexDocument: " + docOperation.getDocIdentifier());
       throw new ApplicationException(e);
     }
   }
@@ -550,6 +551,8 @@ public class IndexHandler {
       }
       */
     } catch (Exception e) {
+      LOGGER.error("indexDocumentLocal: " + docOperation.getDocIdentifier());
+      e.printStackTrace();
       throw new ApplicationException(e);
     }
   }
@@ -566,6 +569,7 @@ public class IndexHandler {
       } catch (Exception ex) {
         // nothing
       }
+      LOGGER.error("deleteDocument: " + docOperation.getDocIdentifier());
       throw new ApplicationException(e);
     }
   }
@@ -583,6 +587,7 @@ public class IndexHandler {
       } catch (Exception ex) {
         // nothing
       }
+      LOGGER.error("deleteCollection: " + collectionName);
       throw new ApplicationException(e);
     }
     return countDeletedDocs;
@@ -609,6 +614,7 @@ public class IndexHandler {
       documentsIndexWriter.deleteDocuments(termIdentifier);
       nodesIndexWriter.deleteDocuments(termIdentifier);
     } catch (Exception e) {
+      LOGGER.error("deleteDocumentLocal: " + docOperation.getDocIdentifier());
       throw new ApplicationException(e);
     }
   }
