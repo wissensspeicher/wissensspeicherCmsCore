@@ -114,10 +114,9 @@ public class DocumentHandler {
         mdRecord.setType(mimeType);
       }
       String docType = null;
-      XQueryEvaluator xQueryEvaluator = null;
+      XQueryEvaluator xQueryEvaluator = new XQueryEvaluator();
       if (docIsXml) {
         // parse validation on file
-        xQueryEvaluator = new XQueryEvaluator();
         XdmNode docNode = xQueryEvaluator.parse(srcUrl); // if it is not parseable an exception with a detail message is thrown 
         docType = getNodeType(docNode);
         docType = docType.trim();
@@ -207,7 +206,7 @@ public class DocumentHandler {
       IndexHandler indexHandler = IndexHandler.getInstance();
       indexHandler.indexDocument(docOperation);
       // write oaiprovider file: has to be after indexing because the id field is set in indexing procedure
-      writeOaiproviderFile(mdRecord);
+      writeOaiproviderFile(mdRecord, xQueryEvaluator);
     } catch (IOException e) {
       throw new ApplicationException(e);
     }
@@ -254,7 +253,7 @@ public class DocumentHandler {
     LOGGER.info("OAI provider directory: " + oaiproviderDirStr + " successfully deleted");
   }
   
-  private void writeOaiproviderFile(MetadataRecord mdRecord) throws ApplicationException {
+  private void writeOaiproviderFile(MetadataRecord mdRecord, XQueryEvaluator xQueryEvaluator) throws ApplicationException {
     StringBuilder dcStrBuilder = new StringBuilder();  // Dublin core content string builder
     dcStrBuilder.append("<oai_dc:dc xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:oai_dc=\"http://www.openarchives.org/OAI/2.0/oai_dc/\">\n");
     String projectUrl = mdRecord.getWebUri();
@@ -287,7 +286,27 @@ public class DocumentHandler {
     String subject = mdRecord.getSubject();
     if (subject != null) {
       subject = StringUtils.deresolveXmlEntities(subject);
-      dcStrBuilder.append("  <dc:subject>" + subject + "</dc:subject>\n");
+      if (subject.contains("###")) {
+        String[] subjects = subject.split("###");
+        for (int i=0; i<subjects.length; i++) {
+          String s = subjects[i];
+          dcStrBuilder.append("  <dc:subject>" + s + "</dc:subject>\n");
+        }
+      } else {
+        dcStrBuilder.append("  <dc:subject>" + subject + "</dc:subject>\n");
+      }
+    }
+    String subjectControlledDetails = mdRecord.getSubjectControlledDetails();
+    if (subjectControlledDetails != null) {
+      String namespaceDeclaration = "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; declare namespace rdfs=\"http://www.w3.org/2000/01/rdf-schema#\"; declare namespace dc=\"http://purl.org/dc/elements/1.1/\"; declare namespace dcterms=\"http://purl.org/dc/terms/\"; ";
+      String dcTermsSubjectsStr = xQueryEvaluator.evaluateAsStringValueJoined(subjectControlledDetails, namespaceDeclaration + "/subjects/dcterms:subject/rdf:Description/rdfs:label", "###");
+      String[] dcTermsSubjects = dcTermsSubjectsStr.split("###");
+      for (int i=0; i<dcTermsSubjects.length; i++) {
+        String s = dcTermsSubjects[i].trim();
+        s = StringUtils.deresolveXmlEntities(s);
+        if (! s.isEmpty())
+          dcStrBuilder.append("  <dc:subject>" + s + "</dc:subject>\n");
+      }
     }
     Date pubDate = mdRecord.getDate();
     if (pubDate != null) {
@@ -432,8 +451,14 @@ public class DocumentHandler {
                 mdRecord.setCreator(tikaMDRecord.getCreator());
               }
             }
-            if (mdRecord.getTitle() == null)
-              mdRecord.setTitle(tikaMDRecord.getTitle());
+            if (mdRecord.getTitle() == null) {
+              String mimeType = mdRecord.getType();
+              if (mimeType != null && mimeType.equals("application/pdf")) {
+                // nothing: title is not the title of the document in mostly all pdf-documents, so is not considered
+              } else {
+                mdRecord.setTitle(tikaMDRecord.getTitle());
+              }
+            }
             if (mdRecord.getLanguage() == null) {
               String tikaLang = tikaMDRecord.getLanguage();
               if (tikaLang != null) {
