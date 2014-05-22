@@ -95,8 +95,6 @@ public class TikaMetadataMapper implements IMetadataFields {
       case IMetadataFields.DC_TITLE:
         mdRecord.setTitle(value);
         break;
-      case IMetadataFields.DC_TITLE_COLON_SEPARATOR:
-        mdRecord.setTitle(value);
       case IMetadataFields.DC_CREATOR:
         mdRecord.setCreator(concatenate(mdRecord.getCreator(), IMetadataFields.MULTIVALUE_SEPARATOR, value));
         break;
