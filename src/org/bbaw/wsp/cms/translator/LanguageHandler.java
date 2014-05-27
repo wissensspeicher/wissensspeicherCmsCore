@@ -12,7 +12,7 @@ import de.mpg.mpiwg.berlin.mpdl.lt.text.norm.Normalizer;
 
 public class LanguageHandler {
 	private static String[] SUPPORTED_LANGUAGES = {"ger", "eng", "fra", "lat", "grc"};
-	private static String[] SUPPORTED_TRANSLATION_LANGUAGES = {"ger", "eng", "fra"};  // TODO
+	private static String[] SUPPORTED_TRANSLATION_LANGUAGES = {"ger", "eng", "fra", "grc", "ara"};  // TODO
 	private MorphologyCache morphologyCache;
 	private Hashtable<String, String> translatedTerms;
 	
