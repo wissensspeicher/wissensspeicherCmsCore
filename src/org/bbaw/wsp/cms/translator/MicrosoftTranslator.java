@@ -10,16 +10,11 @@ import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 
 public class MicrosoftTranslator {
 	private static final String KEY = "474A4E72DB217E37031EC190ACB4159378A6917C";  // free key to use with Microsoft server
-	private static String[] DEST_LANGUAGES = {"eng", "ger", "fra"};
 
 	private MicrosoftTranslator() {
 	  // nothing: prevent instantiation
 	}
 	
-	public static String[] getDestLanguages() {
-    return DEST_LANGUAGES;
-  }
-
   public static String translate(String query, String toLanguageStr) throws ApplicationException {
 	  if (toLanguageStr == null)
 	    throw new ApplicationException("MicrosoftTranslator: toLanguageStr is null");
