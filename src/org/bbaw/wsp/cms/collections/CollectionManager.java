@@ -236,7 +236,7 @@ public class CollectionManager {
           */
         } catch (IOException e) {
           LOGGER.error("get mime type failed for: " + webUriStr);
-          e.printStackTrace();
+          // e.printStackTrace();
         }
         String fileExtension = "html";
         if (mimeType != null && mimeType.contains("html"))
