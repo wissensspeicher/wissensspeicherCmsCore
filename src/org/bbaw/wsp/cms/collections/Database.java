@@ -3,6 +3,7 @@ package org.bbaw.wsp.cms.collections;
 import java.util.Hashtable;
 
 public class Database {
+  private String type;
   private String name;
   private String xmlDumpFileName;
   private String mainResourcesTable;
@@ -10,6 +11,14 @@ public class Database {
   private String webIdPreStr;
   private String webIdAfterStr;
   private Hashtable<String, String> dcField2dbField = new Hashtable<String, String>();
+
+  public String getType() {
+    return type;
+  }
+
+  public void setType(String type) {
+    this.type = type;
+  }
 
   public String getName() {
     return name;
