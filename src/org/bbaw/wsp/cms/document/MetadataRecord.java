@@ -88,6 +88,13 @@ public class MetadataRecord implements Cloneable {
       return false;
   }
   
+  public boolean isDbRecord() {
+    if (system != null && system.equals("dbRecord"))
+      return true;
+    else 
+      return false;
+  }
+
   public String getDocumentType() {
     return documentType;
   }
