@@ -83,6 +83,7 @@ public class DocumentHandler {
       String docId = docOperation.getDocIdentifier();
       String mainLanguage = docOperation.getMainLanguage();
       String[] elementNames = docOperation.getElementNames();
+      MetadataRecord mdRecord = docOperation.getMdRecord();
       if (elementNames == null) {
         String[] defaultElementNames = {"persName", "placeName", "p", "s", "head"};
         docOperation.setElementNames(defaultElementNames); // default
@@ -103,10 +104,12 @@ public class DocumentHandler {
       } else if (protocol != null) {
         docOperation.setStatus("download file from: " + srcUrlStr + " to CMS");
       }
-      boolean success = copyUrlToFile(srcUrl, docDestFile);  // several tries with delay
-      if (! success)
-        return;
-      MetadataRecord mdRecord = docOperation.getMdRecord();
+      boolean isDbRecord = mdRecord.isDbRecord();
+      if (! isDbRecord) {
+        boolean success = copyUrlToFile(srcUrl, docDestFile);  // several tries with delay
+        if (! success)
+          return;
+      }
       mdRecord.setLastModified(new Date());
       String mimeType = mdRecord.getType();
       if (mimeType == null) {
@@ -199,7 +202,7 @@ public class DocumentHandler {
           mdRecord.setLanguage(mainLanguage);
       } 
       // build the documents fulltext fields
-      if (srcUrl != null && docType != null && ! docType.equals("mets"))
+      if (srcUrl != null && docType != null && ! docType.equals("mets") && ! isDbRecord)
         buildFulltextFields(docOperation);
       // perform operation on Lucene
       docOperation.setStatus(operationName + " document: " + docId + " in CMS");
