@@ -4,6 +4,7 @@
     <id>avhseklit</id>
     <rdfId>http://wsp.normdata.rdf/AvHForschungsstelle/Sekundärliteratur</rdfId>
     <db>
+      <type>mysql</type>
       <name>avh_biblio</name>
       <xmlDump>
         <sql>
