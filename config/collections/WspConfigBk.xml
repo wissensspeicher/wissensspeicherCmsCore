@@ -3,6 +3,61 @@
   <collection>
     <id>bk</id>
     <rdfId>http://wsp.normdata.rdf/BerlinerKlassik</rdfId>
+    <db>
+      <type>postgres</type>
+      <name>bk_bibliographie</name>
+      <xmlDump>
+        <sql>
+SELECT 
+ tblbibliographie.bibliographie_id as id,
+ CASE WHEN(CHAR_LENGTH(tblbkperson.bkvorname)) = 0 THEN NULLIF(tblbkperson.bknachname, '')
+      ELSE tblbkperson.bknachname || ', ' || NULLIF(tblbkperson.bkvorname, '')
+ END as creator,
+ tblbibliographie.biblio_titel as title,
+ CASE WHEN(CHAR_LENGTH(tblbibliographie.verleger)) = 0 THEN NULLIF(tblbibliographie.verlagsort, '')
+      ELSE tblbibliographie.verleger || ', ' || NULLIF(tblbibliographie.verlagsort, '')
+ END as publisher,
+ tblbibliographie.jahr as pub_date,
+ tblbibliographie.seitenzahl as pages
+FROM 
+ tblbibliographie, tblperson_regberuf_biblio_autor, tblperson_regberuf, tblbkperson
+WHERE
+ tblbibliographie.bibliographie_id = tblperson_regberuf_biblio_autor.bibliographie_id
+AND
+ tblperson_regberuf_biblio_autor.person_regberuf_id = tblperson_regberuf.person_regberuf_id
+AND
+ tblperson_regberuf.bkperson_id = tblbkperson.bkperson_id
+        </sql>
+        <fileName>config/mdsystem/db-resources/bk-bibliographie.xml</fileName>
+      </xmlDump>
+      <mainResourcesTable>
+        <name>bibliographie</name>
+        <idField>id</idField>
+        <field>
+          <dc>creator</dc>
+          <db>creator</db>
+        </field>
+        <field>
+          <dc>title</dc>
+          <db>title</db>
+        </field>
+        <field>
+          <dc>publisher</dc>
+          <db>publisher</db>
+        </field>
+        <field>
+          <dc>date</dc>
+          <db>pub_date</db>
+        </field>
+        <field>
+          <dc>extent</dc>
+          <db>pages</db>
+        </field>
+      </mainResourcesTable>
+      <webId>
+        <preStr>http://berlinerklassik.bbaw.de/BK/bibliographie/Bibliographie_Details?bibliographie_id=</preStr>
+      </webId>
+    </db>
     <name>Berliner Klassik</name>
     <url>
       <webBaseUrl>http://www.berliner-klassik.de/</webBaseUrl>
