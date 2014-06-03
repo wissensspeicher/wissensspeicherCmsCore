@@ -9,7 +9,7 @@ import org.bbaw.wsp.cms.document.XQuery;
 public class Collection {
   private String id;
   private String rdfId;
-  private Database database;  // when collection is a database
+  private ArrayList<Database> databases;  // when collection is a database
   private String name;
   private String webBaseUrl;  // web base url 
   private WspUrl[] dataUrls;  // urls of data (could also be starting url with type "eXist")
@@ -55,12 +55,12 @@ public class Collection {
     this.rdfId = rdfId;
   }
 
-  public Database getDatabase() {
-    return database;
+  public ArrayList<Database> getDatabases() {
+    return databases;
   }
 
-  public void setDatabase(Database database) {
-    this.database = database;
+  public void setDatabases(ArrayList<Database> databases) {
+    this.databases = databases;
   }
 
   public void setName(String name) {
