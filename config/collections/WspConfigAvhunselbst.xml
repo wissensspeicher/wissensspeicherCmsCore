@@ -4,6 +4,7 @@
     <id>avhunselbst</id>
     <rdfId>http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften</rdfId>
     <db>
+      <type>mysql</type>
       <name>avh_uns</name>
       <xmlDump>
         <sql>
