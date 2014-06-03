@@ -107,38 +107,48 @@ public class CollectionReader {
           } else {
             collection.setRdfId(rdfId);
           }
-          String dbName = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/db/name/text()");
-          if (dbName != null) {
-            Database database = new Database();
-            database.setName(dbName);
-            String xmlDumpFileName = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/db/xmlDump/fileName/text()");
-            if (xmlDumpFileName != null)
-              database.setXmlDumpFileName(xmlDumpFileName);
-            String mainResourcesTable = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/db/mainResourcesTable/name/text()");
-            if (mainResourcesTable != null)
-              database.setMainResourcesTable(mainResourcesTable);
-            String mainResourcesTableId = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/db/mainResourcesTable/idField/text()");
-            if (mainResourcesTableId != null)
-              database.setMainResourcesTableId(mainResourcesTableId);
-            XdmValue mainResourcesTableFields = xQueryEvaluator.evaluate(configFileUrl, "/wsp/collection/db/mainResourcesTable/field");
-            XdmSequenceIterator mainResourcesTableFieldsIterator = mainResourcesTableFields.iterator();
-            if (mainResourcesTableFields != null && mainResourcesTableFields.size() > 0) {
-              while (mainResourcesTableFieldsIterator.hasNext()) {
-                XdmItem mainResourcesTableField = mainResourcesTableFieldsIterator.next();
-                String mainResourcesTableFieldStr = mainResourcesTableField.toString(); // e.g. <field><dc>title</dc><db>title</db></field>
-                String dcField = xQueryEvaluator.evaluateAsString(mainResourcesTableFieldStr, "/field/dc/text()");
-                String dbField = xQueryEvaluator.evaluateAsString(mainResourcesTableFieldStr, "/field/db/text()");
-                if (dcField != null && dbField != null)
-                  database.addField(dcField, dbField);
+          XdmValue xmdValueDBs = xQueryEvaluator.evaluate(configFileUrl, "/wsp/collection/db");
+          XdmSequenceIterator xmdValueDBsIterator = xmdValueDBs.iterator();
+          if (xmdValueDBs != null && xmdValueDBs.size() > 0) {
+            ArrayList<Database> collectionDBs = new ArrayList<Database>();
+            while (xmdValueDBsIterator.hasNext()) {
+              Database db = new Database();
+              XdmItem xdmItemDB = xmdValueDBsIterator.next();
+              String xdmItemDBStr = xdmItemDB.toString(); 
+              String dbType = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/type/text()");  // e.g. "mysql" or "postgres"
+              db.setType(dbType);
+              String dbName = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/name/text()");
+              db.setName(dbName);
+              String xmlDumpFileName = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/xmlDump/fileName/text()");
+              if (xmlDumpFileName != null)
+                db.setXmlDumpFileName(xmlDumpFileName);
+              String mainResourcesTable = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/mainResourcesTable/name/text()");
+              if (mainResourcesTable != null)
+                db.setMainResourcesTable(mainResourcesTable);
+              String mainResourcesTableId = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/mainResourcesTable/idField/text()");
+              if (mainResourcesTableId != null)
+                db.setMainResourcesTableId(mainResourcesTableId);
+              XdmValue mainResourcesTableFields = xQueryEvaluator.evaluate(xdmItemDBStr, "/db/mainResourcesTable/field");
+              XdmSequenceIterator mainResourcesTableFieldsIterator = mainResourcesTableFields.iterator();
+              if (mainResourcesTableFields != null && mainResourcesTableFields.size() > 0) {
+                while (mainResourcesTableFieldsIterator.hasNext()) {
+                  XdmItem mainResourcesTableField = mainResourcesTableFieldsIterator.next();
+                  String mainResourcesTableFieldStr = mainResourcesTableField.toString(); // e.g. <field><dc>title</dc><db>title</db></field>
+                  String dcField = xQueryEvaluator.evaluateAsString(mainResourcesTableFieldStr, "/field/dc/text()");
+                  String dbField = xQueryEvaluator.evaluateAsString(mainResourcesTableFieldStr, "/field/db/text()");
+                  if (dcField != null && dbField != null)
+                    db.addField(dcField, dbField);
+                }
               }
+              String webIdPreStr = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/webId/preStr/text()");
+              if (webIdPreStr != null)
+                db.setWebIdPreStr(webIdPreStr);
+              String webIdAfterStr = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/webId/afterStr/text()");
+              if (webIdAfterStr != null)
+                db.setWebIdAfterStr(webIdAfterStr);
+              collectionDBs.add(db);
             }
-            String webIdPreStr = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/db/webId/preStr/text()");
-            if (webIdPreStr != null)
-              database.setWebIdPreStr(webIdPreStr);
-            String webIdAfterStr = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/db/webId/afterStr/text()");
-            if (webIdAfterStr != null)
-              database.setWebIdAfterStr(webIdAfterStr);
-            collection.setDatabase(database);
+            collection.setDatabases(collectionDBs);
           }
           String projectRdfStr = xQueryEvaluator.evaluateAsString(inputNormdataFileUrl, NAMESPACE_DECLARATION + "/rdf:RDF/*:Description[@*:about='" + rdfId + "']");
           if (projectRdfStr == null || projectRdfStr.trim().isEmpty()) {
