@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Hashtable;
 
 import net.sf.saxon.s9api.XdmItem;
 import net.sf.saxon.s9api.XdmSequenceIterator;
@@ -31,8 +30,9 @@ public class ConvertConfigXml2Rdf {
       // convertConfigXml2Rdf.convertAll();
       // convertConfigXml2Rdf.proofRdfProjects();
       // convertConfigXml2Rdf.proofCollectionProjects();
-      // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("avhseklit");
-      // convertConfigXml2Rdf.convert(c);
+      // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("avhunselbst");
+      Collection c = convertConfigXml2Rdf.collectionReader.getCollection("bk");
+      convertConfigXml2Rdf.convert(c);
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -94,10 +94,13 @@ public class ConvertConfigXml2Rdf {
         LOGGER.error("Project: \"" + collectionRdfId + "\" (configId: \"" + collectionId + "\") does not exist");
       }
       // if collection is a database: insert also from xml db file
-      Database collectionDB = collection.getDatabase();
-      if (collectionDB != null) {
-      	rdfStrBuilder.append("<!-- Resources of database: " + collectionDB.getName() + " (" + collectionDB.getXmlDumpFileName() + ") -->\n");
-      	convertDbXml(rdfStrBuilder, collection);
+      ArrayList<Database> collectionDBs = collection.getDatabases();
+      if (collectionDBs != null) {
+        for (int i=0; i<collectionDBs.size(); i++) {
+          Database collectionDB = collectionDBs.get(i);
+        	rdfStrBuilder.append("<!-- Resources of database: " + collectionDB.getName() + " (" + collectionDB.getXmlDumpFileName() + ") -->\n");
+        	convertDbXml(rdfStrBuilder, collection);
+        }
       }
       rdfStrBuilder.append("</rdf:RDF>");
       FileUtils.writeStringToFile(outputRdfFile, rdfStrBuilder.toString());
@@ -206,25 +209,29 @@ public class ConvertConfigXml2Rdf {
   }
   
   private void convertDbXml(StringBuilder rdfStrBuilder, Collection collection) throws ApplicationException {
-    Database db = collection.getDatabase();
-    Hashtable<String, Row> resources = new Hashtable<String, Row>();
     try {
-      String inputXmlDumpFileName = db.getXmlDumpFileName();
-      File inputXmlDumpFile = new File(inputXmlDumpFileName);      
-      String dbName = db.getName();  // e.g. "avh_biblio";
-      URL xmlDumpFileUrl = inputXmlDumpFile.toURI().toURL();
-      String mainResourcesTable = db.getMainResourcesTable();  // e.g. "titles";
-      String mainResourcesTableId = db.getMainResourcesTableId();  // e.g. "title_id";
-      XdmValue xmdValueMainResources = xQueryEvaluator.evaluate(xmlDumpFileUrl, "/" + dbName + "/" + mainResourcesTable);
-      XdmSequenceIterator xmdValueMainResourcesIterator = xmdValueMainResources.iterator();
-      if (xmdValueMainResources != null && xmdValueMainResources.size() > 0) {
-        while (xmdValueMainResourcesIterator.hasNext()) {
-          XdmItem xdmItemMainResource = xmdValueMainResourcesIterator.next();
-          String xdmItemMainResourceStr = xdmItemMainResource.toString();
-          Row row = xml2row(xdmItemMainResourceStr);
-          appendRow2rdf(rdfStrBuilder, collection, row);
-          String id = row.getFieldValue(mainResourcesTableId);
-          resources.put(id, row);
+      ArrayList<Database> databases = collection.getDatabases();
+      for (int i=0; i<databases.size(); i++) {
+        Database db = databases.get(i);
+        String inputXmlDumpFileName = db.getXmlDumpFileName();
+        File inputXmlDumpFile = new File(inputXmlDumpFileName);      
+        String dbName = db.getName();  // e.g. "avh_biblio";
+        URL xmlDumpFileUrl = inputXmlDumpFile.toURI().toURL();
+        String mainResourcesTable = db.getMainResourcesTable();  // e.g. "titles_persons";
+        String dbType = db.getType();
+        XdmValue xmdValueMainResources = null;
+        if (dbType.equals("mysql"))
+          xmdValueMainResources = xQueryEvaluator.evaluate(xmlDumpFileUrl, "/" + dbName + "/" + mainResourcesTable);
+        else if (dbType.equals("postgres"))
+          xmdValueMainResources = xQueryEvaluator.evaluate(xmlDumpFileUrl, "/data/records/row");
+        XdmSequenceIterator xmdValueMainResourcesIterator = xmdValueMainResources.iterator();
+        if (xmdValueMainResources != null && xmdValueMainResources.size() > 0) {
+          while (xmdValueMainResourcesIterator.hasNext()) {
+            XdmItem xdmItemMainResource = xmdValueMainResourcesIterator.next();
+            String xdmItemMainResourceStr = xdmItemMainResource.toString();
+            Row row = xml2row(xdmItemMainResourceStr, db);
+            appendRow2rdf(rdfStrBuilder, collection, db, row);
+          }
         }
       }
     } catch (IOException e) {
@@ -232,27 +239,41 @@ public class ConvertConfigXml2Rdf {
     }
   }
 
-  private Row xml2row(String xmlStr) throws ApplicationException {
+  private Row xml2row(String rowXmlStr, Database db) throws ApplicationException {
+    String dbType = db.getType();
     Row row = new Row();
-    XdmValue xmdValueFields = xQueryEvaluator.evaluate(xmlStr, "/*/*"); // e.g. /titles/title
-    XdmSequenceIterator xmdValueFieldsIterator = xmdValueFields.iterator();
-    if (xmdValueFields != null && xmdValueFields.size() > 0) {
-      while (xmdValueFieldsIterator.hasNext()) {
-        XdmItem xdmItemField = xmdValueFieldsIterator.next();
-        String fieldStr = xdmItemField.toString();
-        String fieldName = xQueryEvaluator.evaluateAsString(fieldStr, "*/name()");
-        String fieldValue = xdmItemField.getStringValue();
-        row.addField(fieldName, fieldValue);
+    if (dbType.equals("mysql")) {
+      XdmValue xmdValueFields = xQueryEvaluator.evaluate(rowXmlStr, "/*/*"); // e.g. <titles_persons><title>
+      XdmSequenceIterator xmdValueFieldsIterator = xmdValueFields.iterator();
+      if (xmdValueFields != null && xmdValueFields.size() > 0) {
+        while (xmdValueFieldsIterator.hasNext()) {
+          XdmItem xdmItemField = xmdValueFieldsIterator.next();
+          String fieldStr = xdmItemField.toString();
+          String fieldName = xQueryEvaluator.evaluateAsString(fieldStr, "*/name()");
+          String fieldValue = xdmItemField.getStringValue();
+          row.addField(fieldName, fieldValue);
+        }
+      }
+    } else if (dbType.equals("postgres")) {
+      XdmValue xmdValueFields = xQueryEvaluator.evaluate(rowXmlStr, "/*/*"); // e.g. <row><column name="title">
+      XdmSequenceIterator xmdValueFieldsIterator = xmdValueFields.iterator();
+      if (xmdValueFields != null && xmdValueFields.size() > 0) {
+        while (xmdValueFieldsIterator.hasNext()) {
+          XdmItem xdmItemField = xmdValueFieldsIterator.next();
+          String fieldStr = xdmItemField.toString();
+          String fieldName = xQueryEvaluator.evaluateAsString(fieldStr, "string(*/@name)");
+          String fieldValue = xdmItemField.getStringValue();
+          row.addField(fieldName, fieldValue);
+        }
       }
     }
     return row;  
   }
 
-  private void appendRow2rdf(StringBuilder rdfStrBuilder, Collection collection, Row row) {
+  private void appendRow2rdf(StringBuilder rdfStrBuilder, Collection collection, Database db, Row row) {
     String collectionId = collection.getId();
     String collectionRdfId = collection.getRdfId();
     String mainLanguage = collection.getMainLanguage();
-    Database db = collection.getDatabase();
     String mainResourcesTableId = db.getMainResourcesTableId();
     String webIdPreStr = db.getWebIdPreStr();
     String webIdAfterStr = db.getWebIdAfterStr();
@@ -309,11 +330,13 @@ public class ConvertConfigXml2Rdf {
       }
     }
     String dbFieldLanguage = db.getDbField("language");
-    String language = row.getFieldValue(dbFieldLanguage);
+    String language = null;
+    if (dbFieldLanguage != null)
+      row.getFieldValue(dbFieldLanguage);
     if (language == null && mainLanguage != null)
       language = mainLanguage;
     else if (language == null && mainLanguage == null)
-      language = "deu";
+      language = "ger";
     rdfStrBuilder.append("  <dc:language>" + language + "</dc:language>\n");
     rdfStrBuilder.append("  <dc:format>text/html</dc:format>\n");
     String dbFieldSubject = db.getDbField("subject");
