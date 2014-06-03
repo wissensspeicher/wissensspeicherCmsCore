@@ -288,6 +288,7 @@ public class ConvertConfigXml2Rdf {
     rdfStrBuilder.append("  <rdf:type rdf:resource=\"http://purl.org/dc/terms/BibliographicResource\"/>\n");
     rdfStrBuilder.append("  <dcterms:isPartOf rdf:resource=\"" + collectionRdfId + "\"/>\n");
     rdfStrBuilder.append("  <dc:identifier rdf:resource=\"" + rdfWebId + "\">" + id + "</dc:identifier>\n");
+    rdfStrBuilder.append("  <dc:type>dbRecord</dc:type>\n");
     String dbFieldCreator = db.getDbField("creator");
     if (dbFieldCreator != null) {
       String creator = row.getFieldValue(dbFieldCreator);
