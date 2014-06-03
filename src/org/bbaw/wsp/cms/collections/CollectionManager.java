@@ -226,7 +226,10 @@ public class CollectionManager {
       if (! uriPath.toLowerCase().matches(".*\\.csv$|.*\\.gif$|.*\\.jpg$|.*\\.jpeg$|.*\\.html$|.*\\.htm$|.*\\.log$|.*\\.mp3$|.*\\.pdf$|.*\\.txt$|.*\\.xml$|.*\\.doc$")) {
         String mimeType = null;
         try {
-          mimeType = tika.detect(uri); // much faster with tika
+          boolean isDbRecord = mdRecord.isDbRecord();
+          if (! isDbRecord) {
+            mimeType = tika.detect(uri); // much faster with tika
+          }
           /* old code which is slow, when the files behind the url's are large 
           HttpURLConnection connection = (HttpURLConnection) uri.openConnection();
           connection.setConnectTimeout(5000);
@@ -236,7 +239,7 @@ public class CollectionManager {
           */
         } catch (IOException e) {
           LOGGER.error("get mime type failed for: " + webUriStr);
-          // e.printStackTrace();
+          e.printStackTrace();
         }
         String fileExtension = "html";
         if (mimeType != null && mimeType.contains("html"))
@@ -351,8 +354,8 @@ public class CollectionManager {
       LOGGER.error("No identifier given in resource: \"" + xmlRdfStr + "\"");
     MetadataRecord mdRecord = getNewMdRecord(resourceIdUrlStr);
     String type = xQueryEvaluator.evaluateAsString(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dc:type/text()");
-    if (type != null && type.equals("eXistDir"))
-      mdRecord.setSystem(type);
+    if (type != null)
+      mdRecord.setSystem(type);  // e.g. "eXistDir" or "dbRecord"
     String creator = xQueryEvaluator.evaluateAsString(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dc:creator/text()");
     if (creator != null) {
       creator = StringUtils.resolveXmlEntities(creator.trim());
