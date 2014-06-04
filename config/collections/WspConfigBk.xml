@@ -3,6 +3,19 @@
   <collection>
     <id>bk</id>
     <rdfId>http://wsp.normdata.rdf/BerlinerKlassik</rdfId>
+    <name>Berliner Klassik</name>
+    <url>
+      <webBaseUrl>http://www.berliner-klassik.de/</webBaseUrl>
+      <dataUrl>http://www.berliner-klassik.de/</dataUrl>
+      <!-- Berliner Klassik Datenbanken -->
+      <dataUrl>http://berlinerklassik.bbaw.de/BK</dataUrl>
+    </url>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>html</format>
+      <format>xml</format>
+      <format>jpeg</format>
+    </formats> 
     <db>
       <type>postgres</type>
       <name>bk_bibliographie</name>
@@ -58,19 +71,57 @@ AND
         <preStr>http://berlinerklassik.bbaw.de/BK/bibliographie/Bibliographie_Details?bibliographie_id=</preStr>
       </webId>
     </db>
-    <name>Berliner Klassik</name>
-    <url>
-      <webBaseUrl>http://www.berliner-klassik.de/</webBaseUrl>
-      <dataUrl>http://www.berliner-klassik.de/</dataUrl>
-      <!-- Berliner Klassik Datenbanken -->
-      <dataUrl>http://berlinerklassik.bbaw.de/BK</dataUrl>
-    </url>
-    <mainLanguage>ger</mainLanguage>
-    <formats>
-      <format>html</format>
-      <format>xml</format>
-      <format>jpeg</format>
-    </formats> 
+    <db>
+      <type>postgres</type>
+      <name>bk_nationaltheater</name>
+      <xmlDump>
+        <sql>
+SELECT 
+ ver.thveranstaltung_id as id, 
+ array_to_string(array(
+  SELECT (p.bknachname || ', ' || p.bkvorname) 
+  FROM tbltheaterveranstaltung v, tblperson_regberuf_thstueck, tblperson_regberuf, tblbkperson p
+  WHERE 
+   v.thstueck_id = tblperson_regberuf_thstueck.thstueck_id
+  AND
+   tblperson_regberuf_thstueck.person_regberuf_id = tblperson_regberuf.person_regberuf_id
+  AND
+   tblperson_regberuf.bkperson_id = p.bkperson_id
+  AND 
+   v.thveranstaltung_id = ver.thveranstaltung_id
+ ), ' ; ') as creator,
+ ver.veranstaltungsuntertitel as title,
+ EXTRACT(YEAR FROM ver.auffuehrungsdatum) as pub_date,
+ ver.zusatzinfo as abstract
+FROM 
+ tbltheaterveranstaltung ver
+         </sql>
+        <fileName>config/mdsystem/db-resources/bk-nationaltheater.xml</fileName>
+      </xmlDump>
+      <mainResourcesTable>
+        <name>nationaltheater</name>
+        <idField>id</idField>
+        <field>
+          <dc>creator</dc>
+          <db>creator</db>
+        </field>
+        <field>
+          <dc>title</dc>
+          <db>title</db>
+        </field>
+        <field>
+          <dc>date</dc>
+          <db>pub_date</db>
+        </field>
+        <field>
+          <dc>abstract</dc>
+          <db>abstract</db>
+        </field>
+      </mainResourcesTable>
+      <webId>
+        <preStr>http://berlinerklassik.bbaw.de/BK/theater/Theaterveranstaltung_Details?thveranstaltung_id=</preStr>
+      </webId>
+    </db>
   </collection>
 </wsp>
 
