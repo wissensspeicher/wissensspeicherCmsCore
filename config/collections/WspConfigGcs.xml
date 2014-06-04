@@ -24,6 +24,35 @@
       <format>php</format>
       <format>pdf</format>
     </formats>
-    <update>false</update>
+    <db>
+      <type>mysql</type>
+      <name>gcs_filmdb</name>
+      <xmlDump>
+        <sql>
+SELECT 
+ id,
+ autor as creator,
+ werktitel as title
+FROM 
+ filme
+        </sql>
+        <fileName>config/mdsystem/db-resources/gcs-filmdb.xml</fileName>
+      </xmlDump>
+      <mainResourcesTable>
+        <name>filme</name>
+        <idField>id</idField>
+        <field>
+          <dc>creator</dc>
+          <db>creator</db>
+        </field>
+        <field>
+          <dc>title</dc>
+          <db>title</db>
+        </field>
+      </mainResourcesTable>
+      <webId>
+        <preStr>http://gcs.bbaw.de/filmdb/film.php?id=</preStr>
+      </webId>
+    </db>
   </collection>
 </wsp>
