@@ -122,6 +122,38 @@ FROM
         <preStr>http://berlinerklassik.bbaw.de/BK/theater/Theaterveranstaltung_Details?thveranstaltung_id=</preStr>
       </webId>
     </db>
+    <db>
+      <type>postgres</type>
+      <name>bk_personen</name>
+      <xmlDump>
+        <sql>
+SELECT 
+ tblbkperson.bkperson_id as id,
+ CASE WHEN(CHAR_LENGTH(tblbkperson.bkvorname)) = 0 THEN NULLIF(tblbkperson.bknachname, '')
+      ELSE tblbkperson.bknachname || ', ' || NULLIF(tblbkperson.bkvorname, '')
+ END as title,
+ (SELECT tab_lebenslauf FROM tblbkperson_extra WHERE bkperson_id = tblbkperson.bkperson_id) as abstract
+FROM 
+ tblbkperson
+        </sql>
+        <fileName>config/mdsystem/db-resources/bk-personen.xml</fileName>
+      </xmlDump>
+      <mainResourcesTable>
+        <name>person</name>
+        <idField>id</idField>
+        <field>
+          <dc>title</dc>
+          <db>title</db>
+        </field>
+        <field>
+          <dc>abstract</dc>
+          <db>abstract</db>
+        </field>
+      </mainResourcesTable>
+      <webId>
+        <preStr>http://berlinerklassik.bbaw.de/BK/personen/BKPerson_Details?bkperson_id=</preStr>
+      </webId>
+    </db>
   </collection>
 </wsp>
 
