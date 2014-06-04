@@ -99,7 +99,7 @@ public class ConvertConfigXml2Rdf {
         for (int i=0; i<collectionDBs.size(); i++) {
           Database collectionDB = collectionDBs.get(i);
         	rdfStrBuilder.append("<!-- Resources of database: " + collectionDB.getName() + " (" + collectionDB.getXmlDumpFileName() + ") -->\n");
-        	convertDbXml(rdfStrBuilder, collection);
+        	convertDbXml(rdfStrBuilder, collection, collectionDB);
         }
       }
       rdfStrBuilder.append("</rdf:RDF>");
@@ -208,30 +208,26 @@ public class ConvertConfigXml2Rdf {
     }
   }
   
-  private void convertDbXml(StringBuilder rdfStrBuilder, Collection collection) throws ApplicationException {
+  private void convertDbXml(StringBuilder rdfStrBuilder, Collection collection, Database db) throws ApplicationException {
     try {
-      ArrayList<Database> databases = collection.getDatabases();
-      for (int i=0; i<databases.size(); i++) {
-        Database db = databases.get(i);
-        String inputXmlDumpFileName = db.getXmlDumpFileName();
-        File inputXmlDumpFile = new File(inputXmlDumpFileName);      
-        String dbName = db.getName();  // e.g. "avh_biblio";
-        URL xmlDumpFileUrl = inputXmlDumpFile.toURI().toURL();
-        String mainResourcesTable = db.getMainResourcesTable();  // e.g. "titles_persons";
-        String dbType = db.getType();
-        XdmValue xmdValueMainResources = null;
-        if (dbType.equals("mysql"))
-          xmdValueMainResources = xQueryEvaluator.evaluate(xmlDumpFileUrl, "/" + dbName + "/" + mainResourcesTable);
-        else if (dbType.equals("postgres"))
-          xmdValueMainResources = xQueryEvaluator.evaluate(xmlDumpFileUrl, "/data/records/row");
-        XdmSequenceIterator xmdValueMainResourcesIterator = xmdValueMainResources.iterator();
-        if (xmdValueMainResources != null && xmdValueMainResources.size() > 0) {
-          while (xmdValueMainResourcesIterator.hasNext()) {
-            XdmItem xdmItemMainResource = xmdValueMainResourcesIterator.next();
-            String xdmItemMainResourceStr = xdmItemMainResource.toString();
-            Row row = xml2row(xdmItemMainResourceStr, db);
-            appendRow2rdf(rdfStrBuilder, collection, db, row);
-          }
+      String inputXmlDumpFileName = db.getXmlDumpFileName();
+      File inputXmlDumpFile = new File(inputXmlDumpFileName);      
+      String dbName = db.getName();  // e.g. "avh_biblio";
+      URL xmlDumpFileUrl = inputXmlDumpFile.toURI().toURL();
+      String mainResourcesTable = db.getMainResourcesTable();  // e.g. "titles_persons";
+      String dbType = db.getType();
+      XdmValue xmdValueMainResources = null;
+      if (dbType.equals("mysql"))
+        xmdValueMainResources = xQueryEvaluator.evaluate(xmlDumpFileUrl, "/" + dbName + "/" + mainResourcesTable);
+      else if (dbType.equals("postgres"))
+        xmdValueMainResources = xQueryEvaluator.evaluate(xmlDumpFileUrl, "/data/records/row");
+      XdmSequenceIterator xmdValueMainResourcesIterator = xmdValueMainResources.iterator();
+      if (xmdValueMainResources != null && xmdValueMainResources.size() > 0) {
+        while (xmdValueMainResourcesIterator.hasNext()) {
+          XdmItem xdmItemMainResource = xmdValueMainResourcesIterator.next();
+          String xdmItemMainResourceStr = xdmItemMainResource.toString();
+          Row row = xml2row(xdmItemMainResourceStr, db);
+          appendRow2rdf(rdfStrBuilder, collection, db, row);
         }
       }
     } catch (IOException e) {
