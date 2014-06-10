@@ -88,6 +88,13 @@ public class MetadataRecord implements Cloneable {
       return false;
   }
   
+  public boolean isDirectory() {
+    if (system != null && system.equals("directory"))
+      return true;
+    else 
+      return false;
+  }
+
   public boolean isDbRecord() {
     if (system != null && system.equals("dbRecord"))
       return true;
