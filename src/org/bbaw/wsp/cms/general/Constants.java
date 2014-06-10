@@ -112,6 +112,14 @@ public class Constants {
 		}
 	}
 
+  public String getExternalDocumentsDir() {
+    if (properties != null) {
+      return properties.getProperty("externalDocumentsDir");
+    } else {
+      return "no properties file";
+    }
+  }
+
 	public String getLuceneDocumentsDir() {
 		if (properties != null) {
 			return properties.getProperty("luceneDocumentsDir");
