@@ -1,6 +1,7 @@
 package org.bbaw.wsp.cms.collections;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.FileNameMap;
@@ -10,6 +11,7 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -19,6 +21,9 @@ import net.sf.saxon.s9api.XdmItem;
 import net.sf.saxon.s9api.XdmSequenceIterator;
 import net.sf.saxon.s9api.XdmValue;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.filefilter.SuffixFileFilter;
+import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.apache.log4j.Logger;
 import org.apache.tika.Tika;
 import org.bbaw.wsp.cms.dochandler.DocumentHandler;
@@ -159,7 +164,7 @@ public class CollectionManager {
       return mdRecords;
   }
 
-  private ArrayList<MetadataRecord> getMetadataRecordsByRdfFile(Collection collection) throws ApplicationException {
+  public ArrayList<MetadataRecord> getMetadataRecordsByRdfFile(Collection collection) throws ApplicationException {
     String collectionId = collection.getId();
     ArrayList<MetadataRecord> mdRecords = new ArrayList<MetadataRecord>();
     try {
@@ -181,7 +186,6 @@ public class CollectionManager {
             mdRecord.setCollectionNames(collectionId);
             mdRecord.setId(counter); // collection wide id
             mdRecord = createMainFieldsMetadataRecord(mdRecord, collection);
-            mdRecords.add(mdRecord);
             // if it is an eXist directory then fetch all subUrls/mdRecords of that directory
             if (mdRecord.isEXistDir()) {
               String eXistUrl = mdRecord.getWebUri();
@@ -196,12 +200,48 @@ public class CollectionManager {
                   String eXistSubUrlStr = eXistUrls.get(i);
                   MetadataRecord mdRecordEXist = getNewMdRecord(eXistSubUrlStr); // with docId and webUri
                   mdRecordEXist.setCollectionNames(collectionId);
-                  mdRecord.setId(counter); // collection wide id
+                  mdRecordEXist.setId(counter); // collection wide id
                   mdRecordEXist = createMainFieldsMetadataRecord(mdRecordEXist, collection);
                   mdRecordsEXist.add(mdRecordEXist);
                 }
                 mdRecords.addAll(mdRecordsEXist);
               }
+            } else if(mdRecord.isDirectory()) {
+              String fileDirUrlStr = mdRecord.getWebUri();
+              if (fileDirUrlStr != null) {
+                ArrayList<MetadataRecord> mdRecordsDir = new ArrayList<MetadataRecord>();
+                String fileExtensions = "html;htm";
+                if (mdRecord.getType() != null)
+                  fileExtensions = mdRecord.getType();
+                String fileDirStr = null;
+                try {
+                  URL fileDirUrl = new URL(fileDirUrlStr);
+                  String fileDirUrlHost = fileDirUrl.getHost();
+                  String fileDirUrlPath = fileDirUrl.getFile();
+                  fileDirStr = Constants.getInstance().getExternalDocumentsDir() + "/" + fileDirUrlHost + fileDirUrlPath;
+                } catch (MalformedURLException e) {
+                  throw new ApplicationException(e);
+                }
+                java.util.Collection<File> files = getFiles(fileDirStr, fileExtensions);
+                Iterator<File> filesIter = files.iterator();
+                while (filesIter.hasNext()) {
+                  counter++;
+                  File file = filesIter.next();
+                  String fileAbsolutePath = file.getAbsolutePath();
+                  String fileRelativePath = fileAbsolutePath.replaceFirst(fileDirStr, "");
+                  String webUrl = fileDirUrlStr + fileRelativePath;
+                  MetadataRecord mdRecordDirEntry = getNewMdRecord(webUrl);
+                  mdRecordDirEntry.setCollectionNames(collectionId);
+                  mdRecordDirEntry.setId(counter); // collection wide id
+                  mdRecordDirEntry = createMainFieldsMetadataRecord(mdRecordDirEntry, collection);
+                  mdRecordsDir.add(mdRecordDirEntry);
+                }
+                mdRecords.addAll(mdRecordsDir);
+              }
+            }
+            // do not add the eXistDir or directory itself as a record (only the normal resource mdRecord) 
+            if (! mdRecord.isEXistDir() && ! mdRecord.isDirectory()) {
+              mdRecords.add(mdRecord);
             }
           } 
         }
@@ -268,7 +308,8 @@ public class CollectionManager {
       }
       mdRecord.setDocId(docId);
       mdRecord.setUri(webUriStr);
-      mdRecord.setType(mimeType);
+      if (mdRecord.getType() == null)
+        mdRecord.setType(mimeType); 
       // if no language is set then take the mainLanguage of the project
       if (mdRecord.getLanguage() == null) {
         String mainLanguage = collection.getMainLanguage();
@@ -340,6 +381,18 @@ public class CollectionManager {
     return documentUrls;
   }
 
+  private java.util.Collection<File> getFiles(String fileDirStr, String fileExtensions) throws ApplicationException {
+    String[] fileExts = fileExtensions.split(";");
+    for (int i=0; i<fileExts.length; i++) {
+      String fileExt = fileExts[i];
+      fileExts[i] = "." + fileExt;
+    }
+    SuffixFileFilter suffixFileFilter = new SuffixFileFilter(fileExts);
+    File fileDir = new File(fileDirStr);
+    java.util.Collection<File> files = FileUtils.listFiles(fileDir, suffixFileFilter, TrueFileFilter.INSTANCE);
+    return files;
+  }
+  
   private String getMimeType(String docId) {
     String mimeType = null;
     FileNameMap fileNameMap = URLConnection.getFileNameMap();  // map with 53 entries such as "application/xml"
@@ -355,7 +408,7 @@ public class CollectionManager {
     MetadataRecord mdRecord = getNewMdRecord(resourceIdUrlStr);
     String type = xQueryEvaluator.evaluateAsString(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dc:type/text()");
     if (type != null)
-      mdRecord.setSystem(type);  // e.g. "eXistDir" or "dbRecord"
+      mdRecord.setSystem(type);  // e.g. "eXistDir" or "dbRecord" or "directory"
     String creator = xQueryEvaluator.evaluateAsString(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dc:creator/text()");
     if (creator != null) {
       creator = StringUtils.resolveXmlEntities(creator.trim());
@@ -479,4 +532,22 @@ public class CollectionManager {
       throw new ApplicationException(e);
     }
   }
+  
+  public class FileExtensionsFilter implements FileFilter {
+    private String[] fileExtensions;
+    
+    public FileExtensionsFilter(String[] fileExtensions) {
+      this.fileExtensions = fileExtensions;
+    }
+    
+    public boolean accept(File file) {
+      for (String extension : fileExtensions) {
+        if (file.getName().toLowerCase().endsWith(extension)) {
+          return true;
+        }
+      }
+      return false;
+    }
+  }
+
 }
