@@ -210,7 +210,7 @@ public class CollectionManager {
               String fileDirUrlStr = mdRecord.getWebUri();
               if (fileDirUrlStr != null) {
                 ArrayList<MetadataRecord> mdRecordsDir = new ArrayList<MetadataRecord>();
-                String fileExtensions = "html;htm";
+                String fileExtensions = "html;htm;pdf;doc";
                 if (mdRecord.getType() != null)
                   fileExtensions = mdRecord.getType();
                 String fileDirStr = null;
@@ -230,10 +230,12 @@ public class CollectionManager {
                   String fileAbsolutePath = file.getAbsolutePath();
                   String fileRelativePath = fileAbsolutePath.replaceFirst(fileDirStr, "");
                   String webUrl = fileDirUrlStr + fileRelativePath;
+                  String uri = "file:" + fileAbsolutePath;
                   MetadataRecord mdRecordDirEntry = getNewMdRecord(webUrl);
                   mdRecordDirEntry.setCollectionNames(collectionId);
                   mdRecordDirEntry.setId(counter); // collection wide id
                   mdRecordDirEntry = createMainFieldsMetadataRecord(mdRecordDirEntry, collection);
+                  mdRecordDirEntry.setUri(uri);
                   mdRecordsDir.add(mdRecordDirEntry);
                 }
                 mdRecords.addAll(mdRecordsDir);
@@ -408,7 +410,7 @@ public class CollectionManager {
     MetadataRecord mdRecord = getNewMdRecord(resourceIdUrlStr);
     String type = xQueryEvaluator.evaluateAsString(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dc:type/text()");
     if (type != null)
-      mdRecord.setSystem(type);  // e.g. "eXistDir" or "dbRecord" or "directory"
+      mdRecord.setSystem(type);  // e.g. "eXistDir" or "dbRecord" or "directory" or "directoryEntry"
     String creator = xQueryEvaluator.evaluateAsString(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dc:creator/text()");
     if (creator != null) {
       creator = StringUtils.resolveXmlEntities(creator.trim());
