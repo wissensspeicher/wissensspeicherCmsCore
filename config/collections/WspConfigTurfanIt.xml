@@ -5,13 +5,13 @@
     <rdfId>http://wsp.normdata.rdf/Turfan/IranischeTexte</rdfId>
     <name>Turfanforschung: Iranische Texte in der Turfansammlung</name>
     <url>
-      <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/turfanforschung/de/iranischeTexte</webBaseUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/turfanforschung/de/iranischeTexte</dataUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/turfanforschung/bilder/Corpus%20Fontium%20Manichaeorum.pdf</dataUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/turfanforschung/bilder/PsalterBeispiel5v.pdf</dataUrl>
-      <dataUrl>http://zopeman64.bbaw.de/bbaw/Forschung/Forschungsprojekte/turfanforschung/bilder/PsalterMPSyrGrEngversesGlossarySept2012.pdf</dataUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/turfanforschung/bilder/TexteMPdeutsch.pdf</dataUrl>
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/turfanforschung/bilder/TextePadeutsch.pdf</dataUrl>
+      <webBaseUrl>http://turfan.bbaw.de/texte-en/iranische-texte-in-der-turfansammlung</webBaseUrl>
+      <dataUrl>http://turfan.bbaw.de/texte-en/iranische-texte-in-der-turfansammlung</dataUrl>
+      <dataUrl>http://turfan.bbaw.de/bilder/texte/corpus-fontium-manichaeorum.pdf</dataUrl>
+      <dataUrl>http://turfan.bbaw.de/bilder/texte/psalterbeispiel5v.pdf</dataUrl>
+      <dataUrl>http://turfan.bbaw.de/bilder-import/PsalterMPSyrGrEngversesGlossarySept2012.pdf</dataUrl>
+      <dataUrl>http://turfan.bbaw.de/bilder/texte/textempdeutsch.pdf</dataUrl>
+      <dataUrl>http://turfan.bbaw.de/bilder/texte/textepadeutsch.pdf</dataUrl>
     </url>
     <languages>ger,ira</languages>
     <mainLanguage>ger</mainLanguage>
