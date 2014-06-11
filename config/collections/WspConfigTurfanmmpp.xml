@@ -5,9 +5,9 @@
     <rdfId>http://wsp.normdata.rdf/Turfan/ManichaeanMiddlePersianTexts</rdfId>
     <name>Turfanforschung: Published Manichaean Middle Persian and Parthian Texts</name>
     <url>
-      <webBaseUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/turfanforschung/de/MIRTEXT</webBaseUrl>
+      <webBaseUrl>http://turfan.bbaw.de/texte-en/mirtext</webBaseUrl>
       <!-- Published Manichaean Middle Persian and Parthian Texts (MIRTEXT) -->
-      <dataUrl>http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/turfanforschung/de/MIRTEXT</dataUrl>
+      <dataUrl>http://turfan.bbaw.de/texte-en/mirtext</dataUrl>
     </url>
     <mainLanguage>ger</mainLanguage>
     <formats>
