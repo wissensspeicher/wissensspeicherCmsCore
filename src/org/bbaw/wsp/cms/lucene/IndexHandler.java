@@ -1126,6 +1126,8 @@ public class IndexHandler {
   
   private Query buildFieldExpandedQuery(QueryParser queryParser, String queryStr, String fieldExpansion) throws ApplicationException {
     Query retQuery = null;
+    if (fieldExpansion == null)
+      fieldExpansion = "none";
     /*
     Set<Term> queryTerms = new HashSet<Term>();
     query.extractTerms(queryTerms);
@@ -1134,36 +1136,39 @@ public class IndexHandler {
       return query;
     */
     try {
-      if (fieldExpansion != null) {
-        if (fieldExpansion.equals("all")) {
-          BooleanQuery boolQuery = new BooleanQuery();
-          for (int i=0; i < QUERY_EXPANSION_FIELDS_ALL.length; i++) {
-            String expansionField = QUERY_EXPANSION_FIELDS_ALL[i];  // e.g. "author"
-            String expansionFieldQueryStr = expansionField + ":(" + queryStr + ")";
-            Query q = queryParser.parse(expansionFieldQueryStr);
-            boolQuery.add(q, BooleanClause.Occur.SHOULD);
-          }
-          retQuery = boolQuery;
-        } else if (fieldExpansion.equals("allMorph")) {
-          BooleanQuery boolQuery = new BooleanQuery();
-          for (int i=0; i < QUERY_EXPANSION_FIELDS_ALL_MORPH.length; i++) {
-            String expansionField = QUERY_EXPANSION_FIELDS_ALL_MORPH[i];  // e.g. "author"
-            String expansionFieldQueryStr = expansionField + ":(" + queryStr + ")";
-            Query q = queryParser.parse(expansionFieldQueryStr);
-            boolQuery.add(q, BooleanClause.Occur.SHOULD);
-          }
-          retQuery = boolQuery;
-        } else if (fieldExpansion.equals("none")) {
-          Query q = queryParser.parse(queryStr);
-          retQuery = q;
+      if (fieldExpansion.equals("all")) {
+        BooleanQuery boolQuery = new BooleanQuery();
+        for (int i=0; i < QUERY_EXPANSION_FIELDS_ALL.length; i++) {
+          String expansionField = QUERY_EXPANSION_FIELDS_ALL[i];  // e.g. "author"
+          String expansionFieldQueryStr = expansionField + ":(" + queryStr + ")";
+          Query q = queryParser.parse(expansionFieldQueryStr);
+          boolQuery.add(q, BooleanClause.Occur.SHOULD);
         }
-      } else {
+        retQuery = boolQuery;
+      } else if (fieldExpansion.equals("allMorph")) {
+        BooleanQuery boolQuery = new BooleanQuery();
+        for (int i=0; i < QUERY_EXPANSION_FIELDS_ALL_MORPH.length; i++) {
+          String expansionField = QUERY_EXPANSION_FIELDS_ALL_MORPH[i];  // e.g. "author"
+          String expansionFieldQueryStr = expansionField + ":(" + queryStr + ")";
+          Query q = queryParser.parse(expansionFieldQueryStr);
+          boolQuery.add(q, BooleanClause.Occur.SHOULD);
+        }
+        retQuery = boolQuery;
+      } else if (fieldExpansion.equals("none")) {
         Query q = queryParser.parse(queryStr);
         retQuery = q;
       }
     } catch (ParseException e) {
       throw new ApplicationException(e);
     }
+    return retQuery;
+  }
+  
+  private Query buildHighlighterQuery(Query query, String language, boolean translate, LanguageHandler languageHandler) throws ApplicationException {
+    Query retQuery = null;
+    // TODO 
+    // Query fulltextQuery = removeNonFulltextFields(query); // fulltextQuery enthält die Volltextanfrage als tokenOrig oder tokenMorph
+    // retQuery = buildMorphQuery(fulltextQuery, language, true, translate, languageHandler);
     return retQuery;
   }
   
@@ -1281,7 +1286,6 @@ public class IndexHandler {
       } else {
         return inputTermQuery;
       }
-      //TODO ?? perhaps other fields should also be queried morphological e.g. title etc.
     }
     Query retQuery = buildBooleanShouldQuery(queryTerms);
     return retQuery;
@@ -1465,7 +1469,7 @@ public class IndexHandler {
       searcher = documentsSearcherManager.acquire();
       String fieldNameDocId = "docId";
       String docIdQuery = docId;
-      if (docId.contains(" "))
+      if (docId.contains(" ") || docId.contains(":"))
         docIdQuery = "\"" + docId + "\"";
       Query queryDocId = new QueryParser(Version.LUCENE_35, fieldNameDocId, documentsPerFieldAnalyzer).parse(docIdQuery);
       TopDocs topDocs = searcher.search(queryDocId, 100000);
