@@ -115,13 +115,19 @@ public class CollectionReader {
               Database db = new Database();
               XdmItem xdmItemDB = xmdValueDBsIterator.next();
               String xdmItemDBStr = xdmItemDB.toString(); 
-              String dbType = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/type/text()");  // e.g. "mysql" or "postgres"
+              String dbType = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/type/text()");  // e.g. "mysql" or "postgres" or "oai"
               db.setType(dbType);
               String dbName = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/name/text()");
               db.setName(dbName);
               String xmlDumpFileName = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/xmlDump/fileName/text()");
               if (xmlDumpFileName != null)
                 db.setXmlDumpFileName(xmlDumpFileName);
+              String xmlDumpUrl = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/xmlDump/url/text()");
+              if (xmlDumpUrl != null)
+                db.setXmlDumpUrl(xmlDumpUrl);
+              String xmlDumpSet = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/xmlDump/set/text()");
+              if (xmlDumpSet != null)
+                db.setXmlDumpSet(xmlDumpSet);
               String mainResourcesTable = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/mainResourcesTable/name/text()");
               if (mainResourcesTable != null)
                 db.setMainResourcesTable(mainResourcesTable);
