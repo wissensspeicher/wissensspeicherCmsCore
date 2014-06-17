@@ -410,7 +410,7 @@ public class CollectionManager {
     MetadataRecord mdRecord = getNewMdRecord(resourceIdUrlStr);
     String type = xQueryEvaluator.evaluateAsString(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dc:type/text()");
     if (type != null)
-      mdRecord.setSystem(type);  // e.g. "eXistDir" or "dbRecord" or "directory" or "directoryEntry"
+      mdRecord.setSystem(type);  // e.g. "eXistDir" or "dbRecord" or "directory" or "oai"
     String creator = xQueryEvaluator.evaluateAsString(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dc:creator/text()");
     if (creator != null) {
       creator = StringUtils.resolveXmlEntities(creator.trim());
