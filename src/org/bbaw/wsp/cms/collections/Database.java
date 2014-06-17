@@ -6,6 +6,8 @@ public class Database {
   private String type;
   private String name;
   private String xmlDumpFileName;
+  private String xmlDumpUrl;
+  private String xmlDumpSet;
   private String mainResourcesTable;
   private String mainResourcesTableId;
   private String webIdPreStr;
@@ -34,6 +36,22 @@ public class Database {
 
   public void setXmlDumpFileName(String xmlDumpFileName) {
     this.xmlDumpFileName = xmlDumpFileName;
+  }
+
+  public String getXmlDumpUrl() {
+    return xmlDumpUrl;
+  }
+
+  public void setXmlDumpUrl(String xmlDumpUrl) {
+    this.xmlDumpUrl = xmlDumpUrl;
+  }
+
+  public String getXmlDumpSet() {
+    return xmlDumpSet;
+  }
+
+  public void setXmlDumpSet(String xmlDumpSet) {
+    this.xmlDumpSet = xmlDumpSet;
   }
 
   public String getMainResourcesTable() {
