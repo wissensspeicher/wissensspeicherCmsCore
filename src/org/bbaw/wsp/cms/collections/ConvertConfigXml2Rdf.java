@@ -2,6 +2,7 @@ package org.bbaw.wsp.cms.collections;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -9,17 +10,23 @@ import net.sf.saxon.s9api.XdmItem;
 import net.sf.saxon.s9api.XdmSequenceIterator;
 import net.sf.saxon.s9api.XdmValue;
 
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpException;
+import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.bbaw.wsp.cms.general.Constants;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
+import de.mpg.mpiwg.berlin.mpdl.lt.general.Language;
 import de.mpg.mpiwg.berlin.mpdl.util.StringUtils;
 import de.mpg.mpiwg.berlin.mpdl.xml.xquery.XQueryEvaluator;
 
 public class ConvertConfigXml2Rdf {
   private static Logger LOGGER = Logger.getLogger(ConvertConfigXml2Rdf.class);
   private CollectionReader collectionReader;
+  private static int SOCKET_TIMEOUT = 10 * 1000;
+  private HttpClient httpClient; 
   private String outputRdfDir = "config/mdsystem/resources/";
   private XQueryEvaluator xQueryEvaluator;
   private File inputNormdataFile;
@@ -30,9 +37,10 @@ public class ConvertConfigXml2Rdf {
       // convertConfigXml2Rdf.convertAll();
       // convertConfigXml2Rdf.proofRdfProjects();
       // convertConfigXml2Rdf.proofCollectionProjects();
-      // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("avhunselbst");
-      Collection c = convertConfigXml2Rdf.collectionReader.getCollection("bk");
+      // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("turfanit");
+      Collection c = convertConfigXml2Rdf.collectionReader.getCollection("dwds");
       convertConfigXml2Rdf.convert(c);
+      // convertConfigXml2Rdf.generateDbXmlDumpFile(c);
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -41,6 +49,12 @@ public class ConvertConfigXml2Rdf {
   private void init() throws ApplicationException {
     collectionReader = CollectionReader.getInstance();
     xQueryEvaluator = new XQueryEvaluator();
+    httpClient = new HttpClient();
+    // timeout seems to work
+    httpClient.getParams().setParameter("http.socket.timeout", SOCKET_TIMEOUT);
+    httpClient.getParams().setParameter("http.connection.timeout", SOCKET_TIMEOUT);
+    httpClient.getParams().setParameter("http.connection-manager.timeout", new Long(SOCKET_TIMEOUT));
+    httpClient.getParams().setParameter("http.protocol.head-body-timeout", SOCKET_TIMEOUT);
     String inputNormdataFileName = Constants.getInstance().getMdsystemNormdataFile();
     inputNormdataFile = new File(inputNormdataFileName);      
   }
@@ -109,6 +123,54 @@ public class ConvertConfigXml2Rdf {
     }
   }
 
+  private void generateDbXmlDumpFile(Collection collection) throws ApplicationException {
+    ArrayList<Database> collectionDBs = collection.getDatabases();
+    if (collectionDBs != null) {
+      for (int i=0; i<collectionDBs.size(); i++) {
+        Database db = collectionDBs.get(i);
+        String dbType = db.getType();
+        if (dbType != null && dbType.equals("oai")) {
+          File outputDumpFile = new File(db.getXmlDumpFileName());
+          StringBuilder xmlDumpStrBuilder = new StringBuilder();
+          xmlDumpStrBuilder.append("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
+          xmlDumpStrBuilder.append("<!-- Resources of OAI-PMH-Server: " + db.getName() + " (" + db.getXmlDumpUrl() + ", Set: " + db.getXmlDumpSet() + ") -->\n");
+          generateDbXmlDumpFile(xmlDumpStrBuilder, collection, db);
+          try {
+            FileUtils.writeStringToFile(outputDumpFile, xmlDumpStrBuilder.toString());
+          } catch (IOException e) {
+            throw new ApplicationException(e);
+          }
+        }
+      }
+    }
+  }
+  
+  private void generateDbXmlDumpFile(StringBuilder xmlDumpStrBuilder, Collection collection, Database db) throws ApplicationException {
+    // xmlDumpStrBuilder.append("<OAI-PMH xsi:schemaLocation=\"http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd\">\n");
+    xmlDumpStrBuilder.append("<OAI-PMH>\n");
+    xmlDumpStrBuilder.append("<ListRecords>\n");
+    String oaiServerUrl = db.getXmlDumpUrl();
+    String oaiSet = db.getXmlDumpSet();
+    getOaiRecords(xmlDumpStrBuilder, oaiServerUrl, oaiSet);
+    xmlDumpStrBuilder.append("</ListRecords>\n");
+    xmlDumpStrBuilder.append("</OAI-PMH>");
+  }
+  
+  private void getOaiRecords(StringBuilder xmlDumpStrBuilder, String oaiServerUrlStr, String oaiSet) throws ApplicationException {
+    String listRecordsUrl = oaiServerUrlStr + "?verb=ListRecords&metadataPrefix=oai_dc&set=" + oaiSet;
+    String oaiPmhResponseStr = performGetRequest(listRecordsUrl);
+    String oaiRecordsStr = xQueryEvaluator.evaluateAsString(oaiPmhResponseStr, "/*:OAI-PMH/*:ListRecords/*:record");
+    String resumptionToken = xQueryEvaluator.evaluateAsString(oaiPmhResponseStr, "/*:OAI-PMH/*:ListRecords/*:resumptionToken/text()");
+    xmlDumpStrBuilder.append(oaiRecordsStr + "\n");
+    while (resumptionToken != null && ! resumptionToken.isEmpty()) {
+      String listRecordsResumptionTokenUrl = oaiServerUrlStr + "?verb=ListRecords&resumptionToken=" + resumptionToken;
+      oaiPmhResponseStr = performGetRequest(listRecordsResumptionTokenUrl);
+      oaiRecordsStr = xQueryEvaluator.evaluateAsString(oaiPmhResponseStr, "/*:OAI-PMH/*:ListRecords/*:record");
+      resumptionToken = xQueryEvaluator.evaluateAsString(oaiPmhResponseStr, "/*:OAI-PMH/*:ListRecords/*:resumptionToken/text()");
+      xmlDumpStrBuilder.append(oaiRecordsStr + "\n");
+    }
+  }
+  
   private void proofProjectRdfStr(String projectRdfStr, Collection collection) throws ApplicationException {
     String collectionId = collection.getId();
     String collectionRdfId = collection.getRdfId();
@@ -217,10 +279,13 @@ public class ConvertConfigXml2Rdf {
       String mainResourcesTable = db.getMainResourcesTable();  // e.g. "titles_persons";
       String dbType = db.getType();
       XdmValue xmdValueMainResources = null;
-      if (dbType.equals("mysql"))
+      if (dbType.equals("mysql")) {
         xmdValueMainResources = xQueryEvaluator.evaluate(xmlDumpFileUrl, "/" + dbName + "/" + mainResourcesTable);
-      else if (dbType.equals("postgres"))
+      } else if (dbType.equals("postgres")) {
         xmdValueMainResources = xQueryEvaluator.evaluate(xmlDumpFileUrl, "/data/records/row");
+      } else if (dbType.equals("oai")) {
+        xmdValueMainResources = xQueryEvaluator.evaluate(xmlDumpFileUrl, "/*:OAI-PMH/*:ListRecords/*:record");
+      }
       XdmSequenceIterator xmdValueMainResourcesIterator = xmdValueMainResources.iterator();
       if (xmdValueMainResources != null && xmdValueMainResources.size() > 0) {
         while (xmdValueMainResourcesIterator.hasNext()) {
@@ -262,6 +327,21 @@ public class ConvertConfigXml2Rdf {
           row.addField(fieldName, fieldValue);
         }
       }
+    } else if (dbType.equals("oai")) {
+      String recordId = xQueryEvaluator.evaluateAsString(rowXmlStr, "/*:record/*:header/*:identifier/text()");
+      if (recordId != null && ! recordId.isEmpty())
+        row.addField("identifier", recordId);
+      XdmValue xmdValueFields = xQueryEvaluator.evaluate(rowXmlStr, "/*:record/*:metadata/*:dc/*");
+      XdmSequenceIterator xmdValueFieldsIterator = xmdValueFields.iterator();
+      if (xmdValueFields != null && xmdValueFields.size() > 0) {
+        while (xmdValueFieldsIterator.hasNext()) {
+          XdmItem xdmItemField = xmdValueFieldsIterator.next();
+          String fieldStr = xdmItemField.toString();
+          String fieldName = xQueryEvaluator.evaluateAsString(fieldStr, "*/name()");
+          String fieldValue = xdmItemField.getStringValue();
+          row.addField(fieldName, fieldValue);
+        }
+      }
     }
     return row;  
   }
@@ -273,6 +353,7 @@ public class ConvertConfigXml2Rdf {
     String mainResourcesTableId = db.getMainResourcesTableId();
     String webIdPreStr = db.getWebIdPreStr();
     String webIdAfterStr = db.getWebIdAfterStr();
+    String dbType = db.getType();
     String id = row.getFieldValue(mainResourcesTableId);
     String rdfId = "http://" + collectionId + ".bbaw.de/id/" + id;
     String rdfWebId = rdfId;
@@ -284,7 +365,10 @@ public class ConvertConfigXml2Rdf {
     rdfStrBuilder.append("  <rdf:type rdf:resource=\"http://purl.org/dc/terms/BibliographicResource\"/>\n");
     rdfStrBuilder.append("  <dcterms:isPartOf rdf:resource=\"" + collectionRdfId + "\"/>\n");
     rdfStrBuilder.append("  <dc:identifier rdf:resource=\"" + rdfWebId + "\">" + id + "</dc:identifier>\n");
-    rdfStrBuilder.append("  <dc:type>dbRecord</dc:type>\n");
+    if (dbType.equals("oai"))
+      rdfStrBuilder.append("  <dc:type>oaiRecord</dc:type>\n");
+    else
+      rdfStrBuilder.append("  <dc:type>dbRecord</dc:type>\n");
     String dbFieldCreator = db.getDbField("creator");
     if (dbFieldCreator != null) {
       String creator = row.getFieldValue(dbFieldCreator);
@@ -329,21 +413,25 @@ public class ConvertConfigXml2Rdf {
     String dbFieldLanguage = db.getDbField("language");
     String language = null;
     if (dbFieldLanguage != null)
-      row.getFieldValue(dbFieldLanguage);
+      language = row.getFieldValue(dbFieldLanguage);
     if (language == null && mainLanguage != null)
       language = mainLanguage;
     else if (language == null && mainLanguage == null)
       language = "ger";
+    language = Language.getInstance().getISO639Code(language);
     rdfStrBuilder.append("  <dc:language>" + language + "</dc:language>\n");
-    rdfStrBuilder.append("  <dc:format>text/html</dc:format>\n");
+    if (dbType != null && ! dbType.equals("oai"))
+      rdfStrBuilder.append("  <dc:format>text/html</dc:format>\n");
     String dbFieldSubject = db.getDbField("subject");
     if (dbFieldSubject != null) {
       String subject = row.getFieldValue(dbFieldSubject);
       if (subject != null && ! subject.isEmpty()) {
         String[] subjects = subject.split("###");
+        if (! subject.contains("###") && subject.contains(";"))
+          subjects = subject.split(";");
         if (subjects != null) {
           for (int i=0; i<subjects.length; i++) {
-            String s = subjects[i];
+            String s = subjects[i].trim();
             s = StringUtils.deresolveXmlEntities(s);
             rdfStrBuilder.append("  <dc:subject>" + s + "</dc:subject>\n");
           }
@@ -360,6 +448,27 @@ public class ConvertConfigXml2Rdf {
     }
     // TODO further dc fields
     rdfStrBuilder.append("</rdf:Description>\n");
+  }
+
+  private String performGetRequest(String urlStr) throws ApplicationException {
+    String resultStr = null;
+    int statusCode = -1;
+    try {
+      GetMethod method = new GetMethod(urlStr);
+      statusCode = httpClient.executeMethod(method);
+      if (statusCode < 400) {
+        byte[] resultBytes = method.getResponseBody();
+        resultStr = new String(resultBytes, "utf-8");
+      }
+      method.releaseConnection();
+    } catch (HttpException e) {
+      // nothing
+    } catch (SocketTimeoutException e) {
+      LOGGER.error("XXXErrorXXX" + "Url: \"" + urlStr + "\" has socket timeout after " + SOCKET_TIMEOUT + " ms (" + e.bytesTransferred + " bytes transferred)");
+    } catch (IOException e) {
+      // nothing
+    }
+    return resultStr;
   }
   
 }
