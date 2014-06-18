@@ -16,3 +16,383 @@
   <dc:identifier rdf:resource="http://euler.bbaw.de"/>
 </rdf:Description>
 </rdf:RDF>
+
+<!-- Einträge von Sascha -->
+<rdf:Description rdf:about="http://euler.bbaw.de/einfuehrung.php">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
+  <dc:identifier rdf:resource="http://euler.bbaw.de/einfuehrung.php"/>
+  <dc:creator></dc:creator>
+  <dc:title>Zum Euler-Jubiläum</dc:title>
+</rdf:description>
+<rdf:Description rdf:about="http://euler.bbaw.de/euleriana/ansicht.php?dokument=101">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
+  <dc:identifier rdf:resource="http://euler.bbaw.de/euleriana/ansicht.php?dokument=101"/>
+  <dc:creator></dc:creator>
+  <dc:title>Protokoll der Sitzung der mathematischen Klasse vom 6. September 1742 über Eulers erstmalige Teilnahme an einer Akademiesitzung und dessen Beitrag zu den Akademieabhandlungen (Auszug)</dc:title>
+</rdf:description>
+<rdf:Description rdf:about="http://euler.bbaw.de/euleriana/index.php?kategorie=102">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
+  <dc:identifier rdf:resource="http://euler.bbaw.de/euleriana/index.php?kategorie=102"/>
+  <dc:creator></dc:creator>
+  <dc:title>Euleriana</dc:title>
+</rdf:description>
+<rdf:Description rdf:about="http://euler.bbaw.de/euleriana/ansicht.php?dokument=102">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
+  <dc:identifier rdf:resource="http://euler.bbaw.de/euleriana/ansicht.php?dokument=102"/>
+  <dc:creator></dc:creator>
+  <dc:title>Konstituierung und erste Sitzung der Nouvelle Société Littéraire unter Eulers Teilnahme am 1. August 1743</dc:title>
+</rdf:description>
+<rdf:Description rdf:about="http://euler.bbaw.de/euleriana/ansicht.php?dokument=103">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
+  <dc:identifier rdf:resource="http://euler.bbaw.de/euleriana/ansicht.php?dokument=103"/>
+  <dc:creator></dc:creator>
+  <dc:title>Protokollauszüge von den Sitzungen der Nouvelle Société Littéraire vom 1. August 1743 bis zur Neugründung der Akademie am 23. Januar 1744, die die aktive Teilnahme L. Eulers an den Sitzungen dokumentieren</dc:title>
+</rdf:description>
+<rdf:Description rdf:about="http://euler.bbaw.de/euleriana/ansicht.php?dokument=104">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
+  <dc:identifier rdf:resource="http://euler.bbaw.de/euleriana/ansicht.php?dokument=104"/>
+  <dc:creator>Euler, Leonhard</dc:creator>
+  <dc:title>An den Akademiesekretar P. J. de Jariges über die bessere Nutzung des Observatoriums der Akademie</dc:title>
+</rdf:description>
+<rdf:Description rdf:about="http://euler.bbaw.de/euleriana/ansicht.php?dokument=105">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
+  <dc:identifier rdf:resource="http://euler.bbaw.de/euleriana/ansicht.php?dokument=105"/>
+  <dc:creator>Euler, Leonhard</dc:creator>
+  <dc:title>An den Akademiesekretar P. J. de Jariges über die Aufgaben des Astronomen an der Akademie</dc:title>
+</rdf:description>
+<rdf:Description rdf:about="http://euler.bbaw.de/euleriana/ansicht.php?dokument=106">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
+  <dc:identifier rdf:resource="http://euler.bbaw.de/euleriana/ansicht.php?dokument=106"/>
+  <dc:creator>Euler, Leonhard</dc:creator>
+  <dc:title>Vorschlag zur Vereinigung der Neuen Société littéraire mit der Societät der Wissenschaften</dc:title>
+</rdf:description>
+<rdf:Description rdf:about="http://euler.bbaw.de/euleriana/ansicht.php?dokument=107">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
+  <dc:identifier rdf:resource="http://euler.bbaw.de/euleriana/ansicht.php?dokument=107"/>
+  <dc:creator>Euler, Leonhard</dc:creator>
+  <dc:title>Skizze über die Sitzordnung für die Eröffnungssitzung der neuen Akademie der Wissenschaften am 23. Januar 1744 mit Nennung L. Eulers als Direktor der mathematischen Klasse</dc:title>
+</rdf:description>
+<rdf:Description rdf:about="http://euler.bbaw.de/euleriana/ansicht.php?dokument=108">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
+  <dc:identifier rdf:resource="http://euler.bbaw.de/euleriana/ansicht.php?dokument=108"/>
+  <dc:creator>Euler, Leonhard</dc:creator>
+  <dc:title>An die Kuratoren der Akademie über die Aufgaben der mathematischen Klasse</dc:title>
+</rdf:description>
+<rdf:Description rdf:about="http://euler.bbaw.de/euleriana/ansicht.php?dokument=109">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
+  <dc:identifier rdf:resource="http://euler.bbaw.de/euleriana/ansicht.php?dokument=109"/>
+  <dc:creator>Euler, Leonhard</dc:creator>
+  <dc:title>Stellungnahme zum Antrag J. A. Brauns, als Mitglied in die mathematische Klasse der Akademie aufgenommen zu werden</dc:title>
+</rdf:description>
+<rdf:Description rdf:about="http://euler.bbaw.de/euleriana/ansicht.php?dokument=110">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
+  <dc:identifier rdf:resource="http://euler.bbaw.de/euleriana/ansicht.php?dokument=110"/>
+  <dc:creator>Euler, Leonhard</dc:creator>
+  <dc:title>Anweisung an den Administrator D. Köhler über die Aufteilung der Pension J. W. Wagners an C. Kirch, D. Naudé und A. N. Grischow für deren Kalenderarbeit</dc:title>
+</rdf:description>
+<rdf:Description rdf:about="http://euler.bbaw.de/euleriana/ansicht.php?dokument=111">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
+  <dc:identifier rdf:resource="http://euler.bbaw.de/euleriana/ansicht.php?dokument=111"/>
+  <dc:creator>Euler, Leonhard</dc:creator>
+  <dc:title>Erstes Gutachten vom 27.10.1744 zu dem von Kriegsrat Ihering aus Aurich eingesandten Vorschlag, zur Verbesserung des ostfriesischen Deichwesens die Spittdobben mit dem Schlamm des Seewassers aufzufüllen</dc:title>
+</rdf:description>
+<rdf:Description rdf:about="http://euler.bbaw.de/euleriana/ansicht.php?dokument=112">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
+  <dc:identifier rdf:resource="http://euler.bbaw.de/euleriana/ansicht.php?dokument=112"/>
+  <dc:creator>Euler, Leonhard</dc:creator>
+  <dc:title>Zweites Gutachten vom 20.3.1745 zu dem Vorschlag von Kriegsrat Ihering aus Aurich, die Spittdobben mit dem Schlamm des Seewassers wieder aufzufüllen</dc:title>
+</rdf:description>
+<rdf:Description rdf:about="http://euler.bbaw.de/euleriana/ansicht.php?dokument=113">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
+  <dc:identifier rdf:resource="http://euler.bbaw.de/euleriana/ansicht.php?dokument=113"/>
+  <dc:creator>Euler, Leonhard</dc:creator>
+  <dc:title>Drittes Gutachten vom 10.3.1746 über das Wiederanfüllen der Spittdoben an den ostfriesischen Deichen mittels eines hydrostatischen Hebers</dc:title>
+</rdf:description>
+<rdf:Description rdf:about="http://euler.bbaw.de/euleriana/ansicht.php?dokument=114">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
+  <dc:identifier rdf:resource="http://euler.bbaw.de/euleriana/ansicht.php?dokument=114"/>
+  <dc:creator>Euler, Leonhard</dc:creator>
+  <dc:title>Gutachten von L. Euler, J. Kies und C. F. Ludolff vom 22.7.1751 über eine Erfindung des Hofschlossers Schröder, die Lagerung von Achsen auf Rollen durch Verminderung der Reibung zu verbessern</dc:title>
+</rdf:description>
+<rdf:Description rdf:about="http://euler.bbaw.de/euleriana/ansicht.php?dokument=115">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
+  <dc:identifier rdf:resource="http://euler.bbaw.de/euleriana/ansicht.php?dokument=115"/>
+  <dc:creator>Euler, Leonhard</dc:creator>
+  <dc:title>Gutachten der Akademiedirektoren für Friedrich II. über das von G. F. Brander erfundene dioptrische Instrument zum Messen von Entfernungen</dc:title>
+</rdf:description>
+<rdf:Description rdf:about="http://euler.bbaw.de/euleriana/ansicht.php?dokument=116">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
+  <dc:identifier rdf:resource="http://euler.bbaw.de/euleriana/ansicht.php?dokument=116"/>
+  <dc:creator>Euler, Leonhard</dc:creator>
+  <dc:title>An J. G. Gleditsch über die Anpflanzung eins Heckenzaunes um die Köpenicker Maulbeerplantage</dc:title>
+</rdf:description>
+<rdf:Description rdf:about="http://euler.bbaw.de/euleriana/ansicht.php?dokument=117">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
+  <dc:identifier rdf:resource="http://euler.bbaw.de/euleriana/ansicht.php?dokument=117"/>
+  <dc:creator>Euler, Leonhard</dc:creator>
+  <dc:title>Quittung über den Empfang einer Summe aus der Akademiekasse für die Beherbergung von J.-J. de Lalande in Eulers Haus</dc:title>
+</rdf:description>
+<rdf:Description rdf:about="http://euler.bbaw.de/euleriana/ansicht.php?dokument=118">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
+  <dc:identifier rdf:resource="http://euler.bbaw.de/euleriana/ansicht.php?dokument=118"/>
+  <dc:creator>Euler, Leonhard</dc:creator>
+  <dc:title>Anweisung an D. Köhler, die Papierlieferung für den Druck seines Werkes gegen Prof. S. König zu bezahlen</dc:title>
+</rdf:description>
+<rdf:Description rdf:about="http://euler.bbaw.de/euleriana/ansicht.php?dokument=119">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
+  <dc:identifier rdf:resource="http://euler.bbaw.de/euleriana/ansicht.php?dokument=119"/>
+  <dc:creator>de Maupertuis, P. L. M.</dc:creator>
+  <dc:title>Mitteilung des Akademiepräsidenten P. L. M. de Maupertuis an den Akademierendanten D. Köhler, dass während seiner Abwesenheit L. Euler mit Billigung des Königs die Akademiegeschäfte leiten wird</dc:title>
+</rdf:description>
+<rdf:Description rdf:about="http://euler.bbaw.de/euleriana/ansicht.php?dokument=120">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
+  <dc:identifier rdf:resource="http://euler.bbaw.de/euleriana/ansicht.php?dokument=120"/>
+  <dc:creator>Euler, Leonhard</dc:creator>
+  <dc:title>Anweisung L. Eulers an D. Köhler, von dem beigelegten Konzept über die Errichtung eines Hauses in Köpenick für den Seidenbau eine Reinschrift anfertigen zu lassen</dc:title>
+</rdf:description>
+<rdf:Description rdf:about="http://euler.bbaw.de/euleriana/ansicht.php?dokument=121">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
+  <dc:identifier rdf:resource="http://euler.bbaw.de/euleriana/ansicht.php?dokument=121"/>
+  <dc:creator>Euler, Leonhard</dc:creator>
+  <dc:title>Konzept für den Antrag der Akademie an Friedrich II., in Köpenick ein Haus für den Seidenbau errichten zu lassen</dc:title>
+</rdf:description>
+<rdf:Description rdf:about="http://euler.bbaw.de/euleriana/ansicht.php?dokument=122">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
+  <dc:identifier rdf:resource="http://euler.bbaw.de/euleriana/ansicht.php?dokument=122"/>
+  <dc:creator>Euler, Leonhard</dc:creator>
+  <dc:title>L. Euler bittet in einem Schreiben an Friedrich II. vom 25. Juli 1753, das Gesuch des Buchhändlers de Bourdeaux auf Herausgabe eines eigenen Kalenders abschlägig zu bescheiden</dc:title>
+</rdf:description>
+<rdf:Description rdf:about="http://euler.bbaw.de/euleriana/ansicht.php?dokument=123">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
+  <dc:identifier rdf:resource="http://euler.bbaw.de/euleriana/ansicht.php?dokument=123"/>
+  <dc:creator>Euler, Leonhard</dc:creator>
+  <dc:title>Anweisung vom 16. Oktober 1753 an D. Köhler, dem Ingenieur Raillard für dessen Aufsicht über den Bau des chemischen Laboratoriums 50 Rt. auszuzahlen</dc:title>
+</rdf:description>
+<rdf:Description rdf:about="http://euler.bbaw.de/euleriana/ansicht.php?dokument=124">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
+  <dc:identifier rdf:resource="http://euler.bbaw.de/euleriana/ansicht.php?dokument=124"/>
+  <dc:creator>Euler, Leonhard</dc:creator>
+  <dc:title>Anschlag zur Verpachtung der Maulbeerplantage der Akademie in Köpenick</dc:title>
+</rdf:description>
+<rdf:Description rdf:about="http://euler.bbaw.de/euleriana/ansicht.php?dokument=125">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
+  <dc:identifier rdf:resource="http://euler.bbaw.de/euleriana/ansicht.php?dokument=125"/>
+  <dc:creator>Euler, Leonhard</dc:creator>
+  <dc:title>Mitteilung vom 23. Oktober 1754 an D. Köhler über die ihm vom Präsidenten übertragene Abnahme des Observatoriums und die Anfertigung eines Inventars zu den auf dem Observatorium befindlichen Instrumenten</dc:title>
+</rdf:description>
+<rdf:Description rdf:about="http://euler.bbaw.de/euleriana/ansicht.php?dokument=126">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
+  <dc:identifier rdf:resource="http://euler.bbaw.de/euleriana/ansicht.php?dokument=126"/>
+  <dc:creator>Euler, Leonhard</dc:creator>
+  <dc:title>Konzept vom 22. Januar 1761 für ein Gesuch an die Kaiserlich-Russische Regierung im Königreich Preußen, der Berliner Akademie den Kalenderverkauf in Preußen weiterhin zu gestatten</dc:title>
+</rdf:description>
+<rdf:Description rdf:about="http://euler.bbaw.de/euleriana/ansicht.php?dokument=127">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
+  <dc:identifier rdf:resource="http://euler.bbaw.de/euleriana/ansicht.php?dokument=127"/>
+  <dc:creator>Euler, Leonhard</dc:creator>
+  <dc:title>Schreiben der Akademiedirektoren an Friedrich II. vom 22. Dezember 1763 mit Vorschlägen über die Verwendung der Akademieersparnisse </dc:title>
+</rdf:description>
+<rdf:Description rdf:about="http://euler.bbaw.de/euleriana/ansicht.php?dokument=128">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
+  <dc:identifier rdf:resource="http://euler.bbaw.de/euleriana/ansicht.php?dokument=128"/>
+  <dc:creator></dc:creator>
+  <dc:title>Mitteilung der Akademiedirektoren vom 21. Februar 1765 an den Akademierendanten D. Köhler über die Höhe der Pension für das neue Akademiemitglied J. H. Lambert</dc:title>
+</rdf:description>
+<rdf:Description rdf:about="http://euler.bbaw.de/euleriana/ansicht.php?dokument=129">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
+  <dc:identifier rdf:resource="http://euler.bbaw.de/euleriana/ansicht.php?dokument=129"/>
+  <dc:creator></dc:creator>
+  <dc:title>Protokoll der Akademiesitzung vom 29. Mai 1766, an der L. Euler und sein Sohn letztmalig vor ihrer Abreise nach Petersburg teilnahmen und in der beide ehrenvoll verabschiedet wurden</dc:title>
+</rdf:description>
+<rdf:Description rdf:about="http://euler.bbaw.de/euleriana/ansicht.php?dokument=130">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
+  <dc:identifier rdf:resource="http://euler.bbaw.de/euleriana/ansicht.php?dokument=130"/>
+  <dc:creator>Euler, Leonhard</dc:creator>
+  <dc:title>An D. Köhler über die Herausgabe von Landkarten für den Schulgebrauch</dc:title>
+</rdf:description>
+<rdf:Description rdf:about="http://euler.bbaw.de/euleriana/ansicht.php?dokument=131">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
+  <dc:identifier rdf:resource="http://euler.bbaw.de/euleriana/ansicht.php?dokument=131"/>
+  <dc:creator>Euler, Leonhard</dc:creator>
+  <dc:title>Anweisung an D. Köhler, dem Kupferstecher N. F. Sauerbrey die Anfertigung der Karte von Italien zu bezahlen</dc:title>
+</rdf:description>
+<rdf:Description rdf:about="http://euler.bbaw.de/euleriana/ansicht.php?dokument=132">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
+  <dc:identifier rdf:resource="http://euler.bbaw.de/euleriana/ansicht.php?dokument=132"/>
+  <dc:creator>Euler, Leonhard</dc:creator>
+  <dc:title>Anweisung an D. Köhler, im Auftrage des Akademiepräsidenten von allen bisher gestochenen Landkartenplatten 5 Exemplare abziehen zu lassen, um sie Friedrich II. vorzulegen</dc:title>
+</rdf:description>
+<rdf:Description rdf:about="http://euler.bbaw.de/euleriana/ansicht.php?dokument=133">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
+  <dc:identifier rdf:resource="http://euler.bbaw.de/euleriana/ansicht.php?dokument=133"/>
+  <dc:creator>Euler, Leonhard</dc:creator>
+  <dc:title>Mitteilung des Textes für das Inserat über den Geographischen Schulatlas an D. Köhler</dc:title>
+</rdf:description>
+<rdf:Description rdf:about="http://euler.bbaw.de/euleriana/ansicht.php?dokument=134">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
+  <dc:identifier rdf:resource="http://euler.bbaw.de/euleriana/ansicht.php?dokument=134"/>
+  <dc:creator>Euler, Leonhard</dc:creator>
+  <dc:title>Vorbericht vom 31. Mai 1760 zur 2. Auflage des aus 44 Landkarten bestehenden Schulatlasses</dc:title>
+</rdf:description>
+<rdf:Description rdf:about="http://euler.bbaw.de/euleriana/ansicht.php?dokument=146">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
+  <dc:identifier rdf:resource="http://euler.bbaw.de/euleriana/ansicht.php?dokument=146"/>
+  <dc:creator>Euler, Leonhard</dc:creator>
+  <dc:title>Vorbericht</dc:title>
+</rdf:description>
+<rdf:Description rdf:about="http://euler.bbaw.de/euleriana/ansicht.php?dokument=135">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
+  <dc:identifier rdf:resource="http://euler.bbaw.de/euleriana/ansicht.php?dokument=135"/>
+  <dc:creator>Euler, Leonhard</dc:creator>
+  <dc:title>Blatt 1-5: Die Erde</dc:title>
+</rdf:description>
+<rdf:Description rdf:about="http://euler.bbaw.de/euleriana/ansicht.php?dokument=140">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
+  <dc:identifier rdf:resource="http://euler.bbaw.de/euleriana/ansicht.php?dokument=140"/>
+  <dc:creator>Euler, Leonhard</dc:creator>
+  <dc:title>Blatt 6-10: Europa</dc:title>
+</rdf:description>
+<rdf:Description rdf:about="http://euler.bbaw.de/euleriana/ansicht.php?dokument=141">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
+  <dc:identifier rdf:resource="http://euler.bbaw.de/euleriana/ansicht.php?dokument=141"/>
+  <dc:creator>Euler, Leonhard</dc:creator>
+  <dc:title>Blatt 11-18: Westeuropa</dc:title>
+</rdf:description>
+<rdf:Description rdf:about="http://euler.bbaw.de/euleriana/ansicht.php?dokument=142">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
+  <dc:identifier rdf:resource="http://euler.bbaw.de/euleriana/ansicht.php?dokument=142"/>
+  <dc:creator>Euler, Leonhard</dc:creator>
+  <dc:title>Blatt 19-28: Deutsche Länder</dc:title>
+</rdf:description>
+<rdf:Description rdf:about="http://euler.bbaw.de/euleriana/ansicht.php?dokument=143">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
+  <dc:identifier rdf:resource="http://euler.bbaw.de/euleriana/ansicht.php?dokument=143"/>
+  <dc:creator>Euler, Leonhard</dc:creator>
+  <dc:title>Blatt 29-34: Osteuropa und Skandinavien</dc:title>
+</rdf:description>
+<rdf:Description rdf:about="http://euler.bbaw.de/euleriana/ansicht.php?dokument=144">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
+  <dc:identifier rdf:resource="http://euler.bbaw.de/euleriana/ansicht.php?dokument=144"/>
+  <dc:creator>Euler, Leonhard</dc:creator>
+  <dc:title>Blatt 35-38: Russland, Asien und Afrika</dc:title>
+</rdf:description>
+<rdf:Description rdf:about="http://euler.bbaw.de/euleriana/ansicht.php?dokument=145">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
+  <dc:identifier rdf:resource="http://euler.bbaw.de/euleriana/ansicht.php?dokument=145"/>
+  <dc:creator>Euler, Leonhard</dc:creator>
+  <dc:title>Blatt 39-44: Amerika und Ozeanien</dc:title>
+</rdf:description>
+<rdf:Description rdf:about="http://euler.bbaw.de/euleriana/ansicht.php?dokument=136">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
+  <dc:identifier rdf:resource="http://euler.bbaw.de/euleriana/ansicht.php?dokument=136"/>
+  <dc:creator></dc:creator>
+  <dc:title>Übersetzer für den preußischen Staat im Siebenjährigen Krieg</dc:title>
+</rdf:description>
+<rdf:Description rdf:about="http://euler.bbaw.de/euleriana/ansicht.php?dokument=148">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
+  <dc:identifier rdf:resource="http://euler.bbaw.de/euleriana/ansicht.php?dokument=148"/>
+  <dc:creator>Euler, Leonhard</dc:creator>
+  <dc:title>Bericht eines für die russische Armee tätigen Agenten</dc:title>
+</rdf:description>
+<rdf:Description rdf:about="http://euler.bbaw.de/euleriana/ansicht.php?dokument=149">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
+  <dc:identifier rdf:resource="http://euler.bbaw.de/euleriana/ansicht.php?dokument=149"/>
+  <dc:creator>Euler, Leonhard</dc:creator>
+  <dc:title>Schreiben des russischen Grafen Goloffkin</dc:title>
+</rdf:description>
+<rdf:Description rdf:about="http://euler.bbaw.de/euleriana/ansicht.php?dokument=137">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
+  <dc:identifier rdf:resource="http://euler.bbaw.de/euleriana/ansicht.php?dokument=137"/>
+  <dc:creator></dc:creator>
+  <dc:title>Eulers Landgut in Lietzow/Charlottenburg</dc:title>
+</rdf:description>
+<rdf:Description rdf:about="http://euler.bbaw.de/euleriana/ansicht.php?dokument=138">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
+  <dc:identifier rdf:resource="http://euler.bbaw.de/euleriana/ansicht.php?dokument=138"/>
+  <dc:creator></dc:creator>
+  <dc:title>Eulers Wohnsitz in Berlin</dc:title>
+</rdf:description>
+<rdf:Description rdf:about="http://euler.bbaw.de/euleriana/ansicht.php?dokument=147">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
+  <dc:identifier rdf:resource="http://euler.bbaw.de/euleriana/ansicht.php?dokument=147"/>
+  <dc:creator></dc:creator>
+  <dc:title>Euler-Ehrung in Berlin 1907-2007</dc:title>
+</rdf:description>
+<rdf:Description rdf:about="http://euler.bbaw.de/publikationen/winter.php">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
+  <dc:identifier rdf:resource="http://euler.bbaw.de/publikationen/winter.php"/>
+  <dc:creator>Winter, E.</dc:creator>
+  <dc:title>Die Registres der Berliner Akademie der Wissenschaften 1746-1766</dc:title>
+</rdf:description>
+<rdf:Description rdf:about="http://euler.bbaw.de/publikationen/knobloch.php">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
+  <dc:identifier rdf:resource="http://euler.bbaw.de/publikationen/knobloch.php"/>
+  <dc:creator>Knobloch, W.</dc:creator>
+  <dc:title>Leonhard Eulers Wirken an der Berliner Akademie der Wissenschaften 1741-1766</dc:title>
+</rdf:description>
+<rdf:Description rdf:about="http://euler.bbaw.de/presse/1.php">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
+  <dc:identifier rdf:resource="http://euler.bbaw.de/presse/1.php"/>
+  <dc:creator>Knobloch, Eberhard</dc:creator>
+  <dc:title>Mathematik ist Musik. Fiktives Interview mit dem Mathematiker Leonhard Euler</dc:title>
+</rdf:description>
+<rdf:Description rdf:about="http://euler.bbaw.de/presse/2.php">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
+  <dc:identifier rdf:resource="http://euler.bbaw.de/presse/2.php"/>
+  <dc:creator>Metsch, Martina</dc:creator>
+  <dc:title>Hommage an einen großen Mathematiker. Zwei Ausstellungen zu Ehren Leonhard Eulers erinnern an sein großes Werk</dc:title>
+</rdf:description>
