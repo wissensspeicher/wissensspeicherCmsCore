@@ -981,12 +981,5 @@
       <format>html</format>
       <format>xml</format>
     </formats>
-    <xqueries>
-      <xquery>
-        <name>webId</name>
-        <code>concat(string(/windowsSet/@place), '_', string(/windowsSet/@setNumber), '.html')</code>
-        <preStr>http://telota.bbaw.de/cvma/maps/</preStr>
-      </xquery>
-    </xqueries>
   </collection>
 </wsp>
