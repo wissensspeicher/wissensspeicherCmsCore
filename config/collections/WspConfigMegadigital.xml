@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<wsp>
+  <collection>
+    <id>megadigital</id>
+    <rdfId>http://wsp.normdata.rdf/MarxEngelsGAdigital</rdfId>
+    <name>Marx-Engels-Gesamtausgabe digital</name>
+    <url> 
+      <webBaseUrl>http://mega.bbaw.de/megadigital</webBaseUrl>
+
+      <!-- Homepage -->
+      <dataUrl>http://mega.bbaw.de/megadigital</dataUrl>
+      
+    </url>
+    <languages>ger</languages>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>xml</format>
+    </formats>
+    <update>false</update>
+  </collection>
+</wsp>
