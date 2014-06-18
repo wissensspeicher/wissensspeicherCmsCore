@@ -405,6 +405,7 @@ public class CollectionManager {
   private MetadataRecord getMdRecord(XQueryEvaluator xQueryEvaluator, String xmlRdfStr) throws ApplicationException {
     String namespaceDeclaration = "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; declare namespace dc=\"http://purl.org/dc/elements/1.1/\"; declare namespace dcterms=\"http://purl.org/dc/terms/\"; ";
     String resourceIdUrlStr = xQueryEvaluator.evaluateAsString(xmlRdfStr, namespaceDeclaration + "string(/rdf:Description/dc:identifier/@rdf:resource)");
+    resourceIdUrlStr = StringUtils.resolveXmlEntities(resourceIdUrlStr);
     if (resourceIdUrlStr == null || resourceIdUrlStr.trim().isEmpty())
       LOGGER.error("No identifier given in resource: \"" + xmlRdfStr + "\"");
     MetadataRecord mdRecord = getNewMdRecord(resourceIdUrlStr);
@@ -500,8 +501,6 @@ public class CollectionManager {
       if (identifier.startsWith("/"))
         identifier = identifier.substring(1);
       mdRecord.setDocId(identifier);
-      if (urlStr != null)
-        urlStr = StringUtils.deresolveXmlEntities(urlStr.trim());
       mdRecord.setWebUri(urlStr);
     } catch (MalformedURLException e) {
       LOGGER.error("Malformed Url \"" +  urlStr + "\" in resource");
