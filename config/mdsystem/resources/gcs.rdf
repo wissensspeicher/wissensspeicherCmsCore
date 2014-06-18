@@ -25,11 +25,32 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/GriechischChristlichSchriftsteller"/>
   <dc:identifier rdf:resource="http://gcs.bbaw.de/filmdb/"/>
 </rdf:Description>
-<rdf:Description rdf:about="http://telota.bbaw.de/exist/rest/db/gcs/">
+<rdf:Description rdf:about="http://telota.bbaw.de/gcs/index.php?rubrik=einfuehrung">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/GriechischChristlichSchriftsteller"/>
-  <dc:identifier rdf:resource="http://telota.bbaw.de/exist/rest/db/gcs/"/>
-  <dc:type>eXistDir</dc:type>
+  <dc:identifier rdf:resource="http://telota.bbaw.de/gcs/index.php?rubrik=einfuehrung"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://telota.bbaw.de/exist/rest/db/gcs/text_d_1.xml">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/GriechischChristlichSchriftsteller"/>
+  <dc:identifier rdf:resource="http://telota.bbaw.de/exist/rest/db/gcs/text_d_1.xml"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://telota.bbaw.de/exist/rest/db/gcs/text_g_1.xml">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/GriechischChristlichSchriftsteller"/>
+  <dc:identifier rdf:resource="http://telota.bbaw.de/exist/rest/db/gcs/text_g_1.xml"/>
+  <dc:language>grc</dc:language>
+</rdf:Description>
+<rdf:Description rdf:about="http://telota.bbaw.de/exist/rest/db/gcs/app_d_1.xml">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/GriechischChristlichSchriftsteller"/>
+  <dc:identifier rdf:resource="http://telota.bbaw.de/exist/rest/db/gcs/app_d_1.xml"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://telota.bbaw.de/exist/rest/db/gcs/app_g_1.xml">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/GriechischChristlichSchriftsteller"/>
+  <dc:identifier rdf:resource="http://telota.bbaw.de/exist/rest/db/gcs/app_g_1.xml"/>
+  <dc:language>grc</dc:language>
 </rdf:Description>
 <!-- Resources of database: gcs_filmdb (config/mdsystem/db-resources/gcs-filmdb.xml) -->
 <rdf:Description rdf:about="http://gcs.bbaw.de/filmdb/film.php?id=2508">
