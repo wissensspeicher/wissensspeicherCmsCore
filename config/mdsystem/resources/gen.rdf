@@ -75,4 +75,180 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
   <dc:identifier rdf:resource="http://www.gentechnologiebericht.de/gen/themen/gentherapie/resolveuid/6f188886d421c7199877612ee80e364c"/>
 </rdf:Description>
+<rdf:Description rdf:about="http://www.gentechnologiebericht.de/gen/bilder/PM_Gentechnologiebericht.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
+  <dc:identifier rdf:resource="http://www.gentechnologiebericht.de/gen/bilder/PM_Gentechnologiebericht.pdf"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.gentechnologiebericht.de/gen/bilder/Inhalt_Gentechnologiebericht.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
+  <dc:identifier rdf:resource="http://www.gentechnologiebericht.de/gen/bilder/Inhalt_Gentechnologiebericht.pdf"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.gentechnologiebericht.de/gen/bilder/Kurzfassung_Gentechnologiebericht.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
+  <dc:identifier rdf:resource="http://www.gentechnologiebericht.de/gen/bilder/Kurzfassung_Gentechnologiebericht.pdf"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.gentechnologiebericht.de/gen/bilder/GenomXPress-2005-3-Seite-41-42.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
+  <dc:identifier rdf:resource="http://www.gentechnologiebericht.de/gen/bilder/GenomXPress-2005-3-Seite-41-42.pdf"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.gentechnologiebericht.de/gen/bilder/zentrale%20Texte_Stammzellforschung.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
+  <dc:identifier rdf:resource="http://www.gentechnologiebericht.de/gen/bilder/zentrale%20Texte_Stammzellforschung.pdf"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.gentechnologiebericht.de/gen/bilder/Inhalt_Stammzellforschung.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
+  <dc:identifier rdf:resource="http://www.gentechnologiebericht.de/gen/bilder/Inhalt_Stammzellforschung.pdf"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.gentechnologiebericht.de/gen/bilder/Flyer_Stammzellforschung.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
+  <dc:identifier rdf:resource="http://www.gentechnologiebericht.de/gen/bilder/Flyer_Stammzellforschung.pdf"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.gentechnologiebericht.de/gen/bilder/PM_Stammzellforschung.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
+  <dc:identifier rdf:resource="http://www.gentechnologiebericht.de/gen/bilder/PM_Stammzellforschung.pdf"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.gentechnologiebericht.de/gen/bilder/zentrale%20Texte_Grune%20Gentechnologie.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
+  <dc:identifier rdf:resource="http://www.gentechnologiebericht.de/gen/bilder/zentrale%20Texte_Grune%20Gentechnologie.pdf"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.gentechnologiebericht.de/gen/bilder/Kurzfassung_Gendiagnostik%20in%20Deutschland%20%28zweisprachig%29.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
+  <dc:identifier rdf:resource="http://www.gentechnologiebericht.de/gen/bilder/Kurzfassung_Gendiagnostik%20in%20Deutschland%20%28zweisprachig%29.pdf"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.gentechnologiebericht.de/gen/bilder/PM_Gendiagnostik%20in%20Deutschland.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
+  <dc:identifier rdf:resource="http://www.gentechnologiebericht.de/gen/bilder/PM_Gendiagnostik%20in%20Deutschland.pdf"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.gentechnologiebericht.de/gen/bilder/Flyer_Gendiagnostik%20in%20Deutschland.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
+  <dc:identifier rdf:resource="http://www.gentechnologiebericht.de/gen/bilder/Flyer_Gendiagnostik%20in%20Deutschland.pdf"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.gentechnologiebericht.de/gen/bilder/Kurzfassung_Gentherapie%20in%20Deutschland%20%28dt-engl%29.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
+  <dc:identifier rdf:resource="http://www.gentechnologiebericht.de/gen/bilder/Kurzfassung_Gentherapie%20in%20Deutschland%20%28dt-engl%29.pdf"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.gentechnologiebericht.de/gen/bilder/Kurzfassung_Zweiter%20Bericht.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
+  <dc:identifier rdf:resource="http://www.gentechnologiebericht.de/gen/bilder/Kurzfassung_Zweiter%20Bericht.pdf"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.gentechnologiebericht.de/gen/bilder/PM_Zweiter%20Gentechnologiebericht.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
+  <dc:identifier rdf:resource="http://www.gentechnologiebericht.de/gen/bilder/PM_Zweiter%20Gentechnologiebericht.pdf"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.gentechnologiebericht.de/gen/bilder/Flyer_Zweiter%20Bericht.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
+  <dc:identifier rdf:resource="http://www.gentechnologiebericht.de/gen/bilder/Flyer_Zweiter%20Bericht.pdf"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.gentechnologiebericht.de/gen/bilder/Inhalt_Zweiter%20Bericht.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
+  <dc:identifier rdf:resource="http://www.gentechnologiebericht.de/gen/bilder/Inhalt_Zweiter%20Bericht.pdf"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.gentechnologiebericht.de/bilder/Inhalt_Gentherapie_2te%20Auflage_2011.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
+  <dc:identifier rdf:resource="http://www.gentechnologiebericht.de/bilder/Inhalt_Gentherapie_2te%20Auflage_2011.pdf"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.gentechnologiebericht.de/bilder/PM_04_Gentherapie_in_Deutschland.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
+  <dc:identifier rdf:resource="http://www.gentechnologiebericht.de/bilder/PM_04_Gentherapie_in_Deutschland.pdf"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.gentechnologiebericht.de/bilder/Kurzfassung_2012-11-19_PDF-Fassung-fuer-Webseite.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
+  <dc:identifier rdf:resource="http://www.gentechnologiebericht.de/bilder/Kurzfassung_2012-11-19_PDF-Fassung-fuer-Webseite.pdf"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.gentechnologiebericht.de/bilder/VorwortUndInhalt_Synbio_2012.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
+  <dc:identifier rdf:resource="http://www.gentechnologiebericht.de/bilder/VorwortUndInhalt_Synbio_2012.pdf"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.gentechnologiebericht.de/bilder/Kurzfassung_Internet.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
+  <dc:identifier rdf:resource="http://www.gentechnologiebericht.de/bilder/Kurzfassung_Internet.pdf"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.gentechnologiebericht.de/bilder/Inhalt_GruneGentechnik_2013.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
+  <dc:identifier rdf:resource="http://www.gentechnologiebericht.de/bilder/Inhalt_GruneGentechnik_2013.pdf"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.gentechnologiebericht.de/bilder/Selbstdarstellungsbroschure-FINAL.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
+  <dc:identifier rdf:resource="http://www.gentechnologiebericht.de/bilder/Selbstdarstellungsbroschure-FINAL.pdf"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.gentechnologiebericht.de/bilder/Genetisches_Wissen_Jahresmagazin_2011_12-1.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
+  <dc:identifier rdf:resource="http://www.gentechnologiebericht.de/bilder/Genetisches_Wissen_Jahresmagazin_2011_12-1.pdf"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.gentechnologiebericht.de/bilder/BBAW_PM%2008_GruneGentechnologie.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
+  <dc:identifier rdf:resource="http://www.gentechnologiebericht.de/bilder/BBAW_PM%2008_GruneGentechnologie.pdf"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.gentechnologiebericht.de/bilder/PM_41_SynBio_2012.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
+  <dc:identifier rdf:resource="http://www.gentechnologiebericht.de/bilder/PM_41_SynBio_2012.pdf"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.gentechnologiebericht.de/gen/bilder/PM_Stammzellstatement.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
+  <dc:identifier rdf:resource="http://www.gentechnologiebericht.de/gen/bilder/PM_Stammzellstatement.pdf"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.gentechnologiebericht.de/gen/bilder/PM_Gentherapie.pdf ">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
+  <dc:identifier rdf:resource="http://www.gentechnologiebericht.de/gen/bilder/PM_Gentherapie.pdf"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.gentechnologiebericht.de/gen/bilder/PM_Grune%20Gentechnologie.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
+  <dc:identifier rdf:resource="http://www.gentechnologiebericht.de/gen/bilder/PM_Grune%20Gentechnologie.pdf"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.gentechnologiebericht.de/gen/darstellung-des-projektes-indexseite">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
+  <dc:identifier rdf:resource="http://www.gentechnologiebericht.de/gen/darstellung-des-projektes-indexseite"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.gentechnologiebericht.de/gen/mitglieder-der-arbeitsgruppe/ansprechpartner">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
+  <dc:identifier rdf:resource="http://www.gentechnologiebericht.de/gen/mitglieder-der-arbeitsgruppe/ansprechpartner"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.gentechnologiebericht.de/gen/arbeitsweise">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
+  <dc:identifier rdf:resource="http://www.gentechnologiebericht.de/gen/arbeitsweise"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.gentechnologiebericht.de/gen/termine-und-veranstaltungen">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
+  <dc:identifier rdf:resource="http://www.gentechnologiebericht.de/gen/termine-und-veranstaltungen"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.gentechnologiebericht.de/gen/geschaftsstelle-kontakt">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
+  <dc:identifier rdf:resource="http://www.gentechnologiebericht.de/gen/geschaftsstelle-kontakt"/>
+</rdf:Description>
+
 </rdf:RDF>
