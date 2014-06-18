@@ -38,7 +38,7 @@ public class ConvertConfigXml2Rdf {
       // convertConfigXml2Rdf.proofRdfProjects();
       // convertConfigXml2Rdf.proofCollectionProjects();
       // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("turfanit");
-      Collection c = convertConfigXml2Rdf.collectionReader.getCollection("dwds");
+      Collection c = convertConfigXml2Rdf.collectionReader.getCollection("cvma");
       convertConfigXml2Rdf.convert(c);
       // convertConfigXml2Rdf.generateDbXmlDumpFile(c);
     } catch (Exception e) {
@@ -94,10 +94,11 @@ public class ConvertConfigXml2Rdf {
           for (int i=0; i<dataUrls.length; i++) {
             WspUrl dataUrl = dataUrls[i];
             String dataUrlStr = dataUrl.getUrl();
-            rdfStrBuilder.append("<rdf:Description rdf:about=\"" + dataUrlStr + "\">\n");
+            String dataUrlStrResolved = StringUtils.deresolveXmlEntities(dataUrlStr);
+            rdfStrBuilder.append("<rdf:Description rdf:about=\"" + dataUrlStrResolved + "\">\n");
             rdfStrBuilder.append("  <rdf:type rdf:resource=\"http://purl.org/dc/terms/BibliographicResource\"/>\n");
             rdfStrBuilder.append("  <dcterms:isPartOf rdf:resource=\"" + collectionRdfId + "\"/>\n");
-            rdfStrBuilder.append("  <dc:identifier rdf:resource=\"" + dataUrlStr + "\"/>\n");
+            rdfStrBuilder.append("  <dc:identifier rdf:resource=\"" + dataUrlStrResolved + "\"/>\n");
             if (dataUrl.isEXistDir()) {
               rdfStrBuilder.append("  <dc:type>eXistDir</dc:type>\n");
             }
