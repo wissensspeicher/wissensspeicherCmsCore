@@ -603,6 +603,10 @@ public class DocumentHandler {
         }
         creator = StringUtils.deresolveXmlEntities(creator.trim());
         creatorDetails = creatorDetails + "\n</persons>";
+        if (creator.isEmpty())
+          creator = null;
+        if (authors.isEmpty())
+          creatorDetails = null;
       }
       String title = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:titleStmt/*:title");
       XdmValue xdmValueTitleMain = xQueryEvaluator.evaluate(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:titleStmt/*:title[@type='main']");
