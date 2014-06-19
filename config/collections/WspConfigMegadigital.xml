@@ -9,7 +9,16 @@
 
       <!-- Homepage -->
       <dataUrl>http://mega.bbaw.de/megadigital</dataUrl>
-      
+
+      <!-- MEGA Baende -->
+      <dataUrl>http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B001-01_ETX.xml</dataUrl>
+      <dataUrl>http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B001-02_ETX.xml</dataUrl>
+      <dataUrl>http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B004-01_ETX.xml</dataUrl>
+      <dataUrl>http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B005-00_ETX.xml</dataUrl>
+      <dataUrl>http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B011-00_ETX.xml</dataUrl>
+      <dataUrl>http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B012-00_ETX.xml</dataUrl>
+      <dataUrl>http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B013-00_ETX.xml</dataUrl>
+      <dataUrl>http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B015-00_ETX.xml</dataUrl>
     </url>
     <languages>ger</languages>
     <mainLanguage>ger</mainLanguage>
