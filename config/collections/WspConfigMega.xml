@@ -9,7 +9,6 @@
 
       <!-- Homepages -->
       <dataUrl>http://mega.bbaw.de</dataUrl>
-      <dataUrl>http://mega.bbaw.de/megadigital</dataUrl>
       <dataUrl>http://telota.bbaw.de/mega</dataUrl>
       
       <!-- Abteilung 1   -->
@@ -20,15 +19,6 @@
       <dataUrl>http://mega.bbaw.de/struktur/abteilung_i/dateien/mega_i-32_inhalt-einf.pdf</dataUrl>
       
       <!-- Abteilung 2   -->
-      <dataUrl>http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B001-01_ETX.xml</dataUrl>
-      <dataUrl>http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B001-02_ETX.xml</dataUrl>
-      <dataUrl>http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B004-01_ETX.xml</dataUrl>
-      <dataUrl>http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B005-00_ETX.xml</dataUrl>
-      <dataUrl>http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B011-00_ETX.xml</dataUrl>
-      <dataUrl>http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B012-00_ETX.xml</dataUrl>
-      <dataUrl>http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B013-00_ETX.xml</dataUrl>
-      <dataUrl>http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B015-00_ETX.xml</dataUrl>
-
       <dataUrl>http://mega.bbaw.de/struktur/abteilung_ii/dateien/mega_II-11_inhalt-einf.pdf</dataUrl>
       <dataUrl>http://mega.bbaw.de/struktur/abteilung_ii/dateien/mega_II-12_inhalt-einf.pdf</dataUrl>
       <dataUrl>http://mega.bbaw.de/struktur/abteilung_ii/dateien/mega_II-13_inhalt-einf.pdf</dataUrl>
