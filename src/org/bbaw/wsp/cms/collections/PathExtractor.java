@@ -119,7 +119,7 @@ public class PathExtractor {
 
   private boolean isExcluded(String url) {
     boolean isExcluded = false;
-    if (excludes != null && url != null) {
+    if (excludes != null && ! excludes.isEmpty() && url != null) {
       String[] exludeArrayStr = excludes.split(" ");
       for (int i=0; i<exludeArrayStr.length; i++) {
         String exclude = exludeArrayStr[i];
