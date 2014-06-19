@@ -30,31 +30,6 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
   <dc:identifier rdf:resource="http://www.gentechnologiebericht.de/bilder/Evaluationsbericht_2010.pdf"/>
 </rdf:Description>
-<rdf:Description rdf:about="http://edoc.bbaw.de/volltexte/2007/375/pdf/25Go1yDTnpsqk.pdf">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
-  <dc:identifier rdf:resource="http://edoc.bbaw.de/volltexte/2007/375/pdf/25Go1yDTnpsqk.pdf"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://edoc.bbaw.de/volltexte/2007/544/">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
-  <dc:identifier rdf:resource="http://edoc.bbaw.de/volltexte/2007/544/"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://edoc.bbaw.de/volltexte/2008/824/">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
-  <dc:identifier rdf:resource="http://edoc.bbaw.de/volltexte/2008/824/"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://edoc.bbaw.de/volltexte/2010/1315/">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
-  <dc:identifier rdf:resource="http://edoc.bbaw.de/volltexte/2010/1315/"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://edoc.bbaw.de/volltexte/2009/832/">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
-  <dc:identifier rdf:resource="http://edoc.bbaw.de/volltexte/2009/832/"/>
-</rdf:Description>
 <rdf:Description rdf:about="http://www.gentechnologiebericht.de/gen/publikationen/resolveuid/0a42eccb7a76d98c4871cb315e08552d">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Gentechnologiebericht"/>
