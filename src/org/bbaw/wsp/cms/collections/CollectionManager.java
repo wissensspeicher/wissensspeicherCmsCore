@@ -264,7 +264,10 @@ public class CollectionManager {
     try {
       Tika tika = new Tika();
       String webUriStr = mdRecord.getWebUri();
+      String uriStr = mdRecord.getUri();
       URL uri = new URL(webUriStr);
+      if (uriStr != null)
+        uri = new URL(uriStr);
       String uriPath = uri.getPath();
       String prefix = "/exist/rest/db";
       if (uriPath.startsWith(prefix)) {
@@ -315,7 +318,8 @@ public class CollectionManager {
         }
       }
       mdRecord.setDocId(docId);
-      mdRecord.setUri(webUriStr);
+      if (mdRecord.getUri() == null)
+        mdRecord.setUri(webUriStr);
       if (mdRecord.getType() == null)
         mdRecord.setType(mimeType); 
       // if no language is set then take the mainLanguage of the project
@@ -410,11 +414,24 @@ public class CollectionManager {
 
   private MetadataRecord getMdRecord(XQueryEvaluator xQueryEvaluator, String xmlRdfStr) throws ApplicationException {
     String namespaceDeclaration = "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; declare namespace dc=\"http://purl.org/dc/elements/1.1/\"; declare namespace dcterms=\"http://purl.org/dc/terms/\"; ";
+    // download url of resource
     String resourceIdUrlStr = xQueryEvaluator.evaluateAsString(xmlRdfStr, namespaceDeclaration + "string(/rdf:Description/dc:identifier/@rdf:resource)");
     resourceIdUrlStr = StringUtils.resolveXmlEntities(resourceIdUrlStr);
     if (resourceIdUrlStr == null || resourceIdUrlStr.trim().isEmpty())
       LOGGER.error("No identifier given in resource: \"" + xmlRdfStr + "\"");
     MetadataRecord mdRecord = getNewMdRecord(resourceIdUrlStr);
+    // web url of resource
+    String resourceIdentifierStr = xQueryEvaluator.evaluateAsString(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dc:identifier/text()");
+    if (resourceIdentifierStr != null && ! resourceIdentifierStr.isEmpty()) {
+      resourceIdentifierStr = StringUtils.resolveXmlEntities(resourceIdentifierStr);
+      try {
+        new URL(resourceIdentifierStr); // test if identifier is a url, if so then set it as the webUri
+        mdRecord.setWebUri(resourceIdentifierStr);
+      } catch (MalformedURLException e) {
+        // nothing
+      }
+      mdRecord.setUri(resourceIdUrlStr);
+    }
     String type = xQueryEvaluator.evaluateAsString(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dc:type/text()");
     if (type != null)
       mdRecord.setSystem(type);  // e.g. "eXistDir" or "dbRecord" or "directory" or "oai"
