@@ -15,4 +15,15 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks/MirabiliaUrbisRomae"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/census/fulltext/"/>
 </rdf:Description>
+<rdf:Description rdf:about="http://telota.bbaw.de/census/fulltext/Mirabilia_de.html">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks/MirabiliaUrbisRomae"/>
+  <dc:identifier rdf:resource="http://telota.bbaw.de/census/fulltext/Mirabilia_de.html"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://telota.bbaw.de/exist/servlet/db/census/texts/">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks/MirabiliaUrbisRomae"/>
+  <dc:identifier rdf:resource="http://telota.bbaw.de/exist/servlet/db/census/texts/"/>
+  <dc:type>eXistDir</dc:type>
+</rdf:Description>
 </rdf:RDF>
