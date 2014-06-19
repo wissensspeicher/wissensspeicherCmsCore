@@ -343,7 +343,6 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Euler"/>
   <dc:identifier rdf:resource="http://euler.bbaw.de/euleriana/ansicht.php?dokument=137"/>
-  <dc:creator></dc:creator>
   <dc:title>Eulers Landgut in Lietzow/Charlottenburg</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://euler.bbaw.de/euleriana/ansicht.php?dokument=138">
