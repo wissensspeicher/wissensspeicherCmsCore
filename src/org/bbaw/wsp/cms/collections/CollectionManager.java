@@ -412,19 +412,36 @@ public class CollectionManager {
     String type = xQueryEvaluator.evaluateAsString(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dc:type/text()");
     if (type != null)
       mdRecord.setSystem(type);  // e.g. "eXistDir" or "dbRecord" or "directory" or "oai"
-    String creator = xQueryEvaluator.evaluateAsString(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dc:creator/text()");
-    if (creator != null) {
-      creator = StringUtils.resolveXmlEntities(creator.trim());
-      mdRecord.setCreator(creator);
-      String[] creators = creator.split(";");
-      String creatorDetails = "<persons>";
-      for (int i=0; i<creators.length; i++) {
-        String cStr = creators[i];
-        Person c = new Person(cStr);
-        creatorDetails = creatorDetails + "\n" + c.toXmlStr();
+    XdmValue xmdValueAuthors = xQueryEvaluator.evaluate(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dc:creator");
+    if (xmdValueAuthors != null && xmdValueAuthors.size() > 0) {
+      XdmSequenceIterator xmdValueAuthorsIterator = xmdValueAuthors.iterator();
+      ArrayList<Person> authors = new ArrayList<Person>();
+      while (xmdValueAuthorsIterator.hasNext()) {
+        XdmItem xdmItemAuthor = xmdValueAuthorsIterator.next();
+        String name = xdmItemAuthor.getStringValue();
+        if (name != null) {
+          name = name.replaceAll("\n|\\s\\s+", " ").trim();
+        }
+        if (name != null && ! name.isEmpty()) {
+          Person author = new Person(name);
+          authors.add(author);
+        }
       }
+      String creator = "";
+      String creatorDetails = "<persons>";
+      for (int i=0; i<authors.size(); i++) {
+        Person author = authors.get(i);
+        creator = creator + author.getName();
+        if (authors.size() != 1)
+          creator = creator + ". ";
+        creatorDetails = creatorDetails + "\n" + author.toXmlStr();
+      }
+      creator = StringUtils.deresolveXmlEntities(creator.trim());
       creatorDetails = creatorDetails + "\n</persons>";
-      mdRecord.setCreatorDetails(creatorDetails);
+      if (creator != null && ! creator.isEmpty())
+        mdRecord.setCreator(creator);
+      if (authors != null && ! authors.isEmpty())
+        mdRecord.setCreatorDetails(creatorDetails);
     }
     String title = xQueryEvaluator.evaluateAsString(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dc:title/text()");
     if (title != null)
