@@ -1629,7 +1629,7 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
   <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=337"/>
   <dc:creator>Planck, Max</dc:creator>
-  <dc:title>Dankschreiben an den vorsitzenden Sekretar der Preußischen Akademie der Wissenschaften, G. Roethe, vom 2. Februar 1915 anlässlich seiner Auszeichnung mit der Helmholtz-Medaille</a></dc:title>
+  <dc:title>Dankschreiben an den vorsitzenden Sekretar der Preußischen Akademie der Wissenschaften, G. Roethe, vom 2. Februar 1915 anlässlich seiner Auszeichnung mit der Helmholtz-Medaille</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=338">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
