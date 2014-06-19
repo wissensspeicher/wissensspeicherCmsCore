@@ -25,4 +25,12 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KantSchriften/OpusPostumum"/>
   <dc:identifier rdf:resource="http://kant.bbaw.de/opus-postumum/faksimiles-diplomatisch"/>
 </rdf:Description>
+<rdf:Description rdf:about="http://kvmmove3.bbaw.de:8188/exist/rest/db/kant/text/">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KantSchriften/OpusPostumum"/>
+  <dc:identifier rdf:resource="http://kvmmove3.bbaw.de:8188/exist/rest/db/kant/text/"/>
+  <dc:type>eXistDir</dc:type>
+  <dc:creator>Kant, Immanuel</dc:creator>
+  <dc:title>Kant: Opus Postumum: Online Edition</dc:title>
+</rdf:Description>
 </rdf:RDF>
