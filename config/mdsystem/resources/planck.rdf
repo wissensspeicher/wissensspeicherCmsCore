@@ -15,4 +15,1786 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
   <dc:identifier rdf:resource="http://planck.bbaw.de"/>
 </rdf:Description>
+
+
+<!-- Einträge von Sascha -->
+<rdf:Description rdf:about="http://planck.bbaw.de/einfuehrung.php">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/einfuehrung.php"/>
+  <dc:creator>Knobloch, Wolfgang</dc:creator>
+  <dc:title>Einführung. Zum Planck-Jubiläum</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/film.php">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/film.php"/>
+  <dc:title>Max Planck - Filmporträt</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/selbstdarstellung.php">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/selbstdarstellung.php"/>
+  <dc:title>Max Planck - Selbstdarstellung - 1942 (Aus der Arbeit von Plenum und Klassen der AdW der DDR)</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=101">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=101"/>
+  <dc:creator>Helmholtz, Hermann von</dc:creator>
+  <dc:creator>Kundt, August</dc:creator>
+  <dc:title>Mitteilung an den vorsitzenden Klassensekretar Emil du Bois-Reymond über das Einbringen eines Antrags auf Zuwahl eines ordentlichen Mitglieds für Physik in der nächsten Klassensitzung</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=102">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=102"/>
+  <dc:creator>du Bois-Reymond, E.</dc:creator>
+  <dc:title>Auszug aus dem Sitzungsprotokoll der physikalisch-mathematischen Klasse vom 18. Januar 1894 über den von H. von Helmholtz und A. Kundt angezeigten Zuwahlvorschlag</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=103">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=103"/>
+  <dc:creator>du Bois-Reymond, E.</dc:creator>
+  <dc:title>Zirkularschreiben des vorsitzendenvom 19. Januar 1894 an die Mitglieder der physikalisch-mathematischen Klasse über den von H. von Helmholtz und A. Kundt angezeigten Zuwahlvorschlag</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=104">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=104"/>
+  <dc:creator>Helmholtz, Hermann von</dc:creator>
+  <dc:title>Wahlvorschlag für Max Planck zum ordentlichen Mitglied der physikalisch-mathematischen Klasse der Preußischen Akademie der Wissenschaften von Hermann von Helmholtz</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=105">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=105"/>
+  <dc:creator>du Bois-Reymond, E.</dc:creator>
+  <dc:title>Auszug aus dem Sitzungsprotokoll der physikalisch-mathematischen Klasse vom 8. Februar 1894 über die vorgeschlagene Aufnahme von Max Planck in die Akademie</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=106">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=106"/>
+  <dc:creator>du Bois-Reymond, E.</dc:creator>
+  <dc:title>Auszug aus dem Sitzungsprotokoll der physikalisch-mathematischen Klase vom 22. Februar 1894 über die Zuwahl Max Plancks in der Klasse</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=107">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=107"/>
+  <dc:creator>du Bois-Reymond, E.</dc:creator>
+  <dc:title>Auszug aus dem Sitzungsprotokoll des Plenums vom 1. März 1894 über die in der Klasse erfolgte und im Plenum noch ausstehende Zuwahl von Max Planck</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=108">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=108"/>
+  <dc:creator>Mommsen, Theodor</dc:creator>
+  <dc:title>Auszug aus dem Sitzungsprotokoll des Plenums vom 10. Mai 1894 über die Zuwahl Max Plancks im Plenum</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=109">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=109"/>
+  <dc:title>Bericht der Akademie an den Minister der geistlichen, Unterrichts- und Medizinalangelegenheiten über die erfolgte Zuwahl Max Plancks mit der Bitte, diese durch den Kaiser bestätigen zu lassen</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=110">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=110"/>
+  <dc:title>Mitteilung des Ministers der geistlichen, Unterrichts- und Medizinalangelegenheiten an die Akademie über die am 11. Juni durch den Kaiser erfolgte Bestätigung der Zuwahl Max Plancks</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=112">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=112"/>
+  <dc:title>Protokollauszug über Max Plancks erstmalige Teilnahme an der Sitzung des Plenums vom 5. Juli 1894</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=113">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=113"/>
+  <dc:title>Protokollauszug über Max Plancks erstmalige Teilnahme an der Sitzung der physikalisch-mathematischen Klasse vom 12. Juli 1894</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=136">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=136"/>
+  <dc:creator>von Waldeyer-Hartz, W.</dc:creator>
+  <dc:title>Auszug aus dem Sitzungsprotokoll der physikalisch-mathematischen Klasse vom 2. Mai 1912 über den Termin der Wahl eines neuen beständigen Sekretars</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=137">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=137"/>
+  <dc:creator>von Waldeyer-Hartz, W.</dc:creator>
+  <dc:title>Auszug aus dem Sitzungsprotokoll der physikalisch-mathematischen Klasse vom 23. Mai 1912 über die Wahl von Max Planck zum beständigen Klassensekretar</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=138">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=138"/>
+  <dc:creator>Roethe, G.</dc:creator>
+  <dc:title>Auszug aus dem Sitzungsprotokoll des Plenums vom 6. Juni 1912 über die in der Klasse erfolgte Wahl zum beständigen Sekretar</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=139">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=139"/>
+  <dc:title>Bericht der Akademie vom 28. Mai 1912 an das Kultusministerium über die Wahl Max Plancks zum beständigen Akademiesekretar mit dem Gesuch, die Wahl durch den Kaiser bestätigen zu lassen</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=140">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=140"/>
+  <dc:title>Mitteilung des Kultusministeriums vom 28. Juni 1912 an die Akademie über die erfolgte Bestätigung der Wahl Max Plancks zum beständigen Akademiesekretar</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=141">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=141"/>
+  <dc:title>Erste Sekretariatssitzung im neuen Akademiegebäude Unter den Linden am 2. April 1914</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=114">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=114"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Wahlvorschlag für Emil Warburg zum ordentlichen Mitglied der physikalisch-mathematischen Klasse der Preußischen Akademie der Wissenschaften</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=115">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=115"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Wahlvorschlag für Woldemar Voigt zum korrespondierenden Mitglied der physikalisch-mathematischen Klasse der Preußischen Akademie der Wissenschaften</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=116">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=116"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Wahlvorschlag für Johannes Diderik van der Waals zum korrespondierenden Mitglied der physikalisch-mathematischen Klasse der Preußischen Akademie der Wissenschaften</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=117">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=117"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Wahlvorschlag für Hendrik Antoon Lorentz zum korrespondierenden Mitglied der physikalisch-mathematischen Klasse der Preußischen Akademie der Wissenschaften aus dem Jahre 1905</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=118">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=118"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Wahlvorschlag für Heinrich Rubens zum ordentlichen Mitglied der physikalisch-mathematischen Klasse der Preußischen Akademie der Wissenschaften</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=119">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=119"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Wahlvorschlag für Wilhelm (Willy) Wien zum korrespondierenden Mitglied der physikalisch-mathematischen Klasse der Preußischen Akademie der Wissenschaften</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=120">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=120"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Wahlvorschlag für Albert Einstein zum ordentlichen Mitglied der physikalisch-mathematischen Klasse der Preußischen Akademie der Wissenschaften</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=121">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=121"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Wahlvorschlag für den preußischen Kultusminister August von Trott zu Solz zum Ehrenmitglied der Preußischen Akademie der Wissenschaften</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=122">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=122"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Wahlvorschlag für Max von Laue zum ordentlichen Mitglied der physikalisch-mathematischen Klasse der Preußischen Akademie der Wissenschaften</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=123">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=123"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Wahlvorschlag für Erwin Schrödinger zum ordentlichen Mitglied der physikalisch-mathematischen Klasse der Preußischen Akademie der Wissenschaften</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=142">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=142"/>
+  <dc:creator>von Bezold, W.</dc:creator>
+  <dc:title>Wahlvorschlag für Friedrich Kohlrausch zum ordentlichen Mitglied der physikalisch-mathematischen Klasse der Preußischen Akademie der Wissenschaften, mitunterzeichnet von Max Planck</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=143">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=143"/>
+  <dc:creator>Fischer, E.</dc:creator>
+  <dc:title>Wahlvorschlag für Jacobus Hendricus van’t Hoff zum ordentlichen Mitglied der physikalisch-mathematischen Klasse der Preußischen Akademie der Wissenschaften, mitunterzeichnet von Max Planck</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=144">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=144"/>
+  <dc:creator>Struve, H.</dc:creator>
+  <dc:title>Wahlvorschlag für Karl Schwarzschild zum ordentlichen Mitglied der physikalisch-mathematischen Klasse der Preußischen Akademie der Wissenschaften aus dem Jahre 1912, mitunterzeichnet von Max Planck</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=145">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=145"/>
+  <dc:creator>Schrödinger, E.</dc:creator>
+  <dc:title>Wahlvorschlag für Max Born zum korrespondierenden Mitglied der physikalisch-mathematischen Klasse der Preußischen Akademie der Wissenschaften aus dem Jahre 1929, mitunterzeichnet von M. Planck</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=146">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=146"/>
+  <dc:creator>von Laue, M.</dc:creator>
+  <dc:title>Wahlvorschlag für Werner Heisenberg zum ordentlichen Mitglied der mathematisch-naturwissenschaftlichen Klasse der Preußischen Akademie der Wissenschaften aus dem Jahre 1943, mitunterzeichnet von Max Planck</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=147">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=147"/>
+  <dc:creator>v. Auwers, A.</dc:creator>
+  <dc:title>Auszug aus dem Sitzungsprotokoll der physikalisch-mathematischen Klasse vom 16. Juli 1903 über die Aufnahme M. Plancks in die Kommission zur Beratung der Vorschläge für die Herausgabe der Werke Leonhard Eulers</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=148">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=148"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Schreiben an den Klassensekretar A. Auwers vom 31. Januar 1907 über seine Nichtteilnahme an einer Sitzung der Euler-Kommission</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=149">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=149"/>
+  <dc:title>Auszug aus dem Sitzungsprotokoll der physikalisch-mathematischen Klasse vom 1. Februar 1923 über finanzielle Schwierigkeiten bei der Herausgabe der Werke L. Eulers</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=150">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=150"/>
+  <dc:title>Zirkular zu einem Schreiben der Euler-Kommission aus Basel mit dem Entwurf eines Antwortschreibens M. Plancks vom 18. Februar 1923</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=151">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=151"/>
+  <dc:title>Auszug aus dem Sitzungsprotokoll der physikalisch-mathematischen Klasse vom 10. Januar 1924 über die Schwierigkeiten bei der Herausgabe der Werke L. Eulers</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=152">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=152"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Anfrage vom 18. Februar 1932 an die Euler-Kommission der Schweizerischen Naturforschenden Gesellschaft über das Erscheinen des nächsten Bandes der Euler-Ausgabe</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=153">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=153"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Auszug aus dem Sitzungsprotokoll der physikalisch-mathematischen Klasse vom 7. Oktober 1937 über den Ankauf eines weiteren Bandes der Euler-Ausgabe</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=154">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=154"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Auszug aus dem Protokoll der Sitzung des Geldverwendungsausschusses der physikalisch-mathematischen Klasse vom 4. November 1937 über die Bewilligung von 400 RM für die Euler-Ausgabe</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=155">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=155"/>
+  <dc:title>Auszug aus dem Sitzungsprotokoll der physikalisch-mathematischen Klasse vom 29. Juli 1915 über die Wahl M. Plancks zum Vorsitzenden der Kommission für die Herausgabe der Werke von Weierstrass</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=156">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=156"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Protokoll der Sitzung der Kommission für die Herausgabe der Werke von Weierstrass vom 21. Oktober 1915 über den Fortgang der Arbeiten</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=157">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=157"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Bericht für das Jahr 1915 über den Stand der Arbeiten an der Ausgabe der Werke von Weierstrass</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=158">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=158"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Protokoll der Sitzung der Weierstrass-Kommission vom 30. Oktober 1924 über den Stand der Arbeiten an der Weierstrass-Ausgabe</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=159">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=159"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Anfrage vom 25. Februar 1930 an die Akademische Verlagsgesellschaft in Leipzig zur Aufnahme eines aufgefundenen Weierstrass-Manuskripts in die Werkausgabe</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=160">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=160"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Auszug aus dem Sitzungsprotokoll der physikalisch-mathematischen Klasse vom 2. Dezember 1937 über die Wahl Th. Vahlens in die Kommission für die Herausgabe der Werke von Weierstrass</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=161">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=161"/>
+  <dc:creator>Rothe, R.</dc:creator>
+  <dc:title>Bericht vom 2. Januar 1938 an M. Planck über den Stand des Unternehmens zur Herausgabe der Werke von Weierstrass und dessen akademischen Fonds</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=162">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=162"/>
+  <dc:title>Zirkularvordruck zum Bericht von R. Rothe über die Weierstrass-Ausgabe mit den Sicht- und Feststellungsvermerken der Kommissionsmitglieder</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=163">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=163"/>
+  <dc:creator>Schur, I.</dc:creator>
+  <dc:title>Schreiben vom 6. April 1938 an den vorsitzenden Sekretar der physikalisch-mathematischen Klasse H. Stille über seinen Austritt aus den Kommissionen für das Jahrbuch über die Fortschritte der Mathematik und für die Herausgabe der Werke von Weierstrass</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=164">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=164"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Schreiben vom 11. Januar 1939 an den kommissarischen Akademiepräsidenten Th. Vahlen über die Niederlegung seines Vorsitzes in der Kommission für die Herausgabe der Werke von Weierstrass</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=165">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=165"/>
+  <dc:creator>Bieberbach, L.</dc:creator>
+  <dc:title>Auszug aus dem Sitzungsprotokoll der physikalisch-mathematischen Klasse vom 19. Januar 1939 über den Rücktritt M. Plancks als Vorsitzender der Kommission für die Herausgabe der Werke von Weierstrass</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=166">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=166"/>
+  <dc:title>Antrag der Akademiemitglieder E. Schmidt, I. Schur und L. Bieberbach vom 17. Juni 1927 auf Übernahme des „Jahrbuchs über die Fortschritte der Mathematik“ als akademisches Unternehmen</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=167">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=167"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Auszug aus dem Sitzungsprotokoll der physikalisch-mathematischen Klasse vom 23. Juni 1927 über die Bildung einer Kommission für das „Jahrbuch über die Fortschritte der Mathematik“ unter dem Vorsitz von M. Planck</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=168">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=168"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Protokoll der Sitzung der Kommission für das „Jahrbuch über die Fortschritte der Mathematik“ vom 14. Juli 1927 über erforderliche Schritte zur Übernahme des Unternehmens</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=169">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=169"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Protokoll der Sitzung der Kommission für das „Jahrbuch über die Fortschritte der Mathematik“ vom 19. Januar 1928 über die Anstellung des neuen Schriftleiters für das Jahrbuch</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=170">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=170"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Bericht über den Stand der Arbeiten am „Jahrbuch über die Fortschritte der Mathematik“ für die Jahresberichte der Akademie auf das Jahr 1929</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=171">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=171"/>
+  <dc:creator>Bieberbach, L.</dc:creator>
+  <dc:title>Bericht in der Friedrichssitzung der Preußischen Akademie der Wissenschaften am 23. Januar 1930 über das Jahrbuch über die Fortschritte der Mathematik</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=172">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=172"/>
+  <dc:creator>Rubner, M.</dc:creator>
+  <dc:title>Auszug aus dem Sitzungsprotokoll der physikalisch-mathematischen Klasse vom 5. November 1931 über das Ausscheiden M. Plancks als Vorsitzender der Kommission für das „Jahrbuch über die Fortschritte der Mathematik“</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=173">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=173"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Schreiben vom 9. Dezember 1939 an den Sekretar der mathematisch-naturwissenschaftlichen Klasse L. Bieberbach über seinen Wunsch, aus der Kommission für das Jahrbuch über die Fortschritte der Mathematik sowie aus der Kommission für die Herausgabe der Werke von Weierstrass auszuscheiden</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=174">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=174"/>
+  <dc:title>Auszug aus dem Sitzungsprotokoll der mathematisch-naturwissenschaftlichen Klasse vom 21. Dezember 1939 über das Ausscheiden M. Planck aus den Kommissionen für das Jahrbuch über die Fortschritte der Mathematik und für die Herausgabe der Werke von Weierstrass</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=175">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=175"/>
+  <dc:title>Auszug aus dem Sitzungsprotokoll des Plenums vom 13. Juni 1907 über die Wahl von M. Planck in das Kuratorium der Berliner Jubiläumsstiftung</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=176">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=176"/>
+  <dc:title>Auszug aus dem Sitzungsprotokoll des Plenums vom 10. Dezember 1908 über die Neuwahl des Kuratoriums der Berliner Jubiläumsstiftung und Anfrage des vorsitzenden Sekretars H. Diels an Planck vom 12. Dezember 1908 über die Annahme der Wahl</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=177">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=177"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Mitteilung vom 19. Dezember 1908 an den vorsitzenden Akademiesekretar H. Diels über die Annahme seiner Wahl in das Kuratorium der Berliner Jubiläumsstiftung</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=178">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=178"/>
+  <dc:title>Einladungsschreiben der Akademie vom 6. Januar 1909 an die Kuratoriumsmitglieder W. Waldeyer, M. Planck und G. von Schmoller zur Teilnahme an der Konstituierung des Kuratoriums der Berliner Jubiläumsstiftung</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=179">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=179"/>
+  <dc:title>Bericht über die Akademische Jubiläums-Stiftung der Stadt Berlin vom 4. Februar 1909 für die Jahresberichte der Akademie</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=180">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=180"/>
+  <dc:title>Auszug aus dem Sitzungsprotokoll des Plenums vom 5. Dezember 1912 über die Wiederwahl M. Plancks als Mitglied des Kuratoriums der Berliner Jubiläumsstiftung</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=181">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=181"/>
+  <dc:creator>Diels, H.</dc:creator>
+  <dc:title>Bericht über die Berliner Jubiläumsstiftung vom 30. Januar 1913 für die Jahresberichte der Akademie mit Erwähnung der Wahl M. Plancks zum Vorsitzenden des Kuratoriums</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=182">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=182"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Bericht vom 4. Februar 1915 über die Berliner Jubiläumsstiftung für die Jahresberichte der Akademie</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=183">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=183"/>
+  <dc:creator>Roethe, G.</dc:creator>
+  <dc:title>Auszüge aus den Sitzungsprotokollen des Plenums über die von M. Planck angeregte Änderung des Statuts der Berliner Jubiläumsstiftung</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=184">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=184"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Bericht vom 3. Februar 1921 über die Berliner Jubiläumsstiftung für die Jahresberichte der Akademie</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=185">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=185"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Auszug aus dem Sitzungsprotokoll der physikalisch-mathematischen Klasse vom 10. Januar 1924 über die Erträgnisse der Berliner Jubiläumsstiftung</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=186">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=186"/>
+  <dc:creator>Lüders, H.</dc:creator>
+  <dc:title>Auszug aus dem Sitzungsprotokoll des Plenums vom 6. Dezember 1928 über die Neuwahl des Kuratoriums der Berliner Jubiläumsstiftung</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=187">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=187"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Schreiben vom 20. Juli 1912 an den vorsitzenden Akademiesekretar G. Roethe über seine Kandidatur als Mitglied des Kuratoriums der Wentzel-Heckmann-Stiftung</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=188">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=188"/>
+  <dc:title>Protokoll der Sitzung des Kuratoriums der Wentzel-Heckmann-Stiftung vom 25. Juli 1912 über die Wahl M. Plancks zum Mitglied und Stellvertreter des Vorsitzenden des Kuratoriums</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=189">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=189"/>
+  <dc:title>Auszug aus dem Bericht über die Wentzel-Heckmann-Stiftung vom 30. Januar 1913 für die Jahresberichte der Akademie mit Erwähnung der Wahl M. Plancks in das Stiftungskuratorium</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=190">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=190"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Protokoll der Sitzung des Kuratoriums der Wentzel-Heckmann-Stiftung von 20. Juli 1916 über Rechnungslegungen und Mittelbewilligungen</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=191">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=191"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Mitteilung vom 27. Juli 1916 als Stellvertreter des Vorsitzenden des Kuratoriums der Wentzel-Heckmann-Stiftung an den vorsitzenden Akademiesekretar H. Diels über Mittelbewilligungen</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=192">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=192"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Protokoll der konstituierenden Sitzung des Kuratoriums der Wentzel-Heckmann-Stiftung für die Jahre 1920 bis 1925</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=193">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=193"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Protokoll der Sitzung des Kuratoriums der Wentzel-Heckmann-Stiftung vom 2. Dezember 1926 über Änderungen in der Zusammensetzung des Kuratoriums</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=194">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=194"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Mitteilung vom 31. März 1927 als Vorsitzender des Kuratoriums der Wentzel-Heckmann-Stiftung an den vorsitzenden Akademiesekretar E. Heymann über die momentanen Stiftungserträgnisse</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=195">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=195"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Einladung zur konstituierenden Sitzung des Kuratoriums der Wentzel-Heckmann-Stiftung am 3. April 1930</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=196">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=196"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Protokoll der konstituierenden Sitzung des Kuratoriums der Wentzel-Heckmann-Stiftung vom 3. April 1930</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=197">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=197"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Mitteilung om 3. April 1930 an die Akademie über die Konstituierung des neuen Kuratoriums der Wentzel-Heckmann-Stiftung</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=198">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=198"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Schreiben als vorsitzender Akademiesekretar vom 31. Mai 1933 an das Finanzamt Mitte über Gründung und Zweck der Wentzel-Heckmann-Stiftung</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=199">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=199"/>
+  <dc:creator>Lüders, H.</dc:creator>
+  <dc:title>Protokoll der konstituierenden Sitzung des Kuratoriums der Wentzel-Heckmann-Stiftung vom 4. April 1935 für die Jahre 1935 bis 1940</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=200">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=200"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Einschätzung der wissenschaftlichen Leistung von H. A. Lorentz aus dem Jahre 1903 für dessen Nominierung als Kandidat an dritter Stelle für den Orden pour le mérite</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=201">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=201"/>
+  <dc:creator>Auwers, A.</dc:creator>
+  <dc:title>Mitteilung von A. Auwers, Kanzler des Ordens pour le mérite für Wissenschaften und Künste, vom 25. Januar 1908 an die Akademie über die angeordnete Wiederbesetzung der durch den Tod von Lord Kelvin erledigten Stelle eines ausländischen Ordensritters mit der Bitte um Einreichung entsprechender Vorschläge</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=202">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=202"/>
+  <dc:creator>Auwers, A.</dc:creator>
+  <dc:title>Auszug aus dem Sitzungsprotokoll des Plenums vom 30. Januar 1908 über die Bildung einer Kommission zur Aufstellung einer Wahlliste für die vorzunehmende Ersatzwahl eines ausländischen Ritters des Ordens pour le mérite</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=203">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=203"/>
+  <dc:creator>Auwers, A.</dc:creator>
+  <dc:title>Auszug aus dem Sitzungsprotokoll des Plenums vom 27. Februar 1908 über die Wahl von Kandidaten zur Neubesetzung der Stelle eines ausländischen Ordensritters</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=204">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=204"/>
+  <dc:title>Stimmzettel von der Ersatzwahl für Lord Kelvin mit dem Abstimmungsergebnis für den an erster Stelle gewählten Kandidaten H. A. Lorentz</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=205">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=205"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Schreiben vom 29. Februar 1908 an den Kanzler des Ordens pour le mérite und Akademiesekretar, A. Auwers, über die von der Akademie präsentierten Vorschläge für einen neuen ausländischen Ordensritter mit einer Einschätzung der wissenschaftlichen Stellung der Kandidaten</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=206">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=206"/>
+  <dc:creator>Auwers, A.</dc:creator>
+  <dc:title>Mitteilung von A. Auwers, Kanzler des Ordens pour le mérite, vom 1. Juni 1908 an die Akademie über die Verleihung des Ordens pour le mérite für Wissenschaften und Künste an H. A. Lorentz</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=207">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=207"/>
+  <dc:creator>Auwers, A.</dc:creator>
+  <dc:title>Auszug aus dem Sitzungsprotokoll des Plenums vom 6. April 1911 über die Bildung einer Kommission im Zusammenhang mit der Wiederbesetzung einer ausländischen Ordensritterstelle</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=208">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=208"/>
+  <dc:title>Vorschläge für die Wahl eines ausländischen Ritters des Ordens pour le mérite von E. Fischer, W. Nernst, M. Planck, H. Rubens und E. Warburg</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=209">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=209"/>
+  <dc:creator>Diels, H.</dc:creator>
+  <dc:title>Sitzungsprotokoll der Kommission vom 6. Mai 1911 zur Aufstellung einer Vorschlagsliste für die Wahl von Kandidaten der neu zu besetzenden Stelle eines ausländischen Ordensritters durch das Plenum</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=210">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=210"/>
+  <dc:creator>Auwers, A.</dc:creator>
+  <dc:title>Auszug aus dem Sitzungsprotokoll der physikalisch-mathematischen Klasse vom 14. März 1912 über die Vorschläge für die Wiederbesetzung von zwei vakanten Stellen unter den ausländischen Rittern des Ordens pour le mérite</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=211">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=211"/>
+  <dc:creator>Roethe, G.</dc:creator>
+  <dc:title>Auszug aus dem Sitzungsprotokoll des Plenums vom 9. Mai 1912 über die Wahl von Kandidaten, darunter den von M. Planck vorgeschlagenen J. D. van der Waals, zur Neubesetzung der Stelle eines ausländischen Ordensritters</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=212">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=212"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Einschätzung des als Kandidat für den Orden pour le mérite vorgeschlagenen J. D. van der Waals</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=213">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=213"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Auszug aus dem Sitzungsprotokoll des Plenums vom 10. Juli 1913 über die Bildung einer Kommission im Zusammenhang mit der Wiederbesetzung einer ausländischen Ordensritterstelle sowie Protokollniederschrift M. Plancks vom 17. Juli 1913 von der Sitzung dieser Kommission</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=214">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=214"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Mitteilung vom 28. Dezember 1922 an das Auswärtige Amt über die Nichtverleihung des Ordens pour le mérite an Louis Pasteur</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=215">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=215"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Mitteilung vom 17. Oktober 1930 an die Ritter des Ordens pour le mérite für Wissenschaften und Künste über sein Nachrücken in das Amt des Ordenskanzlers sowie über die erforderliche Wahl eines zweiten Vizekanzlers</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=216">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=216"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Mitteilung vom 1. Dezember 1931 an H. Lüders über dessen Wahl zum zweiten Vizekanzler und die anstehende Ersatzwahl für U. von Wilamowitz-Moellendorff</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=217">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=217"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Einladung vom 30. Dezember 1931 an die Ritter des Ordens pour le mérite für Wissenschaften und Künste über die vorzunehmende Ersatzwahl für U. von Wilamowitz-Moellendorff</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=218">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=218"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Mitteilung vom 23. Dezember 1932 über die Wahl von Max Liebermann zum ersten Vizekanzler des Ordens pour le mérite für Wissenschaften und Künste</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=219">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=219"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Einladung vom 28. Dezember 1932 an H. Lüders zu einer Vorbesprechung über die anstehenden Zuwahlen für den Orden pour le mérite für Wissenschaften und Künste</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=220">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=220"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Mitteilung vom 21. Februar 1933 an die Ritter des Ordens pour le mérite für Wissenschaften und Künste über das Ergebnis der Ersatzwahlen für Ordensritter</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=221">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=221"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Mitteilung vom 20. Juni 1933 an die Ritter des Ordens pour le mérite für Wissenschaften und Künste über den Austritt A. Einsteins aus dem Orden</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=222">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=222"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Anfrage vom 2. Januar 1934 an den preußischen Kultusminister B. Rust über die Weiterführung des Ordens pour le mérite für Wissenschaften und Künste und die Gültigkeit seiner Satzungen</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=223">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=223"/>
+  <dc:title>Antwort des preußischen Kultusministers vom 31. Januar 1934 an M. Planck auf dessen Anfrage zur Weiterführung des Ordens pour le mérite für Wissenschaften und Künste</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=224">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=224"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Mitteilung vom 7. Februar 1934 an H. Lüders über den in Abschrift beigefügten Briefwechsel mit dem preußischen Kultusminister zur Weiterführung des Ordens pour le mérite für Wissenschaften und Künste und die daraus zu ziehenden Konsequenzen</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=225">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=225"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Mitteilung vom 20. Januar 1936 an die Ordensritter über eine Anfrage an das Reichsministerium des Innern zum Tragen des Ordensabzeichens</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=226">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=226"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Mitteilung vom 1. Februar 1939 an die Ordensritter über ein abschriftlich beigefügtes Antwortschreiben des preußischen Ministerpräsidenten H. Göring zur Frage der Weiterexistenz des Ordens pour le mérite für Wissenschaften und Künste</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=227">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=227"/>
+  <dc:creator>Scheel, H.</dc:creator>
+  <dc:title>Aktennotiz des Direktors der Preußischen Akademie der Wissenschaften, H. Scheel, vom 11. Februar 1944 über Bestrebungen zur Wiederzulassung des Ordens pour le mérite</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=228">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=228"/>
+  <dc:creator>Grapow, H.</dc:creator>
+  <dc:title>Anfrage des amtierenden Akademiepräsidenten H. Grapow vom 11. Februar 1944 an M. Planck über den Orden pour le mérite</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=229">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=229"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Schreiben vom 17. Februar 1944 an den amtierenden Akademiepräsidenten H. Grapow über seine Bemühungen zum Erhalt des Ordens pour le mérite nach der Machtübernahme durch die Nationalsozialisten</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=230">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=230"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Schreiben vom 17. März 1944 an Akademiedirektor H. Scheel über seine Bemühungen als Ordenskanzler für das Weiterbestehen des Ordens pour le mérite in der Nazizeit</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=231">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=231"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Antrag und A. Ermans vom 15. Juli 1915 über die Vertagung aller etwaigen Schritte gegen Akademien feindlicher Länder bis nach Beendigung des Krieges</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=232">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=232"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>M. Plancks Begründung des von ihm und A. Erman eingereichten Antrags zu den Beziehungen gegenüber den Akademien feindlicher Länder für die Plenarsitzung am 22. Juli 1915</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=233">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=233"/>
+  <dc:title>Gedruckte Anträge, darunter der von M. Planck und A. Erman, für die bevorstehende Aussprache in der Plenarsitzung am 22. Juli 1915 über die Beziehungen zu den Akademien feindlicher Länder</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=234">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=234"/>
+  <dc:creator>Diels, H.</dc:creator>
+  <dc:title>Auszug aus dem Sitzungsprotokoll des Plenums vom 22. Juli 1915 mit dem Ergebnis der Abstimmung zu den eingereichten Anträgen über die Beziehungen zu den Akademien feindlicher Länder</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=235">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=235"/>
+  <dc:creator>Haber, Fritz</dc:creator>
+  <dc:title>Schreiben vom 29. März 1920 an M. Planck mit einer Anlage und dem Antrag auf Beteiligung der Akademie an der Gründung einer Notgemeinschaft der deutschen Wissenschaft</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=236">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=236"/>
+  <dc:title>Auszug aus dem Sitzungsprotokoll des Plenums vom 15. April 1920 über die Beteiligung der Akademie an der Gründung der Notgemeinschaft der deutschen Wissenschaft</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=237">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=237"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Schreiben vom 19. April 1920 an den Staatsminister F. Schmidt-Ott über die Notwendigkeit der Gründung der Notgemeinschaft der deutschen Wissenschaft</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=238">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=238"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Schreiben als vorsitzender Akademiesekretar vom 21. April 1920 an die Akademien in Göttingen, Heidelberg, Leipzig und München über den Plan der Gründung einer Notgemeinschaft der deutschen Wissenschaft</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=239">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=239"/>
+  <dc:creator>Schmidt-Ott, F.</dc:creator>
+  <dc:title>Schreiben vom 25. April 1920 an M. Planck über seine Bereitschaft zum Mitwirken bei der Gründung der Notgemeinschaft der deutschen Wissenschaft</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=241">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=241"/>
+  <dc:creator>Schmidt-Ott. F.</dc:creator>
+  <dc:title>Einladungsschreiben von F. Schmidt-Ott vom 28. Oktober 1920 an die Akademie zur Teilnahme an der Gründungssitzung der Notgemeinschaft der deutschen Wissenschaft</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=240">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=240"/>
+  <dc:creator>Roethe, G.</dc:creator>
+  <dc:title>Auszug aus dem Sitzungsprotokoll des Plenums vom 28. Oktober 1920 über die Delegierung von M. Planck und H. Diels als Vertreter der Akademie zur Gründungsversammlung der Notgemeinschaft der deutschen Wissenschaft</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=242">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=242"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Kurzbericht vom 31. Oktober 1920 an die Akademie über die Gründung der Notgemeinschaft der deutschen Wissenschaft</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=243">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=243"/>
+  <dc:creator>Roethe, G.</dc:creator>
+  <dc:title>Auszug aus dem Sitzungsprotokoll des Plenums vom 11. November 1920 zum Bericht M. Plancks über die Gründung der Notgemeinschaft der deutschen Wissenschaft</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=244">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=244"/>
+  <dc:creator>Haber, Fritz</dc:creator>
+  <dc:title>Denkschrift vom November 1920 über die Notgemeinschaft der deutschen Wissenschaft mit Erwähnung der Wahl M. Plancks in den Hauptausschuss</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=245">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=245"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Auszug aus dem Sitzungsprotokoll der physikalisch-mathematischen Klasse vom 22. Mai 1919 über die Bildung einer Kommission zur Prüfung des Antrags auf Zusammenfassung der in Deutschland erscheinenden naturwissenschaftlichen Bibliographien</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=246">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=246"/>
+  <dc:title>Schreiben der Preußischen Akademie der Wissenschaften vom 12. Juni 1919 an das Kultusministerium über die Unterstützung des Plans einer Zusammenfassung der in Deutschland erscheinenden naturwissenschaftlichen Bibliographien</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=247">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=247"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Protokoll der Beratung vom 4. Juli 1919 zur Frage einer Zusammenfassung der naturwissenschaftlichen Bibliographien</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=248">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=248"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Auszug aus dem Protokoll der physikalisch-mathematischen Klasse vom 10. Juli 1919 über den Bericht M. Plancks in der Angelegenheit der naturwissenschaftlichen Bibliographien</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=249">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=249"/>
+  <dc:title>Schreiben der Preußischen Akademie der Wissenschaften vom 17. Juli 1919 an das Kultusministerium in der Angelegenheit der Bildung einer Zentralstelle für die naturwissenschaftlichen Bibliographien</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=250">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=250"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Schreiben vom 8. August 1919 an H. A. Krüss im Kultusministerium über die Gründe für die baldige Schaffung einer Zentralstelle für naturwissenschaftliche Berichterstattung</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=251">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=251"/>
+  <dc:title>Anlage zu einem Bericht M. Plancks vor der Akademie vom 6. Oktober 1919 über die geplante Arbeitsgemeinschaft deutscher naturwissenschaftlicher Bibliographien</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=252">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=252"/>
+  <dc:creator>Rubner, M.</dc:creator>
+  <dc:title>Auszug aus dem Sitzungsprotokoll des Plenums vom 13. November 1919 zu Plancks Bericht über die Bildung einer Zentralstelle naturwissenschaftlicher Bibliographien</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=253">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=253"/>
+  <dc:title>Bericht der Preußischen Akademie der Wissenschaften vom 13. November 1919 an das Kultusministerium über die Notwendigkeit einer baldigen Einrichtung der Zentralstelle für naturwissenschaftliche Berichterstattung</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=254">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=254"/>
+  <dc:creator>Haenisch, K.</dc:creator>
+  <dc:title>Schreiben des Kultusministers K. Haenisch vom 5. Dezember 1919 an die Akademie über die Gewährung einer Anlaufsumme in Höhe von 10 000 Mark für die Zentralstelle</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=255">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=255"/>
+  <dc:title>Schreiben der Preußischen Akademie der Wissenschaften vom 5. Januar 1920 an das Kultusministerium über die Notwendigkeit der kurzfristigen Ausleihe von ausländischen naturwissenschaftlichen Zeitschriften aus der Staatsbibliothek durch die Reichszentralstelle für naturwissenschaftliche Berichterstattung</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=256">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=256"/>
+  <dc:title>Bericht der Preußischen Akademie der Wissenschaften vom 7. Januar 1920 an das Kultusministerium über die Bildung einer Kommission für die Reichszentralstelle der naturwissenschaftlichen Berichterstattung unter dem Vorsitz von M. Planck</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=257">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=257"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Dankschreiben vom 15. März 1920 an A. v. Harnack, Generaldirektor der Preußischen Staatsbibliothek, für die Ausleihe von ausländischen naturwissenschaftlichen Zeitschriften an die Reichszentralstelle der naturwissenschaftlichen Berichterstattung</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=124">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=124"/>
+  <dc:title>Einladungskarte der Russischen Akademie der Wissenschaften an die Preußische Akademie der Wissenschaften zu den Feierlichkeiten ihres 200jährigen Bestehens</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=125">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=125"/>
+  <dc:creator>von Gruber, M.</dc:creator>
+  <dc:title>Anfrage des Präsidenten der Bayerischen Akademie der Wissenschaften M. von Gruber vom 23. Mai 1925 an M. Planck bezüglich der Teilnahme an der 200-Jahrfeier der Russischen Akademie der Wissenschaften</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=126">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=126"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Auszug aus dem Sitzungsprotokoll des Plenums vom 28. Mai 1925 über die Annahme der Einladung zur Teilnahme an der 200-Jahrfeier der Russischen Akademie der Wissenschaften</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=127">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=127"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Schreiben vom 29. Mai 1925 an den Präsidenten der Bayerischen Akademie der Wissenschaften M. v. Gruber über die Gründe für die Teilnahme der Berliner Akademie an der 200-Jahrfeier der Russischen Akademie der Wissenschaften</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=128">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=128"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Schreiben vom 16. Juni 1925 an die Russische Akademie der Wissenschaften über die Annahme der Einladung zur Teilnahme an deren 200-Jahrfeier</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=129">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=129"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Schreiben vom 15. Juli 1925 an den Rektor der Universität Berlin K. Holl über die Gefährdung der Teilnahme an der 200-Jahrfeier der Russischen Akademie der Wissenschaften</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=130">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=130"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Schreiben vom 27. Juli 1925 an die Akademien in München, Göttingen, Heidelberg und Leipzig über die Teilnahme an der 200-Jahrfeier in Leningrad und die geplante Reiseroute</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=131">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=131"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Schreiben vom 28. August 1925 an die Akademien in München, Göttingen, Heidelberg und Leipzig über seine definitive Teilnahme an der 200-Jahrfeier der Russischen Akademie der Wissenschaften</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=132">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=132"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Von M. Planck entworfene Grußadresse vom 6. September 1925 zur 200-Jahrfeier der Russischen Akademie der Wissenschaften</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=133">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=133"/>
+  <dc:creator>Schmidt-Ott, F.</dc:creator>
+  <dc:title>Schreiben des Präsidenten der Notgemeinschaft der Deutschen Wissenschaft F. Schmidt-Ott vom 3. November 1925 an die Preußische Akademie der Wissenschaften über die Bildung eines Sonderausschusses für wissenschaftliche Zusammenarbeit zwischen Deutschland und Rußland und die Entsendung eines Vertreter</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=134">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=134"/>
+  <dc:creator>Schmidt-Ott, F.</dc:creator>
+  <dc:title>Niederschrift des Präsidenten der Notgemeinschaft der Deutschen Wissenschaft F. Schmidt-Ott über eine Besprechung am 7. September 1925 in Leningrad zwischen russischen und deutschen Wissenschaftlern zu Fragen einer engeren Zusammenarbeit</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=135">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=135"/>
+  <dc:creator>Roethe, G.</dc:creator>
+  <dc:title>Auszug aus dem Sitzungsprotokoll des Plenums vom 5. November 1925 über die Delegierung von M. Planck und H. Lüders in den Sonderausschuss für wissenschaftliche Zusammenarbeit zwischen Deutschland und Rußland</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=258">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=258"/>
+  <dc:creator>Haber, Fritz</dc:creator>
+  <dc:title>Schreiben vom 10. April 1933 an den vorsitzenden Akademiesekretar Heinrich von Ficker über den Besuch der Familie Planck und seinen Verzicht auf Ehrungen unter den vorherrschenden politischen Verhältnissen</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=259">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=259"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Auszug aus dem Sitzungsprotokoll des Plenums vom 11. Mai 1933 über die Würdigung Albert Einsteins nach dessen Akademieaustritt durch Max Planck, vorsitzender Sekretar</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=260">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=260"/>
+  <dc:creator>Goldschmidt, A.</dc:creator>
+  <dc:title>Anfrage des ordentlichen Akademiemitglieds A. Goldschmidt vom 27. Juli 1933 an die Akademie zu seiner Teilnahme am Internationalen Kunsthistorischen Kongreß in Stockholm unter den veränderten politischen Verhältnissen</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=261">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=261"/>
+  <dc:title>Auszug aus dem Protokoll der Sekretariatssitzung vom 27. Juli 1933 über die Teilnahme von A. Goldschmidt am Internationalen Kongress für Kunstgeschichte in Stockholm</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=262">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=262"/>
+  <dc:title>Erlass des Kultusministers vom 3. November 1933 an die Akademie mit der Auflagezu berichten, wer die Teilnahme von Prof. Goldschmidt am Internationalen Kongress für Kunstgeschichte in Stockholm gestattet habe</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=263">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=263"/>
+  <dc:title>Bericht der Akademie vom 9. November 1933 an das Kultusministerium über die Teilnahme von A. Goldschmidt am Internationalen Kongress für Kunstgeschichte in Stockholm</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=264">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=264"/>
+  <dc:title>Erlass des Kultusministers vom 12. Januar 1934 an die Akademie mit der Weisung, Auslandseinsätze von Personen nur mit einem politischen Gutachten des Gauleiters der NSDAP und mit Genehmigung des Ministers vorzunehmen</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=265">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=265"/>
+  <dc:title>Auszug aus dem Sitzungsprotokoll der physikalisch-mathematischen Klasse vom 6. Juli 1933 über das Einrücken Max von Laues in die vakante Fachstelle für Physik</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=266">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=266"/>
+  <dc:title>Auszüge aus den Sitzungsprotokollen des Plenums vom 9. und 23. November 1933 über den Beschluss, die durch den Austritt Albert Einsteins vakant gewordene hauptamtliche Stelle Max von Laue zu übertragen</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=267">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=267"/>
+  <dc:title>Antrag der Akademiesekretare an das Kultusministerium vom 30. November 1933, die durch den Austritt Albert Einsteins vakant gewordene hauptamtliche Stelle der physikalisch-mathematischen Klasse Max von Laue zu übertragen</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=268">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=268"/>
+  <dc:title>Ablehnung des Antrags der Akademie auf Übertragung der hauptamtlichen Mitgliedsstelle der physikalisch-mathematischen Klasse an M. von Laue durch den Kultusminister am 30. Januar 1934</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=269">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=269"/>
+  <dc:title>Antrag der ordentlichen Mitglieder L. Bieberbach, H. Ludendorff und P. Guthnick vom 13. Februar 1936 auf Zuwahl von Eugen Fischer und Hans F. K. Günther als Vertreter der Anthropologie und Rassenkunde</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=270">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=270"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Auszug aus dem Sitzungsprotokoll der physikalisch-mathematischen Klasse vom 13. Februar 1936 über die Frage der Einrichtung zweier Fachstellen für Anthropologie und Rassenkunde</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=271">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=271"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Auszug aus dem Protokoll der Sekretariatssitzung vom 20. Februar 1936 über die Frage der Einrichtung neuer Fachstellen für Rassenkunde und Anthropologie</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=272">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=272"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Auszug aus dem Sitzungsprotokoll der physikalisch-mathematischen Klasse vom 27. Februar 1936 über den Beschluß des Sekretariats, keine neuen Fachstellen für Rassenkunde und Anthropologie einzurichten</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=273">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=273"/>
+  <dc:title>Erlass des Reichserziehungsministers vom 14. Februar 1936 an die Akademie über die notwendige Änderung der Akademiesatzungen</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=274">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=274"/>
+  <dc:title>Kurzbericht der Akademie vom 17. Februar 1936 an das Reichserziehungsministerium über die geplante Änderung der Satzungen</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=275">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=275"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Auszug aus dem Sitzungsprotokoll des Plenums vom 20. Februar 1936 über die vom Reichserziehungsministerium geforderte Satzungsänderung</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=276">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=276"/>
+  <dc:title>Bericht der Akademie vom 13. März 1936 an das Reichserziehungsministerium über den als Anlage beigefügten Entwurf einer Statutenänderung</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=277">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=277"/>
+  <dc:title>Genehmigungserlass des Reichserziehungsministers vom 22. Mai 1936 an die Akademie zum eingereichten Entwurf der Statutenänderung</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=278">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=278"/>
+  <dc:creator>Lüders, H.</dc:creator>
+  <dc:title>Auszug aus dem Protokoll der Sekretariatssitzung vom 15. Oktober 1936 über die Abänderung der Unterschriftsformel bei Akademieausfertigungen</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=279">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=279"/>
+  <dc:title>Erlass des Reichserziehungsministers vom 10. Februar 1937 an die Akademie über die Benennung der jüdischen ordentlichen, außerordentlichen und korrespondierenden Mitglieder sowie der jüdischen Ehrenmitglieder</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=280">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=280"/>
+  <dc:title>Bericht der Akademie vom 1. März 1937 an das Reichserziehungsministerium über die jüdischen Akademiemitglieder</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=281">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=281"/>
+  <dc:title>Gemeinsamer Bericht der Akademien in Berlin, Göttingen, Leipzig und München an den Reichserziehungsminister vom 10. Juni 1937 über die jüdischen Akademiemitglieder</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=282">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=282"/>
+  <dc:title>Erlass des Reichserziehungsministers vom 8. Oktober 1938 an die Akademie über die vorzunehmende Neufassung der Akademiesatzung nach dem „Führerprinzip“ und den Ausschluss der jüdischen ordentlichen Mitglieder</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=283">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=283"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Schreiben vom 10. Oktober 1938 an die ordentlichen Mitglieder A. Goldschmidt, E. Norden und I. Schur über den Inhalt des Erlasses des Reichserziehungsministers vom 8. Oktober 1938</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=284">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=284"/>
+  <dc:creator>Goldschmidt, A.</dc:creator>
+  <dc:title>Schreiben des ordentlichen Akademiemitglieds A. Goldschmidt vom 12. Oktober 1938 an den vorsitzenden Sekretar M. Planck über seinen erzwungenen Austritt aus der Akademie</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=285">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=285"/>
+  <dc:creator>Norden, Eduard</dc:creator>
+  <dc:title>Schreiben des ordentlichen Akademiemitglieds Eduard Norden vom 12. Oktober 1938 an den vorsitzenden Sekretar M. Planck über seinen erzwungenen Austritt aus der Akademie</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=286">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=286"/>
+  <dc:creator>Schur, I.</dc:creator>
+  <dc:title>Schreiben des ordentlichen Akademiemitglieds I. Schur vom 12. Oktober 1938 an den vorsitzenden Sekretar M. Planck über seinen erzwungenen Austritt aus der Akademie</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=287">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=287"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Auszug aus dem Protokoll der außerordentlichen Plenarsitzung vom 13. Oktober 1938 über das Ausscheiden der jüdischen Mitglieder A. Goldschmidt, E. Norden und I. Schur sowie die Neufassung der Akademiesatzungen</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=288">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=288"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Dankschreiben als vorsitzender Sekretar an A. Goldschmidt, E. Norden und I. Schur vom 14.10.1938 nach deren erzwungenem Ausscheiden aus der Akademie</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=289">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=289"/>
+  <dc:title>Kurzbericht der Akademie vom 14. Oktober 1938 an den Reichserziehungsminister über den Austritt der jüdischen ordentlichen Mitglieder A. Goldschmidt, E. Norden und I. Schur</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=292">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=292"/>
+  <dc:title>Erlass des Reichserziehungsministers vom 22. November 1938 an die Akademie mit Auflagen für die Neufassung der Akademiesatzung und der Aufforderung, einen neuen Satzungsentwurf bis zum 20. Dezember beim Ministerium einzureichen</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=293">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=293"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Konzept eines Rundschreibens an alle reichsangehörigen Akademiemitglieder auf Grund der antisemitischen Bestimmungen des Ministerialerlasses vom 22. November 1938</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=294">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=294"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Konzept eines Fragebogens auf Grund der antisemitischen Bestimmungen des Ministerialerlasses vom 22. November 1938</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=295">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=295"/>
+  <dc:title>Fragebogen für die Akademiemitglieder auf Grund der antisemitischen Bestimmungen des Ministerialerlasses vom 22. November 1938</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=296">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=296"/>
+  <dc:title>Rundschreiben vom 1. Dezember 1938 an alle reichsangehörigen Akademiemitglieder auf Grund der antisemitischen Bestimmungen des Ministerialerlasses vom 22. November 1938</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=297">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=297"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Auszug aus dem Sitzungsprotokoll des Plenums vom 1. Dezember 1938 über die antisemitischen Bestimmungen des Ministerialerlasses vom 22. November 1938</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=298">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=298"/>
+  <dc:creator>Hintze, Otto</dc:creator>
+  <dc:title>Rücksendung des Fragebogens durch das ordentliche Mitglied Otto Hintze mit dessen Austrittserklärung vom 2. Dezember 1938</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=299">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=299"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Dankschreiben des vorsitzenden Sekretars M. Planck vom 8. Dezember 1938 an O. Hintze nach dessen erzwungenem Ausscheiden aus der Akademie</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=300">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=300"/>
+  <dc:creator>Jacoby, F.</dc:creator>
+  <dc:title>Rücksendung des Fragebogens durch das korrespondierende Mitglied F. Jacoby mit dessen Austrittserklärung vom 2. Dezember 1938</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=301">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=301"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Dankschreiben M. Plancks als vorsitzender Sekretar vom 8. Dezember 1938 an F. Jacoby nach dessen erzwungenem Ausscheiden aus der Akademie</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=302">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=302"/>
+  <dc:creator>Sering, M.</dc:creator>
+  <dc:title>Schreiben des ordentlichen Mitglieds M. Sering vom 5. Dezember 1938 an den vorsitzenden Sekretar M. Planck über seinen erzwungenen Austritt aus der Akademie</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=303">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=303"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Dankschreiben M. Plancks als vorsitzender Sekretar vom 8. Dezember 1938 an M. Sering nach dessen erzwungenem Ausscheiden aus der Akademie</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=304">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=304"/>
+  <dc:creator>Meyer, H. H.</dc:creator>
+  <dc:title>Schreiben des korrespondierenden Akademiemitglieds H. H. Meyer vom 13. Dezember 1938 an die Preußische Akademie der Wissenschaften über seinen erzwungenen Austritt aus der Akademie</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=305">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=305"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Dankschreiben M. Plancks als vorsitzender Sekretar vom 15. Dezember 1938 an H. H. Meyer nach dessen erzwungenem Ausscheiden aus der Akademie</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=306">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=306"/>
+  <dc:title>Auszug aus dem Sitzungsprotokoll des Plenums vom 15. Dezember 1938 über das erzwungene Ausscheiden der ordentlichen Mitglieder M. Sering und O. Hintze sowie der korrespondierenden Mitglieder F. Jacoby und H. H. Meyer infolge der nationalsozialistischen Rassengesetze und über die Annahme der neuen Akademiesatzung</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=307">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=307"/>
+  <dc:title>Bericht der Akademie vom 15. Dezember 1938 an den Reichserziehungsminister über das erzwungene Ausscheiden der Akademiemitglieder M. Sering, O. Hintze, F. Jacoby und H. H. Meyer</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=308">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=308"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Berichtskonzept M. Plancks an den Reichserziehungsminister zum Ergebnis der Fragebogenaktion</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=309">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=309"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Fragebogen von M. Planck vom Dezember 1938 über seine Abstammung</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=310">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=310"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Fragebogen von M. Planck vom 4. März 1939</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=311">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=311"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Fragebogen von M. Planck vom 4. März 1939 über seine Nichtzugehörigkeit zu einer Logenorganisation</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=360">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=360"/>
+  <dc:title>Erlass des Reichserziehungsministers vom 8. Oktober 1938 an die Akademie über die vorzunehmende Neufassung der Akademiesatzung nach dem „Führerprinzip“ und den Ausschluss der jüdischen ordentlichen Mitglieder</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=290">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=290"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Schreiben vom 25. Oktober 1938 an den Ministerialrat Frey mit der Bitte um eine Unterredung über die vorzunehmende Änderung der Akademiesatzungen</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=291">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=291"/>
+  <dc:title>Zwischenbericht der Akademie vom 26. Oktober 1938 an den Reichserziehungsminister über die Neufassung ihrer Satzungen</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=312">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=312"/>
+  <dc:title>Erlass des Reichserziehungsministers vom 22. November 1938 an die Akademie mit Auflagen für die Neufassung der Akademiesatzung und der Aufforderung, einen neuen Satzungsentwurf bis zum 20. Dezember beim Ministerium einzureichen</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=313">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=313"/>
+  <dc:title>Schreiben der ordentlichen Akademie- und NSDAP-Mitglieder B. Meissner, Th. Vahlen, A. Kraft, L. Bieberbach und H. Grapow an die Akademieleitung mit der Bitte um Aufnahme in die Satzungskommission</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=314">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=314"/>
+  <dc:title>Auszug aus dem Sitzungsprotokoll des Plenums vom 1. Dezember 1938 über die Zusammensetzung der Kommission zur Neufassung der Satzungen</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=358">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=358"/>
+  <dc:title>Auszug aus dem Sitzungsprotokoll des Plenums vom 15. Dezember 1938 über die Annahme der neuen Akademiesatzung</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=315">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=315"/>
+  <dc:title>Erste Seite der zur Genehmigung durch den Reichserziehungsminister vorgelegten Akademiesatzung vom 15. Dezember 1938</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=316">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=316"/>
+  <dc:title>Bericht der Akademie vom 22. Dezember 1938 an den Reichserziehungsminister über die als Anlage beigefügte neue Akademiesatzung</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=317">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=317"/>
+  <dc:title>Bericht der Akademie vom 22. Dezember 1938 an den Reichserziehungsminister über den Rücktritt der vier beständigen Sekretare in Auswirkung der neuen Akademiesatzung</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=318">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=318"/>
+  <dc:title>Erlass des Reichserziehungsministers vom 24. Dezember 1938 an die Akademie über die Ernennung der kommissarischen Akademieleitung</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=319">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=319"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Mitteilung vom 30. Dezember 1938 an die ordentlichen Mitglieder und alle Mitarbeiter der Akademie über die vom Reichserziehungsminister ernannte neue Akademieleitung</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=320">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=320"/>
+  <dc:creator>Vahlen, Th.</dc:creator>
+  <dc:title>Schreiben des kommissarischen Akademiepräsidenten Th. Vahlen vom 2. Januar 1939 an M. Planck wegen der Übergabe der Amtsgeschäfte in Form eines Betriebsappells</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=321">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=321"/>
+  <dc:title>Erlass des Reichserziehungsministers vom 10. Januar 1939 an den kommissarischen Akademiepräsidenten über die Ernennung der beiden kommissarischen Klassensekretare</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=322">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=322"/>
+  <dc:creator>Vahlen, Th.</dc:creator>
+  <dc:title>Auszug aus dem Sitzungsprotokoll des Plenums vom 12. Januar 1939 über die Ernennung der neuen kommissarischen Akademieleitung und den Rücktritt der Sekretare</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=323">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=323"/>
+  <dc:title>Friedrichssitzung der Preußischen Akademie der Wissenschaften am 26. Januar 1939</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=324">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=324"/>
+  <dc:title>Schreiben der ordentlichen Mitglieder M. Planck, H. Lüders und H. Stille vom 14. März 1939 an den kommissarischen Präsidenten Th. Vahlen über ihre Befürchtungen hinsichtlich der Streichung des Vorschlagsrechtes der Akademie bei der Ernennung des Präsidiums</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=325">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=325"/>
+  <dc:title>Mitteilung einer Anfrage der ordentlichen Mitglieder M. Planck, H. Lüders und H. Stille vom 14. März 1939 an den kommissarischen Akademiepräsidenten Th. Vahlen wegen der Beibehaltung des Vorschlagsrechtes der Akademie bei der Ernennung ihres Präsidiums zur Kenntnisnahme an alle ordentlichen Akademiemitglieder</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=326">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=326"/>
+  <dc:creator>Grapow, H.</dc:creator>
+  <dc:title>Schreiben des kommissarischen Sekretars H. Grapow vom 15. März 1939 an den kommissarischen Präsidenten Th. Vahlen über das ihm zugegangene Schreiben der ordentlichen Mitglieder Planck, Lüders und Stille vom 14. März 1939</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=327">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=327"/>
+  <dc:creator>Vahlen, Th.</dc:creator>
+  <dc:title>Schreiben des kommissarischen Präsidenten Th. Vahlen vom 17. März 1939 an M. Planck auf dessen Anfrage zum Vorschlagsrecht der Akademie</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=328">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=328"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Schreiben vom 19. März 1939 an den kommissarischen Präsidenten Th. Vahlen zu den Motiven seines Rundschreibens an die ordentlichen Mitglieder</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=329">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=329"/>
+  <dc:title>Erlass des Reichserziehungsministers vom 8. Juni 1939 an die Akademie über die Genehmigung der neuen Akademiesatzung in der beigefügten Fassung und mit der Aufforderung, Vorschläge für die Ernennung der Akademieleitung einzureichen</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=330">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=330"/>
+  <dc:creator>Vahlen, Th.</dc:creator>
+  <dc:title>Auszug aus dem Sitzungsprotokoll des Plenums vom 15. Juni 1939 über die neue Satzung der Akademie sowie über die Abstimmung von Vorschlägen für die neue Akademieleitung</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=331">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=331"/>
+  <dc:creator>Vahlen, Th.</dc:creator>
+  <dc:title>Bericht des kommissarischen Akademiepräsidenten Th. Vahlen vom 15. Juni 1939 an den Reichserziehungsminister über die Abstimmungsergebnisse bei den Vorschlägen für die Ernennung der neuen Akademieleitung</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=332">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=332"/>
+  <dc:title>Erlass des Reichserziehungsministers vom 24. Juni 1939 an den Akademiepräsidenten über die Ernennung der Akademieleitung</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=333">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=333"/>
+  <dc:creator>Schwendener, S.</dc:creator>
+  <dc:title>Mitteilung an den Klassensekretar W. Waldeyer vom 30. November 1914 über den in einer Kommissionssitzung beschlossenen Antrag, die Helmholtz-Medaille an Max Planck zu verleihen</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=334">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=334"/>
+  <dc:creator>Waldeyer, W.</dc:creator>
+  <dc:title>Sonderprotokolle der Sitzung der physikalisch-mathematischen Klasse vom 10. Dezember 1914 und der Sitzung des Plenums vom 17. Dezember 1914 über die Auszeichnung Max Plancks mit der Helmholtz-Medaille</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=335">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=335"/>
+  <dc:creator>Waldeyer, W.</dc:creator>
+  <dc:title>Auftrag zur Anfertigung der Helmholtz-Medaille für Max Planck</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=336">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=336"/>
+  <dc:title>Vorderansicht der Hermann-von-Helmholtz-Medaille in Gold</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=337">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=337"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Dankschreiben an den vorsitzenden Sekretar der Preußischen Akademie der Wissenschaften, G. Roethe, vom 2. Februar 1915 anlässlich seiner Auszeichnung mit der Helmholtz-Medaille</a></dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=338">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=338"/>
+  <dc:creator>Sommerfeld, A.</dc:creator>
+  <dc:title>Glückwunschadresse zum 60. Geburtstag M. Plancks am 23. April 1918</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=339">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=339"/>
+  <dc:creator>Schrödinger, Erwin</dc:creator>
+  <dc:title>Entwurf der Glückwunschadresse für M. Planck zum 50. Doktorjubiläum am 28. Juni 1929</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=340">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=340"/>
+  <dc:title>Glückwunschadresse der Preußischen Akademie der Wissenschaften zum 50. Doktorjubiläum von M. Planck am 28. Juni 1929</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=343">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=343"/>
+  <dc:title>Adresse der Preußischen Akademie der Wissenschaften zum 60. Doktorjubiläum von M. Planck am 28. Juni 1939</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=344">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=344"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Dankschreiben vom 1. Juli 1939 an die Akademie anlässlich der Glückwünsche zu seinem 60. Doktorjubiläum</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=341">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=341"/>
+  <dc:title>Glückwunschadresse der Preußischen Akademie der Wissenschaften zum 80. Geburtstag von M. Planck am 23. April 1938</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=342">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=342"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Danksagungskarte vom 16. Mai 1938 an Frau Marie von Bülow für die Glückwünsche zu seinem 80. Geburtstag</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=349">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=349"/>
+  <dc:creator>Grapow, H.</dc:creator>
+  <dc:title>Glückwunschschreiben des amtierenden Akademiepräsidenten H. Grapow zum 85. Geburtstag M. Plancks am 23. April 1943</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=350">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=350"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Dankschreiben vom 1. Mai 1943 an den amtierenden Akademiepräsidenten H. Grapow für die Glückwünsche zu seinem 85. Geburtstag</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=345">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=345"/>
+  <dc:title>Anfrage des Reichserziehungsministeriums vom 5. Dezember 1940 an den Akademiepräsidenten wegen des Ankaufs der von Philipp Flettner angefertigten Marmorbüste M. Plancks</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=346">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=346"/>
+  <dc:title>Bericht der Akademie vom 13. Dezember 1940 an das Reichserziehungsministerium über ihr Interesse am Ankauf der Planck-Büste von P. Flettner</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=347">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=347"/>
+  <dc:title>Mitteilung des Reichserziehungsministeriums vom 28. Januar 1941 an die Akademie über die Bereitstellung von Mitteln für den Ankauf der Planck-Büste</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=348">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=348"/>
+  <dc:title>Marmorbüste Max Plancks von Philipp Flettner aus dem Jahre 1938</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=351">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=351"/>
+  <dc:creator>Grapow, H.</dc:creator>
+  <dc:title>Glückwunschschreiben des amtierenden Akademiepräsidenten H. Grapow zum 50. Akademiejubiläum M. Plancks am 11. Juni 1944</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=352">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=352"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Dankschreiben vom 10. Juni 1944 an den amtierenden Akademiepräsidenten H. Grapow für die Glückwünsche zu seinem 50. Akademiejubiläum</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=353">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=353"/>
+  <dc:creator>Heisenberg, Werner</dc:creator>
+  <dc:title>Festvortrag „Das Plancksche Wirkungsquantum“ zum 50. Akademiejubiläum M. Plancks, gehalten in der Leibnizsitzung der Preußischen Akademie der Wissenschaften am 29. Juni 1944</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=354">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=354"/>
+  <dc:title>Leibniztag der Preußischen Akademie der Wissenschaften am 29. Juni 1944</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=355">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=355"/>
+  <dc:title>Auszug aus dem Sitzungsprotokoll des Plenums vom 9. Oktober 1947 über das Gedenken an das verstorbene ordentliche Mitglied M. Planck und den Plan zur Errichtung eines Planck-Denkmals auf dem Gelände zwischen Universität und Akademie</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=356">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=356"/>
+  <dc:title>Max-Planck-Denkmal von Bernhard Heiliger, 1949</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/planckiana.php?dokument=357">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/planckiana.php?dokument=357"/>
+  <dc:creator>von Laue, M.</dc:creator>
+  <dc:title>Nachruf auf M. Planck von M. von Laue</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/onlinetexte/Nachweise_zum_Wirken_Max_Planck.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/onlinetexte/Nachweise_zum_Wirken_Max_Planck.pdf"/>
+  <dc:creator>Künzel, Friedrich</dc:creator>
+  <dc:title>Nachweise zum Wirken Max Plancks an der Berliner Akademie der Wissenschaften</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/akademieansprachen.php">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/akademieansprachen.php"/>
+  <dc:creator>Planck, Max</dc:creator>
+  <dc:title>Akademieansprachen</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/onlinetexte/Heisenberg_Wirkungsquantum.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/onlinetexte/Heisenberg_Wirkungsquantum.pdf"/>
+  <dc:creator>Heisenberg, Werner</dc:creator>
+  <dc:title>Vortrag über Max Plancks bedeutendste Entdeckung</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/akademievortraege.php">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/akademievortraege.php"/>
+  <dc:creator>Künzel, Friedrich</dc:creator>
+  <dc:title>Vorträge, Vorlagen und Ansprachen von Max Planck in der Preußischen Akademie der Wissenschaften</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://planck.bbaw.de/schriftenverzeichnis.php">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Planck"/>
+  <dc:identifier rdf:resource="http://planck.bbaw.de/schriftenverzeichnis.php"/>
+  <dc:title>Verzeichnis von Max Planks sämtlichen Schriften</dc:title>
+</rdf:Description>
+
+
 </rdf:RDF>
