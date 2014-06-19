@@ -4411,6 +4411,20 @@ Vierte Abteilung: Exzerpte. Notizen. Marginalien.</dcterms:abstract>
 		<gnd:topic rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Geschichte</gnd:topic>
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Herres"/>
 	</rdf:Description>
+  <rdf:Description rdf:about="http://wsp.normdata.rdf/MarxEngelsGAdigital">
+    <dc:language>ger</dc:language>
+    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
+    <foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">megadigital</foaf:nick>
+    <foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">MEGAdigital -- Ökonomische Texte von Karl Marx im Internet</foaf:name>
+    <foaf:status rdf:datatype="http://www.w3.org/2001/XMLSchema#string">aktiv</foaf:status>
+    <dcterms:abstract rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Die MEGA präsentiert Edierte Texte und Teile der Editorischen 
+      Apparate der II. Abteilung in einer digitale Ausgabe sukzessive im Internet. Dies erfolgt im Rahmen eines Projekts der 
+      Telota-Arbeitsgruppe der BBAW und des Akademienvorhabens MEGA mit Unterstützung einer japanischen Forschergruppe.</dcterms:abstract>
+    <foaf:homepage rdf:resource="http://mega.bbaw.de/megadigital"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Neuzeit"/>
+    <gnd:topic rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Geschichte</gnd:topic>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA" />  
+  </rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/Motschmann">
 		<foaf:familyName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Motschmann</foaf:familyName>
 		<dc:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Wissenschaftliche Mitarbeiterin</dc:description>
