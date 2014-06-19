@@ -202,6 +202,12 @@ public class CollectionManager {
                   mdRecordEXist.setCollectionNames(collectionId);
                   mdRecordEXist.setId(counter); // collection wide id
                   mdRecordEXist = createMainFieldsMetadataRecord(mdRecordEXist, collection);
+                  mdRecordEXist.setCreator(mdRecord.getCreator());
+                  mdRecordEXist.setTitle(mdRecord.getTitle());
+                  mdRecordEXist.setPublisher(mdRecord.getPublisher());
+                  mdRecordEXist.setDate(mdRecord.getDate());
+                  if (mdRecord.getLanguage() != null)
+                    mdRecordEXist.setLanguage(mdRecord.getLanguage());
                   mdRecordsEXist.add(mdRecordEXist);
                 }
                 mdRecords.addAll(mdRecordsEXist);
