@@ -25,8 +25,12 @@ public class OaiPmhSetManager {
   
   public static void main(String[] args) throws ApplicationException {
     OaiPmhSetManager setManager = new OaiPmhSetManager();
-//    setManager.init();
-    setManager.createSets();
+    //zum Sets-xml erzeugen:
+    //setManager.init();
+    //setManager.convert();
+    
+    //zum Daten indexieren
+    //setManager.connectSetAndData();
   }
 
   public OaiPmhSetManager() {
@@ -114,7 +118,7 @@ public class OaiPmhSetManager {
    * this is kind of a hack and should be handled with care 
    * 
    */
-  public void createSets() {
+  public void connectSetAndData() {
     try {
       CollectionReader collectionReader = CollectionReader.getInstance();
       ArrayList<Collection> collList = collectionReader.getCollections();
