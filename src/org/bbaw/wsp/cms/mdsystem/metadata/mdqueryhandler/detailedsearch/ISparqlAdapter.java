@@ -90,4 +90,6 @@ public interface ISparqlAdapter {
    *           if the minNumberTriples is less than 2 or one of the parameters is null.
    */
   List<HitStatement> findRelatedConcepts(String node, int minNumberTriples, int maxNumberTriples) throws IllegalArgumentException;
+  
+  HitGraphContainer sparqlDirectly(String pattern);
 }
