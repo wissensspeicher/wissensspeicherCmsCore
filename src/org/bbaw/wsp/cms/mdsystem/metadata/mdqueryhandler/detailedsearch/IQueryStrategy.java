@@ -75,6 +75,8 @@ public interface IQueryStrategy<T> {
    */
   T preloadAllProjectInfoAndResolveUris(String collectionIds);
   
+  T preloadAnything(String query);
+  
   /**
    * Query a single named graph.
    * 
