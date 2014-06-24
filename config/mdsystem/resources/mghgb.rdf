@@ -15,4 +15,10 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MonumentaGermaniaeHistorica/DieGoldeneBulle"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/mgh/"/>
 </rdf:Description>
+<rdf:Description rdf:about="http://telota.bbaw.de:8088/exist/rest/db/mgh/">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MonumentaGermaniaeHistorica/DerGoldeneBulle"/>
+  <dc:identifier rdf:resource="http://telota.bbaw.de:8088/exist/rest/db/mgh/"/>
+  <dc:type>eXistDir</dc:type>
+</rdf:Description>
 </rdf:RDF>
