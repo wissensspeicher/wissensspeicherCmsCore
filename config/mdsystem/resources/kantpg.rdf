@@ -15,4 +15,21 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KantSchriften/PhysischeGeographie"/>
   <dc:identifier rdf:resource="http://kant.bbaw.de/physische-geographie"/>
 </rdf:Description>
+<rdf:Description rdf:about="http://kant.bbaw.de/physische-geographie/das-editionsvorhaben">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KantSchriften/PhysischeGeographie"/>
+  <dc:identifier rdf:resource="http://kant.bbaw.de/physische-geographie/das-editionsvorhaben"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://kant.bbaw.de/physische-geographie/das-editionsvorhaben">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KantSchriften/PhysischeGeographie"/>
+  <dc:identifier rdf:resource="http://kant.bbaw.de/physische-geographie/das-editionsvorhaben"/>
+  <dc:title>Das Editionsvorhaben</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://kant.bbaw.de/physische-geographie/informationen">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KantSchriften/PhysischeGeographie"/>
+  <dc:identifier rdf:resource="http://kant.bbaw.de/physische-geographie/informationen"/>
+  <dc:title>Informationen zu den "Vorlesungen über physische Geographie"</dc:title>
+</rdf:Description>
 </rdf:RDF>

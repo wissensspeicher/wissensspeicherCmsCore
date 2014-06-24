@@ -56,8 +56,16 @@ public class RelatedHitStatement extends HitStatement {
     return distance; 
   }
 
-  public RelatedHitStatement(final RDFNode subject, final RDFNode predicate, final RDFNode object, final double score, final RDFNode subjParent, final RDFNode predParent, final RDFNode resolvedPer,final RDFNode resolvedLing, final RDFNode resolvedTime, final RDFNode resolvedProj, final RDFNode resolvedLoc,final RDFNode resolvedOrg, final RDFNode resolvedMed, final RDFNode resolvedEvnt, final int distance, final Relationship relationship) {
-    super(subject, predicate, object, score, subjParent, predParent, resolvedPer, resolvedLing,  resolvedTime, resolvedProj, resolvedLoc, resolvedOrg, resolvedMed, resolvedEvnt);
+  public RelatedHitStatement(final RDFNode subject, final RDFNode predicate, final RDFNode object, final double score, final RDFNode subjParent, final RDFNode predParent, final RDFNode resolvedPer,final RDFNode resolvedLing, final RDFNode resolvedTime, final RDFNode resolvedProj, final RDFNode resolvedLoc,final RDFNode resolvedOrg, final RDFNode resolvedMed, final RDFNode resolvedEvnt, final int distance, final Relationship relationship,
+      final RDFNode projectId, final RDFNode typeRes,final RDFNode function, final RDFNode title, final RDFNode preName, final RDFNode lastName, 
+      final RDFNode email, final RDFNode label, final RDFNode languageCode, final RDFNode isPartOf, final RDFNode coordinates, final RDFNode dcSubject,
+      final RDFNode geographicAreaCode, final RDFNode identifier, final RDFNode hasPart, final RDFNode nick, final RDFNode name, 
+      final RDFNode definition, final RDFNode topic, final RDFNode status, final RDFNode coverage, final RDFNode dctermsAbstract, 
+      final RDFNode replaces, final RDFNode valid, final RDFNode founder, final RDFNode contributor, final RDFNode fundedBy, 
+      final RDFNode hp, final RDFNode temporal) {
+    super(subject, predicate, object, score, subjParent, predParent, resolvedPer, resolvedLing,  resolvedTime, resolvedProj, resolvedLoc, resolvedOrg, resolvedMed, resolvedEvnt,projectId,typeRes,function,title,preName,lastName,email,label,languageCode,isPartOf,coordinates,dcSubject,geographicAreaCode,
+        identifier,hasPart,nick,name,definition,topic,status,coverage,dctermsAbstract,replaces,valid,founder,contributor,fundedBy,hp,temporal
+        );
     this.distance = distance;
     this.relationship = relationship;
   }

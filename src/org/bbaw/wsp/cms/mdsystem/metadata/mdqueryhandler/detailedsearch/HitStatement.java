@@ -30,44 +30,52 @@ public class HitStatement {
   protected final RDFNode resolvedOrg;
   protected final RDFNode resolvedMed;
   protected final RDFNode resolvedEvnt;
+  protected final RDFNode projectId;
+  protected final RDFNode typeRes;
+  protected final RDFNode function;
+  protected final RDFNode title;
+  protected final RDFNode preName;
+  protected final RDFNode lastName;
+  protected final RDFNode email;
+  protected final RDFNode label;
+  protected final RDFNode languageCode;
+  protected final RDFNode isPartOf;
+  protected final RDFNode coordinates;
+  protected final RDFNode dcSubject;
+  protected final RDFNode geographicAreaCode;
+  protected final RDFNode identifier;
+  protected final RDFNode hasPart;
+  protected final RDFNode nick;
+  protected final RDFNode name;
+  protected final RDFNode definition;
+  protected final RDFNode topic;
+  protected final RDFNode status;
+  protected final RDFNode coverage;
+  protected final RDFNode dctermsAbstract;
+  protected final RDFNode replaces;
+  protected final RDFNode valid;
+  protected final RDFNode founder;
+  protected final RDFNode contributor;
+  protected final RDFNode fundedBy;
+  protected final RDFNode hp;
+  protected final RDFNode temporal;
   protected final double score;
   private MdSystemResultType resultType;
 
   /**
    * Create a new HitStatement to represent results of the {@link SparqlAdapter}
    * 
-   * @param subject
-   *          an {@link RDFNode}
-   * @param predicate
-   *          an {@link RDFNode}
-   * @param object
-   *          an {@link RDFNode}
-   * @param score
-   *          a {@link Double}
-   * @param subjParent
-   *          an {@link RDFNode}
-   * @param predParent
-   *          an {@link RDFNode}
-   * @param resolvedPer
-   *          an {@link RDFNode}
-   * @param resolvedLing
-   *          an {@link RDFNode}
-   * @param resolvedTime
-   *          an {@link RDFNode}
-   * @param resolvedProj
-   *          an {@link RDFNode}
-   * @param resolvedLoc
-   *          an {@link RDFNode}
-   * @param resolvedOrg
-   *          an {@link RDFNode}
-   * @param resolvedMed
-   *          an {@link RDFNode}
-   * @param resolvedEvnt
-   *          an {@link RDFNode}
    */
-  public HitStatement(final RDFNode subject, final RDFNode predicate, final RDFNode object, final double score, final RDFNode subjParent, final RDFNode predParent, 
-      final RDFNode resolvedPer, final RDFNode resolvedLing, final RDFNode resolvedTime, final RDFNode resolvedProj, final RDFNode resolvedLoc,
-      final RDFNode resolvedOrg, final RDFNode resolvedMed, final RDFNode resolvedEvnt) {
+  public HitStatement(final RDFNode subject, final RDFNode predicate, final RDFNode object, final double score, final RDFNode subjParent, 
+      final RDFNode predParent, final RDFNode resolvedPer, final RDFNode resolvedLing, final RDFNode resolvedTime, final RDFNode resolvedProj, 
+      final RDFNode resolvedLoc, final RDFNode resolvedOrg, final RDFNode resolvedMed, final RDFNode resolvedEvnt,
+      final RDFNode projectId, final RDFNode typeRes,final RDFNode function, final RDFNode title, final RDFNode preName, final RDFNode lastName, 
+      final RDFNode email, final RDFNode label, final RDFNode languageCode, final RDFNode isPartOf, final RDFNode coordinates, final RDFNode dcSubject,
+      final RDFNode geographicAreaCode, final RDFNode identifier, final RDFNode hasPart, final RDFNode nick, final RDFNode name, 
+      final RDFNode definition, final RDFNode topic, final RDFNode status, final RDFNode coverage, final RDFNode dctermsAbstract, 
+      final RDFNode replaces, final RDFNode valid, final RDFNode founder, final RDFNode contributor, final RDFNode fundedBy, 
+      final RDFNode hp, final RDFNode temporal
+      ) {
 
     this.subject = removeSparqlBrackets(subject);
     this.predicate = removeSparqlBrackets(predicate);
@@ -83,6 +91,35 @@ public class HitStatement {
     this.resolvedOrg = removeSparqlBrackets(resolvedOrg);
     this.resolvedMed = removeSparqlBrackets(resolvedMed);
     this.resolvedEvnt = removeSparqlBrackets(resolvedEvnt);
+    this.projectId = removeSparqlBrackets(projectId);
+    this.typeRes = removeSparqlBrackets(typeRes);
+    this.function = removeSparqlBrackets(function);
+    this.title = removeSparqlBrackets(title);
+    this.preName = removeSparqlBrackets(preName);
+    this.lastName = removeSparqlBrackets(lastName);
+    this.email = removeSparqlBrackets(email);
+    this.label = removeSparqlBrackets(label);
+    this.languageCode = removeSparqlBrackets(languageCode);
+    this.isPartOf = removeSparqlBrackets(isPartOf);
+    this.coordinates = removeSparqlBrackets(coordinates);
+    this.dcSubject = removeSparqlBrackets(dcSubject);
+    this.geographicAreaCode = removeSparqlBrackets(geographicAreaCode);
+    this.identifier = removeSparqlBrackets(identifier);
+    this.hasPart = removeSparqlBrackets(hasPart);
+    this.nick = removeSparqlBrackets(nick);
+    this.name = removeSparqlBrackets(name);
+    this.definition = removeSparqlBrackets(definition);
+    this.topic = removeSparqlBrackets(topic);
+    this.status = removeSparqlBrackets(status);
+    this.coverage = removeSparqlBrackets(coverage);
+    this.dctermsAbstract = removeSparqlBrackets(dctermsAbstract);
+    this.replaces = removeSparqlBrackets(replaces);
+    this.valid = removeSparqlBrackets(valid);
+    this.founder = removeSparqlBrackets(founder);
+    this.contributor = removeSparqlBrackets(contributor);
+    this.fundedBy = removeSparqlBrackets(fundedBy);
+    this.hp = removeSparqlBrackets(hp);
+    this.temporal = removeSparqlBrackets(temporal);
   }
 
   private RDFNode removeSparqlBrackets(final RDFNode rdfnode) {
@@ -188,6 +225,122 @@ public class HitStatement {
   public RDFNode getResolvedEvnt() {
     return resolvedEvnt;
   }
+  
+  public RDFNode getProjectId() {
+    return projectId;
+  }
+
+  public RDFNode getTypeRes() {
+    return typeRes;
+  }
+
+  public RDFNode getFunction() {
+    return function;
+  }
+
+  public RDFNode getTitle() {
+    return title;
+  }
+
+  public RDFNode getPreName() {
+    return preName;
+  }
+
+  public RDFNode getLastName() {
+    return lastName;
+  }
+
+  public RDFNode getEmail() {
+    return email;
+  }
+
+  public RDFNode getLabel() {
+    return label;
+  }
+
+  public RDFNode getLanguageCode() {
+    return languageCode;
+  }
+
+  public RDFNode getIsPartOf() {
+    return isPartOf;
+  }
+
+  public RDFNode getCoordinates() {
+    return coordinates;
+  }
+
+  public RDFNode getDcSubject() {
+    return dcSubject;
+  }
+
+  public RDFNode getGeographicAreaCode() {
+    return geographicAreaCode;
+  }
+
+  public RDFNode getIdentifier() {
+    return identifier;
+  }
+
+  public RDFNode getHasPart() {
+    return hasPart;
+  }
+
+  public RDFNode getNick() {
+    return nick;
+  }
+
+  public RDFNode getName() {
+    return name;
+  }
+
+  public RDFNode getDefinition() {
+    return definition;
+  }
+
+  public RDFNode getTopic() {
+    return topic;
+  }
+
+  public RDFNode getStatus() {
+    return status;
+  }
+
+  public RDFNode getCoverage() {
+    return coverage;
+  }
+
+  public RDFNode getDctermsAbstract() {
+    return dctermsAbstract;
+  }
+
+  public RDFNode getReplaces() {
+    return replaces;
+  }
+
+  public RDFNode getValid() {
+    return valid;
+  }
+
+  public RDFNode getFounder() {
+    return founder;
+  }
+
+  public RDFNode getContributor() {
+    return contributor;
+  }
+
+  public RDFNode getFundedBy() {
+    return fundedBy;
+  }
+
+  public RDFNode getHp() {
+    return hp;
+  }
+
+  public RDFNode getTemporal() {
+    return temporal;
+  }
 
   /*
    * (non-Javadoc)
@@ -196,9 +349,24 @@ public class HitStatement {
    */
   @Override
   public String toString() {
-    return "HitStatement [subject=" + subject + ", predicate=" + predicate + ", object=" + object + ", subjParent=" + subjParent + ", predParent=" + predParent + ", score=" + score + ", resultType=" + resultType + ", resolvedEvent=" + resolvedEvnt + ", resolved Ling=" + resolvedLing + ", resolved Location=" + resolvedLoc + ", resolved Media Type=" + resolvedMed + ", resolved Organization=" + resolvedOrg + ", resolved Person=" + resolvedPer + ", resolved Project=" + resolvedProj + ", resolved Period Of Time=" + resolvedTime + "]";
+    return "HitStatement [subject=" + subject + ", predicate=" + predicate + ", object=" + object + ", subjParent=" + subjParent + ", "
+        + "predParent=" + predParent + ", score=" + score + ", resultType=" + resultType + ", resolvedEvent=" + resolvedEvnt + ", "
+        + "resolved Ling=" + resolvedLing + ", resolved Location=" + resolvedLoc + ", resolved Media Type=" + resolvedMed + ", "
+        + "resolved Organization=" + resolvedOrg + ", resolved Person=" + resolvedPer + ", resolved Project=" + resolvedProj + ", "
+        + "resolved Period Of Time=" + resolvedTime + ", resolved projectId=" + projectId + ", resolved typeRes=" + typeRes + ""
+        + ", resolved function=" + function + ", resolved title=" + title + ", resolved preName=" + preName + ""
+        + ", resolved lastName=" + lastName + ", resolved email=" + email + ", resolved label=" + label + ""
+        + ", resolved languageCode=" + languageCode + ", resolved isPartOf=" + isPartOf + ", resolved coordinates=" + coordinates + ""
+        + ", resolved dcSubject=" + dcSubject + ", resolved geographicAreaCode=" + geographicAreaCode + ", resolved identifier=" + identifier + ""
+        + ", resolved hasPart=" + hasPart + ", resolved nick=" + nick + ", resolved name=" + name + ", resolved definition=" + definition + ""
+        + ", resolved topic=" + topic + ", resolved status=" + status + ", resolved coverage=" + coverage + ""
+        + ", resolved dctermsAbstract=" + dctermsAbstract + ""
+        + ", resolved replaces=" + replaces + ", resolved valid=" + valid + ", resolved founder=" + founder + ""
+        + ", resolved contributor=" + contributor + ", resolved fundedBy=" + fundedBy + ""
+        + ", resolved hp=" + hp + ", resolved temporal=" + temporal + ""
+        + "]";
   }
-
+  
   /*
    * (non-Javadoc)
    * 

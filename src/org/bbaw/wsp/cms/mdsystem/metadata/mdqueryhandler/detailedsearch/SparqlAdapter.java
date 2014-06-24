@@ -111,7 +111,6 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
    */
   private void handleSolution(final HitGraphContainer container, final QuerySolution solution, final URL namedGraphUrl, final RDFNode pSubject) {
     try {
-//      System.out.println("solution : "+solution);
       final URL graphUrl;
       if (namedGraphUrl == null && solution.getResource("g") != null) { // means: sparql query contains the graph name
         graphUrl = new URL(solution.getResource("g").getURI());
@@ -135,7 +134,6 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
       }
       RDFNode predicate = null;
       if (solution.get("p") != null) {
-//        logger.info("p : "+solution.getLiteral("p"));
         predicate = solution.get("p");
       }
       RDFNode literal = null;
@@ -147,7 +145,6 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
           literal = solution.get("o");
         
       }
-      logger.info("passiert ");
       RDFNode resolvedPer = null;
       if (solution.get("resolvedPer") != null) {
         resolvedPer = solution.get("resolvedPer");
@@ -170,8 +167,6 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
       }
       RDFNode resolvedOrg = null;
       if (solution.get("resolvedOrg") != null) {
-        logger.info("resolvedOrg : "+solution.get("resolvedOrg"));
-        System.out.println("resolvedOrg : ");
         resolvedOrg = solution.get("resolvedOrg");
       }
       RDFNode resolvedMed = null;
@@ -182,6 +177,124 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
       if (solution.get("resolvedEvnt") != null) {
         resolvedEvnt = solution.get("resolvedEvnt");
       }
+      
+      RDFNode projectId = null;
+      if (solution.get("projectId") != null) {
+        projectId = solution.get("projectId");
+      }
+      RDFNode typeRes = null;
+      if (solution.get("typeRes") != null) {
+        typeRes = solution.get("typeRes");
+      }
+      RDFNode function = null;
+      if (solution.get("function") != null) {
+        function = solution.get("function");
+      }
+      RDFNode title = null;
+      if (solution.get("title") != null) {
+        title = solution.get("title");
+      }
+      RDFNode preName = null;
+      if (solution.get("preName") != null) {
+        preName = solution.get("preName");
+      }
+      RDFNode lastName = null;
+      if (solution.get("lastName") != null) {
+        lastName = solution.get("lastName");
+      }
+      RDFNode email = null;
+      if (solution.get("email") != null) {
+        email = solution.get("email");
+      }
+      RDFNode label = null;
+      if (solution.get("label") != null) {
+        label = solution.get("label");
+      }
+      RDFNode languageCode = null;
+      if (solution.get("languageCode") != null) {
+        languageCode = solution.get("languageCode");
+      }
+      RDFNode isPartOf = null;
+      if (solution.get("isPartOf") != null) {
+        isPartOf = solution.get("isPartOf");
+      }
+      RDFNode coordinates = null;
+      if (solution.get("coordinates") != null) {
+        coordinates = solution.get("coordinates");
+      }
+      RDFNode dcSubject = null;
+      if (solution.get("dcSubject") != null) {
+        dcSubject = solution.get("dcSubject");
+      }
+      RDFNode geographicAreaCode = null;
+      if (solution.get("geographicAreaCode") != null) {
+        geographicAreaCode = solution.get("geographicAreaCode");
+      }
+      RDFNode identifier = null;
+      if (solution.get("identifier") != null) {
+        identifier = solution.get("identifier");
+      }
+      RDFNode hasPart = null;
+      if (solution.get("hasPart") != null) {
+        hasPart = solution.get("hasPart");
+      }
+      RDFNode nick = null;
+      if (solution.get("nick") != null) {
+        nick = solution.get("nick");
+      }
+      RDFNode name = null;
+      if (solution.get("name") != null) {
+        name = solution.get("name");
+      }
+      RDFNode definition = null;
+      if (solution.get("definition") != null) {
+        definition = solution.get("definition");
+      }
+      RDFNode topic = null;
+      if (solution.get("topic") != null) {
+        topic = solution.get("topic");
+      }
+      RDFNode status = null;
+      if (solution.get("status") != null) {
+        status = solution.get("status");
+      }
+      RDFNode coverage = null;
+      if (solution.get("coverage") != null) {
+        coverage = solution.get("coverage");
+      }
+      RDFNode dctermsAbstract = null;
+      if (solution.get("dctermsAbstract") != null) {
+        dctermsAbstract = solution.get("dctermsAbstract");
+      }
+      RDFNode replaces = null;
+      if (solution.get("replaces") != null) {
+        replaces = solution.get("replaces");
+      }
+      RDFNode valid = null;
+      if (solution.get("valid") != null) {
+        valid = solution.get("valid");
+      }
+      RDFNode founder = null;
+      if (solution.get("founder") != null) {
+        founder = solution.get("founder");
+      }
+      RDFNode contributor = null;
+      if (solution.get("contributor") != null) {
+        contributor = solution.get("contributor");
+      }
+      RDFNode fundedBy = null;
+      if (solution.get("fundedBy") != null) {
+        fundedBy = solution.get("fundedBy");
+      }
+      RDFNode hp = null;
+      if (solution.get("hp") != null) {
+        hp = solution.get("hp");
+      }
+      RDFNode temporal = null;
+      if (solution.get("temporal") != null) {
+        temporal = solution.get("temporal");
+      }
+      
       double score = 0;
       if (solution.getLiteral("score") != null) {
         score = solution.getLiteral("score").getDouble();
@@ -194,11 +307,12 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
       if (solution.get("pParent") != null) {
         predParent = solution.get("pParent");
       }
-//      logger.info("vor statement ");
-      final HitStatement statement = new HitStatement(subject, predicate, literal, score, subjParent, predParent, resolvedPer, resolvedLing,  resolvedTime, resolvedProj, resolvedLoc, resolvedOrg, resolvedMed, resolvedEvnt);
-//      System.out.println("HitStatement  ");
+      final HitStatement statement = new HitStatement(subject, predicate, literal, score, subjParent, predParent, 
+          resolvedPer, resolvedLing, resolvedTime, resolvedProj, resolvedLoc, resolvedOrg, resolvedMed, resolvedEvnt,
+          projectId,typeRes,function,title,preName,lastName,email,label,languageCode,isPartOf,coordinates,dcSubject,geographicAreaCode,
+          identifier,hasPart,nick,name,definition,topic,status,coverage,dctermsAbstract,replaces,valid,founder,contributor,fundedBy,hp,temporal
+          );
       hitGraph.addStatement(statement);
-//      System.out.println("hitGraph : "+hitGraph);
 
       // set result type
       if (score == 0) { // no literal/LARQ search (because a score would be returned)
@@ -212,7 +326,7 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
       }
 
     } catch (final MalformedURLException e) {
-      System.out.println("SparQlAdapter: not a valid URL (should be one): " + e.getMessage());
+      logger.info("SparQlAdapter: not a valid URL (should be one): " + e.getMessage());
       logger.error("SparQlAdapter: not a valid URL (should be one): " + e.getMessage());
     }
   }
@@ -227,21 +341,16 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
   // final String query =
   // SparqlCommandBuilder.SELECT_NAMED_USING_INDEX.getSelectQueryString("*",
   // namedGraphUrl.toExternalForm(), literal);
-  // System.out.println("Builded query " + query);
   // final ResultSet results = delegateQuery(query);
   // final StmtIterator it = results.getResourceModel().listStatements();
   //
   // // while (it.hasNext()) {
   // // final Statement statement = it.next();
-  // // System.out.println(statement);
   // // }
   //
   // while (results.hasNext()) { // hier kommt man nicht weiter, wie an die
   // // Tripels ran???
   // final QuerySolution solution = results.next();
-  // // System.out.println(solution);
-  // // System.out.println("s: " + solution.getResource("s"));
-  // System.out.println("o: " + solution.getLiteral("s"));
   // }
   // }
 
@@ -285,7 +394,9 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
         final RDFNode object = solution.get("o");
         final RDFNode predicate = solution.get("p");
         final RDFNode subject = solution.get("s");
-        final HitStatement hitStatement = new HitStatement(subject, predicate, object, 0, null, null, null, null, null, null, null, null, null, null);
+        final HitStatement hitStatement = new HitStatement(subject, predicate, object, 0, null, null, null, null, null, null, null, null, null, null
+            , null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null
+            , null, null, null, null, null);
         hitGraph.addStatement(hitStatement);
         hitStatement.setResultType(MdSystemResultType.ALL_TRIPLES_NAMED_GRAPH);
       }
@@ -336,7 +447,9 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
         final RDFNode predicate = solution.get("p");
         // subject is given by the client (who uses the SparqlAdapter)
         final RDFNode subject = new ResourceImpl(pSubject);
-        final HitStatement hitStatement = new HitStatement(subject, predicate, object, 0, null, null, null, null, null, null, null, null, null, null);
+        final HitStatement hitStatement = new HitStatement(subject, predicate, object, 0, null, null, null, null, null, null, null, null, null, null
+            , null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null
+            , null, null, null, null, null);
         hitGraph.addStatement(hitStatement);
         hitStatement.setResultType(MdSystemResultType.ALL_TRIPLES_NAMED_GRAPH_AND_GIVEN_SUBJECT);
       }
@@ -359,7 +472,10 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
 
           // the subject (object of the parent statement) doesn't need to be part of another statement
           if (topDownRelatedSubj != null && topDownRelatedSubj.isResource() && topwDownRelatedPred != null && topDownRelatedNode != null) {
-            final RelatedHitStatement relatedStatement = new RelatedHitStatement(topDownRelatedSubj, topwDownRelatedPred, topDownRelatedNode, 0, null, null, null, null, null, null, null, null, null, null, i, Relationship.CHILD);
+            final RelatedHitStatement relatedStatement = new RelatedHitStatement(topDownRelatedSubj, topwDownRelatedPred, topDownRelatedNode, 0, null, null, null, null, null, null, null, null, null, null, i, Relationship.CHILD
+                , null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null
+                , null, null, null, null, null
+                );
             if (!resultStatements.contains(relatedStatement)) {
               resultStatements.add(relatedStatement);
               relatedStatement.setResultType(MdSystemResultType.RELATED_CONCEPTS);
@@ -372,7 +488,10 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
           final RDFNode bottomRelatedNode = solution.get("s1" + (i - 1)); // object is subject in the child statement
 
           if (bottomRelatedNode != null && bottomRelatedNode.isResource() && bottomDownRelatedPred != null && bottomRelatedSubj != null) {
-            final RelatedHitStatement bottomRelatedStatement = new RelatedHitStatement(bottomRelatedSubj, bottomDownRelatedPred, bottomRelatedNode, 0, null, null, null, null, null, null, null, null, null, null, i, Relationship.PARENT);
+            final RelatedHitStatement bottomRelatedStatement = new RelatedHitStatement(bottomRelatedSubj, bottomDownRelatedPred, bottomRelatedNode, 0, null, null, null, null, null, null, null, null, null, null, i, Relationship.PARENT
+                , null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null
+                , null, null, null, null, null
+                );
             if (!resultStatements.contains(bottomRelatedStatement)) {
               resultStatements.add(bottomRelatedStatement);
               bottomRelatedStatement.setResultType(MdSystemResultType.RELATED_CONCEPTS);
@@ -604,13 +723,12 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
         }
       }
     }
-
     return container;
   }
 
   @Override
   public HitGraphContainer buildSparqlQuery(String projectUri, boolean isProjectId) {
-    logger.info("buildSparqlQuery");
+    logger.info("building Sparql Query");
     final T results = queryStrategy.queryAllProjectInfoAndResolveUris(projectUri, isProjectId);
     freeQueryStrategy();
     return this.handleProjectIdResults(results);
@@ -620,14 +738,12 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
     final HitGraphContainer container = new HitGraphContainer(new Date()); // result
     // container
     if (results instanceof ResultSet) { // QueryStrategyFuseki
-      System.out.println("ResultSet ");
       final ResultSet realResults = (ResultSet) results;
       while (realResults.hasNext()) {
         final QuerySolution solution = realResults.next();
         this.handleSolution(container, solution, null, null);
       }
     } else if (results instanceof HashMap<?, ?>) { // query strategy returns hash map in the form named graph url - value
-      System.out.println("HashMap");
       @SuppressWarnings("unchecked")
       final Map<URL, ResultSet> resultMap = (HashMap<URL, ResultSet>) results;
       for (final URL namedGraph : resultMap.keySet()) {
@@ -644,9 +760,17 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
 
   @Override
   public HitGraphContainer sparqlAllProjectInf(String collectionsIdPattern) {
-    logger.info("sparqlAllProjectInf");
+    logger.info("sparql all Project and related Info");
     final T results = queryStrategy.preloadAllProjectInfoAndResolveUris(collectionsIdPattern);
     freeQueryStrategy();
     return this.handleProjectIdResults(results);
   }
+  
+  @Override
+  public HitGraphContainer sparqlDirectly(String pattern){
+    final T results = queryStrategy.preloadAnything(pattern);
+    freeQueryStrategy();
+    return this.handleProjectIdResults(results);
+  }
+  
 }

@@ -19,9 +19,12 @@
     </formats>
     <xqueries>
       <xquery>
-        <name>webId</name>
+     <!--     <name>webId</name>
         <code>concat('?volume=', string(//*:idno[@type = "Band"]), '&part=', string(//*:idno[@type = "Stück"]))</code>
         <preStr>http://telota.bbaw.de:8085/exist/servlet/db/mes/scripts/browse.xql</preStr>
+      </xquery>
+        <preStr>http://telota.bbaw.de:8085/exist/servlet/db/mes/scripts/browse.xql</preStr>
+        -->
       </xquery>
     </xqueries>
   </collection>
