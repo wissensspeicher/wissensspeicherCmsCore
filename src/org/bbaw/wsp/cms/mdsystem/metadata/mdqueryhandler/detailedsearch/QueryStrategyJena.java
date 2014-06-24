@@ -79,7 +79,7 @@ public class QueryStrategyJena implements IQueryStrategy<Map<URL, ResultSet>> {
    */
   public Map<URL, ResultSet> queryLiteral(final String literal) {
     final String query = SparqlCommandBuilder.SELECT_USING_INDEX.getSelectQueryString("*", null, literal, null,null);
-    logger.info("QueryStrategyJena: builded sparql query: " + query);
+    logger.info("QueryStrategyJena: buildt sparql query: " + query);
     return delegateQuery(query);
   }
 
@@ -113,7 +113,7 @@ public class QueryStrategyJena implements IQueryStrategy<Map<URL, ResultSet>> {
   @Override
   public Map<URL, ResultSet> querySubject(final Resource subject) {
     final String query = SparqlCommandBuilder.SELECT_CONTAINING_NAMED_GRAPH.getSelectQueryString("*", null, subject.getURI() + " ?p ?o", null,null);
-    logger.info("querySubject: query builded -> " + query);
+    logger.info("querySubject: query built -> " + query);
     return delegateQuery(query);
   }
 
@@ -125,6 +125,12 @@ public class QueryStrategyJena implements IQueryStrategy<Map<URL, ResultSet>> {
 
   @Override
   public Map<URL, ResultSet> preloadAllProjectInfoAndResolveUris(String collectionIds) {
+    // TODO Auto-generated method stub
+    return null;
+  }
+
+  @Override
+  public Map<URL, ResultSet> preloadAnything(String query) {
     // TODO Auto-generated method stub
     return null;
   }

@@ -11,7 +11,8 @@ import java.util.HashMap;
 /**
  * This class holds all {@link IHitRecord} instances which result from a single (literal) query with the {@link SparqlAdapter}.
  * 
- * @author Sascha Feldmann (wsp-shk1)
+ * @author marco juergens
+ * @author Sascha Feldmann
  * @since 04.02.2013
  * 
  */
