@@ -16,7 +16,6 @@
       <format>xml</format>
       <format>jpeg</format>
     </formats> 
-    <!-- 
     <db>
       <type>postgres</type>
       <name>bk_bibliographie</name>
@@ -155,7 +154,6 @@ FROM
         <preStr>http://berlinerklassik.bbaw.de/BK/personen/BKPerson_Details?bkperson_id=</preStr>
       </webId>
     </db>
-    -->
     <db>
       <type>postgres</type>
       <name>bk_vereine</name>
