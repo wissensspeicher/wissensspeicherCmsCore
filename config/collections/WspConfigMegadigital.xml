@@ -22,9 +22,26 @@
     </url>
     <languages>ger</languages>
     <mainLanguage>ger</mainLanguage>
+    <services>
+      <service>
+        <id>pageView</id>
+        <parameters>
+          <param>
+            <name>page</name>
+            <value>pageNr</value>
+          </param>
+        </parameters>
+      </service>
+    </services>
     <formats>
       <format>xml</format>
     </formats>
-    <update>false</update>
+    <xqueries>
+      <xquery>
+        <name>webId</name>
+        <code>xxxFileName</code>  <!-- special field: delivers the fileName of the xml file -->
+        <preStr>http://telota.bbaw.de/mega/#?doc=</preStr>
+      </xquery>
+    </xqueries>
   </collection>
 </wsp>
