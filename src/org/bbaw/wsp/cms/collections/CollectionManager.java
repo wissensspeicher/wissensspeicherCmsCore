@@ -466,10 +466,21 @@ public class CollectionManager {
       if (authors != null && ! authors.isEmpty())
         mdRecord.setCreatorDetails(creatorDetails);
     }
-    String title = xQueryEvaluator.evaluateAsString(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dc:title/text()");
-    if (title != null)
-      title = StringUtils.resolveXmlEntities(title.trim());
-    mdRecord.setTitle(title);
+    XdmValue xmdValueTitle = xQueryEvaluator.evaluate(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dc:title|/rdf:Description/dcterms:alternative");
+    XdmSequenceIterator xmdValueTitleIterator = xmdValueTitle.iterator();
+    if (xmdValueTitle != null && xmdValueTitle.size() > 0) {
+      String title = "";
+      while (xmdValueTitleIterator.hasNext()) {
+        XdmItem xdmItemTitle = xmdValueTitleIterator.next();
+        String xdmItemTitleStr = xdmItemTitle.getStringValue().trim();
+        if (xmdValueTitle.size() == 1)
+          title = xdmItemTitleStr;
+        else
+          title = title + xdmItemTitleStr + ". ";
+      }
+      title = StringUtils.resolveXmlEntities(title);
+      mdRecord.setTitle(title);
+    }
     String publisher = xQueryEvaluator.evaluateAsString(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dc:publisher/text()");
     if (publisher != null)
       publisher = StringUtils.resolveXmlEntities(publisher.trim());
