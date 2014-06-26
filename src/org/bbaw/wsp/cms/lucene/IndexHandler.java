@@ -676,7 +676,7 @@ public class IndexHandler {
       if (sortFieldNames != null) {
         sort = buildSort(sortFieldNames, "doc");  // build sort criteria
       }
-      TopFieldCollector topFieldCollector = TopFieldCollector.create(sort, 100000, true, true, true, true); // default topFieldCollector for TopDocs results
+      TopFieldCollector topFieldCollector = TopFieldCollector.create(sort, 1000000, true, true, true, true); // default topFieldCollector for TopDocs results
       FacetSearchParams facetSearchParams = new FacetSearchParams();
       facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("collectionNames"), 1000));
       facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("language"), 1000));
