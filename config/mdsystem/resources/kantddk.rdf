@@ -71,10 +71,10 @@
   </dcterms:subject>
 </rdf:Description>
 
-<rdf:Description rdf:about="kant.bbaw.de/die-drei-kritiken/critik-der-reinen-vernunft">
+<rdf:Description rdf:about="http://kant.bbaw.de/die-drei-kritiken/critik-der-reinen-vernunft">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KantSchriften/DieDreiKritiken"/>
-  <dc:identifier rdf:resource="kant.bbaw.de/die-drei-kritiken/critik-der-reinen-vernunft"/>
+  <dc:identifier rdf:resource="http://kant.bbaw.de/die-drei-kritiken/critik-der-reinen-vernunft"/>
   <dcterms:subject>
     <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Philosophisches_Werk">
       <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
@@ -143,10 +143,10 @@
   </dcterms:subject>
 </rdf:Description>
 
-<rdf:Description rdf:about="kant.bbaw.de/die-drei-kritiken/critik-der-urtheilskraft">
+<rdf:Description rdf:about="http://kant.bbaw.de/die-drei-kritiken/critik-der-urtheilskraft">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KantSchriften/DieDreiKritiken"/>
-  <dc:identifier rdf:resource="kant.bbaw.de/die-drei-kritiken/critik-der-urtheilskraft"/>
+  <dc:identifier rdf:resource="http://kant.bbaw.de/die-drei-kritiken/critik-der-urtheilskraft"/>
   <dcterms:subject>
     <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Philosophisches_Werk">
       <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
