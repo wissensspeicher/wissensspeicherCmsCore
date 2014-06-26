@@ -32,6 +32,12 @@
       <rdfs:label>Immanuel Kant</rdfs:label>
     </rdf:Description>
   </dcterms:subject>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://d-nb.info/gnd/118578537">
+      <rdf:type rdf:resource="http://d-nb.info/standards/elementset/gnd#Person"/>
+      <rdfs:label>Immanuel Kant</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
 </rdf:Description>
 
 <!-- WEB  -->
@@ -54,6 +60,12 @@
   <dcterms:subject>
     <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Immanuel_Kant">
       <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      <rdfs:label>Immanuel Kant</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://d-nb.info/gnd/118578537">
+      <rdf:type rdf:resource="http://d-nb.info/standards/elementset/gnd#Person"/>
       <rdfs:label>Immanuel Kant</rdfs:label>
     </rdf:Description>
   </dcterms:subject>
@@ -87,6 +99,12 @@
       <rdfs:label>Immanuel Kant</rdfs:label>
     </rdf:Description>
   </dcterms:subject>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://d-nb.info/gnd/118578537">
+      <rdf:type rdf:resource="http://d-nb.info/standards/elementset/gnd#Person"/>
+      <rdfs:label>Immanuel Kant</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
 </rdf:Description>
 
 <rdf:Description rdf:about="http://kant.bbaw.de/die-drei-kritiken/critik-der-practischen-vernunft-handexemplar">
@@ -114,6 +132,12 @@
   <dcterms:subject>
     <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Immanuel_Kant">
       <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      <rdfs:label>Immanuel Kant</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://d-nb.info/gnd/118578537">
+      <rdf:type rdf:resource="http://d-nb.info/standards/elementset/gnd#Person"/>
       <rdfs:label>Immanuel Kant</rdfs:label>
     </rdf:Description>
   </dcterms:subject>
@@ -147,6 +171,12 @@
       <rdfs:label>Immanuel Kant</rdfs:label>
     </rdf:Description>
   </dcterms:subject>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://d-nb.info/gnd/118578537">
+      <rdf:type rdf:resource="http://d-nb.info/standards/elementset/gnd#Person"/>
+      <rdfs:label>Immanuel Kant</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
 </rdf:Description>
 
 <rdf:Description rdf:about="http://kant.bbaw.de/die-drei-kritiken/zeit-stiftung">
@@ -168,6 +198,12 @@
   <dcterms:subject>
     <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Immanuel_Kant">
       <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      <rdfs:label>Immanuel Kant</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://d-nb.info/gnd/118578537">
+      <rdf:type rdf:resource="http://d-nb.info/standards/elementset/gnd#Person"/>
       <rdfs:label>Immanuel Kant</rdfs:label>
     </rdf:Description>
   </dcterms:subject>
@@ -195,6 +231,12 @@
       <rdfs:label>Immanuel Kant</rdfs:label>
     </rdf:Description>
   </dcterms:subject>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://d-nb.info/gnd/118578537">
+      <rdf:type rdf:resource="http://d-nb.info/standards/elementset/gnd#Person"/>
+      <rdfs:label>Immanuel Kant</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
 </rdf:Description>
 
 <rdf:Description rdf:about="http://kant.bbaw.de/die-drei-kritiken/hamburger-stiftung-zur-foerderung-von-wissenschaft-und-kultur">
@@ -216,6 +258,12 @@
   <dcterms:subject>
     <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Immanuel_Kant">
       <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      <rdfs:label>Immanuel Kant</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://d-nb.info/gnd/118578537">
+      <rdf:type rdf:resource="http://d-nb.info/standards/elementset/gnd#Person"/>
       <rdfs:label>Immanuel Kant</rdfs:label>
     </rdf:Description>
   </dcterms:subject>
@@ -255,6 +303,12 @@
     <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Literarisches_Werk">
       <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
       <rdfs:label>Literarisches Werk</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://d-nb.info/gnd/118578537">
+      <rdf:type rdf:resource="http://d-nb.info/standards/elementset/gnd#Person"/>
+      <rdfs:label>Immanuel Kant</rdfs:label>
     </rdf:Description>
   </dcterms:subject>
   <dc:creator>Kant, Immanuel</dc:creator>
@@ -298,6 +352,12 @@
       <rdfs:label>Literarisches Werk</rdfs:label>
     </rdf:Description>
   </dcterms:subject>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://d-nb.info/gnd/118578537">
+      <rdf:type rdf:resource="http://d-nb.info/standards/elementset/gnd#Person"/>
+      <rdfs:label>Immanuel Kant</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
   <dc:creator>Kant, Immanuel</dc:creator>
   <dc:title>Kritik der reinen Vernunft (2. Auflage, 1787) </dc:title>
   <!--  alternativer titel  -->
@@ -330,6 +390,12 @@
   <dcterms:subject>
     <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Immanuel_Kant">
       <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      <rdfs:label>Immanuel Kant</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://d-nb.info/gnd/118578537">
+      <rdf:type rdf:resource="http://d-nb.info/standards/elementset/gnd#Person"/>
       <rdfs:label>Immanuel Kant</rdfs:label>
     </rdf:Description>
   </dcterms:subject>
@@ -367,6 +433,12 @@
   <dcterms:subject>
     <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Immanuel_Kant">
       <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      <rdfs:label>Immanuel Kant</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://d-nb.info/gnd/118578537">
+      <rdf:type rdf:resource="http://d-nb.info/standards/elementset/gnd#Person"/>
       <rdfs:label>Immanuel Kant</rdfs:label>
     </rdf:Description>
   </dcterms:subject>
