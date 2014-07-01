@@ -2,6 +2,8 @@ package org.bbaw.wsp.cms.collections;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -101,7 +103,11 @@ public class PathExtractor {
                   url = startUrl + nameAttributeValue;
                 boolean startUrlIsExcluded = isExcluded(url); // if exclude contains a full file name e.g. verzeichnisse/personenkorrektur.xml
                 if (! startUrlIsExcluded) {
-                  url = url.replaceAll("%20", " ");
+                  try {
+                    url = URLDecoder.decode(url, "utf-8"); // decodes the "%HexHex" chars into unicode chars e.g. "%20" to " "
+                  } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                  }
                   ressourceLoc.add(url);
                 }
               }
