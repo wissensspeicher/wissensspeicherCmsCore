@@ -15,4 +15,44 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Chronologie"/>
   <dc:identifier rdf:resource="http://avh.bbaw.de/chronologie"/>
 </rdf:Description>
+<rdf:Description rdf:about="http://avh.bbaw.de/chronologie/1766-1790">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Chronologie"/>
+  <dc:identifier rdf:resource="http://avh.bbaw.de/chronologie/1766-1790"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://avh.bbaw.de/chronologie/1791-1800">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Chronologie"/>
+  <dc:identifier rdf:resource="http://avh.bbaw.de/chronologie/1791-1800"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://avh.bbaw.de/chronologie/1801-1810">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Chronologie"/>
+  <dc:identifier rdf:resource="http://avh.bbaw.de/chronologie/1801-1810"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://avh.bbaw.de/chronologie/1811-1820">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Chronologie"/>
+  <dc:identifier rdf:resource="http://avh.bbaw.de/chronologie/1811-1820"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://avh.bbaw.de/chronologie/1821-1830">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Chronologie"/>
+  <dc:identifier rdf:resource="http://avh.bbaw.de/chronologie/1821-1830"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://avh.bbaw.de/chronologie/1831-1840">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Chronologie"/>
+  <dc:identifier rdf:resource="http://avh.bbaw.de/chronologie/1831-1840"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://avh.bbaw.de/chronologie/1841-1850">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Chronologie"/>
+  <dc:identifier rdf:resource="http://avh.bbaw.de/chronologie/1841-1850"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://avh.bbaw.de/chronologie/1851-1859">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Chronologie"/>
+  <dc:identifier rdf:resource="http://avh.bbaw.de/chronologie/1851-1859"/>
+</rdf:Description>
 </rdf:RDF>

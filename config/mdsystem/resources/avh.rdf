@@ -10,9 +10,19 @@
    xmlns:gnd="http://d-nb.info/standards/elementset/gnd#" 
    xmlns:ore="http://www.openarchives.org/ore/terms/" 
 >
-<rdf:Description rdf:about="http://avh.bbaw.de/">
+<rdf:Description rdf:about="http://avh.bbaw.de">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle"/>
-  <dc:identifier rdf:resource="http://avh.bbaw.de/"/>
+  <dc:identifier rdf:resource="http://avh.bbaw.de"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://avh.bbaw.de/projekt">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle"/>
+  <dc:identifier rdf:resource="http://avh.bbaw.de/projekt"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://avh.bbaw.de/publikationen/publikationen-der-forschungsstelle">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle"/>
+  <dc:identifier rdf:resource="http://avh.bbaw.de/publikationen/publikationen-der-forschungsstelle"/>
 </rdf:Description>
 </rdf:RDF>

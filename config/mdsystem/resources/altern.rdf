@@ -15,4 +15,19 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AlternGesellschaft"/>
   <dc:identifier rdf:resource="http://altern.bbaw.de"/>
 </rdf:Description>
+<rdf:Description rdf:about="http://altern.bbaw.de/en/">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AlternGesellschaft"/>
+  <dc:identifier rdf:resource="http://altern.bbaw.de/en/"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://altern.bbaw.de/Ueberblick">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AlternGesellschaft"/>
+  <dc:identifier rdf:resource="http://altern.bbaw.de/Ueberblick"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://altern.bbaw.de/Publikationen">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AlternGesellschaft"/>
+  <dc:identifier rdf:resource="http://altern.bbaw.de/Publikationen"/>
+</rdf:Description>
 </rdf:RDF>

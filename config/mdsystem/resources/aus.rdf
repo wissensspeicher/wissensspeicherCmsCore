@@ -15,4 +15,9 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AkademieSchule"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/AuS/"/>
 </rdf:Description>
+<rdf:Description rdf:about="http://www.bbaw.de/AuS/Info_AuS">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AkademieSchule"/>
+  <dc:identifier rdf:resource="http://www.bbaw.de/AuS/Info_AuS"/>
+</rdf:Description>
 </rdf:RDF>
