@@ -121,9 +121,14 @@ public class DocumentHandler {
       XQueryEvaluator xQueryEvaluator = new XQueryEvaluator();
       if (docIsXml) {
         // parse validation on file
-        XdmNode docNode = xQueryEvaluator.parse(srcUrl); // if it is not parseable an exception with a detail message is thrown 
-        docType = getNodeType(docNode);
-        docType = docType.trim();
+        try {
+          XdmNode docNode = xQueryEvaluator.parse(srcUrl); // if it is not parseable an exception with a detail message is thrown 
+          docType = getNodeType(docNode);
+          docType = docType.trim();
+        } catch (ApplicationException e) {
+          LOGGER.error(srcUrlStr + " is not xml parseable");
+          e.printStackTrace();
+        }
       }
       if (docType == null) {
         docType = mimeType;
