@@ -10,6 +10,7 @@ import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -979,9 +980,17 @@ public class DocumentHandler {
       FileUtils.deleteQuietly(docDestFile);
       return false;
     } catch (IOException e) {
-      LOGGER.error("copyUrlToFile failed. IOException: " + e.getMessage() + " for Url: " + srcUrl);
-      FileUtils.deleteQuietly(docDestFile);
-      return false;
+      try {
+        // second try with encoded blanks url
+        String srcUrlFileEncodedStr = srcUrl.getFile().replaceAll(" ", "%20");
+        String srcUrlEncodedStr = srcUrl.getProtocol() + "://" + srcUrl.getHost() + ":" + srcUrl.getPort() + srcUrlFileEncodedStr;
+        URL srcUrlEncoded = new URL(srcUrlEncodedStr);
+        FileUtils.copyURLToFile(srcUrlEncoded, docDestFile, 20000, 20000);
+      } catch (IOException e2) {
+        LOGGER.error("copyUrlToFile failed. IOException: " + e.getMessage() + " for Url: " + srcUrl);
+        FileUtils.deleteQuietly(docDestFile);
+        return false;
+      }
     }
     return true;
   }
