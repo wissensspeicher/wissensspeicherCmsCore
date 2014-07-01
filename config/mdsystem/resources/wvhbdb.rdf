@@ -15,9 +15,10 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/WilhelmVonHumboldt/Briefdatenbank"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/wvh/db-start.jsf"/>
 </rdf:Description>
-<rdf:Description rdf:about="http://telota.bbaw.de:8085/exist/servlet/wvh/wvh-briefdb.xml">
+<rdf:Description rdf:about="http://telotadev.bbaw.de:8078/exist/rest/db/WvH/Briefe">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/WilhelmVonHumboldt/Briefdatenbank"/>
-  <dc:identifier rdf:resource="http://telota.bbaw.de:8085/exist/servlet/wvh/wvh-briefdb.xml"/>
+  <dc:identifier rdf:resource="http://telotadev.bbaw.de:8078/exist/rest/db/WvH/Briefe"/>
+  <dc:type>eXistDir</dc:type>
 </rdf:Description>
 </rdf:RDF>
