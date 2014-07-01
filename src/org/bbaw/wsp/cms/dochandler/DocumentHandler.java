@@ -10,7 +10,6 @@ import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.net.URLEncoder;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -126,8 +125,18 @@ public class DocumentHandler {
           docType = getNodeType(docNode);
           docType = docType.trim();
         } catch (ApplicationException e) {
-          LOGGER.error(srcUrlStr + " is not xml parseable");
-          e.printStackTrace();
+          // second try with encoded blanks url
+          String srcUrlFileEncodedStr = srcUrl.getFile().replaceAll(" ", "%20");
+          String srcUrlEncodedStr = srcUrl.getProtocol() + "://" + srcUrl.getHost() + ":" + srcUrl.getPort() + srcUrlFileEncodedStr;
+          URL srcUrlEncoded = new URL(srcUrlEncodedStr);
+          try {
+            XdmNode docNode = xQueryEvaluator.parse(srcUrlEncoded);
+            docType = getNodeType(docNode);
+            docType = docType.trim();
+          } catch (Exception e2) {
+            LOGGER.error(srcUrlStr + " is not xml parseable");
+            e.printStackTrace();
+          }
         }
       }
       if (docType == null) {
@@ -1100,7 +1109,7 @@ public class DocumentHandler {
       GetFragmentsContentHandler getFragmentsContentHandler = new GetFragmentsContentHandler(milestoneElementName);
       XMLReader xmlParser = new SAXParser();
       xmlParser.setContentHandler(getFragmentsContentHandler);
-      InputSource inputSource = new InputSource(fileName);
+      InputSource inputSource = new InputSource("file:" + fileName);
       xmlParser.parse(inputSource);
       Hashtable<Integer, StringBuilder> resultFragments = getFragmentsContentHandler.getResultPages();
       return resultFragments;
