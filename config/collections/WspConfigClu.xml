@@ -7,6 +7,7 @@
     <url>
       <webBaseUrl>http://www.bbaw.de/forschung/clu</webBaseUrl>
       <dataUrl>http://www.bbaw.de/forschung/clu</dataUrl>
+      <dataUrl>http://www.bbaw.de/forschung/clu/projektdarstellung</dataUrl>
     </url>
     <mainLanguage>ger</mainLanguage>
     <formats>

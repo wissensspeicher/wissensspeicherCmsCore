@@ -7,6 +7,10 @@
     <url>
       <webBaseUrl>http://clarin.bbaw.de</webBaseUrl>
       <dataUrl>http://clarin.bbaw.de</dataUrl>
+      <dataUrl>http://clarin.bbaw.de/corpus/</dataUrl>
+      <dataUrl>http://clarin.bbaw.de/lexik/</dataUrl>
+      <dataUrl>http://clarin.bbaw.de/web/</dataUrl>
+      <dataUrl>http://clarin.bbaw.de/repo/</dataUrl>
     </url>
     <languages>ger</languages>
     <mainLanguage>ger</mainLanguage>
