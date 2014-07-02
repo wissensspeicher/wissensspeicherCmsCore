@@ -10,9 +10,214 @@
    xmlns:gnd="http://d-nb.info/standards/elementset/gnd#" 
    xmlns:ore="http://www.openarchives.org/ore/terms/" 
 >
+
+<!--  Web  -->
 <rdf:Description rdf:about="http://cil.bbaw.de/">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusInscriptLatinarum"/>
   <dc:identifier rdf:resource="http://cil.bbaw.de/"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://cil.bbaw.de/dateien/forschung.html">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusInscriptLatinarum"/>
+  <dc:identifier rdf:resource="http://cil.bbaw.de/dateien/forschung.html"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://cil.bbaw.de/dateien/beirat.html">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusInscriptLatinarum"/>
+  <dc:identifier rdf:resource="http://cil.bbaw.de/dateien/beirat.html"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://cil.bbaw.de/dateien/arbeitsstelle.html">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusInscriptLatinarum"/>
+  <dc:identifier rdf:resource="http://cil.bbaw.de/dateien/arbeitsstelle.html"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://cil.bbaw.de/dateien/jahresbericht.html">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusInscriptLatinarum"/>
+  <dc:identifier rdf:resource="http://cil.bbaw.de/dateien/jahresbericht.html"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://cil.bbaw.de/dateien/hilfsmittel.html">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusInscriptLatinarum"/>
+  <dc:identifier rdf:resource="http://cil.bbaw.de/dateien/hilfsmittel.html"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://cil.bbaw.de/dateien/addenda.html">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusInscriptLatinarum"/>
+  <dc:identifier rdf:resource="http://cil.bbaw.de/dateien/addenda.html"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://cil.bbaw.de/dateien/datenbank.php">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusInscriptLatinarum"/>
+  <dc:identifier rdf:resource="http://cil.bbaw.de/dateien/datenbank.php"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://cil.bbaw.de/dateien/indices.html">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusInscriptLatinarum"/>
+  <dc:identifier rdf:resource="http://cil.bbaw.de/dateien/indices.html"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://cil.bbaw.de/loca/loca_vorwort.html">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusInscriptLatinarum"/>
+  <dc:identifier rdf:resource="http://cil.bbaw.de/loca/loca_vorwort.html"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://cil.bbaw.de/dateien/konkordanz.html">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusInscriptLatinarum"/>
+  <dc:identifier rdf:resource="http://cil.bbaw.de/dateien/konkordanz.html"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://cil.bbaw.de/dateien/findbuch.html">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusInscriptLatinarum"/>
+  <dc:identifier rdf:resource="http://cil.bbaw.de/dateien/findbuch.html"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://cil.bbaw.de/kwic/Vorwort.htm">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusInscriptLatinarum"/>
+  <dc:identifier rdf:resource="http://cil.bbaw.de/kwic/Vorwort.htm"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://cil.bbaw.de/dateien/indices_xvii.html">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusInscriptLatinarum"/>
+  <dc:identifier rdf:resource="http://cil.bbaw.de/dateien/indices_xvii.html"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://cil.bbaw.de/dateien/anthologie.html">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusInscriptLatinarum"/>
+  <dc:identifier rdf:resource="http://cil.bbaw.de/dateien/anthologie.html"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://cil.bbaw.de/dateien/links.html">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusInscriptLatinarum"/>
+  <dc:identifier rdf:resource="http://cil.bbaw.de/dateien/links.html"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://cil.bbaw.de/dateien/aktuelles.html">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusInscriptLatinarum"/>
+  <dc:identifier rdf:resource="http://cil.bbaw.de/dateien/aktuelles.html"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://cil.bbaw.de/dateien/aktuelles_veranstaltungen.html">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusInscriptLatinarum"/>
+  <dc:identifier rdf:resource="http://cil.bbaw.de/dateien/aktuelles_veranstaltungen.html"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://cil.bbaw.de/dateien/aktuelles_literatur.html">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusInscriptLatinarum"/>
+  <dc:identifier rdf:resource="http://cil.bbaw.de/dateien/aktuelles_literatur.html"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://cil.bbaw.de/dateien/kontakt.html">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusInscriptLatinarum"/>
+  <dc:identifier rdf:resource="http://cil.bbaw.de/dateien/kontakt.html"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://cil.bbaw.de/pdf/CILBro2007_S.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusInscriptLatinarum"/>
+  <dc:identifier rdf:resource="http://cil.bbaw.de/pdf/CILBro2007_S.pdf"/>
+</rdf:Description>
+
+
+<!-- PDF  -->
+<rdf:Description rdf:about="http://cil.bbaw.de/pdf/spiegelbilder.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusInscriptLatinarum"/>
+  <dc:identifier rdf:resource="http://cil.bbaw.de/pdf/spiegelbilder.pdf"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://cil.bbaw.de/pdf/reflections.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusInscriptLatinarum"/>
+  <dc:identifier rdf:resource="http://cil.bbaw.de/pdf/reflections.pdf"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://cil.bbaw.de/pdf/CIL_I2%20add.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusInscriptLatinarum"/>
+  <dc:identifier rdf:resource="http://cil.bbaw.de/pdf/CIL_I2%20add.pdf"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://cil.bbaw.de/pdf/CIL_II%20add.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusInscriptLatinarum"/>
+  <dc:identifier rdf:resource="http://cil.bbaw.de/pdf/CIL_II%20add.pdf"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://cil.bbaw.de/pdf/CIL_III%20add.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusInscriptLatinarum"/>
+  <dc:identifier rdf:resource="http://cil.bbaw.de/pdf/CIL_III%20add.pdf"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://cil.bbaw.de/pdf/CIL_IV%20add.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusInscriptLatinarum"/>
+  <dc:identifier rdf:resource="http://cil.bbaw.de/pdf/CIL_IV%20add.pdf"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://cil.bbaw.de/pdf/CIL_V%20add.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusInscriptLatinarum"/>
+  <dc:identifier rdf:resource="http://cil.bbaw.de/pdf/CIL_V%20add.pdf"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://cil.bbaw.de/pdf/CIL_VI%20add.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusInscriptLatinarum"/>
+  <dc:identifier rdf:resource="http://cil.bbaw.de/pdf/CIL_VI%20add.pdf"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://cil.bbaw.de/pdf/CIL_VII%20add.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusInscriptLatinarum"/>
+  <dc:identifier rdf:resource="http://cil.bbaw.de/pdf/CIL_VII%20add.pdf"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://cil.bbaw.de/pdf/CIL_VIII%20add.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusInscriptLatinarum"/>
+  <dc:identifier rdf:resource="http://cil.bbaw.de/pdf/CIL_VIII%20add.pdf"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://cil.bbaw.de/pdf/CIL_IX%20add.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusInscriptLatinarum"/>
+  <dc:identifier rdf:resource="http://cil.bbaw.de/pdf/CIL_IX%20add.pdf"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://cil.bbaw.de/pdf/CIL_X%20add.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusInscriptLatinarum"/>
+  <dc:identifier rdf:resource="http://cil.bbaw.de/pdf/CIL_X%20add.pdf"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://cil.bbaw.de/pdf/CIL_XI%20add.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusInscriptLatinarum"/>
+  <dc:identifier rdf:resource="http://cil.bbaw.de/pdf/CIL_XI%20add.pdf"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://cil.bbaw.de/pdf/CIL_XII%20add.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusInscriptLatinarum"/>
+  <dc:identifier rdf:resource="http://cil.bbaw.de/pdf/CIL_XII%20add.pdf"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://cil.bbaw.de/pdf/CIL_XIII%20add.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusInscriptLatinarum"/>
+  <dc:identifier rdf:resource="http://cil.bbaw.de/pdf/CIL_XIII%20add.pdf"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://cil.bbaw.de/pdf/CIL_XIII%20add.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusInscriptLatinarum"/>
+  <dc:identifier rdf:resource="http://cil.bbaw.de/pdf/CIL_XIII%20add.pdf"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://cil.bbaw.de/pdf/CIL_XIV%20add.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusInscriptLatinarum"/>
+  <dc:identifier rdf:resource="http://cil.bbaw.de/pdf/CIL_XIV%20add.pdf"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://cil.bbaw.de/pdf/CIL_XV%20add.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusInscriptLatinarum"/>
+  <dc:identifier rdf:resource="http://cil.bbaw.de/pdf/CIL_XV%20add.pdf"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://cil.bbaw.de/pdf/CIL_XVII%20add.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusInscriptLatinarum"/>
+  <dc:identifier rdf:resource="http://cil.bbaw.de/pdf/CIL_XVII%20add.pdf"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://cil.bbaw.de/pdf/IndexXVII4_1.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusInscriptLatinarum"/>
+  <dc:identifier rdf:resource="http://cil.bbaw.de/pdf/IndexXVII4_1.pdf"/>
 </rdf:Description>
 </rdf:RDF>
