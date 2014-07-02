@@ -15,4 +15,24 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ClarinD"/>
   <dc:identifier rdf:resource="http://clarin.bbaw.de"/>
 </rdf:Description>
+<rdf:Description rdf:about="http://clarin.bbaw.de/corpus/">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ClarinD"/>
+  <dc:identifier rdf:resource="http://clarin.bbaw.de/corpus/"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://clarin.bbaw.de/lexik/">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ClarinD"/>
+  <dc:identifier rdf:resource="http://clarin.bbaw.de/lexik/"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://clarin.bbaw.de/web/">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ClarinD"/>
+  <dc:identifier rdf:resource="http://clarin.bbaw.de/web/"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://clarin.bbaw.de/repo/">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ClarinD"/>
+  <dc:identifier rdf:resource="http://clarin.bbaw.de/repo/"/>
+</rdf:Description>
 </rdf:RDF>

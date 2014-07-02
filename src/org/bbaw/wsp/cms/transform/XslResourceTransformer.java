@@ -47,6 +47,7 @@ public class XslResourceTransformer {
   public String transform(String xmlFileName) throws ApplicationException {
     String result = null;
     try {
+      xmlFileName = "file:" + xmlFileName;
       StreamSource xmlDoc = new StreamSource(xmlFileName); 
       serializer = new Serializer();
       serializer.setOutputWriter(new StringWriter());

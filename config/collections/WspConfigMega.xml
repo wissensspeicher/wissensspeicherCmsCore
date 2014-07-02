@@ -64,29 +64,10 @@
     <formats>
       <format>xml</format>
     </formats>
-    <services>
-      <service>
-        <id>pageView</id>
-        <parameters>
-          <param>
-            <name>page</name>
-            <value>pageNr</value>
-          </param>
-        </parameters>
-      </service>
-    </services>
     <fields>
       <field>p</field>
       <field>s</field>
       <field>head</field>
     </fields>
-    <xqueries>
-      <xquery>
-        <name>webId</name>
-        <code>xxxFileName</code>  <!-- special field: delivers the fileName of the xml file -->
-        <preStr>http://telota.bbaw.de/mega/#?doc=</preStr>
-      </xquery>
-    </xqueries>
-    <update>false</update>
   </collection>
 </wsp>

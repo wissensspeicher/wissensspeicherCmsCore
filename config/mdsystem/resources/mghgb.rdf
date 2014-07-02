@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rdf:RDF 
-   xmlns="http://wsp.normdata.rdf/MonumentaGermaniaeHistorica/DerGoldeneBulle" 
-   xml:base="http://wsp.normdata.rdf/MonumentaGermaniaeHistorica/DerGoldeneBulle" 
+   xmlns="http://wsp.normdata.rdf/MonumentaGermaniaeHistorica/DieGoldeneBulle" 
+   xml:base="http://wsp.normdata.rdf/MonumentaGermaniaeHistorica/DieGoldeneBulle" 
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" 
    xmlns:dc="http://purl.org/dc/elements/1.1/" 
@@ -12,7 +12,13 @@
 >
 <rdf:Description rdf:about="http://telota.bbaw.de/mgh/">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MonumentaGermaniaeHistorica/DerGoldeneBulle"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MonumentaGermaniaeHistorica/DieGoldeneBulle"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/mgh/"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://telota.bbaw.de:8088/exist/rest/db/mgh/">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MonumentaGermaniaeHistorica/DieGoldeneBulle"/>
+  <dc:identifier rdf:resource="http://telota.bbaw.de:8088/exist/rest/db/mgh/"/>
+  <dc:type>eXistDir</dc:type>
 </rdf:Description>
 </rdf:RDF>

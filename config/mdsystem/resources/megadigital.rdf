@@ -131,6 +131,13 @@
   <dc:subject>Marx</dc:subject>
   <dc:subject>Engels</dc:subject>
   <dc:subject>Kapital</dc:subject>
+  <!-- standard work: controlled vocabulary: DBpedia -->
+  <dcterms:subject type="standardWork">
+    <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Marxismus">
+      <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      <rdfs:label>Marxismus</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
 </rdf:Description>
 <rdf:Description rdf:about="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B001-02_ETX.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>

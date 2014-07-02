@@ -15,4 +15,10 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MonumentaGermaniaeHistorica/Constitutiones"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/constitutiones/"/>
 </rdf:Description>
+<rdf:Description rdf:about="http://telota.bbaw.de:8089/exist/rest/db/mgh/data/">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MonumentaGermaniaeHistorica/Constitutiones"/>
+  <dc:identifier rdf:resource="http://telota.bbaw.de:8089/exist/rest/db/mgh/data/"/>
+  <dc:type>eXistDir</dc:type>
+</rdf:Description>
 </rdf:RDF>

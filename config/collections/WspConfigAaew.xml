@@ -6,7 +6,13 @@
     <name>Strukturen und Transformationen des Wortschatzes der ägyptischen Sprache: Text- und Wissenskultur im Alten Ägypten</name>
     <url>
       <webBaseUrl>http://aaew.bbaw.de/</webBaseUrl>
-      <dataUrl>http://aaew.bbaw.de/</dataUrl>
+      <dataUrl>http://aaew.bbaw.de</dataUrl>
+      <dataUrl>http://aaew.bbaw.de/projekt</dataUrl>
+      <dataUrl>http://aaew.bbaw.de/projekt/einfuehrung-ausfuehrlich</dataUrl>
+      <dataUrl>http://aaew.bbaw.de/projekt/geschichte</dataUrl>
+      <dataUrl>http://aaew.bbaw.de/projekt/geschichte/erman</dataUrl>
+      <dataUrl>http://aaew.bbaw.de/projekt/geschichte/grapow</dataUrl>
+      <dataUrl>http://aaew.bbaw.de/projekt/geschichte/sethe</dataUrl>
     </url>
     <languages>ger,eng,egy</languages>
     <mainLanguage>ger</mainLanguage>

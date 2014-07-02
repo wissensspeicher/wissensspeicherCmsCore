@@ -1712,11 +1712,11 @@ Damit sollen gemeinsame historische Vermächtnisse sowie die Mobilität von Pers
 		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MonumentaGermaniaeHistorica" />	
 		<foaf:homepage rdf:resource="http://telota.bbaw.de/constitutiones/"/>		
 	</rdf:Description>
-	<rdf:Description rdf:about="http://wsp.normdata.rdf/MonumentaGermaniaeHistorica/DerGoldeneBulle">
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/MonumentaGermaniaeHistorica/DieGoldeneBulle">
     <dc:language>ger</dc:language>
     <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
     <foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mghgb</foaf:nick>
-		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Monumenta Germaniae Historica: Der Goldene Bulle</foaf:name>
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Monumenta Germaniae Historica: Die Goldene Bulle</foaf:name>
 		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MonumentaGermaniaeHistorica" />	
 		<foaf:homepage rdf:resource="http://telota.bbaw.de/mgh/"/>		
 	</rdf:Description>

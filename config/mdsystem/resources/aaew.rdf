@@ -10,9 +10,39 @@
    xmlns:gnd="http://d-nb.info/standards/elementset/gnd#" 
    xmlns:ore="http://www.openarchives.org/ore/terms/" 
 >
-<rdf:Description rdf:about="http://aaew.bbaw.de/">
+<rdf:Description rdf:about="http://aaew.bbaw.de">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/StrukturenTransformationAEW"/>
-  <dc:identifier rdf:resource="http://aaew.bbaw.de/"/>
+  <dc:identifier rdf:resource="http://aaew.bbaw.de"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://aaew.bbaw.de/projekt">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/StrukturenTransformationAEW"/>
+  <dc:identifier rdf:resource="http://aaew.bbaw.de/projekt"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://aaew.bbaw.de/projekt/einfuehrung-ausfuehrlich">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/StrukturenTransformationAEW"/>
+  <dc:identifier rdf:resource="http://aaew.bbaw.de/projekt/einfuehrung-ausfuehrlich"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://aaew.bbaw.de/projekt/geschichte">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/StrukturenTransformationAEW"/>
+  <dc:identifier rdf:resource="http://aaew.bbaw.de/projekt/geschichte"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://aaew.bbaw.de/projekt/geschichte/erman">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/StrukturenTransformationAEW"/>
+  <dc:identifier rdf:resource="http://aaew.bbaw.de/projekt/geschichte/erman"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://aaew.bbaw.de/projekt/geschichte/grapow">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/StrukturenTransformationAEW"/>
+  <dc:identifier rdf:resource="http://aaew.bbaw.de/projekt/geschichte/grapow"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://aaew.bbaw.de/projekt/geschichte/sethe">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/StrukturenTransformationAEW"/>
+  <dc:identifier rdf:resource="http://aaew.bbaw.de/projekt/geschichte/sethe"/>
 </rdf:Description>
 </rdf:RDF>

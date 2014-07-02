@@ -38,8 +38,8 @@ public class ConvertConfigXml2Rdf {
       // convertConfigXml2Rdf.proofRdfProjects();
       // convertConfigXml2Rdf.proofCollectionProjects();
       // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("turfanit");
-      Collection c = convertConfigXml2Rdf.collectionReader.getCollection("cvma");
-      convertConfigXml2Rdf.convert(c);
+      // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("mghconst");
+      // convertConfigXml2Rdf.convert(c);
       // convertConfigXml2Rdf.generateDbXmlDumpFile(c);
     } catch (Exception e) {
       e.printStackTrace();
@@ -280,8 +280,13 @@ public class ConvertConfigXml2Rdf {
       String mainResourcesTable = db.getMainResourcesTable();  // e.g. "titles_persons";
       String dbType = db.getType();
       XdmValue xmdValueMainResources = null;
+      Integer idCounter = null;
       if (dbType.equals("mysql")) {
         xmdValueMainResources = xQueryEvaluator.evaluate(xmlDumpFileUrl, "/" + dbName + "/" + mainResourcesTable);
+        XdmValue xmdValueIds = xQueryEvaluator.evaluate(xmlDumpFileUrl, "/" + dbName + "/" + mainResourcesTable + "/*:id");
+        // if no id field exists then insert automatically ids starting from 1
+        if (xmdValueIds != null && xmdValueIds.size() == 0)
+          idCounter = new Integer(0);
       } else if (dbType.equals("postgres")) {
         xmdValueMainResources = xQueryEvaluator.evaluate(xmlDumpFileUrl, "/data/records/row");
       } else if (dbType.equals("oai")) {
@@ -292,7 +297,9 @@ public class ConvertConfigXml2Rdf {
         while (xmdValueMainResourcesIterator.hasNext()) {
           XdmItem xdmItemMainResource = xmdValueMainResourcesIterator.next();
           String xdmItemMainResourceStr = xdmItemMainResource.toString();
-          Row row = xml2row(xdmItemMainResourceStr, db);
+          if (idCounter != null)
+            idCounter++;
+          Row row = xml2row(xdmItemMainResourceStr, db, idCounter);
           appendRow2rdf(rdfStrBuilder, collection, db, row);
         }
       }
@@ -301,10 +308,12 @@ public class ConvertConfigXml2Rdf {
     }
   }
 
-  private Row xml2row(String rowXmlStr, Database db) throws ApplicationException {
+  private Row xml2row(String rowXmlStr, Database db, Integer idCounter) throws ApplicationException {
     String dbType = db.getType();
     Row row = new Row();
     if (dbType.equals("mysql")) {
+      if (idCounter != null)
+        row.addField("id", idCounter.toString());
       XdmValue xmdValueFields = xQueryEvaluator.evaluate(rowXmlStr, "/*/*"); // e.g. <titles_persons><title>
       XdmSequenceIterator xmdValueFieldsIterator = xmdValueFields.iterator();
       if (xmdValueFields != null && xmdValueFields.size() > 0) {
@@ -358,10 +367,12 @@ public class ConvertConfigXml2Rdf {
     String id = row.getFieldValue(mainResourcesTableId);
     String rdfId = "http://" + collectionId + ".bbaw.de/id/" + id;
     String rdfWebId = rdfId;
-    if (webIdPreStr != null)
+    if (webIdPreStr != null) {
       rdfWebId = webIdPreStr + id;
-    if (webIdAfterStr != null)
+    }
+    if (webIdAfterStr != null) {
       rdfWebId = rdfWebId + webIdAfterStr;
+    }
     rdfStrBuilder.append("<rdf:Description rdf:about=\"" + rdfWebId + "\">\n");
     rdfStrBuilder.append("  <rdf:type rdf:resource=\"http://purl.org/dc/terms/BibliographicResource\"/>\n");
     rdfStrBuilder.append("  <dcterms:isPartOf rdf:resource=\"" + collectionRdfId + "\"/>\n");

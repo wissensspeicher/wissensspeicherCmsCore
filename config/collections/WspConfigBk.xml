@@ -154,6 +154,44 @@ FROM
         <preStr>http://berlinerklassik.bbaw.de/BK/personen/BKPerson_Details?bkperson_id=</preStr>
       </webId>
     </db>
+    <db>
+      <type>postgres</type>
+      <name>bk_vereine</name>
+      <xmlDump>
+        <sql>
+SELECT 
+ geselligkeit_id as id,
+ name as title,
+ CASE 
+   WHEN(CHAR_LENGTH(gegruendet)) = 10 THEN (SUBSTRING(gegruendet from 1 for 4) || '-' || SUBSTRING(gegruendet from 6 for 2) || '-' || SUBSTRING(gegruendet from 9 for 2) || 'T00:00:00.000Z') 
+   ELSE NULL
+ END as pub_date,
+ ('Sitz 1: ' || coalesce(sitz1, '') || '\nSitz 2: ' || coalesce(sitz2, '') || '\nKommentar: ' || coalesce(kommentar, '') || '\nGeschichte/Programmatik: ' || coalesce(geschichte_programm, '') || '\nStruktur/Organisation: ' || coalesce(struktur_organisation, '') || '\nStatuten: ' || coalesce(statuten, '') || '\nQuellen: ' || coalesce(quellen, '')) as abstract
+FROM 
+ tblgeselligkeit
+        </sql>
+        <fileName>config/mdsystem/db-resources/bk-vereine.xml</fileName>
+      </xmlDump>
+      <mainResourcesTable>
+        <name>verein</name>
+        <idField>id</idField>
+        <field>
+          <dc>title</dc>
+          <db>title</db>
+        </field>
+        <field>
+          <dc>date</dc>
+          <db>pub_date</db>
+        </field>
+        <field>
+          <dc>abstract</dc>
+          <db>abstract</db>
+        </field>
+      </mainResourcesTable>
+      <webId>
+        <preStr>http://berlinerklassik.bbaw.de/BK/geselligkeit/GeselligkeitDetails?geselligkeit_id=</preStr>
+      </webId>
+    </db>
   </collection>
 </wsp>
 

@@ -15,61 +15,44 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Chronologie"/>
   <dc:identifier rdf:resource="http://avh.bbaw.de/chronologie"/>
 </rdf:Description>
-
-<!-- Einträge von Sascha -->
-<rdf:Description rdf:about="http://avh.bbaw.de/chronologie">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Chronologie"/>
-  <dc:identifier rdf:resource="http://avh.bbaw.de/chronologie"/>
-  <dc:title>Chronologie</dc:title>
-</rdf:Description>
 <rdf:Description rdf:about="http://avh.bbaw.de/chronologie/1766-1790">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Chronologie"/>
   <dc:identifier rdf:resource="http://avh.bbaw.de/chronologie/1766-1790"/>
-  <dc:title>1766-1790. Jugendjahre</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://avh.bbaw.de/chronologie/1791-1800">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Chronologie"/>
   <dc:identifier rdf:resource="http://avh.bbaw.de/chronologie/1791-1800"/>
-  <dc:title>1791-1800. Studium, Bergdienst, Vorbereitung und Beginn der Amerikareise</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://avh.bbaw.de/chronologie/1801-1810">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Chronologie"/>
   <dc:identifier rdf:resource="http://avh.bbaw.de/chronologie/1801-1810"/>
-  <dc:title>1801-1810. Amerikareise, Auswertung der Reise in Paris</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://avh.bbaw.de/chronologie/1811-1820">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Chronologie"/>
   <dc:identifier rdf:resource="http://avh.bbaw.de/chronologie/1811-1820"/>
-  <dc:title>1811-1820. Auswertung der Reise in Paris</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://avh.bbaw.de/chronologie/1821-1830">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Chronologie"/>
   <dc:identifier rdf:resource="http://avh.bbaw.de/chronologie/1821-1830"/>
-  <dc:title>1821-1830. Auswertung der Reise in Paris, Rückkehr nach Berlin, Kosmos-Vorlesungen, Rußland-Reise, Förderung der Wissenschaften</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://avh.bbaw.de/chronologie/1831-1840">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Chronologie"/>
   <dc:identifier rdf:resource="http://avh.bbaw.de/chronologie/1831-1840"/>
-  <dc:title>1831-1840. Berlin, Förderung der Wissenschaften, Reisen nach Paris</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://avh.bbaw.de/chronologie/1841-1850">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Chronologie"/>
   <dc:identifier rdf:resource="http://avh.bbaw.de/chronologie/1841-1850"/>
-  <dc:title>1841-1850. Berlin, Förderung der Wissenschaften, Reisen nach Paris, Arbeit am "Kosmos"</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://avh.bbaw.de/chronologie/1851-1859">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Chronologie"/>
   <dc:identifier rdf:resource="http://avh.bbaw.de/chronologie/1851-1859"/>
-  <dc:title>1851-1859. Berlin, Förderung der Wissenschaften, Arbeit am "Kosmos"</dc:title>
 </rdf:Description>
-
 </rdf:RDF>

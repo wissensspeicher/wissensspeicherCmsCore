@@ -120,9 +120,24 @@ public class DocumentHandler {
       XQueryEvaluator xQueryEvaluator = new XQueryEvaluator();
       if (docIsXml) {
         // parse validation on file
-        XdmNode docNode = xQueryEvaluator.parse(srcUrl); // if it is not parseable an exception with a detail message is thrown 
-        docType = getNodeType(docNode);
-        docType = docType.trim();
+        try {
+          XdmNode docNode = xQueryEvaluator.parse(srcUrl); // if it is not parseable an exception with a detail message is thrown 
+          docType = getNodeType(docNode);
+          docType = docType.trim();
+        } catch (ApplicationException e) {
+          // second try with encoded blanks url
+          String srcUrlFileEncodedStr = srcUrl.getFile().replaceAll(" ", "%20");
+          String srcUrlEncodedStr = srcUrl.getProtocol() + "://" + srcUrl.getHost() + ":" + srcUrl.getPort() + srcUrlFileEncodedStr;
+          URL srcUrlEncoded = new URL(srcUrlEncodedStr);
+          try {
+            XdmNode docNode = xQueryEvaluator.parse(srcUrlEncoded);
+            docType = getNodeType(docNode);
+            docType = docType.trim();
+          } catch (Exception e2) {
+            LOGGER.error(srcUrlStr + " is not xml parseable");
+            e.printStackTrace();
+          }
+        }
       }
       if (docType == null) {
         docType = mimeType;
@@ -979,9 +994,17 @@ public class DocumentHandler {
       FileUtils.deleteQuietly(docDestFile);
       return false;
     } catch (IOException e) {
-      LOGGER.error("copyUrlToFile failed. IOException: " + e.getMessage() + " for Url: " + srcUrl);
-      FileUtils.deleteQuietly(docDestFile);
-      return false;
+      try {
+        // second try with encoded blanks url
+        String srcUrlFileEncodedStr = srcUrl.getFile().replaceAll(" ", "%20");
+        String srcUrlEncodedStr = srcUrl.getProtocol() + "://" + srcUrl.getHost() + ":" + srcUrl.getPort() + srcUrlFileEncodedStr;
+        URL srcUrlEncoded = new URL(srcUrlEncodedStr);
+        FileUtils.copyURLToFile(srcUrlEncoded, docDestFile, 20000, 20000);
+      } catch (IOException e2) {
+        LOGGER.error("copyUrlToFile failed. IOException: " + e.getMessage() + " for Url: " + srcUrl);
+        FileUtils.deleteQuietly(docDestFile);
+        return false;
+      }
     }
     return true;
   }
@@ -1086,7 +1109,7 @@ public class DocumentHandler {
       GetFragmentsContentHandler getFragmentsContentHandler = new GetFragmentsContentHandler(milestoneElementName);
       XMLReader xmlParser = new SAXParser();
       xmlParser.setContentHandler(getFragmentsContentHandler);
-      InputSource inputSource = new InputSource(fileName);
+      InputSource inputSource = new InputSource("file:" + fileName);
       xmlParser.parse(inputSource);
       Hashtable<Integer, StringBuilder> resultFragments = getFragmentsContentHandler.getResultPages();
       return resultFragments;

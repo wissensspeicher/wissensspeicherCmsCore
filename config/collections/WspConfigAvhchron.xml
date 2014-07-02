@@ -7,6 +7,14 @@
     <url>
       <webBaseUrl>http://avh.bbaw.de/chronologie</webBaseUrl>
       <dataUrl>http://avh.bbaw.de/chronologie</dataUrl>
+      <dataUrl>http://avh.bbaw.de/chronologie/1766-1790</dataUrl>
+      <dataUrl>http://avh.bbaw.de/chronologie/1791-1800</dataUrl>
+      <dataUrl>http://avh.bbaw.de/chronologie/1801-1810</dataUrl>
+      <dataUrl>http://avh.bbaw.de/chronologie/1811-1820</dataUrl>
+      <dataUrl>http://avh.bbaw.de/chronologie/1821-1830</dataUrl>
+      <dataUrl>http://avh.bbaw.de/chronologie/1831-1840</dataUrl>
+      <dataUrl>http://avh.bbaw.de/chronologie/1841-1850</dataUrl>
+      <dataUrl>http://avh.bbaw.de/chronologie/1851-1859</dataUrl>
     </url>
     <languages>ger,lat,fra,eng</languages>
     <mainLanguage>ger</mainLanguage>

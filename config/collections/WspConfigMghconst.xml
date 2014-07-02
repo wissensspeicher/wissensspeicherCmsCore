@@ -7,6 +7,8 @@
     <url>
       <webBaseUrl>http://telota.bbaw.de/constitutiones/</webBaseUrl>
       <dataUrl>http://telota.bbaw.de/constitutiones/</dataUrl>
+      <!-- XML-Texte -->
+      <dataUrl type="eXistDir">http://telota.bbaw.de:8089/exist/rest/db/mgh/data/</dataUrl>
     </url>
     <languages>ger, lat, gmh</languages>
     <mainLanguage>ger</mainLanguage>
@@ -15,6 +17,12 @@
       <format>html</format>
       <format>pdf</format>
     </formats>
-    <update>false</update>
+    <xqueries>
+      <xquery>
+        <name>webId</name>
+        <code>concat('', //*:idno/text())</code>
+        <preStr>http://telota.bbaw.de/constitutiones/#</preStr>
+      </xquery>
+    </xqueries>
   </collection>
 </wsp>

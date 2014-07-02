@@ -2,11 +2,14 @@
 <wsp>
   <collection>
     <id>mghgb</id>
-    <rdfId>http://wsp.normdata.rdf/MonumentaGermaniaeHistorica/DerGoldeneBulle</rdfId>
-    <name>Monumenta Germaniae Historica: Der Goldene Bulle</name>
+    <rdfId>http://wsp.normdata.rdf/MonumentaGermaniaeHistorica/DieGoldeneBulle</rdfId>
+    <name>Monumenta Germaniae Historica: Die Goldene Bulle</name>
     <url>
       <webBaseUrl>http://telota.bbaw.de/mgh/</webBaseUrl>
       <dataUrl>http://telota.bbaw.de/mgh/</dataUrl>
+      <!-- XML-Texte -->
+      <dataUrl type="eXistDir">http://telota.bbaw.de:8088/exist/rest/db/mgh/</dataUrl>
+      <exclude>scripts</exclude>
     </url>
     <languages>ger, lat, gmh</languages>
     <mainLanguage>ger</mainLanguage>
@@ -15,6 +18,13 @@
       <format>html</format>
       <format>pdf</format>
     </formats>
-    <update>false</update>
+    <xqueries> 
+      <xquery>
+        <!-- hack: to generate the same static webUri to all xml documents -->
+        <name>webId</name>
+        <code>concat('', 'mgh/')</code>
+        <preStr>http://telota.bbaw.de/</preStr>
+      </xquery>
+    </xqueries>
   </collection>
 </wsp>

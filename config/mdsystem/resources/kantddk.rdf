@@ -14,5 +14,438 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KantSchriften/DieDreiKritiken"/>
   <dc:identifier rdf:resource="http://kant.bbaw.de/die-drei-kritiken"/>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Philosophisches_Werk">
+      <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      <rdfs:label>Philosophisches Werk</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Ethische_Theorie">
+      <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      <rdfs:label>Ethische Theorie</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Immanuel_Kant">
+      <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      <rdfs:label>Immanuel Kant</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://d-nb.info/gnd/118578537">
+      <rdf:type rdf:resource="http://d-nb.info/standards/elementset/gnd#Person"/>
+      <rdfs:label>Immanuel Kant</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
 </rdf:Description>
+
+<!-- WEB  -->
+<rdf:Description rdf:about="http://kant.bbaw.de/die-drei-kritiken/edition">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KantSchriften/DieDreiKritiken"/>
+  <dc:identifier rdf:resource="http://kant.bbaw.de/die-drei-kritiken/edition"/>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Philosophisches_Werk">
+      <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      <rdfs:label>Philosophisches Werk</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Ethische_Theorie">
+      <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      <rdfs:label>Ethische Theorie</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Immanuel_Kant">
+      <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      <rdfs:label>Immanuel Kant</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://d-nb.info/gnd/118578537">
+      <rdf:type rdf:resource="http://d-nb.info/standards/elementset/gnd#Person"/>
+      <rdfs:label>Immanuel Kant</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://kant.bbaw.de/die-drei-kritiken/critik-der-reinen-vernunft">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KantSchriften/DieDreiKritiken"/>
+  <dc:identifier rdf:resource="http://kant.bbaw.de/die-drei-kritiken/critik-der-reinen-vernunft"/>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Philosophisches_Werk">
+      <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      <rdfs:label>Philosophisches Werk</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Ethische_Theorie">
+      <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      <rdfs:label>Ethische Theorie</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+   <dcterms:subject>
+    <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Literarisches_Werk">
+      <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      <rdfs:label>Literarisches Werk</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Immanuel_Kant">
+      <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      <rdfs:label>Immanuel Kant</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://d-nb.info/gnd/118578537">
+      <rdf:type rdf:resource="http://d-nb.info/standards/elementset/gnd#Person"/>
+      <rdfs:label>Immanuel Kant</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://kant.bbaw.de/die-drei-kritiken/critik-der-practischen-vernunft-handexemplar">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KantSchriften/DieDreiKritiken"/>
+  <dc:identifier rdf:resource="http://kant.bbaw.de/die-drei-kritiken/critik-der-practischen-vernunft-handexemplar"/>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Philosophisches_Werk">
+      <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      <rdfs:label>Philosophisches Werk</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Ethische_Theorie">
+      <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      <rdfs:label>Ethische Theorie</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+   <dcterms:subject>
+    <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Literarisches_Werk">
+      <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      <rdfs:label>Literarisches Werk</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Immanuel_Kant">
+      <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      <rdfs:label>Immanuel Kant</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://d-nb.info/gnd/118578537">
+      <rdf:type rdf:resource="http://d-nb.info/standards/elementset/gnd#Person"/>
+      <rdfs:label>Immanuel Kant</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://kant.bbaw.de/die-drei-kritiken/critik-der-urtheilskraft">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KantSchriften/DieDreiKritiken"/>
+  <dc:identifier rdf:resource="http://kant.bbaw.de/die-drei-kritiken/critik-der-urtheilskraft"/>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Philosophisches_Werk">
+      <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      <rdfs:label>Philosophisches Werk</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Ethische_Theorie">
+      <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      <rdfs:label>Ethische Theorie</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+   <dcterms:subject>
+    <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Literarisches_Werk">
+      <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      <rdfs:label>Literarisches Werk</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Immanuel_Kant">
+      <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      <rdfs:label>Immanuel Kant</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://d-nb.info/gnd/118578537">
+      <rdf:type rdf:resource="http://d-nb.info/standards/elementset/gnd#Person"/>
+      <rdfs:label>Immanuel Kant</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://kant.bbaw.de/die-drei-kritiken/zeit-stiftung">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KantSchriften/DieDreiKritiken"/>
+  <dc:identifier rdf:resource="http://kant.bbaw.de/die-drei-kritiken/zeit-stiftung"/>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Philosophisches_Werk">
+      <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      <rdfs:label>Philosophisches Werk</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Ethische_Theorie">
+      <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      <rdfs:label>Ethische Theorie</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Immanuel_Kant">
+      <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      <rdfs:label>Immanuel Kant</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://d-nb.info/gnd/118578537">
+      <rdf:type rdf:resource="http://d-nb.info/standards/elementset/gnd#Person"/>
+      <rdfs:label>Immanuel Kant</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://kant.bbaw.de/die-drei-kritiken/walter-de-gruyter-stiftung">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KantSchriften/DieDreiKritiken"/>
+  <dc:identifier rdf:resource="http://kant.bbaw.de/die-drei-kritiken/walter-de-gruyter-stiftung"/>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Philosophisches_Werk">
+      <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      <rdfs:label>Philosophisches Werk</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Ethische_Theorie">
+      <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      <rdfs:label>Ethische Theorie</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Immanuel_Kant">
+      <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      <rdfs:label>Immanuel Kant</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://d-nb.info/gnd/118578537">
+      <rdf:type rdf:resource="http://d-nb.info/standards/elementset/gnd#Person"/>
+      <rdfs:label>Immanuel Kant</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://kant.bbaw.de/die-drei-kritiken/hamburger-stiftung-zur-foerderung-von-wissenschaft-und-kultur">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KantSchriften/DieDreiKritiken"/>
+  <dc:identifier rdf:resource="http://kant.bbaw.de/die-drei-kritiken/hamburger-stiftung-zur-foerderung-von-wissenschaft-und-kultur"/>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Philosophisches_Werk">
+      <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      <rdfs:label>Philosophisches Werk</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Ethische_Theorie">
+      <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      <rdfs:label>Ethische Theorie</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Immanuel_Kant">
+      <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      <rdfs:label>Immanuel Kant</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://d-nb.info/gnd/118578537">
+      <rdf:type rdf:resource="http://d-nb.info/standards/elementset/gnd#Person"/>
+      <rdfs:label>Immanuel Kant</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+</rdf:Description>
+
+
+<!-- Erstausgabe Kritik der reinen Vernunft Retrodigitalisat  -->
+<rdf:Description rdf:about="http://kant.bbaw.de/die-drei-kritiken/critik-der-reinen-vernunft/crva">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KantSchriften/DieDreiKritiken"/>
+  <dc:identifier rdf:resource="http://kant.bbaw.de/die-drei-kritiken/critik-der-reinen-vernunft/crva"/>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Kritik_der_reinen_Vernunft">
+      <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      <rdfs:label>Kritik der reinen Vernunft</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Immanuel_Kant">
+      <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      <rdfs:label>Immanuel Kant</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Philosophisches_Werk">
+      <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      <rdfs:label>Philosophisches Werk</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Ethische_Theorie">
+      <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      <rdfs:label>Ethische Theorie</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+   <dcterms:subject>
+    <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Literarisches_Werk">
+      <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      <rdfs:label>Literarisches Werk</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://d-nb.info/gnd/118578537">
+      <rdf:type rdf:resource="http://d-nb.info/standards/elementset/gnd#Person"/>
+      <rdfs:label>Immanuel Kant</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+  <dc:creator>Kant, Immanuel</dc:creator>
+  <dc:title>Kritik der reinen Vernunft (1. Auflage, 1781) </dc:title>
+  <!--  alternativer titel  -->
+  <dcterms:alternative>Critik der reinen Vernunft (1. Auflage, 1781) </dcterms:alternative>
+</rdf:Description>
+
+<!-- Zweitausgabe Kritik der reinen Vernunft Retrodigitalisat  -->
+<rdf:Description rdf:about="http://kant.bbaw.de/die-drei-kritiken/critik-der-reinen-vernunft/crvb">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KantSchriften/DieDreiKritiken"/>
+  <dc:identifier rdf:resource="http://kant.bbaw.de/die-drei-kritiken/critik-der-reinen-vernunft/crvb"/>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Kritik_der_reinen_Vernunft">
+      <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      <rdfs:label>Kritik der reinen Vernunft</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Immanuel_Kant">
+      <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      <rdfs:label>Immanuel Kant</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Philosophisches_Werk">
+      <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      <rdfs:label>Philosophisches Werk</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Ethische_Theorie">
+      <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      <rdfs:label>Ethische Theorie</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+   <dcterms:subject>
+    <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Literarisches_Werk">
+      <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      <rdfs:label>Literarisches Werk</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://d-nb.info/gnd/118578537">
+      <rdf:type rdf:resource="http://d-nb.info/standards/elementset/gnd#Person"/>
+      <rdfs:label>Immanuel Kant</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+  <dc:creator>Kant, Immanuel</dc:creator>
+  <dc:title>Kritik der reinen Vernunft (2. Auflage, 1787) </dc:title>
+  <!--  alternativer titel  -->
+  <dcterms:alternative>Critik der reinen Vernunft (2. Auflage, 1787)</dcterms:alternative>
+</rdf:Description>
+
+<!-- Erstausgabe Kritik der praktischen Vernunft Retrodigitalisat  -->
+<rdf:Description rdf:about="http://kant.bbaw.de/die-drei-kritiken/critik-der-practischen-vernunft-handexemplar/CpV">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KantSchriften/DieDreiKritiken"/>
+  <dc:identifier rdf:resource="http://kant.bbaw.de/die-drei-kritiken/critik-der-practischen-vernunft-handexemplar/CpV"/>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Philosophisches_Werk">
+      <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      <rdfs:label>Philosophisches Werk</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Ethische_Theorie">
+      <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      <rdfs:label>Ethische Theorie</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+   <dcterms:subject>
+    <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Literarisches_Werk">
+      <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      <rdfs:label>Literarisches Werk</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Immanuel_Kant">
+      <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      <rdfs:label>Immanuel Kant</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://d-nb.info/gnd/118578537">
+      <rdf:type rdf:resource="http://d-nb.info/standards/elementset/gnd#Person"/>
+      <rdfs:label>Immanuel Kant</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+  <dc:creator>Kant, Immanuel</dc:creator>
+  <dc:title>Kritik der praktischen Vernunft (Handexemplar der 1. Auflage, 1788)</dc:title>
+  <!--  alternativer titel  -->
+  <dcterms:alternative>Critik der practischen Vernunft (Handexemplar der 1. Auflage, 1788)</dcterms:alternative>
+</rdf:Description>
+
+
+
+<!-- Erstausgabe Kritik der Urteilskraft Retrodigitalisat  -->
+<rdf:Description rdf:about="http://kant.bbaw.de/die-drei-kritiken/critik-der-urtheilskraft/critik-der-urtheilskraft">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KantSchriften/DieDreiKritiken"/>
+  <dc:identifier rdf:resource="http://kant.bbaw.de/die-drei-kritiken/critik-der-urtheilskraft/critik-der-urtheilskraft"/>
+   <dcterms:subject>
+    <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Philosophisches_Werk">
+      <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      <rdfs:label>Philosophisches Werk</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Ethische_Theorie">
+      <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      <rdfs:label>Ethische Theorie</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+   <dcterms:subject>
+    <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Literarisches_Werk">
+      <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      <rdfs:label>Literarisches Werk</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Immanuel_Kant">
+      <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+      <rdfs:label>Immanuel Kant</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+  <dcterms:subject>
+    <rdf:Description rdf:about="http://d-nb.info/gnd/118578537">
+      <rdf:type rdf:resource="http://d-nb.info/standards/elementset/gnd#Person"/>
+      <rdfs:label>Immanuel Kant</rdfs:label>
+    </rdf:Description>
+  </dcterms:subject>
+  <dc:creator>Kant, Immanuel</dc:creator>
+  <dc:title>Kritik der Urteilskraft (2. Auflage, 1793)</dc:title>
+  <!--  alternativer titel  -->
+  <dcterms:alternative>Critik der Urtheilskraft (2. Auflage, 1793)</dcterms:alternative>
+</rdf:Description>
+
 </rdf:RDF>

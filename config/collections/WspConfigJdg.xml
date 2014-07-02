@@ -4,7 +4,6 @@
     <id>jdg</id>
     <rdfId>http://wsp.normdata.rdf/JahresberichteDeutscheGeschichte</rdfId>
     <name>Jahresberichte für deutsche Geschichte</name>
-    <!-- if dataUrl is not a directory but a file, it should end with a forward slash -->
     <url>
       <webBaseUrl>http://www.bbaw.de/forschung/jdg</webBaseUrl>
       <!-- Homepage -->
@@ -12,15 +11,15 @@
       
       <!-- Jahresberichte für deutsche Geschichte -->
       <dataUrl>http://jdgdb.bbaw.de/cgi-bin/jdg?lang=de</dataUrl>
+
+      <!-- ToDo -->
+      <!-- DB einbinden -->
       
-      
-      <exclude>scripts</exclude>
     </url>
     <languages>ger</languages>
     <mainLanguage>ger</mainLanguage>
     <formats>
       <format>xml</format>
     </formats>
-    <update>false</update>
   </collection>
 </wsp>
