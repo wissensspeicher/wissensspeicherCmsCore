@@ -16,7 +16,7 @@
   <dc:identifier rdf:resource="http://avh.bbaw.de/chronologie"/>
 </rdf:Description>
 
-<!-- EintrÃ¤ge von Sascha -->
+<!-- Einträge von Sascha -->
 <rdf:Description rdf:about="http://avh.bbaw.de/chronologie">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Chronologie"/>
@@ -51,25 +51,25 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Chronologie"/>
   <dc:identifier rdf:resource="http://avh.bbaw.de/chronologie/1821-1830"/>
-  <dc:title>1821-1830. Auswertung der Reise in Paris, RÃ¼ckkehr nach Berlin, Kosmos-Vorlesungen, RuÃŸland-Reise, FÃ¶rderung der Wissenschaften</dc:title>
+  <dc:title>1821-1830. Auswertung der Reise in Paris, Rückkehr nach Berlin, Kosmos-Vorlesungen, Rußland-Reise, Förderung der Wissenschaften</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://avh.bbaw.de/chronologie/1831-1840">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Chronologie"/>
   <dc:identifier rdf:resource="http://avh.bbaw.de/chronologie/1831-1840"/>
-  <dc:title>1831-1840. Berlin, FÃ¶rderung der Wissenschaften, Reisen nach Paris</dc:title>
+  <dc:title>1831-1840. Berlin, Förderung der Wissenschaften, Reisen nach Paris</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://avh.bbaw.de/chronologie/1841-1850">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Chronologie"/>
   <dc:identifier rdf:resource="http://avh.bbaw.de/chronologie/1841-1850"/>
-  <dc:title>1841-1850. Berlin, FÃ¶rderung der Wissenschaften, Reisen nach Paris, Arbeit am "Kosmos"</dc:title>
+  <dc:title>1841-1850. Berlin, Förderung der Wissenschaften, Reisen nach Paris, Arbeit am "Kosmos"</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://avh.bbaw.de/chronologie/1851-1859">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Chronologie"/>
   <dc:identifier rdf:resource="http://avh.bbaw.de/chronologie/1851-1859"/>
-  <dc:title>1851-1859. Berlin, FÃ¶rderung der Wissenschaften, Arbeit am "Kosmos"</dc:title>
+  <dc:title>1851-1859. Berlin, Förderung der Wissenschaften, Arbeit am "Kosmos"</dc:title>
 </rdf:Description>
 
 </rdf:RDF>
