@@ -10,12 +10,6 @@
    xmlns:gnd="http://d-nb.info/standards/elementset/gnd#" 
    xmlns:ore="http://www.openarchives.org/ore/terms/" 
 >
-<rdf:Description rdf:about="http://avh.bbaw.de/chronologie">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Chronologie"/>
-  <dc:identifier rdf:resource="http://avh.bbaw.de/chronologie"/>
-</rdf:Description>
-
 <!-- Einträge von Sascha -->
 <rdf:Description rdf:about="http://avh.bbaw.de/chronologie">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
