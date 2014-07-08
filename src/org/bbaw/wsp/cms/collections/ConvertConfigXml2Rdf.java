@@ -33,12 +33,12 @@ public class ConvertConfigXml2Rdf {
   public static void main(String[] args) throws ApplicationException {
     try {
       ConvertConfigXml2Rdf convertConfigXml2Rdf = new ConvertConfigXml2Rdf();
-      convertConfigXml2Rdf.init();
+      // convertConfigXml2Rdf.init();
       // convertConfigXml2Rdf.convertAll();
       // convertConfigXml2Rdf.proofRdfProjects();
       // convertConfigXml2Rdf.proofCollectionProjects();
-      // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("turfanit");
-      // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("mghconst");
+      // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("avhseklit");
+      // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("jdg");
       // convertConfigXml2Rdf.convert(c);
       // convertConfigXml2Rdf.generateDbXmlDumpFile(c);
     } catch (Exception e) {
@@ -159,16 +159,20 @@ public class ConvertConfigXml2Rdf {
   
   private void getOaiRecords(StringBuilder xmlDumpStrBuilder, String oaiServerUrlStr, String oaiSet) throws ApplicationException {
     String listRecordsUrl = oaiServerUrlStr + "?verb=ListRecords&metadataPrefix=oai_dc&set=" + oaiSet;
+    if (oaiSet == null)
+      listRecordsUrl = oaiServerUrlStr + "?verb=ListRecords&metadataPrefix=oai_dc";
     String oaiPmhResponseStr = performGetRequest(listRecordsUrl);
     String oaiRecordsStr = xQueryEvaluator.evaluateAsString(oaiPmhResponseStr, "/*:OAI-PMH/*:ListRecords/*:record");
     String resumptionToken = xQueryEvaluator.evaluateAsString(oaiPmhResponseStr, "/*:OAI-PMH/*:ListRecords/*:resumptionToken/text()");
     xmlDumpStrBuilder.append(oaiRecordsStr + "\n");
-    while (resumptionToken != null && ! resumptionToken.isEmpty()) {
+    int counter = 1;  // TODO
+    while (resumptionToken != null && ! resumptionToken.isEmpty() && counter <= 5) {
       String listRecordsResumptionTokenUrl = oaiServerUrlStr + "?verb=ListRecords&resumptionToken=" + resumptionToken;
       oaiPmhResponseStr = performGetRequest(listRecordsResumptionTokenUrl);
       oaiRecordsStr = xQueryEvaluator.evaluateAsString(oaiPmhResponseStr, "/*:OAI-PMH/*:ListRecords/*:record");
       resumptionToken = xQueryEvaluator.evaluateAsString(oaiPmhResponseStr, "/*:OAI-PMH/*:ListRecords/*:resumptionToken/text()");
       xmlDumpStrBuilder.append(oaiRecordsStr + "\n");
+      counter++;
     }
   }
   
@@ -289,7 +293,7 @@ public class ConvertConfigXml2Rdf {
           idCounter = new Integer(0);
       } else if (dbType.equals("postgres")) {
         xmdValueMainResources = xQueryEvaluator.evaluate(xmlDumpFileUrl, "/data/records/row");
-      } else if (dbType.equals("oai")) {
+      } else if (dbType.equals("oai") || dbType.equals("oai-dbrecord")) {
         xmdValueMainResources = xQueryEvaluator.evaluate(xmlDumpFileUrl, "/*:OAI-PMH/*:ListRecords/*:record");
       }
       XdmSequenceIterator xmdValueMainResourcesIterator = xmdValueMainResources.iterator();
@@ -337,7 +341,7 @@ public class ConvertConfigXml2Rdf {
           row.addField(fieldName, fieldValue);
         }
       }
-    } else if (dbType.equals("oai")) {
+    } else if (dbType.equals("oai") || dbType.equals("oai-dbrecord")) {
       String recordId = xQueryEvaluator.evaluateAsString(rowXmlStr, "/*:record/*:header/*:identifier/text()");
       if (recordId != null && ! recordId.isEmpty())
         row.addField("identifier", recordId);
@@ -403,7 +407,6 @@ public class ConvertConfigXml2Rdf {
       if (publisher != null && ! publisher.isEmpty()) {
         publisher = StringUtils.deresolveXmlEntities(publisher);
         rdfStrBuilder.append("  <dc:publisher>" + publisher + "</dc:publisher>\n");
-        // rdfStrBuilder.append("  <dc:publisher rdf:resource=\"" + publisher + "\"/>\n");
       }
     }
     String dbFieldDate = db.getDbField("date");
@@ -424,13 +427,19 @@ public class ConvertConfigXml2Rdf {
     }
     String dbFieldLanguage = db.getDbField("language");
     String language = null;
-    if (dbFieldLanguage != null)
+    if (dbFieldLanguage != null) {
       language = row.getFieldValue(dbFieldLanguage);
+      if (language != null && language.contains(" ")) {
+        String[] langs = language.split(" ");
+        language = langs[0];
+      }
+    }
+    if (language != null)
+      language = Language.getInstance().getISO639Code(language);
     if (language == null && mainLanguage != null)
       language = mainLanguage;
     else if (language == null && mainLanguage == null)
       language = "ger";
-    language = Language.getInstance().getISO639Code(language);
     rdfStrBuilder.append("  <dc:language>" + language + "</dc:language>\n");
     if (dbType != null && ! dbType.equals("oai"))
       rdfStrBuilder.append("  <dc:format>text/html</dc:format>\n");
