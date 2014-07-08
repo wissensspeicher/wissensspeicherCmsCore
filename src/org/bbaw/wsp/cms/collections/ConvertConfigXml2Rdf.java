@@ -165,14 +165,12 @@ public class ConvertConfigXml2Rdf {
     String oaiRecordsStr = xQueryEvaluator.evaluateAsString(oaiPmhResponseStr, "/*:OAI-PMH/*:ListRecords/*:record");
     String resumptionToken = xQueryEvaluator.evaluateAsString(oaiPmhResponseStr, "/*:OAI-PMH/*:ListRecords/*:resumptionToken/text()");
     xmlDumpStrBuilder.append(oaiRecordsStr + "\n");
-    int counter = 1;  // TODO
-    while (resumptionToken != null && ! resumptionToken.isEmpty() && counter <= 5) {
+    while (resumptionToken != null && ! resumptionToken.isEmpty()) {
       String listRecordsResumptionTokenUrl = oaiServerUrlStr + "?verb=ListRecords&resumptionToken=" + resumptionToken;
       oaiPmhResponseStr = performGetRequest(listRecordsResumptionTokenUrl);
       oaiRecordsStr = xQueryEvaluator.evaluateAsString(oaiPmhResponseStr, "/*:OAI-PMH/*:ListRecords/*:record");
       resumptionToken = xQueryEvaluator.evaluateAsString(oaiPmhResponseStr, "/*:OAI-PMH/*:ListRecords/*:resumptionToken/text()");
       xmlDumpStrBuilder.append(oaiRecordsStr + "\n");
-      counter++;
     }
   }
   
