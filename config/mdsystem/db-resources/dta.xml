@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Resources of OAI-PMH-Server: dta (http://fedora.dwds.de:8088/oaiprovider/oai, Set: dta) -->
+<!-- Resources of OAI-PMH-Server: dta (Url: http://fedora.dwds.de:8088/oaiprovider/oai, File: config/mdsystem/db-resources/dta.xml, Set: dta) -->
 <OAI-PMH>
 <ListRecords>
 <record xmlns="http://www.openarchives.org/OAI/2.0/"
@@ -6762,8 +6762,7 @@ Herrn Westrumb  (vollständige digitalisierte Ausgabe)</dc:title>
          <dc:date>1838-01-01T00:00:00Z</dc:date>
       </oai_dc:dc>
   </metadata>
-</record>
-<record xmlns="http://www.openarchives.org/OAI/2.0/"
+</record><record xmlns="http://www.openarchives.org/OAI/2.0/"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <header>
       <identifier>dta:1223</identifier>
