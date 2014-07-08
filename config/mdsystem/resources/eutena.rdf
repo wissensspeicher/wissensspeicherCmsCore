@@ -14,10 +14,24 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Eutena"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/eutena/projektdarstellung"/>
+  <dc:title>Projektdarstellung</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.bbaw.de/publikationen/stellungnahmen-empfehlungen/Stellungnahme_BBAW_MINT.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Eutena"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/publikationen/stellungnahmen-empfehlungen/Stellungnahme_BBAW_MINT.pdf"/>
+  <dc:title>Stellungnahmen und Empfehlungen zu MINT-Bildung in Deutschland auf der Basis einer europäischen Vergleichsstudie</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.bbaw.de/forschung/eutena/uebersicht">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Eutena"/>
+  <dc:identifier rdf:resource="http://www.bbaw.de/forschung/eutena/uebersicht"/>
+  <dc:title>Übersicht</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.bbaw.de/forschung/eutena/mitarbeiter">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Eutena"/>
+  <dc:identifier rdf:resource="http://www.bbaw.de/forschung/eutena/mitarbeiter"/>
+  <dc:title>Mitglieder/Mitarbeiter</dc:title>
 </rdf:Description>
 </rdf:RDF>

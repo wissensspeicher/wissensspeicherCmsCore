@@ -15,4 +15,22 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Galen"/>
   <dc:identifier rdf:resource="http://galen.bbaw.de/"/>
 </rdf:Description>
+<rdf:Description rdf:about="http://www.bbaw.de/forschung/galen/ubersicht">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Galen"/>
+  <dc:identifier rdf:resource="http://www.bbaw.de/forschung/galen/ubersicht"/>
+  <dc:title>Übersicht</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.bbaw.de/forschung/galen/projektdarstellung">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Galen"/>
+  <dc:identifier rdf:resource="http://www.bbaw.de/forschung/galen/projektdarstellung"/>
+  <dc:title>Projektdarstellung</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.bbaw.de/forschung/galen/mitarbeiter">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Galen"/>
+  <dc:identifier rdf:resource="http://www.bbaw.de/forschung/galen/mitarbeiter"/>
+  <dc:title>Mitarbeiter</dc:title>
+</rdf:Description>
 </rdf:RDF>

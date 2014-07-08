@@ -15,4 +15,22 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Exzellenzinitiative"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/Exzellenzinitiative"/>
 </rdf:Description>
+<rdf:Description rdf:about="http://www.bbaw.de/forschung/Exzellenzinitiative/projektdarstellung">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Exzellenzinitiative"/>
+  <dc:identifier rdf:resource="http://www.bbaw.de/forschung/Exzellenzinitiative/projektdarstellung"/>
+  <dc:title>Projektdarstellung</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.bbaw.de/forschung/Exzellenzinitiative/mitarbeiter">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Exzellenzinitiative"/>
+  <dc:identifier rdf:resource="http://www.bbaw.de/forschung/Exzellenzinitiative/mitarbeiter"/>
+  <dc:title>Mitglieder/Mitarbeiter</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/Exzellenzinitiative/de/Ueberblick">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Exzellenzinitiative"/>
+  <dc:identifier rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/Exzellenzinitiative/de/Ueberblick"/>
+  <dc:title>Aus dem Vorwort zum Band Die Exzellenzinitiative. Zwischenbilanz und Perspektiven (2010)</dc:title>
+</rdf:Description>
 </rdf:RDF>

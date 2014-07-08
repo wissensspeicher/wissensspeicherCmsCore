@@ -1219,22 +1219,6 @@ Damit sollen gemeinsame historische Vermächtnisse sowie die Mobilität von Pers
 		<gnd:definition>Prosopographie</gnd:definition>
 		<dc:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Drittmittelprojekt</dc:description>
 	</rdf:Description>
-	<rdf:Description rdf:about="http://wsp.normdata.rdf/ProsopographiaImperiiRomani/Addenda">
-    <dc:language>ger</dc:language>
-    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
-    <foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pira</foaf:nick>
-		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Prosopographia Imperii Romani: Addenda</foaf:name>
-		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ProsopographiaImperiiRomani" />	
-		<foaf:homepage rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/pir/de/blanko.2005-02-17.7966795951" />
-	</rdf:Description>
-	<rdf:Description rdf:about="http://wsp.normdata.rdf/ProsopographiaImperiiRomani/Stichwortliste">
-    <dc:language>ger</dc:language>
-    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
-    <foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pirs</foaf:nick>
-		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Prosopographia Imperii Romani: Stichwortliste</foaf:name>
-		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ProsopographiaImperiiRomani" />	
-		<foaf:homepage rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/pir/de/blanko.2005-02-17.2432643101" />
-	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/WilhelmOstwaldSymposium">
     <dc:language>ger</dc:language>
     <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>

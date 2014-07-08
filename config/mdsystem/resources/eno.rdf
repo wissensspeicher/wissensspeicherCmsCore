@@ -14,5 +14,12 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/EuropaImNahenOsten"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/eino/projektdarstellung"/>
+  <dc:title>Projektdarstellung</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.bbaw.de/forschung/eino/mitarbeiter">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/EuropaImNahenOsten"/>
+  <dc:identifier rdf:resource="http://www.bbaw.de/forschung/eino/mitarbeiter"/>
+  <dc:title>Mitarbeiter</dc:title>
 </rdf:Description>
 </rdf:RDF>

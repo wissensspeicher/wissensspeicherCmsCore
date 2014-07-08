@@ -14,35 +14,42 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/GriechischChristlichSchriftsteller/Text"/>
   <dc:identifier rdf:resource="http://gcs.bbaw.de/gcs-texte-zum-download"/>
+  <dc:title>GCS-Texte zum Download</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/ProkopOnline.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/GriechischChristlichSchriftsteller/Text"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/ProkopOnline.pdf"/>
+  <dc:title>Prokop von Gaza, Genesiskommentar aus der so genannten Oktateuchkatene</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/anonyme_kirchengeschichte.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/GriechischChristlichSchriftsteller/Text"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/anonyme_kirchengeschichte.pdf"/>
+  <dc:title>Anonyme Kirchengeschichte. (Gelasius Cyzicenus, CPG 6034)</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/daniel.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/GriechischChristlichSchriftsteller/Text"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/daniel.pdf"/>
+  <dc:title>Daniel-Kommentar Hippolyts</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/ehrhard.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/GriechischChristlichSchriftsteller/Text"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/ehrhard.pdf"/>
+  <dc:title>Handschriften-Register zu Albert Ehrhard</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/martyrium.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/GriechischChristlichSchriftsteller/Text"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/martyrium.pdf"/>
+  <dc:title>Martyrium Clementis</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/mirClem.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/GriechischChristlichSchriftsteller/Text"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/mirClem.pdf"/>
+  <dc:title>Miraculum Clementis - Codex Parisinus graecus 1510 (D)</dc:title>
 </rdf:Description>
 </rdf:RDF>
