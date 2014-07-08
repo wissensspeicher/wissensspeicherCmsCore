@@ -1,6 +1,7 @@
 package org.bbaw.wsp.cms.collections;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
@@ -14,6 +15,7 @@ import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.apache.log4j.Logger;
 import org.bbaw.wsp.cms.general.Constants;
 
@@ -33,14 +35,14 @@ public class ConvertConfigXml2Rdf {
   public static void main(String[] args) throws ApplicationException {
     try {
       ConvertConfigXml2Rdf convertConfigXml2Rdf = new ConvertConfigXml2Rdf();
-      // convertConfigXml2Rdf.init();
+      convertConfigXml2Rdf.init();
       // convertConfigXml2Rdf.convertAll();
       // convertConfigXml2Rdf.proofRdfProjects();
       // convertConfigXml2Rdf.proofCollectionProjects();
       // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("avhseklit");
-      // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("jdg");
+      Collection c = convertConfigXml2Rdf.collectionReader.getCollection("jdg");
       // convertConfigXml2Rdf.convert(c);
-      // convertConfigXml2Rdf.generateDbXmlDumpFile(c);
+      convertConfigXml2Rdf.generateDbXmlDumpFile(c);
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -130,47 +132,83 @@ public class ConvertConfigXml2Rdf {
       for (int i=0; i<collectionDBs.size(); i++) {
         Database db = collectionDBs.get(i);
         String dbType = db.getType();
-        if (dbType != null && dbType.equals("oai")) {
-          File outputDumpFile = new File(db.getXmlDumpFileName());
-          StringBuilder xmlDumpStrBuilder = new StringBuilder();
-          xmlDumpStrBuilder.append("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
-          xmlDumpStrBuilder.append("<!-- Resources of OAI-PMH-Server: " + db.getName() + " (" + db.getXmlDumpUrl() + ", Set: " + db.getXmlDumpSet() + ") -->\n");
-          generateDbXmlDumpFile(xmlDumpStrBuilder, collection, db);
-          try {
-            FileUtils.writeStringToFile(outputDumpFile, xmlDumpStrBuilder.toString());
-          } catch (IOException e) {
-            throw new ApplicationException(e);
-          }
+        LOGGER.info("Generate database dump files of database: \"" + db.getName() + "\"");
+        if (dbType != null && (dbType.equals("oai") || dbType.equals("oai-dbrecord"))) {
+          generateOaiDbXmlDumpFiles(db);
         }
       }
     }
   }
   
-  private void generateDbXmlDumpFile(StringBuilder xmlDumpStrBuilder, Collection collection, Database db) throws ApplicationException {
-    // xmlDumpStrBuilder.append("<OAI-PMH xsi:schemaLocation=\"http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd\">\n");
-    xmlDumpStrBuilder.append("<OAI-PMH>\n");
-    xmlDumpStrBuilder.append("<ListRecords>\n");
+  private void generateOaiDbXmlDumpFiles(Database db) throws ApplicationException {
+    File xmlDumpFile = new File(db.getXmlDumpFileName());
+    String xmlDumpFileFilter = xmlDumpFile.getName() + "*"; 
+    FileFilter fileFilter = new WildcardFileFilter(xmlDumpFileFilter);
+    File[] files = xmlDumpFile.getParentFile().listFiles(fileFilter);
+    for (int i = 0; i < files.length; i++) {
+      File dumpFileToDelete = files[i];
+      FileUtils.deleteQuietly(dumpFileToDelete);
+    }
+    LOGGER.info("Database dump files of database \"" + db.getName() + "\" sucessfully deleted");
+    StringBuilder xmlDumpStrBuilder = new StringBuilder();
     String oaiServerUrl = db.getXmlDumpUrl();
     String oaiSet = db.getXmlDumpSet();
-    getOaiRecords(xmlDumpStrBuilder, oaiServerUrl, oaiSet);
-    xmlDumpStrBuilder.append("</ListRecords>\n");
-    xmlDumpStrBuilder.append("</OAI-PMH>");
-  }
-  
-  private void getOaiRecords(StringBuilder xmlDumpStrBuilder, String oaiServerUrlStr, String oaiSet) throws ApplicationException {
-    String listRecordsUrl = oaiServerUrlStr + "?verb=ListRecords&metadataPrefix=oai_dc&set=" + oaiSet;
+    String listRecordsUrl = oaiServerUrl + "?verb=ListRecords&metadataPrefix=oai_dc&set=" + oaiSet;
     if (oaiSet == null)
-      listRecordsUrl = oaiServerUrlStr + "?verb=ListRecords&metadataPrefix=oai_dc";
+      listRecordsUrl = oaiServerUrl + "?verb=ListRecords&metadataPrefix=oai_dc";
     String oaiPmhResponseStr = performGetRequest(listRecordsUrl);
     String oaiRecordsStr = xQueryEvaluator.evaluateAsString(oaiPmhResponseStr, "/*:OAI-PMH/*:ListRecords/*:record");
+    xmlDumpStrBuilder.append(oaiRecordsStr);
     String resumptionToken = xQueryEvaluator.evaluateAsString(oaiPmhResponseStr, "/*:OAI-PMH/*:ListRecords/*:resumptionToken/text()");
-    xmlDumpStrBuilder.append(oaiRecordsStr + "\n");
-    while (resumptionToken != null && ! resumptionToken.isEmpty()) {
-      String listRecordsResumptionTokenUrl = oaiServerUrlStr + "?verb=ListRecords&resumptionToken=" + resumptionToken;
-      oaiPmhResponseStr = performGetRequest(listRecordsResumptionTokenUrl);
-      oaiRecordsStr = xQueryEvaluator.evaluateAsString(oaiPmhResponseStr, "/*:OAI-PMH/*:ListRecords/*:record");
-      resumptionToken = xQueryEvaluator.evaluateAsString(oaiPmhResponseStr, "/*:OAI-PMH/*:ListRecords/*:resumptionToken/text()");
-      xmlDumpStrBuilder.append(oaiRecordsStr + "\n");
+    // if end is reached before resumptionToken comes
+    if (resumptionToken == null || resumptionToken.isEmpty()) {
+      writeOaiDbXmlDumpFile(db, xmlDumpStrBuilder, 1);
+    } else {
+      int resumptionTokenCounter = 1; 
+      int fileCounter = 1;
+      while (resumptionToken != null && ! resumptionToken.isEmpty() && resumptionTokenCounter <= 30) {
+        String listRecordsResumptionTokenUrl = oaiServerUrl + "?verb=ListRecords&resumptionToken=" + resumptionToken;
+        oaiPmhResponseStr = performGetRequest(listRecordsResumptionTokenUrl);
+        oaiRecordsStr = xQueryEvaluator.evaluateAsString(oaiPmhResponseStr, "/*:OAI-PMH/*:ListRecords/*:record");
+        xmlDumpStrBuilder.append(oaiRecordsStr + "\n");
+        resumptionToken = xQueryEvaluator.evaluateAsString(oaiPmhResponseStr, "/*:OAI-PMH/*:ListRecords/*:resumptionToken/text()");
+        int writeFileInterval = resumptionTokenCounter % 10; // after each 10 resumptionTokens generate a new file
+        if (writeFileInterval == 0) {
+          writeOaiDbXmlDumpFile(db, xmlDumpStrBuilder, fileCounter);
+          xmlDumpStrBuilder = new StringBuilder();
+          fileCounter++;
+        }
+        resumptionTokenCounter++;
+      }
+      // write the last resumptionTokens
+      if (xmlDumpStrBuilder.length() > 0)
+        writeOaiDbXmlDumpFile(db, xmlDumpStrBuilder, fileCounter);
+    }
+  }
+
+  private void writeOaiDbXmlDumpFile(Database db, StringBuilder recordsStrBuilder, int fileCounter) throws ApplicationException {
+    StringBuilder xmlDumpStrBuilder = new StringBuilder();
+    String oaiSet = db.getXmlDumpSet();
+    String dumpFileName = db.getXmlDumpFileName();
+    if (fileCounter > 1) {
+      dumpFileName = db.getXmlDumpFileName() + "." + fileCounter;
+    }
+    xmlDumpStrBuilder.append("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
+    if (oaiSet == null)
+      xmlDumpStrBuilder.append("<!-- Resources of OAI-PMH-Server: " + db.getName() + " (Url: " + db.getXmlDumpUrl() + ", File: " + dumpFileName + ") -->\n");
+    else 
+      xmlDumpStrBuilder.append("<!-- Resources of OAI-PMH-Server: " + db.getName() + " (Url: " + db.getXmlDumpUrl() + ", File: " + dumpFileName + ", Set: " + db.getXmlDumpSet() + ") -->\n");
+    xmlDumpStrBuilder.append("<OAI-PMH>\n");
+    xmlDumpStrBuilder.append("<ListRecords>\n");
+    xmlDumpStrBuilder.append(recordsStrBuilder.toString());
+    xmlDumpStrBuilder.append("</ListRecords>\n");
+    xmlDumpStrBuilder.append("</OAI-PMH>");
+    try {
+      File dumpFile = new File(dumpFileName);
+      FileUtils.writeStringToFile(dumpFile, xmlDumpStrBuilder.toString());
+      LOGGER.info("Database dump file \"" + dumpFileName + "\" sucessfully created");
+    } catch (IOException e) {
+      throw new ApplicationException(e);
     }
   }
   
