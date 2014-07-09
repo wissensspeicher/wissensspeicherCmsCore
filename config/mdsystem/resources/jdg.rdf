@@ -15,9 +15,4 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JahresberichteDeutscheGeschichte"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/jdg"/>
 </rdf:Description>
-<rdf:Description rdf:about="http://jdgdb.bbaw.de/cgi-bin/jdg?lang=de">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JahresberichteDeutscheGeschichte"/>
-  <dc:identifier rdf:resource="http://jdgdb.bbaw.de/cgi-bin/jdg?lang=de"/>
-</rdf:Description>
 </rdf:RDF>
