@@ -10,9 +10,44 @@
    xmlns:gnd="http://d-nb.info/standards/elementset/gnd#" 
    xmlns:ore="http://www.openarchives.org/ore/terms/" 
 >
-<rdf:Description rdf:about="http://www.bbaw.de/forschung/dfg_hist/projektdarstellung">
+<rdf:Description rdf:about="http://www.bbaw.de/forschung/dfg_hist/uebersicht">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DFGimSpannungsfeld"/>
-  <dc:identifier rdf:resource="http://www.bbaw.de/forschung/dfg_hist/projektdarstellung"/>
+  <dc:identifier rdf:resource="http://www.bbaw.de/forschung/dfg_hist/uebersicht"/>
+  <dc:title>Übersicht</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.bbaw.de/forschung/dfg_hist/mitarbeiter">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DFGimSpannungsfeld"/>
+  <dc:identifier rdf:resource="http://www.bbaw.de/forschung/dfg_hist/mitarbeiter"/>
+  <dc:title>Mitglieder/Mitarbeiter</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.bbaw.de/forschung/dfg_hist/arbeitsbericht-2004">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DFGimSpannungsfeld"/>
+  <dc:identifier rdf:resource="http://www.bbaw.de/forschung/dfg_hist/arbeitsbericht-2004"/>
+  <dc:title>Arbeitsbericht 2004</dc:title>
+  <dc:creator>Nötzoldt, Peter</dc:creator>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.bbaw.de/forschung/dfg_hist/arbeitsbericht-2003">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DFGimSpannungsfeld"/>
+  <dc:identifier rdf:resource="http://www.bbaw.de/forschung/dfg_hist/arbeitsbericht-2003"/>
+  <dc:title>Arbeitsbericht 2003. </dc:title>
+  <dc:creator>Nötzoldt, Peter</dc:creator>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.bbaw.de/forschung/dfg_hist/arbeitsbericht-2002">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DFGimSpannungsfeld"/>
+  <dc:identifier rdf:resource="http://www.bbaw.de/forschung/dfg_hist/arbeitsbericht-2002"/>
+  <dc:title>Arbeitsbericht 2002</dc:title>
+  <dc:creator>Nötzoldt, Peter</dc:creator>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.bbaw.de/forschung/dfg_hist/arbeitsbericht-2001">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DFGimSpannungsfeld"/>
+  <dc:identifier rdf:resource="http://www.bbaw.de/forschung/dfg_hist/arbeitsbericht-2001"/>
+  <dc:title>Arbeitsbericht 2001</dc:title>
+  <dc:creator>Nötzoldt, Peter</dc:creator>
 </rdf:Description>
 </rdf:RDF>
