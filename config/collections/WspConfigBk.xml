@@ -18,7 +18,7 @@
     </formats> 
     <db>
       <type>postgres</type>
-      <name>bk_bibliographie</name>
+      <name>bibliographie</name>
       <xmlDump>
         <sql>
 SELECT 
@@ -41,7 +41,6 @@ AND
 AND
  tblperson_regberuf.bkperson_id = tblbkperson.bkperson_id
         </sql>
-        <fileName>config/mdsystem/db-resources/bk-bibliographie.xml</fileName>
       </xmlDump>
       <mainResourcesTable>
         <name>bibliographie</name>
@@ -73,7 +72,7 @@ AND
     </db>
     <db>
       <type>postgres</type>
-      <name>bk_nationaltheater</name>
+      <name>nationaltheater</name>
       <xmlDump>
         <sql>
 SELECT 
@@ -96,7 +95,6 @@ SELECT
 FROM 
  tbltheaterveranstaltung ver
          </sql>
-        <fileName>config/mdsystem/db-resources/bk-nationaltheater.xml</fileName>
       </xmlDump>
       <mainResourcesTable>
         <name>nationaltheater</name>
@@ -124,7 +122,7 @@ FROM
     </db>
     <db>
       <type>postgres</type>
-      <name>bk_personen</name>
+      <name>personen</name>
       <xmlDump>
         <sql>
 SELECT 
@@ -136,7 +134,6 @@ SELECT
 FROM 
  tblbkperson
         </sql>
-        <fileName>config/mdsystem/db-resources/bk-personen.xml</fileName>
       </xmlDump>
       <mainResourcesTable>
         <name>person</name>
@@ -156,7 +153,7 @@ FROM
     </db>
     <db>
       <type>postgres</type>
-      <name>bk_vereine</name>
+      <name>vereine</name>
       <xmlDump>
         <sql>
 SELECT 
@@ -170,7 +167,6 @@ SELECT
 FROM 
  tblgeselligkeit
         </sql>
-        <fileName>config/mdsystem/db-resources/bk-vereine.xml</fileName>
       </xmlDump>
       <mainResourcesTable>
         <name>verein</name>
