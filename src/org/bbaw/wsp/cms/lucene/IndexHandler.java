@@ -109,6 +109,8 @@ public class IndexHandler {
   private TaxonomyReader taxonomyReader;
   private CategoryDocumentBuilder categoryDocBuilder;
   private XQueryEvaluator xQueryEvaluator;
+  private int commitInterval = 10;  // default: commit after each 10th document
+  private int commitCounter = 0;
   
   public static IndexHandler getInstance() throws ApplicationException {
     if (instance == null) {
@@ -136,11 +138,12 @@ public class IndexHandler {
     LOGGER.info("Reading of all tokens in Lucene index successfully with: " + tokens.size() + " tokens (" + "elapsed time: " + (after.getTime() - before.getTime()) + " ms)");
   }
 
-  public void indexDocument(CmsDocOperation docOperation) throws ApplicationException {
+  public void setCommitInterval(int commitInterval) {
+    this.commitInterval = commitInterval;
+  }
+  
+  public void commit() throws ApplicationException {
     try {
-      // first delete document in documentsIndex and nodesIndex
-      deleteDocumentLocal(docOperation);
-      indexDocumentLocal(docOperation);
       taxonomyWriter.commit();
       documentsIndexWriter.commit();
       nodesIndexWriter.commit();
@@ -152,8 +155,19 @@ public class IndexHandler {
       } catch (Exception ex) {
         // nothing
       }
-      LOGGER.error("indexDocument: " + docOperation.getDocIdentifier());
       throw new ApplicationException(e);
+    }
+  }
+  
+  public void indexDocument(CmsDocOperation docOperation) throws ApplicationException {
+    commitCounter++;
+    // first delete document in documentsIndex and nodesIndex
+    deleteDocumentLocal(docOperation);
+    indexDocumentLocal(docOperation);
+    // performance gain (each commit needs at least ca. 60 ms extra): a commit is only done if commitInterval (e.g. 500) is reached 
+    if (commitCounter >= commitInterval) {
+      commit();
+      commitCounter = 0;
     }
   }
 
@@ -162,11 +176,12 @@ public class IndexHandler {
       MetadataRecord mdRecord = docOperation.getMdRecord();
       List<CategoryPath> categories = new ArrayList<CategoryPath>();
       Document doc = new Document();
-      int id = generateId(); // short id (auto increment)
-      NumericField idField = new NumericField("id", Field.Store.YES, true);
-      idField.setIntValue(id);
-      doc.add(idField);
-      mdRecord.setId(id);
+      int id = mdRecord.getId(); // short id (auto incremented)
+      if (id != -1) { 
+        NumericField idField = new NumericField("id", Field.Store.YES, true);
+        idField.setIntValue(id);
+        doc.add(idField);
+      }
       String docId = mdRecord.getDocId();
       Field docIdField = new Field("docId", docId, Field.Store.YES, Field.Index.ANALYZED);
       doc.add(docIdField);
@@ -558,38 +573,14 @@ public class IndexHandler {
   }
 
   public void deleteDocument(CmsDocOperation docOperation) throws ApplicationException {
-    try {
-      deleteDocumentLocal(docOperation);
-      documentsIndexWriter.commit();
-      nodesIndexWriter.commit();
-    } catch (Exception e) {
-      try {
-        documentsIndexWriter.rollback();
-        nodesIndexWriter.rollback();
-      } catch (Exception ex) {
-        // nothing
-      }
-      LOGGER.error("deleteDocument: " + docOperation.getDocIdentifier());
-      throw new ApplicationException(e);
-    }
+    deleteDocumentLocal(docOperation);
+    commit();
   }
 
   public int deleteCollection(String collectionName) throws ApplicationException {
     int countDeletedDocs = -1;
-    try {
-      countDeletedDocs = deleteCollectionLocal(collectionName);
-      documentsIndexWriter.commit();
-      nodesIndexWriter.commit();
-    } catch (Exception e) {
-      try {
-        documentsIndexWriter.rollback();
-        nodesIndexWriter.rollback();
-      } catch (Exception ex) {
-        // nothing
-      }
-      LOGGER.error("deleteCollection: " + collectionName);
-      throw new ApplicationException(e);
-    }
+    countDeletedDocs = deleteCollectionLocal(collectionName);
+    commit();
     return countDeletedDocs;
   }
 
@@ -1496,18 +1487,17 @@ public class IndexHandler {
   }
 
   private int generateId() throws ApplicationException {
-    int maxId = -1;
-    String maxIdStr = findMaxId();
-    if (maxIdStr == null) {
-      return 1;  
-    } else {
-      maxId = Integer.valueOf(maxIdStr).intValue() + 1;
-    }
-    return maxId;
+    int id = findMaxId() + 1;
+    return id;
   }
-  
-  private String findMaxId() throws ApplicationException {
-    String maxId = null;
+
+  /**
+   * Performance: needs ca. 10 ms per call
+   * @return
+   * @throws ApplicationException
+   */
+  public int findMaxId() throws ApplicationException {
+    String maxIdStr = null;
     IndexSearcher searcher = null;
     try {
       makeDocumentsSearcherManagerUpToDate();
@@ -1515,7 +1505,7 @@ public class IndexHandler {
       String fieldNameId = "id";
       String idQuery = "[* TO *]";
       Query queryId = new QueryParser(Version.LUCENE_35, fieldNameId, documentsPerFieldAnalyzer).parse(idQuery);
-      queryId = NumericRangeQuery.newIntRange(fieldNameId, 0, 1000000, false, false);
+      queryId = NumericRangeQuery.newIntRange(fieldNameId, 0, 10000000, false, false);
       Sort sortByIdReverse = new Sort(new SortField("id", SortField.INT, true));  // reverse order
       TopDocs topDocs = searcher.search(queryId, 1, sortByIdReverse);
       topDocs.setMaxScore(1);
@@ -1525,7 +1515,7 @@ public class IndexHandler {
         Document doc = searcher.doc(docID, docFieldSelector);
         if (doc != null) {
           Fieldable maxIdField = doc.getFieldable("id");
-          maxId = maxIdField.stringValue();
+          maxIdStr = maxIdField.stringValue();
         }
       }
       
@@ -1542,6 +1532,11 @@ public class IndexHandler {
     }
     // Do not use searcher after this!
     searcher = null;
+    // return the maxId
+    int maxId = 0;
+    if (maxIdStr != null) {
+      maxId = Integer.valueOf(maxIdStr).intValue();
+    }
     return maxId;
   }
   

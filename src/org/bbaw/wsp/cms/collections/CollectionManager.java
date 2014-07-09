@@ -32,6 +32,7 @@ import org.bbaw.wsp.cms.document.MetadataRecord;
 import org.bbaw.wsp.cms.document.Person;
 import org.bbaw.wsp.cms.document.XQuery;
 import org.bbaw.wsp.cms.general.Constants;
+import org.bbaw.wsp.cms.lucene.IndexHandler;
 import org.bbaw.wsp.cms.scheduler.CmsDocOperation;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
@@ -49,8 +50,8 @@ import com.sun.org.apache.xml.internal.serialize.XMLSerializer;
 public class CollectionManager {
   private static Logger LOGGER = Logger.getLogger(CollectionManager.class);
   private static CollectionManager confManager;
+  private static int COMMIT_INTERVAL_DB = 1000;
   private CollectionReader collectionReader;
-  private int counter = 0;
 
   public static void main(String[] args) throws ApplicationException {
     try {
@@ -114,7 +115,16 @@ public class CollectionManager {
   private void addDocuments(Collection collection) throws ApplicationException {
     DocumentHandler docHandler = new DocumentHandler();
     ArrayList<MetadataRecord> mdRecords = getMetadataRecords(collection);
+    LOGGER.info("Create collection: " + collection.getId() + " ...");
+    int counter = 0;
     if (mdRecords != null) {
+      ArrayList<Database> collDBs = collection.getDatabases();
+      // performance gain for database records: a commit is only done if commitInterval (e.g. 1000) is reached 
+      boolean isDbColl = false;
+      if (collDBs != null && collDBs.size() > 0)
+        isDbColl = true;
+      if (isDbColl)
+        IndexHandler.getInstance().setCommitInterval(COMMIT_INTERVAL_DB);
       for (int i=0; i<mdRecords.size(); i++) {
         MetadataRecord mdRecord = mdRecords.get(i);
         String docUrl = mdRecord.getUri();
@@ -124,7 +134,13 @@ public class CollectionManager {
         String logCreationStr = counter + ". " + "Collection: " + collectionId + ": Create resource: " + docUrl + " (" + docId + ")";
         if (docUrl == null)
           logCreationStr = counter + ". " + "Collection: " + collectionId + ": Create metadata resource: " + docId;
-        LOGGER.info(logCreationStr);
+        // if isDbColl then log only after each commit interval 
+        if (! isDbColl) {
+          LOGGER.info(logCreationStr);
+        } else {
+          if (counter % COMMIT_INTERVAL_DB == 0)
+            LOGGER.info(logCreationStr);
+        }
         CmsDocOperation docOp = new CmsDocOperation("create", docUrl, null, docId);
         docOp.setMdRecord(mdRecord);
         ArrayList<String> fields = collection.getFields();
@@ -147,7 +163,9 @@ public class CollectionManager {
         // with that the main big fields (content etc.) could be garbaged
         mdRecord.setAllNull();
       }
+      IndexHandler.getInstance().commit();  // so that the last pending mdRecords before commitInterval were also committed
     }
+    LOGGER.info("Collection: " + collection.getId() + " with: " + counter + " records created");
   }
 
   private ArrayList<MetadataRecord> getMetadataRecords(Collection collection) throws ApplicationException {
@@ -175,16 +193,16 @@ public class CollectionManager {
       XQueryEvaluator xQueryEvaluator = new XQueryEvaluator();
       XdmValue xmdValueResources = xQueryEvaluator.evaluate(rdfRessourcesFileUrl, namespaceDeclaration + "/rdf:RDF/rdf:Description");
       XdmSequenceIterator xmdValueResourcesIterator = xmdValueResources.iterator();
-      int counter = 0;
+      int maxIdcounter = IndexHandler.getInstance().findMaxId();  // find the highest value, so that each following id is a real new id
       if (xmdValueResources != null && xmdValueResources.size() > 0) {
         while (xmdValueResourcesIterator.hasNext()) {
-          counter++;
+          maxIdcounter++;
           XdmItem xdmItemResource = xmdValueResourcesIterator.next();
           String xdmItemResourceStr = xdmItemResource.toString();
           MetadataRecord mdRecord = getMdRecord(xQueryEvaluator, xdmItemResourceStr);  // get the mdRecord out of rdf string
           if (mdRecord != null) {
             mdRecord.setCollectionNames(collectionId);
-            mdRecord.setId(counter); // collection wide id
+            mdRecord.setId(maxIdcounter); // collections wide id
             mdRecord = createMainFieldsMetadataRecord(mdRecord, collection);
             // if it is an eXist directory then fetch all subUrls/mdRecords of that directory
             if (mdRecord.isEXistDir()) {
@@ -196,11 +214,11 @@ public class CollectionManager {
                 String excludesStr = collection.getExcludesStr();
                 List<String> eXistUrls = extractDocumentUrls(eXistUrl, excludesStr);
                 for (int i=0; i<eXistUrls.size(); i++) {
-                  counter++;
+                  maxIdcounter++;
                   String eXistSubUrlStr = eXistUrls.get(i);
                   MetadataRecord mdRecordEXist = getNewMdRecord(eXistSubUrlStr); // with docId and webUri
                   mdRecordEXist.setCollectionNames(collectionId);
-                  mdRecordEXist.setId(counter); // collection wide id
+                  mdRecordEXist.setId(maxIdcounter); // collections wide id
                   mdRecordEXist = createMainFieldsMetadataRecord(mdRecordEXist, collection);
                   mdRecordEXist.setCreator(mdRecord.getCreator());
                   mdRecordEXist.setTitle(mdRecord.getTitle());
@@ -231,7 +249,7 @@ public class CollectionManager {
                 java.util.Collection<File> files = getFiles(fileDirStr, fileExtensions);
                 Iterator<File> filesIter = files.iterator();
                 while (filesIter.hasNext()) {
-                  counter++;
+                  maxIdcounter++;
                   File file = filesIter.next();
                   String fileAbsolutePath = file.getAbsolutePath();
                   String fileRelativePath = fileAbsolutePath.replaceFirst(fileDirStr, "");
@@ -239,7 +257,7 @@ public class CollectionManager {
                   String uri = "file:" + fileAbsolutePath;
                   MetadataRecord mdRecordDirEntry = getNewMdRecord(webUrl);
                   mdRecordDirEntry.setCollectionNames(collectionId);
-                  mdRecordDirEntry.setId(counter); // collection wide id
+                  mdRecordDirEntry.setId(maxIdcounter); // collections wide id
                   mdRecordDirEntry = createMainFieldsMetadataRecord(mdRecordDirEntry, collection);
                   mdRecordDirEntry.setUri(uri);
                   mdRecordsDir.add(mdRecordDirEntry);
@@ -340,12 +358,15 @@ public class CollectionManager {
     String metadataRedundantUrlPrefix = collection.getMetadataRedundantUrlPrefix();
     String metadataUrlPrefix = collection.getMetadataUrlPrefix();
     String[] metadataUrls = collection.getMetadataUrls();
+    int maxIdcounter = IndexHandler.getInstance().findMaxId();
     for (int i=0; i<metadataUrls.length; i++) {
+      maxIdcounter++;
       String metadataUrl = metadataUrls[i];
       MetadataRecord mdRecord = new MetadataRecord();
       String docId = null;
       String uri = null;
       String webUri = null;
+      mdRecord.setId(maxIdcounter);
       EdocIndexMetadataFetcherTool.fetchHtmlDirectly(metadataUrl, mdRecord);
       if (mdRecord.getLanguage() != null) {
         String isoLang = Language.getInstance().getISO639Code(mdRecord.getLanguage());

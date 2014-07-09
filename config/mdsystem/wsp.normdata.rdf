@@ -6666,6 +6666,17 @@ Das Projekt konzentrierte sich auf einen ausgewählten Bereich im weiten Spektru
 		<foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">akademiepublikationen5</foaf:nick>
     <foaf:homepage rdf:resource="http://edoc.bbaw.de"/>
 	</rdf:Description>
+  <rdf:Description rdf:about="http://wsp.normdata.rdf/dspin">
+    <dc:language>ger</dc:language>
+    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
+    <foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">dspin</foaf:nick>
+    <foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Deutsche Sprachressourcen-Infrastruktur</foaf:name>
+    <foaf:homepage rdf:resource="http://www.bbaw.de/forschung/deutsche-sprachressourcen-infrastruktur"/>
+    <dcterms:abstract rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Das Projekt „Deutsche Sprachressourcen-Infrastruktur” (D-SPIN), Laufzeit 2008-2011, wird vom Bundesministerium für Bildung und Forschung (BMBF) gefördert. Das Projekt verfolgt das Ziel, eine Infrastruktur für Sprachressourcen und sprachtechnologische Werkzeuge als integralen Bestandteil des elektronischen geisteswissenschaftlichen Arbeitsplatzes der Zukunft aufzubauen.</dcterms:abstract>
+	<foaf:status rdf:datatype="http://www.w3.org/2001/XMLSchema#string">abgeschlossen</foaf:status>
+    <gnd:topic rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Sprache</gnd:topic>
+    <gnd:topic rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Linguistik</gnd:topic>
+  </rdf:Description>
   <rdf:Description rdf:about="http://wsp.normdata.rdf/Edoc">
     <dc:language>ger</dc:language>
     <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
