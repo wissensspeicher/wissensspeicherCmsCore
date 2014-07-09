@@ -9,6 +9,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -24,6 +26,7 @@ import net.sf.saxon.s9api.XdmValue;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.SuffixFileFilter;
 import org.apache.commons.io.filefilter.TrueFileFilter;
+import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.apache.log4j.Logger;
 import org.apache.tika.Tika;
 import org.bbaw.wsp.cms.dochandler.DocumentHandler;
@@ -113,68 +116,108 @@ public class CollectionManager {
   }
   
   private void addDocuments(Collection collection) throws ApplicationException {
-    DocumentHandler docHandler = new DocumentHandler();
-    ArrayList<MetadataRecord> mdRecords = getMetadataRecords(collection);
-    LOGGER.info("Create collection: " + collection.getId() + " ...");
     int counter = 0;
+    LOGGER.info("Create collection: " + collection.getId() + " ...");
+    // first add the manually maintained mdRecords
+    ArrayList<MetadataRecord> mdRecords = getMetadataRecords(collection);
     if (mdRecords != null) {
-      ArrayList<Database> collDBs = collection.getDatabases();
-      // performance gain for database records: a commit is only done if commitInterval (e.g. 1000) is reached 
-      boolean isDbColl = false;
-      if (collDBs != null && collDBs.size() > 0)
-        isDbColl = true;
-      if (isDbColl)
-        IndexHandler.getInstance().setCommitInterval(COMMIT_INTERVAL_DB);
-      for (int i=0; i<mdRecords.size(); i++) {
-        MetadataRecord mdRecord = mdRecords.get(i);
-        String docUrl = mdRecord.getUri();
-        String docId = mdRecord.getDocId();
-        String collectionId = mdRecord.getCollectionNames();
-        counter++;
-        String logCreationStr = counter + ". " + "Collection: " + collectionId + ": Create resource: " + docUrl + " (" + docId + ")";
-        if (docUrl == null)
-          logCreationStr = counter + ". " + "Collection: " + collectionId + ": Create metadata resource: " + docId;
-        // if isDbColl then log only after each commit interval 
-        if (! isDbColl) {
-          LOGGER.info(logCreationStr);
-        } else {
-          if (counter % COMMIT_INTERVAL_DB == 0)
-            LOGGER.info(logCreationStr);
+      int countDocs = addDocuments(collection, mdRecords, false);
+      counter = counter + countDocs;
+      ArrayList<Database> collectionDBs = collection.getDatabases();
+      // add the database records 
+      if (collectionDBs != null) {
+        for (int i=0; i<collectionDBs.size(); i++) {
+          Database collectionDB = collectionDBs.get(i);
+          countDocs = addDocuments(collection, collectionDB);
+          counter = counter + countDocs;
         }
-        CmsDocOperation docOp = new CmsDocOperation("create", docUrl, null, docId);
-        docOp.setMdRecord(mdRecord);
-        ArrayList<String> fields = collection.getFields();
-        if (fields != null && ! fields.isEmpty()) {
-          String[] fieldsArray = new String[fields.size()];
-          for (int j=0;j<fields.size();j++) {
-            String f = fields.get(j);
-            fieldsArray[j] = f;
-          }
-          docOp.setElementNames(fieldsArray);
-        }
-        String mainLanguage = collection.getMainLanguage();
-        docOp.setMainLanguage(mainLanguage);
-        try {
-          docHandler.doOperation(docOp);
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-        // without that, there would be a memory leak (with many big documents in one collection)
-        // with that the main big fields (content etc.) could be garbaged
-        mdRecord.setAllNull();
       }
-      IndexHandler.getInstance().commit();  // so that the last pending mdRecords before commitInterval were also committed
     }
     LOGGER.info("Collection: " + collection.getId() + " with: " + counter + " records created");
   }
 
+  private int addDocuments(Collection collection, Database db) throws ApplicationException {
+    int counter = 0;
+    String dbResourcesDirName = Constants.getInstance().getMdsystemConfDir() + "/db-resources";
+    File dbResourcesDir = new File(dbResourcesDirName);
+    String rdfFileFilterName = collection.getId() + "-" + db.getName() + "*.rdf"; 
+    FileFilter rdfFileFilter = new WildcardFileFilter(rdfFileFilterName);
+    File[] rdfDbResourcesFiles = dbResourcesDir.listFiles(rdfFileFilter);
+    if (rdfDbResourcesFiles != null && rdfDbResourcesFiles.length > 0) {
+      Arrays.sort(rdfDbResourcesFiles, new Comparator<File>() {
+        public int compare(File f1, File f2) {
+          return f1.getName().compareToIgnoreCase(f2.getName());
+        }
+      }); 
+      // add the database records of each database of each database file
+      for (int i = 0; i < rdfDbResourcesFiles.length; i++) {
+        File rdfDbResourcesFile = rdfDbResourcesFiles[i];
+        LOGGER.info("Create database resources from file: " + rdfDbResourcesFile);
+        ArrayList<MetadataRecord> dbMdRecords = getMetadataRecordsByRdfFile(collection, rdfDbResourcesFile);
+        int countDocs = addDocuments(collection, dbMdRecords, true);
+        counter = counter + countDocs;
+      }
+    }
+    return counter;
+  }
+  
+  private int addDocuments(Collection collection, ArrayList<MetadataRecord> mdRecords, boolean dbRecords) throws ApplicationException {
+    DocumentHandler docHandler = new DocumentHandler();
+    int counter = 0;
+    // performance gain for database records: a commit is only done if commitInterval (e.g. 1000) is reached 
+    if (dbRecords)
+      IndexHandler.getInstance().setCommitInterval(COMMIT_INTERVAL_DB);
+    for (int i=0; i<mdRecords.size(); i++) {
+      MetadataRecord mdRecord = mdRecords.get(i);
+      String docUrl = mdRecord.getUri();
+      String docId = mdRecord.getDocId();
+      String collectionId = mdRecord.getCollectionNames();
+      counter++;
+      String logCreationStr = counter + ". " + "Collection: " + collectionId + ": Create resource: " + docUrl + " (" + docId + ")";
+      if (docUrl == null)
+        logCreationStr = counter + ". " + "Collection: " + collectionId + ": Create metadata resource: " + docId;
+      // if isDbColl then log only after each commit interval 
+      if (! dbRecords) {
+        LOGGER.info(logCreationStr);
+      } else {
+        if (counter % COMMIT_INTERVAL_DB == 0)
+          LOGGER.info(logCreationStr);
+      }
+      CmsDocOperation docOp = new CmsDocOperation("create", docUrl, null, docId);
+      docOp.setMdRecord(mdRecord);
+      ArrayList<String> fields = collection.getFields();
+      if (fields != null && ! fields.isEmpty()) {
+        String[] fieldsArray = new String[fields.size()];
+        for (int j=0;j<fields.size();j++) {
+          String f = fields.get(j);
+          fieldsArray[j] = f;
+        }
+        docOp.setElementNames(fieldsArray);
+      }
+      String mainLanguage = collection.getMainLanguage();
+      docOp.setMainLanguage(mainLanguage);
+      try {
+        docHandler.doOperation(docOp);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+      // without that, there would be a memory leak (with many big documents in one collection)
+      // with that the main big fields (content etc.) could be garbaged
+      mdRecord.setAllNull();
+    }
+    IndexHandler.getInstance().commit();  // so that the last pending mdRecords before commitInterval were also committed
+    return counter;
+  }
+  
   private ArrayList<MetadataRecord> getMetadataRecords(Collection collection) throws ApplicationException {
     ArrayList<MetadataRecord> mdRecords = new ArrayList<MetadataRecord>();
     String collectionId = collection.getId();
     if (collectionId.equals("edoc")) {
       mdRecords = getMetadataRecordsEdoc(collection);
     } else {
-      mdRecords = getMetadataRecordsByRdfFile(collection);
+      String metadataRdfDir = Constants.getInstance().getMdsystemConfDir() + "/resources/";
+      File rdfRessourcesFile = new File(metadataRdfDir + collectionId + ".rdf");
+      mdRecords = getMetadataRecordsByRdfFile(collection, rdfRessourcesFile);
     }
     if (mdRecords.size() == 0)
       return null;
@@ -182,12 +225,10 @@ public class CollectionManager {
       return mdRecords;
   }
 
-  public ArrayList<MetadataRecord> getMetadataRecordsByRdfFile(Collection collection) throws ApplicationException {
+  public ArrayList<MetadataRecord> getMetadataRecordsByRdfFile(Collection collection, File rdfRessourcesFile) throws ApplicationException {
     String collectionId = collection.getId();
     ArrayList<MetadataRecord> mdRecords = new ArrayList<MetadataRecord>();
     try {
-      String metadataRdfDir = Constants.getInstance().getMdsystemConfDir() + "/resources/";
-      File rdfRessourcesFile = new File(metadataRdfDir + collectionId + ".rdf");
       URL rdfRessourcesFileUrl = rdfRessourcesFile.toURI().toURL();
       String namespaceDeclaration = "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; declare namespace dc=\"http://purl.org/dc/elements/1.1/\"; declare namespace dcterms=\"http://purl.org/dc/terms/\"; ";
       XQueryEvaluator xQueryEvaluator = new XQueryEvaluator();
