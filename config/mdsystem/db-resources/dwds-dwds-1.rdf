@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF 
+   xmlns="http://wsp.normdata.rdf/DWDS" 
+   xml:base="http://wsp.normdata.rdf/DWDS" 
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
+   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" 
+   xmlns:dc="http://purl.org/dc/elements/1.1/" 
+   xmlns:dcterms="http://purl.org/dc/terms/" 
+   xmlns:foaf="http://xmlns.com/foaf/0.1/" 
+   xmlns:gnd="http://d-nb.info/standards/elementset/gnd#" 
+   xmlns:ore="http://www.openarchives.org/ore/terms/" 
+>
+<!-- Resources of database: dwds (Database file name: dwds-dwds-1.xml) -->
+<rdf:Description rdf:about="http://fedora.deutschestextarchiv.de:8088/fedora/objects/dwds:1/datastreams/cmdi/content">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DWDS"/>
+  <dc:identifier rdf:resource="http://fedora.deutschestextarchiv.de:8088/fedora/objects/dwds:1/datastreams/cmdi/content">dwds:1</dc:identifier>
+  <dc:type>oaiRecord</dc:type>
+  <dc:creator>Digitales Wörterbuch der deutschen Sprache (DWDS)</dc:creator>
+  <dc:title>Digitales Wörterbuch der deutschen Sprache, Wörterbuchkomponente</dc:title>
+  <dc:publisher>Digitales Wörterbuch der deutschen Sprache (DWDS)</dc:publisher>
+  <dc:date>2013-09-05</dc:date>
+  <dc:language>ger</dc:language>
+  <dc:subject>monolingual dictionary</dc:subject>
+</rdf:Description>
+<rdf:Description rdf:about="http://fedora.deutschestextarchiv.de:8088/fedora/objects/dwds:2/datastreams/cmdi/content">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DWDS"/>
+  <dc:identifier rdf:resource="http://fedora.deutschestextarchiv.de:8088/fedora/objects/dwds:2/datastreams/cmdi/content">dwds:2</dc:identifier>
+  <dc:type>oaiRecord</dc:type>
+  <dc:creator>Digitales Wörterbuch der deutschen Sprache (DWDS)</dc:creator>
+  <dc:title>Digitales Wörterbuch der deutschen Sprache, Wörterbuchkomponente (Stichwortliste)</dc:title>
+  <dc:publisher>Digitales Wörterbuch der deutschen Sprache (DWDS)</dc:publisher>
+  <dc:date>2013-09-05</dc:date>
+  <dc:language>ger</dc:language>
+  <dc:subject>monolingual dictionary (headword list)</dc:subject>
+</rdf:Description>
+<rdf:Description rdf:about="http://fedora.deutschestextarchiv.de:8088/fedora/objects/dwds:3/datastreams/cmdi/content">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DWDS"/>
+  <dc:identifier rdf:resource="http://fedora.deutschestextarchiv.de:8088/fedora/objects/dwds:3/datastreams/cmdi/content">dwds:3</dc:identifier>
+  <dc:type>oaiRecord</dc:type>
+  <dc:creator>Digitales Wörterbuch der deutschen Sprache (DWDS)</dc:creator>
+  <dc:title>Digitales Wörterbuch der deutschen Sprache, etymologische Wörterbuchkomponente (nach Pfeifer)</dc:title>
+  <dc:publisher>Digitales Wörterbuch der deutschen Sprache (DWDS)</dc:publisher>
+  <dc:date>2014-03-07</dc:date>
+  <dc:language>ger</dc:language>
+  <dc:subject>monolingual dictionary</dc:subject>
+</rdf:Description>
+<rdf:Description rdf:about="http://fedora.deutschestextarchiv.de:8088/fedora/objects/dwds:4/datastreams/cmdi/content">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DWDS"/>
+  <dc:identifier rdf:resource="http://fedora.deutschestextarchiv.de:8088/fedora/objects/dwds:4/datastreams/cmdi/content">dwds:4</dc:identifier>
+  <dc:type>oaiRecord</dc:type>
+  <dc:creator>Digitales Wörterbuch der deutschen Sprache (DWDS)</dc:creator>
+  <dc:title>Digitales Wörterbuch der deutschen Sprache, etymologische Wörterbuchkomponente (nach Pfeifer, Stichwortliste)</dc:title>
+  <dc:publisher>Digitales Wörterbuch der deutschen Sprache (DWDS)</dc:publisher>
+  <dc:date>2014-03-07</dc:date>
+  <dc:language>ger</dc:language>
+  <dc:subject>monolingual dictionary (headword list)</dc:subject>
+</rdf:Description>
+<rdf:Description rdf:about="http://fedora.deutschestextarchiv.de:8088/fedora/objects/dwds:5/datastreams/cmdi/content">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DWDS"/>
+  <dc:identifier rdf:resource="http://fedora.deutschestextarchiv.de:8088/fedora/objects/dwds:5/datastreams/cmdi/content">dwds:5</dc:identifier>
+  <dc:type>oaiRecord</dc:type>
+  <dc:creator>Norbert Dittmar (Freie Universität Berlin), Digitales Wörterbuch der deutschen Sprache (DWDS)</dc:creator>
+  <dc:title>Berliner Wendekorpus</dc:title>
+  <dc:publisher>CLARIN-D, Digitales Wörterbuch der deutschen Sprache (DWDS)</dc:publisher>
+  <dc:date>2014-04-22</dc:date>
+  <dc:language>ger</dc:language>
+  <dc:subject>Berlin, Wende</dc:subject>
+</rdf:Description>
+</rdf:RDF>
