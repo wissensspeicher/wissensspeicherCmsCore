@@ -42,7 +42,7 @@ public class ConvertConfigXml2Rdf {
       // convertConfigXml2Rdf.convertAll();
       // convertConfigXml2Rdf.proofRdfProjects();
       // convertConfigXml2Rdf.proofCollectionProjects();
-      // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("avhseklit");
+      // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("dwb");
       // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("jdg");
       // convertConfigXml2Rdf.convert(c, false);
       // convertConfigXml2Rdf.convertDbXmlFiles(c);
@@ -62,7 +62,7 @@ public class ConvertConfigXml2Rdf {
     httpClient.getParams().setParameter("http.connection-manager.timeout", new Long(SOCKET_TIMEOUT));
     httpClient.getParams().setParameter("http.protocol.head-body-timeout", SOCKET_TIMEOUT);
     resourcesDirName = Constants.getInstance().getMdsystemConfDir() +  "/resources";
-    dbResourcesDirName = Constants.getInstance().getMdsystemConfDir() + "/db-resources";
+    dbResourcesDirName = Constants.getInstance().getExternalDocumentsDir() + "/db-resources";
     String inputNormdataFileName = Constants.getInstance().getMdsystemNormdataFile();
     inputNormdataFile = new File(inputNormdataFileName);      
   }
