@@ -138,7 +138,7 @@ public class CollectionManager {
 
   private int addDocuments(Collection collection, Database db) throws ApplicationException {
     int counter = 0;
-    String dbResourcesDirName = Constants.getInstance().getMdsystemConfDir() + "/db-resources";
+    String dbResourcesDirName = Constants.getInstance().getExternalDocumentsDir() + "/db-resources";
     File dbResourcesDir = new File(dbResourcesDirName);
     String rdfFileFilterName = collection.getId() + "-" + db.getName() + "*.rdf"; 
     FileFilter rdfFileFilter = new WildcardFileFilter(rdfFileFilterName);
