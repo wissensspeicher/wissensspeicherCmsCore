@@ -17,6 +17,7 @@
       <!-- die folgende URL soll nicht in den Index aufgenommen werden, momentan nur die Belege mit dem Buchstaben "a"
         http://telota.bbaw.de:8088/exist/servlet/db/dwb/dwb.xml
       -->
+      <!-- ToDo mit Alex checken: <dataUrl>http://pom.bbaw.de/dwb/</dataUrl> -->
     </url>
     <languages>ger</languages>
     <mainLanguage>ger</mainLanguage>
