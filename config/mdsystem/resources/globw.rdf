@@ -15,4 +15,22 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/GlobalerWandel"/>
   <dc:identifier rdf:resource="http://globalerwandel.bbaw.de"/>
 </rdf:Description>
+<rdf:Description rdf:about="http://globalerwandel.bbaw.de/ueberblick">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/GlobalerWandel"/>
+  <dc:identifier rdf:resource="http://globalerwandel.bbaw.de/ueberblick"/>
+  <dc:title>Überblick</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://globalerwandel.bbaw.de/mitglieder-mitarbeiter">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/GlobalerWandel"/>
+  <dc:identifier rdf:resource="http://globalerwandel.bbaw.de/mitglieder-mitarbeiter"/>
+  <dc:title>Mitglieder/Mitarbeiter</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://globalerwandel.bbaw.de/publikationen">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/GlobalerWandel"/>
+  <dc:identifier rdf:resource="http://globalerwandel.bbaw.de/publikationen"/>
+  <dc:title>Publikationen</dc:title>
+</rdf:Description>
 </rdf:RDF>

@@ -15,4 +15,40 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KriegUndGewalt"/>
   <dc:identifier rdf:resource="http://kriegundgewalt.bbaw.de"/>
 </rdf:Description>
+<rdf:Description rdf:about="http://kriegundgewalt.bbaw.de/Mitglieder_Mitarbeiter">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KriegUndGewalt"/>
+  <dc:identifier rdf:resource="http://kriegundgewalt.bbaw.de/Mitglieder_Mitarbeiter"/>
+  <dc:title>Mitglieder/Mitarbeiter</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://kriegundgewalt.bbaw.de/mai28">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KriegUndGewalt"/>
+  <dc:identifier rdf:resource="http://kriegundgewalt.bbaw.de/mai28"/>
+  <dc:title>„Kriegsfolgen“, 28. Mai 2003</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://kriegundgewalt.bbaw.de/Blanko.2005-01-17.5071737653">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KriegUndGewalt"/>
+  <dc:identifier rdf:resource="http://kriegundgewalt.bbaw.de/Blanko.2005-01-17.5071737653"/>
+  <dc:title>"Kriege der Zukunft", 15. Oktober 2003</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://kriegundgewalt.bbaw.de/Blanko.2005-01-17.5141072789">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KriegUndGewalt"/>
+  <dc:identifier rdf:resource="http://kriegundgewalt.bbaw.de/Blanko.2005-01-17.5141072789"/>
+  <dc:title>"Gibt es den gerechten Krieg?", 10. Dezember 2003</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://kriegundgewalt.bbaw.de/Blanko.2005-01-17.5218459913">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KriegUndGewalt"/>
+  <dc:identifier rdf:resource="http://kriegundgewalt.bbaw.de/Blanko.2005-01-17.5218459913"/>
+  <dc:title>"Kriege und ihre Folgen in der modernen Gesellschaft", 12. Februar 2004</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://kriegundgewalt.bbaw.de/programm">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KriegUndGewalt"/>
+  <dc:identifier rdf:resource="http://kriegundgewalt.bbaw.de/programm"/>
+  <dc:title>Programme der Veranstaltungsreihe "Krieg und Gewalt im 21. Jahrhundert"</dc:title>
+</rdf:Description>
 </rdf:RDF>

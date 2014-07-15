@@ -15,4 +15,22 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KlinischeForschungPopulation"/>
   <dc:identifier rdf:resource="http://kfvp.bbaw.de"/>
 </rdf:Description>
+<rdf:Description rdf:about="http://kfvp.bbaw.de/de/arbeitsberichte">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KlinischeForschungPopulation"/>
+  <dc:identifier rdf:resource="http://kfvp.bbaw.de/de/arbeitsberichte"/>
+  <dc:title>Arbeitsberichte</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://kfvp.bbaw.de/de/mitarbeiter">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KlinischeForschungPopulation"/>
+  <dc:identifier rdf:resource="http://kfvp.bbaw.de/de/mitarbeiter"/>
+  <dc:title>Mitarbeiter</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.bbaw.de/forschung/kfvp/projektdarstellung">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KlinischeForschungPopulation"/>
+  <dc:identifier rdf:resource="http://www.bbaw.de/forschung/kfvp/projektdarstellung"/>
+  <dc:title>Projektdarstellung</dc:title>
+</rdf:Description>
 </rdf:RDF>
