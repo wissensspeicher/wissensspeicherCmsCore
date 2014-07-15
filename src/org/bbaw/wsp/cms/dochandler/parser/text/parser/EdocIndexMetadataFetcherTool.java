@@ -216,7 +216,7 @@ public class EdocIndexMetadataFetcherTool {
         }
       }
       // Bugfix: Institut
-      final Pattern p3 = Pattern.compile("(?i)<TD class=\"frontdoor\" valign=\"top\"><B>Institut:</B></TD>.*?<TD class=\"frontdoor\" valign=\"top\">(.*?)</TD><");
+      final Pattern p3 = Pattern.compile("(?i)<TD class=\"frontdoor\" valign=\"top\"><B>Institut {0,1}1{0,1}:</B></TD>.*?<TD class=\"frontdoor\" valign=\"top\">(.*?)</TD><");
       for (final Matcher m = p3.matcher(line); m.find();) {
         mapInstitut(mdRecord, eDocMapper, m.group(1));
       }
