@@ -25,12 +25,12 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/GemeinwohlUndGemeinsinn"/>
   <dc:identifier rdf:resource="http://gemeinwohl.bbaw.de/Mitglieder_Mitarbeiter"/>
-  <dc:title>Mitglieder/Mitarbeite</dc:title>
+  <dc:title>Mitglieder/Mitarbeiter</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="gemeinwohl.bbaw.de/Publikationen">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/GemeinwohlUndGemeinsinn"/>
-  <dc:identifier rdf:resource="gemeinwohl.bbaw.de/Publikationen"/>
+  <dc:identifier rdf:resource="http://gemeinwohl.bbaw.de/Publikationen"/>
   <dc:title>Publikationen</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://gemeinwohl.bbaw.de/blanko.2005-02-22.3608097864">
