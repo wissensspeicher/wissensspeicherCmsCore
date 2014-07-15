@@ -202,7 +202,7 @@ public class EdocIndexMetadataFetcherTool {
           mdRecord.setPublishingDate(cal.getTime());
         } else if (key.contains("ISBN")) {
           mdRecord.setIsbn(value);
-        } else if (key.contains("Institut") && !key.contains("Sonstige beteiligte Institution")) { // multi values possible
+        } else if (key.contains("Institut") && !key.contains("Sonstige beteiligte Institution") && !key.contains("Institut 2")) { // multi values possible
           mapInstitut(mdRecord, eDocMapper, value);
         } else if (key.contains("Collection")) { // multi values possible
           final Pattern pColl = Pattern.compile("(?i)<a.*?>(.*?)</a>");
