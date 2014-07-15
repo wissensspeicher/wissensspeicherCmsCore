@@ -12,7 +12,6 @@
         <url>http://fedora.dwds.de:8088/oaiprovider/oai</url>
         <set>dta</set>
         <!-- dwds sets: dta;dwds;WebLichtWebServices;dingler -->
-        <fileName>config/mdsystem/db-resources/dta.xml</fileName>
       </xmlDump>
       <mainResourcesTable>
         <name>records</name>

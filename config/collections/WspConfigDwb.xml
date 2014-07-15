@@ -8,15 +8,18 @@
       <webBaseUrl>http://dwb.bbaw.de/</webBaseUrl>
       <dataUrl>http://dwb.bbaw.de/</dataUrl>
       <dataUrl>http://telota.bbaw.de/dwb/</dataUrl>
-      <!-- DWB online / Der digitale Grimm -->
-      <!-- ToDo -->
-      <!-- Belegzettel von Jacob und Wilhelm Grimm -->
-      <!-- ToDo -->
-      <!-- Alex Czmiel: die folgende URL soll nicht in den Index aufgenommen werden
-        <dataUrl>http://telota.bbaw.de:8088/exist/servlet/db/dwb/dwb.xml</dataUrl>
+      <dataUrl>http://www.dwds.de/ressourcen/woerterbuecher/</dataUrl>
+      <!-- 1. DWB: Deutsches Wörterbuch von Jacob Grimm und Wilhelm Grimm. Buchstabe A-Z, erstellt von 1854-1961 -->
+      <!-- wird per Schnittstelle über www.dwds.de angeboten -->
+      <!-- Altes abgeschlossenes Projekt mit der Uni Trier siehe hier: http://woerterbuchnetz.de/DWB/ -->
+      <!-- 2. DWB: Deutsches Wörterbuch von Jacob Grimm und Wilhelm Grimm. Buchstabe A-F, erstellt seit 1965 -->
+      <!-- 3. DWB: Belegzettel von Jacob und Wilhelm Grimm -->
+      <!-- die folgende URL soll nicht in den Index aufgenommen werden, momentan nur die Belege mit dem Buchstaben "a"
+        http://telota.bbaw.de:8088/exist/servlet/db/dwb/dwb.xml
       -->
+      <!-- ToDo mit Alex checken: <dataUrl>http://pom.bbaw.de/dwb/</dataUrl> -->
     </url>
-    <languages>ger,goh,gmh,gml,gsw</languages>
+    <languages>ger</languages>
     <mainLanguage>ger</mainLanguage>
     <formats>
       <format>html</format>

@@ -31,8 +31,6 @@ FROM
 ORDER BY
   kat_nr
         </sql>
-        <fileName>config/mdsystem/db-resources/leibpotsritter.xml</fileName>
-        <replace></replace>
       </xmlDump>
       <mainResourcesTable>
         <name>ritter</name>

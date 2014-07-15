@@ -5,7 +5,7 @@
     <rdfId>http://wsp.normdata.rdf/AvHForschungsstelle/Sekundärliteratur</rdfId>
     <db>
       <type>mysql</type>
-      <name>avh_biblio</name>
+      <name>seklit</name>
       <xmlDump>
         <sql>
 SELECT 
@@ -35,7 +35,6 @@ AND
  titles_persons.person_id = persons.person_id
 GROUP BY tits.title_id
         </sql>
-        <fileName>config/mdsystem/db-resources/avhseklit.xml</fileName>
       </xmlDump>
       <mainResourcesTable>
         <name>titles_persons</name>

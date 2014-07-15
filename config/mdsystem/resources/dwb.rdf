@@ -10,6 +10,14 @@
    xmlns:gnd="http://d-nb.info/standards/elementset/gnd#" 
    xmlns:ore="http://www.openarchives.org/ore/terms/" 
 >
+<!-- 1. DWB: Deutsches Wörterbuch von Jacob Grimm und Wilhelm Grimm. Buchstabe A-Z, erstellt von 1854-1961 -->
+<!-- wird per Schnittstelle über www.dwds.de angeboten -->
+<!-- Altes abgeschlossenes Projekt mit der Uni Trier siehe hier: http://woerterbuchnetz.de/DWB/ -->
+<!-- 2. DWB: Deutsches Wörterbuch von Jacob Grimm und Wilhelm Grimm. Buchstabe A-F, erstellt seit 1965 -->
+<!-- 3. DWB: Belegzettel von Jacob und Wilhelm Grimm -->
+<!-- die folgende URL soll nicht in den Index aufgenommen werden, momentan nur die Belege mit dem Buchstaben "a"
+   http://telota.bbaw.de:8088/exist/servlet/db/dwb/dwb.xml
+-->
 <rdf:Description rdf:about="http://dwb.bbaw.de/">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DWB"/>
@@ -19,5 +27,10 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DWB"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/dwb/"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.dwds.de/ressourcen/woerterbuecher/">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DWB"/>
+  <dc:identifier rdf:resource="http://www.dwds.de/ressourcen/woerterbuecher/"/>
 </rdf:Description>
 </rdf:RDF>

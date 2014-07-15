@@ -5,7 +5,7 @@
     <rdfId>http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften</rdfId>
     <db>
       <type>mysql</type>
-      <name>avh_uns</name>
+      <name>unselbst</name>
       <xmlDump>
         <sql>
 SELECT 
@@ -38,7 +38,6 @@ AND
  articles_persons.person_id = persons.person_id
 GROUP BY tits.publication_id
         </sql>
-        <fileName>config/mdsystem/db-resources/avhunselbst.xml</fileName>
       </xmlDump>
       <mainResourcesTable>
         <name>articles_publications</name>
