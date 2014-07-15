@@ -13,11 +13,7 @@
       <!-- wird per Schnittstelle über www.dwds.de angeboten -->
       <!-- Altes abgeschlossenes Projekt mit der Uni Trier siehe hier: http://woerterbuchnetz.de/DWB/ -->
       <!-- 2. DWB: Deutsches Wörterbuch von Jacob Grimm und Wilhelm Grimm. Buchstabe A-F, erstellt seit 1965 -->
-      <!-- 3. DWB: Belegzettel von Jacob und Wilhelm Grimm -->
-      <!-- die folgende URL soll nicht in den Index aufgenommen werden, momentan nur die Belege mit dem Buchstaben "a"
-        http://telota.bbaw.de:8088/exist/servlet/db/dwb/dwb.xml
-      -->
-      <!-- ToDo mit Alex checken: <dataUrl>http://pom.bbaw.de/dwb/</dataUrl> -->
+      <!-- wird per Schnittstelle über www.dwds.de angeboten -->
     </url>
     <languages>ger</languages>
     <mainLanguage>ger</mainLanguage>
@@ -26,5 +22,23 @@
       <format>jpeg</format>
       <format>xml</format>
     </formats>
+    <db>
+      <type>dwb</type> <!-- very special type -->
+      <name>dwb</name>
+      <xmlDump>
+        <!-- 3. DWB: Belegzettel von Jacob und Wilhelm Grimm: momentan nur die Belege von "auffassung - aufpeitschen" -->
+        <url>http://telota.bbaw.de:8088/exist/servlet/db/dwb/dwb.xml</url>
+      </xmlDump>
+      <webId>
+        <preStr>http://pom.bbaw.de/exist/xquery/dwb/zeigeA.xq?artikel=</preStr> <!-- e.g.: artikel=AUFFASSUNG&qString=auffassung&in=sw vt be ba#1 -->
+        <afterStr>&amp;qString=*&amp;in=sw vt be ba#1</afterStr>
+      </webId>
+    </db>
+    <xqueries>
+      <xquery>
+        <name>webId</name>
+        <code>//*:idno[@type="URLWeb"]/text()</code>
+      </xquery>
+    </xqueries>
   </collection>
 </wsp>
