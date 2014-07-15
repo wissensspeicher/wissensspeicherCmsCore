@@ -19,25 +19,60 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LandInnovation"/>
   <dc:identifier rdf:resource="http://landinnovation.bbaw.de/resolveuid/20e4cd72a640633ad2b873b9d5655787"/>
+  <dc:title>Jahresbericht 2007</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://landinnovation.bbaw.de/resolveuid/2a99c69407ece97d986986b73d94ca97">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LandInnovation"/>
   <dc:identifier rdf:resource="http://landinnovation.bbaw.de/resolveuid/2a99c69407ece97d986986b73d94ca97"/>
+  <dc:title>Jahresbericht 2006</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://landinnovation.bbaw.de/resolveuid/0624b30d2da99c8a296e43236aeeb973">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LandInnovation"/>
   <dc:identifier rdf:resource="http://landinnovation.bbaw.de/resolveuid/0624b30d2da99c8a296e43236aeeb973"/>
+  <dc:title>Jahresbericht 2005</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://landinnovation.bbaw.de/resolveuid/8a4599bb3689a0f438b9beeeb8dd1842">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LandInnovation"/>
   <dc:identifier rdf:resource="http://landinnovation.bbaw.de/resolveuid/8a4599bb3689a0f438b9beeeb8dd1842"/>
+  <dc:title>Jahresbericht 2004</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://landinnovation.bbaw.de/resolveuid/0440d402c6c8adb615a0c9d45db41cf7">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LandInnovation"/>
   <dc:identifier rdf:resource="http://landinnovation.bbaw.de/resolveuid/0440d402c6c8adb615a0c9d45db41cf7"/>
+  <dc:title>Jahresbericht 2003</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://landinnovation.bbaw.de/Ueberblick">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LandInnovation"/>
+  <dc:identifier rdf:resource="http://landinnovation.bbaw.de/Ueberblick"/>
+  <dc:title>Überblick</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://landinnovation.bbaw.de/Mitglieder_Mitarbeiter">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LandInnovation"/>
+  <dc:identifier rdf:resource="http://landinnovation.bbaw.de/Mitglieder_Mitarbeiter"/>
+  <dc:title>Mitglieder/Mitarbeiter</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://landinnovation.bbaw.de/Publikationen">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LandInnovation"/>
+  <dc:identifier rdf:resource="http://landinnovation.bbaw.de/Publikationen"/>
+  <dc:title>Publikationen</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://landinnovation.bbaw.de/bilder/poster.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LandInnovation"/>
+  <dc:identifier rdf:resource="http://landinnovation.bbaw.de/bilder/poster.pdf"/>
+  <dc:title>Poster</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://landinnovation.bbaw.de/bilder/hintergrundpapier.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LandInnovation"/>
+  <dc:identifier rdf:resource="http://landinnovation.bbaw.de/bilder/hintergrundpapier.pdf"/>
+  <dc:title>Hintergrundpapier</dc:title>
 </rdf:Description>
 </rdf:RDF>
