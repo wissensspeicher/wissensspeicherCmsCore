@@ -33,6 +33,7 @@ public class ConvertConfigXml2Rdf {
   private HttpClient httpClient; 
   private String resourcesDirName;
   private String dbResourcesDirName;
+  private String externalResourcesDirName;
   private File inputNormdataFile;
   private XQueryEvaluator xQueryEvaluator;
   public static void main(String[] args) throws ApplicationException {
@@ -63,6 +64,7 @@ public class ConvertConfigXml2Rdf {
     httpClient.getParams().setParameter("http.protocol.head-body-timeout", SOCKET_TIMEOUT);
     resourcesDirName = Constants.getInstance().getMdsystemConfDir() +  "/resources";
     dbResourcesDirName = Constants.getInstance().getExternalDocumentsDir() + "/db-resources";
+    externalResourcesDirName = Constants.getInstance().getExternalDocumentsDir() + "/resources";
     String inputNormdataFileName = Constants.getInstance().getMdsystemNormdataFile();
     inputNormdataFile = new File(inputNormdataFileName);      
   }
@@ -76,8 +78,104 @@ public class ConvertConfigXml2Rdf {
         LOGGER.info("Generate database dump files of database: \"" + db.getName() + "\"");
         if (dbType != null && (dbType.equals("oai") || dbType.equals("oai-dbrecord"))) {
           generateOaiDbXmlDumpFiles(collection, db);
+        } else if (dbType != null && (dbType.equals("dwb"))) {
+          // very special case for dwb
+          generateDwbFiles(collection, db);
         }
       }
+    }
+  }
+  
+  private void generateDwbFiles(Collection collection, Database db) throws ApplicationException {
+    // generates both dump files + rdf file
+    String collectionRdfId = collection.getRdfId();
+    try {
+      String xmlDumpFileFilter = db.getName() + "-" + "*.xml"; 
+      FileFilter fileFilter = new WildcardFileFilter(xmlDumpFileFilter);
+      File dwbExternalResourcesDir = new File(externalResourcesDirName + "/dwb");
+      File[] files = dwbExternalResourcesDir.listFiles(fileFilter);
+      if (files != null && files.length > 0) {
+        for (int i = 0; i < files.length; i++) {
+          File dumpFileToDelete = files[i];
+          FileUtils.deleteQuietly(dumpFileToDelete);
+        }
+        LOGGER.info("Database dump files of database \"" + db.getName() + "\" sucessfully deleted");
+      }
+      StringBuilder rdfRecordsStrBuilder = new StringBuilder();
+      rdfRecordsStrBuilder.append("<!-- Resources of database: " + db.getName() + " (External directory: " + dwbExternalResourcesDir + ") -->\n");
+      File dwbMainFile = new File(externalResourcesDirName + "/dwb/dwb.xml");
+      URL dwbMainFileUrl = dwbMainFile.toURI().toURL();
+      XdmValue xmdValueMainResources = xQueryEvaluator.evaluate(dwbMainFileUrl, "//entry");
+      XdmSequenceIterator xmdValueMainResourcesIterator = xmdValueMainResources.iterator();
+      if (xmdValueMainResources != null && xmdValueMainResources.size() > 0) {
+        while (xmdValueMainResourcesIterator.hasNext()) {
+          XdmItem xdmItemMainResource = xmdValueMainResourcesIterator.next();
+          String xdmItemMainResourceStr = xdmItemMainResource.toString();
+          StringBuilder entryTeiFileStrBuilder = new StringBuilder();
+          String entryKey = xQueryEvaluator.evaluateAsString(xdmItemMainResourceStr, "string(/entry/@key)");
+          entryTeiFileStrBuilder.append("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
+          entryTeiFileStrBuilder.append("<TEI xmlns=\"http://www.tei-c.org/ns/1.0\">\n");
+          entryTeiFileStrBuilder.append("<teiHeader>\n");
+          entryTeiFileStrBuilder.append("  <fileDesc>\n");
+          entryTeiFileStrBuilder.append("    <titleStmt>\n");
+          entryTeiFileStrBuilder.append("      <title type=\"main\">Deutsches Wörterbuch von Jacob Grimm und Wilhelm Grimm: Belege zu: " + entryKey + "</title>\n");
+          entryTeiFileStrBuilder.append("      <author>\n");
+          entryTeiFileStrBuilder.append("        <persName>\n");
+          entryTeiFileStrBuilder.append("          <surname>Grimm</surname>\n");
+          entryTeiFileStrBuilder.append("          <forename>Jacob</forename>\n");
+          entryTeiFileStrBuilder.append("        </persName>\n");
+          entryTeiFileStrBuilder.append("      </author>\n");
+          entryTeiFileStrBuilder.append("      <author>\n");
+          entryTeiFileStrBuilder.append("        <persName>\n");
+          entryTeiFileStrBuilder.append("          <surname>Grimm</surname>\n");
+          entryTeiFileStrBuilder.append("          <forename>Wilhelm</forename>\n");
+          entryTeiFileStrBuilder.append("        </persName>\n");
+          entryTeiFileStrBuilder.append("      </author>\n");
+          entryTeiFileStrBuilder.append("    </titleStmt>\n");
+          entryTeiFileStrBuilder.append("    <publicationStmt>\n");
+          entryTeiFileStrBuilder.append("      <pubPlace>Berlin</pubPlace>\n");
+          // entryTeiFileStrBuilder.append("      <date>2014-01-09T23:11:23Z</date>\n");
+          entryTeiFileStrBuilder.append("      <publisher>\n");
+          entryTeiFileStrBuilder.append("        <orgName>Deutsches Wörterbuch</orgName>\n");
+          entryTeiFileStrBuilder.append("        <orgName>Berlin-Brandenburgische Akademie der Wissenschaften (BBAW)</orgName>\n");
+          entryTeiFileStrBuilder.append("      </publisher>\n");
+          entryTeiFileStrBuilder.append("      <availability>\n");
+          entryTeiFileStrBuilder.append("        <licence target=\"http://creativecommons.org/licenses/by-nc/3.0/de/\">\n");
+          entryTeiFileStrBuilder.append("          <p>Distributed under the Creative Commons Attribution-NonCommercial 3.0 Unported License.</p>\n");
+          entryTeiFileStrBuilder.append("        </licence>\n");
+          entryTeiFileStrBuilder.append("      </availability>\n");
+          entryTeiFileStrBuilder.append("      <idno>\n");
+          entryTeiFileStrBuilder.append("        <idno type=\"URLWeb\">" + db.getWebIdPreStr() + entryKey + db.getWebIdAfterStr() + "</idno>\n");
+          entryTeiFileStrBuilder.append("      </idno>\n");
+          entryTeiFileStrBuilder.append("    </publicationStmt>\n");
+          entryTeiFileStrBuilder.append("  </fileDesc>\n");
+          entryTeiFileStrBuilder.append("  <profileDesc>\n");
+          entryTeiFileStrBuilder.append("    <langUsage>\n");
+          entryTeiFileStrBuilder.append("      <language ident=\"deu\">German</language>\n");
+          entryTeiFileStrBuilder.append("    </langUsage>\n");
+          entryTeiFileStrBuilder.append("  </profileDesc>\n");
+          entryTeiFileStrBuilder.append("</teiHeader>\n");
+          entryTeiFileStrBuilder.append("<text>\n");
+          entryTeiFileStrBuilder.append(xdmItemMainResourceStr + "\n");
+          entryTeiFileStrBuilder.append("</text>\n");
+          entryTeiFileStrBuilder.append("</TEI>\n");
+          String entryTeiFileName = externalResourcesDirName + "/dwb/dwb-" + entryKey + ".xml";
+          String rdfFileId = "file:" + entryTeiFileName;
+          rdfRecordsStrBuilder.append("<rdf:Description rdf:about=\"" + rdfFileId + "\">\n");
+          rdfRecordsStrBuilder.append("  <rdf:type rdf:resource=\"http://purl.org/dc/terms/BibliographicResource\"/>\n");
+          rdfRecordsStrBuilder.append("  <dcterms:isPartOf rdf:resource=\"" + collectionRdfId + "\"/>\n");
+          rdfRecordsStrBuilder.append("  <dc:identifier rdf:resource=\"" + rdfFileId + "\"/>\n");
+          rdfRecordsStrBuilder.append("</rdf:Description>\n");
+          File entryTeiFile = new File(entryTeiFileName);
+          FileUtils.writeStringToFile(entryTeiFile, entryTeiFileStrBuilder.toString(), "utf-8");
+        }
+      }
+      String rdfFileName = externalResourcesDirName + "/dwb/dwb" + ".rdf";
+      File rdfFile = new File(rdfFileName);
+      writeRdfFile(rdfFile, rdfRecordsStrBuilder, collectionRdfId);
+      LOGGER.info("Database dump files in directory \"" + dwbExternalResourcesDir + "\" and RDF file: " + rdfFileName + " sucessfully created");
+    } catch (Exception e) {
+      throw new ApplicationException(e);
     }
   }
   
