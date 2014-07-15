@@ -14,80 +14,102 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam/Baende"/>
   <dc:identifier rdf:resource="http://leibniz-potsdam.bbaw.de/bilder/IV1tit.pdf"/>
+  <dc:title>Band IV,1 mit Schriften von 1667-1676 in 3., durchgesehener u. ergänzter Aufl. 1983). Titel, Bemerkung</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/bilder/IV1text.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam/Baende"/>
   <dc:identifier rdf:resource="http://leibniz-potsdam.bbaw.de/bilder/IV1text.pdf"/>
+  <dc:title>Band IV,1 mit Schriften von 1667-1676 in 3., durchgesehener u. ergänzter Aufl. 1983). Text und Verzeichnisse</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/bilder/IV2tit.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam/Baende"/>
   <dc:identifier rdf:resource="http://leibniz-potsdam.bbaw.de/bilder/IV2tit.pdf"/>
+  <dc:title>Band IV,2 mit Schriften von 1677-1687 in 2., durchgesehener Aufl. 1984. Titelei, Vorwort und Einleitung</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/bilder/IV2text.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam/Baende"/>
   <dc:identifier rdf:resource="http://leibniz-potsdam.bbaw.de/bilder/IV2text.pdf"/>
+  <dc:title>Band IV,2 mit Schriften von 1677-1687 in 2., durchgesehener Aufl. 1984. Text und Verzeichnisse</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/bilder/IV3tit.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam/Baende"/>
   <dc:identifier rdf:resource="http://leibniz-potsdam.bbaw.de/bilder/IV3tit.pdf"/>
+  <dc:title>Band IV,3 mit Schriften von 1677-1689 1. Aufl. 1986. Titelei, Vorwort und Einleitung</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/bilder/IV3text.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam/Baende"/>
   <dc:identifier rdf:resource="http://leibniz-potsdam.bbaw.de/bilder/IV3text.pdf"/>
+  <dc:title>Band IV,3 mit Schriften von 1677-1689 1. Aufl. 1986. Text und Verzeichnisse</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/bilder/IV4tit.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam/Baende"/>
   <dc:identifier rdf:resource="http://leibniz-potsdam.bbaw.de/bilder/IV4tit.pdf"/>
+  <dc:title>Band IV,4 mit Schriften von 1680-1692 1. Aufl. 2001. Titelei, Vorwort und Einleitung</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/bilder/IV4text.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam/Baende"/>
   <dc:identifier rdf:resource="http://leibniz-potsdam.bbaw.de/bilder/IV4text.pdf"/>
+  <dc:title>Band IV,4 mit Schriften von 1680-1692 1. Aufl. 2001. Text und Verzeichnisse</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/bilder/IV5tit.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam/Baende"/>
   <dc:identifier rdf:resource="http://leibniz-potsdam.bbaw.de/bilder/IV5tit.pdf"/>
+  <dc:title>Band IV,5 mit Schriften von 1692-1694 1. Aufl. 2004. Titelei, Vorwort und Einleitung</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/bilder/IV5text.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam/Baende"/>
   <dc:identifier rdf:resource="http://leibniz-potsdam.bbaw.de/bilder/IV5text.pdf"/>
+  <dc:title>Band IV,5 mit Schriften von 1692-1694 1. Aufl. 2004. Text und Verzeichnisse</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/bilder/IV6TITa.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam/Baende"/>
   <dc:identifier rdf:resource="http://leibniz-potsdam.bbaw.de/bilder/IV6TITa.pdf"/>
+  <dc:title>Band IV,6 mit Schriften von 1695-1697 1. Aufl. 2008. Inhaltsverzeichnis, Vorwort und Einleitung</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/bilder/IV6text.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam/Baende"/>
   <dc:identifier rdf:resource="http://leibniz-potsdam.bbaw.de/bilder/IV6text.pdf"/>
+  <dc:title>Band IV,6 mit Schriften von 1695-1697 1. Aufl. 2008. Text und Verzeichnisse</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/bilder/IV7TIT.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam/Baende"/>
   <dc:identifier rdf:resource="http://leibniz-potsdam.bbaw.de/bilder/IV7TIT.pdf"/>
+  <dc:title>Band IV,7 mit Schriften von 1697 bis Anfang 1699. Inhaltsverzeichnis, Vorwort und Einleitung</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/bilder/IV7text.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam/Baende"/>
   <dc:identifier rdf:resource="http://leibniz-potsdam.bbaw.de/bilder/IV7text.pdf"/>
+  <dc:title>Band IV,7 mit Schriften von 1697 bis Anfang 1699. Text und Verzeichnisse</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/bilder/Corrigenda.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam/Baende"/>
+  <dc:identifier rdf:resource="http://leibniz-potsdam.bbaw.de/bilder/Corrigenda.pdf"/>
+  <dc:title>Corrigenda zu den Bänden der Reihe IV</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/bilder/Bibelindex.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam/Baende"/>
   <dc:identifier rdf:resource="http://leibniz-potsdam.bbaw.de/bilder/Bibelindex.pdf"/>
+  <dc:title>Kumuliertes Verzeichnis der Bibelstellen (Index of the texts from the Bible) der Leibniz-Akademieausgabe</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/bilder/Feller_Konkordanz.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam/Baende"/>
   <dc:identifier rdf:resource="http://leibniz-potsdam.bbaw.de/bilder/Feller_Konkordanz.pdf"/>
+  <dc:title>Konkordanz zwischen der Akademie-Ausgabe und dem von Joachim Friedrich Feller herausgegebenen Otium Hanoveranum</dc:title>
 </rdf:Description>
 </rdf:RDF>

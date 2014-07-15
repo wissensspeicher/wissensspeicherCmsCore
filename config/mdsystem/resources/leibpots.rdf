@@ -20,4 +20,142 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam"/>
   <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/"/>
 </rdf:Description>
+
+<rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/ueberblick">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam"/>
+  <dc:identifier rdf:resource="http://leibniz-potsdam.bbaw.de/ueberblick"/>
+  <dc:title>Überblick</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/mitglieder-mitarbeiter">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam"/>
+  <dc:identifier rdf:resource="http://leibniz-potsdam.bbaw.de/mitglieder-mitarbeiter"/>
+  <dc:title>Mitglieder/Mitarbeiter</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/publikationen">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam"/>
+  <dc:identifier rdf:resource="http://leibniz-potsdam.bbaw.de/publikationen"/>
+  <dc:title>Publikationen</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/bilder/beiderbeck-gleichgewicht.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam"/>
+  <dc:identifier rdf:resource="http://leibniz-potsdam.bbaw.de/bilder/beiderbeck-gleichgewicht.pdf"/>
+  <dc:creator>Beiderbeck, Friedrich</dc:creator>
+  <dc:title>Das Gleichgewicht im politischen Denken von G. W. Leibniz</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/bilder/KOMMA_UND_KATHEDRALE.doc">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam"/>
+  <dc:identifier rdf:resource="http://leibniz-potsdam.bbaw.de/bilder/KOMMA_UND_KATHEDRALE.doc"/>
+  <dc:creator>Li, Wenchao (Hrsg.)</dc:creator>
+  <dc:title>Komma und Kathedrale. Tradition, Bedeutung und Herausforderung der Leibniz-Edition</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/bilder/LEIBNIZ_UND_DIE_OEKUMENE.doc">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam"/>
+  <dc:identifier rdf:resource="http://leibniz-potsdam.bbaw.de/bilder/LEIBNIZ_UND_DIE_OEKUMENE.doc"/>
+  <dc:creator>Li, Wenchao (Hrsg.)</dc:creator>
+  <dc:creator>Poser, Hans (Hrsg.)</dc:creator>
+  <dc:creator>Rudolph, Hartmut (Hrsg.)</dc:creator>
+  <dc:title>Leibniz und die Ökumene</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/bilder/LEIBNIZ.doc">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam"/>
+  <dc:identifier rdf:resource="http://leibniz-potsdam.bbaw.de/bilder/LEIBNIZ.doc"/>
+  <dc:creator>Li, Wenchao (Hrsg.)</dc:creator>
+  <dc:creator>Rudolph, Hartmut (Hrsg.)</dc:creator>
+  <dc:title> „Leibniz“ in der Zeit des Nationalsozialismus</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/bilder/300_JAHRE_ESSAIS_DE_THEODICEE.doc">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam"/>
+  <dc:identifier rdf:resource="http://leibniz-potsdam.bbaw.de/bilder/300_JAHRE_ESSAIS_DE_THEODICEE.doc"/>
+  <dc:creator>Li, Wenchao (Hrsg.)</dc:creator>
+  <dc:creator>Schmidt-Biggemann, Wilhelm (Hrsg.)</dc:creator>
+  <dc:title>300 Jahre Essais de Théodicée. Rezeption und Transformation</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/forschungsprojekte/wissenskanonisierung-und-2013ueberlieferung-in-der-chinesischen-gesellschaft-vom-15.-bis-17.-jahrhundert">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam"/>
+  <dc:identifier rdf:resource="http://leibniz-potsdam.bbaw.de/forschungsprojekte/wissenskanonisierung-und-2013ueberlieferung-in-der-chinesischen-gesellschaft-vom-15.-bis-17.-jahrhundert"/>
+  <dc:title>Wissenskanonisierung und –überlieferung in der chinesischen Gesellschaft vom 15. bis 17. Jahrhundert </dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/forschungsprojekte/politische-intersubjektivitaet-und-aesthetisches-selbstbewusstsein-in-der-deutschen-aufklaerung">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam"/>
+  <dc:identifier rdf:resource="http://leibniz-potsdam.bbaw.de/forschungsprojekte/politische-intersubjektivitaet-und-aesthetisches-selbstbewusstsein-in-der-deutschen-aufklaerung"/>
+  <dc:creator>Rodríguez, Manuel Sánchez</dc:creator>
+  <dc:title>Politische Intersubjektivität und ästhetisches Selbstbewusstsein in der deutschen Aufklärung </dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/forschungsprojekte/study-on-leibniz-justice-theory">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam"/>
+  <dc:identifier rdf:resource="http://leibniz-potsdam.bbaw.de/forschungsprojekte/study-on-leibniz-justice-theory"/>
+  <dc:creator>Shaobing, Li</dc:creator>
+  <dc:title>Study on Leibniz' Justice Theory </dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/veranstaltungen/bericht-zur-internationalen-leibniz-konferenz-in-beijing-china-2005">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam"/>
+  <dc:identifier rdf:resource="http://leibniz-potsdam.bbaw.de/veranstaltungen/bericht-zur-internationalen-leibniz-konferenz-in-beijing-china-2005"/>
+  <dc:title>Bericht zur Internationalen Leibniz-Konferenz in Beijing, China 2005 </dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/veranstaltungen/internationale-arbeitstagung-leibniz-stellung-zum-judentum">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam"/>
+  <dc:identifier rdf:resource="http://leibniz-potsdam.bbaw.de/veranstaltungen/internationale-arbeitstagung-leibniz-stellung-zum-judentum"/>
+  <dc:title>Internationale Arbeitstagung: Leibniz' Stellung zum Judentum </dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/veranstaltungen/veranstaltungen-2009">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam"/>
+  <dc:identifier rdf:resource="http://leibniz-potsdam.bbaw.de/veranstaltungen/veranstaltungen-2009"/>
+  <dc:title>Veranstaltungen 2009</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/veranstaltungen/veranstaltungen-2008">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam"/>
+  <dc:identifier rdf:resource="http://leibniz-potsdam.bbaw.de/veranstaltungen/veranstaltungen-2008"/>
+  <dc:title>Veranstaltungen 2008</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/veranstaltungen/veranstaltungen-2007">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam"/>
+  <dc:identifier rdf:resource="http://leibniz-potsdam.bbaw.de/veranstaltungen/veranstaltungen-2007"/>
+  <dc:title>Veranstaltungen 2007</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/veranstaltungen/veranstaltungen-2006">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam"/>
+  <dc:identifier rdf:resource="http://leibniz-potsdam.bbaw.de/veranstaltungen/veranstaltungen-2006"/>
+  <dc:title>Veranstaltungen 2006</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/veranstaltungen/veranstaltungen-2005">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam"/>
+  <dc:identifier rdf:resource="http://leibniz-potsdam.bbaw.de/veranstaltungen/veranstaltungen-2005"/>
+  <dc:title>Veranstaltungen 2005</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/veranstaltungen/veranstaltungen-2004">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam"/>
+  <dc:identifier rdf:resource="http://leibniz-potsdam.bbaw.de/veranstaltungen/veranstaltungen-2004"/>
+  <dc:title>Veranstaltungen 2004</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/veranstaltungen/veranstaltungen-2003">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam"/>
+  <dc:identifier rdf:resource="http://leibniz-potsdam.bbaw.de/veranstaltungen/veranstaltungen-2003"/>
+  <dc:title>Veranstaltungen 2003</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/bilder/L_Richter_Zur_Person.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam"/>
+  <dc:identifier rdf:resource="http://leibniz-potsdam.bbaw.de/bilder/L_Richter_Zur_Person.pdf"/>
+  <dc:title>Prof. Dr. Liselotte Richter (1906 – 1968) </dc:title>
+</rdf:Description>
 </rdf:RDF>
