@@ -15,4 +15,16 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Justizgewaehrung"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/JuStGe"/>
 </rdf:Description>
+<rdf:Description rdf:about="http://www.bbaw.de/forschung/JuStGe/projektdarstellung">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Justizgewaehrung"/>
+  <dc:identifier rdf:resource="http://www.bbaw.de/forschung/JuStGe/projektdarstellung"/>
+  <dc:title>Projektdarstellung</dc:title>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.bbaw.de/forschung/JuStGe/mitarbeiter">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Justizgewaehrung"/>
+  <dc:identifier rdf:resource="http://www.bbaw.de/forschung/JuStGe/mitarbeiter"/>
+  <dc:title>Mitglieder/Mitarbeiter</dc:title>
+</rdf:Description>
 </rdf:RDF>
