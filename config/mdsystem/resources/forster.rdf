@@ -15,4 +15,40 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Forster"/>
   <dc:identifier rdf:resource="http://forster.bbaw.de"/>
 </rdf:Description>
+<rdf:Description rdf:about="http://forster.bbaw.de/Ueberblick">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Forster"/>
+  <dc:identifier rdf:resource="http://forster.bbaw.de/Ueberblick"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://forster.bbaw.de/Mitglieder_Mitarbeiter">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Forster"/>
+  <dc:identifier rdf:resource="http://forster.bbaw.de/Mitglieder_Mitarbeiter"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://forster.bbaw.de/Publikationen">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Forster"/>
+  <dc:identifier rdf:resource="http://forster.bbaw.de/Publikationen"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://forster.bbaw.de/forsters-reise-um-die-welt">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Forster"/>
+  <dc:identifier rdf:resource="http://forster.bbaw.de/forsters-reise-um-die-welt"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://forster.bbaw.de/rede-forsters-im-mainzer-nationalkonvent">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Forster"/>
+  <dc:identifier rdf:resource="http://forster.bbaw.de/rede-forsters-im-mainzer-nationalkonvent"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://forster.bbaw.de/forster-auf-tahiti">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Forster"/>
+  <dc:identifier rdf:resource="http://forster.bbaw.de/forster-auf-tahiti"/>
+</rdf:Description>
 </rdf:RDF>
+
+
+
+
+
+
