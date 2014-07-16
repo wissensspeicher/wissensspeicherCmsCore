@@ -54,6 +54,7 @@ public class EdocFieldValueMapper implements IFieldValueMapper {
     mapping.put("Interdisziplinäre Arbeitsgruppe Wissenschaftliche Politikberatung in der Demokratie", new InstitutMapping("Wissenschaftliche Politikberatung in der Demokratie", "wpd"));
     mapping.put("Interdisziplinäre Arbeitsgruppe Die Herausforderung durch das Fremde", new InstitutMapping("Die Herausforderung durch das Fremde", "fremde"));
     mapping.put("Initiative Wissen für Entscheidungsprozesse", new InstitutMapping("Wissen für Entscheidungsprozesse - Forschung zum Verhältnis von Wissenschaft, Politik und Gesellschaft", "wfe"));
+    mapping.put("Initiative Qualitätsbeurteilung in der Wissenschaft", new InstitutMapping("Qualitätsbeurteilung in der Wissenschaft", "quali"));
     mapping.put("Interdisziplinäre Arbeitsgruppe Gentechnologiebericht", new InstitutMapping("Gentechnologiebericht", "gen"));
     mapping.put("Interdisziplinäre Arbeitsgruppe Wissenschaften und Wiedervereinigung", new InstitutMapping("Wissenschaft und Wiedervereinigung", "ww"));
     mapping.put("Akademienvorhaben Leibniz-Edition Berlin", new InstitutMapping("Leibniz-Edition Berlin", "leibber"));

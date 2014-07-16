@@ -202,7 +202,7 @@ public class EdocIndexMetadataFetcherTool {
           mdRecord.setPublishingDate(cal.getTime());
         } else if (key.contains("ISBN")) {
           mdRecord.setIsbn(value);
-        } else if (key.contains("Institut") && !key.contains("Sonstige beteiligte Institution")) { // multi values possible
+        } else if (key.contains("Institut") && !key.contains("Sonstige beteiligte Institution") && !key.contains("Institut 2")) { // multi values possible
           mapInstitut(mdRecord, eDocMapper, value);
         } else if (key.contains("Collection")) { // multi values possible
           final Pattern pColl = Pattern.compile("(?i)<a.*?>(.*?)</a>");
@@ -216,7 +216,7 @@ public class EdocIndexMetadataFetcherTool {
         }
       }
       // Bugfix: Institut
-      final Pattern p3 = Pattern.compile("(?i)<TD class=\"frontdoor\" valign=\"top\"><B>Institut:</B></TD>.*?<TD class=\"frontdoor\" valign=\"top\">(.*?)</TD><");
+      final Pattern p3 = Pattern.compile("(?i)<TD class=\"frontdoor\" valign=\"top\"><B>Institut {0,1}1{0,1}:</B></TD>.*?<TD class=\"frontdoor\" valign=\"top\">(.*?)</TD><");
       for (final Matcher m = p3.matcher(line); m.find();) {
         mapInstitut(mdRecord, eDocMapper, m.group(1));
       }
