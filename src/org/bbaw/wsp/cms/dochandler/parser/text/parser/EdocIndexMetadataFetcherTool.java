@@ -171,7 +171,7 @@ public class EdocIndexMetadataFetcherTool {
         }
       }
 
-      final Pattern p2 = Pattern.compile("(?i)<TD class=\"frontdoor\" valign=\"top\"><B>(.*?)</B></TD>.*?<TD class=\"frontdoor\" valign=\"top\">(.*?)</TD><");
+      final Pattern p2 = Pattern.compile("(?i)<TD class=\"frontdoor\" valign=\"top\"><B>(.*?)</B>.*?</TD>.*?<TD class=\"frontdoor\" valign=\"top\">(.*?)</TD>.*?<");
       for (final Matcher m = p2.matcher(line); m.find();) {
         final String key = m.group(1);
         String value = m.group(2).trim();
@@ -181,7 +181,7 @@ public class EdocIndexMetadataFetcherTool {
         }
         if (key.contains("pdf-Format")) {
           final Pattern pLink = Pattern.compile("(?i)<a href=\"(.*?)(\".*?)\">.*?</a>");
-          final Matcher mLink = pLink.matcher(key);
+          final Matcher mLink = pLink.matcher(value);
           mLink.find();
           mdRecord.setRealDocUrl(mLink.group(1));
         } else if (key.contains("SWD-Schlagwörter")) { // only german subjects
@@ -202,7 +202,7 @@ public class EdocIndexMetadataFetcherTool {
           mdRecord.setPublishingDate(cal.getTime());
         } else if (key.contains("ISBN")) {
           mdRecord.setIsbn(value);
-        } else if (key.contains("Institut") && !key.contains("Sonstige beteiligte Institution") && !key.contains("Institut 2")) { // multi values possible
+        } else if ((key.equals("Institut:") || key.equals("Institut 1:") || key.equals("Institut 2:")) && ! key.contains("Sonstige beteiligte Institution")) { // multi values possible
           mapInstitut(mdRecord, eDocMapper, value);
         } else if (key.contains("Collection")) { // multi values possible
           final Pattern pColl = Pattern.compile("(?i)<a.*?>(.*?)</a>");
@@ -215,12 +215,6 @@ public class EdocIndexMetadataFetcherTool {
           mdRecord.setDescription(value);
         }
       }
-      // Bugfix: Institut
-      final Pattern p3 = Pattern.compile("(?i)<TD class=\"frontdoor\" valign=\"top\"><B>Institut {0,1}1{0,1}:</B></TD>.*?<TD class=\"frontdoor\" valign=\"top\">(.*?)</TD><");
-      for (final Matcher m = p3.matcher(line); m.find();) {
-        mapInstitut(mdRecord, eDocMapper, m.group(1));
-      }
-
       in.close();
       return mdRecord;
     } catch (final IOException e) {
@@ -245,6 +239,8 @@ public class EdocIndexMetadataFetcherTool {
       final String newPublisher = concatenateValues(mdRecord.getPublisher(), newValues.getInstitut(), DEFAULT_SEPARATOR);
       mdRecord.setPublisher(newPublisher);
       if (mdRecord.getCollectionNames() == null && newValues.getConfigId() != null) {
+        mdRecord.setCollectionNames(newValues.getConfigId());
+      } else if (mdRecord.getCollectionNames() != null && newValues.getConfigId() != null && mdRecord.getCollectionNames().contains("akademiepublikation") && ! newValues.getConfigId().contains("akademiepublikation")) {
         mdRecord.setCollectionNames(newValues.getConfigId());
       }
     } else if (institutValue != null) { // no mapping values retrieved -> so set the unmapped publisher
