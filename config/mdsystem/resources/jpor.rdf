@@ -10,4 +10,38 @@
    xmlns:gnd="http://d-nb.info/standards/elementset/gnd#" 
    xmlns:ore="http://www.openarchives.org/ore/terms/" 
 >
+
+
+<rdf:Description rdf:about="http://jean-paul.bbaw.de/online-register-des-jean-paul-briefwechsels">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ElitenIntegration"/>
+  <dc:identifier rdf:resource="http://jean-paul.bbaw.de/online-register-des-jean-paul-briefwechsels"/>
+</rdf:Description>
+
+<!-- DB -->
+<rdf:Description rdf:about="http://telota.bbaw.de/jeanpaul/jp_personen.php">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ElitenIntegration"/>
+  <dc:identifier rdf:resource="http://telota.bbaw.de/jeanpaul/jp_personen.php"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://telota.bbaw.de/jeanpaul/jp_werke.php">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ElitenIntegration"/>
+  <dc:identifier rdf:resource="http://telota.bbaw.de/jeanpaul/jp_werke.php"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://telota.bbaw.de/jeanpaul/jp_jpwerke.php">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ElitenIntegration"/>
+  <dc:identifier rdf:resource="http://telota.bbaw.de/jeanpaul/jp_jpwerke.php"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://telota.bbaw.de/jeanpaul/jp_orte.php">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ElitenIntegration"/>
+  <dc:identifier rdf:resource="http://telota.bbaw.de/jeanpaul/jp_orte.php"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://telota.bbaw.de/jeanpaul/jp_impressum.html">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ElitenIntegration"/>
+  <dc:identifier rdf:resource="http://telota.bbaw.de/jeanpaul/jp_impressum.html"/>
+</rdf:Description>
 </rdf:RDF>
