@@ -20,4 +20,9 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionBerlin"/>
   <dc:identifier rdf:resource="http://www.leibniz-edition.de"/>
 </rdf:Description>
+<rdf:Description rdf:about="http://leibniz-berlin.bbaw.de/bilder/2013-10-23-leibniz8-2-gesamt.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionBerlin/Baende"/>
+  <dc:identifier rdf:resource="http://leibniz-berlin.bbaw.de/bilder/2013-10-23-leibniz8-2-gesamt.pdf"/>
+</rdf:Description>
 </rdf:RDF>
