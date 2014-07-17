@@ -191,20 +191,12 @@ Das modulartig angelegte Vorhaben beginnt mit einer Geschichte des preußischen 
 		<gnd:relatedCorporateBody rdf:resource="http://www.jean-paul-portal.uni-wuerzburg.de/aktuelle_editionen/nachlass_einfaelle_bausteine_erfindungen/"/>
 		<foaf:status rdf:datatype="http://www.w3.org/2001/XMLSchema#string">aktiv</foaf:status>
 		<gnd:relatedCorporateBody rdf:resource="http://www.dla-marbach.de/index.php?id=57927#Berend,%20Eduard"/>
-		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Bernauer"/>
-	</rdf:Description>
-	<rdf:Description rdf:about="http://wsp.normdata.rdf/JeanPaul/Editionsbeispiel">
-    <dc:language>ger</dc:language>
-    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
-    <foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">jped</foaf:nick>
-		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Jean Paul Edition: Editionsbeispiel</foaf:name>
-		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JeanPaul" />	
-		<foaf:homepage rdf:resource="http://www.bbaw.de/forschung/jean_paul" />
+		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Bernauer"/>	
 	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/JeanPaul/Onlineregister">
-    <dc:language>ger</dc:language>
-    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
-    <foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">jpor</foaf:nick>
+    	<dc:language>ger</dc:language>
+    	<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
+    	<foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">jpor</foaf:nick>
 		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Jean Paul Edition: Online-Register des Jean Paul Briefwechsels</foaf:name>
 		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JeanPaul" />	
 		<foaf:homepage rdf:resource="http://www.bbaw.de/forschung/jean_paul" />
