@@ -60,4 +60,196 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Oekosystemleistungen"/>
   <dc:identifier rdf:resource="http://www.oekosystemleistungen.de/dateien/GAIA_4_2010_Schaich.pdf"/>
 </rdf:Description>
+
+<!--   WEB   -->
+<rdf:Description rdf:about="http://www.bbaw.de/forschung/oekosystemleistungen/projektdarstellung">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Oekosystemleistungen"/>
+  <dc:identifier rdf:resource="http://www.bbaw.de/forschung/oekosystemleistungen/projektdarstellung"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.bbaw.de/forschung/oekosystemleistungen/mitarbeiter">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Oekosystemleistungen"/>
+  <dc:identifier rdf:resource="http://www.bbaw.de/forschung/oekosystemleistungen/mitarbeiter"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.oekosystemleistungen.de/projekt">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Oekosystemleistungen"/>
+  <dc:identifier rdf:resource="http://www.oekosystemleistungen.de/projekt"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.oekosystemleistungen.de/projekt/projektziele">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Oekosystemleistungen"/>
+  <dc:identifier rdf:resource="http://www.oekosystemleistungen.de/projekt/projektziele"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.oekosystemleistungen.de/projekt/untersuchungsgebiete">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Oekosystemleistungen"/>
+  <dc:identifier rdf:resource="http://www.oekosystemleistungen.de/projekt/untersuchungsgebiete"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.oekosystemleistungen.de/projekt/ergebnisse">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Oekosystemleistungen"/>
+  <dc:identifier rdf:resource="http://www.oekosystemleistungen.de/projekt/ergebnisse"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.oekosystemleistungen.de/dateien/ergebnisbroschuere">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Oekosystemleistungen"/>
+  <dc:identifier rdf:resource="http://www.oekosystemleistungen.de/dateien/ergebnisbroschuere"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.oekosystemleistungen.de/teilprojekte">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Oekosystemleistungen"/>
+  <dc:identifier rdf:resource="http://www.oekosystemleistungen.de/teilprojekte"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.oekosystemleistungen.de/teilprojekte/teilprojekt-1.1">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Oekosystemleistungen"/>
+  <dc:identifier rdf:resource="http://www.oekosystemleistungen.de/teilprojekte/teilprojekt-1.1"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.oekosystemleistungen.de/teilprojekte/teilprojekt-1.2">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Oekosystemleistungen"/>
+  <dc:identifier rdf:resource="http://www.oekosystemleistungen.de/teilprojekte/teilprojekt-1.2"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.oekosystemleistungen.de/teilprojekte/teilprojekt-2.1">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Oekosystemleistungen"/>
+  <dc:identifier rdf:resource="http://www.oekosystemleistungen.de/teilprojekte/teilprojekt-2.1"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.oekosystemleistungen.de/teilprojekte/teilprojekt-2.2">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Oekosystemleistungen"/>
+  <dc:identifier rdf:resource="http://www.oekosystemleistungen.de/teilprojekte/teilprojekt-2.2"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.oekosystemleistungen.de/teilprojekte/teilprojekt-2.3">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Oekosystemleistungen"/>
+  <dc:identifier rdf:resource="http://www.oekosystemleistungen.de/teilprojekte/teilprojekt-2.3"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.oekosystemleistungen.de/teilprojekte/teilprojekt-3.1">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Oekosystemleistungen"/>
+  <dc:identifier rdf:resource="http://www.oekosystemleistungen.de/teilprojekte/teilprojekt-3.1"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.oekosystemleistungen.de/teilprojekte/teilprojekt-3.2">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Oekosystemleistungen"/>
+  <dc:identifier rdf:resource="http://www.oekosystemleistungen.de/teilprojekte/teilprojekt-3.2"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.oekosystemleistungen.de/teilprojekte/querschnittsprojekt-1">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Oekosystemleistungen"/>
+  <dc:identifier rdf:resource="http://www.oekosystemleistungen.de/teilprojekte/querschnittsprojekt-1"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.oekosystemleistungen.de/teilprojekte/querschnittsprojekt-2">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Oekosystemleistungen"/>
+  <dc:identifier rdf:resource="http://www.oekosystemleistungen.de/teilprojekte/querschnittsprojekt-2"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.oekosystemleistungen.de/team">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Oekosystemleistungen"/>
+  <dc:identifier rdf:resource="http://www.oekosystemleistungen.de/team"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.oekosystemleistungen.de/partner">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Oekosystemleistungen"/>
+  <dc:identifier rdf:resource="http://www.oekosystemleistungen.de/partner"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.oekosystemleistungen.de/publikationen">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Oekosystemleistungen"/>
+  <dc:identifier rdf:resource="http://www.oekosystemleistungen.de/publikationen"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.oekosystemleistungen.de/links">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Oekosystemleistungen"/>
+  <dc:identifier rdf:resource="http://www.oekosystemleistungen.de/links"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.ecosystemservices.de/">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Oekosystemleistungen"/>
+  <dc:identifier rdf:resource="http://www.ecosystemservices.de/"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.ecosystemservices.de/project">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Oekosystemleistungen"/>
+  <dc:identifier rdf:resource="http://www.ecosystemservices.de/project"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.ecosystemservices.de/subprojects">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Oekosystemleistungen"/>
+  <dc:identifier rdf:resource="http://www.ecosystemservices.de/subprojects"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.ecosystemservices.de/subprojects/subproject-1.1">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Oekosystemleistungen"/>
+  <dc:identifier rdf:resource="http://www.ecosystemservices.de/subprojects/subproject-1.1"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.ecosystemservices.de/subprojects/subproject-1.2">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Oekosystemleistungen"/>
+  <dc:identifier rdf:resource="http://www.ecosystemservices.de/subprojects/subproject-1.2"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.ecosystemservices.de/subprojects/subproject-2.1">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Oekosystemleistungen"/>
+  <dc:identifier rdf:resource="http://www.ecosystemservices.de/subprojects/subproject-2.1"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.ecosystemservices.de/subprojects/subproject-2.2">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Oekosystemleistungen"/>
+  <dc:identifier rdf:resource="http://www.ecosystemservices.de/subprojects/subproject-2.2"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.ecosystemservices.de/subprojects/subproject-2.3">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Oekosystemleistungen"/>
+  <dc:identifier rdf:resource="http://www.ecosystemservices.de/subprojects/subproject-2.3"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.ecosystemservices.de/subprojects/subproject-3.1">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Oekosystemleistungen"/>
+  <dc:identifier rdf:resource="http://www.ecosystemservices.de/subprojects/subproject-3.1"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.ecosystemservices.de/subprojects/subproject-3.2">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Oekosystemleistungen"/>
+  <dc:identifier rdf:resource="http://www.ecosystemservices.de/subprojects/subproject-3.2"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.ecosystemservices.de/subprojects/cross-sectional-project-1">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Oekosystemleistungen"/>
+  <dc:identifier rdf:resource="http://www.ecosystemservices.de/subprojects/cross-sectional-project-1"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.ecosystemservices.de/subprojects/cross-sectional-project-2">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Oekosystemleistungen"/>
+  <dc:identifier rdf:resource="http://www.ecosystemservices.de/subprojects/cross-sectional-project-2"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.ecosystemservices.de/team">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Oekosystemleistungen"/>
+  <dc:identifier rdf:resource="http://www.ecosystemservices.de/team"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.ecosystemservices.de/partner">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Oekosystemleistungen"/>
+  <dc:identifier rdf:resource="http://www.ecosystemservices.de/partner"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.ecosystemservices.de/publications">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Oekosystemleistungen"/>
+  <dc:identifier rdf:resource="http://www.ecosystemservices.de/publications"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.ecosystemservices.de/archive">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Oekosystemleistungen"/>
+  <dc:identifier rdf:resource="http://www.ecosystemservices.de/archive"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.ecosystemservices.de/links">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Oekosystemleistungen"/>
+  <dc:identifier rdf:resource="http://www.ecosystemservices.de/links"/>
+</rdf:Description>
 </rdf:RDF>
