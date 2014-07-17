@@ -866,14 +866,6 @@ Damit sollen gemeinsame historische Vermächtnisse sowie die Mobilität von Pers
 		<dc:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Vorhaben</dc:description>
 		<gnd:contributingPerson rdf:resource="http://wsp.normdata.rdf/LeibnizGottfriedWilhelm"/>
 	</rdf:Description>
-	<rdf:Description rdf:about="http://wsp.normdata.rdf/LeibnizEditionBerlin/Baende">
-    <dc:language>ger</dc:language>
-    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
-    <foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">leibberbaende</foaf:nick>
-		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Leibniz-Edition Berlin: Bände</foaf:name>
-    <foaf:homepage rdf:resource="http://leibniz-berlin.bbaw.de"/>
-		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionBerlin" />			
-	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/LeibnizEditionBerlin/Sachregister">
     <dc:language>ger</dc:language>
     <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
