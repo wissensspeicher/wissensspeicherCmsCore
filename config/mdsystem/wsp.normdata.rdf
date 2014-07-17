@@ -5802,16 +5802,6 @@ Mit der im Juni 2000 durchgeführten internationalen Konferenz »Die Arbeit der 
 		<gnd:relatedCorporateBody rdf:resource="http://bibliothek.bbaw.de/"/>
 		<gnd:contributingPerson rdf:resource="http://wsp.normdata.rdf/SchlegelFriedrich"/>
 	</rdf:Description>
-	<rdf:Description rdf:about="http://wsp.normdata.rdf/GDK">		
-    <dc:language>ger</dc:language>
-    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
-    <foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">gdk</foaf:nick>
-		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Gesamtbestand des Kunstbesitzes</foaf:name>
-		<foaf:homepage rdf:resource="http://archiv.bbaw.de/archiv/archivbestaende/abteilung-sammlungen/gesamtbestand-des-kunstbesitzes"/>
-		<dc:coverage rdf:resource="http://wsp.normdata.rdf/Neuzeit"/>
-		<gnd:relatedCorporateBody rdf:resource="http://bibliothek.bbaw.de/"/>
-		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Knobloch"/>
-	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/GlossariumGraecoArabicum">		
     <dc:language>ger</dc:language>
     <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
