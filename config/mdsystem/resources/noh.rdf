@@ -15,4 +15,14 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NormativitätObjektivitätHandlung"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/normativitaet"/>
 </rdf:Description>
+<rdf:Description rdf:about="http://www.bbaw.de/forschung/normativitaet/projektdarstellung">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NormativitätObjektivitätHandlung"/>
+  <dc:identifier rdf:resource="http://www.bbaw.de/forschung/normativitaet/projektdarstellung"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.bbaw.de/forschung/normativitaet/mitarbeiter">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NormativitätObjektivitätHandlung"/>
+  <dc:identifier rdf:resource="http://www.bbaw.de/forschung/normativitaet/mitarbeiter"/>
+</rdf:Description>
 </rdf:RDF>

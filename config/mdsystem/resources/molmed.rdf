@@ -15,4 +15,9 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ForschungsschwerpunkteMolekulareMedizin"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/molmed"/>
 </rdf:Description>
+<rdf:Description rdf:about="http://www.bbaw.de/forschung/molmed/projektdarstellung">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ForschungsschwerpunkteMolekulareMedizin"/>
+  <dc:identifier rdf:resource="http://www.bbaw.de/forschung/molmed/projektdarstellung"/>
+</rdf:Description>
 </rdf:RDF>
