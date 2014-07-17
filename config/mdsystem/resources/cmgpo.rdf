@@ -15,4 +15,25 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Probeedition"/>
   <dc:identifier rdf:resource="http://cmg.bbaw.de/online-publikationen/probeedition-online"/>
 </rdf:Description>
+<rdf:Description rdf:about="http://telota.bbaw.de/cmg">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Probeedition"/>
+  <dc:identifier rdf:resource="http://telota.bbaw.de/cmg"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://telota.bbaw.de:8088/exist/rest/db/cmg/TextOxy.xml">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Probeedition"/>
+  <dc:identifier rdf:resource="http://telota.bbaw.de:8088/exist/rest/db/cmg/TextOxy.xml">http://telota.bbaw.de/cmg/</dc:identifier>
+  <dc:creator>Brockmann, Christian</dc:creator>
+  <dc:title>Galen. Kommentar zu Hippokrates, Über die Gelenke. Die Einleitung und die ersten sechs Kommentarabschnitte von Buch I</dc:title>
+  <dc:language>grc</dc:language>
+</rdf:Description>
+<rdf:Description rdf:about="http://telota.bbaw.de:8088/exist/rest/db/cmg/TranslationOxy.xml">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Probeedition"/>
+  <dc:identifier rdf:resource="http://telota.bbaw.de:8088/exist/rest/db/cmg/TranslationOxy.xml">http://telota.bbaw.de/cmg/</dc:identifier>
+  <dc:creator>Brockmann, Christian</dc:creator>
+  <dc:title>Galen. Kommentar zu Hippokrates, Über die Gelenke. Die Einleitung und die ersten sechs Kommentarabschnitte von Buch I</dc:title>
+  <dc:language>ger</dc:language>
+</rdf:Description>
 </rdf:RDF>
