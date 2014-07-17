@@ -7,6 +7,9 @@
     <url>
       <webBaseUrl>http://cmg.bbaw.de/online-publikationen/probeedition-online</webBaseUrl>
       <dataUrl>http://cmg.bbaw.de/online-publikationen/probeedition-online</dataUrl>
+      <dataUrl>http://telota.bbaw.de/cmg</dataUrl>
+      <dataUrl>http://telota.bbaw.de:8088/exist/rest/db/cmg/TextOxy.xml</dataUrl>
+      <dataUrl>http://telota.bbaw.de:8088/exist/rest/db/cmg/TranslationOxy.xml</dataUrl>
     </url>
     <languages>ger</languages>
     <mainLanguage>ger</mainLanguage>
