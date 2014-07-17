@@ -165,7 +165,7 @@ Das modulartig angelegte Vorhaben beginnt mit einer Geschichte des preußischen 
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/JeanPaul">
 	  <dc:language>ger</dc:language>
     <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
-    <foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">jp</foaf:nick>
+    <foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">jped</foaf:nick>
 		<gnd:relatedCorporateBody rdf:resource="http://www.jean-paul-portal.uni-wuerzburg.de/neue_werkausgabe/vorschule_der_aesthetik/"/>
 		<foaf:fundedBy rdf:resource="http://www.fritz-thyssen-stiftung.de"/>
 		<gnd:contributingCorporateBody rdf:resource="http://www.uni-bayreuth.de"/>
