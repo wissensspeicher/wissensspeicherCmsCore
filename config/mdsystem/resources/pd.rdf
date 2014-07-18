@@ -15,4 +15,59 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/PsychologischesDenkenPraxis"/>
   <dc:identifier rdf:resource="http://psychologischesdenken.bbaw.de"/>
 </rdf:Description>
+<rdf:Description rdf:about="http://psychologischesdenken.bbaw.de/Ueberblick">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/PsychologischesDenkenPraxis"/>
+  <dc:identifier rdf:resource="http://psychologischesdenken.bbaw.de/Ueberblick"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.bbaw.de/forschung/psychologie/projektdarstellung">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/PsychologischesDenkenPraxis"/>
+  <dc:identifier rdf:resource="http://www.bbaw.de/forschung/psychologie/projektdarstellung"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://psychologischesdenken.bbaw.de/arbeitsberichte">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/PsychologischesDenkenPraxis"/>
+  <dc:identifier rdf:resource="http://psychologischesdenken.bbaw.de/arbeitsberichte"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://psychologischesdenken.bbaw.de/Mitglieder_Mitarbeiter">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/PsychologischesDenkenPraxis"/>
+  <dc:identifier rdf:resource="http://psychologischesdenken.bbaw.de/Mitglieder_Mitarbeiter"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://psychologischesdenken.bbaw.de/Publikationen">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/PsychologischesDenkenPraxis"/>
+  <dc:identifier rdf:resource="http://psychologischesdenken.bbaw.de/Publikationen"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://psychologischesdenken.bbaw.de/Blanko.2005-01-20.2087945577">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/PsychologischesDenkenPraxis"/>
+  <dc:identifier rdf:resource="http://psychologischesdenken.bbaw.de/Blanko.2005-01-20.2087945577"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://psychologischesdenken.bbaw.de/Blanko.2005-01-20.2204412638">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/PsychologischesDenkenPraxis"/>
+  <dc:identifier rdf:resource="http://psychologischesdenken.bbaw.de/Blanko.2005-01-20.2204412638"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://psychologischesdenken.bbaw.de/blanko.2006-08-26.2237214343">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/PsychologischesDenkenPraxis"/>
+  <dc:identifier rdf:resource="http://psychologischesdenken.bbaw.de/blanko.2006-08-26.2237214343"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://psychologischesdenken.bbaw.de/Blanko.2005-01-20.2728954824">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/PsychologischesDenkenPraxis"/>
+  <dc:identifier rdf:resource="http://psychologischesdenken.bbaw.de/Blanko.2005-01-20.2728954824"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://psychologischesdenken.bbaw.de/english/">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/PsychologischesDenkenPraxis"/>
+  <dc:identifier rdf:resource="http://psychologischesdenken.bbaw.de/english/"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://psychologischesdenken.bbaw.de/english/Ueberblick">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/PsychologischesDenkenPraxis"/>
+  <dc:identifier rdf:resource="http://psychologischesdenken.bbaw.de/english/Ueberblick"/>
+</rdf:Description>
 </rdf:RDF>
