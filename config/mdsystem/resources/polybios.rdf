@@ -15,4 +15,39 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/PolybiosLexikon"/>
   <dc:identifier rdf:resource="http://polybios.bbaw.de"/>
 </rdf:Description>
+<rdf:Description rdf:about="http://polybios.bbaw.de/Ueberblick">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/PolybiosLexikon"/>
+  <dc:identifier rdf:resource="http://polybios.bbaw.de/Ueberblick"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://polybios.bbaw.de/Mitglieder_Mitarbeiter">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/PolybiosLexikon"/>
+  <dc:identifier rdf:resource="http://polybios.bbaw.de/Mitglieder_Mitarbeiter"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://polybios.bbaw.de/Publikationen">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/PolybiosLexikon"/>
+  <dc:identifier rdf:resource="http://polybios.bbaw.de/Publikationen"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://polybios.bbaw.de/blanko.2005-02-22.5057948911">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/PolybiosLexikon"/>
+  <dc:identifier rdf:resource="http://polybios.bbaw.de/blanko.2005-02-22.5057948911"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://polybios.bbaw.de/blanko.2005-02-22.5975538699">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/PolybiosLexikon"/>
+  <dc:identifier rdf:resource="http://polybios.bbaw.de/blanko.2005-02-22.5975538699"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.bbaw.de/forschung/polybios/uebersicht">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/PolybiosLexikon"/>
+  <dc:identifier rdf:resource="http://www.bbaw.de/forschung/polybios/uebersicht"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.bbaw.de/forschung/polybios/projektdarstellung">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/PolybiosLexikon"/>
+  <dc:identifier rdf:resource="http://www.bbaw.de/forschung/polybios/projektdarstellung"/>
+</rdf:Description>
 </rdf:RDF>
