@@ -15,4 +15,9 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/PrioritaetenEnergieforschung"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/energie/uebersicht"/>
 </rdf:Description>
+<rdf:Description rdf:about="http://www.bbaw.de/forschung/energie/mitarbeiter">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/PrioritaetenEnergieforschung"/>
+  <dc:identifier rdf:resource="http://www.bbaw.de/forschung/energie/mitarbeiter"/>
+</rdf:Description>
 </rdf:RDF>
