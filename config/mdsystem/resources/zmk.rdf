@@ -15,4 +15,15 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ZukunftMitKindern"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/Fertilitaet"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://www.bbaw.de/forschung/Fertilitaet/mitarbeiter">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ZukunftMitKindern"/>
+    <dc:identifier rdf:resource="http://www.bbaw.de/forschung/Fertilitaet/mitarbeiter"/>
+  </rdf:Description>
+  <!-- eigentliche Projektseite -->
+  <rdf:Description rdf:about="http://www.zukunft-mit-kindern.eu/">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ZukunftMitKindern"/>
+    <dc:identifier rdf:resource="http://www.zukunft-mit-kindern.eu/"/>
+  </rdf:Description>
 </rdf:RDF>

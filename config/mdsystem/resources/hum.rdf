@@ -15,4 +15,9 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Humanprojekt"/>
   <dc:identifier rdf:resource="http://humanprojekt.bbaw.de/"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://humanprojekt.bbaw.de/Mitglieder_Mitarbeiter">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Humanprojekt"/>
+    <dc:identifier rdf:resource="http://humanprojekt.bbaw.de/Mitglieder_Mitarbeiter"/>
+  </rdf:Description>
 </rdf:RDF>

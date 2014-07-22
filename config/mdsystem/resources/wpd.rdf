@@ -10,9 +10,14 @@
    xmlns:gnd="http://d-nb.info/standards/elementset/gnd#" 
    xmlns:ore="http://www.openarchives.org/ore/terms/" 
 >
-<rdf:Description rdf:about="http://politikberatung.bbaw.de/">
+  <rdf:Description rdf:about="http://politikberatung.bbaw.de/Mitglieder_Mitarbeiter">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/WissenschaftlichePolitikberatung"/>
-  <dc:identifier rdf:resource="http://politikberatung.bbaw.de/"/>
+    <dc:identifier rdf:resource="http://politikberatung.bbaw.de/Mitglieder_Mitarbeiter"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://politikberatung.bbaw.de/">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/WissenschaftlichePolitikberatung"/>
+    <dc:identifier rdf:resource="http://politikberatung.bbaw.de/"/>
+  </rdf:Description>
 </rdf:RDF>

@@ -10,9 +10,21 @@
    xmlns:gnd="http://d-nb.info/standards/elementset/gnd#" 
    xmlns:ore="http://www.openarchives.org/ore/terms/" 
 >
-<rdf:Description rdf:about="http://www.kyoto-project.eu">
+  <rdf:Description rdf:about="http://www.bbaw.de/forschung/kyoto">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Kyoto"/>
-  <dc:identifier rdf:resource="http://www.kyoto-project.eu"/>
+  <dc:identifier rdf:resource="http://www.bbaw.de/forschung/kyoto"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://www.bbaw.de/forschung/kyoto/mitarbeiter">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Kyoto"/>
+    <dc:identifier rdf:resource="http://www.bbaw.de/forschung/kyoto/mitarbeiter"/>
+  </rdf:Description>
+  
+  <!-- externe Projektseite -->
+  <rdf:Description rdf:about="http://kyoto-project.eu/xmlgroup.iit.cnr.it/kyoto/index.html">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Kyoto"/>
+    <dc:identifier rdf:resource="http://kyoto-project.eu/xmlgroup.iit.cnr.it/kyoto/index.html"/>
+    </rdf:Description>
 </rdf:RDF>

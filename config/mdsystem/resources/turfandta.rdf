@@ -12,7 +12,104 @@
 >
 <rdf:Description rdf:about="http://turfan.bbaw.de/dta-i-en">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Turfan/DigitalesArchiv"/>
+  <dcterms:isPartOf rdf:resource="http://turfan.bbaw.de/dta-i"/>
   <dc:identifier rdf:resource="http://turfan.bbaw.de/dta-i-en"/>
+  <dc:language>eng</dc:language>
 </rdf:Description>
+  <rdf:Description rdf:about="http://turfan.bbaw.de/dta-i">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://turfan.bbaw.de/dta-i"/>
+    <dc:identifier rdf:resource="http://turfan.bbaw.de/dta-i"/>
+    <dc:language>ger</dc:language>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://turfan.bbaw.de/dta/index.html">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://turfan.bbaw.de/dta-i"/>
+    <dc:identifier rdf:resource="http://turfan.bbaw.de/dta/index.html"/>
+    <dc:title>Index</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://turfan.bbaw.de/dta/bi/dta_bi_index.htm">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://turfan.bbaw.de/dta-i"/>
+    <dc:identifier rdf:resource="http://turfan.bbaw.de/dta/bi/dta_bi_index.htm"/>
+    <dc:title>Mitteliranische Texte in Br&#257;hm&#299;-Schrift</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://turfan.bbaw.de/dta/bs/dta_bs_index.htm">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://turfan.bbaw.de/dta-i"/>
+    <dc:identifier rdf:resource="http://turfan.bbaw.de/dta/bs/dta_bs_index.htm"/>
+    <dc:title>Soghdische Text in Br&#257;hm&#299;-Schrift</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://turfan.bbaw.de/dta/ch_u/dta_chu_index.html">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://turfan.bbaw.de/dta-i"/>
+    <dc:identifier rdf:resource="http://turfan.bbaw.de/dta/ch_u/dta_chu_index.html"/>
+    <dc:title>Chinesisch-uigurische Texte</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://turfan.bbaw.de/dta/h/dta_h_index.htm">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://turfan.bbaw.de/dta-i"/>
+    <dc:identifier rdf:resource="http://turfan.bbaw.de/dta/h/dta_h_index.htm"/>
+    <dc:title>Baktrische Texte in hephthalitischer Schrift</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://turfan.bbaw.de/dta/ks/dta_ks_index.htm">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://turfan.bbaw.de/dta-i"/>
+    <dc:identifier rdf:resource="http://turfan.bbaw.de/dta/ks/dta_ks_index.htm"/>
+    <dc:title>Khotansakische Texte</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://turfan.bbaw.de/dta/m/dta_m_index.htm">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://turfan.bbaw.de/dta-i"/>
+    <dc:identifier rdf:resource="http://turfan.bbaw.de/dta/m/dta_m_index.htm"/>
+    <dc:title>Mitteliranische Texte in manichäischer Schrift</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://turfan.bbaw.de/dta/mainz/dta_mainz_index.htm">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://turfan.bbaw.de/dta-i"/>
+    <dc:identifier rdf:resource="http://turfan.bbaw.de/dta/mainz/dta_mainz_index.htm"/>
+    <dc:title>Mainz-Signaturen</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://turfan.bbaw.de/dta/monght/dta_monght_index.htm">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://turfan.bbaw.de/dta-i"/>
+    <dc:identifier rdf:resource="http://turfan.bbaw.de/dta/monght/dta_monght_index.htm"/>
+    <dc:title>Mongolische Texte</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://turfan.bbaw.de/dta/n/dta_n_index.html">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://turfan.bbaw.de/dta-i"/>
+    <dc:identifier rdf:resource="http://turfan.bbaw.de/dta/n/dta_n_index.html"/>
+    <dc:title>Christlich-soghdische Texte in nestorianischer Schrift</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://turfan.bbaw.de/dta/np/dta_np_index.htm">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://turfan.bbaw.de/dta-i"/>
+    <dc:identifier rdf:resource="http://turfan.bbaw.de/dta/np/dta_np_index.htm"/>
+    <dc:title>Neupersischer Text in arabischer Schrift</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://turfan.bbaw.de/dta/ps/dta_ps_index.htm">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://turfan.bbaw.de/dta-i"/>
+    <dc:identifier rdf:resource="http://turfan.bbaw.de/dta/ps/dta_ps_index.htm"/>
+    <dc:title>Mittelpersischer Psalter</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://turfan.bbaw.de/dta/so/dta_so_index.htm">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://turfan.bbaw.de/dta-i"/>
+    <dc:identifier rdf:resource="http://turfan.bbaw.de/dta/so/dta_so_index.htm"/>
+    <dc:title>Mitteliranische Texte in Soghdischer Schrift / Chinesisch-Soghdische Texte</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://turfan.bbaw.de/dta/ts/dta_ts_index.htm">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://turfan.bbaw.de/dta-i"/>
+    <dc:identifier rdf:resource="http://turfan.bbaw.de/dta/ts/dta_ts_index.htm"/>
+    <dc:title>Tumshuksakische Texte</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://turfan.bbaw.de/dta/u/dta_u_index.htm">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://turfan.bbaw.de/dta-i"/>
+    <dc:identifier rdf:resource="http://turfan.bbaw.de/dta/u/dta_u_index.htm"/>
+    <dc:title>Uigurische Texte</dc:title>
+  </rdf:Description>
 </rdf:RDF>

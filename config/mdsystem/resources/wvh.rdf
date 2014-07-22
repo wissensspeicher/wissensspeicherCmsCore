@@ -24,5 +24,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/WilhelmVonHumboldt"/>
   <dc:identifier rdf:resource="http://wvh.bbaw.de/bilder/gkatlv5r.pdf"/>
+  <dc:title>Bibliographie der neueren Sekundärliteratur zu Wilhelm von Humboldt</dc:title>
+  <dc:date>2010</dc:date>
 </rdf:Description>
 </rdf:RDF>

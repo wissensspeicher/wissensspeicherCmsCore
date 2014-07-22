@@ -15,4 +15,5 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/IdealeAkademie"/>
   <dc:identifier rdf:resource="http://idealeakademie.bbaw.de/"/>
 </rdf:Description>
+  
 </rdf:RDF>

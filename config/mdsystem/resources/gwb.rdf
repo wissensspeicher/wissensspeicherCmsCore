@@ -15,9 +15,10 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/GoetheWB"/>
   <dc:identifier rdf:resource="http://gwb.bbaw.de"/>
 </rdf:Description>
-<rdf:Description rdf:about="http://telota.bbaw.de/gwb">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/GoetheWB"/>
-  <dc:identifier rdf:resource="http://telota.bbaw.de/gwb"/>
-</rdf:Description>
+  <rdf:DescriptionDescription rdf:about="http://gwb.bbaw.de/mitarbeiter">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/GoetheWB"/>
+    <dc:identifier rdf:resource="http://gwb.bbaw.de/mitarbeiter"/>
+  </rdf:DescriptionDescription>
+
 </rdf:RDF>

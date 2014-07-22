@@ -15,4 +15,9 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Virtualitaet"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/virtualitaet"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://www.bbaw.de/forschung/virtualitaet/mitarbeiter">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Virtualitaet"/>
+    <dc:identifier rdf:resource="http://www.bbaw.de/forschung/virtualitaet/mitarbeiter"/>
+  </rdf:Description>
 </rdf:RDF>

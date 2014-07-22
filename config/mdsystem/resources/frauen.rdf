@@ -15,4 +15,9 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/FrauenInAkademieWissenschaft"/>
   <dc:identifier rdf:resource="http://frauenakademiewissenschaft.bbaw.de"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://frauenakademiewissenschaft.bbaw.de/Mitglieder_Mitarbeiter">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/FrauenInAkademieWissenschaft"/>
+    <dc:identifier rdf:resource="http://frauenakademiewissenschaft.bbaw.de/Mitglieder_Mitarbeiter"/>
+  </rdf:Description>
 </rdf:RDF>
