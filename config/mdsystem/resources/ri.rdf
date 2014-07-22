@@ -15,9 +15,15 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/RegestaImperii"/>
   <dc:identifier rdf:resource="http://ri.bbaw.de"/>
 </rdf:Description>
-<rdf:Description rdf:about="http://ri.bbaw.de/ueberblick">
+  <rdf:Description rdf:about="http://ri.bbaw.de/mitglieder-mitarbeiter">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/RegestaImperii"/>
-  <dc:identifier rdf:resource="http://ri.bbaw.de/ueberblick"/>
+    <dc:identifier rdf:resource="http://ri.bbaw.de/mitglieder-mitarbeiter"/>
 </rdf:Description>
+  <!-- externe Datenbank Mainz, in der Daten der BBAW enthalten sind  -->
+  <rdf:Description rdf:about="http://www.regesta-imperii.de">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/RegestaImperii"/>
+    <dc:identifier rdf:resource="http://www.regesta-imperii.de"/>
+  </rdf:Description>
 </rdf:RDF>

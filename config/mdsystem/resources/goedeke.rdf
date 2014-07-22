@@ -15,4 +15,10 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Goedeke"/>
   <dc:identifier rdf:resource="http://goedeke.bbaw.de"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://goedeke.bbaw.de">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Goedeke"/>
+    <dc:identifier rdf:resource="http://goedeke.bbaw.de/bilder/sd-keller-gottfried.pdf"/>
+    <dc:title>Probeartikel aus: Deutsches Schriftsteller-Lexikon 1830-1880. Band I-K. Hrsg. von der Berlin-Brandenburgischen Akademie der Wissenschaften durch Herbert Jacob.</dc:title>
+  </rdf:Description>
 </rdf:RDF>

@@ -15,4 +15,11 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Turfan/ManichaeanMiddlePersianTexts"/>
   <dc:identifier rdf:resource="http://turfan.bbaw.de/texte-en/mirtext"/>
 </rdf:Description>
+  <!-- The Dictionary of Manichaean Middle Persian and Parthian of the Manichaean Dictionary Project  -->
+  <rdf:Description rdf:about="http://turfan.bbaw.de/bilder/mirtext-2">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Turfan/ManichaeanMiddlePersianTexts"/>
+    <dc:identifier rdf:resource="http://turfan.bbaw.de/bilder/mirtext-2"/>
+    <dc:title>MIRTEXT - Published Manichaean Middle Persian and Parthian texts Purpose</dc:title>
+  </rdf:Description>
 </rdf:RDF>
