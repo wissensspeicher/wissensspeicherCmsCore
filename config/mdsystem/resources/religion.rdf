@@ -15,4 +15,29 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ReligionUndGlauben"/>
   <dc:identifier rdf:resource="http://religion.bbaw.de/"/>
 </rdf:Description>
+<rdf:Description rdf:about="http://www.bbaw.de/forschung/religion/projektdarstellung">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ReligionUndGlauben"/>
+  <dc:identifier rdf:resource="http://www.bbaw.de/forschung/religion/projektdarstellung"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.bbaw.de/forschung/religion/mitarbeiter">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ReligionUndGlauben"/>
+  <dc:identifier rdf:resource="http://www.bbaw.de/forschung/religion/mitarbeiter"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.bbaw.de/forschung/religion/uebersicht">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ReligionUndGlauben"/>
+  <dc:identifier rdf:resource="http://www.bbaw.de/forschung/religion/uebersicht"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://religion.bbaw.de/Mitglieder_Mitarbeiter">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ReligionUndGlauben"/>
+  <dc:identifier rdf:resource="http://religion.bbaw.de/Mitglieder_Mitarbeiter"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://religion.bbaw.de/Publikationen">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ReligionUndGlauben"/>
+  <dc:identifier rdf:resource="http://religion.bbaw.de/Publikationen"/>
+</rdf:Description>
 </rdf:RDF>
