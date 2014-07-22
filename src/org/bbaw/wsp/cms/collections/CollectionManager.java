@@ -8,6 +8,9 @@ import java.net.FileNameMap;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -245,6 +248,14 @@ public class CollectionManager {
             mdRecord.setCollectionNames(collectionId);
             mdRecord.setId(maxIdcounter); // collections wide id
             mdRecord = createMainFieldsMetadataRecord(mdRecord, collection);
+            // if it is a record: set lastModified to the date of the harvested dump file; if it is a normal web record: set it to now (harvested now)
+            Date lastModified = new Date();
+            if (mdRecord.isRecord()) {
+              String xmlDumpFileStr = rdfRessourcesFile.getPath().replaceAll("\\.rdf", ".xml");
+              File xmlDumpFile = new File(xmlDumpFileStr);
+              lastModified = new Date(xmlDumpFile.lastModified());
+            }
+            mdRecord.setLastModified(lastModified);
             // if it is an eXist directory then fetch all subUrls/mdRecords of that directory
             if (mdRecord.isEXistDir()) {
               String eXistUrl = mdRecord.getWebUri();
@@ -408,6 +419,9 @@ public class CollectionManager {
       String uri = null;
       String webUri = null;
       mdRecord.setId(maxIdcounter);
+      File edocDir = new File(Constants.getInstance().getExternalDocumentsDir() + "/edoc");
+      Date lastModified = new Date(edocDir.lastModified());
+      mdRecord.setLastModified(lastModified);
       EdocIndexMetadataFetcherTool.fetchHtmlDirectly(metadataUrl, mdRecord);
       if (mdRecord.getLanguage() != null) {
         String isoLang = Language.getInstance().getISO639Code(mdRecord.getLanguage());
