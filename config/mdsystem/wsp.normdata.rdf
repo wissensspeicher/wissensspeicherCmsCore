@@ -165,7 +165,7 @@ Das modulartig angelegte Vorhaben beginnt mit einer Geschichte des preußischen 
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/JeanPaul">
 	  <dc:language>ger</dc:language>
     <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
-    <foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">jp</foaf:nick>
+    <foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">jped</foaf:nick>
 		<gnd:relatedCorporateBody rdf:resource="http://www.jean-paul-portal.uni-wuerzburg.de/neue_werkausgabe/vorschule_der_aesthetik/"/>
 		<foaf:fundedBy rdf:resource="http://www.fritz-thyssen-stiftung.de"/>
 		<gnd:contributingCorporateBody rdf:resource="http://www.uni-bayreuth.de"/>
@@ -191,20 +191,12 @@ Das modulartig angelegte Vorhaben beginnt mit einer Geschichte des preußischen 
 		<gnd:relatedCorporateBody rdf:resource="http://www.jean-paul-portal.uni-wuerzburg.de/aktuelle_editionen/nachlass_einfaelle_bausteine_erfindungen/"/>
 		<foaf:status rdf:datatype="http://www.w3.org/2001/XMLSchema#string">aktiv</foaf:status>
 		<gnd:relatedCorporateBody rdf:resource="http://www.dla-marbach.de/index.php?id=57927#Berend,%20Eduard"/>
-		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Bernauer"/>
-	</rdf:Description>
-	<rdf:Description rdf:about="http://wsp.normdata.rdf/JeanPaul/Editionsbeispiel">
-    <dc:language>ger</dc:language>
-    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
-    <foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">jped</foaf:nick>
-		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Jean Paul Edition: Editionsbeispiel</foaf:name>
-		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JeanPaul" />	
-		<foaf:homepage rdf:resource="http://www.bbaw.de/forschung/jean_paul" />
+		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Bernauer"/>	
 	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/JeanPaul/Onlineregister">
-    <dc:language>ger</dc:language>
-    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
-    <foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">jpor</foaf:nick>
+    	<dc:language>ger</dc:language>
+    	<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
+    	<foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">jpor</foaf:nick>
 		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Jean Paul Edition: Online-Register des Jean Paul Briefwechsels</foaf:name>
 		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JeanPaul" />	
 		<foaf:homepage rdf:resource="http://www.bbaw.de/forschung/jean_paul" />
@@ -486,18 +478,39 @@ Ziel ist es, in einem „State of the art“-Bericht bisher erhobene Daten und v
 		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
 	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/ClarinD">
-    <dc:language>ger</dc:language>
-    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
-    <foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">clarin</foaf:nick>
+    	<dc:language>ger</dc:language>
+    	<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
+    	<foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">clarin</foaf:nick>
 		<gnd:definition>Expertise</gnd:definition>
+		<dc:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Drittmittelprojekt</dc:description>
 		<foaf:status rdf:datatype="http://www.w3.org/2001/XMLSchema#string">aktiv</foaf:status>
 		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">CLARIN-D</foaf:name>
 		<dcterms:abstract rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Linguistische Daten, Werkzeuge und Dienste sollen in einer integrierten, interoperablen und skalierbaren Infrastruktur für die Fachdisziplinen der Geistes- und Sozialwissenschaften bereitgestellt werden.</dcterms:abstract>
-		<dcterms:replaces rdf:resource="http://wsp.normdata.rdf/Clarin"/>
+		<dcterms:abstract rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Das Projekt D-SPIN schafft die Grundlagen für eine stabile und nachhaltige Infrastruktur von Sprachressourcen und Sprachtechnologien. Diese soll in erster Linie der empirischen geistes- und sozialwissenschaftlichen Forschung dienen.</dcterms:abstract>
 		<dcterms:valid rdf:datatype="http://purl.org/dc/terms/Period">start=2011-05-01; end=2014-04-30; name=Laufzeit; scheme=W3CDTF</dcterms:valid>
 		<gnd:topic rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Linguistik</gnd:topic>
 		<foaf:homepage rdf:resource="http://clarin.bbaw.de"/>
 		<foaf:mbox rdf:datatype="http://www.w3.org/2001/XMLSchema#string">clarin@bbaw.de</foaf:mbox>
+		<gnd:relatedCorporateBody rdf:resource="http://www.ims.uni-stuttgart.de/"/>
+		<gnd:relatedCorporateBody rdf:resource="http://www.ids-mannheim.de/"/>
+		<gnd:relatedCorporateBody rdf:resource="http://www.corpora.uni-hamburg.de/"/>
+		<gnd:relatedCorporateBody rdf:resource="http://www.phonetik.uni-muenchen.de/Bas/BasHomedeu.html"/>
+		<gnd:relatedCorporateBody rdf:resource="http://asv.informatik.uni-leipzig.de/"/>
+		<gnd:relatedCorporateBody rdf:resource="http://www.gwdg.de/index.php"/>
+		<gnd:relatedCorporateBody rdf:resource="http://fr46.uni-saarland.de/"/>
+		<gnd:relatedCorporateBody rdf:resource="http://www.sfs.uni-tuebingen.de/"/>
+		<gnd:relatedCorporateBody rdf:resource="http://www.mpi.nl/research/research-projects/the-language-archive"/>
+		<gnd:relatedCorporateBody rdf:resource="http://www.fz-juelich.de/portal/DE/Home/home_node.html"/>
+		<gnd:relatedCorporateBody rdf:resource="http://www.rzg.mpg.de/"/>
+		<dc:coverage rdf:resource="http://wsp.normdata.rdf/Neuzeit"/>
+		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Geyken"/>
+		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Didakowski"/>
+		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Lemnitzer"/>
+		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Zimmer"/>
+		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Herold"/>
+		<dcterms:isPartOf rdf:resource="http://www.clarin.eu"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ZentrumSprache"/>
+		<foaf:fundedBy rdf:resource="http://www.bmbf.de"/>
 	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/Martin">
 		<foaf:familyName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Martin</foaf:familyName>
@@ -852,14 +865,6 @@ Damit sollen gemeinsame historische Vermächtnisse sowie die Mobilität von Pers
 		<gnd:contributingPerson rdf:resource="http://wsp.normdata.rdf/Bayuk"/>
 		<dc:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Vorhaben</dc:description>
 		<gnd:contributingPerson rdf:resource="http://wsp.normdata.rdf/LeibnizGottfriedWilhelm"/>
-	</rdf:Description>
-	<rdf:Description rdf:about="http://wsp.normdata.rdf/LeibnizEditionBerlin/Baende">
-    <dc:language>ger</dc:language>
-    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
-    <foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">leibberbaende</foaf:nick>
-		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Leibniz-Edition Berlin: Bände</foaf:name>
-    <foaf:homepage rdf:resource="http://leibniz-berlin.bbaw.de"/>
-		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionBerlin" />			
 	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/LeibnizEditionBerlin/Sachregister">
     <dc:language>ger</dc:language>
@@ -1218,22 +1223,6 @@ Damit sollen gemeinsame historische Vermächtnisse sowie die Mobilität von Pers
 		<foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pir</foaf:nick>
 		<gnd:definition>Prosopographie</gnd:definition>
 		<dc:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Drittmittelprojekt</dc:description>
-	</rdf:Description>
-	<rdf:Description rdf:about="http://wsp.normdata.rdf/ProsopographiaImperiiRomani/Addenda">
-    <dc:language>ger</dc:language>
-    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
-    <foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pira</foaf:nick>
-		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Prosopographia Imperii Romani: Addenda</foaf:name>
-		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ProsopographiaImperiiRomani" />	
-		<foaf:homepage rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/pir/de/blanko.2005-02-17.7966795951" />
-	</rdf:Description>
-	<rdf:Description rdf:about="http://wsp.normdata.rdf/ProsopographiaImperiiRomani/Stichwortliste">
-    <dc:language>ger</dc:language>
-    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
-    <foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">pirs</foaf:nick>
-		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Prosopographia Imperii Romani: Stichwortliste</foaf:name>
-		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ProsopographiaImperiiRomani" />	
-		<foaf:homepage rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/pir/de/blanko.2005-02-17.2432643101" />
 	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/WilhelmOstwaldSymposium">
     <dc:language>ger</dc:language>
@@ -3087,26 +3076,25 @@ Hauptaufgabe ist die Edition des türkischen und iranischen Teils der Berliner T
     <dc:language>ger</dc:language>
     <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
     <foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">turfandp</foaf:nick>
-		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Internationales Dunhuang Projekt</foaf:name>
+		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Internationles Dunhuang Projekt</foaf:name>
 		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Turfan" />	
 		<foaf:homepage rdf:resource="http://idp.bbaw.de" />
 	</rdf:Description>
-	<rdf:Description rdf:about="http://turfan.bbaw.de/dta-i">
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/Turfan/DigitalesArchiv">
     <dc:language>ger</dc:language>
     <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
     <foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">turfandta</foaf:nick>
 		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Digitales Turfan-Archiv</foaf:name>
 		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Turfan" />	
-		<foaf:homepage rdf:resource="http://turfan.bbaw.de/dta-i" />
+		<foaf:homepage rdf:resource="http://turfan.bbaw.de/dta-i"/>
 	</rdf:Description>
-	<rdf:Description rdf:about="http://turfan.bbaw.de/texte/iranische-texte-in-der-turfansammlung">
+	<rdf:Description rdf:about="http://wsp.normdata.rdf/Turfan/IranischeTexte">
     <dc:language>ger</dc:language>
-		<dc:language>eng</dc:language>
     <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
     <foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">turfanit</foaf:nick>
 		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Iranische Texte in der Turfansammlung</foaf:name>
 		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Turfan" />	
-		<foaf:homepage rdf:resource="http://turfan.bbaw.de/texte/iranische-texte-in-der-turfansammlung" />
+		<foaf:homepage rdf:resource="http://turfan.bbaw.de/texte-en/iranische-texte-in-der-turfansammlung" />
 	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/Turfan/ManichaeanMiddlePersianTexts">
     <dc:language>eng</dc:language>
@@ -3114,7 +3102,7 @@ Hauptaufgabe ist die Edition des türkischen und iranischen Teils der Berliner T
     <foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">turfanmmpp</foaf:nick>
 		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Published Manichaean Middle Persian and Parthian Texts</foaf:name>
 		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Turfan" />	
-		<foaf:homepage rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/turfanforschung/de/MIRTEXT" />
+		<foaf:homepage rdf:resource="http://turfan.bbaw.de/bilder/mirtext-2" />
 	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/Eck">
 		<foaf:familyName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Eck</foaf:familyName>
@@ -4119,41 +4107,6 @@ Die IAG wird der zentralen Frage nachgehen, ob wassertechnische Großprojekte ei
 		<foaf:givenName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Detlef</foaf:givenName>
 		<gnd:functionOrRole>Wissenschaftlicher Mitarbeiter</gnd:functionOrRole>
 		<foaf:mbox rdf:datatype="http://www.w3.org/2001/XMLSchema#string">gritzke@bbaw.de</foaf:mbox>
-	</rdf:Description>
-	<rdf:Description rdf:about="http://wsp.normdata.rdf/Clarin">
-    <dc:language>ger</dc:language>
-    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
-		<gnd:relatedCorporateBody rdf:resource="http://www.ims.uni-stuttgart.de/"/>
-		<dc:coverage rdf:resource="http://wsp.normdata.rdf/Neuzeit"/>
-		<foaf:mbox rdf:datatype="http://www.w3.org/2001/XMLSchema#string">clarin@bbaw.de</foaf:mbox>
-		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Geyken"/>
-		<gnd:relatedCorporateBody rdf:resource="http://www.ids-mannheim.de/"/>
-		<gnd:relatedCorporateBody rdf:resource="http://www.corpora.uni-hamburg.de/"/>
-		<gnd:relatedCorporateBody rdf:resource="http://www.phonetik.uni-muenchen.de/Bas/BasHomedeu.html"/>
-		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Didakowski"/>
-		<dcterms:isReplacedBy rdf:resource="http://wsp.normdata.rdf/ClarinD"/>
-		<dcterms:isPartOf rdf:resource="http://www.clarin.eu"/>
-		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Lemnitzer"/>
-		<foaf:status rdf:datatype="http://www.w3.org/2001/XMLSchema#string">abgeschlossen</foaf:status>
-		<dcterms:valid rdf:datatype="http://purl.org/dc/terms/Period">start=2008-04-01; end=2011-03-31; name=Laufzeit; scheme=W3CDTF</dcterms:valid>
-		<gnd:topic rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Linguistik</gnd:topic>
-		<gnd:relatedCorporateBody rdf:resource="http://asv.informatik.uni-leipzig.de/"/>
-		<gnd:definition>Expertise</gnd:definition>
-		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Zimmer"/>
-		<gnd:relatedCorporateBody rdf:resource="http://www.gwdg.de/index.php"/>
-		<foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">weblicht</foaf:nick>
-		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Herold"/>
-		<gnd:relatedCorporateBody rdf:resource="http://fr46.uni-saarland.de/"/>
-		<foaf:fundedBy rdf:resource="http://www.bmbf.de"/>
-		<gnd:relatedCorporateBody rdf:resource="http://www.sfs.uni-tuebingen.de/"/>
-		<dcterms:abstract rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Das Projekt D-SPIN schafft die Grundlagen für eine stabile und nachhaltige Infrastruktur von Sprachressourcen und Sprachtechnologien. Diese soll in erster Linie der empirischen geistes- und sozialwissenschaftlichen Forschung dienen.</dcterms:abstract>
-		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ZentrumSprache"/>
-		<foaf:homepage rdf:resource="http://www.bbaw.de/forschung/deutsche-sprachressourcen-infrastruktur"/>
-		<dc:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Drittmittelprojekt</dc:description>
-		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Deutsche Sprachressourcen-Infrastruktur</foaf:name>
-		<gnd:relatedCorporateBody rdf:resource="http://www.mpi.nl/research/research-projects/the-language-archive"/>
-		<gnd:relatedCorporateBody rdf:resource="http://www.fz-juelich.de/portal/DE/Home/home_node.html"/>
-		<gnd:relatedCorporateBody rdf:resource="http://www.rzg.mpg.de/"/>
 	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/Bohlender">
 		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
@@ -5849,16 +5802,6 @@ Mit der im Juni 2000 durchgeführten internationalen Konferenz »Die Arbeit der 
 		<gnd:relatedCorporateBody rdf:resource="http://bibliothek.bbaw.de/"/>
 		<gnd:contributingPerson rdf:resource="http://wsp.normdata.rdf/SchlegelFriedrich"/>
 	</rdf:Description>
-	<rdf:Description rdf:about="http://wsp.normdata.rdf/GDK">		
-    <dc:language>ger</dc:language>
-    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
-    <foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">gdk</foaf:nick>
-		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Gesamtbestand des Kunstbesitzes</foaf:name>
-		<foaf:homepage rdf:resource="http://archiv.bbaw.de/archiv/archivbestaende/abteilung-sammlungen/gesamtbestand-des-kunstbesitzes"/>
-		<dc:coverage rdf:resource="http://wsp.normdata.rdf/Neuzeit"/>
-		<gnd:relatedCorporateBody rdf:resource="http://bibliothek.bbaw.de/"/>
-		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Knobloch"/>
-	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/GlossariumGraecoArabicum">		
     <dc:language>ger</dc:language>
     <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
@@ -6683,6 +6626,17 @@ Das Projekt konzentrierte sich auf einen ausgewählten Bereich im weiten Spektru
 		<foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">akademiepublikationen5</foaf:nick>
     <foaf:homepage rdf:resource="http://edoc.bbaw.de"/>
 	</rdf:Description>
+  <rdf:Description rdf:about="http://wsp.normdata.rdf/dspin">
+    <dc:language>ger</dc:language>
+    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
+    <foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">dspin</foaf:nick>
+    <foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Deutsche Sprachressourcen-Infrastruktur</foaf:name>
+    <foaf:homepage rdf:resource="http://www.bbaw.de/forschung/deutsche-sprachressourcen-infrastruktur"/>
+    <dcterms:abstract rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Das Projekt „Deutsche Sprachressourcen-Infrastruktur” (D-SPIN), Laufzeit 2008-2011, wird vom Bundesministerium für Bildung und Forschung (BMBF) gefördert. Das Projekt verfolgt das Ziel, eine Infrastruktur für Sprachressourcen und sprachtechnologische Werkzeuge als integralen Bestandteil des elektronischen geisteswissenschaftlichen Arbeitsplatzes der Zukunft aufzubauen.</dcterms:abstract>
+	<foaf:status rdf:datatype="http://www.w3.org/2001/XMLSchema#string">abgeschlossen</foaf:status>
+    <gnd:topic rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Sprache</gnd:topic>
+    <gnd:topic rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Linguistik</gnd:topic>
+  </rdf:Description>
   <rdf:Description rdf:about="http://wsp.normdata.rdf/Edoc">
     <dc:language>ger</dc:language>
     <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
