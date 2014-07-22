@@ -7,6 +7,19 @@
     <url>
     	<webBaseUrl>http://cil.bbaw.de/</webBaseUrl>
       <dataUrl>http://cil.bbaw.de/</dataUrl>
+      <dataUrl>http://cil.bbaw.de/dateien/forschung.html</dataUrl>
+      <dataUrl>http://cil.bbaw.de/dateien/jahresbericht.html</dataUrl>
+      <dataUrl>http://cil.bbaw.de/pdf/CILBro2007_S.pdf</dataUrl>
+      <dataUrl>http://cil.bbaw.de/pdf/spiegelbilder.pdf</dataUrl>
+      <dataUrl>http://cil.bbaw.de/pdf/reflections.pdf</dataUrl>
+      <dataUrl>http://cil.bbaw.de/dateien/hilfsmittel.html</dataUrl>
+      <dataUrl>http://cil.bbaw.de/dateien/addenda.html</dataUrl>
+      <dataUrl>http://cil.bbaw.de/dateien/indices.html</dataUrl>
+      <dataUrl>http://cil.bbaw.de/dateien/konkordanz.html</dataUrl>
+      <dataUrl>http://cil.bbaw.de/dateien/glossar.php</dataUrl>
+      <dataUrl>http://cil.bbaw.de/dateien/aktuelles.html</dataUrl>
+      <dataUrl>http://cil.bbaw.de/dateien/aktuelles_veranstaltungen.html</dataUrl>
+      <dataUrl>http://cil.bbaw.de/dateien/aktuelles_literatur.html</dataUrl>
     </url>
     <languages>ger, lat</languages>
     <mainLanguage>ger</mainLanguage>
@@ -15,72 +28,32 @@
       <format>php</format>
     </formats>
     <db>
-      <type>mysql</type>
+      <type>postgres</type>
       <name>cil</name>
       <xmlDump>
         <sql>
 SELECT 
- tits.title_id as id,
- GROUP_CONCAT(persons.last_name, ', ', persons.first_name ORDER BY persons.last_name SEPARATOR ' ; ') as creator,
- tits.title as title,
- IF(CHAR_LENGTH(tits.pub_editor) = 0, IFNULL(tits.pub_location, ''), CONCAT(tits.pub_editor, ', ', IFNULL(tits.pub_location, ''))) as publisher,
- tits.pub_year as pub_date,
- tits.pages as pages,
- tits.keywords as subject
-FROM 
-(SELECT 
-  titles.*, 
-  GROUP_CONCAT(keywords.keyword ORDER BY keywords.keyword SEPARATOR '###') as keywords
- FROM titles, titles_keywords, keywords
- WHERE 
-  titles_keywords.title_id = titles.title_id
- AND
-  titles_keywords.keyword_id = keywords.keyword_id
- GROUP BY titles.title_id
-) as tits, 
-titles_persons, 
-persons
-WHERE
- titles_persons.title_id = tits.title_id
-AND
- titles_persons.person_id = persons.person_id
-GROUP BY tits.title_id
+  inschrift as id,
+  inschrift as title,
+  ('Fundort: ' || fundort_antik || ' (' || fundort_modern || '), ' || provinz) as abstract
+FROM cilkooa3 
         </sql>
-        <fileName>config/mdsystem/db-resources/cil.xml</fileName>
       </xmlDump>
       <mainResourcesTable>
-        <name>titles_persons</name>
+        <name>inschriften</name>
         <idField>id</idField>
-        <field>
-          <dc>creator</dc>
-          <db>creator</db>
-        </field>
         <field>
           <dc>title</dc>
           <db>title</db>
         </field>
         <field>
-          <dc>publisher</dc>
-          <db>publisher</db>
-        </field>
-        <field>
-          <dc>date</dc>
-          <db>pub_date</db>
-        </field>
-        <field>
-          <dc>extent</dc>
-          <db>pages</db>
-        </field>
-        <field>
-          <dc>subject</dc>
-          <db>subject</db>
-        </field>
-        <field>
-          <dc>language</dc>
-          <db>language</db> 
+          <dc>abstract</dc>
+          <db>abstract</db> 
         </field>
       </mainResourcesTable>
       <webId>
+        <!-- e.g.: mnum=I2+p.+250+n.+XIX+1+a+=+VI+2304+adn. -->
+        <!-- e.g.: VIII 7759 cf. VIII p. 966 et VIII 19478 = ILAlg. II 831 = CLE 1327 -->
         <preStr>http://cil.bbaw.de/dateien/cil_pgsql_query.php?&amp;mnum=</preStr>
       </webId>
     </db>
