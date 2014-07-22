@@ -15,4 +15,9 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Techcultures"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/techcultures"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://www.bbaw.de/forschung/techcultures/mitarbeiter">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Techcultures"/>
+    <dc:identifier rdf:resource="http://www.bbaw.de/forschung/techcultures/mitarbeiter"/>
+  </rdf:Description>
 </rdf:RDF>

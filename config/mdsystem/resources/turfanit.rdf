@@ -12,38 +12,38 @@
 >
 <rdf:Description rdf:about="http://turfan.bbaw.de/texte-en/iranische-texte-in-der-turfansammlung">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://turfan.bbaw.de/texte/iranische-texte-in-der-turfansammlung"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Turfan/IranischeTexte"/>
   <dc:identifier rdf:resource="http://turfan.bbaw.de/texte-en/iranische-texte-in-der-turfansammlung"/>
 </rdf:Description>
   
   <!-- PDF mit Angaben zum Buch -->
 <rdf:Description rdf:about="http://turfan.bbaw.de/bilder/texte/corpus-fontium-manichaeorum.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://turfan.bbaw.de/texte/iranische-texte-in-der-turfansammlung"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Turfan/IranischeTexte"/>
   <dc:identifier rdf:resource="http://turfan.bbaw.de/bilder/texte/corpus-fontium-manichaeorum.pdf"/>
   <dc:title>Corpus Fontium Manichaeorum: Subsidia</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://turfan.bbaw.de/bilder/texte/psalterbeispiel5v.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://turfan.bbaw.de/texte/iranische-texte-in-der-turfansammlung"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Turfan/IranischeTexte"/>
   <dc:identifier rdf:resource="http://turfan.bbaw.de/bilder/texte/psalterbeispiel5v.pdf"/>
   <dc:title>Ein christlicher Text in mittelpersischer Sprache aus Turfan</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://turfan.bbaw.de/bilder-import/PsalterMPSyrGrEngversesGlossarySept2012.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://turfan.bbaw.de/texte/iranische-texte-in-der-turfansammlung"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Turfan/IranischeTexte"/>
   <dc:identifier rdf:resource="http://turfan.bbaw.de/bilder-import/PsalterMPSyrGrEngversesGlossarySept2012.pdf"/>
   <dc:title>The Pahlavi Psalter arranged according to units of the text; glossary and index</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://turfan.bbaw.de/bilder/texte/textempdeutsch.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://turfan.bbaw.de/texte/iranische-texte-in-der-turfansammlung"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Turfan/IranischeTexte"/>
   <dc:identifier rdf:resource="http://turfan.bbaw.de/bilder/texte/textempdeutsch.pdf"/>
   <dc:title>Text, Transkription und Übersetzung einiger mittelpersischen Texte in manichäischer Schrift in der Turfansammlung</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://turfan.bbaw.de/bilder/texte/textepadeutsch.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://turfan.bbaw.de/texte/iranische-texte-in-der-turfansammlung"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Turfan/IranischeTexte"/>
   <dc:identifier rdf:resource="http://turfan.bbaw.de/bilder/texte/textepadeutsch.pdf"/>
   <dc:title>Text, Transkription und Übersetzung einiger parthischen Texte in manichäischer Schrift in der Turfansammlung</dc:title>
 </rdf:Description>

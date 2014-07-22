@@ -15,4 +15,9 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/StrategienAbfall"/>
   <dc:identifier rdf:resource="http://abfallenergieverwertung.bbaw.de/"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://abfallenergieverwertung.bbaw.de/Ueberblick">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/StrategienAbfall"/>
+    <dc:identifier rdf:resource="http://abfallenergieverwertung.bbaw.de/Ueberblick"/>
+  </rdf:Description>
 </rdf:RDF>
