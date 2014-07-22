@@ -8,6 +8,7 @@
       <webBaseUrl>http://cmg.bbaw.de/online-publikationen/Dielskatalog</webBaseUrl>
       <!-- Der Dielssche Handschriftenkatalog online -->
       <dataUrl>http://cmg.bbaw.de/online-publikationen/Dielskatalog</dataUrl>
+      <!-- Mets-Dateien zu diels01-diels04: müssen noch transkribiert werden -->      
     </url>
     <languages>ger</languages>
     <mainLanguage>ger</mainLanguage>
