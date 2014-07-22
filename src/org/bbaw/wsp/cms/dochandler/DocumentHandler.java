@@ -110,7 +110,10 @@ public class DocumentHandler {
         if (! success)
           return;
       }
-      mdRecord.setLastModified(new Date());
+      if (mdRecord.getLastModified() == null) {
+        Date lastModified = new Date();
+        mdRecord.setLastModified(lastModified);
+      }
       String mimeType = mdRecord.getType();
       if (mimeType == null) {
         mimeType = getMimeType(docId);
