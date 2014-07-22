@@ -102,6 +102,13 @@ public class MetadataRecord implements Cloneable {
       return false;
   }
 
+  public boolean isRecord() {
+    if (system != null && system.contains("Record"))
+      return true;
+    else 
+      return false;
+  }
+
   public String getDocumentType() {
     return documentType;
   }
