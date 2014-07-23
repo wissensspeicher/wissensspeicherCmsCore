@@ -8,9 +8,6 @@ import java.net.FileNameMap;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -95,6 +92,22 @@ public class CollectionManager {
     ArrayList<Collection> collections = collectionReader.getCollections();
     for (Collection collection : collections) {
       addDocuments(collection);
+    }
+  }
+
+  /**
+   * Update of all collections
+   * @throws ApplicationException
+   */
+  public void updateCollections(String startingCollectionId) throws ApplicationException {
+    boolean start = false;
+    ArrayList<Collection> collections = collectionReader.getCollections();
+    for (Collection collection : collections) {
+      String collId = collection.getId();
+      if (startingCollectionId.equals(collId))
+        start = true;
+      if (start)
+        addDocuments(collection);
     }
   }
 
