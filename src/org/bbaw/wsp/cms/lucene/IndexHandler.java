@@ -644,6 +644,7 @@ public class IndexHandler {
       searcher = documentsSearcherManager.acquire();
       String defaultQueryFieldName = "tokenOrig";
       QueryParser queryParser = new QueryParser(Version.LUCENE_35, defaultQueryFieldName, documentsPerFieldAnalyzer);
+      queryParser.setAllowLeadingWildcard(true);
       Query query = null;
       if (queryStr.equals("*")) {
         query = new MatchAllDocsQuery();
@@ -776,9 +777,13 @@ public class IndexHandler {
       makeNodesSearcherManagerUpToDate();
       searcher = nodesSearcherManager.acquire();
       String fieldNameDocId = "docId";
-      Query queryDocId = new QueryParser(Version.LUCENE_35, fieldNameDocId, nodesPerFieldAnalyzer).parse(docId);
+      QueryParser queryParser1 = new QueryParser(Version.LUCENE_35, fieldNameDocId, nodesPerFieldAnalyzer);
+      queryParser1.setAllowLeadingWildcard(true);
+      Query queryDocId = queryParser1.parse(docId);
       String defaultQueryFieldName = "tokenOrig";
-      Query query = new QueryParser(Version.LUCENE_35, defaultQueryFieldName, nodesPerFieldAnalyzer).parse(queryStr);
+      QueryParser queryParser2 = new QueryParser(Version.LUCENE_35, defaultQueryFieldName, nodesPerFieldAnalyzer);
+      queryParser2.setAllowLeadingWildcard(true);
+      Query query = queryParser2.parse(queryStr);
       String language = docMetadataRecord.getLanguage();
       if (language == null || language.equals("")) {
         String collectionNames = docMetadataRecord.getCollectionNames();
