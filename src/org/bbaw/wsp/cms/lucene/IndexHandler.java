@@ -668,7 +668,7 @@ public class IndexHandler {
       if (sortFieldNames != null) {
         sort = buildSort(sortFieldNames, "doc");  // build sort criteria
       }
-      TopFieldCollector topFieldCollector = TopFieldCollector.create(sort, to, true, true, true, true); // default topFieldCollector for TopDocs results, numHits: maximum is "to" (performance gain for every bigger result)
+      TopFieldCollector topFieldCollector = TopFieldCollector.create(sort, to + 1, true, true, true, true); // default topFieldCollector for TopDocs results, numHits: maximum is "to" (performance gain for every bigger result)
       FacetSearchParams facetSearchParams = new FacetSearchParams();
       facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("collectionNames"), 1000));
       facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("language"), 1000));
@@ -690,8 +690,8 @@ public class IndexHandler {
         facets = new Facets(tmpFacetResult);
       resultDocs.setMaxScore(1);
       int toTmp = to;
-      if (resultDocs.scoreDocs.length <= to)
-        toTmp = resultDocs.scoreDocs.length - 1;
+      if (resultDocs.totalHits <= to)
+        toTmp = resultDocs.totalHits - 1;
       if (resultDocs != null) {
         ArrayList<org.bbaw.wsp.cms.document.Document> docs = new ArrayList<org.bbaw.wsp.cms.document.Document>();
         for (int i=from; i<=toTmp; i++) { 
