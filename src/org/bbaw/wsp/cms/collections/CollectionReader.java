@@ -6,6 +6,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
@@ -101,6 +102,10 @@ public class CollectionReader {
           } else {
 						collection.setId(collectionId);
 					} 
+          String metadataRdfDir = Constants.getInstance().getMdsystemConfDir() + "/resources/";
+          File rdfResourceFile = new File(metadataRdfDir + collectionId + ".rdf");
+          Date rdfResourceFileLastModified = new Date(rdfResourceFile.lastModified());
+          collection.setLastModified(rdfResourceFileLastModified);
           String rdfId = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/rdfId/text()");
           if (rdfId == null || rdfId.trim().isEmpty()) {
             LOGGER.error("No rdfId found in: " + collection.getConfigFileName());
