@@ -1,6 +1,7 @@
 package org.bbaw.wsp.cms.collections;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class Collection {
   private Hashtable<String, XQuery> xQueries;
   private List<String> excludeField;
   private String configFileName;  // configuration file name
+  private Date lastModified;
   
   public Collection() {
     id = "";
@@ -47,6 +49,14 @@ public class Collection {
     this.id = id;
   }
   
+  public Date getLastModified() {
+    return lastModified;
+  }
+
+  public void setLastModified(Date lastModified) {
+    this.lastModified = lastModified;
+  }
+
   public String getRdfId() {
     return rdfId;
   }
