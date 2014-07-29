@@ -668,7 +668,7 @@ public class IndexHandler {
       if (sortFieldNames != null) {
         sort = buildSort(sortFieldNames, "doc");  // build sort criteria
       }
-      TopFieldCollector topFieldCollector = TopFieldCollector.create(sort, 2000000, true, true, true, true); // default topFieldCollector for TopDocs results
+      TopFieldCollector topFieldCollector = TopFieldCollector.create(sort, to, true, true, true, true); // default topFieldCollector for TopDocs results, numHits: maximum is to (performance gain for big results)
       FacetSearchParams facetSearchParams = new FacetSearchParams();
       facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("collectionNames"), 1000));
       facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("language"), 1000));
@@ -717,6 +717,8 @@ public class IndexHandler {
             if (! hitFragments.isEmpty())
               doc.setHitFragments(hitFragments);
           }
+          /*
+           * only needed when indexing works also on xml document nodes 
           // if xml document: try to add pageNumber to resulting doc
           DocumentHandler docHandler = new DocumentHandler();
           Fieldable docIdField = luceneDoc.getFieldable("docId");
@@ -739,13 +741,14 @@ public class IndexHandler {
               }
             }
           }
+          */
           docs.add(doc);
         }
         int sizeTotalDocuments = documentsIndexReader.numDocs();
         int sizeTotalTerms = tokens.size(); // term count over tokenOrig
         if (docs != null) {
           hits = new Hits(docs, from, to);
-          hits.setSize(resultDocs.scoreDocs.length);
+          hits.setSize(resultDocs.totalHits);
           hits.setSizeTotalDocuments(sizeTotalDocuments);
           hits.setSizeTotalTerms(sizeTotalTerms);
           hits.setQuery(morphQuery);
