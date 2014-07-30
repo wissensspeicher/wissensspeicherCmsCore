@@ -469,7 +469,10 @@ public class DocumentHandler {
               if (mimeType != null && mimeType.equals("application/pdf")) {
                 // nothing: creator is not the creator of the document in mostly all pdf-documents, so is not considered
               } else {
-                mdRecord.setCreator(tikaMDRecord.getCreator());
+                String tikaCreator = tikaMDRecord.getCreator();
+                boolean isProper = isProper("author", tikaCreator);
+                if (isProper)
+                  mdRecord.setCreator(tikaCreator);
               }
             }
             if (mdRecord.getTitle() == null) {
@@ -589,6 +592,9 @@ public class DocumentHandler {
           XdmItem xdmItemAuthor = xmdValueAuthorsIterator.next();
           String xdmItemAuthorStr = xdmItemAuthor.toString();
           String name = xdmItemAuthor.getStringValue();
+          boolean isProper = isProper("author", name);
+          if (! isProper)
+            name = "";
           if (name != null) {
             name = name.replaceAll("\n|\\s\\s+", " ").trim();
           }
@@ -847,6 +853,9 @@ public class DocumentHandler {
       if (identifier != null && ! identifier.isEmpty())
         identifier = StringUtils.deresolveXmlEntities(identifier.trim());
       String creator = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/head/meta[@name = 'DC.creator']/@content)");
+      boolean isProper = isProper("author", creator);
+      if (! isProper)
+        creator = "";
       if (creator != null) {
         creator = StringUtils.deresolveXmlEntities(creator.trim());
         if (creator.isEmpty())
@@ -969,6 +978,15 @@ public class DocumentHandler {
   private String getPlaces(String tocString, XQueryEvaluator xQueryEvaluator) throws ApplicationException {
     String places = xQueryEvaluator.evaluateAsStringValueJoined(tocString, "/list/list[@type='places']/item[not(. = preceding::item)]", "###"); 
     return places;
+  }
+
+  private boolean isProper(String fieldName, String fieldValue) {
+    if (fieldValue == null)
+      return true;
+    boolean isProper = true;
+    if (fieldName != null && fieldName.equals("author") && (fieldValue.equals("admin") || fieldValue.equals("user")))
+      return false;
+    return isProper;
   }
 
   private boolean copyUrlToFile(URL srcUrl, File docDestFile) {
