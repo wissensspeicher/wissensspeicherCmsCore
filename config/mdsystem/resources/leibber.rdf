@@ -419,13 +419,15 @@
     <dcterms:isFormatOf rdf:resource="http://leibnizviii.bbaw.de/pdf/De%2Bpendulorum%2Blongitudinibus/LH035%252C12%252C02_062r/LH035,12!02_062+ra-07564.jpg"/>
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/></rdf:Description>
   
-  <!-- LH035,12,02_156v -->
-  <rdf:Description rdf:about="http://leibnizviii.bbaw.de/pdf/Aus+Bernhard+Varenius%252C+Geographia+generalis/LH035%252C12%252C02_156v/LH_XXXV_XII_II_Bl._156v+a.png">
-<dcterms:identifier>LH035,12,02_156v</dcterms:identifier>
-<dc:identifier rdf:resource="http://leibnizviii.bbaw.de/pdf/Aus+Bernhard+Varenius%252C+Geographia+generalis/LH035%252C12%252C02_156v/LH_XXXV_XII_II_Bl._156v+a.png"/>
+<!-- LH035,12,02_156v -->
+<!-- URL ist noch nicht zugreifbar
+<rdf:Description rdf:about="http://leibnizviii.bbaw.de/pdf/Aus+Bernhard+Varenius%252C+Geographia+generalis/LH035%252C12%252C02_156v/LH_XXXV_XII_II_Bl._156v+a.png">
+  <dcterms:identifier>LH035,12,02_156v</dcterms:identifier>
+  <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/pdf/Aus+Bernhard+Varenius%252C+Geographia+generalis/LH035%252C12%252C02_156v/LH_XXXV_XII_II_Bl._156v+a.png"/>
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-    <dc:title>Aus Bernhard Varenius, Geographia generalis</dc:title>
-  </rdf:Description>
+  <dc:title>Aus Bernhard Varenius, Geographia generalis</dc:title>
+</rdf:Description>
+-->
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Aus+Bernhard+Varenius%252C+Geographia+generalis/LH035%252C12%252C02_156v/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Aus+Bernhard+Varenius%252C+Geographia+generalis/LH035%252C12%252C02_156v/index.html"/>
 <dcterms:isFormatOf rdf:resource="http://leibnizviii.bbaw.de/pdf/Aus+Bernhard+Varenius%252C+Geographia+generalis/LH035%252C12%252C02_156v/LH_XXXV_XII_II_Bl._156v+a.png"/>
@@ -479,13 +481,15 @@
 <dcterms:isFormatOf rdf:resource="http://leibnizviii.bbaw.de/pdf/Aus+Otto+von+Guericke%252C+Experimenta+nova/LH035%252C14%252C02_091v/LH035,14%2102_091+va.png"/>
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/></rdf:Description>
 
-  <!-- LH035,14,02_092r -->
-  <rdf:Description rdf:about="http://leibnizviii.bbaw.de/pdf/Aus+Otto+von+Guericke%252C+Experimenta+nova/LH035%252C14%252C02_092r/x">
-<dcterms:identifier>LH035,14,02_092r</dcterms:identifier>
-<dc:identifier rdf:resource="http://leibnizviii.bbaw.de/pdf/Aus+Otto+von+Guericke%252C+Experimenta+nova/LH035%252C14%252C02_092r/x"/>
+<!-- LH035,14,02_092r -->
+<!-- URL ist noch nicht zugreifbar
+<rdf:Description rdf:about="http://leibnizviii.bbaw.de/pdf/Aus+Otto+von+Guericke%252C+Experimenta+nova/LH035%252C14%252C02_092r/x">
+  <dcterms:identifier>LH035,14,02_092r</dcterms:identifier>
+  <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/pdf/Aus+Otto+von+Guericke%252C+Experimenta+nova/LH035%252C14%252C02_092r/x"/>
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-    <dc:title>Aus Otto von Guericke, Experimenta nova</dc:title>
-  </rdf:Description>
+  <dc:title>Aus Otto von Guericke, Experimenta nova</dc:title>
+</rdf:Description>
+-->
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Aus+Otto+von+Guericke%252C+Experimenta+nova/LH035%252C14%252C02_092r/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Aus+Otto+von+Guericke%252C+Experimenta+nova/LH035%252C14%252C02_092r/index.html"/>
 <dcterms:isFormatOf rdf:resource="http://leibnizviii.bbaw.de/pdf/Aus+Otto+von+Guericke%252C+Experimenta+nova/LH035%252C14%252C02_092r/x"/>
@@ -1071,13 +1075,15 @@
 <dcterms:isFormatOf rdf:resource="http://leibnizviii.bbaw.de/pdf/M%2526eacute%253Bthode+et+inventions+de+La+Montre/LH035%252C15%252C06_020r/LH035,15%2106_020+ra.png"/>
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/></rdf:Description>
   
-  <!-- LH035,15,06_020v -->
-  <rdf:Description rdf:about="http://leibnizviii.bbaw.de/pdf/M%2526eacute%253Bthode+et+inventions+de+La+Montre/LH035%252C15%252C06_020v/LH035,15%2106_020+va.png%0B">
-<dcterms:identifier>LH035,15,06_020v</dcterms:identifier>
-<dc:identifier rdf:resource="http://leibnizviii.bbaw.de/pdf/M%2526eacute%253Bthode+et+inventions+de+La+Montre/LH035%252C15%252C06_020v/LH035,15%2106_020+va.png%0B"/>
+<!-- LH035,15,06_020v -->
+<!-- URL ist noch nicht zugreifbar
+<rdf:Description rdf:about="http://leibnizviii.bbaw.de/pdf/M%2526eacute%253Bthode+et+inventions+de+La+Montre/LH035%252C15%252C06_020v/LH035,15%2106_020+va.png%0B">
+  <dcterms:identifier>LH035,15,06_020v</dcterms:identifier>
+  <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/pdf/M%2526eacute%253Bthode+et+inventions+de+La+Montre/LH035%252C15%252C06_020v/LH035,15%2106_020+va.png%0B"/>
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-    <dc:title>Méthode et inventions de La Montre</dc:title>
-  </rdf:Description>
+  <dc:title>Méthode et inventions de La Montre</dc:title>
+</rdf:Description>
+-->
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/M%2526eacute%253Bthode+et+inventions+de+La+Montre/LH035%252C15%252C06_020v/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/M%2526eacute%253Bthode+et+inventions+de+La+Montre/LH035%252C15%252C06_020v/index.html"/>
 <dcterms:isFormatOf rdf:resource="http://leibnizviii.bbaw.de/pdf/M%2526eacute%253Bthode+et+inventions+de+La+Montre/LH035%252C15%252C06_020v/LH035,15%2106_020+va.png%0B"/>
@@ -1323,13 +1329,15 @@
 <dcterms:isFormatOf rdf:resource="http://leibnizviii.bbaw.de/pdf/Cogitationes+diversae+circa+navigationem/LH035%252C15%252C06_057r/LH035,15%2106_057+ra-11062.png"/>
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/></rdf:Description>
 
-  <!-- LH035,15,06_057v -->
-  <rdf:Description rdf:about="http://leibnizviii.bbaw.de/pdf/Cogitationes+diversae+circa+navigationem/LH035%252C15%252C06_057v/LH035,15%2106_047+va-11031.png">
-<dcterms:identifier>LH035,15,06_057v</dcterms:identifier>
-<dc:identifier rdf:resource="http://leibnizviii.bbaw.de/pdf/Cogitationes+diversae+circa+navigationem/LH035%252C15%252C06_057v/LH035,15%2106_047+va-11031.png"/>
+<!-- LH035,15,06_057v -->
+<!-- URL is noch nicht zugreifbar
+<rdf:Description rdf:about="http://leibnizviii.bbaw.de/pdf/Cogitationes+diversae+circa+navigationem/LH035%252C15%252C06_057v/LH035,15%2106_047+va-11031.png">
+  <dcterms:identifier>LH035,15,06_057v</dcterms:identifier>
+  <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/pdf/Cogitationes+diversae+circa+navigationem/LH035%252C15%252C06_057v/LH035,15%2106_047+va-11031.png"/>
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-    <dc:title>Cogitationes diversae circa navigationem</dc:title>
-  </rdf:Description>
+  <dc:title>Cogitationes diversae circa navigationem</dc:title>
+</rdf:Description>
+-->
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Cogitationes+diversae+circa+navigationem/LH035%252C15%252C06_057v/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Cogitationes+diversae+circa+navigationem/LH035%252C15%252C06_057v/index.html"/>
 <dcterms:isFormatOf rdf:resource="http://leibnizviii.bbaw.de/pdf/Cogitationes+diversae+circa+navigationem/LH035%252C15%252C06_057v/LH035,15%2106_047+va-11031.png"/>
@@ -1810,13 +1818,15 @@
 <dcterms:isFormatOf rdf:resource="http://leibnizviii.bbaw.de/pdf/Optici+phaenomeni+explicatio/LH037%252C02_009v/LH03702_009+va-00707.jpg"/>
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/></rdf:Description>
 
-  <!-- LH037,02_010r -->
-  <rdf:Description rdf:about="http://leibnizviii.bbaw.de/pdf/Hugenius+et+Huddenius+de+refractione/LH037%252C02_010r/LH03702_010+ra-00708.jpg%0B">
-<dcterms:identifier>LH037,02_010r</dcterms:identifier>
-<dc:identifier rdf:resource="http://leibnizviii.bbaw.de/pdf/Hugenius+et+Huddenius+de+refractione/LH037%252C02_010r/LH03702_010+ra-00708.jpg%0B"/>
+<!-- LH037,02_010r -->
+<!-- URL noch nicht zugreifbar
+<rdf:Description rdf:about="http://leibnizviii.bbaw.de/pdf/Hugenius+et+Huddenius+de+refractione/LH037%252C02_010r/LH03702_010+ra-00708.jpg%0B">
+  <dcterms:identifier>LH037,02_010r</dcterms:identifier>
+  <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/pdf/Hugenius+et+Huddenius+de+refractione/LH037%252C02_010r/LH03702_010+ra-00708.jpg%0B"/>
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-    <dc:title>Hugenius et Huddenius de refractione</dc:title>
-  </rdf:Description>
+  <dc:title>Hugenius et Huddenius de refractione</dc:title>
+</rdf:Description>
+-->
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Hugenius+et+Huddenius+de+refractione/LH037%252C02_010r/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Hugenius+et+Huddenius+de+refractione/LH037%252C02_010r/index.html"/>
 <dcterms:isFormatOf rdf:resource="http://leibnizviii.bbaw.de/pdf/Hugenius+et+Huddenius+de+refractione/LH037%252C02_010r/LH03702_010+ra-00708.jpg%0B"/>
