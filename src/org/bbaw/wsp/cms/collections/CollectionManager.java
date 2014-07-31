@@ -385,6 +385,10 @@ public class CollectionManager {
           fileExtension = "pdf";
         else if (mimeType != null && mimeType.contains("xml"))
           fileExtension = "xml";
+        else if (mimeType != null && mimeType.contains("png"))
+          fileExtension = "png";
+        else if (mimeType != null && mimeType.contains("jpg"))
+          fileExtension = "jpg";
         int recordId = mdRecord.getId();
         String fileName = "indexxx" + recordId + "." + fileExtension;
         if (uriPath.endsWith("/"))
