@@ -211,6 +211,8 @@ public class EdocIndexMetadataFetcherTool {
           final String collections = mColl.group(1);
           final String newCollections = concatenateValues(mdRecord.getCollectionNames(), collections, DEFAULT_SEPARATOR);
           mdRecord.setEdocCollection(newCollections);
+          if (collections != null && collections.contains("Gegenworte"))
+            mdRecord.setCollectionNames("gw"); // Bugbehebung für einige Edoc-Records, die das falsche Institut enthalten
         } else if (key.contains("Kurzfassung auf Deutsch") && value != null && mdRecord.getDescription() != null) {
           mdRecord.setDescription(value);
         }
