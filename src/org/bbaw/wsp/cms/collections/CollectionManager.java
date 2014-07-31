@@ -96,6 +96,22 @@ public class CollectionManager {
   }
 
   /**
+   * Update of all collections
+   * @throws ApplicationException
+   */
+  public void updateCollections(String startingCollectionId) throws ApplicationException {
+    boolean start = false;
+    ArrayList<Collection> collections = collectionReader.getCollections();
+    for (Collection collection : collections) {
+      String collId = collection.getId();
+      if (startingCollectionId.equals(collId))
+        start = true;
+      if (start)
+        addDocuments(collection);
+    }
+  }
+
+  /**
    * Update of the collection with that collectionId
    * @param collectionId
    * @throws ApplicationException
@@ -227,6 +243,9 @@ public class CollectionManager {
 
   public ArrayList<MetadataRecord> getMetadataRecordsByRdfFile(Collection collection, File rdfRessourcesFile) throws ApplicationException {
     String collectionId = collection.getId();
+    String xmlDumpFileStr = rdfRessourcesFile.getPath().replaceAll("\\.rdf", ".xml");
+    File xmlDumpFile = new File(xmlDumpFileStr);
+    Date xmlDumpFileLastModified = new Date(xmlDumpFile.lastModified());
     ArrayList<MetadataRecord> mdRecords = new ArrayList<MetadataRecord>();
     try {
       URL rdfRessourcesFileUrl = rdfRessourcesFile.toURI().toURL();
@@ -245,6 +264,12 @@ public class CollectionManager {
             mdRecord.setCollectionNames(collectionId);
             mdRecord.setId(maxIdcounter); // collections wide id
             mdRecord = createMainFieldsMetadataRecord(mdRecord, collection);
+            // if it is a record: set lastModified to the date of the harvested dump file; if it is a normal web record: set it to now (harvested now)
+            Date lastModified = new Date();
+            if (mdRecord.isRecord()) {
+              lastModified = xmlDumpFileLastModified;
+            }
+            mdRecord.setLastModified(lastModified);
             // if it is an eXist directory then fetch all subUrls/mdRecords of that directory
             if (mdRecord.isEXistDir()) {
               String eXistUrl = mdRecord.getWebUri();
@@ -261,6 +286,7 @@ public class CollectionManager {
                   mdRecordEXist.setCollectionNames(collectionId);
                   mdRecordEXist.setId(maxIdcounter); // collections wide id
                   mdRecordEXist = createMainFieldsMetadataRecord(mdRecordEXist, collection);
+                  mdRecordEXist.setLastModified(lastModified);
                   mdRecordEXist.setCreator(mdRecord.getCreator());
                   mdRecordEXist.setTitle(mdRecord.getTitle());
                   mdRecordEXist.setPublisher(mdRecord.getPublisher());
@@ -300,6 +326,7 @@ public class CollectionManager {
                   mdRecordDirEntry.setCollectionNames(collectionId);
                   mdRecordDirEntry.setId(maxIdcounter); // collections wide id
                   mdRecordDirEntry = createMainFieldsMetadataRecord(mdRecordDirEntry, collection);
+                  mdRecordDirEntry.setLastModified(lastModified);
                   mdRecordDirEntry.setUri(uri);
                   mdRecordsDir.add(mdRecordDirEntry);
                 }
@@ -408,6 +435,9 @@ public class CollectionManager {
       String uri = null;
       String webUri = null;
       mdRecord.setId(maxIdcounter);
+      File edocDir = new File(Constants.getInstance().getExternalDocumentsDir() + "/edoc");
+      Date lastModified = new Date(edocDir.lastModified());
+      mdRecord.setLastModified(lastModified);
       EdocIndexMetadataFetcherTool.fetchHtmlDirectly(metadataUrl, mdRecord);
       if (mdRecord.getLanguage() != null) {
         String isoLang = Language.getInstance().getISO639Code(mdRecord.getLanguage());

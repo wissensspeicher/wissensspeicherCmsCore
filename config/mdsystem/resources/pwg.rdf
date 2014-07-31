@@ -15,4 +15,9 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/PolitikWissenschaftGesellschaft"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/pwg"/>
 </rdf:Description>
+<rdf:Description rdf:about="http://www.bbaw.de/forschung/pwg/mitarbeiter">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/PolitikWissenschaftGesellschaft"/>
+  <dc:identifier rdf:resource="http://www.bbaw.de/forschung/pwg/mitarbeiter"/>
+</rdf:Description>
 </rdf:RDF>

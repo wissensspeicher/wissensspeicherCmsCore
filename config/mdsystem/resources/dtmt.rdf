@@ -10,24 +10,26 @@
    xmlns:gnd="http://d-nb.info/standards/elementset/gnd#" 
    xmlns:ore="http://www.openarchives.org/ore/terms/" 
 >
+<!-- nur mit Benutzerkennung zugreifbar
 <rdf:Description rdf:about="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/dtm/de/Transkriptionen">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DTM/Transkription"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/dtm/de/Transkriptionen"/>
 </rdf:Description>
-<rdf:Description rdf:about=" http://dtm.bbaw.de/EliHsS.pdf ">
+-->
+<rdf:Description rdf:about="http://dtm.bbaw.de/bilder/elihss.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DTM/Transkription"/>
-  <dc:identifier rdf:resource=" http://dtm.bbaw.de/EliHsS.pdf "/>
+  <dc:identifier rdf:resource="http://dtm.bbaw.de/bilder/elihss.pdf"/>
 </rdf:Description>
-<rdf:Description rdf:about=" http://dtm.bbaw.de/Christh.pdf ">
+<rdf:Description rdf:about="http://dtm.bbaw.de/bilder/christh.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DTM/Transkription"/>
-  <dc:identifier rdf:resource=" http://dtm.bbaw.de/Christh.pdf "/>
+  <dc:identifier rdf:resource="http://dtm.bbaw.de/bilder/christh.pdf"/>
 </rdf:Description>
-<rdf:Description rdf:about=" http://dtm.bbaw.de/Christherrechronik_Teilausgabe.pdf">
+<rdf:Description rdf:about="http://dtm.bbaw.de/bilder/christherrechronik-teilausgabe.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DTM/Transkription"/>
-  <dc:identifier rdf:resource=" http://dtm.bbaw.de/Christherrechronik_Teilausgabe.pdf"/>
+  <dc:identifier rdf:resource="http://dtm.bbaw.de/bilder/christherrechronik-teilausgabe.pdf"/>
 </rdf:Description>
 </rdf:RDF>

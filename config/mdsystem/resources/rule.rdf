@@ -15,4 +15,59 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/RULE"/>
   <dc:identifier rdf:resource="http://rule.bbaw.de"/>
 </rdf:Description>
+<rdf:Description rdf:about="http://www.bbaw.de/forschung/rule/projektdarstellung">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/RULE"/>
+  <dc:identifier rdf:resource="http://www.bbaw.de/forschung/rule/projektdarstellung"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.bbaw.de/forschung/rule/uebersicht">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/RULE"/>
+  <dc:identifier rdf:resource="http://www.bbaw.de/forschung/rule/uebersicht"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.bbaw.de/forschung/rule/mitarbeiter">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/RULE"/>
+  <dc:identifier rdf:resource="http://www.bbaw.de/forschung/rule/mitarbeiter"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://rule.bbaw.de/Ueberblick">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/RULE"/>
+  <dc:identifier rdf:resource="http://rule.bbaw.de/Ueberblick"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://rule.bbaw.de/Mitglieder_Mitarbeiter">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/RULE"/>
+  <dc:identifier rdf:resource="http://rule.bbaw.de/Mitglieder_Mitarbeiter"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://rule.bbaw.de/Publikationen">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/RULE"/>
+  <dc:identifier rdf:resource="http://rule.bbaw.de/Publikationen"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://rule.bbaw.de/blanko.2005-01-28.2389976239">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/RULE"/>
+  <dc:identifier rdf:resource="http://rule.bbaw.de/blanko.2005-01-28.2389976239"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://rule.bbaw.de/english/">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/RULE"/>
+  <dc:identifier rdf:resource="http://rule.bbaw.de/english/"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://rule.bbaw.de/english/Ueberblick">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/RULE"/>
+  <dc:identifier rdf:resource="http://rule.bbaw.de/english/  "/>
+</rdf:Description>
+<rdf:Description rdf:about="http://rule.bbaw.de/english/Mitglieder_Mitarbeiter">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/RULE"/>
+  <dc:identifier rdf:resource="http://rule.bbaw.de/english/Mitglieder_Mitarbeiter"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://rule.bbaw.de/english/Publikationen">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/RULE"/>
+  <dc:identifier rdf:resource="http://rule.bbaw.de/english/Publikationen"/>
+</rdf:Description>
 </rdf:RDF>

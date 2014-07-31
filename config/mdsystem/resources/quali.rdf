@@ -15,4 +15,55 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/QualitätsbeurteilungWissenschaft"/>
   <dc:identifier rdf:resource="http://qualitaetsbeurteilungwissenschaft.bbaw.de/"/>
 </rdf:Description>
+
+<rdf:Description rdf:about="http://www.bbaw.de/forschung/qualitaetsbeurteilung/projektdarstellung">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/QualitätsbeurteilungWissenschaft"/>
+  <dc:identifier rdf:resource="http://www.bbaw.de/forschung/qualitaetsbeurteilung/projektdarstellung"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://www.bbaw.de/forschung/qualitaetsbeurteilung/">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/QualitätsbeurteilungWissenschaft"/>
+  <dc:identifier rdf:resource="http://www.bbaw.de/forschung/qualitaetsbeurteilung/"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://qualitaetsbeurteilungwissenschaft.bbaw.de/Ueberblick">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/QualitätsbeurteilungWissenschaft"/>
+  <dc:identifier rdf:resource="http://qualitaetsbeurteilungwissenschaft.bbaw.de/Ueberblick"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://qualitaetsbeurteilungwissenschaft.bbaw.de/Publikationen">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/QualitätsbeurteilungWissenschaft"/>
+  <dc:identifier rdf:resource="http://qualitaetsbeurteilungwissenschaft.bbaw.de/Publikationen"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://qualitaetsbeurteilungwissenschaft.bbaw.de/Blanko.2005-01-20.1221474203">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/QualitätsbeurteilungWissenschaft"/>
+  <dc:identifier rdf:resource="http://qualitaetsbeurteilungwissenschaft.bbaw.de/Blanko.2005-01-20.1221474203"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://qualitaetsbeurteilungwissenschaft.bbaw.de/english/   ">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/QualitätsbeurteilungWissenschaft"/>
+  <dc:identifier rdf:resource="http://qualitaetsbeurteilungwissenschaft.bbaw.de/english/   "/>
+</rdf:Description>
+<rdf:Description rdf:about="http://qualitaetsbeurteilungwissenschaft.bbaw.de/english/Ueberblick">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/QualitätsbeurteilungWissenschaft"/>
+  <dc:identifier rdf:resource="http://qualitaetsbeurteilungwissenschaft.bbaw.de/english/Ueberblick"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://qualitaetsbeurteilungwissenschaft.bbaw.de/english/Ueberblick">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/QualitätsbeurteilungWissenschaft"/>
+  <dc:identifier rdf:resource="http://qualitaetsbeurteilungwissenschaft.bbaw.de/english/Ueberblick"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://qualitaetsbeurteilungwissenschaft.bbaw.de/english/Blanko.2005-01-20.1315964975">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/QualitätsbeurteilungWissenschaft"/>
+  <dc:identifier rdf:resource="http://qualitaetsbeurteilungwissenschaft.bbaw.de/english/Blanko.2005-01-20.1315964975"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://qualitaetsbeurteilungwissenschaft.bbaw.de/english/Publikationen">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/QualitätsbeurteilungWissenschaft"/>
+  <dc:identifier rdf:resource="http://qualitaetsbeurteilungwissenschaft.bbaw.de/english/Publikationen"/>
+</rdf:Description>
 </rdf:RDF>

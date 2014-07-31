@@ -5898,14 +5898,6 @@ Mit der im Juni 2000 durchgeführten internationalen Konferenz »Die Arbeit der 
 		<dcterms:valid rdf:datatype="http://purl.org/dc/terms/Period">start=1994; name=Laufzeit</dcterms:valid>
 		<gnd:definition>Edition</gnd:definition>
 	</rdf:Description>
-	<rdf:Description rdf:about="http://wsp.normdata.rdf/CorpusInscriptLatinarum/Afrika">
-    <dc:language>ger</dc:language>
-    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
-    <foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">cilafrika</foaf:nick>
-		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Corpus Inscriptionum Latinarum: Eine Auswahl afrikanischer Versinschriften</foaf:name>
-		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusInscriptLatinarum" />	
-		<foaf:homepage rdf:resource="http://cil.bbaw.de/afrika/afrika.html" />
-	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/Taube">
 		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
 		<foaf:familyName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Taube</foaf:familyName>
