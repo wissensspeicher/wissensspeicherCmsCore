@@ -24,30 +24,60 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/PreußenAlsKulturstaat"/>
   <dc:identifier rdf:resource="http://actaborussica.bbaw.de/projektberichte/projektbericht-2004"/>
+  <dc:title>Projektbericht 2004</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://actaborussica.bbaw.de/projektberichte/projektbericht-2005">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/PreußenAlsKulturstaat"/>
   <dc:identifier rdf:resource="http://actaborussica.bbaw.de/projektberichte/projektbericht-2005"/>
+  <dc:title>Projektbericht 2005</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://actaborussica.bbaw.de/projektberichte/projektbericht-2006">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/PreußenAlsKulturstaat"/>
   <dc:identifier rdf:resource="http://actaborussica.bbaw.de/projektberichte/projektbericht-2006"/>
+  <dc:title>Projektbericht 2006</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://actaborussica.bbaw.de/projektberichte/projektbericht-2007">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/PreußenAlsKulturstaat"/>
   <dc:identifier rdf:resource="http://actaborussica.bbaw.de/projektberichte/projektbericht-2007"/>
+  <dc:title>Projektbericht 2007</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://actaborussica.bbaw.de/projektberichte/projektbericht-2008">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/PreußenAlsKulturstaat"/>
   <dc:identifier rdf:resource="http://actaborussica.bbaw.de/projektberichte/projektbericht-2008"/>
+  <dc:title>Projektbericht 2008</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://actaborussica.bbaw.de/projektberichte/projektbericht-2009">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/PreußenAlsKulturstaat"/>
   <dc:identifier rdf:resource="http://actaborussica.bbaw.de/projektberichte/projektbericht-2009"/>
+  <dc:title>Projektbericht 2009</dc:title>
 </rdf:Description>
+  <rdf:Description rdf:about="http://actaborussica.bbaw.de/projektberichte/projektbericht-2010">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/PreußenAlsKulturstaat"/>
+    <dc:identifier rdf:resource="http://actaborussica.bbaw.de/projektberichte/projektbericht-2010"/>
+    <dc:title>Projektbericht 2010</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://actaborussica.bbaw.de/projektberichte/projektbericht-2011">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/PreußenAlsKulturstaat"/>
+    <dc:identifier rdf:resource="http://actaborussica.bbaw.de/projektberichte/projektbericht-2011"/>
+    <dc:title>Projektbericht 2011</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://actaborussica.bbaw.de/projektberichte/projektbericht-2012">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/PreußenAlsKulturstaat"/>
+    <dc:identifier rdf:resource="http://actaborussica.bbaw.de/projektberichte/projektbericht-2012"/>
+    <dc:title>Projektbericht 2012</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://actaborussica.bbaw.de/projektberichte/projektbericht-2013">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/PreußenAlsKulturstaat"/>
+    <dc:identifier rdf:resource="http://actaborussica.bbaw.de/projektberichte/projektbericht-2013"/>
+    <dc:title>Projektbericht 2013</dc:title>
+  </rdf:Description>
 </rdf:RDF>
