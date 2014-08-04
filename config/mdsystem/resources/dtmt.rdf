@@ -10,26 +10,43 @@
    xmlns:gnd="http://d-nb.info/standards/elementset/gnd#" 
    xmlns:ore="http://www.openarchives.org/ore/terms/" 
 >
-<!-- nur mit Benutzerkennung zugreifbar
-<rdf:Description rdf:about="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/dtm/de/Transkriptionen">
+<!-- URL geändert -->
+<rdf:Description rdf:about="http://dtm.bbaw.de/publikationen/transkriptionen">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DTM/Transkription"/>
-  <dc:identifier rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/dtm/de/Transkriptionen"/>
+  <dc:identifier rdf:resource="http://dtm.bbaw.de/publikationen/transkriptionen"/>
 </rdf:Description>
--->
+
 <rdf:Description rdf:about="http://dtm.bbaw.de/bilder/elihss.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DTM/Transkription"/>
   <dc:identifier rdf:resource="http://dtm.bbaw.de/bilder/elihss.pdf"/>
+  <dc:title>Johannes Rothe: Elisabethleben. Transkription der Handschrift S.</dc:title>
+  <dc:description>Erfurt/Gotha, UFB - FB Gotha, Chart. B 180: Bl. 72v-135v</dc:description>
+  <dc:date>1415</dc:date>
+  <dc:date>2013</dc:date>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/HaaseA"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Schubert"/>
 </rdf:Description>
 <rdf:Description rdf:about="http://dtm.bbaw.de/bilder/christh.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DTM/Transkription"/>
   <dc:identifier rdf:resource="http://dtm.bbaw.de/bilder/christh.pdf"/>
+  <dc:title>Christherre-Chronik</dc:title>
+  <dc:description>: Göttingen, SUB, Cod. 2° philol. 188/10 Cim. (olim: Gotha, Membr. I. 88)</dc:description>
+  <dc:date>1991</dc:date>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/GaertnerK"/>
+  <dc:creator>Monika Schwabbauer</dc:creator>
 </rdf:Description>
 <rdf:Description rdf:about="http://dtm.bbaw.de/bilder/christherrechronik-teilausgabe.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DTM/Transkription"/>
   <dc:identifier rdf:resource="http://dtm.bbaw.de/bilder/christherrechronik-teilausgabe.pdf"/>
+  <dc:title>Die Christherre-Chronik</dc:title>
+  <dc:description>V. 7161-12450 der in den 'Deutschen Texten des Mittelalters' erscheinenden Ausgabe nach der Göttinger Handschrift Cod. 2° Philol. 188/10 (olim Gotha, Membr. I 88).</dc:description>
+  <dc:date>1998</dc:date>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/GaertnerK"/>
+  <dc:creator>Ralf Plate</dc:creator>
+  <dc:creator>Monika Schwabbauer</dc:creator>
 </rdf:Description>
 </rdf:RDF>

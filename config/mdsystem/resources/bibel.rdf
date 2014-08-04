@@ -15,4 +15,9 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BiblexegeseSpätantike"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/bibelexegese"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://www.bbaw.de/forschung/bibelexegese/projekte">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BiblexegeseSpätantike"/>
+    <dc:identifier rdf:resource="http://www.bbaw.de/forschung/bibelexegese/projekte"/>
+  </rdf:Description>
 </rdf:RDF>
