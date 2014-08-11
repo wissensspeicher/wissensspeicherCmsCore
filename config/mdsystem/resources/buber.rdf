@@ -15,4 +15,9 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MartinBuberWerkausgabe"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/buber"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://www.bbaw.de/forschung/buber/projektdarstellung">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MartinBuberWerkausgabe"/>
+    <dc:identifier rdf:resource="http://www.bbaw.de/forschung/buber/projektdarstellung"/>
+  </rdf:Description>
 </rdf:RDF>

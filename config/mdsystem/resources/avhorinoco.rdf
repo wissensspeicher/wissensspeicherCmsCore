@@ -19,100 +19,175 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Orinoco"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/avh/orinoco/texte/german.html"/>
+  <dc:title>Reise in die Aequinoctial-Gegenden des neuen Continents in den Jahren 1799, 1800, 1801, 1802, 1803 und 1804.</dc:title>
+  <dc:date>1799</dc:date>
+  <dc:date>1800</dc:date>
+  <dc:date>1801</dc:date>
+  <dc:date>1802</dc:date>
+  <dc:date>1803</dc:date>
+  <dc:date>1804</dc:date>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/HumboldtAlexander"/>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.bbaw.de/forschung/avh/orinoco/texte/english.html">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Orinoco"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/avh/orinoco/texte/english.html"/>
+  <dc:title>Personal Narrative of Travels to the Equinoctial Regions of the New Continent, During the Years 1799-1804</dc:title>
+  <dc:date>1799</dc:date>
+  <dc:date>1800</dc:date>
+  <dc:date>1801</dc:date>
+  <dc:date>1802</dc:date>
+  <dc:date>1803</dc:date>
+  <dc:date>1804</dc:date>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/HumboldtAlexander"/>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.bbaw.de/forschung/avh/orinoco/texte/french.html">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Orinoco"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/avh/orinoco/texte/french.html"/>
+  <dc:title>Voyage aux régions équinoxiales du Nouveau Continent</dc:title>
+  <dc:date>1799</dc:date>
+  <dc:date>1800</dc:date>
+  <dc:date>1801</dc:date>
+  <dc:date>1802</dc:date>
+  <dc:date>1803</dc:date>
+  <dc:date>1804</dc:date>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/HumboldtAlexander"/>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_240.html">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Orinoco"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_240.html"/>
+  <dc:title>Tagebuch</dc:title>
+  <dc:date type="xs:date">1800-03-31/1800-04-07</dc:date>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/HumboldtAlexander"/>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_241.html">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Orinoco"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_241.html"/>
+  <dc:title>Tagebuch</dc:title>
+  <dc:date type="xs:date">1800-03-31/1800-04-07</dc:date>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/HumboldtAlexander"/>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_242.html">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Orinoco"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_242.html"/>
+  <dc:title>Tagebuch</dc:title>
+  <dc:date type="xs:date">1800-03-31/1800-04-07</dc:date>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/HumboldtAlexander"/>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_243.html">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Orinoco"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_243.html"/>
+  <dc:title>Tagebuch</dc:title>
+  <dc:date type="xs:date">1800-03-31/1800-04-07</dc:date>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/HumboldtAlexander"/>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_244.html">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Orinoco"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_244.html"/>
+  <dc:title>Tagebuch</dc:title>
+  <dc:date type="xs:date">1800-03-31/1800-04-07</dc:date>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/HumboldtAlexander"/>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_245.html">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Orinoco"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_245.html"/>
+  <dc:title>Tagebuch</dc:title>
+  <dc:date type="xs:date">1800-03-31/1800-04-07</dc:date>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/HumboldtAlexander"/>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_246.html">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Orinoco"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_246.html"/>
+  <dc:title>Tagebuch</dc:title>
+  <dc:date type="xs:date">1800-03-31/1800-04-07</dc:date>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/HumboldtAlexander"/>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_247.html">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Orinoco"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_247.html"/>
+  <dc:title>Tagebuch</dc:title>
+  <dc:date type="xs:date">1800-03-31/1800-04-07</dc:date>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/HumboldtAlexander"/>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_248.html">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Orinoco"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_248.html"/>
+  <dc:title>Tagebuch</dc:title>
+  <dc:date type="xs:date">1800-03-31/1800-04-07</dc:date>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/HumboldtAlexander"/>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_249.html">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Orinoco"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_249.html"/>
+  <dc:title>Tagebuch</dc:title>
+  <dc:date type="xs:date">1800-03-31/1800-04-07</dc:date>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/HumboldtAlexander"/>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_250.html">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Orinoco"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_250.html"/>
+  <dc:title>Tagebuch</dc:title>
+  <dc:date type="xs:date">1800-03-31/1800-04-07</dc:date>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/HumboldtAlexander"/>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_251.html">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Orinoco"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_251.html"/>
+  <dc:title>Tagebuch</dc:title>
+  <dc:date type="xs:date">1800-03-31/1800-04-07</dc:date>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/HumboldtAlexander"/>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_252.html">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Orinoco"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_252.html"/>
+  <dc:title>Tagebuch</dc:title>
+  <dc:date type="xs:date">1800-03-31/1800-04-07</dc:date>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/HumboldtAlexander"/>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_253.html">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Orinoco"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_253.html"/>
+  <dc:title>Tagebuch</dc:title>
+  <dc:date type="xs:date">1800-03-31/1800-04-07</dc:date>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/HumboldtAlexander"/>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_254.html">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Orinoco"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_254.html"/>
+  <dc:title>Tagebuch</dc:title>
+  <dc:date type="xs:date">1800-03-31/1800-04-07</dc:date>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/HumboldtAlexander"/>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_255.html">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Orinoco"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_255.html"/>
+  <dc:title>Tagebuch</dc:title>
+  <dc:date type="xs:date">1800-03-31/1800-04-07</dc:date>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/HumboldtAlexander"/>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_256.html">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Orinoco"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/avh/orinoco/diary/diary_256.html"/>
+  <dc:title>Tagebuch</dc:title>
+  <dc:date type="xs:date">1800-03-31/1800-04-07</dc:date>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/HumboldtAlexander"/>
 </rdf:Description>
 </rdf:RDF>

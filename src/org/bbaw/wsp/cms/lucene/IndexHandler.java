@@ -644,6 +644,7 @@ public class IndexHandler {
       searcher = documentsSearcherManager.acquire();
       String defaultQueryFieldName = "tokenOrig";
       QueryParser queryParser = new QueryParser(Version.LUCENE_35, defaultQueryFieldName, documentsPerFieldAnalyzer);
+      queryParser.setAllowLeadingWildcard(true);
       Query query = null;
       if (queryStr.equals("*")) {
         query = new MatchAllDocsQuery();
@@ -667,7 +668,7 @@ public class IndexHandler {
       if (sortFieldNames != null) {
         sort = buildSort(sortFieldNames, "doc");  // build sort criteria
       }
-      TopFieldCollector topFieldCollector = TopFieldCollector.create(sort, 1000000, true, true, true, true); // default topFieldCollector for TopDocs results
+      TopFieldCollector topFieldCollector = TopFieldCollector.create(sort, to + 1, true, true, true, true); // default topFieldCollector for TopDocs results, numHits: maximum is "to" (performance gain for every bigger result)
       FacetSearchParams facetSearchParams = new FacetSearchParams();
       facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("collectionNames"), 1000));
       facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("language"), 1000));
@@ -689,8 +690,8 @@ public class IndexHandler {
         facets = new Facets(tmpFacetResult);
       resultDocs.setMaxScore(1);
       int toTmp = to;
-      if (resultDocs.scoreDocs.length <= to)
-        toTmp = resultDocs.scoreDocs.length - 1;
+      if (resultDocs.totalHits <= to)
+        toTmp = resultDocs.totalHits - 1;
       if (resultDocs != null) {
         ArrayList<org.bbaw.wsp.cms.document.Document> docs = new ArrayList<org.bbaw.wsp.cms.document.Document>();
         for (int i=from; i<=toTmp; i++) { 
@@ -716,6 +717,8 @@ public class IndexHandler {
             if (! hitFragments.isEmpty())
               doc.setHitFragments(hitFragments);
           }
+          /*
+           * only needed when indexing works also on xml document nodes 
           // if xml document: try to add pageNumber to resulting doc
           DocumentHandler docHandler = new DocumentHandler();
           Fieldable docIdField = luceneDoc.getFieldable("docId");
@@ -738,13 +741,14 @@ public class IndexHandler {
               }
             }
           }
+          */
           docs.add(doc);
         }
         int sizeTotalDocuments = documentsIndexReader.numDocs();
         int sizeTotalTerms = tokens.size(); // term count over tokenOrig
         if (docs != null) {
           hits = new Hits(docs, from, to);
-          hits.setSize(resultDocs.scoreDocs.length);
+          hits.setSize(resultDocs.totalHits);
           hits.setSizeTotalDocuments(sizeTotalDocuments);
           hits.setSizeTotalTerms(sizeTotalTerms);
           hits.setQuery(morphQuery);
@@ -776,9 +780,13 @@ public class IndexHandler {
       makeNodesSearcherManagerUpToDate();
       searcher = nodesSearcherManager.acquire();
       String fieldNameDocId = "docId";
-      Query queryDocId = new QueryParser(Version.LUCENE_35, fieldNameDocId, nodesPerFieldAnalyzer).parse(docId);
+      QueryParser queryParser1 = new QueryParser(Version.LUCENE_35, fieldNameDocId, nodesPerFieldAnalyzer);
+      queryParser1.setAllowLeadingWildcard(true);
+      Query queryDocId = queryParser1.parse(docId);
       String defaultQueryFieldName = "tokenOrig";
-      Query query = new QueryParser(Version.LUCENE_35, defaultQueryFieldName, nodesPerFieldAnalyzer).parse(queryStr);
+      QueryParser queryParser2 = new QueryParser(Version.LUCENE_35, defaultQueryFieldName, nodesPerFieldAnalyzer);
+      queryParser2.setAllowLeadingWildcard(true);
+      Query query = queryParser2.parse(queryStr);
       String language = docMetadataRecord.getLanguage();
       if (language == null || language.equals("")) {
         String collectionNames = docMetadataRecord.getCollectionNames();

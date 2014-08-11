@@ -112,14 +112,18 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusInscriptLatinarum"/>
   <dc:identifier rdf:resource="http://cil.bbaw.de/dateien/kontakt.html"/>
 </rdf:Description>
+<rdf:Description rdf:about="http://cil.bbaw.de/afrika/afrika.html">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusInscriptLatinarum"/>
+  <dc:identifier rdf:resource="http://cil.bbaw.de/afrika/afrika.html"/>
+</rdf:Description>
+
+<!-- PDF  -->
 <rdf:Description rdf:about="http://cil.bbaw.de/pdf/CILBro2007_S.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusInscriptLatinarum"/>
   <dc:identifier rdf:resource="http://cil.bbaw.de/pdf/CILBro2007_S.pdf"/>
 </rdf:Description>
-
-
-<!-- PDF  -->
 <rdf:Description rdf:about="http://cil.bbaw.de/pdf/spiegelbilder.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusInscriptLatinarum"/>

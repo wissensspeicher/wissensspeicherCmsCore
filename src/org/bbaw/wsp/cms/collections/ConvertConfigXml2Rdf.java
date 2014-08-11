@@ -43,7 +43,7 @@ public class ConvertConfigXml2Rdf {
       // convertConfigXml2Rdf.convertAll();
       // convertConfigXml2Rdf.proofRdfProjects();
       // convertConfigXml2Rdf.proofCollectionProjects();
-      // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("dwb");
+      // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("cil");
       // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("jdg");
       // convertConfigXml2Rdf.convert(c, false);
       // convertConfigXml2Rdf.convertDbXmlFiles(c);
@@ -434,6 +434,7 @@ public class ConvertConfigXml2Rdf {
     String webIdAfterStr = db.getWebIdAfterStr();
     String dbType = db.getType();
     String id = row.getFieldValue(mainResourcesTableId);
+    id = StringUtils.deresolveXmlEntities(id);
     String rdfId = "http://" + collectionId + ".bbaw.de/id/" + id;
     String rdfWebId = rdfId;
     if (webIdPreStr != null) {

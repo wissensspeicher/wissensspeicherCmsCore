@@ -92,29 +92,26 @@ public class DocumentHandler {
       String docDestFileName = getDocFullFileName(docId); 
       boolean docIsXml = isDocXml(docId); 
       URL srcUrl = null;
-      String protocol = null;
       if (srcUrlStr != null && ! srcUrlStr.equals("empty")) {
         srcUrl = new URL(srcUrlStr);
-        protocol = srcUrl.getProtocol();
       }
       File docDestFile = new File(docDestFileName);
-      // perform operation on file system
-      if (protocol != null && protocol.equals("file")) {
-        docOperation.setStatus("upload file: " + srcUrlStr + " to CMS");
-      } else if (protocol != null) {
-        docOperation.setStatus("download file from: " + srcUrlStr + " to CMS");
-      }
-      boolean isDbRecord = mdRecord.isDbRecord();
-      if (! isDbRecord) {
-        boolean success = copyUrlToFile(srcUrl, docDestFile);  // several tries with delay
-        if (! success)
-          return;
-      }
-      mdRecord.setLastModified(new Date());
       String mimeType = mdRecord.getType();
       if (mimeType == null) {
         mimeType = getMimeType(docId);
         mdRecord.setType(mimeType);
+      }
+      // perform operation on file system
+      boolean isDbRecord = mdRecord.isDbRecord();
+      boolean isText = isText(mimeType);
+      if (! isDbRecord && isText) {
+        boolean success = copyUrlToFile(srcUrl, docDestFile);  // several tries with delay
+        if (! success)
+          return;
+      }
+      if (mdRecord.getLastModified() == null) {
+        Date lastModified = new Date();
+        mdRecord.setLastModified(lastModified);
       }
       String docType = null;
       XQueryEvaluator xQueryEvaluator = new XQueryEvaluator();
@@ -217,7 +214,7 @@ public class DocumentHandler {
           mdRecord.setLanguage(mainLanguage);
       } 
       // build the documents fulltext fields
-      if (srcUrl != null && docType != null && ! docType.equals("mets") && ! isDbRecord)
+      if (srcUrl != null && docType != null && ! docType.equals("mets") && ! isDbRecord && isText)
         buildFulltextFields(docOperation);
       // perform operation on Lucene
       docOperation.setStatus(operationName + " document: " + docId + " in CMS");
@@ -466,7 +463,10 @@ public class DocumentHandler {
               if (mimeType != null && mimeType.equals("application/pdf")) {
                 // nothing: creator is not the creator of the document in mostly all pdf-documents, so is not considered
               } else {
-                mdRecord.setCreator(tikaMDRecord.getCreator());
+                String tikaCreator = tikaMDRecord.getCreator();
+                boolean isProper = isProper("author", tikaCreator);
+                if (isProper)
+                  mdRecord.setCreator(tikaCreator);
               }
             }
             if (mdRecord.getTitle() == null) {
@@ -586,6 +586,9 @@ public class DocumentHandler {
           XdmItem xdmItemAuthor = xmdValueAuthorsIterator.next();
           String xdmItemAuthorStr = xdmItemAuthor.toString();
           String name = xdmItemAuthor.getStringValue();
+          boolean isProper = isProper("author", name);
+          if (! isProper)
+            name = "";
           if (name != null) {
             name = name.replaceAll("\n|\\s\\s+", " ").trim();
           }
@@ -844,6 +847,9 @@ public class DocumentHandler {
       if (identifier != null && ! identifier.isEmpty())
         identifier = StringUtils.deresolveXmlEntities(identifier.trim());
       String creator = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/head/meta[@name = 'DC.creator']/@content)");
+      boolean isProper = isProper("author", creator);
+      if (! isProper)
+        creator = "";
       if (creator != null) {
         creator = StringUtils.deresolveXmlEntities(creator.trim());
         if (creator.isEmpty())
@@ -968,6 +974,15 @@ public class DocumentHandler {
     return places;
   }
 
+  private boolean isProper(String fieldName, String fieldValue) {
+    if (fieldValue == null)
+      return true;
+    boolean isProper = true;
+    if (fieldName != null && fieldName.equals("author") && (fieldValue.equals("admin") || fieldValue.equals("user")))
+      return false;
+    return isProper;
+  }
+
   private boolean copyUrlToFile(URL srcUrl, File docDestFile) {
     try {
       if (srcUrl != null) {
@@ -1045,6 +1060,13 @@ public class DocumentHandler {
         isXml = true;
     }
     return isXml;
+  }
+
+  public boolean isText(String mimeType) {
+    boolean isText = true;
+    if (mimeType != null && mimeType.contains("image"))
+      return false;
+    return isText;
   }
 
   public String getMimeType(String docId) {

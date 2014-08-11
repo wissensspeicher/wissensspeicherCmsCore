@@ -3,6 +3,7 @@ package org.bbaw.wsp.cms.document;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
@@ -15,6 +16,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import de.mpg.mpiwg.berlin.mpdl.util.StringUtils;
+import de.mpg.mpiwg.berlin.mpdl.util.Util;
 
 public class Facets implements Iterable<Facet> {
   protected Hashtable<String, Facet> facets;
@@ -179,6 +181,11 @@ public class Facets implements Iterable<Facet> {
             if (rdfId == null)
               rdfId = "none";
             jsonFacetValue.put("rdfUri", rdfId); 
+            Date lastModified = coll.getLastModified();
+            if (lastModified != null) {
+              String xsDateStrLastModified = new Util().toXsDate(lastModified);
+              jsonFacetValue.put("lastModified", xsDateStrLastModified);
+            }
           } catch (Exception e) {
             jsonFacetValue.put("rdfUri", "none"); 
           }
