@@ -41,6 +41,8 @@
 <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>Directiones ad rem medicam pertinentes</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4038243-6">Medizin</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/4014770-8">England</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118537202">Galen</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Directiones%2Bad%2Brem%2Bmedicam%2Bpertinentes/LH003%252C01%252C03_001r/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Directiones%2Bad%2Brem%2Bmedicam%2Bpertinentes/LH003%252C01%252C03_001r/index.html"/>
@@ -54,6 +56,8 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>Directiones ad rem medicam pertinentes</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4038243-6">Medizin</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118659642">Boyle, Robert</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/117512753">Eschinardi, Francesco</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Directiones%2Bad%2Brem%2Bmedicam%2Bpertinentes/LH003%252C01%252C03_001v/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Directiones%2Bad%2Brem%2Bmedicam%2Bpertinentes/LH003%252C01%252C03_001v/index.html"/>
@@ -80,6 +84,9 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>Directiones ad rem medicam pertinentes</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4038243-6">Medizin</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/4024344-8">Helmstedt</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/4032399-7">Kopenhagen</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/173170560">Bils, Louis de</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Directiones%2Bad%2Brem%2Bmedicam%2Bpertinentes/LH003%252C01%252C03_002v/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Directiones%2Bad%2Brem%2Bmedicam%2Bpertinentes/LH003%252C01%252C03_002v/index.html"/>
@@ -93,6 +100,9 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>Directiones ad rem medicam pertinentes</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4038243-6">Medizin</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/11863819X">Campanella, Tommaso</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/128884509">Charas, Moyse</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118561448">Kepler, Johannes</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Directiones%2Bad%2Brem%2Bmedicam%2Bpertinentes/LH003%252C01%252C03_003r/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Directiones%2Bad%2Brem%2Bmedicam%2Bpertinentes/LH003%252C01%252C03_003r/index.html"/>
@@ -119,6 +129,8 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>Directiones ad rem medicam pertinentes</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4038243-6">Medizin</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118652850">Bartholin, Thomas</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118774883">Hooke, Robert</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Directiones%2Bad%2Brem%2Bmedicam%2Bpertinentes/LH003%252C01%252C03_004r/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Directiones%2Bad%2Brem%2Bmedicam%2Bpertinentes/LH003%252C01%252C03_004r/index.html"/>
@@ -132,6 +144,11 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>Directiones ad rem medicam pertinentes</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4038243-6">Medizin</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/4014770-8">England</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/100752454">Campensis, Claudius</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/104245999">Cureau de la Chambre, Marin</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/117497541">Fabri, Honoré</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/11855140X">Hippocrates, von Kos</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Directiones%2Bad%2Brem%2Bmedicam%2Bpertinentes/LH003%252C01%252C03_004v/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Directiones%2Bad%2Brem%2Bmedicam%2Bpertinentes/LH003%252C01%252C03_004v/index.html"/>
@@ -145,6 +162,7 @@
 <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>Directiones ad rem medicam pertinentes</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4038243-6">Medizin</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/129782637">Ludwig, Daniel</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Directiones%2Bad%2Brem%2Bmedicam%2Bpertinentes/LH003%252C01%252C03_005r/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Directiones%2Bad%2Brem%2Bmedicam%2Bpertinentes/LH003%252C01%252C03_005r/index.html"/>
@@ -184,6 +202,7 @@
 <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>Directiones ad rem medicam pertinentes</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4038243-6">Medizin</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118505696">Bacon, Francis</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Directiones%2Bad%2Brem%2Bmedicam%2Bpertinentes/LH003%252C01%252C03_006v/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Directiones%2Bad%2Brem%2Bmedicam%2Bpertinentes/LH003%252C01%252C03_006v/index.html"/>
@@ -197,6 +216,8 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>Directiones ad rem medicam pertinentes</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4038243-6">Medizin</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118659642">Boyle, Robert</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118524844">Descartes, René</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Directiones%2Bad%2Brem%2Bmedicam%2Bpertinentes/LH003%252C01%252C03_007r/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Directiones%2Bad%2Brem%2Bmedicam%2Bpertinentes/LH003%252C01%252C03_007r/index.html"/>
@@ -210,6 +231,9 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>Directiones ad rem medicam pertinentes</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4038243-6">Medizin</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/4829027-0">Kos</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118500864">Asklepios</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/11855140X">Hippocrates, von Kos</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Directiones%2Bad%2Brem%2Bmedicam%2Bpertinentes/LH003%252C01%252C03_007v/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Directiones%2Bad%2Brem%2Bmedicam%2Bpertinentes/LH003%252C01%252C03_007v/index.html"/>
@@ -223,6 +247,10 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>Directiones ad rem medicam pertinentes</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4038243-6">Medizin</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/100049974">Borri, Giuseppe Francesco</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/119058626">Casaubon, Méric</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/104082003">Du Moulin, Pierre</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/11855140X">Hippocrates, von Kos</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Directiones%2Bad%2Brem%2Bmedicam%2Bpertinentes/LH003%252C01%252C03_008r/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Directiones%2Bad%2Brem%2Bmedicam%2Bpertinentes/LH003%252C01%252C03_008r/index.html"/>
@@ -236,6 +264,8 @@
 <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>Directiones ad rem medicam pertinentes</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4038243-6">Medizin</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/117584363">Bellini, Lorenzo</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/124582656">Lower, Richard</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Directiones%2Bad%2Brem%2Bmedicam%2Bpertinentes/LH003%252C01%252C03_008v/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Directiones%2Bad%2Brem%2Bmedicam%2Bpertinentes/LH003%252C01%252C03_008v/index.html"/>
@@ -249,6 +279,8 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>Note sur l'optique de Desargues</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4043650-0">Optik</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/12466511X">Aleaume, Jacques</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118671545">Desargues, Girard</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Note%2Bsur%2Bl%2527optique%2Bde%2BDesargues/LH035%252C01%252C12_012r/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Note%2Bsur%2Bl%2527optique%2Bde%2BDesargues/LH035%252C01%252C12_012r/index.html"/>
@@ -358,6 +390,7 @@
     <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/pdf/Calculus%2Belasticus%2B%25282%2529/LH035%252C05%252C02_009r/LH035,05!02_009%2Bra.jpg"/>
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>Calculus elasticus (2)</dc:title>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118650130">Aristoteles</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Calculus%2Belasticus%2B%25282%2529/LH035%252C05%252C02_009r/index.html">
     <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Calculus%2Belasticus%2B%25282%2529/LH035%252C05%252C02_009r/index.html"/>
@@ -420,6 +453,10 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>Index librorum diversorum</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4127921-9">Alchemie</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/130263400">Bosc, Pierre</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/119634414">Cabot, Vincent</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/124495036">Fachs, Modestin</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/119522403">Libavius, Andreas</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Index%2Blibrorum%2Bdiversorum/LH035%252C12%252C01_328r/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Index%2Blibrorum%2Bdiversorum/LH035%252C12%252C01_328r/index.html"/>
@@ -498,6 +535,10 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>Aus Otto von Guericke, Experimenta nova</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4130703-3">Drucklufttechnik</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/4018145-5">Frankreich</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118645714">Aristarchus, Samius</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118588095">Cusanus, Nicolaus</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/11854330X">Guericke, Otto von</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Aus%2BOtto%2Bvon%2BGuericke%252C%2BExperimenta%2Bnova/LH035%252C14%252C02_091v/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Aus%2BOtto%2Bvon%2BGuericke%252C%2BExperimenta%2Bnova/LH035%252C14%252C02_091v/index.html"/>
@@ -512,6 +553,9 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dc:title>Aus Otto von Guericke, Experimenta nova</dc:title>
   <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4130703-3">Drucklufttechnik</gnd:gndSubjectCategory>
+  <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/4007616-7">Bologna</gnd:gndRelatedPlaceOrGeographicName>
+  <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/4036770-8">Lyon</gnd:gndRelatedPlaceOrGeographicName>
+  <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118562347">Kircher, Athanasius</gnd:gndRelatedPerson>
 </rdf:Description>
 -->
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Aus%2BOtto%2Bvon%2BGuericke%252C%2BExperimenta%2Bnova/LH035%252C14%252C02_092r/index.html">
@@ -527,6 +571,11 @@
     <dc:title>Aus Otto von Guericke, Experimenta nova</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4130703-3">Drucklufttechnik</gnd:gndSubjectCategory>
     <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/4001670-5">Amerika</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/4037124-4">Mainz</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/11854330X">Guericke, Otto von</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/124383955">Havemann, Michael</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/116972815">Metternich, Carl Heinrich von</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/119357100">Lubienietzki, Stanislaus</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Aus%2BOtto%2Bvon%2BGuericke%252C%2BExperimenta%2Bnova/LH035%252C14%252C02_093v/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Aus%2BOtto%2Bvon%2BGuericke%252C%2BExperimenta%2Bnova/LH035%252C14%252C02_093v/index.html"/>
@@ -554,6 +603,14 @@
     <dc:title>Aus Otto von Guericke, Experimenta nova</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4130703-3">Drucklufttechnik</gnd:gndSubjectCategory>
     <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/4001783-7">Amsterdam</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118503863">Archimedes</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118659642">Boyle, Robert</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118880632">Clavius, Christoph</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/100154042">Gothofredus, Dionysius</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/11854330X">Guericke, Otto von</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/119431416">Hevelius, Johannes</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118639749">Huygens, Christiaan</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/119443546">Lessius, Leonhard</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Aus%2BOtto%2Bvon%2BGuericke%252C%2BExperimenta%2Bnova/LH035%252C14%252C02_095v/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Aus%2BOtto%2Bvon%2BGuericke%252C%2BExperimenta%2Bnova/LH035%252C14%252C02_095v/index.html"/>
@@ -567,6 +624,10 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>Aus Otto von Guericke, Experimenta nova</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4130703-3">Drucklufttechnik</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/128886-6">Holland</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/102435006">Baliani, Giovanni Battista</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118537229">Galilei, Galileo</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/11854330X">Guericke, Otto von</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Aus%2BOtto%2Bvon%2BGuericke%252C%2BExperimenta%2Bnova/LH035%252C14%252C02_096r/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Aus%2BOtto%2Bvon%2BGuericke%252C%2BExperimenta%2Bnova/LH035%252C14%252C02_096r/index.html"/>
@@ -580,6 +641,8 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>Aus Otto von Guericke, Experimenta nova</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4130703-3">Drucklufttechnik</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/4048989-9">Regensburg</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/124534570">Dalancé, Joachim</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Aus%2BOtto%2Bvon%2BGuericke%252C%2BExperimenta%2Bnova/LH035%252C14%252C02_097v/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Aus%2BOtto%2Bvon%2BGuericke%252C%2BExperimenta%2Bnova/LH035%252C14%252C02_097v/index.html"/>
@@ -593,6 +656,16 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>Aus Otto von Guericke, Experimenta nova</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4130703-3">Drucklufttechnik</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/4029760-3">Karpathen</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/4762315-9">Maelstrom</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/4042640-3">Norwegen</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/4048035-5">Quedlinburg</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPlaceOrGeographicName>Zeunickenberg</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPlaceOrGeographicName>Seveckenberg</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118645714">Aristarchus, Samius</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118514237">Brahe, Tycho de</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/104348941">Frölich, David</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118537229">Galilei, Galileo</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Aus%2BOtto%2Bvon%2BGuericke%252C%2BExperimenta%2Bnova/LH035%252C14%252C02_098r/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Aus%2BOtto%2Bvon%2BGuericke%252C%2BExperimenta%2Bnova/LH035%252C14%252C02_098r/index.html"/>
@@ -606,6 +679,8 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>Aus Otto von Guericke, Experimenta nova</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4130703-3">Drucklufttechnik</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/11854330X">Guericke, Otto von</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118562347">Kircher, Athanasius</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Aus%2BOtto%2Bvon%2BGuericke%252C%2BExperimenta%2Bnova/LH035%252C14%252C02_099v/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Aus%2BOtto%2Bvon%2BGuericke%252C%2BExperimenta%2Bnova/LH035%252C14%252C02_099v/index.html"/>
@@ -619,6 +694,14 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>Aus Otto von Guericke, Experimenta nova</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4130703-3">Drucklufttechnik</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118647547">Battānī, Mu&#x1E25;ammad Ibn-&#x11E;ābir al-</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118514237">Brahe, Tycho de</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/1045066311">Chiaramonti, Scipione</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118565273">Copernicus, Nicolaus</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118810987">Fracastoro, Girolamo</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/111548993">Gemma Frisius van den Steen, Rainer</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/100499651">Hipparchos, von Nicaea</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118561448">Kepler, Johannes</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Aus%2BOtto%2Bvon%2BGuericke%252C%2BExperimenta%2Bnova/LH035%252C14%252C02_100r/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Aus%2BOtto%2Bvon%2BGuericke%252C%2BExperimenta%2Bnova/LH035%252C14%252C02_100r/index.html"/>
@@ -632,6 +715,12 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>Aus Otto von Guericke, Experimenta nova</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4130703-3">Drucklufttechnik</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/63739-7">Böhmen</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/4029760-3">Karpathen</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118514237">Brahe, Tycho de</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118739840">Fabri de Peiresc, Nicolas Claude</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/104348941">Frölich, David</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118537695">Gassendi, Pierre</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Aus%2BOtto%2Bvon%2BGuericke%252C%2BExperimenta%2Bnova/LH035%252C14%252C02_101v/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Aus%2BOtto%2Bvon%2BGuericke%252C%2BExperimenta%2Bnova/LH035%252C14%252C02_101v/index.html"/>
@@ -1104,6 +1193,8 @@
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/pdf/M%2526eacute%253Bthode%2Bet%2Binventions%2Bde%2BLa%2BMontre/LH035%252C15%252C06_020r/LH035,15%2106_020%2Bra.png"/>
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>Méthode et inventions de La Montre</dc:title>
+    <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/4044660-8">Paris</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPerson>Montre, Abbe de la</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/M%2526eacute%253Bthode%2Bet%2Binventions%2Bde%2BLa%2BMontre/LH035%252C15%252C06_020r/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/M%2526eacute%253Bthode%2Bet%2Binventions%2Bde%2BLa%2BMontre/LH035%252C15%252C06_020r/index.html"/>
@@ -1156,6 +1247,11 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>De longitudinibus inveniendis 1</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4020202-1">Geodäsie</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118671936">Digby, Kenelm</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/100816207">Drebbel, Cornelius</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118542702">Grotius, Hugo</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118639749">Huygens, Christiaan</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118639889">Jacob I., Englischer König</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Blongitudinibus%2Binveniendis%2B1/LH035%252C15%252C06_046r/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Blongitudinibus%2Binveniendis%2B1/LH035%252C15%252C06_046r/index.html"/>
@@ -1182,6 +1278,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>De longitudinibus inveniendis 2</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4020202-1">Geodäsie</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/100816207">Drebbel, Cornelius</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Blongitudinibus%2Binveniendis%2B2/LH035%252C15%252C06_047r/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Blongitudinibus%2Binveniendis%2B2/LH035%252C15%252C06_047r/index.html"/>
@@ -1208,6 +1305,8 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>De longitudinibus inveniendis 2</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4020202-1">Geodäsie</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/4044660-8">Paris</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/14210616X">Cramoisy, Sébastien</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Blongitudinibus%2Binveniendis%2B2/LH035%252C15%252C06_048r/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Blongitudinibus%2Binveniendis%2B2/LH035%252C15%252C06_048r/index.html"/>
@@ -1221,6 +1320,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>De longitudinibus inveniendis 2</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4020202-1">Geodäsie</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118562347">Kircher, Athanasius</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Blongitudinibus%2Binveniendis%2B2/LH035%252C15%252C06_048v/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Blongitudinibus%2Binveniendis%2B2/LH035%252C15%252C06_048v/index.html"/>
@@ -1234,6 +1334,9 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>De longitudinibus inveniendis 3</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4020202-1">Geodäsie</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/131791850">Grandami, Jacques</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/100163998">Hérigone, Pierre</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118562347">Kircher, Athanasius</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Blongitudinibus%2Binveniendis%2B3/LH035%252C15%252C06_049r/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Blongitudinibus%2Binveniendis%2B3/LH035%252C15%252C06_049r/index.html"/>
@@ -1247,6 +1350,13 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>De longitudinibus inveniendis 3</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4020202-1">Geodäsie</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/4026722-2">Indien</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/119057441">Boodt, Anselm Boethius de</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/124652794">Cabeo, Niccolò</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/12233020X">Gilbert, William</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/131791850">Grandami, Jacques</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118639749">Huygens, Christiaan</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118562347">Kircher, Athanasius</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Blongitudinibus%2Binveniendis%2B3/LH035%252C15%252C06_049v/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Blongitudinibus%2Binveniendis%2B3/LH035%252C15%252C06_049v/index.html"/>
@@ -1260,6 +1370,19 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dc:title>De longitudinibus inveniendis 3</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4020202-1">Geodäsie</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/4008003-1">Brasilien</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/4018145-5">Frankreich</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/4020185-5">Genua</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/4031483-2">Köln</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/4029307-5">Kalifornien</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/4035919-0">Lissabon</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/4015754-4">Nordmeer</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/4116883-5">Quito</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/4050471-2">Rom</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/102435006">Baliani, Giovanni Battista</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/12233020X">Gilbert, William</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/131791850">Grandami, Jacques</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118562347">Kircher, Athanasius</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Blongitudinibus%2Binveniendis%2B3/LH035%252C15%252C06_050r/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Blongitudinibus%2Binveniendis%2B3/LH035%252C15%252C06_050r/index.html"/>
@@ -1274,6 +1397,9 @@
     <dc:title>De longitudinibus inveniendis 3</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4020202-1">Geodäsie</gnd:gndSubjectCategory>
     <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/4002529-9">Arabien</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/4037694-1">Marseille</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118639749">Huygens, Christiaan</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118562347">Kircher, Athanasius</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Blongitudinibus%2Binveniendis%2B3/LH035%252C15%252C06_050v/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Blongitudinibus%2Binveniendis%2B3/LH035%252C15%252C06_050v/index.html"/>
@@ -1286,6 +1412,8 @@
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/pdf/De%2Blongitudinibus%2Binveniendis%2B4/LH035%252C15%252C06_051r/LH035,15%2106_051%2Bra-11041.png"/>
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>De longitudinibus inveniendis 4</dc:title>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/131791850">Grandami, Jacques</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118562347">Kircher, Athanasius</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Blongitudinibus%2Binveniendis%2B4/LH035%252C15%252C06_051r/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Blongitudinibus%2Binveniendis%2B4/LH035%252C15%252C06_051r/index.html"/>
@@ -1298,6 +1426,8 @@
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/pdf/De%2Blongitudinibus%2Binveniendis%2B4/LH035%252C15%252C06_051v/LH035,15%2106_051%2Bva-11043.png"/>
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>De longitudinibus inveniendis 4</dc:title>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/131791850">Grandami, Jacques</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118562347">Kircher, Athanasius</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Blongitudinibus%2Binveniendis%2B4/LH035%252C15%252C06_051v/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Blongitudinibus%2Binveniendis%2B4/LH035%252C15%252C06_051v/index.html"/>
@@ -1310,6 +1440,7 @@
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/pdf/De%2Blongitudinibus%2Binveniendis%2B4/LH035%252C15%252C06_052r/LH035,15%2106_052%2Bra-11044.png"/>
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>De longitudinibus inveniendis 4</dc:title>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/124652794">Cabeo, Niccolò</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Blongitudinibus%2Binveniendis%2B4/LH035%252C15%252C06_052r/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Blongitudinibus%2Binveniendis%2B4/LH035%252C15%252C06_052r/index.html"/>
@@ -1322,6 +1453,9 @@
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/pdf/De%2Blongitudinibus%2Binveniendis%2B4/LH035%252C15%252C06_052v/LH035,15%2106_052%2Bva-11046.png"/>
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>De longitudinibus inveniendis 4</dc:title>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/131791850">Grandami, Jacques</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118639749">Huygens, Christiaan</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118562347">Kircher, Athanasius</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Blongitudinibus%2Binveniendis%2B4/LH035%252C15%252C06_052v/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Blongitudinibus%2Binveniendis%2B4/LH035%252C15%252C06_052v/index.html"/>
@@ -1362,6 +1496,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>Machina ad navigationem efficiendam</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4020202-1">Geodäsie</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118562347">Kircher, Athanasius</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Machina%2Bad%2Bnavigationem%2Befficiendam/LH035%252C15%252C06_056r/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Machina%2Bad%2Bnavigationem%2Befficiendam/LH035%252C15%252C06_056r/index.html"/>
@@ -1375,6 +1510,8 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>Cogitationes diversae circa navigationem</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4020202-1">Geodäsie</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/117497541">Fabri, Honoré</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118639749">Huygens, Christiaan</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Cogitationes%2Bdiversae%2Bcirca%2Bnavigationem/LH035%252C15%252C06_057r/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Cogitationes%2Bdiversae%2Bcirca%2Bnavigationem/LH035%252C15%252C06_057r/index.html"/>
@@ -1516,6 +1653,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>De longitudinum determinatione scheda prima</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4020202-1">Geodäsie</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118639749">Huygens, Christiaan</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Blongitudinum%2Bdeterminatione%2Bscheda%2Bprima/LH035%252C15%252C06_064r/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Blongitudinum%2Bdeterminatione%2Bscheda%2Bprima/LH035%252C15%252C06_064r/index.html"/>
@@ -1529,6 +1667,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>De longitudinum determinatione scheda prima</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4020202-1">Geodäsie</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118562347">Kircher, Athanasius</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Blongitudinum%2Bdeterminatione%2Bscheda%2Bprima/LH035%252C15%252C06_064v/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Blongitudinum%2Bdeterminatione%2Bscheda%2Bprima/LH035%252C15%252C06_064v/index.html"/>
@@ -1542,6 +1681,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>De longitudinum determinatione scheda prima</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4020202-1">Geodäsie</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118639749">Huygens, Christiaan</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Blongitudinum%2Bdeterminatione%2Bscheda%2Bprima/LH035%252C15%252C06_065r/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Blongitudinum%2Bdeterminatione%2Bscheda%2Bprima/LH035%252C15%252C06_065r/index.html"/>
@@ -1568,6 +1708,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>De longitudinum determinatione scheda secunda</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4020202-1">Geodäsie</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118639749">Huygens, Christiaan</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Blongitudinum%2Bdeterminatione%2Bscheda%2Bsecunda/LH035%252C15%252C06_066r/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Blongitudinum%2Bdeterminatione%2Bscheda%2Bsecunda/LH035%252C15%252C06_066r/index.html"/>
@@ -1750,6 +1891,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>De longitudinum determinatione scheda secunda</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4020202-1">Geodäsie</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/119277379">Boulliau, Ismael</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Blongitudinum%2Bdeterminatione%2Bscheda%2Bsecunda/LH035%252C15%252C06_073r/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Blongitudinum%2Bdeterminatione%2Bscheda%2Bsecunda/LH035%252C15%252C06_073r/index.html"/>
@@ -1763,6 +1905,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>De longitudinibus inveniendis 1</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4020202-1">Geodäsie</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/100816207">Drebbel, Cornelius</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Blongitudinibus%2Binveniendis%2B1/LH035%252C15%252C06_074r/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Blongitudinibus%2Binveniendis%2B1/LH035%252C15%252C06_074r/index.html"/>
@@ -1795,6 +1938,8 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>Problemata optica nova reperta</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4043650-0">Optik</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/115501479">Lana, Francesco</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118571249">Leibniz, Gottfried Wilhelm</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Problemata%2Boptica%2Bnova%2Breperta/LH037%252C02_001r/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Problemata%2Boptica%2Bnova%2Breperta/LH037%252C02_001r/index.html"/>
@@ -1809,6 +1954,8 @@
     <dc:title>De rei opticae emendatione</dc:title>
     <dc:title>Aus einer fremden Schrift, Autor unbekannt</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4043650-0">Optik</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/117669490">Auzout, Adrien</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118774883">Hooke, Robert</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Brei%2Bopticae%2Bemendatione/LH037%252C02_001v/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Brei%2Bopticae%2Bemendatione/LH037%252C02_001v/index.html"/>
@@ -1822,6 +1969,10 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>Aus und zu Francesco Lana, Prodromo Overo saggio di alcune inventioni nuove</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4043650-0">Optik</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118872621">Cavalieri, Bonaventura</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118524844">Descartes, René</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/119431416">Hevelius, Johannes</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/115501479">Lana, Francesco</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Zu%2BFrancesco%2BLana%252C%2BProdromo%2BOvero%2Bsaggio%2Bdi%2Balcune%2Binventioni%2Bnuove/LH037%252C02_002r/index.html">
     <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Zu%2BFrancesco%2BLana%252C%2BProdromo%2BOvero%2Bsaggio%2Bdi%2Balcune%2Binventioni%2Bnuove/LH037%252C02_002r/index.html"/>
@@ -1835,6 +1986,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>Aus und zu Francesco Lana, Prodromo Overo saggio di alcune inventioni nuove</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4043650-0">Optik</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/115501479">Lana, Francesco</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Zu%2BFrancesco%2BLana%252C%2BProdromo%2BOvero%2Bsaggio%2Bdi%2Balcune%2Binventioni%2Bnuove/LH037%252C02_002v/index.html">
     <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Zu%2BFrancesco%2BLana%252C%2BProdromo%2BOvero%2Bsaggio%2Bdi%2Balcune%2Binventioni%2Bnuove/LH037%252C02_002v/index.html"/>
@@ -1848,6 +2000,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>Ratio aequalitatis angulorum reflexionis et incidentiae</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4043650-0">Optik</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118524844">Descartes, René</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Ratio%2Baequalitatis%2Bangulorum%2Breflexionis%2Bet%2Bincidentiae/LH037%252C02_006r/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Ratio%2Baequalitatis%2Bangulorum%2Breflexionis%2Bet%2Bincidentiae/LH037%252C02_006r/index.html"/>
@@ -1861,6 +2014,8 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dc:title>Optica</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4043650-0">Optik</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/119105241">Bartholin, Erasmus</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/10029166X">Heliodorus von Larissa</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Optica/LH037%252C02_007r/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Optica/LH037%252C02_007r/index.html"/>
@@ -1874,6 +2029,9 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>De refractione ope superficiei sphaericae</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4043650-0">Optik</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118524844">Descartes, René</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/128350679">Hudde, Jean</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118639749">Huygens, Christiaan</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Brefractione%2Bope%2Bsuperficiei%2Bsphaericae/LH037%252C02_008r/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Brefractione%2Bope%2Bsuperficiei%2Bsphaericae/LH037%252C02_008r/index.html"/>
@@ -1900,6 +2058,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>Optici phaenomeni explicatio</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4043650-0">Optik</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/128696346">Dechales, Claude Fran&#xE7;ois Milliet</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Optici%2Bphaenomeni%2Bexplicatio/LH037%252C02_009v/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Optici%2Bphaenomeni%2Bexplicatio/LH037%252C02_009v/index.html"/>
@@ -1914,6 +2073,8 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dc:title>Hugenius et Huddenius de refractione</dc:title>
   <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4043650-0">Optik</gnd:gndSubjectCategory>
+  <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/128350679">Hudde, Jean</gnd:gndRelatedPerson>
+  <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118639749">Huygens, Christiaan</gnd:gndRelatedPerson>
 </rdf:Description>
 -->
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Hugenius%2Bet%2BHuddenius%2Bde%2Brefractione/LH037%252C02_010r/index.html">
@@ -1928,6 +2089,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>Aus René Descartes, Dioptrice</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4043650-0">Optik</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118524844">Descartes, René</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Aus%2BRen%2526eacute%253B%2BDescartes%252C%2BDioptrice/LH037%252C02_011r/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Aus%2BRen%2526eacute%253B%2BDescartes%252C%2BDioptrice/LH037%252C02_011r/index.html"/>
@@ -1954,6 +2116,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>Sur la réfraction des couleurs différentes</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4043650-0">Optik</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/4044660-8">Paris</gnd:gndRelatedPlaceOrGeographicName>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Sur%2Bla%2Br%2526eacute%253Bfraction%2Bdes%2Bcouleurs%2Bdiff%2526eacute%253Brentes/LH037%252C02_013v/index.html">
     <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Sur%2Bla%2Br%2526eacute%253Bfraction%2Bdes%2Bcouleurs%2Bdiff%2526eacute%253Brentes/LH037%252C02_013v/index.html"/>
@@ -1993,6 +2156,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>Zu Johann Hudde, Specilla circularia</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4043650-0">Optik</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118524844">Descartes, René</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Zu%2BJohann%2BHudde%252C%2BSpecilla%2Bcircularia/LH037%252C02_083r/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Zu%2BJohann%2BHudde%252C%2BSpecilla%2Bcircularia/LH037%252C02_083r/index.html"/>
@@ -2006,6 +2170,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>Zu Johann Hudde, Specilla circularia</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4043650-0">Optik</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118524844">Descartes, René</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Zu%2BJohann%2BHudde%252C%2BSpecilla%2Bcircularia/LH037%252C02_083v/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Zu%2BJohann%2BHudde%252C%2BSpecilla%2Bcircularia/LH037%252C02_083v/index.html"/>
@@ -2032,6 +2197,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>Zu Johann Hudde, Specilla circularia</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4043650-0">Optik</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118524844">Descartes, René</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Zu%2BJohann%2BHudde%252C%2BSpecilla%2Bcircularia/LH037%252C02_084v/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Zu%2BJohann%2BHudde%252C%2BSpecilla%2Bcircularia/LH037%252C02_084v/index.html"/>
@@ -2065,7 +2231,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/></rdf:Description>
 
   <!-- LH037,02_086r -->
-  <rdf:Description rdf:about="LH037,02_086r">
+  <rdf:Description rdf:about="http://leibnizviii.bbaw.de/pdf/Zu%2BJohann%2BHudde%252C%2BSpecilla%2Bcircularia/LH037%252C02_086r/LH037,02_086%2Bra.png">
 <dcterms:identifier>LH037,02_086r</dcterms:identifier>
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/pdf/Zu%2BJohann%2BHudde%252C%2BSpecilla%2Bcircularia/LH037%252C02_086r/LH037,02_086%2Bra.png"/>
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
@@ -2110,6 +2276,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>Zu Johann Hudde, Specilla circularia</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4043650-0">Optik</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118524844">Descartes, René</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Zu%2BJohann%2BHudde%252C%2BSpecilla%2Bcircularia/LH037%252C02_087v/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Zu%2BJohann%2BHudde%252C%2BSpecilla%2Bcircularia/LH037%252C02_087v/index.html"/>
@@ -2123,6 +2290,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>Zu Johann Hudde, Specilla circularia</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4043650-0">Optik</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118524844">Descartes, René</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Zu%2BJohann%2BHudde%252C%2BSpecilla%2Bcircularia/LH037%252C02_088r/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Zu%2BJohann%2BHudde%252C%2BSpecilla%2Bcircularia/LH037%252C02_088r/index.html"/>
@@ -2201,6 +2369,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>Zu Johann Hudde, Specilla circularia</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4043650-0">Optik</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118524844">Descartes, René</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Zu%2BJohann%2BHudde%252C%2BSpecilla%2Bcircularia/LH037%252C02_091r/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Zu%2BJohann%2BHudde%252C%2BSpecilla%2Bcircularia/LH037%252C02_091r/index.html"/>
@@ -2227,6 +2396,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>Demonstratio nova legum refractionis quae in lumine observantur. Scheda prima</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4043650-0">Optik</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118524844">Descartes, René</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Demonstratio%2Bnova%2Blegum%2Brefractionis%252C%2Bquae%2Bin%2Blumine%2Bobservantur%2B%25281%2529/LH037%252C02_097r/index.html">
     <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Demonstratio%2Bnova%2Blegum%2Brefractionis%252C%2Bquae%2Bin%2Blumine%2Bobservantur%2B%25281%2529/LH037%252C02_097r/index.html"/>
@@ -2279,6 +2449,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>Demonstratio nova legum refractionis quae in lumine observantur. Scheda secunda</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4043650-0">Optik</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118524844">Descartes, René</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Demonstratio%2Bnova%2Blegum%2Brefractionis%2Bquae%2Bin%2Blumine%2Bobservantur%2B%25282%2529/LH037%252C02_099r/index.html">
     <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Demonstratio%2Bnova%2Blegum%2Brefractionis%2Bquae%2Bin%2Blumine%2Bobservantur%2B%25282%2529/LH037%252C02_099r/index.html"/>
@@ -2305,6 +2476,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>Demonstratio nova legum refractionis quae in lumine observantur. Scheda secunda</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4043650-0">Optik</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118524844">Descartes, René</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Demonstratio%2Bnova%2Blegum%2Brefractionis%2Bquae%2Bin%2Blumine%2Bobservantur%2B%25282%2529/LH037%252C02_100r/index.html">
     <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Demonstratio%2Bnova%2Blegum%2Brefractionis%2Bquae%2Bin%2Blumine%2Bobservantur%2B%25282%2529/LH037%252C02_100r/index.html"/>
@@ -2346,6 +2518,12 @@
     <dc:title>Sur le télescope</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4043650-0">Optik</gnd:gndSubjectCategory>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4059205-4">Technik</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/4012995-0">Dresden</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/4448574-8">Kötzschau</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/4035206-7">Leipzig</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/4044660-8">Paris</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/119458446">August, Kurfürst von Sachsen</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/122149335">Homberg, Wilhelm</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Sur%2Ble%2Bt%2526eacute%253Blescope/LH037%252C02_122r/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Sur%2Ble%2Bt%2526eacute%253Blescope/LH037%252C02_122r/index.html"/>
@@ -2366,6 +2544,15 @@
     <dc:description>Technische Projekte, darunter Salzgewinnung sowie Glas- und Porzellanherstellung</dc:description>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4059205-4">Technik</gnd:gndSubjectCategory>
     <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/4003011-8">Arnstadt</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/4012995-0">Dresden</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/4021652-4">Gotha</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/4044660-8">Paris</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/4390075-6">Schwarza</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/123890446">Albrecht Günther, Graf von Schwarzburg-Rudolstadt</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/123890438">Carl Günther, Graf von Schwarzburg-Rudolstadt</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/102620768">Christian Günther II., Graf von Schwarzburg-Arnstadt</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118524844">Descartes, René</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/12105800X">Ludwig Günther, Graf von Schwarzburg-Rudolstadt</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Banimalibus/LH037%252C02_123v/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Banimalibus/LH037%252C02_123v/index.html"/>
@@ -2457,6 +2644,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>Definitiones circa vim elasticam</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4130703-3">Drucklufttechnik</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118524844">Descartes, René</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Definitiones%2Bcirca%2Bvim%2Belasticam/LH037%252C03_090v/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Definitiones%2Bcirca%2Bvim%2Belasticam/LH037%252C03_090v/index.html"/>
@@ -2470,6 +2658,9 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>Experimenta novissima pneumatica illustris Hugenii</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4130703-3">Drucklufttechnik</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118659642">Boyle, Robert</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/11854330X">Guericke, Otto von</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118639749">Huygens, Christiaan</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Experimenta%2Bnovissima%2Bpneumatica%2Billustris%2BHugenii/LH037%252C03_091r/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Experimenta%2Bnovissima%2Bpneumatica%2Billustris%2BHugenii/LH037%252C03_091r/index.html"/>
@@ -2483,6 +2674,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>Experimenta novissima pneumatica illustris Hugenii</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4130703-3">Drucklufttechnik</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/11854330X">Guericke, Otto von</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Experimenta%2Bnovissima%2Bpneumatica%2Billustris%2BHugenii/LH037%252C03_091v/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Experimenta%2Bnovissima%2Bpneumatica%2Billustris%2BHugenii/LH037%252C03_091v/index.html"/>
@@ -2496,6 +2688,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>Experimenta novissima pneumatica illustris Hugenii</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4130703-3">Drucklufttechnik</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118639749">Huygens, Christiaan</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Experimenta%2Bnovissima%2Bpneumatica%2Billustris%2BHugenii/LH037%252C03_092r/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Experimenta%2Bnovissima%2Bpneumatica%2Billustris%2BHugenii/LH037%252C03_092r/index.html"/>
@@ -2522,6 +2715,8 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>Experimenta novissima pneumatica illustris Hugenii</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4130703-3">Drucklufttechnik</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/11854330X">Guericke, Otto von</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118639749">Huygens, Christiaan</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Experimenta%2Bnovissima%2Bpneumatica%2Billustris%2BHugenii/LH037%252C03_093r/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Experimenta%2Bnovissima%2Bpneumatica%2Billustris%2BHugenii/LH037%252C03_093r/index.html"/>
@@ -2535,6 +2730,8 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>Experimenta novissima pneumatica illustris Hugenii</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4130703-3">Drucklufttechnik</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118659642">Boyle, Robert</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118537229">Galilei, Galileo</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Experimenta%2Bnovissima%2Bpneumatica%2Billustris%2BHugenii/LH037%252C03_093v/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Experimenta%2Bnovissima%2Bpneumatica%2Billustris%2BHugenii/LH037%252C03_093v/index.html"/>
@@ -2600,6 +2797,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>Clepsydra uniformiter fluens</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4059205-4">Technik</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118537229">Galilei, Galileo</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Clepsydra%2Buniformiter%2Bfluens/LH037%252C03_096r/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Clepsydra%2Buniformiter%2Bfluens/LH037%252C03_096r/index.html"/>
@@ -2630,6 +2828,16 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>Experimenta pneumatica circa vacuum</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4130703-3">Drucklufttechnik</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/2035457-5">Deutschland</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/4014770-8">England</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/4018145-5">Frankreich</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/4036934-1">Magdeburg</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/5160232-5">Puy-de-Dôme</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118659642">Boyle, Robert</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118537229">Galilei, Galileo</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/11854330X">Guericke, Otto von</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/132683318">Hall, Francis</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118639749">Huygens, Christiaan</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Experimenta%2Bpneumatica%2Bcirca%2Bvacuum/LH037%252C03_097r/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Experimenta%2Bpneumatica%2Bcirca%2Bvacuum/LH037%252C03_097r/index.html"/>
@@ -2643,6 +2851,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>Experimenta pneumatica circa vacuum</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4130703-3">Drucklufttechnik</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118659642">Boyle, Robert</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Experimenta%2Bpneumatica%2Bcirca%2Bvacuum/LH037%252C03_097v/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Experimenta%2Bpneumatica%2Bcirca%2Bvacuum/LH037%252C03_097v/index.html"/>
@@ -2656,6 +2865,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>Experimenta pneumatica circa vacuum</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4130703-3">Drucklufttechnik</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118659642">Boyle, Robert</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Experimenta%2Bpneumatica%2Bcirca%2Bvacuum/LH037%252C03_098r/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Experimenta%2Bpneumatica%2Bcirca%2Bvacuum/LH037%252C03_098r/index.html"/>
@@ -2669,6 +2879,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>Experimenta pneumatica circa vacuum</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4130703-3">Drucklufttechnik</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118659642">Boyle, Robert</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Experimenta%2Bpneumatica%2Bcirca%2Bvacuum/LH037%252C03_098v/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Experimenta%2Bpneumatica%2Bcirca%2Bvacuum/LH037%252C03_098v/index.html"/>
@@ -2683,6 +2894,9 @@
     <dc:title>De variis experimentis pneumaticis</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4130703-3">Drucklufttechnik</gnd:gndSubjectCategory>
     <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/4003998-5">Auvergne</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/4018145-5">Frankreich</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/5160232-5">Puy-de-Dôme</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118537229">Galilei, Galileo</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Bvariis%2Bexperimentis%2Bpneumaticis/LH037%252C03_099r/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Bvariis%2Bexperimentis%2Bpneumaticis/LH037%252C03_099r/index.html"/>
@@ -2696,6 +2910,16 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>De variis experimentis pneumaticis</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4130703-3">Drucklufttechnik</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/2035457-5">Deutschland</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/4014770-8">England</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/4018145-5">Frankreich</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/4077258-5">Schweden</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118659642">Boyle, Robert</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/116488182">Chanut, Pierre Hector</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/11854330X">Guericke, Otto von</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson>de Lisieux, Marin Bourgeois</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118548174">Henri IV., Französischer König</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118639749">Huygens, Christiaan</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Bvariis%2Bexperimentis%2Bpneumaticis/LH037%252C03_099v/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Bvariis%2Bexperimentis%2Bpneumaticis/LH037%252C03_099v/index.html"/>
@@ -2710,6 +2934,9 @@
     <dc:title>De variis experimentis pneumaticis</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4130703-3">Drucklufttechnik</gnd:gndSubjectCategory>
     <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/4003998-5">Auvergne</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/5160232-5">Puy-de-Dôme</gnd:gndRelatedPlaceOrGeographicName>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118659642">Boyle, Robert</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118639749">Huygens, Christiaan</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Bvariis%2Bexperimentis%2Bpneumaticis/LH037%252C03_100r/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Bvariis%2Bexperimentis%2Bpneumaticis/LH037%252C03_100r/index.html"/>
@@ -2723,6 +2950,9 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dc:title>De variis experimentis pneumaticis</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4130703-3">Drucklufttechnik</gnd:gndSubjectCategory>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118659642">Boyle, Robert</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118639749">Huygens, Christiaan</gnd:gndRelatedPerson>
+    <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/132683318">Linus, Franciscus</gnd:gndRelatedPerson>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Bvariis%2Bexperimentis%2Bpneumaticis/LH037%252C03_100v/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Bvariis%2Bexperimentis%2Bpneumaticis/LH037%252C03_100v/index.html"/>
@@ -2840,6 +3070,8 @@
 <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dc:title>De barometri variatione</dc:title>
   <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4130703-3">Drucklufttechnik</gnd:gndSubjectCategory>
+  <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/116488182">Chanut, Pierre Hector</gnd:gndRelatedPerson>
+  <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118537229">Galilei, Galileo</gnd:gndRelatedPerson>
 </rdf:Description>
 <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Bbarometri%2Bvariatione/LH037%252C03_105r/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Bbarometri%2Bvariatione/LH037%252C03_105r/index.html"/>
@@ -2892,6 +3124,8 @@
 <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dc:title>Propositio experimentorum novorum</dc:title>
   <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4130703-3">Drucklufttechnik</gnd:gndSubjectCategory>
+  <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118639749">Huygens, Christiaan</gnd:gndRelatedPerson>
+  <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/132683318">Linus, Franciscus</gnd:gndRelatedPerson>
 </rdf:Description>
     <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Propositio%2Bexperimentorum%2Bnovorum/LH037%252C03_107r/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Propositio%2Bexperimentorum%2Bnovorum/LH037%252C03_107r/index.html"/>
@@ -3746,6 +3980,8 @@
 <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dc:title>De Motu cogitata confusanea</dc:title>
   <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4038168-7">Mechanik</gnd:gndSubjectCategory>
+  <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118659359">Borelli, Giovanni Alfonso</gnd:gndRelatedPerson>
+  <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118537229">Galilei, Galileo</gnd:gndRelatedPerson>
 </rdf:Description>
     <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2BMotu%2Bcogitata%2Bconfusanea/LH037%252C05_008r/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2BMotu%2Bcogitata%2Bconfusanea/LH037%252C05_008r/index.html"/>
@@ -3772,6 +4008,8 @@
 <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dc:title>De Motu cogitata confusanea</dc:title>
   <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4038168-7">Mechanik</gnd:gndSubjectCategory>
+  <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118537229">Galilei, Galileo</gnd:gndRelatedPerson>
+  <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/132683318">Linus, Franciscus</gnd:gndRelatedPerson>
 </rdf:Description>
     <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2BMotu%2Bcogitata%2Bconfusanea/LH037%252C05_009r/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2BMotu%2Bcogitata%2Bconfusanea/LH037%252C05_009r/index.html"/>
@@ -4138,6 +4376,8 @@
 <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dc:title>Sur l'expérience et l'appareil de Foucher pour l'evaluation du poids de l'air raréfié</dc:title>
   <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4059205-4">Technik</gnd:gndSubjectCategory>
+  <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/4012315-7">Dijon</gnd:gndRelatedPlaceOrGeographicName>
+  <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118692305">Foucher, Simon</gnd:gndRelatedPerson>
 </rdf:Description>
     <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Sur%2Bl%2527exp%2526eacute%253Brience%2Bet%2Bl%2527appareil%2Bde%2BFoucher%2Bpour%2Bl%2527evaluation%2Bdu%2Bpoids%2Bde%2Bl%2527air%2Brar%2526eacute%253Bfi%2526eacute%253B/LH038_144r/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Sur%2Bl%2527exp%2526eacute%253Brience%2Bet%2Bl%2527appareil%2Bde%2BFoucher%2Bpour%2Bl%2527evaluation%2Bdu%2Bpoids%2Bde%2Bl%2527air%2Brar%2526eacute%253Bfi%2526eacute%253B/LH038_144r/index.html"/>
@@ -4299,6 +4539,8 @@
 <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dc:title>Perpetuum mobile</dc:title>
   <gnd:gndSubjectCategory rdf:resource="http://d-nb.info/gnd/4059205-4">Technik</gnd:gndSubjectCategory>
+  <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/122899687">Crafft, Johann Daniel</gnd:gndRelatedPerson>
+  <gnd:gndRelatedPerson rdf:resource="http://d-nb.info/gnd/118571249">Leibniz, Gottfried Wilhelm</gnd:gndRelatedPerson>
 </rdf:Description>
     <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Perpetuum%2Bmobile/LH038_202r/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Perpetuum%2Bmobile/LH038_202r/index.html"/>
