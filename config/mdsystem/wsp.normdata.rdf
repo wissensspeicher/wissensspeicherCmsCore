@@ -1175,10 +1175,10 @@ Damit sollen gemeinsame historische Vermächtnisse sowie die Mobilität von Pers
 		<foaf:familyName rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Neidhardt</foaf:familyName>
 		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
 	</rdf:Description>
-	<rdf:Description rdf:about="http://wsp.normdata.rdf/Planck">		
-    <dc:language>ger</dc:language>
-    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
-    <foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">planck</foaf:nick>
+		<rdf:Description rdf:about="http://wsp.normdata.rdf/Planck">		
+  	 	<dc:language>ger</dc:language>
+   		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
+   		<foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">planck</foaf:nick>
 		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">150 Jahre Max Planck</foaf:name>
 		<foaf:homepage rdf:resource="http://planck.bbaw.de"/>
 		<dc:coverage rdf:resource="http://wsp.normdata.rdf/Neuzeit"/>
@@ -1916,42 +1916,42 @@ Damit sollen gemeinsame historische Vermächtnisse sowie die Mobilität von Pers
 		<dcterms:valid rdf:datatype="http://purl.org/dc/terms/Period">start=1901; name=Laufzeit</dcterms:valid>
 		<foaf:homepage rdf:resource="http://leibniz-potsdam.bbaw.de"/>
 	</rdf:Description>
-	<rdf:Description rdf:about="http://wsp.normdata.rdf/LeibnizEditionPotsdam/Baende">
-    <dc:language>ger</dc:language>
-    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
-    <foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">leibpotsbaende</foaf:nick>
+		<rdf:Description rdf:about="http://wsp.normdata.rdf/LeibnizEditionPotsdam/Baende">
+    	<dc:language>ger</dc:language>
+    	<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
+    	<foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">leibpotsbaende</foaf:nick>
 		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Leibniz-Edition Potsdam: Bände</foaf:name>
-    <foaf:homepage rdf:resource="http://leibniz-potsdam.bbaw.de"/>
+    	<foaf:homepage rdf:resource="http://leibniz-potsdam.bbaw.de"/>
 		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam" />	
 	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/LeibnizEditionPotsdam/KumulierterIndex">
-    <dc:language>ger</dc:language>
-    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
-    <foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">leibpotskin</foaf:nick>
+    	<dc:language>ger</dc:language>
+    	<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
+    	<foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">leibpotskin</foaf:nick>
 		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Leibniz-Edition Potsdam: Kumulierter index nominum der Ausgaben von Dutens und deuhardt (Philosophische und Mathematische Schriften)</foaf:name>
-    <foaf:homepage rdf:resource="http://leibniz-potsdam.bbaw.de"/>
+    	<foaf:homepage rdf:resource="http://leibniz-potsdam.bbaw.de"/>
 		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam" />		
 	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/LeibnizEditionPotsdam/PersonenUndSachindex">
-    <dc:language>ger</dc:language>
-    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
-    <foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">leibpotsps</foaf:nick>
+    	<dc:language>ger</dc:language>
+    	<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
+    	<foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">leibpotsps</foaf:nick>
 		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Leibniz-Edition Potsdam: Personen- und Sachindex der Ausgaben von Erdmann (Opera philosophica) und Grua (Textes inédits)</foaf:name>
-    <foaf:homepage rdf:resource="http://leibniz-potsdam.bbaw.de"/>
+    	<foaf:homepage rdf:resource="http://leibniz-potsdam.bbaw.de"/>
 		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam" />		
 	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/LeibnizEditionPotsdam/RitterKatalog">
-    <dc:language>ger</dc:language>
-    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
-    <foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">leibpotsritter</foaf:nick>
+    	<dc:language>ger</dc:language>
+    	<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
+    	<foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">leibpotsritter</foaf:nick>
 		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Leibniz-Edition Potsdam: Ritter Katalog</foaf:name>
-    <foaf:homepage rdf:resource="http://ritter.bbaw.de"/>
+    	<foaf:homepage rdf:resource="http://ritter.bbaw.de"/>
 		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam" />		
 	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/DFGimSpannungsfeld">
-    <dc:language>ger</dc:language>
-    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
-    <foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">dfg</foaf:nick>
+    	<dc:language>ger</dc:language>
+    	<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
+    	<foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">dfg</foaf:nick>
 		<dc:contributor rdf:resource="http://wsp.normdata.rdf/Noetzoldt"/>
 		<dcterms:abstract rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Im Projekt "Die Deutsche Forschungsgemeinschaft im Spannungsfeld von Kaiser-Wilhelm-Gesellschaft und Akademien der Wissenschaften bis 1945" ist analysiert worden, wie und warum es der 1920 als Notgemeinschaft der Deutschen Wissenschaft gegründeten Deutschen Forschungsgemeinschaft gelang, sich sowohl in der Weimarer Republik als auch in der NS-Zeit neben den beiden damals großen außeruniversitären Forschungsinstitutionen Akademien der Wissenschaften und Kaiser-Wilhelm-Gesellschaft (KWG) als weitere Säule in der deutschen Forschungslandschaft fest zu etablieren. Das Vorhaben ist Bestandteil des von der DFG geförderten Projektes "Die Geschichte der Deutschen Forschungsgemeinschaft von den 1920er bis in die 1970er Jahre".</dcterms:abstract>
 		<dc:coverage rdf:resource="http://wsp.normdata.rdf/Gegenwart"/>
