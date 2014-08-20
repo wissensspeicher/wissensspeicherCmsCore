@@ -10,17 +10,6 @@
       <dataUrl>http://www.corpuscoranicum.de</dataUrl>
       <dataUrl>http://corpuscoranicum.de/kommentar/index/sure</dataUrl>
       <dataUrl>http://koran.bbaw.de/materialien/bergstrasser-original-indexklein.pdf</dataUrl>
-      <!-- XML-Texte -->
-      <dataUrl type="eXistDir">http://telotadev.bbaw.de:8085/exist/rest/db/Koran/</dataUrl>
-      <exclude>ms-data</exclude>
-      <exclude>test.xql</exclude>
-      <exclude>Kommentar/bibelbuecher.txt</exclude>
-      <exclude>Kommentar/Overlay.xsd</exclude>
-      <exclude>Kommentar/surenlaenge.txt</exclude>
-      <exclude>Kommentar/xml1.xsd</exclude>
-      <exclude>Kommentar/xml2.xsd</exclude>
-      <exclude>Kommentar/Kommentar.xsd</exclude>
-      <exclude>Textstruktur/Textstruktur.xsd</exclude>
     </url>
     <languages>ger,ara,grc</languages>
     <mainLanguage>ger</mainLanguage>
@@ -29,19 +18,196 @@
       <format>html</format>
       <format>pdf</format>
     </formats>
-    <fields>
-      <field>p</field>
-      <field>Vers</field>
-    </fields>
-    <xqueries>
-      <xquery>
-        <name>webId</name>
-        <code>/*[1]/*[1]/string(@id)</code>
-        <preStr>http://corpuscoranicum.de/kommentar/index/sure/</preStr>
-        <afterStr>/vers/1</afterStr>
-      </xquery>
-    </xqueries>
-    <exclude/>
-    <update>false</update>
+    <db>
+      <type>mysql</type>
+      <name>druckausgabe</name>
+      <xmlDump>
+        <sql>
+SELECT 
+ CONCAT('sure/', k1.sure, '/vers/', k1.vers) as id,
+ CONCAT('Sure ', k1.sure, ' (', k.surenname, '), Vers: ', k1.vers) as title,
+ CONCAT('Transkription: ', GROUP_CONCAT(transkription ORDER BY wort SEPARATOR ' '), '\n', 'Arabischer Text: ', GROUP_CONCAT(arab ORDER BY wort SEPARATOR ' '), '\n', 'Deutsche Übersetzung: ', k2.text) as abstract
+FROM 
+ koran k, lc_kkoran k1, koran_uebersetzung k2
+WHERE
+ k.sure = k1.sure
+AND
+ k.vers = 1
+AND
+ k1.sure = k2.sure
+AND
+ k1.vers = k2.vers
+AND
+ k1.sure = 1
+AND
+ k1.vers = 7
+GROUP BY 
+ k1.sure, k1.vers
+         </sql>
+      </xmlDump>
+      <mainResourcesTable>
+        <name>druckausgabe</name>
+        <idField>id</idField>
+        <field>
+          <dc>title</dc>
+          <db>title</db>
+        </field>
+        <field>
+          <dc>abstract</dc>
+          <db>abstract</db>
+        </field>
+      </mainResourcesTable>
+      <webId>
+        <!-- Suren 1 - 114: pro Sure: Verse 1 - x, manche Verse haben eine andere Ausgabe -->
+        <preStr>http://www.corpuscoranicum.de/index/index/</preStr>
+      </webId>
+    </db>
+    <db>
+      <type>mysql</type>
+      <name>handschriften</name>
+      <xmlDump>
+        <sql>
+SELECT
+ CONCAT('sure/', k.sure, '/vers/', k.vers) as id,
+ CONCAT('Sure ', k.sure, ', Vers: ', k.vers) as title,
+ CONCAT('Handschriften: ', GROUP_CONCAT(m.kodextitel, m.kommentar SEPARATOR '\n')) as abstract
+FROM
+(SELECT
+ sure, vers
+FROM 
+ lc_kkoran k
+GROUP BY 
+ k.sure, k.vers) k, manuskript_mapping mm, manuskript m
+WHERE
+ cast(concat(k.sure, k.vers) as unsigned) BETWEEN (cast(concat(mm.sure_start, mm.vers_start) as unsigned)) and (cast(concat(mm.sure_ende, mm.vers_ende) as unsigned))
+AND
+ mm.manuskript = m.id
+AND
+ k.sure = 2
+AND
+ k.vers = 1
+GROUP BY
+ k.sure, k.vers
+        </sql>
+      </xmlDump>
+      <mainResourcesTable>
+        <name>handschriften</name>
+        <idField>id</idField>
+        <field>
+          <dc>title</dc>
+          <db>title</db>
+        </field>
+        <field>
+          <dc>abstract</dc>
+          <db>abstract</db>
+        </field>
+      </mainResourcesTable>
+      <webId>
+        <!-- Suren 1 - 114: pro Sure: Verse 1 - x, manche Verse haben eine andere Handschrift -->
+        <preStr>http://www.corpuscoranicum.de/handschriften/index/</preStr>
+      </webId>
+    </db>
+    <db>
+      <type>mysql</type>
+      <name>lesarten</name>
+      <xmlDump>
+        <sql>
+SELECT
+ CONCAT('sure/', l.sure, '/vers/', l.vers) as id,
+ CONCAT('Sure ', l.sure, ', Vers: ', l.vers) as title,
+ CONCAT('Referenz: ', q.anzeigetitel, '\n', 'Leser: ', le.anzeigename, '\n', 'Lesart: ', 'bla') as abstract
+FROM
+ lc_leseart l, lc_leseart_quelle lq, lc_quelle q, lc_leseart_leser lle, lc_leser le
+WHERE
+ l.id = lq.leseart
+AND
+ lq.quelle = q.id
+AND
+ l.id = lle.leseart
+AND
+ lle.leser = le.id
+AND
+ l.sure = 1
+AND
+ l.vers = 2
+         </sql>
+      </xmlDump>
+      <mainResourcesTable>
+        <name>lesarten</name>
+        <idField>id</idField>
+        <field>
+          <dc>title</dc>
+          <db>title</db>
+        </field>
+        <field>
+          <dc>abstract</dc>
+          <db>abstract</db>
+        </field>
+      </mainResourcesTable>
+      <webId>
+        <!-- Suren 1 - 114: pro Sure: Verse 1 - x, jeder Vers hat eine andere Lesart -->
+        <preStr>http://www.corpuscoranicum.de/lesarten/index/</preStr>
+      </webId>
+    </db>
+    <db>
+      <type>mysql</type>
+      <name>kontexte</name>
+      <xmlDump>
+        <sql>
+SELECT 
+ concat('sure/', sureId, '/vers/', versId) as id,
+ titel as title,
+ concat(field1, '\n', field2, '\n', field3, '\n', field4, '\n', field5, '\n', field6) as abstract
+FROM 
+ kontexte
+        </sql>
+      </xmlDump>
+      <mainResourcesTable>
+        <name>kontexte</name>
+        <idField>id</idField>
+        <field>
+          <dc>title</dc>
+          <db>title</db>
+        </field>
+        <field>
+          <dc>abstract</dc>
+          <db>abstract</db>
+        </field>
+      </mainResourcesTable>
+      <webId>
+        <!-- Suren 1 - 114: pro Sure: Verse 1 - x, nur manche Verse haben einen Kontext -->
+        <preStr>http://www.corpuscoranicum.de/kontexte/index/</preStr>
+      </webId>
+    </db>
+    <db>
+      <type>mysql</type>
+      <name>kommentare</name>
+      <xmlDump>
+        <sql>
+SELECT 
+ concat('sure/', sureId, '/vers/1') as id,
+ titel as title,
+ concat(field1, '\n', field2, '\n', field3, '\n', field4, '\n', field5, '\n', field6) as abstract
+FROM 
+ kommentare
+        </sql>
+      </xmlDump>
+      <mainResourcesTable>
+        <name>kommentare</name>
+        <idField>id</idField>
+        <field>
+          <dc>title</dc>
+          <db>title</db>
+        </field>
+        <field>
+          <dc>abstract</dc>
+          <db>abstract</db>
+        </field>
+      </mainResourcesTable>
+      <webId>
+        <!-- Suren 1 - 114: pro Sure: immer Vers 1, es gibt Kommentare nur pro Sure (nicht pro Vers) -->
+        <preStr>http://www.corpuscoranicum.de/kommentar/index/</preStr>
+      </webId>
+    </db>
   </collection>
 </wsp>
