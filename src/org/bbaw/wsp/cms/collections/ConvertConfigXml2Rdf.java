@@ -5,9 +5,16 @@ import java.io.FileFilter;
 import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Hashtable;
+import java.util.Properties;
 
 import net.sf.saxon.s9api.XdmItem;
 import net.sf.saxon.s9api.XdmSequenceIterator;
@@ -43,7 +50,7 @@ public class ConvertConfigXml2Rdf {
       // convertConfigXml2Rdf.convertAll();
       // convertConfigXml2Rdf.proofRdfProjects();
       // convertConfigXml2Rdf.proofCollectionProjects();
-      // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("cil");
+      Collection c = convertConfigXml2Rdf.collectionReader.getCollection("coranicum");
       // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("jdg");
       // convertConfigXml2Rdf.convert(c, false);
       // convertConfigXml2Rdf.convertDbXmlFiles(c);
@@ -71,21 +78,237 @@ public class ConvertConfigXml2Rdf {
   
   private void generateDbXmlDumpFiles(Collection collection) throws ApplicationException {
     ArrayList<Database> collectionDBs = collection.getDatabases();
+    String collectionId = collection.getId();
     if (collectionDBs != null) {
       for (int i=0; i<collectionDBs.size(); i++) {
         Database db = collectionDBs.get(i);
         String dbType = db.getType();
-        LOGGER.info("Generate database dump files of database: \"" + db.getName() + "\"");
+        JdbcConnection jdbcConn = db.getJdbcConnection();
+        LOGGER.info("Generate database dump files (Collection: " + collection.getId() + ") of database: \"" + db.getName() + "\"");
         if (dbType != null && (dbType.equals("oai") || dbType.equals("oai-dbrecord"))) {
           generateOaiDbXmlDumpFiles(collection, db);
-        } else if (dbType != null && (dbType.equals("dwb"))) {
-          // very special case for dwb
+        } else if (dbType != null && dbType.equals("dwb")) {
+          // special case for dwb
           generateDwbFiles(collection, db);
+        } else if (collectionId.equals("coranicum")) {
+          // special case for coranicum: by jdbc
+          generateCoranicumDbXmlDumpFile(collection, db);
+        } else if (dbType != null && jdbcConn != null) {
+          // generate db file by jdbc
+          generateDbXmlDumpFile(collection, db);
         }
       }
     }
   }
   
+  private void generateDbXmlDumpFile(Collection collection, Database db) throws ApplicationException {
+    File dbResourcesDir = new File(dbResourcesDirName);
+    String xmlDumpFileFilter = collection.getId() + "-" + db.getName() + "*.xml"; 
+    FileFilter fileFilter = new WildcardFileFilter(xmlDumpFileFilter);
+    File[] files = dbResourcesDir.listFiles(fileFilter);
+    if (files != null && files.length > 0) {
+      for (int i = 0; i < files.length; i++) {
+        File dumpFileToDelete = files[i];
+        FileUtils.deleteQuietly(dumpFileToDelete);
+      }
+      LOGGER.info("Database dump files of database \"" + db.getName() + "\" sucessfully deleted");
+    }
+    StringBuilder xmlDumpStrBuilder = new StringBuilder();
+    xmlDumpStrBuilder.append("<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n");
+    xmlDumpStrBuilder.append("<!-- Resources of database: " + db.getName() + " (Collection: " + collection.getId() + ") -->\n");
+    JdbcConnection jdbcConn = db.getJdbcConnection();
+    xmlDumpStrBuilder.append("<" + jdbcConn.getDb() + ">\n");
+    Properties connectionProps = new Properties();
+    connectionProps.put("user", jdbcConn.getUser());
+    connectionProps.put("password", jdbcConn.getPw());
+    Connection conn = null;
+    try {
+      String dbType = db.getType();
+      if (dbType.equals("mysql")) {
+        Class.forName("com.mysql.jdbc.Driver");
+      } else {
+        return;  // TODO postgres etc.
+      }
+      String jdbcUrl = "jdbc:" + dbType + "://" + jdbcConn.getHost() + ":" + jdbcConn.getPort() + "/" + jdbcConn.getDb();  // + "?useUnicode=true&characterEncoding=utf8&connectionCollation=utf8_general_ci&characterSetResults=utf8"
+      conn = DriverManager.getConnection(jdbcUrl, connectionProps);
+      PreparedStatement initPS = conn.prepareStatement("SET group_concat_max_len = 999999");
+      initPS.execute();
+      initPS.close();
+      String select = db.getSql();
+      PreparedStatement preparedStatement = conn.prepareStatement(select);
+      ResultSet rs = preparedStatement.executeQuery();
+      ResultSetMetaData rsMetaData = rs.getMetaData();
+      while (rs.next()) {
+        xmlDumpStrBuilder.append("  <" + db.getMainResourcesTable() + ">\n");
+        int colCount = rsMetaData.getColumnCount();
+        for (int i=1; i<=colCount; i++) {
+          String colName = rsMetaData.getColumnName(i).toLowerCase();
+          String colValue = rs.getString(colName);
+          xmlDumpStrBuilder.append("    <" + colName + ">" + colValue + "</" + colName + ">\n");
+        }
+        xmlDumpStrBuilder.append("  </" + db.getMainResourcesTable() + ">\n");
+      }
+      rs.close();
+      conn.close();
+      xmlDumpStrBuilder.append("</" + jdbcConn.getDb() + ">\n");
+      String xmlDumpFileName = dbResourcesDirName + "/" + collection.getId() + "-" + db.getName() + "-1" + ".xml";
+      File dumpFile = new File(xmlDumpFileName);
+      FileUtils.writeStringToFile(dumpFile, xmlDumpStrBuilder.toString(), "utf-8");
+      LOGGER.info("Database dump file \"" + xmlDumpFileName + "\" sucessfully created");
+    } catch (Exception e) {
+      try {
+        conn.close();
+      } catch (Exception e2) {
+        // nothing
+      };
+      throw new ApplicationException(e);
+    }
+  }
+  
+  private void generateCoranicumDbXmlDumpFile(Collection collection, Database db) throws ApplicationException {
+    File dbResourcesDir = new File(dbResourcesDirName);
+    String xmlDumpFileFilter = collection.getId() + "-" + db.getName() + "*.xml"; 
+    FileFilter fileFilter = new WildcardFileFilter(xmlDumpFileFilter);
+    File[] files = dbResourcesDir.listFiles(fileFilter);
+    if (files != null && files.length > 0) {
+      for (int i = 0; i < files.length; i++) {
+        File dumpFileToDelete = files[i];
+        FileUtils.deleteQuietly(dumpFileToDelete);
+      }
+      LOGGER.info("Database dump files of database \"" + db.getName() + "\" sucessfully deleted");
+    }
+    StringBuilder xmlDumpStrBuilder = new StringBuilder();
+    xmlDumpStrBuilder.append("<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n");
+    xmlDumpStrBuilder.append("<!-- Resources of database: " + db.getName() + " (Collection: " + collection.getId() + ") -->\n");
+    JdbcConnection jdbcConn = db.getJdbcConnection();
+    xmlDumpStrBuilder.append("<" + jdbcConn.getDb() + ">\n");
+    Properties connectionProps = new Properties();
+    connectionProps.put("user", jdbcConn.getUser());
+    connectionProps.put("password", jdbcConn.getPw());
+    Connection conn = null;
+    try {
+      String dbType = db.getType();
+      if (dbType.equals("mysql")) {
+        Class.forName("com.mysql.jdbc.Driver");
+      } else {
+        return;  // TODO postgres etc.
+      }
+      String jdbcUrl = "jdbc:" + dbType + "://" + jdbcConn.getHost() + ":" + jdbcConn.getPort() + "/" + jdbcConn.getDb();  // + "?useUnicode=true&characterEncoding=utf8&connectionCollation=utf8_general_ci&characterSetResults=utf8"
+      conn = DriverManager.getConnection(jdbcUrl, connectionProps);
+      PreparedStatement initPS = conn.prepareStatement("SET group_concat_max_len = 999999");
+      initPS.execute();
+      initPS.close();
+      String selectKoranVerses = 
+          "SELECT\n" +
+          " k.sure, k.vers, k.wort, k.transkription, k.arab, koran.surenname\n" +
+          "FROM\n" +
+          " lc_kkoran k, koran\n" +
+          "WHERE\n" +
+          " koran.sure = k.sure\n" +
+          "AND\n" +
+          " koran.vers = 1\n" +
+          // "AND\n" +
+          // " (k.sure = 3)\n" +
+          // "AND\n" +
+          // " (k.vers = 120 OR k.vers = 121)\n" +
+          "ORDER BY sure, vers, wort";
+      Hashtable<String, String> koranVersesGerman = getCoranicumAllKoranVersesGerman(conn);
+      PreparedStatement psKoranVerses = conn.prepareStatement(selectKoranVerses);
+      ResultSet rsKoranVerses = psKoranVerses.executeQuery();
+      String versKey = null;
+      String versTitle = null;
+      String versTranskriptionStr = "";
+      String versArabStr = "";
+      while (rsKoranVerses.next()) {
+        String sure = rsKoranVerses.getString("sure");
+        String vers = rsKoranVerses.getString("vers");
+        String transkription = rsKoranVerses.getString("transkription");
+        String arab = rsKoranVerses.getString("arab");
+        String surenname = rsKoranVerses.getString("surenname");
+        String versKeyTmp = "sure/" + sure + "/vers/" + vers;
+        String versTitleTmp = "Sure " + sure + " (" + surenname + "), Vers " + vers;
+        if (versKey == null) {
+          versKey = versKeyTmp;
+          versTitle = versTitleTmp;
+        }
+        if (versKey.equals(versKeyTmp)) {
+          versTranskriptionStr = versTranskriptionStr + " " + transkription;
+          versArabStr = versArabStr + " " + arab;
+        } else if (versKey != null) {
+          String koranVersXmlStr = getCoranicumKoranVersXmlStr(db, koranVersesGerman, versKey, versTitle, versTranskriptionStr, versArabStr);
+          xmlDumpStrBuilder.append(koranVersXmlStr);
+          versKey = versKeyTmp;
+          versTitle = versTitleTmp;
+          versTranskriptionStr = "";
+          versArabStr = "";
+        }
+      }
+      String koranVersXmlStr = getCoranicumKoranVersXmlStr(db, koranVersesGerman, versKey, versTitle, versTranskriptionStr, versArabStr);
+      xmlDumpStrBuilder.append(koranVersXmlStr);
+      psKoranVerses.close();
+      conn.close();
+      xmlDumpStrBuilder.append("</" + jdbcConn.getDb() + ">\n");
+      String xmlDumpFileName = dbResourcesDirName + "/" + collection.getId() + "-" + db.getName() + "-1" + ".xml";
+      File dumpFile = new File(xmlDumpFileName);
+      FileUtils.writeStringToFile(dumpFile, xmlDumpStrBuilder.toString(), "utf-8");
+      LOGGER.info("Database dump file \"" + xmlDumpFileName + "\" sucessfully created");
+    } catch (Exception e) {
+      try {
+        conn.close();
+      } catch (Exception e2) {
+        // nothing
+      };
+      throw new ApplicationException(e);
+    }
+  }
+  
+  private String getCoranicumKoranVersXmlStr(Database db, Hashtable<String, String> koranVersesGerman, String id, String title, String transkription, String arab) {
+    StringBuilder versXmlStrBuilder = new StringBuilder();
+    String abstractStr = "Transkription: " + transkription + "\nArabische Übersetzung: " + arab;
+    String versGermanStr = koranVersesGerman.get(id);
+    if (versGermanStr != null) {
+      versGermanStr = versGermanStr.replaceAll("[\u0000-\u001F]", ""); // remove control characters
+      abstractStr = abstractStr + "\nDeutsche Übersetzung: " + versGermanStr;
+    }
+    abstractStr = StringUtils.deresolveXmlEntities(abstractStr);
+    versXmlStrBuilder.append("  <" + db.getMainResourcesTable() + ">\n");
+    versXmlStrBuilder.append("    <id>" + id + "</id>\n");
+    versXmlStrBuilder.append("    <title>" + title + "</title>\n");
+    versXmlStrBuilder.append("    <abstract>" + abstractStr + "</abstract>\n");
+    versXmlStrBuilder.append("  </" + db.getMainResourcesTable() + ">\n");
+    return versXmlStrBuilder.toString();    
+  }
+  
+  private Hashtable<String, String> getCoranicumAllKoranVersesGerman(Connection conn) throws ApplicationException {
+    Hashtable<String, String> koranVersesGerman = new Hashtable<String, String>(); // e.g. key is "sure/2/vers/102"
+    String selectKoranVersesGerman = 
+        "SELECT\n" +
+        " g.sure, g.vers, g.text\n" +
+        "FROM koran_uebersetzung g\n";
+        // "WHERE\n" +
+        // " (g.sure = 2 OR g.sure = 3)\n" +
+        // "AND\n" +
+        // " (g.vers = 77 OR g.vers = 101 OR g.vers = 102)\n";
+    try {
+      PreparedStatement psKoranVersesGerman = conn.prepareStatement(selectKoranVersesGerman);
+      ResultSet rsKoranVerses = psKoranVersesGerman.executeQuery();
+      while (rsKoranVerses.next()) {
+        String sure = rsKoranVerses.getString("sure");
+        String vers = rsKoranVerses.getString("vers");
+        String text = rsKoranVerses.getString("text");
+        String versKeyTmp = "sure/" + sure + "/vers/" + vers;
+        koranVersesGerman.put(versKeyTmp, text);
+      }      
+    } catch (Exception e) {
+      try {
+        conn.close();
+      } catch (Exception e2) {
+        // nothing
+      };
+      throw new ApplicationException(e);
+    }
+    return koranVersesGerman;
+  }
   private void generateDwbFiles(Collection collection, Database db) throws ApplicationException {
     // generates both dump files + rdf file
     String collectionRdfId = collection.getRdfId();
