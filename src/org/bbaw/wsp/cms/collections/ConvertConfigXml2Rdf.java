@@ -50,7 +50,7 @@ public class ConvertConfigXml2Rdf {
       // convertConfigXml2Rdf.convertAll();
       // convertConfigXml2Rdf.proofRdfProjects();
       // convertConfigXml2Rdf.proofCollectionProjects();
-      Collection c = convertConfigXml2Rdf.collectionReader.getCollection("coranicum");
+      Collection c = convertConfigXml2Rdf.collectionReader.getCollection("kiw");
       // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("jdg");
       // convertConfigXml2Rdf.convert(c, false);
       // convertConfigXml2Rdf.convertDbXmlFiles(c);
@@ -309,6 +309,7 @@ public class ConvertConfigXml2Rdf {
     }
     return koranVersesGerman;
   }
+  
   private void generateDwbFiles(Collection collection, Database db) throws ApplicationException {
     // generates both dump files + rdf file
     String collectionRdfId = collection.getRdfId();
