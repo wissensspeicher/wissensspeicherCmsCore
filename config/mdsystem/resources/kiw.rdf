@@ -15,4 +15,39 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KollokationImWB"/>
   <dc:identifier rdf:resource="http://kollokationen.bbaw.de"/>
 </rdf:Description>
+<rdf:Description rdf:about="http://kollokationen.bbaw.de/htm/about_de.html">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KollokationImWB"/>
+  <dc:identifier rdf:resource="http://kollokationen.bbaw.de/htm/about_de.html"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://kollokationen.bbaw.de/htm/idb_de.html">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KollokationImWB"/>
+  <dc:identifier rdf:resource="http://kollokationen.bbaw.de/htm/idb_de.html"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://kollokationen.bbaw.de/htm/idioms.html">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KollokationImWB"/>
+  <dc:identifier rdf:resource="http://kollokationen.bbaw.de/htm/idioms.html"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://kollokationen.bbaw.de/htm/report_de.html">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KollokationImWB"/>
+  <dc:identifier rdf:resource="http://kollokationen.bbaw.de/htm/report_de.html"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://kollokationen.bbaw.de/htm/pub_de.html">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KollokationImWB"/>
+  <dc:identifier rdf:resource="http://kollokationen.bbaw.de/htm/pub_de.html"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://kollokationen.bbaw.de/htm/talk_de.html">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KollokationImWB"/>
+  <dc:identifier rdf:resource="http://kollokationen.bbaw.de/htm/talk_de.html"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://kollokationen.bbaw.de/htm/active_de.html">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KollokationImWB"/>
+  <dc:identifier rdf:resource="http://kollokationen.bbaw.de/htm/active_de.html"/>
+</rdf:Description>
 </rdf:RDF>
