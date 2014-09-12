@@ -5,6 +5,10 @@ import org.apache.jena.fuseki.DatasetAccessor;
 import org.apache.jena.fuseki.DatasetAccessorFactory;
 
 
+
+import org.apache.log4j.Logger;
+import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.MdSystemQueryHandler;
+
 import com.hp.hpl.jena.query.Query;
 import com.hp.hpl.jena.query.QueryExecution;
 import com.hp.hpl.jena.query.QueryExecutionFactory;
@@ -48,6 +52,7 @@ public class FusekiClient {
    */
   public static String DEFAULT_NAMED_MODEL = "default";
   private static FusekiClient instance;
+  private  Logger logger;
   
   /**
    * 
@@ -91,6 +96,8 @@ public class FusekiClient {
    * @return a {@link ResultSet} containing the specified response.
    */
   private ResultSet queryServerWithDefaultGraph(final String pathToQueryEndpoint, final String queryCommand, final String resultFormat, final String defaultGraph) {
+    logger = Logger.getLogger(FusekiClient.class);
+    logger.info("FusekiClient query : "+queryCommand);
     Query q = QueryFactory.create(queryCommand);
     QueryExecution queryEx = QueryExecutionFactory.sparqlService(pathToQueryEndpoint, q, defaultGraph);
     if(resultFormat.equals(MODE_SELECT)) {
