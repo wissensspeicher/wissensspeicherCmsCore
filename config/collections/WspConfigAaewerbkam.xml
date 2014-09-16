@@ -10,7 +10,7 @@
       <dataUrl>http://aaew.bbaw.de/archive/erbkam-tagebuch</dataUrl>
       <dataUrl>http://telota.bbaw.de/erbkam/</dataUrl>
       <!-- XML-Texte -->
-      <dataUrl type="eXistDir">http://telota.bbaw.de:8088/exist/servlet/db/aaew/erbkam</dataUrl>
+      <dataUrl>http://telota.bbaw.de:8088/exist/servlet/db/aaew/erbkam/erbkam.xml</dataUrl>
     </url>
     <languages>ger</languages>
     <mainLanguage>ger</mainLanguage>
