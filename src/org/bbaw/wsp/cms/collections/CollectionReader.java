@@ -124,6 +124,23 @@ public class CollectionReader {
               db.setType(dbType);
               String dbName = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/name/text()");
               db.setName(dbName);
+              String jdbcHost = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/jdbc/host/text()");
+              if (jdbcHost != null) {
+                JdbcConnection jdbcConn = new JdbcConnection();
+                jdbcConn.setType(dbType);
+                jdbcConn.setHost(jdbcHost);
+                String jdbcPort = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/jdbc/port/text()");
+                jdbcConn.setPort(jdbcPort);
+                String jdbcDb = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/jdbc/db/text()");
+                jdbcConn.setDb(jdbcDb);
+                String jdbcUser = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/jdbc/user/text()");
+                jdbcConn.setUser(jdbcUser);
+                String jdbcPw = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/jdbc/pw/text()");
+                jdbcConn.setPw(jdbcPw);
+                db.setJdbcConnection(jdbcConn);
+                String sql = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/sql/text()");
+                db.setSql(sql);
+              }
               String xmlDumpFileName = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/xmlDump/fileName/text()");
               if (xmlDumpFileName != null)
                 db.setXmlDumpFileName(xmlDumpFileName);

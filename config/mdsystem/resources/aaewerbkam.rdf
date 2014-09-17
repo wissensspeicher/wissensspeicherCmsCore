@@ -20,10 +20,9 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AltaegyptWB/Erbkam"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/erbkam/"/>
 </rdf:Description>
-<rdf:Description rdf:about="http://telota.bbaw.de:8088/exist/servlet/db/aaew/erbkam">
+<rdf:Description rdf:about="http://telota.bbaw.de:8088/exist/servlet/db/aaew/erbkam/erbkam.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AltaegyptWB/Erbkam"/>
-  <dc:identifier rdf:resource="http://telota.bbaw.de:8088/exist/servlet/db/aaew/erbkam"/>
-  <dc:type>eXistDir</dc:type>
+  <dc:identifier rdf:resource="http://telota.bbaw.de:8088/exist/servlet/db/aaew/erbkam/erbkam.xml"/>
 </rdf:Description>
 </rdf:RDF>

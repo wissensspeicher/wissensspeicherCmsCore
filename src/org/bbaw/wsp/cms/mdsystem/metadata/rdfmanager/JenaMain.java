@@ -30,7 +30,6 @@ import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 public class JenaMain {
 
   private static final String datasetPath = MdSystemConfigReader.getInstance().getRdfMdDir();
-  private static final String EDOC = "C:/Dokumente und Einstellungen/wsp-shk1/Eigene Dateien/Development/ParserTest/XSLTTest/outputs/v2_29_11_2012/eDocs";
 
   protected RdfHandler rdfHandler;
   protected WspRdfStore wspStore;
@@ -64,7 +63,7 @@ public class JenaMain {
    */
   private void doYourWork() {
     wspStore.setForce(true);
-    createNamedModelsFromOreSets("/home/juergens/wspEtc/rdfData/projektRdf/gesammelteRdfFuerImport");
+    createNamedModelsFromOreSets("/home/juergens/wspEtc/rdfData/wspNormdata/");
     // createNewModelFromSingleOre(oreBiblioNeu);
     // getAllNamedModelsInDataset();
     // wspStore.openDataset();
@@ -89,7 +88,7 @@ public class JenaMain {
    * @param location
    */
   private void createNamedModelsFromOreSets(final String location) {
-    // read all mods rdf
+    // read all rdf
     final List<String> pathList = extractPathLocally(location);
     logger.info("pathlist : " + pathList.size());
 

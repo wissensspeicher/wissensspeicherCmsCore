@@ -21,6 +21,8 @@ import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.impl.LiteralImpl;
 import com.hp.hpl.jena.rdf.model.impl.ResourceImpl;
 
+import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
+
 /**
  * This Class is meant to be the connector between @QueryHandler sent by the GUI and the @RdfHandler. It combines Strings to valid Sparql queries
  * 
@@ -110,6 +112,7 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
    *          an {@link RDFNode} for the subject to be set. This is done if the client looks for triples for a subject. Leave it null if the sparql result will contain a subject.
    */
   private void handleSolution(final HitGraphContainer container, final QuerySolution solution, final URL namedGraphUrl, final RDFNode pSubject) {
+    logger.info("handleSolution(final HitGraphContainer container, final QuerySolution solution, final URL namedGraphUrl, final RDFNode pSubject)");
     try {
       final URL graphUrl;
       if (namedGraphUrl == null && solution.getResource("g") != null) { // means: sparql query contains the graph name
@@ -300,7 +303,7 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
         score = solution.getLiteral("score").getDouble();
       }
       RDFNode subjParent = null;
-      if (solution.get("sParent") != null) {
+      if (solution.get("sParent") != null ) {
         subjParent = solution.get("sParent");
       }
       RDFNode predParent = null;
@@ -331,6 +334,161 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
     }
   }
 
+  private void handleSolution(final HitGraphContainer container, final QuerySolution solution) {
+      HitGraph hitGraph = null;
+      try {
+        URL graphUrl = new URL("http://wsp.normdata.rdf/");
+      if (!container.contains(graphUrl)) { // create new hit graph
+        hitGraph = new HitGraph(graphUrl);
+        container.addHitRecord(graphUrl, hitGraph);
+      } else {
+        hitGraph = container.getHitGraph(graphUrl);
+      }
+      
+      } catch (MalformedURLException e) {
+        e.printStackTrace();
+      }
+      RDFNode subject = null;
+        if (solution.get("s") != null) {
+          subject = solution.get("s");
+        }
+      RDFNode predicate = null;
+      if (solution.get("p") != null) {
+        predicate = solution.get("p");
+      }
+      RDFNode literal = null;
+      if (solution.getLiteral("lit") != null) {
+        literal = solution.getLiteral("lit");
+      }
+      if (solution.get("o") != null) {
+          literal = solution.get("o");
+      }
+      RDFNode projectId = null;
+      if (solution.get("projectId") != null) {
+        projectId = solution.get("projectId");
+      }
+      RDFNode typeRes = null;
+      if (solution.get("typeRes") != null) {
+        typeRes = solution.get("typeRes");
+      }
+      RDFNode function = null;
+      if (solution.get("function") != null) {
+        function = solution.get("function");
+      }
+      RDFNode title = null;
+      if (solution.get("title") != null) {
+        title = solution.get("title");
+      }
+      RDFNode preName = null;
+      if (solution.get("preName") != null) {
+        preName = solution.get("preName");
+      }
+      RDFNode lastName = null;
+      if (solution.get("lastName") != null) {
+        lastName = solution.get("lastName");
+      }
+      RDFNode email = null;
+      if (solution.get("email") != null) {
+        email = solution.get("email");
+      }
+      RDFNode label = null;
+      if (solution.get("label") != null) {
+        label = solution.get("label");
+      }
+      RDFNode languageCode = null;
+      if (solution.get("languageCode") != null) {
+        languageCode = solution.get("languageCode");
+      }
+      RDFNode isPartOf = null;
+      if (solution.get("isPartOf") != null) {
+        isPartOf = solution.get("isPartOf");
+      }
+      RDFNode coordinates = null;
+      if (solution.get("coordinates") != null) {
+        coordinates = solution.get("coordinates");
+      }
+      RDFNode dcSubject = null;
+      if (solution.get("dcSubject") != null) {
+        dcSubject = solution.get("dcSubject");
+      }
+      RDFNode geographicAreaCode = null;
+      if (solution.get("geographicAreaCode") != null) {
+        geographicAreaCode = solution.get("geographicAreaCode");
+      }
+      RDFNode identifier = null;
+      if (solution.get("identifier") != null) {
+        identifier = solution.get("identifier");
+      }
+      RDFNode hasPart = null;
+      if (solution.get("hasPart") != null) {
+        hasPart = solution.get("hasPart");
+      }
+      RDFNode nick = null;
+      if (solution.get("nick") != null) {
+        nick = solution.get("nick");
+      }
+      RDFNode name = null;
+      if (solution.get("name") != null) {
+        name = solution.get("name");
+      }
+      RDFNode definition = null;
+      if (solution.get("definition") != null) {
+        definition = solution.get("definition");
+      }
+      RDFNode topic = null;
+      if (solution.get("topic") != null) {
+        topic = solution.get("topic");
+      }
+      RDFNode status = null;
+      if (solution.get("status") != null) {
+        status = solution.get("status");
+      }
+      RDFNode coverage = null;
+      if (solution.get("coverage") != null) {
+        coverage = solution.get("coverage");
+      }
+      RDFNode dctermsAbstract = null;
+      if (solution.get("dctermsAbstract") != null) {
+        dctermsAbstract = solution.get("dctermsAbstract");
+      }
+      RDFNode replaces = null;
+      if (solution.get("replaces") != null) {
+        replaces = solution.get("replaces");
+      }
+      RDFNode valid = null;
+      if (solution.get("valid") != null) {
+        valid = solution.get("valid");
+      }
+      RDFNode founder = null;
+      if (solution.get("founder") != null) {
+        founder = solution.get("founder");
+      }
+      RDFNode contributor = null;
+      if (solution.get("contributor") != null) {
+        contributor = solution.get("contributor");
+      }
+      RDFNode fundedBy = null;
+      if (solution.get("fundedBy") != null) {
+        fundedBy = solution.get("fundedBy");
+      }
+      RDFNode hp = null;
+      if (solution.get("hp") != null) {
+        hp = solution.get("hp");
+      }
+      RDFNode temporal = null;
+      if (solution.get("temporal") != null) {
+        temporal = solution.get("temporal");
+      }
+      final HitStatement statement = new HitStatement(subject, predicate, literal, 
+          projectId,typeRes,function,title,preName,lastName,email,label,languageCode,isPartOf,coordinates,dcSubject,geographicAreaCode,
+          identifier,hasPart,nick,name,definition,topic,status,coverage,dctermsAbstract,replaces,valid,founder,contributor,fundedBy,hp,temporal
+          );
+      hitGraph.addStatement(statement);
+
+      // set result type
+      statement.setResultType(MdSystemResultType.LITERAL_NAMED_GRAPH);
+  }
+  
   /*
    * (non-Javadoc)
    * 
@@ -710,7 +868,7 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
       final ResultSet realResults = (ResultSet) results;
       while (realResults.hasNext()) {
         final QuerySolution solution = realResults.next();
-        this.handleSolution(container, solution, null, subject);
+          this.handleSolution(container, solution, null, subject);
       }
     } else if (results instanceof HashMap<?, ?>) { // query strategy returns hash map in the form named graph url - value
       @SuppressWarnings("unchecked")
@@ -741,7 +899,7 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
       final ResultSet realResults = (ResultSet) results;
       while (realResults.hasNext()) {
         final QuerySolution solution = realResults.next();
-        this.handleSolution(container, solution, null, null);
+        this.handleSolution(container, solution);
       }
     } else if (results instanceof HashMap<?, ?>) { // query strategy returns hash map in the form named graph url - value
       @SuppressWarnings("unchecked")

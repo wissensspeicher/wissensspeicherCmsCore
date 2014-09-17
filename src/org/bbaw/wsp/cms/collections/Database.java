@@ -5,6 +5,8 @@ import java.util.Hashtable;
 public class Database {
   private String type;
   private String name;
+  private JdbcConnection jdbcConnection;
+  private String sql;
   private String xmlDumpFileName;
   private String xmlDumpUrl;
   private String xmlDumpSet;
@@ -30,6 +32,22 @@ public class Database {
     this.name = name;
   }
   
+  public JdbcConnection getJdbcConnection() {
+    return jdbcConnection;
+  }
+
+  public void setJdbcConnection(JdbcConnection jdbcConnection) {
+    this.jdbcConnection = jdbcConnection;
+  }
+
+  public String getSql() {
+    return sql;
+  }
+
+  public void setSql(String sql) {
+    this.sql = sql;
+  }
+
   public String getXmlDumpFileName() {
     return xmlDumpFileName;
   }

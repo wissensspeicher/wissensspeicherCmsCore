@@ -3,6 +3,9 @@
  */
 package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.detailedsearch;
 
+import java.util.HashMap;
+import java.util.Map.Entry;
+
 import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.MdSystemResultType;
 
 import com.hp.hpl.jena.rdf.model.RDFNode;
@@ -17,50 +20,52 @@ import com.hp.hpl.jena.rdf.model.impl.ResourceImpl;
  */
 public class HitStatement {
 
-  protected final RDFNode subject;
-  protected final RDFNode predicate;
-  protected final RDFNode object;
-  protected final RDFNode subjParent;
-  protected final RDFNode predParent;
-  protected final RDFNode resolvedPer;
-  protected final RDFNode resolvedLing;
-  protected final RDFNode resolvedTime;
-  protected final RDFNode resolvedProj;
-  protected final RDFNode resolvedLoc;
-  protected final RDFNode resolvedOrg;
-  protected final RDFNode resolvedMed;
-  protected final RDFNode resolvedEvnt;
-  protected final RDFNode projectId;
-  protected final RDFNode typeRes;
-  protected final RDFNode function;
-  protected final RDFNode title;
-  protected final RDFNode preName;
-  protected final RDFNode lastName;
-  protected final RDFNode email;
-  protected final RDFNode label;
-  protected final RDFNode languageCode;
-  protected final RDFNode isPartOf;
-  protected final RDFNode coordinates;
-  protected final RDFNode dcSubject;
-  protected final RDFNode geographicAreaCode;
-  protected final RDFNode identifier;
-  protected final RDFNode hasPart;
-  protected final RDFNode nick;
-  protected final RDFNode name;
-  protected final RDFNode definition;
-  protected final RDFNode topic;
-  protected final RDFNode status;
-  protected final RDFNode coverage;
-  protected final RDFNode dctermsAbstract;
-  protected final RDFNode replaces;
-  protected final RDFNode valid;
-  protected final RDFNode founder;
-  protected final RDFNode contributor;
-  protected final RDFNode fundedBy;
-  protected final RDFNode hp;
-  protected final RDFNode temporal;
-  protected final double score;
-  private MdSystemResultType resultType;
+  protected HashMap<String, RDFNode> hitVars;
+  
+  protected  RDFNode subject = null;
+  protected  RDFNode predicate = null;
+  protected  RDFNode object = null;
+  protected  RDFNode subjParent = null;
+  protected  RDFNode predParent = null;
+  protected  RDFNode resolvedPer = null;
+  protected  RDFNode resolvedLing = null;
+  protected  RDFNode resolvedTime = null;
+  protected RDFNode resolvedProj = null;
+  protected  RDFNode resolvedLoc = null;
+  protected  RDFNode resolvedOrg = null;
+  protected  RDFNode resolvedMed = null;
+  protected  RDFNode resolvedEvent = null;
+  protected  RDFNode projectId = null;
+  protected  RDFNode typeRes = null;
+  protected  RDFNode function = null;
+  protected  RDFNode title = null;
+  protected  RDFNode preName = null;
+  protected  RDFNode lastName = null;
+  protected  RDFNode email = null;
+  protected  RDFNode label = null;
+  protected  RDFNode languageCode = null;
+  protected  RDFNode isPartOf = null;
+  protected  RDFNode coordinates = null;
+  protected  RDFNode dcSubject = null;
+  protected  RDFNode geographicAreaCode = null;
+  protected  RDFNode identifier = null;
+  protected  RDFNode hasPart = null;
+  protected  RDFNode nick = null;
+  protected  RDFNode name = null;
+  protected  RDFNode definition = null;
+  protected  RDFNode topic = null;
+  protected  RDFNode status = null;
+  protected  RDFNode coverage = null;
+  protected  RDFNode dctermsAbstract = null;
+  protected  RDFNode replaces = null;
+  protected  RDFNode valid = null;
+  protected  RDFNode founder = null;
+  protected  RDFNode contributor = null;
+  protected  RDFNode fundedBy = null;
+  protected  RDFNode hp = null;
+  protected  RDFNode temporal = null;
+  protected  double score = 0;
+  private MdSystemResultType resultType = null;
 
   /**
    * Create a new HitStatement to represent results of the {@link SparqlAdapter}
@@ -68,7 +73,7 @@ public class HitStatement {
    */
   public HitStatement(final RDFNode subject, final RDFNode predicate, final RDFNode object, final double score, final RDFNode subjParent, 
       final RDFNode predParent, final RDFNode resolvedPer, final RDFNode resolvedLing, final RDFNode resolvedTime, final RDFNode resolvedProj, 
-      final RDFNode resolvedLoc, final RDFNode resolvedOrg, final RDFNode resolvedMed, final RDFNode resolvedEvnt,
+      final RDFNode resolvedLoc, final RDFNode resolvedOrg, final RDFNode resolvedMed, final RDFNode resolvedEvent,
       final RDFNode projectId, final RDFNode typeRes,final RDFNode function, final RDFNode title, final RDFNode preName, final RDFNode lastName, 
       final RDFNode email, final RDFNode label, final RDFNode languageCode, final RDFNode isPartOf, final RDFNode coordinates, final RDFNode dcSubject,
       final RDFNode geographicAreaCode, final RDFNode identifier, final RDFNode hasPart, final RDFNode nick, final RDFNode name, 
@@ -76,6 +81,8 @@ public class HitStatement {
       final RDFNode replaces, final RDFNode valid, final RDFNode founder, final RDFNode contributor, final RDFNode fundedBy, 
       final RDFNode hp, final RDFNode temporal
       ) {
+    
+    hitVars = new HashMap<String, RDFNode>();
 
     this.subject = removeSparqlBrackets(subject);
     this.predicate = removeSparqlBrackets(predicate);
@@ -90,7 +97,7 @@ public class HitStatement {
     this.resolvedLoc = removeSparqlBrackets(resolvedLoc);
     this.resolvedOrg = removeSparqlBrackets(resolvedOrg);
     this.resolvedMed = removeSparqlBrackets(resolvedMed);
-    this.resolvedEvnt = removeSparqlBrackets(resolvedEvnt);
+    this.resolvedEvent = removeSparqlBrackets(resolvedEvent);
     this.projectId = removeSparqlBrackets(projectId);
     this.typeRes = removeSparqlBrackets(typeRes);
     this.function = removeSparqlBrackets(function);
@@ -120,8 +127,143 @@ public class HitStatement {
     this.fundedBy = removeSparqlBrackets(fundedBy);
     this.hp = removeSparqlBrackets(hp);
     this.temporal = removeSparqlBrackets(temporal);
+    
+    hitVars.put("subject", removeSparqlBrackets(subject));
+    hitVars.put("predicate", removeSparqlBrackets(predicate));
+    hitVars.put("object", removeSparqlBrackets(object));
+    hitVars.put("subjParent", removeSparqlBrackets(subjParent));
+    hitVars.put("predParent", removeSparqlBrackets(predParent));
+    hitVars.put("resolvedPer", removeSparqlBrackets(resolvedPer));
+    hitVars.put("resolvedLing", removeSparqlBrackets(resolvedLing));
+    hitVars.put("resolvedTime", removeSparqlBrackets(resolvedTime));
+    hitVars.put("resolvedProj", removeSparqlBrackets(resolvedProj));
+    hitVars.put("resolvedLoc", removeSparqlBrackets(resolvedLoc));
+    hitVars.put("resolvedOrg", removeSparqlBrackets(resolvedOrg));
+    hitVars.put("resolvedMed", removeSparqlBrackets(resolvedMed));
+    hitVars.put("resolvedEvent", removeSparqlBrackets(resolvedEvent));
+    hitVars.put("projectId", removeSparqlBrackets(projectId));
+    hitVars.put("typeRes", removeSparqlBrackets(typeRes));
+    hitVars.put("function", removeSparqlBrackets(function));
+    hitVars.put("title", removeSparqlBrackets(title));
+    hitVars.put("preName", removeSparqlBrackets(preName));
+    hitVars.put("lastName", removeSparqlBrackets(lastName));
+    hitVars.put("email", removeSparqlBrackets(email));
+    hitVars.put("label", removeSparqlBrackets(label));
+    hitVars.put("languageCode", removeSparqlBrackets(languageCode));
+    hitVars.put("isPartOf", removeSparqlBrackets(isPartOf));
+    hitVars.put("coordinates", removeSparqlBrackets(coordinates));
+    hitVars.put("dcSubject", removeSparqlBrackets(dcSubject));
+    hitVars.put("geographicAreaCode", removeSparqlBrackets(geographicAreaCode));
+    hitVars.put("identifier", removeSparqlBrackets(identifier));
+    hitVars.put("hasPart", removeSparqlBrackets(hasPart));
+    hitVars.put("nick", removeSparqlBrackets(nick));
+    hitVars.put("name", removeSparqlBrackets(name));
+    hitVars.put("definition", removeSparqlBrackets(definition));
+    hitVars.put("topic", removeSparqlBrackets(topic));
+    hitVars.put("status", removeSparqlBrackets(status));
+    hitVars.put("coverage", removeSparqlBrackets(coverage));
+    hitVars.put("dctermsAbstract", removeSparqlBrackets(dctermsAbstract));
+    hitVars.put("replaces", removeSparqlBrackets(replaces));
+    hitVars.put("valid", removeSparqlBrackets(valid));
+    hitVars.put("founder", removeSparqlBrackets(founder));
+    hitVars.put("contributor", removeSparqlBrackets(contributor));
+    hitVars.put("fundedBy", removeSparqlBrackets(fundedBy));
+    hitVars.put("hp", removeSparqlBrackets(hp));
+    hitVars.put("temporal", removeSparqlBrackets(temporal));
+    
+    //
+    this.score = score;
   }
 
+  public HitStatement(final RDFNode subject, final RDFNode predicate, final RDFNode object, 
+      final RDFNode projectId, final RDFNode typeRes,final RDFNode function, final RDFNode title, final RDFNode preName, final RDFNode lastName, 
+      final RDFNode email, final RDFNode label, final RDFNode languageCode, final RDFNode isPartOf, final RDFNode coordinates, final RDFNode dcSubject,
+      final RDFNode geographicAreaCode, final RDFNode identifier, final RDFNode hasPart, final RDFNode nick, final RDFNode name, 
+      final RDFNode definition, final RDFNode topic, final RDFNode status, final RDFNode coverage, final RDFNode dctermsAbstract, 
+      final RDFNode replaces, final RDFNode valid, final RDFNode founder, final RDFNode contributor, final RDFNode fundedBy, 
+      final RDFNode hp, final RDFNode temporal
+      ) {
+
+    hitVars = new HashMap<String, RDFNode>();
+    
+    this.subject = removeSparqlBrackets(subject);
+    this.predicate = removeSparqlBrackets(predicate);
+    this.object = removeSparqlBrackets(object);
+    this.projectId = removeSparqlBrackets(projectId);
+    this.typeRes = removeSparqlBrackets(typeRes);
+    this.function = removeSparqlBrackets(function);
+    this.title = removeSparqlBrackets(title);
+    this.preName = removeSparqlBrackets(preName);
+    this.lastName = removeSparqlBrackets(lastName);
+    this.email = removeSparqlBrackets(email);
+    this.label = removeSparqlBrackets(label);
+    this.languageCode = removeSparqlBrackets(languageCode);
+    this.isPartOf = removeSparqlBrackets(isPartOf);
+    this.coordinates = removeSparqlBrackets(coordinates);
+    this.dcSubject = removeSparqlBrackets(dcSubject);
+    this.geographicAreaCode = removeSparqlBrackets(geographicAreaCode);
+    this.identifier = removeSparqlBrackets(identifier);
+    this.hasPart = removeSparqlBrackets(hasPart);
+    this.nick = removeSparqlBrackets(nick);
+    this.name = removeSparqlBrackets(name);
+    this.definition = removeSparqlBrackets(definition);
+    this.topic = removeSparqlBrackets(topic);
+    this.status = removeSparqlBrackets(status);
+    this.coverage = removeSparqlBrackets(coverage);
+    this.dctermsAbstract = removeSparqlBrackets(dctermsAbstract);
+    this.replaces = removeSparqlBrackets(replaces);
+    this.valid = removeSparqlBrackets(valid);
+    this.founder = removeSparqlBrackets(founder);
+    this.contributor = removeSparqlBrackets(contributor);
+    this.fundedBy = removeSparqlBrackets(fundedBy);
+    this.hp = removeSparqlBrackets(hp);
+    this.temporal = removeSparqlBrackets(temporal);
+    
+
+    hitVars.put("subject", removeSparqlBrackets(subject));
+    hitVars.put("predicate", removeSparqlBrackets(predicate));
+    hitVars.put("object", removeSparqlBrackets(object));
+    hitVars.put("subjParent", removeSparqlBrackets(subjParent));
+    hitVars.put("predParent", removeSparqlBrackets(predParent));
+    hitVars.put("resolvedPer", removeSparqlBrackets(resolvedPer));
+    hitVars.put("resolvedLing", removeSparqlBrackets(resolvedLing));
+    hitVars.put("resolvedTime", removeSparqlBrackets(resolvedTime));
+    hitVars.put("resolvedProj", removeSparqlBrackets(resolvedProj));
+    hitVars.put("resolvedLoc", removeSparqlBrackets(resolvedLoc));
+    hitVars.put("resolvedOrg", removeSparqlBrackets(resolvedOrg));
+    hitVars.put("resolvedMed", removeSparqlBrackets(resolvedMed));
+    hitVars.put("resolvedEvent", removeSparqlBrackets(resolvedEvent));
+    hitVars.put("projectId", removeSparqlBrackets(projectId));
+    hitVars.put("typeRes", removeSparqlBrackets(typeRes));
+    hitVars.put("function", removeSparqlBrackets(function));
+    hitVars.put("title", removeSparqlBrackets(title));
+    hitVars.put("preName", removeSparqlBrackets(preName));
+    hitVars.put("lastName", removeSparqlBrackets(lastName));
+    hitVars.put("email", removeSparqlBrackets(email));
+    hitVars.put("label", removeSparqlBrackets(label));
+    hitVars.put("languageCode", removeSparqlBrackets(languageCode));
+    hitVars.put("isPartOf", removeSparqlBrackets(isPartOf));
+    hitVars.put("coordinates", removeSparqlBrackets(coordinates));
+    hitVars.put("dcSubject", removeSparqlBrackets(dcSubject));
+    hitVars.put("geographicAreaCode", removeSparqlBrackets(geographicAreaCode));
+    hitVars.put("identifier", removeSparqlBrackets(identifier));
+    hitVars.put("hasPart", removeSparqlBrackets(hasPart));
+    hitVars.put("nick", removeSparqlBrackets(nick));
+    hitVars.put("name", removeSparqlBrackets(name));
+    hitVars.put("definition", removeSparqlBrackets(definition));
+    hitVars.put("topic", removeSparqlBrackets(topic));
+    hitVars.put("status", removeSparqlBrackets(status));
+    hitVars.put("coverage", removeSparqlBrackets(coverage));
+    hitVars.put("dctermsAbstract", removeSparqlBrackets(dctermsAbstract));
+    hitVars.put("replaces", removeSparqlBrackets(replaces));
+    hitVars.put("valid", removeSparqlBrackets(valid));
+    hitVars.put("founder", removeSparqlBrackets(founder));
+    hitVars.put("contributor", removeSparqlBrackets(contributor));
+    hitVars.put("fundedBy", removeSparqlBrackets(fundedBy));
+    hitVars.put("hp", removeSparqlBrackets(hp));
+    hitVars.put("temporal", removeSparqlBrackets(temporal));
+  }
+  
   private RDFNode removeSparqlBrackets(final RDFNode rdfnode) {
     final RDFNode resultingNode;
     if (rdfnode != null && rdfnode.isResource()) {
@@ -222,8 +364,8 @@ public class HitStatement {
   /**
    * @return the resolved Event
    */
-  public RDFNode getResolvedEvnt() {
-    return resolvedEvnt;
+  public RDFNode getResolvedEvent() {
+    return resolvedEvent;
   }
   
   public RDFNode getProjectId() {
@@ -349,23 +491,36 @@ public class HitStatement {
    */
   @Override
   public String toString() {
-    return "HitStatement [subject=" + subject + ", predicate=" + predicate + ", object=" + object + ", subjParent=" + subjParent + ", "
-        + "predParent=" + predParent + ", score=" + score + ", resultType=" + resultType + ", resolvedEvent=" + resolvedEvnt + ", "
-        + "resolved Ling=" + resolvedLing + ", resolved Location=" + resolvedLoc + ", resolved Media Type=" + resolvedMed + ", "
-        + "resolved Organization=" + resolvedOrg + ", resolved Person=" + resolvedPer + ", resolved Project=" + resolvedProj + ", "
-        + "resolved Period Of Time=" + resolvedTime + ", resolved projectId=" + projectId + ", resolved typeRes=" + typeRes + ""
-        + ", resolved function=" + function + ", resolved title=" + title + ", resolved preName=" + preName + ""
-        + ", resolved lastName=" + lastName + ", resolved email=" + email + ", resolved label=" + label + ""
-        + ", resolved languageCode=" + languageCode + ", resolved isPartOf=" + isPartOf + ", resolved coordinates=" + coordinates + ""
-        + ", resolved dcSubject=" + dcSubject + ", resolved geographicAreaCode=" + geographicAreaCode + ", resolved identifier=" + identifier + ""
-        + ", resolved hasPart=" + hasPart + ", resolved nick=" + nick + ", resolved name=" + name + ", resolved definition=" + definition + ""
-        + ", resolved topic=" + topic + ", resolved status=" + status + ", resolved coverage=" + coverage + ""
-        + ", resolved dctermsAbstract=" + dctermsAbstract + ""
-        + ", resolved replaces=" + replaces + ", resolved valid=" + valid + ", resolved founder=" + founder + ""
-        + ", resolved contributor=" + contributor + ", resolved fundedBy=" + fundedBy + ""
-        + ", resolved hp=" + hp + ", resolved temporal=" + temporal + ""
-        + "]";
+    StringBuilder sb =  new StringBuilder();
+    sb.append("HitStatement [\n");
+    
+    for (Entry<String, RDFNode> entry : hitVars.entrySet()) {
+      if(entry.getValue() != null){
+        String s = entry.getKey() + ": " + entry.getValue();
+        sb.append(s);
+        sb.append(", | \n");
+      }
+    }
+    sb.append("]\n");
+    return sb.toString();
+//    return "HitStatement [subject=" + subject + ", predicate=" + predicate + ", object=" + object + ", subjParent=" + subjParent + ", "
+//        + "predParent=" + predParent + ", score=" + score + ", resultType=" + resultType + ", resolvedEvent=" + resolvedEvent + ", "
+//        + "resolved Ling=" + resolvedLing + ", resolved Location=" + resolvedLoc + ", resolved Media Type=" + resolvedMed + ", "
+//        + "resolved Organization=" + resolvedOrg + ", resolved Person=" + resolvedPer + ", resolved Project=" + resolvedProj + ", "
+//        + "resolved Period Of Time=" + resolvedTime + ", resolved projectId=" + projectId + ", resolved typeRes=" + typeRes + ""
+//        + ", resolved function=" + function + ", resolved title=" + title + ", resolved preName=" + preName + ""
+//        + ", resolved lastName=" + lastName + ", resolved email=" + email + ", resolved label=" + label + ""
+//        + ", resolved languageCode=" + languageCode + ", resolved isPartOf=" + isPartOf + ", resolved coordinates=" + coordinates + ""
+//        + ", resolved dcSubject=" + dcSubject + ", resolved geographicAreaCode=" + geographicAreaCode + ", resolved identifier=" + identifier + ""
+//        + ", resolved hasPart=" + hasPart + ", resolved nick=" + nick + ", resolved name=" + name + ", resolved definition=" + definition + ""
+//        + ", resolved topic=" + topic + ", resolved status=" + status + ", resolved coverage=" + coverage + ""
+//        + ", resolved dctermsAbstract=" + dctermsAbstract + ""
+//        + ", resolved replaces=" + replaces + ", resolved valid=" + valid + ", resolved founder=" + founder + ""
+//        + ", resolved contributor=" + contributor + ", resolved fundedBy=" + fundedBy + ""
+//        + ", resolved hp=" + hp + ", resolved temporal=" + temporal + ""
+//        + "]";
   }
+ 
   
   /*
    * (non-Javadoc)

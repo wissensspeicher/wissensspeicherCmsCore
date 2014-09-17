@@ -10,6 +10,9 @@
       <dataUrl>http://www.corpuscoranicum.de</dataUrl>
       <dataUrl>http://corpuscoranicum.de/kommentar/index/sure</dataUrl>
       <dataUrl>http://koran.bbaw.de/materialien/bergstrasser-original-indexklein.pdf</dataUrl>
+      <!-- Kommentare: Text (arabische und deutsche Übersetzung) und Kommentare/Anmerkungen; pro Sure (nicht alle Suren) -->
+      <dataUrl type="eXistDir">http://telotadev.bbaw.de:8085/exist/rest/db/Koran/Textstruktur/</dataUrl>
+      <dataUrl type="eXistDir">http://telotadev.bbaw.de:8085/exist/rest/db/Koran/Kommentar/</dataUrl>
     </url>
     <languages>ger,ara,grc</languages>
     <mainLanguage>ger</mainLanguage>
@@ -21,32 +24,15 @@
     <db>
       <type>mysql</type>
       <name>druckausgabe</name>
-      <xmlDump>
-        <sql>
-SELECT 
- CONCAT('sure/', k1.sure, '/vers/', k1.vers) as id,
- CONCAT('Sure ', k1.sure, ' (', k.surenname, '), Vers: ', k1.vers) as title,
- CONCAT('Transkription: ', GROUP_CONCAT(transkription ORDER BY wort SEPARATOR ' '), '\n', 'Arabischer Text: ', GROUP_CONCAT(arab ORDER BY wort SEPARATOR ' '), '\n', 'Deutsche Übersetzung: ', k2.text) as abstract
-FROM 
- koran k, lc_kkoran k1, koran_uebersetzung k2
-WHERE
- k.sure = k1.sure
-AND
- k.vers = 1
-AND
- k1.sure = k2.sure
-AND
- k1.vers = k2.vers
-AND
- k1.sure = 1
-AND
- k1.vers = 7
-GROUP BY 
- k1.sure, k1.vers
-         </sql>
-      </xmlDump>
+      <jdbc>
+        <host>sandbank.bbaw.de</host>
+        <port>3306</port>
+        <db>corpuscoranicum</db>
+        <user>wsp</user>
+        <pw>yMymtHJyetpfTuBc</pw>
+      </jdbc>
       <mainResourcesTable>
-        <name>druckausgabe</name>
+        <name>koran</name>
         <idField>id</idField>
         <field>
           <dc>title</dc>
@@ -58,19 +44,61 @@ GROUP BY
         </field>
       </mainResourcesTable>
       <webId>
-        <!-- Suren 1 - 114: pro Sure: Verse 1 - x, manche Verse haben eine andere Ausgabe -->
+        <!-- Suren 1 - 114: pro Sure: Verse 1 - x -->
         <preStr>http://www.corpuscoranicum.de/index/index/</preStr>
       </webId>
     </db>
-    <db>
+    <db-old>
+      <type>mysql</type>
+      <name>druckausgabe</name>
+      <xmlDump>
+        <sql>
+/* Druckausgabe: no double entries/rows for each sure+vers (values are less than 1024 chars long): needs ca. 30 secs   */
+SELECT
+ CONCAT('sure/', k.sure, '/vers/', k.vers) as id,
+ CONCAT('Sure ', k.sure, ' (', koran.surenname, '), Vers ', k.vers) as title,
+ CONCAT('\nTranskription: ', GROUP_CONCAT(transkription ORDER BY wort DESC SEPARATOR ' '), '\nArabische Übersetzung: ', GROUP_CONCAT(arab ORDER BY wort DESC SEPARATOR ' '), '\nDeutsche Übersetzung: ', kue.text) as abstract
+FROM 
+ lc_kkoran k, koran, koran_uebersetzung kue
+WHERE
+ koran.sure = k.sure
+AND
+ koran.vers = 1
+AND
+ kue.sure = k.sure
+AND
+ kue.vers = k.vers
+GROUP BY 
+ k.sure, k.vers
+        </sql>
+      </xmlDump>
+      <mainResourcesTable>
+        <name>lc_kkoran</name>
+        <idField>id</idField>
+        <field>
+          <dc>title</dc>
+          <db>title</db>
+        </field>
+        <field>
+          <dc>abstract</dc>
+          <db>abstract</db>
+        </field>
+      </mainResourcesTable>
+      <webId>
+        <!-- Suren 1 - 114: pro Sure: Verse 1 - x -->
+        <preStr>http://www.corpuscoranicum.de/index/index/</preStr>
+      </webId>
+    </db-old>
+    <db-old>
       <type>mysql</type>
       <name>handschriften</name>
       <xmlDump>
         <sql>
+/* Handschriften: contain double entries/rows for each sure+vers (not grouped by sure + vers: bug in phpMySql 2.1: group_concat limit with 1024 chars: needs ca. 30 secs (query) + 4 min (Download: 1,8 GB)) */
 SELECT
  CONCAT('sure/', k.sure, '/vers/', k.vers) as id,
- CONCAT('Sure ', k.sure, ', Vers: ', k.vers) as title,
- CONCAT('Handschriften: ', GROUP_CONCAT(m.kodextitel, m.kommentar SEPARATOR '\n')) as abstract
+ CONCAT('Sure ', k.sure, ', Vers ', k.vers) as title,
+ CONCAT(m.kodextitel, ', ', IFNULL(m.aufbewahrungsort, ''), ', \nSchriftduktus: ', IFNULL(m.schriftduktus, ''), '\nTextgliederung: ', IFNULL(m.textgliederung, ''), '\nPaläographie: ', IFNULL(m.palaographie, ''), '\nLiteratur: ', IFNULL(m.literatur, ''), '\nKommentar: ', IFNULL(m.kommentar, '')) as abstract
 FROM
 (SELECT
  sure, vers
@@ -79,19 +107,15 @@ FROM
 GROUP BY 
  k.sure, k.vers) k, manuskript_mapping mm, manuskript m
 WHERE
- cast(concat(k.sure, k.vers) as unsigned) BETWEEN (cast(concat(mm.sure_start, mm.vers_start) as unsigned)) and (cast(concat(mm.sure_ende, mm.vers_ende) as unsigned))
+ cast(concat(k.sure, k.vers) as unsigned) BETWEEN cast(concat(mm.sure_start, mm.vers_start) as unsigned) AND cast(concat(mm.sure_ende, mm.vers_ende) as unsigned)
 AND
  mm.manuskript = m.id
-AND
- k.sure = 2
-AND
- k.vers = 1
-GROUP BY
+ORDER BY
  k.sure, k.vers
         </sql>
       </xmlDump>
       <mainResourcesTable>
-        <name>handschriften</name>
+        <name>manuskript_mapping</name>
         <idField>id</idField>
         <field>
           <dc>title</dc>
@@ -106,15 +130,101 @@ GROUP BY
         <!-- Suren 1 - 114: pro Sure: Verse 1 - x, manche Verse haben eine andere Handschrift -->
         <preStr>http://www.corpuscoranicum.de/handschriften/index/</preStr>
       </webId>
-    </db>
-    <db>
+    </db-old>
+    <db-old>
       <type>mysql</type>
-      <name>lesarten</name>
+      <name>umwelttexte</name>
       <xmlDump>
         <sql>
+/* Umwelttexte: contain double entries/rows for each sure+vers (not grouped by sure + vers: bug in phpMySql 2.1: group_concat limit with 1024 chars): needs ca. 50 secs (query) + 4 min (Download: 1,4 GB)  */
+SELECT
+ CONCAT('sure/', k.sure, '/vers/', k.vers) as id,
+ CONCAT('Sure ', k.sure, ', Vers ', k.vers) as title,
+ CONCAT(b.titel, '\nOrt: ', IFNULL(b.ortregion, ''), '\nEdition', IFNULL(b.edition, ''), '\nOriginalsprache: ', IFNULL(b.originalsprache, ''), '\nÜbersetzung (deutsch): ', IFNULL(b.uebersetzung_dt, ''), '\nÜbersetzung (englisch): ', IFNULL(b.uebersetzung_en, ''), '\nAnmerkungen', IFNULL(b.anmerkungen, '')) as abstract
+FROM
+(SELECT
+ sure, vers
+FROM 
+ lc_kkoran k
+GROUP BY 
+ k.sure, k.vers) k, belegstellen_mapping bm, belegstellen b
+WHERE
+ cast(concat(k.sure, k.vers) as unsigned) BETWEEN cast(concat(bm.sure_start, bm.vers_start) as unsigned) AND cast(concat(bm.sure_ende, bm.vers_ende) as unsigned)
+AND
+ bm.belegstelle = b.id
+AND
+ (b.webtauglich = 'ja' OR b.webtauglich = '')
+ORDER BY
+ k.sure, k.vers
+        </sql>
+      </xmlDump>
+      <mainResourcesTable>
+        <name>belegstellen_mapping</name>
+        <idField>id</idField>
+        <field>
+          <dc>title</dc>
+          <db>title</db>
+        </field>
+        <field>
+          <dc>abstract</dc>
+          <db>abstract</db>
+        </field>
+      </mainResourcesTable>
+      <webId>
+        <!-- Suren 1 - 114: pro Sure: Verse 1 - x, nur manche Verse haben einen Kontext -->
+        <preStr>http://www.corpuscoranicum.de/kontexte/index/</preStr>
+      </webId>
+    </db-old>
+    <db-old>
+      <type>mysql</type>
+      <name>koran</name>
+      <xmlDump>
+        <sql>
+/* druckausgabe  */
+SET @@group_concat_max_len = 999999;
+SELECT
+ CONCAT('sure/', k.sure, '/vers/', k.vers) as id,
+ CONCAT('Sure ', k.sure, ' (', koran.surenname, '), Vers ', k.vers) as title,
+ GROUP_CONCAT(transkription ORDER BY wort SEPARATOR ' ') transcription, 
+ GROUP_CONCAT(arab ORDER BY wort SEPARATOR ' ') arab,
+ kue.text as german
+FROM 
+ lc_kkoran k, koran, koran_uebersetzung kue
+WHERE
+ koran.sure = k.sure
+AND
+ koran.vers = 1
+AND
+ kue.sure = k.sure
+AND
+ kue.vers = k.vers
+GROUP BY 
+ k.sure, k.vers
+
+/* handschriften  */
+SET @@group_concat_max_len = 999999;
+SELECT
+ CONCAT('sure/', k.sure, '/vers/', k.vers) as id,
+ CONCAT('Sure ', k.sure, ', Vers ', k.vers) as title,
+ CONCAT('Handschriften: ', GROUP_CONCAT(IF(m.webtauglich = 'ja', CONCAT(m.kodextitel, ', ', IFNULL(m.aufbewahrungsort, ''), ', \nSchriftduktus: ', IFNULL(m.schriftduktus, ''), '\nTextgliederung: ', IFNULL(m.textgliederung, ''), '\nPaläographie: ', IFNULL(m.palaographie, ''), '\nLiteratur: ', IFNULL(m.literatur, ''), '\nKommentar: ', IFNULL(m.kommentar, '')), '') SEPARATOR '\n')) as abstract
+FROM
+(SELECT
+ sure, vers
+FROM 
+ lc_kkoran k
+GROUP BY 
+ k.sure, k.vers) k, manuskript_mapping mm, manuskript m
+WHERE
+ cast(concat(k.sure, k.vers) as unsigned) BETWEEN cast(concat(mm.sure_start, mm.vers_start) as unsigned) AND cast(concat(mm.sure_ende, mm.vers_ende) as unsigned)
+AND
+ mm.manuskript = m.id
+GROUP BY
+ k.sure, k.vers
+ 
+/* lesarten  */
 SELECT
  CONCAT('sure/', l.sure, '/vers/', l.vers) as id,
- CONCAT('Sure ', l.sure, ', Vers: ', l.vers) as title,
+ CONCAT('Sure ', l.sure, ', Vers ', l.vers) as title,
  CONCAT('Referenz: ', q.anzeigetitel, '\n', 'Leser: ', le.anzeigename, '\n', 'Lesart: ', 'bla') as abstract
 FROM
  lc_leseart l, lc_leseart_quelle lq, lc_quelle q, lc_leseart_leser lle, lc_leser le
@@ -130,40 +240,85 @@ AND
  l.sure = 1
 AND
  l.vers = 2
-         </sql>
-      </xmlDump>
-      <mainResourcesTable>
-        <name>lesarten</name>
-        <idField>id</idField>
-        <field>
-          <dc>title</dc>
-          <db>title</db>
-        </field>
-        <field>
-          <dc>abstract</dc>
-          <db>abstract</db>
-        </field>
-      </mainResourcesTable>
-      <webId>
-        <!-- Suren 1 - 114: pro Sure: Verse 1 - x, jeder Vers hat eine andere Lesart -->
-        <preStr>http://www.corpuscoranicum.de/lesarten/index/</preStr>
-      </webId>
-    </db>
-    <db>
-      <type>mysql</type>
-      <name>kontexte</name>
-      <xmlDump>
-        <sql>
-SELECT 
- concat('sure/', sureId, '/vers/', versId) as id,
- titel as title,
- concat(field1, '\n', field2, '\n', field3, '\n', field4, '\n', field5, '\n', field6) as abstract
+
+/* Umwelttexte: needs ca. 185 sec. */
+SET @@group_concat_max_len = 999999;
+SELECT
+ CONCAT('sure/', k.sure, '/vers/', k.vers) as id,
+ CONCAT('Sure ', k.sure, ', Vers ', k.vers) as title,
+ CONCAT('Texte aus der Umwelt des Koran: \n', GROUP_CONCAT(IF(b.webtauglich = 'ja', CONCAT(b.titel, '\nOrt: ', IFNULL(b.ortregion, ''), '\nEdition', IFNULL(b.edition, ''), '\nOriginalsprache: ', IFNULL(b.originalsprache, ''), '\nÜbersetzung (deutsch): ', IFNULL(b.uebersetzung_dt, ''), '\nÜbersetzung (englisch): ', IFNULL(b.uebersetzung_en, ''), '\nAnmerkungen', IFNULL(b.anmerkungen, '')), '') SEPARATOR '\n')) as abstract
+FROM
+(SELECT
+ sure, vers
 FROM 
- kontexte
+ lc_kkoran k
+GROUP BY 
+ k.sure, k.vers) k, belegstellen_mapping bm, belegstellen b
+WHERE
+ cast(concat(k.sure, k.vers) as unsigned) BETWEEN cast(concat(bm.sure_start, bm.vers_start) as unsigned) AND cast(concat(bm.sure_ende, bm.vers_ende) as unsigned)
+AND
+ bm.belegstelle = b.id
+AND
+ (b.webtauglich = 'ja' OR b.webtauglich = '')
+GROUP BY
+ k.sure, k.vers
+
+/* alles zusammen (zu schlechte Performance): Transkription, Arabischer Text, Deutsche Übersetzung, Handschriften, Umwelttexte  */
+SET @@group_concat_max_len = 999999;
+SELECT
+ kv.id,
+ kv.title,
+ CONCAT('Transkription: ', kv.transcription, '\n', 'Arabischer Text: ', kv.arab, '\n', 'Deutsche Übersetzung: ', kv.german, '\n', 'Handschriften: \n', kv.handschriften, 'Texte aus der Umwelt des Koran: \n', kv.umwelttexte) as abstract
+FROM
+(SELECT 
+ ko.id, ko.title, ko.transcription, ko.arab, ko.german, ko.handschriften, 
+ GROUP_CONCAT(IF(b.webtauglich = 'ja', CONCAT(b.titel, '\nOrt: ', IFNULL(b.ortregion, ''), '\nEdition', IFNULL(b.edition, ''), '\nOriginalsprache: ', IFNULL(b.originalsprache, ''), '\nÜbersetzung (deutsch): ', IFNULL(b.uebersetzung_dt, ''), '\nÜbersetzung (englisch): ', IFNULL(b.uebersetzung_en, ''), '\nAnmerkungen', IFNULL(b.anmerkungen, '')), '') SEPARATOR '\n') as umwelttexte
+FROM
+(SELECT 
+ k.sure, k.vers,
+ CONCAT('sure/', k.sure, '/vers/', k.vers) as id,
+ CONCAT('Sure ', k.sure, ' (', koran.surenname, '), Vers ', k.vers) as title,
+ transcription, 
+ arab, 
+ kue.text as german, 
+ GROUP_CONCAT(IF(m.webtauglich = 'ja', CONCAT(m.kodextitel, ', ', IFNULL(m.aufbewahrungsort, ''), ', \nSchriftduktus: ', IFNULL(m.schriftduktus, ''), '\nTextgliederung: ', IFNULL(m.textgliederung, ''), '\nPaläographie: ', IFNULL(m.palaographie, ''), '\nLiteratur: ', IFNULL(m.literatur, ''), '\nKommentar: ', IFNULL(m.kommentar, '')), '') SEPARATOR '\n') as handschriften
+FROM 
+(SELECT
+ sure, vers, GROUP_CONCAT(transkription ORDER BY wort SEPARATOR ' ') transcription, GROUP_CONCAT(arab ORDER BY wort SEPARATOR ' ') arab
+FROM 
+ lc_kkoran
+WHERE
+ sure = 1
+AND
+ vers = 6
+GROUP BY 
+ sure, vers) k, koran koran, koran_uebersetzung kue, manuskript_mapping mm, manuskript m
+WHERE
+ koran.sure = k.sure
+AND
+ koran.vers = 1
+AND
+ kue.sure = k.sure
+AND
+ kue.vers = k.vers
+AND
+ cast(concat(k.sure, k.vers) as unsigned) BETWEEN cast(concat(mm.sure_start, mm.vers_start) as unsigned) AND cast(concat(mm.sure_ende, mm.vers_ende) as unsigned)
+AND
+ mm.manuskript = m.id
+GROUP BY
+ k.sure, k.vers
+) ko, belegstellen_mapping bm, belegstellen b
+WHERE
+ cast(concat(ko.sure, ko.vers) as unsigned) BETWEEN cast(concat(bm.sure_start, bm.vers_start) as unsigned) AND cast(concat(bm.sure_ende, bm.vers_ende) as unsigned)
+AND
+ bm.belegstelle = b.id
+GROUP BY
+ ko.sure, ko.vers
+) kv
         </sql>
       </xmlDump>
       <mainResourcesTable>
-        <name>kontexte</name>
+        <name>belegstellen</name>
         <idField>id</idField>
         <field>
           <dc>title</dc>
@@ -175,39 +330,15 @@ FROM
         </field>
       </mainResourcesTable>
       <webId>
+        <!-- Suren 1 - 114: pro Sure: Verse 1 - x -->
+        <preStr>http://www.corpuscoranicum.de/index/index/</preStr>
+        <!-- Suren 1 - 114: pro Sure: Verse 1 - x, manche Verse haben eine andere Handschrift -->
+        <preStr>http://www.corpuscoranicum.de/handschriften/index/</preStr>
+        <!-- Suren 1 - 114: pro Sure: Verse 1 - x, jeder Vers hat eine andere Lesart -->
+        <preStr>http://www.corpuscoranicum.de/lesarten/index/</preStr>
         <!-- Suren 1 - 114: pro Sure: Verse 1 - x, nur manche Verse haben einen Kontext -->
         <preStr>http://www.corpuscoranicum.de/kontexte/index/</preStr>
       </webId>
-    </db>
-    <db>
-      <type>mysql</type>
-      <name>kommentare</name>
-      <xmlDump>
-        <sql>
-SELECT 
- concat('sure/', sureId, '/vers/1') as id,
- titel as title,
- concat(field1, '\n', field2, '\n', field3, '\n', field4, '\n', field5, '\n', field6) as abstract
-FROM 
- kommentare
-        </sql>
-      </xmlDump>
-      <mainResourcesTable>
-        <name>kommentare</name>
-        <idField>id</idField>
-        <field>
-          <dc>title</dc>
-          <db>title</db>
-        </field>
-        <field>
-          <dc>abstract</dc>
-          <db>abstract</db>
-        </field>
-      </mainResourcesTable>
-      <webId>
-        <!-- Suren 1 - 114: pro Sure: immer Vers 1, es gibt Kommentare nur pro Sure (nicht pro Vers) -->
-        <preStr>http://www.corpuscoranicum.de/kommentar/index/</preStr>
-      </webId>
-    </db>
+    </db-old>
   </collection>
 </wsp>

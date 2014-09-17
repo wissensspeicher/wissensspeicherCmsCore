@@ -7,11 +7,48 @@
     <url>
     	<webBaseUrl>http://kollokationen.bbaw.de</webBaseUrl>
       <dataUrl>http://kollokationen.bbaw.de</dataUrl>
+      <dataUrl>http://kollokationen.bbaw.de/htm/about_de.html</dataUrl>
+      <dataUrl>http://kollokationen.bbaw.de/htm/idb_de.html</dataUrl>
+      <dataUrl>http://kollokationen.bbaw.de/htm/idioms.html</dataUrl>
+      <dataUrl>http://kollokationen.bbaw.de/htm/report_de.html</dataUrl>
+      <dataUrl>http://kollokationen.bbaw.de/htm/pub_de.html</dataUrl>
+      <dataUrl>http://kollokationen.bbaw.de/htm/talk_de.html</dataUrl>
+      <dataUrl>http://kollokationen.bbaw.de/htm/active_de.html</dataUrl>
+      
     </url>
     <mainLanguage>ger</mainLanguage>
     <formats>
       <format>html</format>
     </formats> 
+    <db>
+      <type>mysql</type>
+      <name>kiw</name>
+      <xmlDump>
+        <sql>
+<!-- mysql -u root -p kiw < kiw.sql -->
+<!-- mysql -u root -p -X -e "select id, nennform as title, concat('Nennform: ', nennform, '; Varianten: ', alternation, '; Polysemie: ', polysemie, '; Homonymie: ', homonymie, '; präferierte syntaktische Umgebung: ', praef_syn_umgebung, 'zusätzliche Hinweise: ', besonderheit, '; ', fazit, '; Fremdsprachliche Äquivalente: ', language) as abstract from kiw.idiomdb order by id" > kiw-kiw-1.xml -->
+<!-- regular expression in Eclipse to convert xml file: 
+  Search: <field name="abstract" xsi:nil="true" />  Replace <field name="abstract"></field>
+  Search: (?s)<field name="(.*?)">(.*?)</field> Replace: <$1>$2</$1> 
+-->
+        </sql>
+      </xmlDump>
+      <mainResourcesTable>
+        <name>row</name>
+        <idField>id</idField>
+        <field>
+          <dc>title</dc>
+          <db>title</db>
+        </field>
+        <field>
+          <dc>abstract</dc>
+          <db>abstract</db>
+        </field>
+      </mainResourcesTable>
+      <webId>
+        <preStr>http://kollokationen.bbaw.de/cgi-bin/view.pl?id=</preStr>
+      </webId>
+    </db>
   </collection>
 </wsp>
 
