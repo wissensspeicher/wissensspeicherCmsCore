@@ -27,6 +27,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.apache.log4j.Logger;
 import org.bbaw.wsp.cms.general.Constants;
+import org.bbaw.wsp.cms.transform.XslResourceTransformer;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 import de.mpg.mpiwg.berlin.mpdl.lt.general.Language;
@@ -50,7 +51,7 @@ public class ConvertConfigXml2Rdf {
       // convertConfigXml2Rdf.convertAll();
       // convertConfigXml2Rdf.proofRdfProjects();
       // convertConfigXml2Rdf.proofCollectionProjects();
-      Collection c = convertConfigXml2Rdf.collectionReader.getCollection("kiw");
+      Collection c = convertConfigXml2Rdf.collectionReader.getCollection("pdr");
       // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("jdg");
       // convertConfigXml2Rdf.convert(c, false);
       // convertConfigXml2Rdf.convertDbXmlFiles(c);
@@ -93,6 +94,9 @@ public class ConvertConfigXml2Rdf {
         } else if (collectionId.equals("coranicum")) {
           // special case for coranicum: by jdbc
           generateCoranicumDbXmlDumpFile(collection, db);
+        } else if (collectionId.equals("pdr")) {
+          // special case for pdr: by special pdr services
+          generatePdrDbXmlDumpFile(collection, db);
         } else if (dbType != null && jdbcConn != null) {
           // generate db file by jdbc
           generateDbXmlDumpFile(collection, db);
@@ -472,6 +476,155 @@ public class ConvertConfigXml2Rdf {
     } catch (IOException e) {
       throw new ApplicationException(e);
     }
+  }
+  
+  private void generatePdrDbXmlDumpFile(Collection collection, Database db) throws ApplicationException {
+    String dbName = db.getName();
+    XslResourceTransformer pdrIdiTransformer = new XslResourceTransformer("pdrIdiGnd.xsl");
+    File dbResourcesDir = new File(dbResourcesDirName);
+    String xmlDumpFileFilter = collection.getId() + "-" + db.getName() + "*.xml"; 
+    FileFilter fileFilter = new WildcardFileFilter(xmlDumpFileFilter);
+    File[] files = dbResourcesDir.listFiles(fileFilter);
+    if (files != null && files.length > 0) {
+      for (int i = 0; i < files.length; i++) {
+        File dumpFileToDelete = files[i];
+        FileUtils.deleteQuietly(dumpFileToDelete);
+      }
+      LOGGER.info("Database dump files of database \"" + db.getName() + "\" sucessfully deleted");
+    }
+    StringBuilder xmlDumpStrBuilder = new StringBuilder();
+    xmlDumpStrBuilder.append("<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n");
+    xmlDumpStrBuilder.append("<!-- Resources of database: " + db.getName() + " (Collection: " + collection.getId() + ") -->\n");
+    xmlDumpStrBuilder.append("<" + dbName + ">\n");
+    ArrayList<String> personIds = null; 
+    if (dbName.equals("persons"))
+      personIds = getPdrPersonIds();
+    else if (dbName.equals("gnds"))
+      personIds = getPdrGndIds();
+    for (int i=0; i<personIds.size(); i++) {
+      // e.g.: pdrPo.001.005.000000362
+      String personId = personIds.get(i);
+      String persName = null;
+      String personStr = null;
+      if (dbName.equals("persons")) {
+        String getPersonUrl = "http://www.personendaten.org/module/getPerson.php?extern&pdrId=" + personId;
+        String resultPersonHtmlStr = null;
+        try {
+          resultPersonHtmlStr = performGetRequest(getPersonUrl);
+        } catch (Exception e) {
+          LOGGER.info(getPersonUrl + " did not work"); 
+        }
+        if (resultPersonHtmlStr != null) {
+          resultPersonHtmlStr = resultPersonHtmlStr.replaceAll("<!DOCTYPE html[\n ]+SYSTEM \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">", "");
+          resultPersonHtmlStr = resultPersonHtmlStr.replaceAll("<html xmlns=\"http://www.w3.org/1999/xhtml\">", "<html>");
+          resultPersonHtmlStr = resultPersonHtmlStr.replaceAll("&nbsp;", " ");
+          resultPersonHtmlStr = resultPersonHtmlStr.replaceAll("&apos;", "'");
+          persName = xQueryEvaluator.evaluateAsString(resultPersonHtmlStr, "/*:html/*:body//*:div[@id = 'header']/descendant::*/text()");
+          personStr = xQueryEvaluator.evaluateAsString(resultPersonHtmlStr, "string-join(/*:html/*:body/descendant::*/text(), ' ')");  // all text of all subnodes separated by blank
+        }
+      } else if (dbName.equals("gnds")) {
+        String getPersonUrl = "https://pdrprod.bbaw.de/idi/gnd/" + personId;
+        String resultPersonXmlStr = null;
+        try {
+          resultPersonXmlStr = performGetRequest(getPersonUrl);
+        } catch (Exception e) {
+          LOGGER.info(getPersonUrl + " did not work"); 
+        }
+        if (resultPersonXmlStr != null) {
+          String resultPersonHtmlStr = pdrIdiTransformer.transformStr(resultPersonXmlStr);
+          resultPersonHtmlStr = resultPersonHtmlStr.replaceAll("<!DOCTYPE html[\n ]+SYSTEM \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">", "");
+          resultPersonHtmlStr = resultPersonHtmlStr.replaceAll("<html xmlns=\"http://www.w3.org/1999/xhtml\">", "<html>");
+          resultPersonHtmlStr = resultPersonHtmlStr.replaceAll("&nbsp;", " ");
+          resultPersonHtmlStr = resultPersonHtmlStr.replaceAll("&apos;", "'");
+          persName = xQueryEvaluator.evaluateAsString(resultPersonHtmlStr, "/*:html/*:body//*:div[@id = 'header']/descendant::*/text()");
+          personStr = xQueryEvaluator.evaluateAsString(resultPersonHtmlStr, "string-join(/*:html/*:body/descendant::*/text(), ' ')");  // all text of all subnodes separated by blank
+        }
+      }      
+      xmlDumpStrBuilder.append("  <" + db.getMainResourcesTable() + ">\n");
+      xmlDumpStrBuilder.append("    <id>" + personId + "</id>\n");
+      xmlDumpStrBuilder.append("    <title>" + persName + "</title>\n");
+      xmlDumpStrBuilder.append("    <publisher>" + "BBAW: Personendaten-Repositorium (PDR)" + "</publisher>\n");
+      xmlDumpStrBuilder.append("    <rights>" + "CC-BY-SA 4.0" + "</rights>\n");
+      personStr = StringUtils.deresolveXmlEntities(personStr);
+      xmlDumpStrBuilder.append("    <abstract>" + personStr + "</abstract>\n");
+      xmlDumpStrBuilder.append("  </" + db.getMainResourcesTable() + ">\n");
+    }
+    xmlDumpStrBuilder.append("</" + db.getName() + ">\n");
+    String xmlDumpFileName = dbResourcesDirName + "/" + collection.getId() + "-" + dbName + "-1" + ".xml";
+    try {
+      File dumpFile = new File(xmlDumpFileName);
+      FileUtils.writeStringToFile(dumpFile, xmlDumpStrBuilder.toString(), "utf-8");
+      LOGGER.info("Database dump file \"" + xmlDumpFileName + "\" sucessfully created");
+    } catch (IOException e) {
+      throw new ApplicationException(e);
+    }
+  }
+  
+  private ArrayList<String> getPdrPersonIds() throws ApplicationException {
+    ArrayList<Integer> projectIds = new ArrayList<Integer>();
+    projectIds.add(2);
+    projectIds.add(3);
+    projectIds.add(5);
+    projectIds.add(6);
+    projectIds.add(7);
+    projectIds.add(202);
+    ArrayList<String> personIds = new ArrayList<String>();
+    for (int i=0; i<projectIds.size(); i++) {
+      int projId = projectIds.get(i);
+      String projIdSize3Str = "00" + projId;
+      if (projId == 202)
+        projIdSize3Str = "202";
+      String getOccupiedIDRangesUrl = "https://pdrprod.bbaw.de/axis2/services/Utilities/getOccupiedIDRanges?Type=pdrPo&Instance=1&Min=1&Max=99999999&Project=" + projId;
+      String idRangesXmlStr = performGetRequest(getOccupiedIDRangesUrl);
+      XdmValue xmdValueIdRanges = xQueryEvaluator.evaluate(idRangesXmlStr, "//*:Range");
+      XdmSequenceIterator xmdValueIdRangesIterator = xmdValueIdRanges.iterator();
+      if (xmdValueIdRanges != null && xmdValueIdRanges.size() > 0) {
+        while (xmdValueIdRangesIterator.hasNext()) {
+          XdmItem xdmItemField = xmdValueIdRangesIterator.next();
+          String rangeXml = xdmItemField.toString();
+          String rangeMinStr = xQueryEvaluator.evaluateAsString(rangeXml, "//*:Min/text()");
+          String rangeMaxStr = xQueryEvaluator.evaluateAsString(rangeXml, "//*:Max/text()");
+          Integer rangeMin = Integer.valueOf(rangeMinStr);
+          Integer rangeMax = Integer.valueOf(rangeMaxStr);
+          for (int j=rangeMin; j<=rangeMax; j++) {
+            String personIdSize9Str = "" + j;
+            if (j < 10)
+              personIdSize9Str = "00000000" + j;
+            else if (j < 100)
+              personIdSize9Str = "0000000" + j;
+            else if (j < 1000)
+              personIdSize9Str = "000000" + j;
+            else if (j < 10000)
+              personIdSize9Str = "00000" + j;
+            else if (j < 100000)
+              personIdSize9Str = "0000" + j;
+            else if (j < 1000000)
+              personIdSize9Str = "000" + j;
+            else if (j < 10000000)
+              personIdSize9Str = "00" + j;
+            else if (j < 100000000)
+              personIdSize9Str = "0" + j;
+            personIds.add("pdrPo.001." + projIdSize3Str + "." + personIdSize9Str);
+          }
+        }
+      }
+    }
+    return personIds;
+  }
+  
+  private ArrayList<String> getPdrGndIds()throws ApplicationException {
+    ArrayList<String> gndIds = new ArrayList<String>();
+    String getIdiBeaconUrl = "https://pdrprod.bbaw.de/idi/beacon";
+    String idiBeaconStr = performGetRequest(getIdiBeaconUrl);
+    String[] idiBeaconStrLines = idiBeaconStr.split("\n");
+    for (int i=0; i<idiBeaconStrLines.length; i++) {
+      String line = idiBeaconStrLines[i];
+      if (! (line.startsWith("#"))) {
+        String gndId = line.replaceAll("\\|.+", "");
+        gndIds.add(gndId);
+      }
+    }
+    return gndIds;
   }
   
   private void convertAll() throws ApplicationException {
