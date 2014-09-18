@@ -1709,14 +1709,6 @@ Damit sollen gemeinsame historische Vermächtnisse sowie die Mobilität von Pers
 		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MonumentaGermaniaeHistorica" />	
 		<foaf:homepage rdf:resource="http://telota.bbaw.de/mgh/"/>		
 	</rdf:Description>
-	<rdf:Description rdf:about="http://wsp.normdata.rdf/MonumentaGermaniaeHistorica/KaiserReichUndRegion">
-    <dc:language>ger</dc:language>
-    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
-    <foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">mghkrr</foaf:nick>
-		<foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Monumenta Germaniae Historica: Kaiser, Reich und Region</foaf:name>
-		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MonumentaGermaniaeHistorica" />	
-		<foaf:homepage rdf:resource="http://edoc.bbaw.de/volltexte/2006/75/"/>		
-	</rdf:Description>
 	<rdf:Description rdf:about="http://wsp.normdata.rdf/Spikermann">
 		<rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
 		<gnd:functionOrRole>Wissenschaftlich-technische Mitarbeiterin</gnd:functionOrRole>
