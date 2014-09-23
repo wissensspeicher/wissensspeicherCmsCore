@@ -12,6 +12,8 @@ import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.Analyzer;
@@ -70,7 +72,6 @@ import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
 import org.bbaw.wsp.cms.collections.Collection;
 import org.bbaw.wsp.cms.collections.CollectionReader;
-import org.bbaw.wsp.cms.dochandler.DocumentHandler;
 import org.bbaw.wsp.cms.document.Facets;
 import org.bbaw.wsp.cms.document.Hits;
 import org.bbaw.wsp.cms.document.MetadataRecord;
@@ -614,7 +615,7 @@ public class IndexHandler {
     int countDeletedDocs = -1;
     try {
       String queryDocumentsByCollectionName = "collectionNames:" + collectionName;
-      Hits collectionDocHits = queryDocuments(queryDocumentsByCollectionName, null, null, null, 0, 100000, false, false);
+      Hits collectionDocHits = queryDocuments("lucene", queryDocumentsByCollectionName, null, null, null, 0, 100000, false, false);
       ArrayList<org.bbaw.wsp.cms.document.Document> collectionDocs = collectionDocHits.getHits();
       if (collectionDocs != null) {
         countDeletedDocs = collectionDocHits.getSize();
@@ -636,7 +637,7 @@ public class IndexHandler {
     return countDeletedDocs;
   }
 
-  public Hits queryDocuments(String queryStr, String[] sortFieldNames, String fieldExpansion, String language, int from, int to, boolean withHitFragments, boolean translate) throws ApplicationException {
+  public Hits queryDocuments(String queryLanguage, String queryStr, String[] sortFieldNames, String fieldExpansion, String language, int from, int to, boolean withHitFragments, boolean translate) throws ApplicationException {
     Hits hits = null;
     IndexSearcher searcher = null;
     try {
@@ -649,6 +650,9 @@ public class IndexHandler {
       if (queryStr.equals("*")) {
         query = new MatchAllDocsQuery();
       } else {
+        if (queryLanguage != null && queryLanguage.equals("gl")) {
+          queryStr = translateGoogleLikeQueryToLucene(queryStr);
+        }
         query = buildFieldExpandedQuery(queryParser, queryStr, fieldExpansion);
       }
       LanguageHandler languageHandler = new LanguageHandler();
@@ -1121,6 +1125,32 @@ public class IndexHandler {
     } catch (IOException e) {
       throw new ApplicationException(e);
     }
+  }
+  
+  private String translateGoogleLikeQueryToLucene(String queryStr) {
+    int apostrophCounter = org.apache.commons.lang3.StringUtils.countMatches(queryStr, "\"");
+    if (apostrophCounter == 1 || apostrophCounter == 3 || apostrophCounter == 5 || apostrophCounter == 7 || apostrophCounter == 9)
+      queryStr = queryStr.replaceAll("\"", "");
+    String luceneQueryStr = queryStr;
+    if (queryStr.matches(".+\\|.+")) {
+      luceneQueryStr = luceneQueryStr.replaceAll("\\|", " ");  // logical or queries
+    } else if (queryStr.matches("(.+) (-.+?)")) {
+      luceneQueryStr = luceneQueryStr.replaceAll("(.+) (-.+?)", "$1 ANDNOT $2");  // logical andnot queries
+    } else if (queryStr.matches(".+~.+")) {
+      luceneQueryStr = queryStr; // near/fuzzy queries
+    } else { 
+      List<String> logicalAndQueryTerms = new ArrayList<String>();
+      Matcher m = Pattern.compile("([^\"]\\S*|\".+?\")\\s*").matcher(queryStr); // matches phrases (e.g. "bla1 bla2 bla3") or single words delimited by spaces ("S*" means: all characters but not spaces; "s*" means: spaces)
+      while (m.find())
+        logicalAndQueryTerms.add(m.group(1));
+      luceneQueryStr = "";
+      for (int i=0; i<logicalAndQueryTerms.size(); i++) {
+        String queryTerm = logicalAndQueryTerms.get(i);
+        luceneQueryStr = luceneQueryStr + "+" + queryTerm + " "; 
+      }
+      luceneQueryStr = luceneQueryStr.substring(0, luceneQueryStr.length() - 1);
+    }
+    return luceneQueryStr;
   }
   
   private Query buildFieldExpandedQuery(QueryParser queryParser, String queryStr, String fieldExpansion) throws ApplicationException {
