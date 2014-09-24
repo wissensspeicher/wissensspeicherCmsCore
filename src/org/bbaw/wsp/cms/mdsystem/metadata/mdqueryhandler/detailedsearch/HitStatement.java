@@ -67,6 +67,10 @@ public class HitStatement {
   protected  double score = 0;
   private MdSystemResultType resultType = null;
 
+  public HitStatement(HashMap<String, RDFNode> hitVars){
+    this.hitVars = hitVars;
+  }
+  
   /**
    * Create a new HitStatement to represent results of the {@link SparqlAdapter}
    * 
@@ -278,6 +282,10 @@ public class HitStatement {
     return rdfnode;
   }
 
+  public HashMap<String, RDFNode>getHitVars(){
+   return hitVars; 
+  }
+  
   /**
    * @return the subject
    */
