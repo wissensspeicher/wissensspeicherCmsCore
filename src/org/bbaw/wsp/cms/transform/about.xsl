@@ -248,9 +248,9 @@
   <xsl:if test="$type = 'person'">
     <xsl:if test="not(empty($pdrPersonsHits))">
       <div class="pdr">
-        <span class="h2"><xsl:value-of select="'PDR IDI/PIT'"/></span>
+        <span class="h2"><xsl:value-of select="'PDR Webfrontend / IDI'"/></span>
         <span class="about">
-          [Adapted from PDR IDI/PIT (ID Interface / PDR Interface Tools)]
+          [Adapted from PDR Webfrontend / PDR ID Interface]
           <a class="logo" href="https://pdrprod.bbaw.de/wiki/doku.php?id=en:doc:connect">
             <img src="../images/info.png" width="18" height="18" border="0" alt="Info PDR"/>
           </a>
@@ -416,10 +416,10 @@
   <xsl:variable name="yearOfActivity" select="person/yearOfActivity[normalize-space() != '']"/>
   <xsl:variable name="countryOfActivity" select="person/countryOfActivity[normalize-space() != '']"/>
   <xsl:variable name="furtherProviders" select="identifiers"/>
-  <xsl:variable name="pndUrl" select="identifiers/personId[@provider = 'PeEnDe']/@url[normalize-space() != '']"/>
-  <xsl:variable name="gndUrl" select="identifiers/personId[@provider = 'GND']/@url[normalize-space() != '']"/>
-  <xsl:variable name="lccnUrl" select="identifiers/personId[@provider = 'LCCN']/@url[normalize-space() != '']"/>
-  <xsl:variable name="viafUrl" select="identifiers/personId[@provider = 'VIAF']/@url[normalize-space() != '']"/>
+  <xsl:variable name="pndUrl" select="identifiers/personId[@provider = 'PeEnDe']/@url[normalize-space() != '' and not(contains(., 'NULL'))]"/>
+  <xsl:variable name="gndUrl" select="identifiers/personId[@provider = 'GND']/@url[normalize-space() != '' and not(contains(., 'NULL'))]"/>
+  <xsl:variable name="lccnUrl" select="identifiers/personId[@provider = 'LCCN']/@url[normalize-space() != '' and not(contains(., 'NULL'))]"/>
+  <xsl:variable name="viafUrl" select="identifiers/personId[@provider = 'VIAF']/@url[normalize-space() != '' and not(contains(., 'NULL'))]"/>
   <div class="person"> 
     <div class="name">
       <xsl:sequence select="$typeLogo"/>
