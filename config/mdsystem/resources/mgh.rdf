@@ -25,4 +25,29 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MonumentaGermaniaeHistorica"/>
   <dc:identifier rdf:resource="http://mgh.bbaw.de/bilder/broschuere_mgh_ri.pdf"/>
 </rdf:Description>
+<rdf:Description rdf:about="http://mgh.bbaw.de/publikationen">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MonumentaGermaniaeHistorica"/>
+  <dc:identifier rdf:resource="http://mgh.bbaw.de/publikationen"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://mgh.bbaw.de/forschung-aktuell">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MonumentaGermaniaeHistorica"/>
+  <dc:identifier rdf:resource="http://mgh.bbaw.de/forschung-aktuell"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://mgh.bbaw.de/lehre-aktuell">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MonumentaGermaniaeHistorica"/>
+  <dc:identifier rdf:resource="http://mgh.bbaw.de/lehre-aktuell"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://mgh.bbaw.de/bilder/Sommerschule_bbaw.pdf">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MonumentaGermaniaeHistorica"/>
+  <dc:identifier rdf:resource="http://mgh.bbaw.de/bilder/Sommerschule_bbaw.pdf"/>
+</rdf:Description>
+<rdf:Description rdf:about="http://mgh.bbaw.de/mitglieder-mitarbeiter">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MonumentaGermaniaeHistorica"/>
+  <dc:identifier rdf:resource="http://mgh.bbaw.de/mitglieder-mitarbeiter"/>
+</rdf:Description>
 </rdf:RDF>
