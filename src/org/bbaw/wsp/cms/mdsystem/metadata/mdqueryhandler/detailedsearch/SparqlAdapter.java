@@ -12,6 +12,7 @@ import org.apache.log4j.Logger;
 import org.bbaw.wsp.cms.collections.Collection;
 import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.MdSystemResultType;
 import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.detailedsearch.RelatedHitStatement.Relationship;
+import org.junit.internal.RealSystem;
 
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
@@ -34,6 +35,7 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
   private static final Logger logger = Logger.getLogger(SparqlAdapter.class);
   private static final String PLACEHOLDER_LASTNODE = "%%PLACEHOLDER_LASTNODE%%";
   private final IQueryStrategy<T> queryStrategy;
+  private ArrayList<String> allNdSubjects;
   /**
    * Index of the last queried node within the findRelatedConcepts().
    */
@@ -46,6 +48,8 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
    * @param <T>
    */
   public SparqlAdapter(final IQueryStrategy<T> queryStrategy) {
+    this.allNdSubjects = new ArrayList<String>();
+    logger.info("new allNdSubjects");
     this.queryStrategy = queryStrategy;
   }
 
@@ -334,11 +338,18 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
     }
   }
 
-  private void handleSolution(final HitGraphContainer container, final QuerySolution solution) {
+  /**
+   * solution for metadata preload
+   * 
+   * @param container
+   * @param solution
+   * @param resultVars
+   */
+  private void handleSolution(final HitGraphContainer container, final QuerySolution solution, List<String> resultVars) {
       HitGraph hitGraph = null;
       try {
         URL graphUrl = new URL("http://wsp.normdata.rdf/");
-      if (!container.contains(graphUrl)) { // create new hit graph
+      if (!container.contains(graphUrl)) {
         hitGraph = new HitGraph(graphUrl);
         container.addHitRecord(graphUrl, hitGraph);
       } else {
@@ -349,144 +360,34 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
         e.printStackTrace();
       }
       RDFNode subject = null;
-        if (solution.get("s") != null) {
-          subject = solution.get("s");
+      HashMap<String, RDFNode> currentDescription = null;
+      if (solution.get("s") != null) {
+        subject = solution.get("s");
+        if(!allNdSubjects.contains(subject.toString())){
+          allNdSubjects.add(subject.toString());
+          currentDescription = new HashMap<String, RDFNode>();
+          currentDescription.put("subject", subject);
+        }else{
+          currentDescription = hitGraph.getStatementBySubject(subject.toString());
         }
-      RDFNode predicate = null;
-      if (solution.get("p") != null) {
-        predicate = solution.get("p");
+        RDFNode predicate = null;
+        if (solution.get("p") != null) {
+          predicate = solution.get("p");
+          
+          RDFNode literal = null;
+          if (solution.get("o") != null) {
+              literal = solution.get("o");
+          }else 
+            if (solution.getLiteral("lit") != null) {
+            literal = solution.getLiteral("lit"); 
+          }
+          currentDescription.put(predicate.toString(), literal);
+        }
       }
-      RDFNode literal = null;
-      if (solution.getLiteral("lit") != null) {
-        literal = solution.getLiteral("lit");
-      }
-      if (solution.get("o") != null) {
-          literal = solution.get("o");
-      }
-      RDFNode projectId = null;
-      if (solution.get("projectId") != null) {
-        projectId = solution.get("projectId");
-      }
-      RDFNode typeRes = null;
-      if (solution.get("typeRes") != null) {
-        typeRes = solution.get("typeRes");
-      }
-      RDFNode function = null;
-      if (solution.get("function") != null) {
-        function = solution.get("function");
-      }
-      RDFNode title = null;
-      if (solution.get("title") != null) {
-        title = solution.get("title");
-      }
-      RDFNode preName = null;
-      if (solution.get("preName") != null) {
-        preName = solution.get("preName");
-      }
-      RDFNode lastName = null;
-      if (solution.get("lastName") != null) {
-        lastName = solution.get("lastName");
-      }
-      RDFNode email = null;
-      if (solution.get("email") != null) {
-        email = solution.get("email");
-      }
-      RDFNode label = null;
-      if (solution.get("label") != null) {
-        label = solution.get("label");
-      }
-      RDFNode languageCode = null;
-      if (solution.get("languageCode") != null) {
-        languageCode = solution.get("languageCode");
-      }
-      RDFNode isPartOf = null;
-      if (solution.get("isPartOf") != null) {
-        isPartOf = solution.get("isPartOf");
-      }
-      RDFNode coordinates = null;
-      if (solution.get("coordinates") != null) {
-        coordinates = solution.get("coordinates");
-      }
-      RDFNode dcSubject = null;
-      if (solution.get("dcSubject") != null) {
-        dcSubject = solution.get("dcSubject");
-      }
-      RDFNode geographicAreaCode = null;
-      if (solution.get("geographicAreaCode") != null) {
-        geographicAreaCode = solution.get("geographicAreaCode");
-      }
-      RDFNode identifier = null;
-      if (solution.get("identifier") != null) {
-        identifier = solution.get("identifier");
-      }
-      RDFNode hasPart = null;
-      if (solution.get("hasPart") != null) {
-        hasPart = solution.get("hasPart");
-      }
-      RDFNode nick = null;
-      if (solution.get("nick") != null) {
-        nick = solution.get("nick");
-      }
-      RDFNode name = null;
-      if (solution.get("name") != null) {
-        name = solution.get("name");
-      }
-      RDFNode definition = null;
-      if (solution.get("definition") != null) {
-        definition = solution.get("definition");
-      }
-      RDFNode topic = null;
-      if (solution.get("topic") != null) {
-        topic = solution.get("topic");
-      }
-      RDFNode status = null;
-      if (solution.get("status") != null) {
-        status = solution.get("status");
-      }
-      RDFNode coverage = null;
-      if (solution.get("coverage") != null) {
-        coverage = solution.get("coverage");
-      }
-      RDFNode dctermsAbstract = null;
-      if (solution.get("dctermsAbstract") != null) {
-        dctermsAbstract = solution.get("dctermsAbstract");
-      }
-      RDFNode replaces = null;
-      if (solution.get("replaces") != null) {
-        replaces = solution.get("replaces");
-      }
-      RDFNode valid = null;
-      if (solution.get("valid") != null) {
-        valid = solution.get("valid");
-      }
-      RDFNode founder = null;
-      if (solution.get("founder") != null) {
-        founder = solution.get("founder");
-      }
-      RDFNode contributor = null;
-      if (solution.get("contributor") != null) {
-        contributor = solution.get("contributor");
-      }
-      RDFNode fundedBy = null;
-      if (solution.get("fundedBy") != null) {
-        fundedBy = solution.get("fundedBy");
-      }
-      RDFNode hp = null;
-      if (solution.get("hp") != null) {
-        hp = solution.get("hp");
-      }
-      RDFNode temporal = null;
-      if (solution.get("temporal") != null) {
-        temporal = solution.get("temporal");
-      }
-      final HitStatement statement = new HitStatement(subject, predicate, literal, 
-          projectId,typeRes,function,title,preName,lastName,email,label,languageCode,isPartOf,coordinates,dcSubject,geographicAreaCode,
-          identifier,hasPart,nick,name,definition,topic,status,coverage,dctermsAbstract,replaces,valid,founder,contributor,fundedBy,hp,temporal
-          );
-      hitGraph.addStatement(statement);
+      hitGraph.addStatement(subject.toString(), currentDescription);
 
       // set result type
-      statement.setResultType(MdSystemResultType.LITERAL_NAMED_GRAPH);
+//      statement.setResultType(MdSystemResultType.LITERAL_NAMED_GRAPH);
   }
   
   /*
@@ -862,8 +763,7 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
    * @return HitGraph to be delegated to the client
    */
   private HitGraphContainer handleSubjectResults(final T results, final Resource subject) {
-    final HitGraphContainer container = new HitGraphContainer(new Date()); // result
-    // container
+    final HitGraphContainer container = new HitGraphContainer(new Date()); // result container
     if (results instanceof ResultSet) { // QueryStrategyFuseki
       final ResultSet realResults = (ResultSet) results;
       while (realResults.hasNext()) {
@@ -897,9 +797,11 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
     // container
     if (results instanceof ResultSet) { // QueryStrategyFuseki
       final ResultSet realResults = (ResultSet) results;
+//      logger.info("weal wesultß : "+realResults.getResultVars());
+      List<String> resultVars = realResults.getResultVars();
       while (realResults.hasNext()) {
         final QuerySolution solution = realResults.next();
-        this.handleSolution(container, solution);
+        this.handleSolution(container, solution, resultVars);
       }
     } else if (results instanceof HashMap<?, ?>) { // query strategy returns hash map in the form named graph url - value
       @SuppressWarnings("unchecked")
@@ -912,7 +814,6 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
         }
       }
     }
-
     return container;
   }
 
