@@ -37,10 +37,8 @@
       <!-- DFG-Projekt „Personennamen-Repositorium“ -->
       <dataUrl>http://digiversity.net/2009/personendaten-repositorium/</dataUrl>
       
-      <!-- Tagungsbericht: „Die Universität Kiel und ihre Professorinnen und Professorenoder: Wozu der Kieler Professorenkatalog?“ -->
+      <!-- Tagungsbericht: „Die Universität Kiel und ihre Professorinnen und Professoren oder: Wozu der Kieler Professorenkatalog?“ -->
       <dataUrl>http://digiversity.net/2012/04/</dataUrl>
-      
-                  
     </url>
     <languages>ger,itl,eng</languages>
     <mainLanguage>ger</mainLanguage>
@@ -49,6 +47,69 @@
       <format>software</format>
       <format>html</format>
     </formats> 
+    <db>
+      <type>mysql</type>
+      <name>persons</name>
+      <xmlDump>
+        <sql>
+        </sql>
+      </xmlDump>
+      <mainResourcesTable>
+        <name>person</name>
+        <idField>id</idField>
+        <field>
+          <dc>title</dc>
+          <db>title</db>
+        </field>
+        <field>
+          <dc>publisher</dc>
+          <db>publisher</db>
+        </field>
+        <field>
+          <dc>rights</dc>
+          <db>rights</db>
+        </field>
+        <field>
+          <dc>abstract</dc>
+          <db>abstract</db>
+        </field>
+      </mainResourcesTable>
+      <webId>
+        <!-- e.g.: pdrPo.001.005.000000362 -->
+        <preStr>http://www.personendaten.org/module/getPerson.php?extern&amp;pdrId=</preStr>
+      </webId>
+    </db>
+    <db>
+      <type>mysql</type>
+      <name>gnds</name>
+      <xmlDump>
+        <sql>
+        </sql>
+      </xmlDump>
+      <mainResourcesTable>
+        <name>gnd</name>
+        <idField>id</idField>
+        <field>
+          <dc>title</dc>
+          <db>title</db>
+        </field>
+        <field>
+          <dc>publisher</dc>
+          <db>publisher</db>
+        </field>
+        <field>
+          <dc>rights</dc>
+          <db>rights</db>
+        </field>
+        <field>
+          <dc>abstract</dc>
+          <db>abstract</db>
+        </field>
+      </mainResourcesTable>
+      <webId>
+        <!-- e.g.: 118607782 -->
+        <preStr>https://pdrprod.bbaw.de/idi/gnd/</preStr>
+      </webId>
+    </db>
   </collection>
 </wsp>
-

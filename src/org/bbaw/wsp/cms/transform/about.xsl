@@ -74,6 +74,7 @@
 <xsl:variable name="dbpediaRelatedTerms" select="saxon:evaluate($dbpediaRelatedTermsEvalStr)" xmlns:saxon="http://saxon.sf.net/"/>
 <xsl:variable name="wikiUrls" select="//*:isPrimaryTopicOf/@*:resource"/>
 
+<xsl:variable name="pdrPersonsHits" select="//*:pdr/*:persons/*:person"/>
 <xsl:variable name="pdrPitHits" select="//*:item"/>
 <xsl:variable name="pdrConcordancerHits" select="subsequence(//*:match, 1, 10)"/>
 
@@ -245,6 +246,32 @@
     </div>
   </xsl:if>
   <xsl:if test="$type = 'person'">
+    <xsl:if test="not(empty($pdrPersonsHits))">
+      <div class="pdr">
+        <span class="h2"><xsl:value-of select="'PDR IDI/PIT'"/></span>
+        <span class="about">
+          [Adapted from PDR IDI/PIT (ID Interface / PDR Interface Tools)]
+          <a class="logo" href="https://pdrprod.bbaw.de/wiki/doku.php?id=en:doc:connect">
+            <img src="../images/info.png" width="18" height="18" border="0" alt="Info PDR"/>
+          </a>
+          <a class="logo" href="http://en.wikipedia.org/wiki/Wikipedia:Text_of_Creative_Commons_Attribution-ShareAlike_3.0_Unported_License">
+            <img src="../images/cc.svg" width="18" height="18" border="0" alt="cc license"/>
+          </a>
+        </span>
+        <xsl:variable name="pdrPersonsResultSize" select="count($pdrPersonsHits)"/>
+        <xsl:variable name="pdrPersonsHitsText">
+          <xsl:choose>
+            <xsl:when test="$pdrPersonsResultSize = 1"><xsl:value-of select="'1 hit'"/></xsl:when>
+            <xsl:when test="$pdrPersonsResultSize &lt; 10"><xsl:value-of select="concat($pdrPersonsResultSize, ' hits')"/></xsl:when>
+            <xsl:otherwise><xsl:value-of select="concat('first ', $pdrPersonsResultSize, ' hits')"/></xsl:otherwise>
+          </xsl:choose>
+        </xsl:variable>
+        <div>
+          <xsl:value-of select="$pdrPersonsHitsText"/>
+        </div>
+        <xsl:apply-templates select="$pdrPersonsHits"/>
+      </div>
+    </xsl:if>
     <xsl:if test="not(empty($pdrPitHits))">
       <div class="pdr">
         <span class="h2"><xsl:value-of select="'PDR PIT'"/></span>
@@ -337,6 +364,23 @@
       </ul> 
     </div>
   </xsl:if>
+</xsl:template>
+
+<!--  PDR person matches -->
+<xsl:template match="*:person">
+  <xsl:variable name="name" select="name"/>
+  <xsl:variable name="webUri" select="webUri"/> 
+  <div class="person"> 
+    <div class="name">
+      <xsl:sequence select="$typeLogo"/>
+      <xsl:value-of select="$name"/>
+    </div>
+    <xsl:if test="not(empty($webUri))">
+      <ul class="pitPersonLink">
+        <li class="provider"><a class="url" href="{$webUri}"><xsl:value-of select="'Details'"/></a></li>
+      </ul>
+    </xsl:if>
+  </div>
 </xsl:template>
 
 <!--  PDR PIT person matches -->

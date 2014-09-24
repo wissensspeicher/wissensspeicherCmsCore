@@ -25,6 +25,7 @@
       <name>kiw</name>
       <xmlDump>
         <sql>
+<!-- mysql -u root -p kiw < kiw.sql -->
 <!-- mysql -u root -p -X -e "select id, nennform as title, concat('Nennform: ', nennform, '; Varianten: ', alternation, '; Polysemie: ', polysemie, '; Homonymie: ', homonymie, '; präferierte syntaktische Umgebung: ', praef_syn_umgebung, 'zusätzliche Hinweise: ', besonderheit, '; ', fazit, '; Fremdsprachliche Äquivalente: ', language) as abstract from kiw.idiomdb order by id" > kiw-kiw-1.xml -->
 <!-- regular expression in Eclipse to convert xml file: 
   Search: <field name="abstract" xsi:nil="true" />  Replace <field name="abstract"></field>
