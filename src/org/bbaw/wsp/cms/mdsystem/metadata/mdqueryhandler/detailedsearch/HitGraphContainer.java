@@ -7,6 +7,9 @@ import java.net.URL;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map.Entry;
+
+import com.hp.hpl.jena.rdf.model.RDFNode;
 
 /**
  * This class holds all {@link IHitRecord} instances which result from a single (literal) query with the {@link SparqlAdapter}.
@@ -85,6 +88,13 @@ public class HitGraphContainer extends HashMap<URL, HitGraph> {
    */
   @Override
   public String toString() {
-    return super.toString() + "\n " + "[resultTime=" + resultTime + "]";
+    StringBuilder sb = new StringBuilder();
+    Collection<HitGraph> hitGraphs = values();
+    for (HitGraph hitGraph : hitGraphs) {
+      sb.append(hitGraph.toString());
+      sb.append("\n");
+    }
+    sb.append("\n " + "[resultTime=" + resultTime + "]");
+    return sb.toString();
   }
 }
