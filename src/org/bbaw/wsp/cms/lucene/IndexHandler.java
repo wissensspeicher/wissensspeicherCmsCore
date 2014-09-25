@@ -1135,14 +1135,18 @@ public class IndexHandler {
     if (queryStr.matches(".+\\|.+")) {
       luceneQueryStr = luceneQueryStr.replaceAll("\\|", " ");  // logical or queries
     } else if (queryStr.matches("(.+) (-.+?)")) {
-      luceneQueryStr = luceneQueryStr.replaceAll("(.+) (-.+?)", "$1 ANDNOT $2");  // logical andnot queries
+      // nothing, same as in google like // logical andnot queries
     } else if (queryStr.matches(".+~.+")) {
       luceneQueryStr = queryStr; // near/fuzzy queries
     } else { 
       List<String> logicalAndQueryTerms = new ArrayList<String>();
-      Matcher m = Pattern.compile("([^\"]\\S*|\".+?\")\\s*").matcher(queryStr); // matches phrases (e.g. "bla1 bla2 bla3") or single words delimited by spaces ("S*" means: all characters but not spaces; "s*" means: spaces)
-      while (m.find())
-        logicalAndQueryTerms.add(m.group(1));
+      Matcher matchFields = Pattern.compile("(\\S*:\\(.+?\\)|\\S*:\\S*)\\s*").matcher(queryStr); // matches fields (e.g. "author:leibniz" or "author:(leibniz humboldt)" 
+      while (matchFields.find())
+        logicalAndQueryTerms.add(matchFields.group(1));
+      String queryStrWithoutFields = matchFields.replaceAll("");
+      Matcher matchWordsAndPhrases = Pattern.compile("([^\"]\\S*|\".+?\"|[^\"]:\\(.+\\))\\s*").matcher(queryStrWithoutFields); // matches phrases (e.g. "bla1 bla2 bla3") or single words delimited by spaces ("S*" means: all characters but not spaces; "s*" means: spaces)
+      while (matchWordsAndPhrases.find())
+        logicalAndQueryTerms.add(matchWordsAndPhrases.group(1));
       luceneQueryStr = "";
       for (int i=0; i<logicalAndQueryTerms.size(); i++) {
         String queryTerm = logicalAndQueryTerms.get(i);
