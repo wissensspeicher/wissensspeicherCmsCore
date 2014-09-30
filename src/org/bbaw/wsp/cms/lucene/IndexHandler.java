@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.KeywordAnalyzer;
@@ -477,6 +478,33 @@ public class IndexHandler {
       categoryDocBuilder.build(doc);
 
       documentsIndexWriter.addDocument(doc);
+      
+      // add frequent words to document and facets
+      /*
+      documentsIndexWriter.commit();
+      ArrayList<Token> frequentTokens = getFrequentToken(docId, "tokenOrig", 10);
+      if (frequentTokens != null) {
+        String frequentWordsXmlStr = "<tokens>";  
+        for (int i=0; i<frequentTokens.size(); i++) {
+          Token frequentToken = frequentTokens.get(i);
+          int freq = frequentToken.getFreq();
+          String tokenStr = frequentToken.getTerm().text();
+          for (int j=1; j<=freq; j++) {
+            categories.add(new CategoryPath("tokenOrig", tokenStr));
+          }
+          frequentWordsXmlStr = frequentWordsXmlStr + "<token><text>" + tokenStr + "</text><freq>" + freq + "</freq></token>";
+        }
+        frequentWordsXmlStr = frequentWordsXmlStr + "</tokens>";
+        Field frequentWordsField = new Field("frequentWords", frequentWordsXmlStr, Field.Store.YES, Field.Index.NOT_ANALYZED);
+        doc.add(frequentWordsField);
+        Term termIdentifier = new Term("docId", docId);
+        documentsIndexWriter.deleteDocuments(termIdentifier);
+        categoryDocBuilder.setCategoryPaths(categories);
+        categoryDocBuilder.build(doc);
+        documentsIndexWriter.addDocument(doc);
+      }
+      documentsIndexWriter.commit();
+      */
       
       // to save Lucene disk space and to gain performance the document nodes index is set off:
       /* 
@@ -1078,6 +1106,61 @@ public class IndexHandler {
               if (counter >= count)
                 break;
               success = false;
+            }
+          }
+        }
+      }
+    } catch (Exception e) {
+      throw new ApplicationException(e);
+    } finally {
+      try {
+        if (searcher != null)
+          documentsSearcherManager.release(searcher);
+      } catch (IOException e) {
+        // nothing
+      }
+    }
+    // Do not use searcher after this!
+    searcher = null;
+    return retToken;
+  }
+
+  public ArrayList<Token> getFrequentToken(String docId, String fieldName, int count) throws ApplicationException {
+    ArrayList<Token> retToken = null;
+    IndexSearcher searcher = null;
+    try {
+      makeDocumentsSearcherManagerUpToDate();
+      makeIndexReaderUpToDate();
+      searcher = documentsSearcherManager.acquire();
+      Query queryDocId = new TermQuery(new Term("docId", docId));
+      TopDocs topDocs = searcher.search(queryDocId, 1);
+      if (topDocs != null) {
+        int docIdInt = topDocs.scoreDocs[0].doc;
+        TermFreqVector termFreqVector = documentsIndexReader.getTermFreqVector(docIdInt, fieldName);
+        if (termFreqVector != null) {
+          String[] terms = termFreqVector.getTerms();
+          int[] freqs = termFreqVector.getTermFrequencies();
+          if (freqs.length < count)
+            count = freqs.length;
+          if (terms != null) {
+            retToken = new ArrayList<Token>();
+            for (int i=1; i<=count; i++) {
+              int maxFreqPos = -1;
+              int maxFreq = -1;
+              for (int j=0; j<terms.length; j++) {
+                int termFreq = freqs[j];
+                if (termFreq > maxFreq) {
+                  maxFreq = termFreq;
+                  maxFreqPos = j;
+                }
+              }
+              String maxFreqTermStr = terms[maxFreqPos];
+              Term t = new Term(fieldName, maxFreqTermStr);
+              Token tok = new Token(t);
+              tok.setFreq(maxFreq);
+              retToken.add(tok);
+              terms = ArrayUtils.remove(terms, maxFreqPos);
+              freqs = ArrayUtils.remove(freqs, maxFreqPos);
             }
           }
         }
