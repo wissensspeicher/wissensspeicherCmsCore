@@ -541,14 +541,10 @@ public class DocumentHandler {
           else
             dbPediaResourcesStrBuilder.append(resources.get(i) + "###");
         }
-        String subject = mdRecord.getSubject();
-        if (subject == null)
-          mdRecord.setSubject(dbPediaResourcesStrBuilder.toString());
-        else 
-          mdRecord.setSubject(subject + dbPediaResourcesStrBuilder.toString());
-        String knowledgeDirName = Constants.getInstance().getExternalDocumentsDir() +  "/dbPediaSpotlight";
+        mdRecord.setEntities(dbPediaResourcesStrBuilder.toString());
+        String dbPediaSpotlightDirName = Constants.getInstance().getExternalDocumentsDir() +  "/dbPediaSpotlight";
         String spotlightAnnotationXmlStr = annotation.getSpotlightAnnotationXmlStr();
-        FileUtils.writeStringToFile(new File(knowledgeDirName + "/" + docId + ".dbPediaSpotlight.xml"), spotlightAnnotationXmlStr, "utf-8");
+        FileUtils.writeStringToFile(new File(dbPediaSpotlightDirName + "/" + docId + ".dbPediaSpotlight.xml"), spotlightAnnotationXmlStr, "utf-8");
       }
     } catch (Exception e) {
       throw new ApplicationException(e);
