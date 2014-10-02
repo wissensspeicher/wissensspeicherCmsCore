@@ -3,14 +3,22 @@ package org.bbaw.wsp.cms.dochandler;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import net.sf.saxon.s9api.XdmItem;
+import net.sf.saxon.s9api.XdmSequenceIterator;
+import net.sf.saxon.s9api.XdmValue;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.io.IOUtils;
+import org.bbaw.wsp.cms.document.Annotation;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
+import de.mpg.mpiwg.berlin.mpdl.xml.xquery.XQueryEvaluator;
 
 public class DBpediaSpotlightHandler {
   private static DBpediaSpotlightHandler instance;
@@ -19,6 +27,7 @@ public class DBpediaSpotlightHandler {
   private static int PORT = 2222;
   private static String SERVICE_PATH = "spotlight/rest";
   private HttpClient httpClient; 
+  private XQueryEvaluator xQueryEvaluator;
 
   public static DBpediaSpotlightHandler getInstance() throws ApplicationException {
     if (instance == null) {
@@ -39,16 +48,34 @@ public class DBpediaSpotlightHandler {
     httpClient.getParams().setParameter("http.connection.timeout", SOCKET_TIMEOUT);
     httpClient.getParams().setParameter("http.connection-manager.timeout", new Long(SOCKET_TIMEOUT));
     httpClient.getParams().setParameter("http.protocol.head-body-timeout", SOCKET_TIMEOUT);
+    xQueryEvaluator = new XQueryEvaluator();
   }
   
-  public String annotate(String text) throws ApplicationException {
+  public Annotation annotate(String text, String type) throws ApplicationException {
     NameValuePair textParam = new NameValuePair("text", text);
     NameValuePair confidenceParam = new NameValuePair("confidence", "0.5");
-    NameValuePair supportParam = new NameValuePair("support", "20");
+    NameValuePair typesParam = new NameValuePair("types", "Person"); // Person, Organisation, Place (Category ??) Einschränkung liefert evtl. zu wenige Entitäten
+    NameValuePair supportParam = new NameValuePair("support", "20"); // how many incoming links are on the DBpedia-Resource 
     NameValuePair whitelistSparqlParam = new NameValuePair("sparql", "select ...");
     NameValuePair[] params = {textParam, confidenceParam};
-    String dbPediaKnowledgeXmlStr = performPostRequest("annotate", params);
-    return dbPediaKnowledgeXmlStr;
+    String spotlightAnnotationXmlStr = performPostRequest("annotate", params);
+    List<String> resources = null; 
+    XdmValue xmdValueResourceUris = xQueryEvaluator.evaluate(spotlightAnnotationXmlStr, "//Resource[not(@URI = preceding::Resource/@URI)]/@URI");
+    if (xmdValueResourceUris != null && xmdValueResourceUris.size() > 0) {
+      resources = new ArrayList<String>();
+      XdmSequenceIterator xmdValueAuthorsIterator = xmdValueResourceUris.iterator();
+      while (xmdValueAuthorsIterator.hasNext()) {
+        XdmItem xdmItemResourceUri = xmdValueAuthorsIterator.next();
+        String uriStr = xdmItemResourceUri.getStringValue();
+        int begin = uriStr.lastIndexOf("resource/")+ 9;
+        String resourceName = uriStr.substring(begin);
+        resources.add(resourceName);
+      }
+    }
+    Annotation annotation = new Annotation();
+    annotation.setResources(resources);
+    annotation.setSpotlightAnnotationXmlStr(spotlightAnnotationXmlStr);
+    return annotation;
   }
   
   private String performPostRequest(String serviceName, NameValuePair[] params) throws ApplicationException {
