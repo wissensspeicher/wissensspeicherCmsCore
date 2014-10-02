@@ -96,8 +96,8 @@ import de.mpg.mpiwg.berlin.mpdl.xml.xquery.XQueryEvaluator;
 public class IndexHandler {
   private static IndexHandler instance;
   private static Logger LOGGER = Logger.getLogger(IndexHandler.class);
-  private static final String[] QUERY_EXPANSION_FIELDS_ALL = {"author", "title", "description", "subject", "subjectControlled", "swd", "ddc", "persons", "places", "tokenOrig"};
-  private static final String[] QUERY_EXPANSION_FIELDS_ALL_MORPH = {"author", "title", "description", "subject", "subjectControlled", "swd", "ddc", "persons", "places", "tokenMorph"};
+  private static final String[] QUERY_EXPANSION_FIELDS_ALL = {"author", "title", "description", "subject", "subjectControlled", "swd", "ddc", "entities", "persons", "places", "tokenOrig"};
+  private static final String[] QUERY_EXPANSION_FIELDS_ALL_MORPH = {"author", "title", "description", "subject", "subjectControlled", "swd", "ddc", "entities", "persons", "places", "tokenMorph"};
   private IndexWriter documentsIndexWriter;
   private IndexWriter nodesIndexWriter;
   private SearcherManager documentsSearcherManager;
@@ -367,6 +367,19 @@ public class IndexHandler {
       } else {
         categories.add(new CategoryPath("type", "unbekannt"));
       }
+      if (mdRecord.getEntities() != null) {
+        String[] entities = mdRecord.getEntities().split("###");
+        for (int i=0; i<entities.length; i++) {
+          String entityName = entities[i];
+          categories.add(new CategoryPath("entity", entityName));
+        }
+        Field entitiesField = new Field("entities", mdRecord.getEntities(), Field.Store.YES, Field.Index.ANALYZED);
+        doc.add(entitiesField);
+      }
+      if (mdRecord.getEntitiesDetails() != null) {
+        Field entitiesDetailsField = new Field("entitiesDetails", mdRecord.getEntitiesDetails(), Field.Store.YES, Field.Index.NOT_ANALYZED);
+        doc.add(entitiesDetailsField);
+      }
       if (mdRecord.getPersons() != null) {
         Field personsField = new Field("persons", mdRecord.getPersons(), Field.Store.YES, Field.Index.ANALYZED);
         doc.add(personsField);
@@ -478,33 +491,6 @@ public class IndexHandler {
       categoryDocBuilder.build(doc);
 
       documentsIndexWriter.addDocument(doc);
-      
-      // add frequent words to document and facets
-      /*
-      documentsIndexWriter.commit();
-      ArrayList<Token> frequentTokens = getFrequentToken(docId, "tokenOrig", 10);
-      if (frequentTokens != null) {
-        String frequentWordsXmlStr = "<tokens>";  
-        for (int i=0; i<frequentTokens.size(); i++) {
-          Token frequentToken = frequentTokens.get(i);
-          int freq = frequentToken.getFreq();
-          String tokenStr = frequentToken.getTerm().text();
-          for (int j=1; j<=freq; j++) {
-            categories.add(new CategoryPath("tokenOrig", tokenStr));
-          }
-          frequentWordsXmlStr = frequentWordsXmlStr + "<token><text>" + tokenStr + "</text><freq>" + freq + "</freq></token>";
-        }
-        frequentWordsXmlStr = frequentWordsXmlStr + "</tokens>";
-        Field frequentWordsField = new Field("frequentWords", frequentWordsXmlStr, Field.Store.YES, Field.Index.NOT_ANALYZED);
-        doc.add(frequentWordsField);
-        Term termIdentifier = new Term("docId", docId);
-        documentsIndexWriter.deleteDocuments(termIdentifier);
-        categoryDocBuilder.setCategoryPaths(categories);
-        categoryDocBuilder.build(doc);
-        documentsIndexWriter.addDocument(doc);
-      }
-      documentsIndexWriter.commit();
-      */
       
       // to save Lucene disk space and to gain performance the document nodes index is set off:
       /* 
@@ -711,6 +697,7 @@ public class IndexHandler {
       facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("subjectControlled"), 10));
       facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("swd"), 10));
       facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("ddc"), 10));
+      facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("entity"), 100));
       facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("type"), 1000));
       FacetsCollector facetsCollector = new FacetsCollector(facetSearchParams, documentsIndexReader, taxonomyReader);
       Collector facetsCollectorWrapper = MultiCollector.wrap(topFieldCollector, facetsCollector);
@@ -1745,6 +1732,8 @@ public class IndexHandler {
       documentsFieldAnalyzers.put("subjectControlled", new StandardAnalyzer(Version.LUCENE_35));
       documentsFieldAnalyzers.put("swd", new StandardAnalyzer(Version.LUCENE_35));
       documentsFieldAnalyzers.put("ddc", new StandardAnalyzer(Version.LUCENE_35));
+      documentsFieldAnalyzers.put("entities", new StandardAnalyzer(Version.LUCENE_35));
+      documentsFieldAnalyzers.put("subject", new StandardAnalyzer(Version.LUCENE_35));
       documentsFieldAnalyzers.put("rights", new StandardAnalyzer(Version.LUCENE_35));
       documentsFieldAnalyzers.put("license", new StandardAnalyzer(Version.LUCENE_35));
       documentsFieldAnalyzers.put("accessRights", new StandardAnalyzer(Version.LUCENE_35));
@@ -1880,6 +1869,8 @@ public class IndexHandler {
     fields.add("pageCount");
     fields.add("schemaName");
     fields.add("lastModified");
+    fields.add("entities");
+    fields.add("entitiesDetails");
     fields.add("persons");
     fields.add("personsDetails");
     fields.add("places");
