@@ -16,6 +16,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.List;
 
 import net.sf.saxon.s9api.Axis;
 import net.sf.saxon.s9api.QName;
@@ -32,6 +33,7 @@ import org.apache.commons.io.FileUtils;
 import org.bbaw.wsp.cms.collections.CollectionManager;
 import org.bbaw.wsp.cms.dochandler.parser.document.IDocument;
 import org.bbaw.wsp.cms.dochandler.parser.text.parser.DocumentParser;
+import org.bbaw.wsp.cms.document.Annotation;
 import org.bbaw.wsp.cms.document.MetadataRecord;
 import org.bbaw.wsp.cms.document.Person;
 import org.bbaw.wsp.cms.document.XQuery;
@@ -522,6 +524,31 @@ public class DocumentHandler {
         mdRecord.setTokenNorm(docTokensNorm);
         mdRecord.setTokenMorph(docTokensMorph);
         mdRecord.setContent(content);
+      }
+      DBpediaSpotlightHandler dbPediaSpotlightHandler = DBpediaSpotlightHandler.getInstance(); 
+      Annotation annotation = null;
+      try {
+        annotation = dbPediaSpotlightHandler.annotate(docTokensOrig, null);
+      } catch (ApplicationException e) {
+        LOGGER.error(e);
+      }
+      if (annotation != null && ! annotation.isEmpty()) {
+        List<String> resources = annotation.getResources();
+        StringBuilder dbPediaResourcesStrBuilder = new StringBuilder();
+        for (int i=0; i<resources.size(); i++) {
+          if (i == resources.size() - 1)
+            dbPediaResourcesStrBuilder.append(resources.get(i));
+          else
+            dbPediaResourcesStrBuilder.append(resources.get(i) + "###");
+        }
+        String subject = mdRecord.getSubject();
+        if (subject == null)
+          mdRecord.setSubject(dbPediaResourcesStrBuilder.toString());
+        else 
+          mdRecord.setSubject(subject + dbPediaResourcesStrBuilder.toString());
+        String knowledgeDirName = Constants.getInstance().getExternalDocumentsDir() +  "/dbPediaSpotlight";
+        String spotlightAnnotationXmlStr = annotation.getSpotlightAnnotationXmlStr();
+        FileUtils.writeStringToFile(new File(knowledgeDirName + "/" + docId + ".dbPediaSpotlight.xml"), spotlightAnnotationXmlStr, "utf-8");
       }
     } catch (Exception e) {
       throw new ApplicationException(e);
