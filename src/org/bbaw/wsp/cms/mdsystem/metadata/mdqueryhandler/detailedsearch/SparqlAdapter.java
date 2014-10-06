@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.httpclient.URIException;
+import org.apache.commons.httpclient.util.URIUtil;
 import org.apache.log4j.Logger;
 import org.bbaw.wsp.cms.collections.Collection;
 import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.MdSystemResultType;
@@ -116,7 +118,7 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
    *          an {@link RDFNode} for the subject to be set. This is done if the client looks for triples for a subject. Leave it null if the sparql result will contain a subject.
    */
   private void handleSolution(final HitGraphContainer container, final QuerySolution solution, final URL namedGraphUrl, final RDFNode pSubject) {
-    logger.info("handleSolution(final HitGraphContainer container, final QuerySolution solution, final URL namedGraphUrl, final RDFNode pSubject)");
+//    logger.info("handleSolution(final HitGraphContainer container, final QuerySolution solution, final URL namedGraphUrl, final RDFNode pSubject)");
     try {
       final URL graphUrl;
       if (namedGraphUrl == null && solution.getResource("g") != null) { // means: sparql query contains the graph name
@@ -360,20 +362,33 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
         e.printStackTrace();
       }
       RDFNode subject = null;
-      HashMap<String, RDFNode> currentDescription = null;
+      HashMap<String, List<String>> currentDescription = null;
+//      List<String> valueList;
       if (solution.get("s") != null) {
         subject = solution.get("s");
         if(!allNdSubjects.contains(subject.toString())){
           allNdSubjects.add(subject.toString());
-          currentDescription = new HashMap<String, RDFNode>();
-          currentDescription.put("subject", subject);
+          currentDescription = new HashMap<String, List<String>>();
+          List<String> valueList = new ArrayList<String>();
+          valueList.add(subject.toString());
+          currentDescription.put("subject", valueList);
         }else{
           currentDescription = hitGraph.getStatementBySubject(subject.toString());
         }
         RDFNode predicate = null;
         if (solution.get("p") != null) {
           predicate = solution.get("p");
-          
+          String currentPred = null;
+          if(predicate.toString().contains("%23")){
+            int chAscii = predicate.toString().lastIndexOf("%23");
+            currentPred = predicate.toString().substring(chAscii+3);
+          }else if(predicate.toString().contains("#")){
+              int chHash = predicate.toString().lastIndexOf("#");
+              currentPred = predicate.toString().substring(chHash+1);
+          }else if(predicate.toString().contains("/")){
+            int chSlash = predicate.toString().lastIndexOf('/');
+            currentPred = predicate.toString().substring(chSlash+1);
+          }
           RDFNode literal = null;
           if (solution.get("o") != null) {
               literal = solution.get("o");
@@ -381,7 +396,27 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
             if (solution.getLiteral("lit") != null) {
             literal = solution.getLiteral("lit"); 
           }
-          currentDescription.put(predicate.toString(), literal);
+          String encodedLiteral = null;
+          String currentLiteral = null;
+          //ausnahmen
+          if(predicate.toString().contains("homepage") || predicate.toString().contains("relatedCorporateBody") || 
+              predicate.toString().contains("contributingCorporateBody") || predicate.toString().contains("contributor")
+              || predicate.toString().contains("coverage") || predicate.toString().contains("contributingPerson") ){
+            currentLiteral = literal.toString();
+          }else{
+            encodedLiteral = checkForLiteral(literal);
+            currentLiteral = encodedLiteral;
+            currentLiteral = cutLiteralUri(encodedLiteral);
+          }
+          if(currentDescription.get(currentPred) != null){
+            List<String> alreadyExistList = currentDescription.get(currentPred);
+            alreadyExistList.add(currentLiteral);
+            currentDescription.put(currentPred, alreadyExistList);
+          }else{
+            List<String> valueeList = new ArrayList<String>();
+            valueeList.add(currentLiteral);
+            currentDescription.put(currentPred, valueeList);
+          }
         }
       }
       hitGraph.addStatement(subject.toString(), currentDescription);
@@ -831,5 +866,43 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
     freeQueryStrategy();
     return this.handleProjectIdResults(results);
   }
-  
+ 
+  public String cutLiteralUri(String encodedLit){
+    String litReady = null;
+     if (encodedLit != null ){
+       if(encodedLit.startsWith("http://")){
+         //cut the url for gui readability reasons
+         if(encodedLit.contains("%23")){
+           int chAscii = encodedLit.lastIndexOf("%23");
+           litReady = encodedLit.substring(chAscii+3);
+         }else if(encodedLit.contains("#")){
+           int chHash = encodedLit.lastIndexOf("#");
+           litReady = encodedLit.substring(chHash+1);
+         }else if(encodedLit.contains("/")){
+           int chSlash = encodedLit.lastIndexOf('/');
+           litReady = encodedLit.substring(chSlash+1);
+         }//we dont want no nullpointer
+         else{
+           litReady = encodedLit;
+         }
+     }else{
+       litReady = encodedLit;
+       }
+       if(encodedLit.contains("^^")){
+         int beginIndex = encodedLit.indexOf("^^");
+         litReady = encodedLit.substring(beginIndex);
+       }
+     }
+     return litReady;
+   }
+
+   public String checkForLiteral(RDFNode resolved){
+     String obj = null;
+     if(resolved instanceof Literal){
+       obj = resolved.asLiteral().getLexicalForm();
+     }else{
+       obj = resolved.asResource().getLocalName();
+     }
+     return obj;
+   }
 }
