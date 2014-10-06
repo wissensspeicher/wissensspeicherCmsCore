@@ -29,6 +29,8 @@ public class MetadataRecord implements Cloneable {
   private String coverage; // spatial and temporal coverages, e.g. "13th century" or "Grand Canyon, Arizona"
   private String ddc; // subject keywords of DDC (Dewey Decimal Classification), e.g. "Philosophie" 
   private String swd; // subject keywords of SWD (Schlagwortnormdatei), normally separated by commas
+  private String entities; // main entities in resource (separated by "###")
+  private String entitiesDetails; // main entities details in resource (xml format)
   private String persons; // main person names in resource (separated by "###")
   private String personsDetails; // main persons details in resource (xml format)
   private String places; // main place names in resource (separated by "###")
@@ -430,6 +432,22 @@ public class MetadataRecord implements Cloneable {
 
   public void setLastModified(final Date lastModified) {
     this.lastModified = lastModified;
+  }
+
+  public String getEntities() {
+    return entities;
+  }
+
+  public void setEntities(String entities) {
+    this.entities = entities;
+  }
+
+  public String getEntitiesDetails() {
+    return entitiesDetails;
+  }
+
+  public void setEntitiesDetails(String entitiesDetails) {
+    this.entitiesDetails = entitiesDetails;
   }
 
   public String getPersons() {

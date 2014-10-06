@@ -53,7 +53,7 @@ public class DBpediaSpotlightHandler {
   
   public Annotation annotate(String text, String type) throws ApplicationException {
     NameValuePair textParam = new NameValuePair("text", text);
-    NameValuePair confidenceParam = new NameValuePair("confidence", "0.5");
+    NameValuePair confidenceParam = new NameValuePair("confidence", "0.99");
     NameValuePair typesParam = new NameValuePair("types", "Person"); // Person, Organisation, Place (Category ??) Einschränkung liefert evtl. zu wenige Entitäten
     NameValuePair supportParam = new NameValuePair("support", "20"); // how many incoming links are on the DBpedia-Resource 
     NameValuePair whitelistSparqlParam = new NameValuePair("sparql", "select ...");
