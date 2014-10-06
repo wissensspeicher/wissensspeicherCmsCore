@@ -7,6 +7,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map.Entry;
 
 import org.apache.log4j.Logger;
@@ -23,7 +24,7 @@ public class HitGraph {
 
   private final URL namedGraphUrl;
   private final ArrayList<HitStatement> hitStatements;
-  private final HashMap<String, HashMap<String, RDFNode>> hitStatementsMap;
+  private final HashMap<String, HashMap<String, List<String>>> hitStatementsMap;
   private double avgScore;
   private double highestScore;
   private static final Logger logger = Logger.getLogger(SparqlAdapter.class);
@@ -39,7 +40,7 @@ public class HitGraph {
   public HitGraph(final URL namedGraphUrl) {
     this.namedGraphUrl = namedGraphUrl;
     hitStatements = new ArrayList<HitStatement>();
-    hitStatementsMap = new HashMap<String, HashMap<String, RDFNode>>();
+    hitStatementsMap = new HashMap<String, HashMap<String, List<String>>>();
     avgScore = DEFAULT_SCORE;
     highestScore = DEFAULT_SCORE;
   }
@@ -70,7 +71,7 @@ public class HitGraph {
    * @param statement a {@link HitStatement}
    * @param subject
    */
-  public void addStatement(String subject, final HashMap<String, RDFNode> descrMap) {
+  public void addStatement(String subject, final HashMap<String, List<String>> descrMap) {
     hitStatementsMap.put(subject, descrMap);
     // calculate scores
 //    calcAvgScore(statement);
@@ -128,11 +129,11 @@ public class HitGraph {
    * 
    * @return
    */
-  public HashMap<String, HashMap<String, RDFNode>> getAllHitStatementsAsMap() {
+  public HashMap<String, HashMap<String, List<String>>> getAllHitStatementsAsMap() {
     return hitStatementsMap;
   }
 
-  public HashMap<String, RDFNode> getStatementBySubject(String subject){
+  public HashMap<String, List<String>> getStatementBySubject(String subject){
    return hitStatementsMap.get(subject);
   }
   
@@ -146,11 +147,11 @@ public class HitGraph {
     logger.info("hitgraph to string");
     StringBuilder sb = new StringBuilder();
     sb.append("HitGraph [namedGraphUrl=" + namedGraphUrl + ", hitStatementsMap= \n");
-    for (Entry<String, HashMap<String, RDFNode>> entry : hitStatementsMap.entrySet()) {
+    for (Entry<String, HashMap<String, List<String>>> entry : hitStatementsMap.entrySet()) {
       sb.append("  "+(entry.getKey() + " : \n"));
       sb.append("\n");
-      HashMap<String, RDFNode> hmRdfnode = entry.getValue();
-      for (Entry<String, RDFNode> entryRdf : hmRdfnode.entrySet()) {
+      HashMap<String, List<String>> hmRdfnode = entry.getValue();
+      for (Entry<String, List<String>> entryRdf : hmRdfnode.entrySet()) {
         sb.append("    "+(entryRdf.getKey() + " : " + entryRdf.getValue()));
         sb.append("\n");
       }
