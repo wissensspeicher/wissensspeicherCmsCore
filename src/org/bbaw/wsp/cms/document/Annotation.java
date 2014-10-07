@@ -4,13 +4,12 @@ import java.util.List;
 
 public class Annotation {
   private String id;
-  private String spotlightAnnotationXmlStr;
-  private List<String> resources;
+  private List<DBpediaResource> resources;
 
   public Annotation() {
   }
   
-  public Annotation(String id, List<String> resources) {
+  public Annotation(String id, List<DBpediaResource> resources) {
     this.id = id;
     this.resources = resources;
   }
@@ -23,19 +22,11 @@ public class Annotation {
     this.id = id;
   }
 
-  public String getSpotlightAnnotationXmlStr() {
-    return spotlightAnnotationXmlStr;
-  }
-
-  public void setSpotlightAnnotationXmlStr(String spotlightAnnotationXmlStr) {
-    this.spotlightAnnotationXmlStr = spotlightAnnotationXmlStr;
-  }
-
-  public List<String> getResources() {
+  public List<DBpediaResource> getResources() {
     return resources;
   }
 
-  public void setResources(List<String> resources) {
+  public void setResources(List<DBpediaResource> resources) {
     this.resources = resources;
   }
 
