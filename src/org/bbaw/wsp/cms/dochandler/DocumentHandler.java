@@ -543,6 +543,7 @@ public class DocumentHandler {
         if (resources != null) {
           StringBuilder dbPediaResourceNamesStrBuilder = new StringBuilder();
           StringBuilder dbPediaResourcesXmlStrBuilder = new StringBuilder();
+          dbPediaResourcesXmlStrBuilder.append("<resources>\n");
           StringBuilder dbPediaResourcesRdfStrBuilder = new StringBuilder();
           dbPediaResourcesRdfStrBuilder.append("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
           dbPediaResourcesRdfStrBuilder.append("<rdf:RDF \n");
