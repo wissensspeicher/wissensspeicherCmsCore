@@ -133,7 +133,9 @@ public class CollectionManager {
   
   private void addDocuments(Collection collection) throws ApplicationException {
     int counter = 0;
-    LOGGER.info("Create collection: " + collection.getId() + " ...");
+    String collId = collection.getId();
+    LOGGER.info("Create collection: " + collId + " ...");
+    initDBpediaSpotlightWriter(collection);
     // first add the manually maintained mdRecords
     ArrayList<MetadataRecord> mdRecords = getMetadataRecords(collection);
     if (mdRecords != null) {
@@ -149,7 +151,8 @@ public class CollectionManager {
         }
       }
     }
-    LOGGER.info("Collection: " + collection.getId() + " with: " + counter + " records created");
+    flushDBpediaSpotlightWriter(collection);
+    LOGGER.info("Collection: " + collId + " with: " + counter + " records created");
   }
 
   private int addDocuments(Collection collection, Database db) throws ApplicationException {
@@ -223,6 +226,45 @@ public class CollectionManager {
     }
     IndexHandler.getInstance().commit();  // so that the last pending mdRecords before commitInterval were also committed
     return counter;
+  }
+  
+  private void initDBpediaSpotlightWriter(Collection collection) {
+    StringBuilder dbPediaSpotlightCollectionRdfStrBuilder = collection.getDbPediaSpotlightRdfStrBuilder();
+    if (dbPediaSpotlightCollectionRdfStrBuilder == null) {
+      dbPediaSpotlightCollectionRdfStrBuilder = new StringBuilder();
+      dbPediaSpotlightCollectionRdfStrBuilder.append("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
+      dbPediaSpotlightCollectionRdfStrBuilder.append("<rdf:RDF \n");
+      String collRdfId = collection.getRdfId();
+      dbPediaSpotlightCollectionRdfStrBuilder.append("   xmlns=\"" + collRdfId + "\" \n");
+      dbPediaSpotlightCollectionRdfStrBuilder.append("   xml:base=\"" + collRdfId + "\" \n");
+      dbPediaSpotlightCollectionRdfStrBuilder.append("   xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" \n");
+      dbPediaSpotlightCollectionRdfStrBuilder.append("   xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\" \n");
+      dbPediaSpotlightCollectionRdfStrBuilder.append("   xmlns:dc=\"http://purl.org/dc/elements/1.1/\" \n");
+      dbPediaSpotlightCollectionRdfStrBuilder.append("   xmlns:dcterms=\"http://purl.org/dc/terms/\" \n");
+      dbPediaSpotlightCollectionRdfStrBuilder.append("   xmlns:foaf=\"http://xmlns.com/foaf/0.1/\" \n");
+      dbPediaSpotlightCollectionRdfStrBuilder.append("   xmlns:gnd=\"http://d-nb.info/standards/elementset/gnd#\" \n");
+      dbPediaSpotlightCollectionRdfStrBuilder.append("   xmlns:ore=\"http://www.openarchives.org/ore/terms/\" \n");
+      dbPediaSpotlightCollectionRdfStrBuilder.append("   xmlns:wsp=\"http://wsp.bbaw.de/wsp#\" \n");
+      dbPediaSpotlightCollectionRdfStrBuilder.append(">\n");
+      collection.setDbPediaSpotlightRdfStrBuilder(dbPediaSpotlightCollectionRdfStrBuilder);
+    }
+  }
+  
+  private void flushDBpediaSpotlightWriter(Collection collection) throws ApplicationException {
+    // Write the dbPediaSpotlight entities of all collection resources to one rdf file 
+    String collId = collection.getId();
+    StringBuilder dbPediaSpotlightCollectionRdfStrBuilder = collection.getDbPediaSpotlightRdfStrBuilder();
+    if (dbPediaSpotlightCollectionRdfStrBuilder != null) {
+      dbPediaSpotlightCollectionRdfStrBuilder.append("</rdf:RDF>\n"); // 
+      String dbPediaSpotlightDirName = Constants.getInstance().getExternalDocumentsDir() +  "/dbPediaSpotlightResources";
+      String spotlightAnnotationRdfStr = dbPediaSpotlightCollectionRdfStrBuilder.toString();
+      try {
+        FileUtils.writeStringToFile(new File(dbPediaSpotlightDirName + "/" + collId + ".rdf"), spotlightAnnotationRdfStr, "utf-8");
+      } catch (IOException e) {
+        throw new ApplicationException(e);
+      }
+      collection.setDbPediaSpotlightRdfStrBuilder(null);
+    }
   }
   
   private ArrayList<MetadataRecord> getMetadataRecords(Collection collection) throws ApplicationException {
