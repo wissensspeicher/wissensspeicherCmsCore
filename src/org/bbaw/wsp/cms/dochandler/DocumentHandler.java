@@ -544,42 +544,26 @@ public class DocumentHandler {
           StringBuilder dbPediaResourceNamesStrBuilder = new StringBuilder();
           StringBuilder dbPediaResourcesXmlStrBuilder = new StringBuilder();
           dbPediaResourcesXmlStrBuilder.append("<resources>\n");
-          StringBuilder dbPediaResourcesRdfStrBuilder = new StringBuilder();
-          dbPediaResourcesRdfStrBuilder.append("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
-          dbPediaResourcesRdfStrBuilder.append("<rdf:RDF \n");
-          dbPediaResourcesRdfStrBuilder.append("   xmlns=\"" + collRdfId + "\" \n");
-          dbPediaResourcesRdfStrBuilder.append("   xml:base=\"" + collRdfId + "\" \n");
-          dbPediaResourcesRdfStrBuilder.append("   xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" \n");
-          dbPediaResourcesRdfStrBuilder.append("   xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\" \n");
-          dbPediaResourcesRdfStrBuilder.append("   xmlns:dc=\"http://purl.org/dc/elements/1.1/\" \n");
-          dbPediaResourcesRdfStrBuilder.append("   xmlns:dcterms=\"http://purl.org/dc/terms/\" \n");
-          dbPediaResourcesRdfStrBuilder.append("   xmlns:foaf=\"http://xmlns.com/foaf/0.1/\" \n");
-          dbPediaResourcesRdfStrBuilder.append("   xmlns:gnd=\"http://d-nb.info/standards/elementset/gnd#\" \n");
-          dbPediaResourcesRdfStrBuilder.append("   xmlns:ore=\"http://www.openarchives.org/ore/terms/\" \n");
-          dbPediaResourcesRdfStrBuilder.append(">\n");
+          StringBuilder dbPediaSpotlightCollectionRdfStrBuilder = coll.getDbPediaSpotlightRdfStrBuilder();
           String uri = mdRecord.getUri();
-          dbPediaResourcesRdfStrBuilder.append("<rdf:Description rdf:about=\"" + uri + "\">\n");
-          dbPediaResourcesRdfStrBuilder.append("  <rdf:type rdf:resource=\"http://purl.org/dc/terms/BibliographicResource\"/>\n");
-          dbPediaResourcesRdfStrBuilder.append("  <dcterms:isPartOf rdf:resource=\"" + collRdfId + "\"/>\n");
-          dbPediaResourcesRdfStrBuilder.append("  <dc:identifier rdf:resource=\"" + uri + "\"/>\n");
+          dbPediaSpotlightCollectionRdfStrBuilder.append("<rdf:Description rdf:about=\"" + uri + "\">\n");
+          dbPediaSpotlightCollectionRdfStrBuilder.append("  <rdf:type rdf:resource=\"http://purl.org/dc/terms/BibliographicResource\"/>\n");
+          dbPediaSpotlightCollectionRdfStrBuilder.append("  <dcterms:isPartOf rdf:resource=\"" + collRdfId + "\"/>\n");
+          dbPediaSpotlightCollectionRdfStrBuilder.append("  <dc:identifier rdf:resource=\"" + uri + "\"/>\n");
           for (int i=0; i<resources.size(); i++) {
             DBpediaResource r = resources.get(i);
             dbPediaResourcesXmlStrBuilder.append(r.toXmlStr());
-            dbPediaResourcesRdfStrBuilder.append(r.toRdfStr());
+            dbPediaSpotlightCollectionRdfStrBuilder.append(r.toRdfStr());
             String resourceName = r.getName();
             if (i == resources.size() - 1)
               dbPediaResourceNamesStrBuilder.append(resourceName);
             else
               dbPediaResourceNamesStrBuilder.append(resourceName + "###");
           }
-          dbPediaResourcesRdfStrBuilder.append("</rdf:Description>\n");
-          dbPediaResourcesRdfStrBuilder.append("</rdf:RDF>\n");
+          dbPediaSpotlightCollectionRdfStrBuilder.append("</rdf:Description>\n");
           dbPediaResourcesXmlStrBuilder.append("</resources>\n");
           mdRecord.setEntities(dbPediaResourceNamesStrBuilder.toString());
           mdRecord.setEntitiesDetails(dbPediaResourcesXmlStrBuilder.toString());
-          String dbPediaSpotlightDirName = Constants.getInstance().getExternalDocumentsDir() +  "/dbPediaSpotlight";
-          String spotlightAnnotationRdfStr = dbPediaResourcesRdfStrBuilder.toString();
-          FileUtils.writeStringToFile(new File(dbPediaSpotlightDirName + "/" + docId + ".dbPediaSpotlight.rdf"), spotlightAnnotationRdfStr, "utf-8");
         }
       }
     } catch (Exception e) {
