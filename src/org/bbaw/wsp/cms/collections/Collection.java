@@ -25,6 +25,7 @@ public class Collection {
   private List<String> excludeField;
   private String configFileName;  // configuration file name
   private Date lastModified;
+  private StringBuilder dbPediaSpotlightRdfStrBuilder;
   
   public Collection() {
     id = "";
@@ -179,6 +180,14 @@ public class Collection {
       service = services.get(serviceName);
     }
     return service;
+  }
+
+  public StringBuilder getDbPediaSpotlightRdfStrBuilder() {
+    return dbPediaSpotlightRdfStrBuilder;
+  }
+
+  public void setDbPediaSpotlightRdfStrBuilder(StringBuilder dbPediaSpotlightRdfStrBuilder) {
+    this.dbPediaSpotlightRdfStrBuilder = dbPediaSpotlightRdfStrBuilder;
   }
 
 }
