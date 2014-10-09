@@ -546,21 +546,27 @@ public class DocumentHandler {
           dbPediaResourcesXmlStrBuilder.append("<resources>\n");
           StringBuilder dbPediaSpotlightCollectionRdfStrBuilder = coll.getDbPediaSpotlightRdfStrBuilder();
           String uri = mdRecord.getUri();
-          dbPediaSpotlightCollectionRdfStrBuilder.append("<rdf:Description rdf:about=\"" + uri + "\">\n");
-          dbPediaSpotlightCollectionRdfStrBuilder.append("  <rdf:type rdf:resource=\"http://purl.org/dc/terms/BibliographicResource\"/>\n");
-          dbPediaSpotlightCollectionRdfStrBuilder.append("  <dcterms:isPartOf rdf:resource=\"" + collRdfId + "\"/>\n");
-          dbPediaSpotlightCollectionRdfStrBuilder.append("  <dc:identifier rdf:resource=\"" + uri + "\"/>\n");
+          if (dbPediaSpotlightCollectionRdfStrBuilder != null) {
+            dbPediaSpotlightCollectionRdfStrBuilder.append("<rdf:Description rdf:about=\"" + uri + "\">\n");
+            dbPediaSpotlightCollectionRdfStrBuilder.append("  <rdf:type rdf:resource=\"http://purl.org/dc/terms/BibliographicResource\"/>\n");
+            dbPediaSpotlightCollectionRdfStrBuilder.append("  <dcterms:isPartOf rdf:resource=\"" + collRdfId + "\"/>\n");
+            dbPediaSpotlightCollectionRdfStrBuilder.append("  <dc:identifier rdf:resource=\"" + uri + "\"/>\n");
+          }
           for (int i=0; i<resources.size(); i++) {
             DBpediaResource r = resources.get(i);
             dbPediaResourcesXmlStrBuilder.append(r.toXmlStr());
-            dbPediaSpotlightCollectionRdfStrBuilder.append(r.toRdfStr());
+            if (dbPediaSpotlightCollectionRdfStrBuilder != null) {
+              dbPediaSpotlightCollectionRdfStrBuilder.append(r.toRdfStr());
+            }
             String resourceName = r.getName();
             if (i == resources.size() - 1)
               dbPediaResourceNamesStrBuilder.append(resourceName);
             else
               dbPediaResourceNamesStrBuilder.append(resourceName + "###");
           }
-          dbPediaSpotlightCollectionRdfStrBuilder.append("</rdf:Description>\n");
+          if (dbPediaSpotlightCollectionRdfStrBuilder != null) {
+            dbPediaSpotlightCollectionRdfStrBuilder.append("</rdf:Description>\n");
+          }
           dbPediaResourcesXmlStrBuilder.append("</resources>\n");
           mdRecord.setEntities(dbPediaResourceNamesStrBuilder.toString());
           mdRecord.setEntitiesDetails(dbPediaResourcesXmlStrBuilder.toString());
