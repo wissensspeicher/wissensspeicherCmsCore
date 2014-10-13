@@ -16,7 +16,7 @@
       <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionBerlin/Baende"/>
       <dc:identifier rdf:resource="http://leibniz-berlin.bbaw.de/bilder/2013-10-23-leibniz8-2-gesamt.pdf"/>
       <dc:title>Saemtliche Schriften und Briefe</dc:title>
-      <dc:description>Achte Reihe: Naturwissenschaftliche, technische und medizinische Schriften. Zweiter Band: Korrekturvorlage. Dies ist eine Korrekturvorlage. Umfang und Bearbeitungszustand der Texte entsprechen nicht dem fertigen Band.</dc:description>
+      <dc:abstract>Achte Reihe: Naturwissenschaftliche, technische und medizinische Schriften. Zweiter Band: Korrekturvorlage. Dies ist eine Korrekturvorlage. Umfang und Bearbeitungszustand der Texte entsprechen nicht dem fertigen Band.</dc:abstract>
     </rdf:Description>
   <rdf:Description rdf:about="http://leibniz-berlin.bbaw.de">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
@@ -31,6 +31,13 @@
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionBerlin"/>
     <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/"/>
     <dc:title> Gottfried Wilhelm Leibniz. Naturwissenschaftlich- medizinisch-technische Schriften, Reihe VIII der Akademieausgabe </dc:title>
+    <dc:publisher rdf:resource="http://wsp.normdata.rdf/LeibnizEditionBerlin"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/Knobloch"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/Hecht"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/Sattler"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/Stork"/>
+    <dc:creator rdf:resource="http://www.ewerk.de"/>
+    <dc:creator rdf:resource="http://www.weisses-rauschen.de"/>
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/></rdf:Description>
 
 
