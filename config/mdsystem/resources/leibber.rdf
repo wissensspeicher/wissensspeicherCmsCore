@@ -17,6 +17,7 @@
       <dc:identifier rdf:resource="http://leibniz-berlin.bbaw.de/bilder/2013-10-23-leibniz8-2-gesamt.pdf"/>
       <dc:title>Saemtliche Schriften und Briefe</dc:title>
       <dc:abstract>Achte Reihe: Naturwissenschaftliche, technische und medizinische Schriften. Zweiter Band: Korrekturvorlage. Dies ist eine Korrekturvorlage. Umfang und Bearbeitungszustand der Texte entsprechen nicht dem fertigen Band.</dc:abstract>
+      <dc:format rdf:resource="http://wsp.normdata.rdf/text_pdf"/>
     </rdf:Description>
   <rdf:Description rdf:about="http://leibniz-berlin.bbaw.de">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
@@ -38,7 +39,8 @@
     <dc:creator rdf:resource="http://wsp.normdata.rdf/Stork"/>
     <dc:creator rdf:resource="http://www.ewerk.de"/>
     <dc:creator rdf:resource="http://www.weisses-rauschen.de"/>
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/></rdf:Description>
+    <dc:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+  </rdf:Description>
 
 
   <!-- LH003,01,03_001r -->
@@ -52,11 +54,13 @@
     <gnd:gndRelatedPerson rdf:resource="http://wsp.normdata.rdf/Galen"/>
     <gnd:gndRelatedPerson rdf:resource="http://wsp.normdata.rdf/MarciJohannesMarcus"/>
     <gnd:gndRelatedPerson rdf:resource="http://wsp.normdata.rdf/SantorioSantorio"/>
+    <dc:format rdf:resource="http://wsp.normdata.rdf/image_png"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Directiones%2Bad%2Brem%2Bmedicam%2Bpertinentes/LH003%252C01%252C03_001r/index.html">
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Directiones%2Bad%2Brem%2Bmedicam%2Bpertinentes/LH003%252C01%252C03_001r/index.html"/>
 <dcterms:isFormatOf rdf:resource="http://leibnizviii.bbaw.de/pdf/Directiones%2Bad%2Brem%2Bmedicam%2Bpertinentes/LH003%252C01%252C03_001v/LH003,01%2103_001%2Bva.png"/>
-<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/></rdf:Description>
+<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  </rdf:Description>
 
   <!-- LH003,01,03_001v  -->
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/pdf/Directiones%2Bad%2Brem%2Bmedicam%2Bpertinentes/LH003%252C01%252C03_001v/LH003,01%2103_001%2Bva.png">
