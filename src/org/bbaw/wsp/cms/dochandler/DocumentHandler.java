@@ -30,10 +30,13 @@ import net.sf.saxon.trans.XPathException;
 
 import org.apache.log4j.Logger;
 import org.apache.commons.io.FileUtils;
+import org.bbaw.wsp.cms.collections.Collection;
 import org.bbaw.wsp.cms.collections.CollectionManager;
+import org.bbaw.wsp.cms.collections.CollectionReader;
 import org.bbaw.wsp.cms.dochandler.parser.document.IDocument;
 import org.bbaw.wsp.cms.dochandler.parser.text.parser.DocumentParser;
 import org.bbaw.wsp.cms.document.Annotation;
+import org.bbaw.wsp.cms.document.DBpediaResource;
 import org.bbaw.wsp.cms.document.MetadataRecord;
 import org.bbaw.wsp.cms.document.Person;
 import org.bbaw.wsp.cms.document.XQuery;
@@ -528,23 +531,46 @@ public class DocumentHandler {
       DBpediaSpotlightHandler dbPediaSpotlightHandler = DBpediaSpotlightHandler.getInstance(); 
       Annotation annotation = null;
       try {
-        annotation = dbPediaSpotlightHandler.annotate(docTokensOrig, null);
+        annotation = dbPediaSpotlightHandler.annotate(docId, docTokensOrig, null);
       } catch (ApplicationException e) {
         LOGGER.error(e);
       }
       if (annotation != null && ! annotation.isEmpty()) {
-        List<String> resources = annotation.getResources();
-        StringBuilder dbPediaResourcesStrBuilder = new StringBuilder();
-        for (int i=0; i<resources.size(); i++) {
-          if (i == resources.size() - 1)
-            dbPediaResourcesStrBuilder.append(resources.get(i));
-          else
-            dbPediaResourcesStrBuilder.append(resources.get(i) + "###");
+        List<DBpediaResource> resources = annotation.getResources();
+        String collName = mdRecord.getCollectionNames();
+        Collection coll = CollectionReader.getInstance().getCollection(collName);
+        String collRdfId = coll.getRdfId();
+        if (resources != null) {
+          StringBuilder dbPediaResourceNamesStrBuilder = new StringBuilder();
+          StringBuilder dbPediaResourcesXmlStrBuilder = new StringBuilder();
+          dbPediaResourcesXmlStrBuilder.append("<resources>\n");
+          StringBuilder dbPediaSpotlightCollectionRdfStrBuilder = coll.getDbPediaSpotlightRdfStrBuilder();
+          String uri = mdRecord.getUri();
+          if (dbPediaSpotlightCollectionRdfStrBuilder != null) {
+            dbPediaSpotlightCollectionRdfStrBuilder.append("<rdf:Description rdf:about=\"" + uri + "\">\n");
+            dbPediaSpotlightCollectionRdfStrBuilder.append("  <rdf:type rdf:resource=\"http://purl.org/dc/terms/BibliographicResource\"/>\n");
+            dbPediaSpotlightCollectionRdfStrBuilder.append("  <dcterms:isPartOf rdf:resource=\"" + collRdfId + "\"/>\n");
+            dbPediaSpotlightCollectionRdfStrBuilder.append("  <dc:identifier rdf:resource=\"" + uri + "\"/>\n");
+          }
+          for (int i=0; i<resources.size(); i++) {
+            DBpediaResource r = resources.get(i);
+            dbPediaResourcesXmlStrBuilder.append(r.toXmlStr());
+            if (dbPediaSpotlightCollectionRdfStrBuilder != null) {
+              dbPediaSpotlightCollectionRdfStrBuilder.append(r.toRdfStr());
+            }
+            String resourceName = r.getName();
+            if (i == resources.size() - 1)
+              dbPediaResourceNamesStrBuilder.append(resourceName);
+            else
+              dbPediaResourceNamesStrBuilder.append(resourceName + "###");
+          }
+          if (dbPediaSpotlightCollectionRdfStrBuilder != null) {
+            dbPediaSpotlightCollectionRdfStrBuilder.append("</rdf:Description>\n");
+          }
+          dbPediaResourcesXmlStrBuilder.append("</resources>\n");
+          mdRecord.setEntities(dbPediaResourceNamesStrBuilder.toString());
+          mdRecord.setEntitiesDetails(dbPediaResourcesXmlStrBuilder.toString());
         }
-        mdRecord.setEntities(dbPediaResourcesStrBuilder.toString());
-        String dbPediaSpotlightDirName = Constants.getInstance().getExternalDocumentsDir() +  "/dbPediaSpotlight";
-        String spotlightAnnotationXmlStr = annotation.getSpotlightAnnotationXmlStr();
-        FileUtils.writeStringToFile(new File(dbPediaSpotlightDirName + "/" + docId + ".dbPediaSpotlight.xml"), spotlightAnnotationXmlStr, "utf-8");
       }
     } catch (Exception e) {
       throw new ApplicationException(e);

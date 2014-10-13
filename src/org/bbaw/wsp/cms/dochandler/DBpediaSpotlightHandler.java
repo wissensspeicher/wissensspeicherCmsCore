@@ -4,6 +4,7 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import net.sf.saxon.s9api.XdmItem;
@@ -16,13 +17,15 @@ import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.io.IOUtils;
 import org.bbaw.wsp.cms.document.Annotation;
+import org.bbaw.wsp.cms.document.DBpediaResource;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
+import de.mpg.mpiwg.berlin.mpdl.util.StringUtils;
 import de.mpg.mpiwg.berlin.mpdl.xml.xquery.XQueryEvaluator;
 
 public class DBpediaSpotlightHandler {
   private static DBpediaSpotlightHandler instance;
-  private static int SOCKET_TIMEOUT = 100 * 1000;
+  private static int SOCKET_TIMEOUT = 200 * 1000;
   private static String HOSTNAME = "localhost";
   private static int PORT = 2222;
   private static String SERVICE_PATH = "spotlight/rest";
@@ -51,34 +54,67 @@ public class DBpediaSpotlightHandler {
     xQueryEvaluator = new XQueryEvaluator();
   }
   
-  public Annotation annotate(String text, String type) throws ApplicationException {
+  public Annotation annotate(String docId, String text, String type) throws ApplicationException {
+    String testStr = "";
     NameValuePair textParam = new NameValuePair("text", text);
     NameValuePair confidenceParam = new NameValuePair("confidence", "0.99");
     NameValuePair typesParam = new NameValuePair("types", "Person"); // Person, Organisation, Place (Category ??) Einschränkung liefert evtl. zu wenige Entitäten
     NameValuePair supportParam = new NameValuePair("support", "20"); // how many incoming links are on the DBpedia-Resource 
     NameValuePair whitelistSparqlParam = new NameValuePair("sparql", "select ...");
     NameValuePair[] params = {textParam, confidenceParam};
-    String spotlightAnnotationXmlStr = performPostRequest("annotate", params);
-    List<String> resources = null; 
-    XdmValue xmdValueResourceUris = xQueryEvaluator.evaluate(spotlightAnnotationXmlStr, "//Resource[not(@URI = preceding::Resource/@URI)]/@URI");
-    if (xmdValueResourceUris != null && xmdValueResourceUris.size() > 0) {
-      resources = new ArrayList<String>();
-      XdmSequenceIterator xmdValueAuthorsIterator = xmdValueResourceUris.iterator();
-      while (xmdValueAuthorsIterator.hasNext()) {
-        XdmItem xdmItemResourceUri = xmdValueAuthorsIterator.next();
-        String uriStr = xdmItemResourceUri.getStringValue();
-        int begin = uriStr.lastIndexOf("resource/")+ 9;
-        String resourceName = uriStr.substring(begin);
-        resources.add(resourceName);
+    String spotlightAnnotationXmlStr = performPostRequest("annotate", params, "text/xml");
+    List<DBpediaResource> resources = null; 
+    try {
+      spotlightAnnotationXmlStr = spotlightAnnotationXmlStr.replaceAll("&#[0-9];|&#1[0-9];|&#2[0-9];|&#30;|&#31;|&#32;", ""); // remove all steuerzeichen such as "&#0;"
+      XdmValue xmdValueResources = xQueryEvaluator.evaluate(spotlightAnnotationXmlStr, "//Resource[not(@URI = preceding::Resource/@URI)]");  // no double resources
+      if (xmdValueResources != null && xmdValueResources.size() > 0) {
+        resources = new ArrayList<DBpediaResource>();
+        XdmSequenceIterator xmdValueResourcesIterator = xmdValueResources.iterator();
+        while (xmdValueResourcesIterator.hasNext()) {
+          XdmItem xdmItemResource = xmdValueResourcesIterator.next();
+          String resourceStr = xdmItemResource.toString();
+          testStr = resourceStr;
+          String uriStr = xQueryEvaluator.evaluateAsString(resourceStr, "string(/Resource/@URI)"); 
+          String supportStr = xQueryEvaluator.evaluateAsString(resourceStr, "string(/Resource/@support)"); 
+          String similarityStr = xQueryEvaluator.evaluateAsString(resourceStr, "string(/Resource/@similarityScore)"); 
+          String typesStr = xQueryEvaluator.evaluateAsString(resourceStr, "string(/Resource/@types)"); 
+          String uriStrEscaped = StringUtils.deresolveXmlEntities(uriStr);
+          uriStrEscaped = uriStrEscaped.replaceAll("'", "&apos;");
+          String frequencyStr = xQueryEvaluator.evaluateAsString(spotlightAnnotationXmlStr, "count(//Resource[@URI = '" + uriStrEscaped + "'])");
+          DBpediaResource r = new DBpediaResource();
+          r.setUri(uriStr);
+          if (supportStr != null && ! supportStr.isEmpty())
+            r.setSupport(new Integer(supportStr));
+          if (similarityStr != null && ! similarityStr.isEmpty())
+            r.setSimilarity(new Double(similarityStr));
+          if (typesStr == null || typesStr.trim().isEmpty())
+            r.setType("concept");
+          else if (typesStr.contains("Person"))
+            r.setType("person");
+          else if (typesStr.contains("Organization") || typesStr.contains("Organisation"))
+            r.setType("organization");
+          else if (typesStr.contains("Place"))
+            r.setType("place");
+          else 
+            r.setType("concept");
+          r.setFrequency(new Integer(frequencyStr));
+          resources.add(r);
+        }
       }
+    } catch (Exception e) {
+      System.out.println("Error in DBpedia spotlight resource: " + docId + ": " + testStr);
     }
-    Annotation annotation = new Annotation();
-    annotation.setResources(resources);
-    annotation.setSpotlightAnnotationXmlStr(spotlightAnnotationXmlStr);
+    Annotation annotation = null;
+    if (resources != null && ! resources.isEmpty()) {
+      annotation = new Annotation();
+      annotation.setId(docId);
+      Collections.sort(resources);
+      annotation.setResources(resources);
+    }
     return annotation;
   }
   
-  private String performPostRequest(String serviceName, NameValuePair[] params) throws ApplicationException {
+  private String performPostRequest(String serviceName, NameValuePair[] params, String outputFormat) throws ApplicationException {
     String resultStr = null;
     try {
       String portPart = ":" + PORT;
@@ -88,7 +124,7 @@ public class DBpediaSpotlightHandler {
         NameValuePair param = params[i];
         method.addParameter(param);
       }
-      method.addRequestHeader("Accept", "text/xml");  // so output is xml; other values are: application/json, text/html, application/xhtml+xml (RDFa: see http://www.w3.org/2007/08/pyRdfa/)
+      method.addRequestHeader("Accept", outputFormat);  // values are: text/xml, application/json, text/html, application/xhtml+xml (RDFa: see http://www.w3.org/2007/08/pyRdfa/)
       httpClient.executeMethod(method);
       InputStream is = method.getResponseBodyAsStream();
       BufferedInputStream in = new BufferedInputStream(is);

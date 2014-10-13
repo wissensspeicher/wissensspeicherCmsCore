@@ -144,7 +144,6 @@ public class HitGraph {
    */
   @Override
   public String toString() {
-    logger.info("hitgraph to string");
     StringBuilder sb = new StringBuilder();
     sb.append("HitGraph [namedGraphUrl=" + namedGraphUrl + ", hitStatementsMap= \n");
     for (Entry<String, HashMap<String, List<String>>> entry : hitStatementsMap.entrySet()) {

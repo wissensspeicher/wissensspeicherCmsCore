@@ -51,7 +51,6 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
    */
   public SparqlAdapter(final IQueryStrategy<T> queryStrategy) {
     this.allNdSubjects = new ArrayList<String>();
-    logger.info("new allNdSubjects");
     this.queryStrategy = queryStrategy;
   }
 
@@ -425,29 +424,6 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
 //      statement.setResultType(MdSystemResultType.LITERAL_NAMED_GRAPH);
   }
   
-  /*
-   * (non-Javadoc)
-   * 
-   * @see org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.ISparqlAdapter#buildSparqlQuery (java.net.URL, java.lang.String)
-   */
-  // public void buildSparqlQuery(final URL namedGraphUrl, final String literal)
-  // {
-  // final String query =
-  // SparqlCommandBuilder.SELECT_NAMED_USING_INDEX.getSelectQueryString("*",
-  // namedGraphUrl.toExternalForm(), literal);
-  // final ResultSet results = delegateQuery(query);
-  // final StmtIterator it = results.getResourceModel().listStatements();
-  //
-  // // while (it.hasNext()) {
-  // // final Statement statement = it.next();
-  // // }
-  //
-  // while (results.hasNext()) { // hier kommt man nicht weiter, wie an die
-  // // Tripels ran???
-  // final QuerySolution solution = results.next();
-  // }
-  // }
-
   @Override
   /*
    * (non-Javadoc)
@@ -832,7 +808,6 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
     // container
     if (results instanceof ResultSet) { // QueryStrategyFuseki
       final ResultSet realResults = (ResultSet) results;
-//      logger.info("weal wesultß : "+realResults.getResultVars());
       List<String> resultVars = realResults.getResultVars();
       while (realResults.hasNext()) {
         final QuerySolution solution = realResults.next();
