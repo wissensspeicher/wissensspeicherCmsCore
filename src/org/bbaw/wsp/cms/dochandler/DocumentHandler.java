@@ -529,14 +529,28 @@ public class DocumentHandler {
         mdRecord.setContent(content);
       }
       DBpediaSpotlightHandler dbPediaSpotlightHandler = DBpediaSpotlightHandler.getInstance(); 
-      Annotation annotation = null;
+      Annotation docContentAnnotation = null;
+      Annotation docTitleAnnotation = null;
       try {
-        annotation = dbPediaSpotlightHandler.annotate(docId, docTokensOrig, null);
+        docContentAnnotation = dbPediaSpotlightHandler.annotate(docId, docTokensOrig, "0.99", 50);
+        String docTitle = mdRecord.getTitle();
+        if (docTitle != null)
+          docTitleAnnotation = dbPediaSpotlightHandler.annotate(docId, docTitle, "0.5", 50);
       } catch (ApplicationException e) {
         LOGGER.error(e);
       }
-      if (annotation != null && ! annotation.isEmpty()) {
-        List<DBpediaResource> resources = annotation.getResources();
+      if (docContentAnnotation != null && ! docContentAnnotation.isEmpty()) {
+        List<DBpediaResource> resources = docContentAnnotation.getResources();
+        if (docTitleAnnotation != null) {
+          List<DBpediaResource> docTitleResources = docTitleAnnotation.getResources();
+          if (docTitleResources != null) {
+            for (int i=0; i<docTitleResources.size(); i++) {
+              DBpediaResource r = docTitleResources.get(i);
+              if (! resources.contains(r))
+                resources.add(0, r); // add title entities at the beginning
+            }
+          }
+        }
         String collName = mdRecord.getCollectionNames();
         Collection coll = CollectionReader.getInstance().getCollection(collName);
         String collRdfId = coll.getRdfId();
