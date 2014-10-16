@@ -227,12 +227,19 @@ public class DBpediaResource implements Comparable<DBpediaResource> {
     return name.compareToIgnoreCase(r.name);
   }
 
-  public boolean equals(DBpediaResource r) {
-    if (uri.equals(r.uri))
-      return true;
-    else
-      return false;
+  @Override
+  public boolean equals(Object o) {
+    if (o instanceof DBpediaResource) {
+      String toCompare = ((DBpediaResource) o).uri;
+      return uri.equals(toCompare);
+    }
+    return false;
   }
+  
+  @Override
+  public int hashCode() {
+    return uri.hashCode();
+  }  
 
   public String toString() {
     return name + "[" + uri + "]";
