@@ -544,7 +544,7 @@ public class DocumentHandler {
         if (docTitleAnnotation != null) {
           List<DBpediaResource> docTitleResources = docTitleAnnotation.getResources();
           if (docTitleResources != null) {
-            for (int i=0; i<docTitleResources.size(); i++) {
+            for (int i=docTitleResources.size()-1; i>=0; i--) {
               DBpediaResource r = docTitleResources.get(i);
               if (! resources.contains(r))
                 resources.add(0, r); // add title entities at the beginning
