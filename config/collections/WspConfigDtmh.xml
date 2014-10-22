@@ -20,5 +20,33 @@
     <formats>
       <format>html</format>
     </formats>
+    <db>
+      <type>mysql</type>
+      <name>dtmh</name>
+      <xmlDump>
+        <sql>
+        </sql>
+      </xmlDump>
+      <mainResourcesTable>
+        <name>documents</name>
+        <idField>id</idField>
+        <field>
+          <dc>title</dc>
+          <db>title</db>
+        </field>
+        <field>
+          <dc>publisher</dc>
+          <db>publisher</db>
+        </field>
+        <field>
+          <dc>rights</dc>
+          <db>rights</db>
+        </field>
+        <field>
+          <dc>abstract</dc>
+          <db>abstract</db>
+        </field>
+      </mainResourcesTable>
+    </db>
   </collection>
 </wsp>
