@@ -27,9 +27,6 @@ FROM
  IndividualCoins c
 LEFT JOIN
   Mints m ON (c.mintid = m.mintid)
-
-WHERE
- c.mintid = m.mintid
         </sql>
       </xmlDump>
       <mainResourcesTable>
