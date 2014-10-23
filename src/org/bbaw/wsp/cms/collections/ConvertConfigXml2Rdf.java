@@ -55,7 +55,7 @@ public class ConvertConfigXml2Rdf {
       // convertConfigXml2Rdf.proofCollectionProjects();
       // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("pdr");
       // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("jdg");
-      // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("dtmh");
+      // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("pmbz");
       // convertConfigXml2Rdf.convert(c, false);
       // convertConfigXml2Rdf.convertDbXmlFiles(c);
       // convertConfigXml2Rdf.generateDbXmlDumpFiles(c);
@@ -97,6 +97,9 @@ public class ConvertConfigXml2Rdf {
         } else if (collectionId.equals("dtmh")) {
           // special case for dtmh
           generateDtmhFiles(collection, db);
+        } else if (collectionId.equals("pmbz")) {
+          // special case for dtmh
+          generatePmbzFiles(collection, db);
         } else if (collectionId.equals("aaewtla")) {
           // special case for aaewtla
           generateAaewtlaFiles(collection, db);
@@ -492,6 +495,89 @@ public class ConvertConfigXml2Rdf {
           xmlDumpStrBuilder.append("    <abstract>" + abstractStr + "</abstract>\n");
         }
         xmlDumpStrBuilder.append("  </" + db.getMainResourcesTable() + ">\n");
+      }
+      xmlDumpStrBuilder.append("</" + db.getName() + ">\n");
+      String xmlDumpFileName = dbResourcesDirName + "/" + collection.getId() + "-" + dbName + "-1" + ".xml";
+      File dumpFile = new File(xmlDumpFileName);
+      FileUtils.writeStringToFile(dumpFile, xmlDumpStrBuilder.toString(), "utf-8");
+      LOGGER.info("Database dump file \"" + xmlDumpFileName + "\" sucessfully created");
+    } catch (IOException e) {
+      throw new ApplicationException(e);
+    }
+  }
+  
+  private void generatePmbzFiles(Collection collection, Database db) throws ApplicationException {
+    String dbName = db.getName();
+    File dbResourcesDir = new File(dbResourcesDirName);
+    String xmlDumpFileFilter = collection.getId() + "-" + db.getName() + "*.xml"; 
+    FileFilter fileFilter = new WildcardFileFilter(xmlDumpFileFilter);
+    File[] files = dbResourcesDir.listFiles(fileFilter);
+    if (files != null && files.length > 0) {
+      for (int i = 0; i < files.length; i++) {
+        File dumpFileToDelete = files[i];
+        FileUtils.deleteQuietly(dumpFileToDelete);
+      }
+      LOGGER.info("Database dump files of database \"" + db.getName() + "\" sucessfully deleted");
+    }
+    StringBuilder xmlDumpStrBuilder = new StringBuilder();
+    xmlDumpStrBuilder.append("<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n");
+    xmlDumpStrBuilder.append("<!-- Resources of database: " + db.getName() + " (Collection: " + collection.getId() + ") -->\n");
+    xmlDumpStrBuilder.append("<" + dbName + ">\n");
+    String collectionId = collection.getId();
+    String collExternalResourcesDirName = externalResourcesDirName + "/" + collectionId;
+    File dbMainFile = new File(collExternalResourcesDirName + "/" + collection.getId() + "-" + db.getName() + "-1.xml");
+    try {
+      URL dbMainFileUrl = dbMainFile.toURI().toURL();
+      XdmValue xmdValueMainResources = xQueryEvaluator.evaluate(dbMainFileUrl, "//*:entry");
+      Hashtable<String, MetadataRecord> resources = new Hashtable<String, MetadataRecord>();  // key is: id of the resource
+      XdmSequenceIterator xmdValueMainResourcesIterator = xmdValueMainResources.iterator();
+      if (xmdValueMainResources != null && xmdValueMainResources.size() > 0) {
+        while (xmdValueMainResourcesIterator.hasNext()) {
+          XdmItem xdmItemMainResource = xmdValueMainResourcesIterator.next();
+          String xdmItemMainResourceStr = xdmItemMainResource.toString();
+          String id = xQueryEvaluator.evaluateAsString(xdmItemMainResourceStr, "//*:field[@type = 'Arbeitsnr.']/*:item/text()");
+          if (id != null && ! id.isEmpty()) {
+            MetadataRecord mdRecord = resources.get(id);
+            if (mdRecord == null) {
+              mdRecord = new MetadataRecord();
+              mdRecord.setUri(id);
+              resources.put(id, mdRecord);
+            }
+            String title = xQueryEvaluator.evaluateAsString(xdmItemMainResourceStr, "//*:field[@type = 'Name']/*:item/text()");
+            if (title != null)
+              mdRecord.setTitle(title);
+            String quellenname = xQueryEvaluator.evaluateAsString(xdmItemMainResourceStr, "//*:field[@type = 'Quellenname']/*:item/text()");
+            String vita = xQueryEvaluator.evaluateAsString(xdmItemMainResourceStr, "string(//*:field[@type = 'Vita']/*:item)");
+            if (vita != null && vita.length() > 400)
+              vita = vita.substring(0, 400) + " ...";
+            String abstractStr = "Quellename: " + quellenname + " Vita: " + vita;
+            if (quellenname == null)
+              abstractStr = "Vita: " + vita;
+            else if (vita == null)
+              abstractStr = "Quellename: " + quellenname;
+            mdRecord.setDescription(abstractStr);
+          }
+        }
+      }
+      Enumeration<String> resoucesKeys = resources.keys();
+      while (resoucesKeys.hasMoreElements()) {
+        String id = resoucesKeys.nextElement();
+        MetadataRecord mdRecord = resources.get(id);
+        String title = mdRecord.getTitle();
+        if (title != null) {
+          xmlDumpStrBuilder.append("  <" + db.getMainResourcesTable() + ">\n");
+          xmlDumpStrBuilder.append("    <id>" + id + "</id>\n");
+          title = StringUtils.deresolveXmlEntities(title);
+          xmlDumpStrBuilder.append("    <title>" + title + "</title>\n");
+          xmlDumpStrBuilder.append("    <publisher>" + "BBAW: Prosopographie der mittelbyzantinischen Zeit" + "</publisher>\n");
+          xmlDumpStrBuilder.append("    <rights>" + "CC BY-NC-SA 3.0" + "</rights>\n");
+          String abstractStr = mdRecord.getDescription();
+          if (abstractStr != null) {
+            abstractStr = StringUtils.deresolveXmlEntities(abstractStr);
+            xmlDumpStrBuilder.append("    <abstract>" + abstractStr + "</abstract>\n");
+          }
+          xmlDumpStrBuilder.append("  </" + db.getMainResourcesTable() + ">\n");
+        }
       }
       xmlDumpStrBuilder.append("</" + db.getName() + ">\n");
       String xmlDumpFileName = dbResourcesDirName + "/" + collection.getId() + "-" + dbName + "-1" + ".xml";
