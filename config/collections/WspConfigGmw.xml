@@ -5,13 +5,57 @@
     <rdfId>http://wsp.normdata.rdf/GriechischesMuenzwerk</rdfId>
     <name>Griechisches Münzwerk</name>
     <url>
-    	<webBaseUrl>http://gmw.bbaw.de</webBaseUrl>
+      <webBaseUrl>http://gmw.bbaw.de</webBaseUrl>
       <dataUrl>http://gmw.bbaw.de</dataUrl>
     </url>
     <mainLanguage>ger</mainLanguage>
     <formats>
       <format>html</format>
     </formats> 
+    <db>
+      <type>mysql</type>
+      <name>gmw</name>
+      <xmlDump>
+        <sql>
+SELECT 
+ c.coinid as id,
+ concat(m.mint, 'CNT_', c.coinid) as title,
+ concat('BBAW: ', 'Griechisches Münzwerk') as publisher,
+ concat('CC', ' BY-NC-SA 3.0') as rights,
+ datetext as abstract
+FROM 
+ IndividualCoins c
+LEFT JOIN
+  Mints m ON (c.mintid = m.mintid)
+
+WHERE
+ c.mintid = m.mintid
+        </sql>
+      </xmlDump>
+      <mainResourcesTable>
+        <name>IndividualCoins</name>
+        <idField>id</idField>
+        <field>
+          <dc>title</dc>
+          <db>title</db>
+        </field>
+        <field>
+          <dc>publisher</dc>
+          <db>publisher</db>
+        </field>
+        <field>
+          <dc>rights</dc>
+          <db>rights</db>
+        </field>
+        <field>
+          <dc>abstract</dc>
+          <db>abstract</db>
+        </field>
+      </mainResourcesTable>
+      <webId>
+        <preStr>http://www.corpus-nummorum.eu/CNT_</preStr>
+      </webId>
+    </db>
   </collection>
 </wsp>
 
