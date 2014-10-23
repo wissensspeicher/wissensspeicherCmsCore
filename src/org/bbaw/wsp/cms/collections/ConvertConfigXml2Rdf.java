@@ -55,7 +55,7 @@ public class ConvertConfigXml2Rdf {
       // convertConfigXml2Rdf.proofCollectionProjects();
       // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("pdr");
       // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("jdg");
-      // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("pmbz");
+      // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("aaewtla");
       // convertConfigXml2Rdf.convert(c, false);
       // convertConfigXml2Rdf.convertDbXmlFiles(c);
       // convertConfigXml2Rdf.generateDbXmlDumpFiles(c);
@@ -611,6 +611,18 @@ public class ConvertConfigXml2Rdf {
     File dbMainFile = new File(collExternalResourcesDirName + "/" + collection.getId() + "-" + db.getName() + "-1.xml");
     try {
       URL dbMainFileUrl = dbMainFile.toURI().toURL();
+      Hashtable<String, String> resourcesEngl = new Hashtable<String, String>();
+      XdmValue xmdValueMainResourcesEngl = xQueryEvaluator.evaluate(dbMainFileUrl, "//*:bwlengl");
+      XdmSequenceIterator xmdValueMainResourcesEnglIterator = xmdValueMainResourcesEngl.iterator();
+      if (xmdValueMainResourcesEngl != null && xmdValueMainResourcesEngl.size() > 0) {
+        while (xmdValueMainResourcesEnglIterator.hasNext()) {
+          XdmItem xdmItemMainResourceEngl = xmdValueMainResourcesEnglIterator.next();
+          String xdmItemMainResourceEnglStr = xdmItemMainResourceEngl.toString();
+          String id = xQueryEvaluator.evaluateAsString(xdmItemMainResourceEnglStr, "string(/*:bwlengl/@wcn)");
+          String elabel = xQueryEvaluator.evaluateAsString(xdmItemMainResourceEnglStr, "string(/*:bwlengl/@elabel)");
+          resourcesEngl.put(id, elabel);
+        }
+      }
       XdmValue xmdValueMainResources = xQueryEvaluator.evaluate(dbMainFileUrl, "//*:bwllist");
       XdmSequenceIterator xmdValueMainResourcesIterator = xmdValueMainResources.iterator();
       if (xmdValueMainResources != null && xmdValueMainResources.size() > 0) {
@@ -621,12 +633,15 @@ public class ConvertConfigXml2Rdf {
           String id = xQueryEvaluator.evaluateAsString(xdmItemMainResourceStr, "string(/*:bwllist/@wcn)");
           xmlDumpStrBuilder.append("    <id>" + id + "</id>\n");
           String title = xQueryEvaluator.evaluateAsString(xdmItemMainResourceStr, "string(/*:bwllist/@lemma)");
+          title = StringUtils.deresolveXmlEntities(title);
           xmlDumpStrBuilder.append("    <title>" + "Lemma: " + title + "</title>\n");
           xmlDumpStrBuilder.append("    <publisher>" + "BBAW: Altägyptisches Wörterbuch: Thesaurus Linguae Aegyptiae (TLA)" + "</publisher>\n");
           xmlDumpStrBuilder.append("    <rights>" + "CC BY-NC-SA 3.0" + "</rights>\n");
           String label = xQueryEvaluator.evaluateAsString(xdmItemMainResourceStr, "string(/*:bwllist/@label)");
-          String elabel = xQueryEvaluator.evaluateAsString(dbMainFileUrl, "//*:bwlengl[@wcn = '" + id + "']");
+          String elabel = resourcesEngl.get(id);
           String abstractStr = label + " " + elabel;
+          if (elabel == null)
+            abstractStr = label;
           abstractStr = StringUtils.deresolveXmlEntities(abstractStr);
           xmlDumpStrBuilder.append("    <abstract>" + abstractStr + "</abstract>\n");
           xmlDumpStrBuilder.append("  </" + db.getMainResourcesTable() + ">\n");
