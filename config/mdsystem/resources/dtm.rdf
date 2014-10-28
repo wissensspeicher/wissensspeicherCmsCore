@@ -10,9 +10,58 @@
    xmlns:gnd="http://d-nb.info/standards/elementset/gnd#" 
    xmlns:ore="http://www.openarchives.org/ore/terms/" 
 >
-<rdf:Description rdf:about="http://dtm.bbaw.de/">
+<rdf:Description rdf:about="http://dtm.bbaw.de">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DTM"/>
-  <dc:identifier rdf:resource="http://dtm.bbaw.de/"/>
+  <dc:identifier rdf:resource="http://dtm.bbaw.de"/>
+  <dc:title>Deutsche Texte des Mittelalters</dc:title>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://dtm.bbaw.de/ueberblick">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DTM"/>
+    <dc:identifier rdf:resource="http://dtm.bbaw.de/ueberblick"/>
+    <dc:title>Überblick</dc:title>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://dtm.bbaw.de/publikationen/dtm-baende">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DTM"/>
+    <dc:identifier rdf:resource="http://dtm.bbaw.de/publikationen/dtm-baende"/>
+    <dc:title>DTM-Bände</dc:title>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://dtm.bbaw.de/publikationen/dtm-richtlinien">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DTM"/>
+    <dc:identifier rdf:resource="http://dtm.bbaw.de/publikationen/dtm-richtlinien"/>
+    <dc:title>DTM-Richtlinien</dc:title>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://dtm.bbaw.de/bilder/roethe.pdf">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DTM"/>
+    <dc:identifier rdf:resource="http://dtm.bbaw.de/bilder/roethe.pdf"/>
+    <dc:title>Gustav Roethe - Erstfassung der Grundsätze (DTM-Band 1)</dc:title>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_pdf"/>
+    <dcterms:created>1904</dcterms:created>
+    <dcterms:modified>2013-10-15</dcterms:modified>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://dtm.bbaw.de/bilder/huebner.pdf">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DTM"/>
+    <dc:identifier rdf:resource="http://dtm.bbaw.de/bilder/huebner.pdf"/>
+    <dc:title>A. Hübner - Neufassung der Grundsätze (DTM-Band 38)</dc:title>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_pdf"/>
+    <dcterms:created>1933-10</dcterms:created>
+    <dcterms:modified>2013-10-15</dcterms:modified>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://dtm.bbaw.de/publikationen/rezensionen">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DTM"/>
+    <dc:identifier rdf:resource="http://dtm.bbaw.de/publikationen/rezensionen"/>
+    <dc:title>Rezensionen zu DTM-Editionen</dc:title>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+  </rdf:Description>
+  
 </rdf:RDF>

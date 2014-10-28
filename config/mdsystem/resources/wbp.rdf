@@ -14,5 +14,42 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Woerterbuchportal"/>
   <dc:identifier rdf:resource="http://www.woerterbuch-portal.de"/>
+  <dc:title>Wörterbuch-Portal</dc:title>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://www.woerterbuch-portal.de/wbp/index_html">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Woerterbuchportal"/>
+    <dc:identifier rdf:resource="http://www.woerterbuch-portal.de/wbp/index_html"/>
+    <dc:title>Wörterbuch-Portal/Index</dc:title>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.woerterbuch-portal.de/wbp/woebus_alle/Suche">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Woerterbuchportal"/>
+    <dc:identifier rdf:resource="http://www.woerterbuch-portal.de/wbp/woebus_alle/Suche"/>
+    <dc:title>Wörterbuch-Portal/Suche</dc:title>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.woerterbuch-portal.de/wbp/link_list_index">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Woerterbuchportal"/>
+    <dc:identifier rdf:resource="http://www.woerterbuch-portal.de/wbp/link_list_index"/>
+    <dc:title>Wörterbuch-Portal/Linkliste</dc:title>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.woerterbuch-portal.de/wbp/index_ueber_html">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Woerterbuchportal"/>
+    <dc:identifier rdf:resource="http://www.woerterbuch-portal.de/wbp/index_ueber_html"/>
+    <dc:title>Wörterbuch-Portal/Übersicht</dc:title>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.woerterbuch-portal.de/wbp/impressum">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Woerterbuchportal"/>
+    <dc:identifier rdf:resource="http://www.woerterbuch-portal.de/wbp/impressum"/>
+    <dc:title>Wörterbuch-Portal/Impressum</dc:title>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+  </rdf:Description>
 </rdf:RDF>
