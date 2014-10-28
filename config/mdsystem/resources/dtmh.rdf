@@ -14,157 +14,157 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DTM/Handschriftenarchiv"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/dtm/HSA/startseite-hsa.html"/>
-  <dc:identifiertitle>Handschriftenarchiv></dc:identifiertitle>
+  <dc:title>Handschriftenarchiv></dc:title>
 </rdf:Description>
   <rdf:Description rdf:about="http://www.bbaw.de/forschung/dtm/HSA/hsa-index.html">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DTM/Handschriftenarchiv"/>
     <dc:identifier rdf:resource="http://www.bbaw.de/forschung/dtm/HSA/hsa-index.html"/>
-    <dc:title>Archivberschreibungen nach Bibliotheksorten</dc:title>
+    <dc:title>Archivbeschreibungen nach Bibliotheksorten</dc:title>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.bbaw.de/forschung/dtm/HSA/handschriftenlisteA.html">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DTM/Handschriftenarchiv"/>
     <dc:identifier rdf:resource="http://www.bbaw.de/forschung/dtm/HSA/handschriftenlisteA.html"/>
-    <dc:title>Archivberschreibungen nach Bibliotheksorten -A</dc:title>
+    <dc:title>Archivbeschreibungen nach Bibliotheksorten -A</dc:title>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.bbaw.de/forschung/dtm/HSA/handschriftenlisteB.html">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DTM/Handschriftenarchiv"/>
     <dc:identifier rdf:resource="http://www.bbaw.de/forschung/dtm/HSA/handschriftenlisteB.html"/>
-    <dc:title>Archivberschreibungen nach Bibliotheksorten -B</dc:title>
+    <dc:title>Archivbeschreibungen nach Bibliotheksorten -B</dc:title>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.bbaw.de/forschung/dtm/HSA/handschriftenlisteC.html">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DTM/Handschriftenarchiv"/>
     <dc:identifier rdf:resource="http://www.bbaw.de/forschung/dtm/HSA/handschriftenlisteC.html"/>
-    <dc:title>Archivberschreibungen nach Bibliotheksorten -C</dc:title>
+    <dc:title>Archivbeschreibungen nach Bibliotheksorten -C</dc:title>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.bbaw.de/forschung/dtm/HSA/handschriftenlisteD.html">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DTM/Handschriftenarchiv"/>
     <dc:identifier rdf:resource="http://www.bbaw.de/forschung/dtm/HSA/handschriftenlisteD.html"/>
-    <dc:title>Archivberschreibungen nach Bibliotheksorten -D</dc:title>
+    <dc:title>Archivbeschreibungen nach Bibliotheksorten -D</dc:title>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.bbaw.de/forschung/dtm/HSA/handschriftenlisteE.html">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DTM/Handschriftenarchiv"/>
     <dc:identifier rdf:resource="http://www.bbaw.de/forschung/dtm/HSA/handschriftenlisteE.html"/>
-    <dc:title>Archivberschreibungen nach Bibliotheksorten -E</dc:title>
+    <dc:title>Archivbeschreibungen nach Bibliotheksorten -E</dc:title>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.bbaw.de/forschung/dtm/HSA/handschriftenlisteF.html">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DTM/Handschriftenarchiv"/>
     <dc:identifier rdf:resource="http://www.bbaw.de/forschung/dtm/HSA/handschriftenlisteF.html"/>
-    <dc:title>Archivberschreibungen nach Bibliotheksorten -F</dc:title>
+    <dc:title>Archivbeschreibungen nach Bibliotheksorten -F</dc:title>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.bbaw.de/forschung/dtm/HSA/handschriftenlisteG.html">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DTM/Handschriftenarchiv"/>
     <dc:identifier rdf:resource="http://www.bbaw.de/forschung/dtm/HSA/handschriftenlisteG.html"/>
-    <dc:title>Archivberschreibungen nach Bibliotheksorten -G</dc:title>
+    <dc:title>Archivbeschreibungen nach Bibliotheksorten -G</dc:title>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.bbaw.de/forschung/dtm/HSA/handschriftenlisteH.html">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DTM/Handschriftenarchiv"/>
     <dc:identifier rdf:resource="http://www.bbaw.de/forschung/dtm/HSA/handschriftenlisteH.html"/>
-    <dc:title>Archivberschreibungen nach Bibliotheksorten -H</dc:title>
+    <dc:title>Archivbeschreibungen nach Bibliotheksorten -H</dc:title>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.bbaw.de/forschung/dtm/HSA/handschriftenlisteI.html">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DTM/Handschriftenarchiv"/>
     <dc:identifier rdf:resource="http://www.bbaw.de/forschung/dtm/HSA/handschriftenlisteI.html"/>
-    <dc:title>Archivberschreibungen nach Bibliotheksorten -I</dc:title>
+    <dc:title>Archivbeschreibungen nach Bibliotheksorten -I</dc:title>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.bbaw.de/forschung/dtm/HSA/handschriftenlisteJ.html">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DTM/Handschriftenarchiv"/>
     <dc:identifier rdf:resource="http://www.bbaw.de/forschung/dtm/HSA/handschriftenlisteJ.html"/>
-    <dc:title>Archivberschreibungen nach Bibliotheksorten -J</dc:title>
+    <dc:title>Archivbeschreibungen nach Bibliotheksorten -J</dc:title>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.bbaw.de/forschung/dtm/HSA/handschriftenlisteK.html">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DTM/Handschriftenarchiv"/>
     <dc:identifier rdf:resource="http://www.bbaw.de/forschung/dtm/HSA/handschriftenlisteK.html"/>
-    <dc:title>Archivberschreibungen nach Bibliotheksorten -K</dc:title>
+    <dc:title>Archivbeschreibungen nach Bibliotheksorten -K</dc:title>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.bbaw.de/forschung/dtm/HSA/handschriftenlisteL.html">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DTM/Handschriftenarchiv"/>
     <dc:identifier rdf:resource="http://www.bbaw.de/forschung/dtm/HSA/handschriftenlisteL.html"/>
-    <dc:title>Archivberschreibungen nach Bibliotheksorten -L</dc:title>
+    <dc:title>Archivbeschreibungen nach Bibliotheksorten -L</dc:title>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.bbaw.de/forschung/dtm/HSA/handschriftenlisteM.html">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DTM/Handschriftenarchiv"/>
     <dc:identifier rdf:resource="http://www.bbaw.de/forschung/dtm/HSA/handschriftenlisteM.html"/>
-    <dc:title>Archivberschreibungen nach Bibliotheksorten -M</dc:title>
+    <dc:title>Archivbeschreibungen nach Bibliotheksorten -M</dc:title>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.bbaw.de/forschung/dtm/HSA/handschriftenlisteN.html">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DTM/Handschriftenarchiv"/>
     <dc:identifier rdf:resource="http://www.bbaw.de/forschung/dtm/HSA/handschriftenlisteN.html"/>
-    <dc:title>Archivberschreibungen nach Bibliotheksorten -N</dc:title>
+    <dc:title>Archivbeschreibungen nach Bibliotheksorten -N</dc:title>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.bbaw.de/forschung/dtm/HSA/handschriftenlisteO.html">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DTM/Handschriftenarchiv"/>
     <dc:identifier rdf:resource="http://www.bbaw.de/forschung/dtm/HSA/handschriftenlisteO.html"/>
-    <dc:title>Archivberschreibungen nach Bibliotheksorten -O</dc:title>
+    <dc:title>Archivbeschreibungen nach Bibliotheksorten -O</dc:title>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.bbaw.de/forschung/dtm/HSA/handschriftenlisteP.html">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DTM/Handschriftenarchiv"/>
     <dc:identifier rdf:resource="http://www.bbaw.de/forschung/dtm/HSA/handschriftenlisteP.html"/>
-    <dc:title>Archivberschreibungen nach Bibliotheksorten -P</dc:title>
+    <dc:title>Archivbeschreibungen nach Bibliotheksorten -P</dc:title>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.bbaw.de/forschung/dtm/HSA/handschriftenlisteQ.html">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DTM/Handschriftenarchiv"/>
     <dc:identifier rdf:resource="http://www.bbaw.de/forschung/dtm/HSA/handschriftenlisteQ.html"/>
-    <dc:title>Archivberschreibungen nach Bibliotheksorten -Q</dc:title>
+    <dc:title>Archivbeschreibungen nach Bibliotheksorten -Q</dc:title>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.bbaw.de/forschung/dtm/HSA/handschriftenlisteR.html">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DTM/Handschriftenarchiv"/>
     <dc:identifier rdf:resource="http://www.bbaw.de/forschung/dtm/HSA/handschriftenlisteR.html"/>
-    <dc:title>Archivberschreibungen nach Bibliotheksorten -R</dc:title>
+    <dc:title>Archivbeschreibungen nach Bibliotheksorten -R</dc:title>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.bbaw.de/forschung/dtm/HSA/handschriftenlisteS.html">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DTM/Handschriftenarchiv"/>
     <dc:identifier rdf:resource="http://www.bbaw.de/forschung/dtm/HSA/handschriftenlisteS.html"/>
-    <dc:title>Archivberschreibungen nach Bibliotheksorten -S</dc:title>
+    <dc:title>Archivbeschreibungen nach Bibliotheksorten -S</dc:title>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.bbaw.de/forschung/dtm/HSA/handschriftenlisteT.html">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DTM/Handschriftenarchiv"/>
     <dc:identifier rdf:resource="http://www.bbaw.de/forschung/dtm/HSA/handschriftenlisteT.html"/>
-    <dc:title>Archivberschreibungen nach Bibliotheksorten -T</dc:title>
+    <dc:title>Archivbeschreibungen nach Bibliotheksorten -T</dc:title>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.bbaw.de/forschung/dtm/HSA/handschriftenlisteU.html">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DTM/Handschriftenarchiv"/>
     <dc:identifier rdf:resource="http://www.bbaw.de/forschung/dtm/HSA/handschriftenlisteU.html"/>
-    <dc:title>Archivberschreibungen nach Bibliotheksorten -U</dc:title>
+    <dc:title>Archivbeschreibungen nach Bibliotheksorten -U</dc:title>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.bbaw.de/forschung/dtm/HSA/handschriftenlisteV.html">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DTM/Handschriftenarchiv"/>
     <dc:identifier rdf:resource="http://www.bbaw.de/forschung/dtm/HSA/handschriftenlisteV.html"/>
-    <dc:title>Archivberschreibungen nach Bibliotheksorten -V</dc:title>
+    <dc:title>Archivbeschreibungen nach Bibliotheksorten -V</dc:title>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.bbaw.de/forschung/dtm/HSA/handschriftenlisteW.html">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DTM/Handschriftenarchiv"/>
     <dc:identifier rdf:resource="http://www.bbaw.de/forschung/dtm/HSA/handschriftenlisteW.html"/>
-    <dc:title>Archivberschreibungen nach Bibliotheksorten -W</dc:title>
+    <dc:title>Archivbeschreibungen nach Bibliotheksorten -W</dc:title>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.bbaw.de/forschung/dtm/HSA/handschriftenlisteXZ.html">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DTM/Handschriftenarchiv"/>
     <dc:identifier rdf:resource="http://www.bbaw.de/forschung/dtm/HSA/handschriftenlisteXZ.html"/>
-    <dc:title>Archivberschreibungen nach Bibliotheksorten -X-Z</dc:title>
+    <dc:title>Archivbeschreibungen nach Bibliotheksorten -X-Z</dc:title>
   </rdf:Description>
   <rdf:Description rdf:about="http://www.bbaw.de/forschung/dtm/HSA/beschreiber.html">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>

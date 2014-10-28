@@ -54,13 +54,13 @@ public class DBpediaSpotlightHandler {
     xQueryEvaluator = new XQueryEvaluator();
   }
   
-  public Annotation annotate(String docId, String text, String type) throws ApplicationException {
+  public Annotation annotate(String docId, String text, String confidence, int count) throws ApplicationException {
     String testStr = "";
     NameValuePair textParam = new NameValuePair("text", text);
-    NameValuePair confidenceParam = new NameValuePair("confidence", "0.99");
-    NameValuePair typesParam = new NameValuePair("types", "Person"); // Person, Organisation, Place (Category ??) Einschränkung liefert evtl. zu wenige Entitäten
-    NameValuePair supportParam = new NameValuePair("support", "20"); // how many incoming links are on the DBpedia-Resource 
-    NameValuePair whitelistSparqlParam = new NameValuePair("sparql", "select ...");
+    NameValuePair confidenceParam = new NameValuePair("confidence", confidence);
+    // NameValuePair typesParam = new NameValuePair("types", "Person"); // Person, Organisation, Place (Category ??) Einschränkung liefert evtl. zu wenige Entitäten
+    // NameValuePair supportParam = new NameValuePair("support", "20"); // how many incoming links are on the DBpedia-Resource 
+    // NameValuePair whitelistSparqlParam = new NameValuePair("sparql", "select ...");
     NameValuePair[] params = {textParam, confidenceParam};
     String spotlightAnnotationXmlStr = performPostRequest("annotate", params, "text/xml");
     List<DBpediaResource> resources = null; 
@@ -92,7 +92,7 @@ public class DBpediaSpotlightHandler {
           else if (typesStr.contains("Person"))
             r.setType("person");
           else if (typesStr.contains("Organization") || typesStr.contains("Organisation"))
-            r.setType("organization");
+            r.setType("organisation");
           else if (typesStr.contains("Place"))
             r.setType("place");
           else 
@@ -108,7 +108,9 @@ public class DBpediaSpotlightHandler {
     if (resources != null && ! resources.isEmpty()) {
       annotation = new Annotation();
       annotation.setId(docId);
-      Collections.sort(resources);
+      Collections.sort(resources, DBpediaResource.SimilarityComparatorDESC);
+      if (resources.size() > count)
+        resources = resources.subList(0, count);
       annotation.setResources(resources);
     }
     return annotation;

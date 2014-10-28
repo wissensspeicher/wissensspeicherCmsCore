@@ -16,5 +16,36 @@
       <format>jpeg</format>
       <format>pdf</format>
     </formats> 
+    <db>
+      <type>mysql</type>
+      <name>aaewtlawb</name>
+      <xmlDump>
+        <sql>
+        </sql>
+      </xmlDump>
+      <mainResourcesTable>
+        <name>resource</name>
+        <idField>id</idField>
+        <field>
+          <dc>title</dc>
+          <db>title</db>
+        </field>
+        <field>
+          <dc>publisher</dc>
+          <db>publisher</db>
+        </field>
+        <field>
+          <dc>rights</dc>
+          <db>rights</db>
+        </field>
+        <field>
+          <dc>abstract</dc>
+          <db>abstract</db>
+        </field>
+      </mainResourcesTable>
+      <webId>
+        <preStr>http://aaew.bbaw.de/tla/servlet/GetWcnDetails?u=guest&amp;wn=</preStr>
+      </webId>
+    </db>
   </collection>
 </wsp>

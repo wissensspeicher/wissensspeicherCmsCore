@@ -234,17 +234,11 @@ public class CollectionManager {
       dbPediaSpotlightCollectionRdfStrBuilder = new StringBuilder();
       dbPediaSpotlightCollectionRdfStrBuilder.append("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
       dbPediaSpotlightCollectionRdfStrBuilder.append("<rdf:RDF \n");
-      String collRdfId = collection.getRdfId();
-      dbPediaSpotlightCollectionRdfStrBuilder.append("   xmlns=\"" + collRdfId + "\" \n");
-      dbPediaSpotlightCollectionRdfStrBuilder.append("   xml:base=\"" + collRdfId + "\" \n");
       dbPediaSpotlightCollectionRdfStrBuilder.append("   xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" \n");
       dbPediaSpotlightCollectionRdfStrBuilder.append("   xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\" \n");
       dbPediaSpotlightCollectionRdfStrBuilder.append("   xmlns:dc=\"http://purl.org/dc/elements/1.1/\" \n");
       dbPediaSpotlightCollectionRdfStrBuilder.append("   xmlns:dcterms=\"http://purl.org/dc/terms/\" \n");
-      dbPediaSpotlightCollectionRdfStrBuilder.append("   xmlns:foaf=\"http://xmlns.com/foaf/0.1/\" \n");
-      dbPediaSpotlightCollectionRdfStrBuilder.append("   xmlns:gnd=\"http://d-nb.info/standards/elementset/gnd#\" \n");
-      dbPediaSpotlightCollectionRdfStrBuilder.append("   xmlns:ore=\"http://www.openarchives.org/ore/terms/\" \n");
-      dbPediaSpotlightCollectionRdfStrBuilder.append("   xmlns:wsp=\"http://wsp.bbaw.de/wsp#\" \n");
+      dbPediaSpotlightCollectionRdfStrBuilder.append("   xmlns:dbpedia-spotlight=\"http://spotlight.dbpedia.org/spotlight#\" \n");
       dbPediaSpotlightCollectionRdfStrBuilder.append(">\n");
       collection.setDbPediaSpotlightRdfStrBuilder(dbPediaSpotlightCollectionRdfStrBuilder);
     }

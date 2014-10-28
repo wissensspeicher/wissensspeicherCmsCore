@@ -1,7 +1,7 @@
 package org.bbaw.wsp.cms.document;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Comparator;
 
 import org.apache.commons.httpclient.URIException;
 import org.apache.commons.httpclient.util.URIUtil;
@@ -23,6 +23,44 @@ public class DBpediaResource implements Comparable<DBpediaResource> {
   private Double similarity;
   private Integer frequency;
 
+  public static Comparator<DBpediaResource> FrequencyComparatorDESC = new Comparator<DBpediaResource>() {
+    public int compare(DBpediaResource r1, DBpediaResource r2) {
+      if (r1.frequency == null && r2.frequency == null)
+        return 0;
+      if (r1.frequency == null)
+        return 1;
+      if (r2.frequency == null)
+        return -1;
+      return r2.frequency.compareTo(r1.frequency);
+    }
+  };
+  
+  public static Comparator<DBpediaResource> SimilarityComparatorDESC = new Comparator<DBpediaResource>() {
+    public int compare(DBpediaResource r1, DBpediaResource r2) {
+      if (r1.similarity == null && r2.similarity == null)
+        return 0;
+      if (r1.similarity == null)
+        return 1;
+      if (r2.similarity == null)
+        return -1;
+      if (r1.similarity.equals(r2.similarity))
+        return r2.frequency.compareTo(r1.frequency);
+      return r2.similarity.compareTo(r1.similarity);
+    }
+  };
+  
+  public static Comparator<DBpediaResource> NameComparator = new Comparator<DBpediaResource>() {
+    public int compare(DBpediaResource r1, DBpediaResource r2) {
+      if (r1.name == null && r2.name == null)
+        return 0;
+      if (r1.name == null)
+        return -1;
+      if (r2.name == null)
+        return 1;
+      return r1.name.compareTo(r2.name);
+    }
+  };
+  
   public static ArrayList<DBpediaResource> fromXmlStr(XQueryEvaluator xQueryEvaluator, String xmlStr) throws ApplicationException {
     ArrayList<DBpediaResource> retEntities = null;
     XdmValue xmdValues = xQueryEvaluator.evaluate(xmlStr, "//resource");
@@ -54,7 +92,7 @@ public class DBpediaResource implements Comparable<DBpediaResource> {
           entity.setFrequency(new Integer(frequencyStr));
         retEntities.add(entity);
       }
-      Collections.sort(retEntities);
+      // Collections.sort(retEntities);
     }
     return retEntities;
   }
@@ -111,10 +149,10 @@ public class DBpediaResource implements Comparable<DBpediaResource> {
     String uriStrEscaped = StringUtils.deresolveXmlEntities(uri);
     uriStrEscaped = uriStrEscaped.replaceAll("'", "&apos;");
     retStr = retStr + "\n<uri>" + uriStrEscaped + "</uri>";
-    if (support != null)
-      retStr = retStr + "\n<support>" + support + "</support>";
     if (type != null)
       retStr = retStr + "\n<type>" + type + "</type>";
+    if (support != null)
+      retStr = retStr + "\n<support>" + support + "</support>";
     if (similarity != null)
       retStr = retStr + "\n<similarity>" + similarity + "</similarity>"; 
     if (frequency != null)
@@ -130,19 +168,17 @@ public class DBpediaResource implements Comparable<DBpediaResource> {
     uriStrEscaped = uriStrEscaped.replaceAll("'", "&apos;");
     String nameEscaped = StringUtils.deresolveXmlEntities(name);
     nameEscaped = nameEscaped.replaceAll("'", "&apos;");
-    String retStr = "<dcterms:subject>\n";
-    retStr = retStr + "  <rdf:Description rdf:about=\"" + uriStrEscaped + "\">\n";
+    String retStr = "<dcterms:relation rdf:resource=\"" + uriStrEscaped + "\">\n";
     String typeUrl = getTypeUrl(type);
-    retStr = retStr + "    <rdf:type rdf:resource=\"" + typeUrl + "\"/>\n";
-    retStr = retStr + "    <rdfs:label>" + nameEscaped + "</rdfs:label>\n";
+    retStr = retStr + "  <rdf:type rdf:resource=\"" + typeUrl + "\"/>\n";
+    retStr = retStr + "  <rdfs:label>" + nameEscaped + "</rdfs:label>\n";
     if (support != null)
-      retStr = retStr + "    <wsp:support>" + support + "</wsp:support>\n";
+      retStr = retStr + "  <dbpedia-spotlight:support>" + support + "</dbpedia-spotlight:support>\n";
     if (similarity != null)
-      retStr = retStr + "    <wsp:similarity>" + similarity + "</wsp:similarity>\n"; 
+      retStr = retStr + "  <dbpedia-spotlight:similarity>" + similarity + "</dbpedia-spotlight:similarity>\n"; 
     if (frequency != null)
-      retStr = retStr + "    <wsp:frequency>" + frequency + "</wsp:frequency>\n";
-    retStr = retStr + "  </rdf:Description>\n";
-    retStr = retStr + "</dcterms:subject>\n";
+      retStr = retStr + "  <dbpedia-spotlight:frequency>" + frequency + "</dbpedia-spotlight:frequency>\n";
+    retStr = retStr + "</dcterms:relation>\n";
     return retStr;
   }
   
@@ -172,17 +208,37 @@ public class DBpediaResource implements Comparable<DBpediaResource> {
       retJsonObject.put("referenceQuery", queryLinkEnc);
     } catch (URIException e) {}
     if (support != null)
-      retJsonObject.put("support", support);
+      retJsonObject.put("dbpediaSpotlightSupport", support);
     if (similarity != null)
-      retJsonObject.put("similarity", similarity);
+      retJsonObject.put("dbpediaSpotlightSimilarity", similarity);
     if (frequency != null)
-      retJsonObject.put("frequency", frequency);
+      retJsonObject.put("dbpediaSpotlightFrequency", frequency);
     return retJsonObject;
   }
 
   @Override
   public int compareTo(DBpediaResource r) {  
+    if (name == null && r.name == null)
+      return 0;
+    if (name == null)
+      return -1;
+    if (r.name == null)
+      return 1;
     return name.compareToIgnoreCase(r.name);
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (o instanceof DBpediaResource) {
+      String toCompare = ((DBpediaResource) o).uri;
+      return uri.equals(toCompare);
+    }
+    return false;
+  }
+  
+  @Override
+  public int hashCode() {
+    return uri.hashCode();
   }  
 
   public String toString() {
@@ -192,11 +248,11 @@ public class DBpediaResource implements Comparable<DBpediaResource> {
   private String getTypeUrl(String simpleType) {
     String typeUrl = null;
     if (simpleType.equals("person"))
-      typeUrl = "http://schema.org/Person";
-    else if (simpleType.equals("organization"))
-      typeUrl = "http://schema.org/Organization";
+      typeUrl = "http://dbpedia.org/ontology/Person";
+    else if (simpleType.equals("organisation"))
+      typeUrl = "http://dbpedia.org/ontology/Organisation";
     else if (simpleType.equals("place"))
-      typeUrl = "http://schema.org/Place";
+      typeUrl = "http://dbpedia.org/ontology/Place";
     else if (simpleType.equals("concept"))
       typeUrl = "http://www.w3.org/2004/02/skos/core#Concept";
     else 

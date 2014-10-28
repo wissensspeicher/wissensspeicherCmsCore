@@ -13,5 +13,47 @@
       <format>pdf</format>
       <format>jpeg</format>
     </formats>
+    <db>
+      <type>mysql</type>
+      <name>jpor</name>
+      <xmlDump>
+        <sql>
+/* you have to remove control characters by hand afterwards: in vi: %s/[[:cntrl:]]//g */
+SELECT 
+ concat('http://telota.bbaw.de/jeanpaul/', '') as id,
+ CASE 
+   WHEN ort IS NOT NULL and ort != '' and werke IS NOT NULL and werke != '' THEN ort 
+   WHEN ort IS NOT NULL and ort != '' THEN ort 
+   WHEN personen IS NOT NULL and personen != '' and (werke is null or werke = '') THEN SUBSTRING_INDEX(personen, ',', 1) 
+   WHEN personen IS NOT NULL and personen != '' and werke is not null and werke != '' THEN personen 
+ END as title,
+ concat('BBAW: ', 'Jean Paul Edition: Online-Register des Jean Paul Briefwechsels') as publisher,
+ concat('CC', ' BY-NC-SA 3.0') as rights,
+ concat(IF(personen IS NULL, '', personen), ' ', IF(werke IS NULL, '', werke), ' ', IF(ort IS NULL, '', ort)) as abstract
+FROM 
+ register
+        </sql>
+      </xmlDump>
+      <mainResourcesTable>
+        <name>register</name>
+        <idField>id</idField>
+        <field>
+          <dc>title</dc>
+          <db>title</db>
+        </field>
+        <field>
+          <dc>publisher</dc>
+          <db>publisher</db>
+        </field>
+        <field>
+          <dc>rights</dc>
+          <db>rights</db>
+        </field>
+        <field>
+          <dc>abstract</dc>
+          <db>abstract</db>
+        </field>
+      </mainResourcesTable>
+    </db>
   </collection>
 </wsp>
