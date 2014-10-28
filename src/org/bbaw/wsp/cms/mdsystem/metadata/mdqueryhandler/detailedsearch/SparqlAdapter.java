@@ -397,10 +397,12 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
           }
           String encodedLiteral = null;
           String currentLiteral = null;
+//          logger.info("predicate.toString() : "+predicate.toString());
           //ausnahmen
           if(predicate.toString().contains("homepage") || predicate.toString().contains("relatedCorporateBody") || 
               predicate.toString().contains("contributingCorporateBody") || predicate.toString().contains("contributor")
-              || predicate.toString().contains("coverage") || predicate.toString().contains("contributingPerson") ){
+              || predicate.toString().contains("coverage") || predicate.toString().contains("contributingPerson") 
+              || predicate.toString().contains("identifier") || predicate.toString().contains("gndIdentifier")){
             currentLiteral = literal.toString();
           }else{
             encodedLiteral = checkForLiteral(literal);
