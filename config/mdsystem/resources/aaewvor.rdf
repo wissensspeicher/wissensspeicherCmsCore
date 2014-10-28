@@ -10,4 +10,16 @@
    xmlns:gnd="http://d-nb.info/standards/elementset/gnd#" 
    xmlns:ore="http://www.openarchives.org/ore/terms/" 
 >
+   
+   <rdf:Description rdf:about="http://aaew.bbaw.de/tla/servlet/S05?d=d003&amp;h=h017">
+      <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+      <dc:title>Das Vormanuskript des Wörterbuches der Ägyptischen Sprache 1906-1909</dc:title>
+      <dcterms:temporal>start=1906; end=1909</dcterms:temporal>
+      <dc:coverage rdf:resource="http://wsp.normdata.rdf/Aegypten"/>
+      <dc:publisher rdf:resource="http://wsp.normdata.rdf/AltaegyptWB"/>
+      <dc:creator rdf:resource="http://wsp.normdata.rdf/Hafemann"/>
+      <dc:creator rdf:resource="http://wsp.normdata.rdf/Seidlmayer"/>
+      <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AltaegyptWB"/>
+      <dc:identifier rdf:resource="http://aaew.bbaw.de/tla/servlet/S05?d=d003&amp;h=h017"/>
+   </rdf:Description>
 </rdf:RDF>
