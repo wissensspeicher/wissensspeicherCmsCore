@@ -22,8 +22,8 @@
   <dc:identifier rdf:resource="http://telota.bbaw.de:8088/exist/servlet/db/avh/"/>
   <dc:type>eXistDir</dc:type>
 </rdf:Description>
-  <rdf:Description rdf:about="http://telota.bbaw.de/avh">
-    
+  <!-- 
+  <rdf:Description rdf:about="http://telota.bbaw.de/avh">  
     <dc:creator rdf:resource="http://wsp.normdata.rdf/Czmiel"/>
     <dcterms:issued>2006-10</dcterms:issued>
     <dc:creator rdf:resource="http://wsp.normdata.rdf/Knobloch"/>
@@ -212,4 +212,5 @@
     <dcterms:bibliographicCitation>ABBAW II-V, 7, S. 164.</dcterms:bibliographicCitation>
     <dcterms:isFormatOf rdf:resource="http://telota.bbaw.de:8088/exist/servlet/db/avh/b/Abhandlung%207B.xml"/>
   </rdf:Description>
+  -->
 </rdf:RDF>
