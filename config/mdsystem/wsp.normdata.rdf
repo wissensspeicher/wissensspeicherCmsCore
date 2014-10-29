@@ -16069,7 +16069,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
     
     <rdf:Description rdf:about="http://wsp.normdata.rdf/StrategienAbfall">
         <dc:language>ger</dc:language>
-        <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
+        <rdf:type rdf:resource="&foaf;Project"/>
         <foaf:nick>sza</foaf:nick>
         <dc:contributor rdf:resource="http://wsp.normdata.rdf/Tokarz"/>
         <foaf:name>Strategien zur Abfallenergieverwertung</foaf:name>
@@ -16089,7 +16089,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
     
     <rdf:Description rdf:about="http://wsp.normdata.rdf/StudiengruppeStrukturbildung">
         <dc:language>ger</dc:language>
-        <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
+        <rdf:type rdf:resource="&foaf;Project"/>
         <foaf:nick>sui</foaf:nick>
         <dc:type>Interdisziplinäre Arbeitsgruppe</dc:type>
         <dc:contributor rdf:resource="http://wsp.normdata.rdf/Lucas"/>
@@ -16103,6 +16103,20 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
         <dc:coverage rdf:resource="http://wsp.normdata.rdf/Gegenwart"/>
         <dc:subject>Technikforschung</dc:subject>
     </rdf:Description>
+
+
+  <rdf:Description rdf:about="http://wsp.normdata.rdf/Test">
+    <dc:language>eng</dc:language>
+    <rdf:type rdf:resource="&foaf;Project"/>
+    <foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">test</foaf:nick>
+    <foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Testprojekt (nicht beachten)</foaf:name>
+    <foaf:homepage rdf:resource="http://wspdev/test/"/>
+    <gnd:definition>NA</gnd:definition>
+    <dc:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NA</dc:description>
+    <dcterms:abstract rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NA</dcterms:abstract>
+    <dcterms:valid rdf:datatype="http://purl.org/dc/terms/Period">NA</dcterms:valid>
+    <gnd:topic rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NA</gnd:topic>
+  </rdf:Description>
     
 </rdf:RDF>
 
