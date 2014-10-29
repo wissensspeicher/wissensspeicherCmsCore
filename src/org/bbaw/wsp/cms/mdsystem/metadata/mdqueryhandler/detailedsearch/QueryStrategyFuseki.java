@@ -135,7 +135,6 @@ public class QueryStrategyFuseki implements IQueryStrategy<ResultSet> {
   
   @Override
   public ResultSet queryAllProjectInfoAndResolveUris(String projectUri, boolean isProjectId) {
-    logger.info("queryAllProjectInfoAndResolveUris(String projectUri, boolean isProjectId)");
     final String query = SparqlCommandBuilder.SELECT_ALL_PROJECT_INFO_AND_RESOlVE_FOR_GIVEN_ID.getSelectQueryString(null, null, null, null, projectUri);
     return delegateQuery(query);
   }
@@ -149,7 +148,6 @@ public class QueryStrategyFuseki implements IQueryStrategy<ResultSet> {
 
   @Override
   public ResultSet preloadAnything(String query) {
-    logger.info("preload by sparql");
     return delegateQuery(query);
   }
   
