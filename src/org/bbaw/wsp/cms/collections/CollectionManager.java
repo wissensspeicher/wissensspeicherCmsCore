@@ -549,8 +549,11 @@ public class CollectionManager {
     // download url of resource
     String resourceIdUrlStr = xQueryEvaluator.evaluateAsString(xmlRdfStr, namespaceDeclaration + "string(/rdf:Description/dc:identifier/@rdf:resource)");
     resourceIdUrlStr = StringUtils.resolveXmlEntities(resourceIdUrlStr);
-    if (resourceIdUrlStr == null || resourceIdUrlStr.trim().isEmpty())
-      LOGGER.error("No identifier given in resource: \"" + xmlRdfStr + "\"");
+    if (resourceIdUrlStr == null || resourceIdUrlStr.trim().isEmpty()) {
+      resourceIdUrlStr = xQueryEvaluator.evaluateAsString(xmlRdfStr, namespaceDeclaration + "string(/rdf:Description/@rdf:about)");
+      if (resourceIdUrlStr == null || resourceIdUrlStr.trim().isEmpty())
+        LOGGER.error("No identifier given in resource: \"" + xmlRdfStr + "\"");
+    }
     MetadataRecord mdRecord = getNewMdRecord(resourceIdUrlStr);
     // web url of resource
     String resourceIdentifierStr = xQueryEvaluator.evaluateAsString(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dc:identifier/text()");
