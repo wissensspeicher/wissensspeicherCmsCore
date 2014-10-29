@@ -16084,7 +16084,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
         <dcterms:abstract>Die Arbeitsgruppe beschäftigte sich mit der intensiv diskutierten Frage effizienter Energieverwertung und -ersparnis. In interdisziplinärer Zusammenarbeit wurden sowohl technische als auch soziale, volks- und betriebswirtschaftliche sowie rechtliche Fragen bearbeitet und Empfehlungen für eine ökologisch orientierte Abfall- und Abwärmewirtschaft formuliert (abgeschlossenes Vorhaben). Die Ergebnisse der Arbeitsgruppe sind 2000 im Vieweg Verlag in der Reihe Umweltwissenschaften unter dem Titel "Strategien zur Abfallenergieverwertung. Ein Beitrag zur Entropiewirtschaft" erschienen.</dcterms:abstract>
         <dc:contributor rdf:resource="http://wsp.normdata.rdf/Bergmeier"/>
         <dc:contributor rdf:resource="http://wsp.normdata.rdf/Bens"/>
-        <dc:subject rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Technikforschung</dc:subject> 
+        <dc:subject rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Technikforschung</dc:subject>
     </rdf:Description>
     
     <rdf:Description rdf:about="http://wsp.normdata.rdf/StudiengruppeStrukturbildung">
@@ -16102,7 +16102,6 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
         <dcterms:abstract>Die interdisziplinäre Studiengruppe beschäftigte sich fachübergreifend mit den Themenbereichen Innovation und Optimierung. Zentrales Thema war hierbei das Verständnis der Prozesse, die zur evolutionären Strukturbildung und Veränderung von Systemen unterschiedlicher Fachdisziplinen führen: Die Spanne reichte hier von den Anpassungsprozessen agronomischer Betriebsstrukturen als Folge politischer Rahmenbedingungen über die zielgerichtete Entwicklung und nachvollziehbaren Wirkmechanismen von Proteinen und Ribonukleinsäuren bis hin zur gleichgewichtig-mehrkriteriellen Optimierung logistischer und technischer Probleme. Die Studiengruppe verstand sich als Kern eines Forschernetzwerks mit einem Knoten in Berlin, das die Diskussion und Konzeption weiterer Forschungsprojekte anstoßen und verstetigen wollte. Dies geschah durch regelmäßige Zusammenkunft und interdisziplinäre Diskussion der von den Teilnehmern bearbeiteten Systeme in gemeinsamen Workshops und Ausarbeitung einer Dokumentation zum Stand der Forschung. In den drei Jahren stand jeweils einer der drei Schwerpunktbereiche Mehrkriterielle Problemstellungen, Begrenzte Rationalität der Formulierbarkeit von Zielsetzungen und Unscharfe Zieldefinitionen im Mittelpunkt der Tätigkeit.</dcterms:abstract>
         <dc:coverage rdf:resource="http://wsp.normdata.rdf/Gegenwart"/>
         <dc:subject>Technikforschung</dc:subject>
-        
     </rdf:Description>
     
 </rdf:RDF>
