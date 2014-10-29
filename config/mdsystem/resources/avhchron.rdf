@@ -16,6 +16,26 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Chronologie"/>
   <dc:identifier rdf:resource="http://avh.bbaw.de/chronologie"/>
   <dc:title>Chronologie</dc:title>
+  <dcterms:abstract>Chronologische Übersicht über die wichtigsten Daten des Lebens Alexander von Humboldts.</dcterms:abstract>
+  <dcterms:rightsHolder rdf:resource="http://wsp.normdata.rdf/AkademieVerlag"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Mikosch"/>
+  <dcterms:modified>2012-09-05</dcterms:modified>
+  <dc:publisher rdf:resource="http://wsp.normdata.rdf/BBAW"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Schwarz"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+  <dcterms:temporal>start=1766-10-19; end=1859-05-11; name=Lebensdaten</dcterms:temporal>
+  <dcterms:created>2001</dcterms:created>
+  <dcterms:tableOfContents rdf:datatype="http://www.w3.org/2001/XMLSchema#string">1766-1790     Jugendjahre
+    1791-1800     Studium, Bergdienst, Vorbereitung und Beginn der Amerikareise
+    1801-1810     Amerikareise, Auswertung der Reise in Paris
+    1811-1820     Auswertung der Reise in Paris
+    1821-1830     Auswertung der Reise in Paris, Rückkehr nach Berlin, Kosmos-Vorlesungen, Rußland-Reise, Förderung der Wissenschaften
+    1831-1840     Berlin, Förderung der Wissenschaften, Reisen nach Paris
+    1841-1850     Berlin, Förderung der Wissenschaften, Reisen nach Paris, Arbeit am "Kosmos"
+    1851-1859     Berlin, Förderung der Wissenschaften, Arbeit am "Kosmos"</dcterms:tableOfContents>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Leitner"/>
+  <dc:publisher rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle"/>
+  <dcterms:rightsHolder rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle"/>
 </rdf:Description>
 <rdf:Description rdf:about="http://avh.bbaw.de/chronologie/1766-1790">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>

@@ -21,12 +21,14 @@
   <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/LepsiusCarlRichard"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AltaegyptWB/Preussen"/>
   <dc:identifier rdf:resource="http://aaew.bbaw.de/archive/lepsius-archiv/archiv-startseite_lepsius"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
 </rdf:Description>
   
 <rdf:Description rdf:about="http://aaew.bbaw.de/dateien/fuehrungpreussaeg.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AltaegyptWB/Preussen"/>
   <dc:identifier rdf:resource="http://aaew.bbaw.de/dateien/fuehrungpreussaeg.pdf"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_pdf"/>
 </rdf:Description>
   
   <!-- Doku -->
@@ -35,6 +37,7 @@
     <dcterms:isPartOf rdf:resource="http://aaew.bbaw.de/archive/lepsius-archiv/archiv-startseite_lepsius"/>
     <dc:title>Die schriftliche Dokumentation der Lepsius-Expedition</dc:title>
     <dc:identifier rdf:resource="http://aaew.bbaw.de/archive/lepsius-archiv/doku_lepsius"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
   </rdf:Description>
   
   <!-- Zeichnungen -->
@@ -43,6 +46,7 @@
     <dcterms:isPartOf rdf:resource="http://aaew.bbaw.de/archive/lepsius-archiv/archiv-startseite_lepsius"/>
     <dc:title>Die Zeichnungen der Lepsius-Expedition</dc:title>
     <dc:identifier rdf:resource="http://aaew.bbaw.de/archive/lepsius-archiv/zeichnungen_lepsius"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
   </rdf:Description>
   
   <!-- Abklatsche -->
@@ -51,6 +55,7 @@
     <dcterms:isPartOf rdf:resource="http://aaew.bbaw.de/archive/lepsius-archiv/archiv-startseite_lepsius"/>
     <dc:title>Die Abklatsche der Lepsius-Expedition</dc:title>
     <dc:identifier rdf:resource="http://aaew.bbaw.de/archive/lepsius-archiv/abklatsche_lepsius"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
   </rdf:Description>
 
   <!-- Images der Doku -->
