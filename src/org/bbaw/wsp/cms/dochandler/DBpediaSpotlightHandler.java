@@ -26,11 +26,13 @@ import de.mpg.mpiwg.berlin.mpdl.xml.xquery.XQueryEvaluator;
 public class DBpediaSpotlightHandler {
   private static DBpediaSpotlightHandler instance;
   private static int SOCKET_TIMEOUT = 200 * 1000;
-  private static String HOSTNAME = "localhost";
+  // private static String HOSTNAME = "localhost";
+  private static String HOSTNAME = "wspdev.bbaw.de";
   private static int PORT = 2222;
   private static String SERVICE_PATH = "spotlight/rest";
   private HttpClient httpClient; 
   private XQueryEvaluator xQueryEvaluator;
+  private int counter = 0;
 
   public static DBpediaSpotlightHandler getInstance() throws ApplicationException {
     if (instance == null) {
@@ -55,6 +57,11 @@ public class DBpediaSpotlightHandler {
   }
   
   public Annotation annotate(String docId, String text, String confidence, int count) throws ApplicationException {
+    counter++;
+    if (counter == 100) {
+      counter = 0;
+      init(); // so that the handler has new objects and garbage collection of old objects could be done
+    }
     String testStr = "";
     NameValuePair textParam = new NameValuePair("text", text);
     NameValuePair confidenceParam = new NameValuePair("confidence", confidence);
@@ -109,9 +116,13 @@ public class DBpediaSpotlightHandler {
       annotation = new Annotation();
       annotation.setId(docId);
       Collections.sort(resources, DBpediaResource.SimilarityComparatorDESC);
-      if (resources.size() > count)
-        resources = resources.subList(0, count);
-      annotation.setResources(resources);
+      ArrayList<DBpediaResource> mainResources = new ArrayList<DBpediaResource>();
+      if (resources.size() <= count)
+        count = resources.size();
+      for (int i=0; i<count; i++) {
+        mainResources.add(resources.get(i));
+      }
+      annotation.setResources(mainResources);
     }
     return annotation;
   }
