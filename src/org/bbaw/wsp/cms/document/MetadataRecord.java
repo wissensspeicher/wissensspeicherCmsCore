@@ -505,6 +505,8 @@ public class MetadataRecord implements Cloneable {
   public void setAllNull() {
     persons = null;
     places = null;
+    entities = null;
+    entitiesDetails = null;
     tokenOrig = null; 
     tokenReg = null; 
     tokenNorm = null; 
