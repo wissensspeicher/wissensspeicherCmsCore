@@ -10,4 +10,9 @@
    xmlns:gnd="http://d-nb.info/standards/elementset/gnd#" 
    xmlns:ore="http://www.openarchives.org/ore/terms/" 
 >
+<rdf:Description rdf:about="http://www.census.de">
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks/CensusDatabase"/>
+  <dc:identifier rdf:resource="http://www.census.de"/>
+</rdf:Description>
 </rdf:RDF>
