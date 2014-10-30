@@ -455,6 +455,7 @@ public class IndexHandler {
           XQuery xQueryWebId = xqueriesHashtable.get("webId");
           if (xQueryWebId != null) {
             String webId = xQueryWebId.getResult();
+            webId = StringUtils.resolveXmlEntities(webId);
             // Hack: if xQuery code is "fileName"
             boolean codeIsFileName = false;
             if (xQueryWebId.getCode() != null && xQueryWebId.getCode().equals("xxxFileName"))
