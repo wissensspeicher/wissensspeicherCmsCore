@@ -77,6 +77,9 @@ public class DBpediaResource implements Comparable<DBpediaResource> {
         String name = xQueryEvaluator.evaluateAsString(xdmItemStr, "string(/resource/name)");
         if (name != null && ! name.isEmpty()) {
           entity.setName(name);
+        } else {
+          int begin = uri.lastIndexOf("resource/") + 9;
+          name = uri.substring(begin);
         }
         String supportStr = xQueryEvaluator.evaluateAsString(xdmItemStr, "string(/resource/support)");
         if (supportStr != null)
@@ -92,7 +95,6 @@ public class DBpediaResource implements Comparable<DBpediaResource> {
           entity.setFrequency(new Integer(frequencyStr));
         retEntities.add(entity);
       }
-      // Collections.sort(retEntities);
     }
     return retEntities;
   }
@@ -108,8 +110,6 @@ public class DBpediaResource implements Comparable<DBpediaResource> {
   }
   public void setUri(String uri) {
     this.uri = uri;
-    int begin = uri.lastIndexOf("resource/") + 9;
-    name = uri.substring(begin);
   }
   public String getName() {
     return name;
@@ -151,6 +151,11 @@ public class DBpediaResource implements Comparable<DBpediaResource> {
     retStr = retStr + "\n<uri>" + uriStrEscaped + "</uri>";
     if (type != null)
       retStr = retStr + "\n<type>" + type + "</type>";
+    if (name != null) {
+      String nameEscaped = StringUtils.deresolveXmlEntities(name);
+      nameEscaped = nameEscaped.replaceAll("'", "&apos;");
+      retStr = retStr + "\n<name>" + nameEscaped + "</name>";
+    }
     if (support != null)
       retStr = retStr + "\n<support>" + support + "</support>";
     if (similarity != null)
