@@ -4,6 +4,7 @@ public class FacetValue {
   private String name;
   private String value;
   private Integer count;
+  private String uri;
 
   public String getName() {
     return name;
@@ -34,6 +35,14 @@ public String getValue() {
     this.count = count;
   }
   
+  public String getUri() {
+    return uri;
+  }
+
+  public void setUri(String uri) {
+    this.uri = uri;
+  }
+
   @Override
   public int hashCode() {
   	final int prime = 31;
