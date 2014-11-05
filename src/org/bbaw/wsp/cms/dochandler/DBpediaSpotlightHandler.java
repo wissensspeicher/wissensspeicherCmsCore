@@ -114,6 +114,7 @@ public class DBpediaSpotlightHandler {
             DBpediaResource personResource = dbPediaResources.get(uri);
             if (personResource != null) {
               personResource.setName(surname);
+              personResource.setType("person");
             }
           } else if (fieldName.endsWith("givenName")) {
             String uri = triple[0].substring(1);
@@ -123,6 +124,7 @@ public class DBpediaSpotlightHandler {
             if (personResource != null) {
               String name = personResource.getName() + ", " + givenName;
               personResource.setName(name);
+              personResource.setType("person");
             }
           }
         }
@@ -169,6 +171,7 @@ public class DBpediaSpotlightHandler {
           DBpediaResource dbPediaResource = dbPediaResources.get(uriStr);
           if (dbPediaResource != null) {
             r.setName(dbPediaResource.getName());
+            r.setType(dbPediaResource.getType());
           } else {
             int begin = uriStr.lastIndexOf("resource/") + 9;
             if (begin != -1) {
@@ -181,16 +184,18 @@ public class DBpediaSpotlightHandler {
             r.setSupport(new Integer(supportStr));
           if (similarityStr != null && ! similarityStr.isEmpty())
             r.setSimilarity(new Double(similarityStr));
-          if (typesStr == null || typesStr.trim().isEmpty())
-            r.setType("concept");
-          else if (typesStr.contains("Person"))
-            r.setType("person");
-          else if (typesStr.contains("Organization") || typesStr.contains("Organisation"))
-            r.setType("organisation");
-          else if (typesStr.contains("Place"))
-            r.setType("place");
-          else 
-            r.setType("concept");
+          if (r.getType() == null) {
+            if (typesStr == null || typesStr.trim().isEmpty())
+              r.setType("concept");
+            else if (typesStr.contains("Person"))
+              r.setType("person");
+            else if (typesStr.contains("Organization") || typesStr.contains("Organisation"))
+              r.setType("organisation");
+            else if (typesStr.contains("Place"))
+              r.setType("place");
+            else 
+              r.setType("concept");
+          }
           r.setFrequency(new Integer(frequencyStr));
           resources.add(r);
         }
