@@ -19,7 +19,16 @@ import de.mpg.mpiwg.berlin.mpdl.util.StringUtils;
 import de.mpg.mpiwg.berlin.mpdl.util.Util;
 
 public class Facets implements Iterable<Facet> {
+  protected String baseUrl;
   protected Hashtable<String, Facet> facets;
+
+  public String getBaseUrl() {
+    return baseUrl;
+  }
+
+  public void setBaseUrl(String baseUrl) {
+    this.baseUrl = baseUrl;
+  }
 
   public Facets(List<FacetResult> facetResults) {
     for (int i=0; i<facetResults.size(); i++) {
@@ -38,6 +47,13 @@ public class Facets implements Iterable<Facet> {
           boolean isFacetValueProper = isProperValue(facetValue);
           if (facetName != null && isFacetValueProper) {
             FacetValue facetNameValue = new FacetValue();
+            if (facetValue.contains("<uri>")) {
+              int from = facetValue.indexOf("<uri>") + 5;
+              int to = facetValue.indexOf("</uri>");
+              String uri = facetValue.substring(from, to);
+              facetNameValue.setUri(uri);
+              facetValue = facetValue.replaceAll("<uri>.+</uri>", "");
+            }
             facetNameValue.setName(facetValue);
             facetNameValue.setValue(String.valueOf(facetCountHits));
             facetNameValue.setCount(facetCountHits);
@@ -131,13 +147,32 @@ public class Facets implements Iterable<Facet> {
       Facet facet = facetList.get(i);
       ArrayList<FacetValue> facetValues = facet.getValues();
       Collections.sort(facetValues, facetValueComparator);
-      retStr = retStr + "<li>" + facet.getId();
+      String facetId = facet.getId();
+      retStr = retStr + "<li>" + facetId;
       retStr = retStr + "<ul>";
       for (int j=0; j<facetValues.size(); j++) {
         FacetValue facetValue = facetValues.get(j);
         String facetValueName = facetValue.getName();
         String facetValueValue = facetValue.getValue();
-        retStr = retStr + "<li>" + facetValueName + ": " + facetValueValue + "</li>";
+        String facetValueUri = facetValue.getUri();
+        String facetValueNameHtml = facetValueName;
+        if (facetValueUri != null) {
+          facetValueNameHtml = " <uri>" + facetValueName + "</uri>";
+          if (facetId.contains("entity")) {
+            DBpediaResource entity = new DBpediaResource();
+            entity.setBaseUrl(baseUrl);
+            entity.setUri(facetValueUri);
+            entity.setName(facetValueName);
+            String type = "concept";
+            if (facetId.equals("entityPerson"))
+              type = "person";
+            else if (facetId.equals("entityPlace"))
+              type = "place";
+            entity.setType(type);
+            facetValueNameHtml = entity.toHtmlStr();
+          }
+        }
+        retStr = retStr + "<li>" + facetValueNameHtml + ": " + facetValueValue + "</li>";
       }
       retStr = retStr + "</ul>";
       retStr = retStr + "</li>";
@@ -190,8 +225,26 @@ public class Facets implements Iterable<Facet> {
             jsonFacetValue.put("rdfUri", "none"); 
           }
         }
-        jsonFacetValue.put("value", facetValueName);
         jsonFacetValue.put("count", facetValueValue); 
+        String facetValueUri = facetValue.getUri();
+        if (facetValueUri == null) {
+          jsonFacetValue.put("value", facetValueName);
+        } else {
+          if (facetId.contains("entity")) {
+            DBpediaResource entity = new DBpediaResource();
+            entity.setBaseUrl(baseUrl);
+            entity.setUri(facetValueUri);
+            entity.setName(facetValueName);
+            String type = "concept";
+            if (facetId.equals("entityPerson"))
+              type = "person";
+            else if (facetId.equals("entityPlace"))
+              type = "place";
+            entity.setType(type);
+            JSONObject jsonEntity = entity.toJsonObject();
+            jsonFacetValue.put("value", jsonEntity);
+          } 
+        }
         jsonValuesFacets.add(jsonFacetValue);
       }
       retJsonObject.put(facet.getId(), jsonValuesFacets);
