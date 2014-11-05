@@ -198,7 +198,7 @@ public class DBpediaResource implements Comparable<DBpediaResource> {
     return retStr;
   }
 
-  public JSONObject toJsonObject() throws ApplicationException {
+  public JSONObject toJsonObject() {
     JSONObject retJsonObject = new JSONObject();
     if (name == null || uri == null)
       return null;
