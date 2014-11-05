@@ -73,6 +73,7 @@ import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
 import org.bbaw.wsp.cms.collections.Collection;
 import org.bbaw.wsp.cms.collections.CollectionReader;
+import org.bbaw.wsp.cms.document.DBpediaResource;
 import org.bbaw.wsp.cms.document.Facets;
 import org.bbaw.wsp.cms.document.Hits;
 import org.bbaw.wsp.cms.document.MetadataRecord;
@@ -368,15 +369,26 @@ public class IndexHandler {
         categories.add(new CategoryPath("type", "unbekannt"));
       }
       if (mdRecord.getEntities() != null) {
-        String[] entities = mdRecord.getEntities().split("###");
-        for (int i=0; i<entities.length; i++) {
-          String entityName = entities[i];
-          categories.add(new CategoryPath("entity", entityName));
-        }
         Field entitiesField = new Field("entities", mdRecord.getEntities(), Field.Store.YES, Field.Index.ANALYZED);
         doc.add(entitiesField);
       }
       if (mdRecord.getEntitiesDetails() != null) {
+        ArrayList<DBpediaResource> entities = DBpediaResource.fromXmlStr(xQueryEvaluator, mdRecord.getEntitiesDetails());
+        for (int i=0; i<entities.size(); i++) {
+          DBpediaResource entity = entities.get(i);
+          String entityType = entity.getType();
+          String entityName = entity.getName();
+          String entityUri = entity.getUri();
+          String entityFacetStr = entityName + "<uri>" + entityUri + "</uri>";
+          if (entityType != null && entityType.equals("person"))
+            categories.add(new CategoryPath("entityPerson", entityFacetStr));
+          else if (entityType != null && entityType.equals("place"))
+            categories.add(new CategoryPath("entityPlace", entityFacetStr));
+          else if (entityType != null && entityType.equals("concept"))
+            categories.add(new CategoryPath("entityConcept", entityFacetStr));
+          else
+            categories.add(new CategoryPath("entityConcept", entityFacetStr));
+        }
         Field entitiesDetailsField = new Field("entitiesDetails", mdRecord.getEntitiesDetails(), Field.Store.YES, Field.Index.NOT_ANALYZED);
         doc.add(entitiesDetailsField);
       }
@@ -699,7 +711,9 @@ public class IndexHandler {
       facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("subjectControlled"), 10));
       facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("swd"), 10));
       facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("ddc"), 10));
-      facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("entity"), 100));
+      facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("entityPerson"), 100));
+      facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("entityPlace"), 100));
+      facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("entityConcept"), 100));
       facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("type"), 1000));
       FacetsCollector facetsCollector = new FacetsCollector(facetSearchParams, documentsIndexReader, taxonomyReader);
       Collector facetsCollectorWrapper = MultiCollector.wrap(topFieldCollector, facetsCollector);
