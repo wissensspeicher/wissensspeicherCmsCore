@@ -28,6 +28,13 @@ import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 import de.mpg.mpiwg.berlin.mpdl.util.StringUtils;
 import de.mpg.mpiwg.berlin.mpdl.xml.xquery.XQueryEvaluator;
 
+/*
+ * General SparQL knowledge (DBpedia SparQL interface): fetch all names of mainResources by SparQL: e.g. these 2: 
+   SELECT ?name WHERE {
+     {<http://de.dbpedia.org/resource/Karl_Marx> foaf:name ?name .} union
+     {<http://de.dbpedia.org/resource/Friedrich_Engels> foaf:name ?name .} 
+   }
+ */
 public class DBpediaSpotlightHandler {
   private static Logger LOGGER = Logger.getLogger(DBpediaSpotlightHandler.class);
   private static DBpediaSpotlightHandler instance;
@@ -73,6 +80,10 @@ public class DBpediaSpotlightHandler {
   private void initDBpediaResourceLabels() throws ApplicationException {
     String dbPediaResourcesDirName = Constants.getInstance().getExternalDocumentsDir() +  "/dbPediaResources";
     File dbPediaResourceLabelsFile = new File(dbPediaResourcesDirName + "/labels.ttl");
+    if (! dbPediaResourceLabelsFile.exists()) {
+      LOGGER.info("DBpediaSpotlightHandler could not be initialized. File: " + dbPediaResourceLabelsFile.getAbsolutePath() + " does not exist");
+      return;
+    }
     try {
       Scanner s = new Scanner(dbPediaResourceLabelsFile, "utf-8");
       while (s.hasNextLine()) {
@@ -86,6 +97,34 @@ public class DBpediaSpotlightHandler {
           dbPediaResource.setUri(uri);
           dbPediaResource.setName(label);
           dbPediaResources.put(uri, dbPediaResource);
+        }
+      }
+      // persondata: get surname and givenName of all person resources
+      File dbPediaResourcePersondataFile = new File(dbPediaResourcesDirName + "/persondata.ttl");
+      Scanner s2 = new Scanner(dbPediaResourcePersondataFile, "utf-8");
+      while (s2.hasNextLine()) {
+        String line = s2.nextLine();
+        if (! line.startsWith("#")) {
+          String[] triple = line.split("> ");
+          String fieldName = triple[1].substring(1);
+          if (fieldName.endsWith("surname")) {
+            String uri = triple[0].substring(1);
+            int to = triple[2].lastIndexOf("\"");
+            String surname = triple[2].substring(1, to);
+            DBpediaResource personResource = dbPediaResources.get(uri);
+            if (personResource != null) {
+              personResource.setName(surname);
+            }
+          } else if (fieldName.endsWith("givenName")) {
+            String uri = triple[0].substring(1);
+            int to = triple[2].lastIndexOf("\"");
+            String givenName = triple[2].substring(1, to);
+            DBpediaResource personResource = dbPediaResources.get(uri);
+            if (personResource != null) {
+              String name = personResource.getName() + ", " + givenName;
+              personResource.setName(name);
+            }
+          }
         }
       }
     } catch (IOException e) {
@@ -132,8 +171,11 @@ public class DBpediaSpotlightHandler {
             r.setName(dbPediaResource.getName());
           } else {
             int begin = uriStr.lastIndexOf("resource/") + 9;
-            String name = uriStr.substring(begin);
-            r.setName(name);
+            if (begin != -1) {
+              String name = uriStr.substring(begin);
+              name = name.replaceAll("_", " ");
+              r.setName(name);
+            }
           }
           if (supportStr != null && ! supportStr.isEmpty())
             r.setSupport(new Integer(supportStr));
@@ -167,12 +209,6 @@ public class DBpediaSpotlightHandler {
       for (int i=0; i<count; i++) {
         mainResources.add(resources.get(i));
       }
-      // TODO
-      // fetch all names of mainResources by SparQL: e.g. these 2: 
-      // SELECT ?name WHERE {
-      //   {<http://de.dbpedia.org/resource/Karl_Marx> foaf:name ?name .} union
-      //   {<http://de.dbpedia.org/resource/Friedrich_Engels> foaf:name ?name .} 
-      // }
       annotation.setResources(mainResources);
     }
     return annotation;
