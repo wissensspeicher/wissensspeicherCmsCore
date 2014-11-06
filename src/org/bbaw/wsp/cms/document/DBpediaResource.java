@@ -18,6 +18,7 @@ public class DBpediaResource implements Comparable<DBpediaResource> {
   private String baseUrl;
   private String uri;
   private String name;
+  private String gnd;
   private Integer support;
   private String type;
   private Double similarity;
@@ -81,6 +82,9 @@ public class DBpediaResource implements Comparable<DBpediaResource> {
           int begin = uri.lastIndexOf("resource/") + 9;
           name = uri.substring(begin);
         }
+        String gnd = xQueryEvaluator.evaluateAsString(xdmItemStr, "string(/resource/gnd)");
+        if (gnd != null)
+          entity.setGnd(gnd);
         String supportStr = xQueryEvaluator.evaluateAsString(xdmItemStr, "string(/resource/support)");
         if (supportStr != null)
           entity.setSupport(new Integer(supportStr));
@@ -120,6 +124,12 @@ public class DBpediaResource implements Comparable<DBpediaResource> {
   public Integer getSupport() {
     return support;
   }
+  public String getGnd() {
+    return gnd;
+  }
+  public void setGnd(String gnd) {
+    this.gnd = gnd;
+  }
   public void setSupport(Integer support) {
     this.support = support;
   }
@@ -156,6 +166,8 @@ public class DBpediaResource implements Comparable<DBpediaResource> {
       nameEscaped = nameEscaped.replaceAll("'", "&apos;");
       retStr = retStr + "\n<name>" + nameEscaped + "</name>";
     }
+    if (gnd != null)
+      retStr = retStr + "\n<gnd>" + gnd + "</gnd>";
     if (support != null)
       retStr = retStr + "\n<support>" + support + "</support>";
     if (similarity != null)
@@ -173,16 +185,18 @@ public class DBpediaResource implements Comparable<DBpediaResource> {
     uriStrEscaped = uriStrEscaped.replaceAll("'", "&apos;");
     String nameEscaped = StringUtils.deresolveXmlEntities(name);
     nameEscaped = nameEscaped.replaceAll("'", "&apos;");
-    String retStr = "<dcterms:relation rdf:resource=\"" + uriStrEscaped + "\">\n";
+    String retStr = "<dcterms:relation>\n";
+    retStr = retStr + "  <rdf:Description rdf:about=\"" + uriStrEscaped + "\">\n";
     String typeUrl = getTypeUrl(type);
-    retStr = retStr + "  <rdf:type rdf:resource=\"" + typeUrl + "\"/>\n";
-    retStr = retStr + "  <rdfs:label>" + nameEscaped + "</rdfs:label>\n";
+    retStr = retStr + "    <rdf:type rdf:resource=\"" + typeUrl + "\"/>\n";
+    retStr = retStr + "    <rdfs:label>" + nameEscaped + "</rdfs:label>\n";
     if (support != null)
-      retStr = retStr + "  <dbpedia-spotlight:support>" + support + "</dbpedia-spotlight:support>\n";
+      retStr = retStr + "    <dbpedia-spotlight:support>" + support + "</dbpedia-spotlight:support>\n";
     if (similarity != null)
-      retStr = retStr + "  <dbpedia-spotlight:similarity>" + similarity + "</dbpedia-spotlight:similarity>\n"; 
+      retStr = retStr + "    <dbpedia-spotlight:similarity>" + similarity + "</dbpedia-spotlight:similarity>\n"; 
     if (frequency != null)
-      retStr = retStr + "  <dbpedia-spotlight:frequency>" + frequency + "</dbpedia-spotlight:frequency>\n";
+      retStr = retStr + "    <dbpedia-spotlight:frequency>" + frequency + "</dbpedia-spotlight:frequency>\n";
+    retStr = retStr + "  </rdf:Description>\n";
     retStr = retStr + "</dcterms:relation>\n";
     return retStr;
   }
@@ -193,7 +207,10 @@ public class DBpediaResource implements Comparable<DBpediaResource> {
     String retStr = "<span class=\"" + type + "\">";
     String queryHtmlStr = "<a href=\"" + baseUrl + "/query/QueryDocuments?query=entities:&quot;" + name + "&quot;\">" + name + "</a>";
     String refHtmlStr = "<a href=\"" + uri + "\"><img src=\"../images/rdfSmall.gif\" alt=\"DBpedia resource\" border=\"0\" height=\"15\" width=\"15\"></a>";
-    retStr = retStr + queryHtmlStr + " (" + refHtmlStr + ")" + "</span>";
+    String gndHtmlStr = "";
+    if (gnd != null && ! gnd.isEmpty())
+      gndHtmlStr = ", <a href=\"" + "http://d-nb.info/gnd/" + gnd + "\">GND</a>" ;
+    retStr = retStr + queryHtmlStr + " (" + refHtmlStr + gndHtmlStr + ")" + "</span>";
     retStr = retStr + "</span>";
     return retStr;
   }
@@ -212,6 +229,8 @@ public class DBpediaResource implements Comparable<DBpediaResource> {
       String queryLinkEnc = URIUtil.encodeQuery(queryLink);
       retJsonObject.put("referenceQuery", queryLinkEnc);
     } catch (URIException e) {}
+    if (gnd != null)
+      retJsonObject.put("referenceGnd", "http://d-nb.info/gnd/" + gnd);
     if (support != null)
       retJsonObject.put("dbpediaSpotlightSupport", support);
     if (similarity != null)
