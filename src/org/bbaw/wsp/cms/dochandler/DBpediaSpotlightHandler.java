@@ -100,7 +100,7 @@ public class DBpediaSpotlightHandler {
         }
       }
       // persondata: get surname and givenName of all person resources
-      File dbPediaResourcePersondataFile = new File(dbPediaResourcesDirName + "/persondata.ttl");
+      File dbPediaResourcePersondataFile = new File(dbPediaResourcesDirName + "/persondata-names.ttl");
       Scanner s2 = new Scanner(dbPediaResourcePersondataFile, "utf-8");
       while (s2.hasNextLine()) {
         String line = s2.nextLine();
@@ -126,6 +126,21 @@ public class DBpediaSpotlightHandler {
               personResource.setName(name);
               personResource.setType("person");
             }
+          }
+        }
+      }
+      File dbPediaResourceGndFile = new File(dbPediaResourcesDirName + "/infobox-properties-gnds.ttl");
+      Scanner s3 = new Scanner(dbPediaResourceGndFile, "utf-8");
+      while (s3.hasNextLine()) {
+        String line = s3.nextLine();
+        if (! line.startsWith("#")) {
+          String[] triple = line.split("> ");
+          String uri = triple[0].substring(1);
+          int to = triple[2].lastIndexOf("\"");
+          String gnd = triple[2].substring(1, to);
+          DBpediaResource dbpediaResource = dbPediaResources.get(uri);
+          if (dbpediaResource != null) {
+            dbpediaResource.setGnd(gnd);
           }
         }
       }
@@ -172,6 +187,7 @@ public class DBpediaSpotlightHandler {
           if (dbPediaResource != null) {
             r.setName(dbPediaResource.getName());
             r.setType(dbPediaResource.getType());
+            r.setGnd(dbPediaResource.getGnd());
           } else {
             int begin = uriStr.lastIndexOf("resource/") + 9;
             if (begin != -1) {
