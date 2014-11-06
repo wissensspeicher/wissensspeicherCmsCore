@@ -5,20 +5,17 @@ public class FacetValue {
   private String value;
   private Integer count;
   private String uri;
+  private String gnd;
 
   public String getName() {
     return name;
   }
-  
   public void setName(String name) {
     this.name = name;
   }
-  
-
-public String getValue() {
+  public String getValue() {
     return value;
   }
-  
   public void setValue(String value) {
     this.value = value;
   }
@@ -43,6 +40,12 @@ public String getValue() {
     this.uri = uri;
   }
 
+  public String getGnd() {
+    return gnd;
+  }
+  public void setGnd(String gnd) {
+    this.gnd = gnd;
+  }
   @Override
   public int hashCode() {
   	final int prime = 31;
