@@ -563,6 +563,7 @@ public class DocumentHandler {
           dbPediaResourcesXmlStrBuilder.append("<resources>\n");
           StringBuilder dbPediaSpotlightCollectionRdfStrBuilder = coll.getDbPediaSpotlightRdfStrBuilder();
           String uri = mdRecord.getUri();
+          uri = StringUtils.deresolveXmlEntities(uri);
           if (dbPediaSpotlightCollectionRdfStrBuilder != null) {
             dbPediaSpotlightCollectionRdfStrBuilder.append("<rdf:Description rdf:about=\"" + uri + "\">\n");
             dbPediaSpotlightCollectionRdfStrBuilder.append("  <rdf:type rdf:resource=\"http://purl.org/dc/terms/BibliographicResource\"/>\n");
