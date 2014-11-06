@@ -54,6 +54,13 @@ public class Facets implements Iterable<Facet> {
               facetNameValue.setUri(uri);
               facetValue = facetValue.replaceAll("<uri>.+</uri>", "");
             }
+            if (facetValue.contains("<gnd>")) {
+              int from = facetValue.indexOf("<gnd>") + 5;
+              int to = facetValue.indexOf("</gnd>");
+              String gnd = facetValue.substring(from, to);
+              facetNameValue.setGnd(gnd);
+              facetValue = facetValue.replaceAll("<gnd>.+</gnd>", "");
+            }
             facetNameValue.setName(facetValue);
             facetNameValue.setValue(String.valueOf(facetCountHits));
             facetNameValue.setCount(facetCountHits);
@@ -155,6 +162,7 @@ public class Facets implements Iterable<Facet> {
         String facetValueName = facetValue.getName();
         String facetValueValue = facetValue.getValue();
         String facetValueUri = facetValue.getUri();
+        String gnd = facetValue.getGnd();
         String facetValueNameHtml = facetValueName;
         if (facetValueUri != null) {
           facetValueNameHtml = " <uri>" + facetValueName + "</uri>";
@@ -162,6 +170,7 @@ public class Facets implements Iterable<Facet> {
             DBpediaResource entity = new DBpediaResource();
             entity.setBaseUrl(baseUrl);
             entity.setUri(facetValueUri);
+            entity.setGnd(gnd);
             entity.setName(facetValueName);
             String type = "concept";
             if (facetId.equals("entityPerson"))
@@ -227,6 +236,7 @@ public class Facets implements Iterable<Facet> {
         }
         jsonFacetValue.put("count", facetValueValue); 
         String facetValueUri = facetValue.getUri();
+        String facetValueGnd = facetValue.getUri();
         if (facetValueUri == null) {
           jsonFacetValue.put("value", facetValueName);
         } else {
@@ -234,6 +244,7 @@ public class Facets implements Iterable<Facet> {
             DBpediaResource entity = new DBpediaResource();
             entity.setBaseUrl(baseUrl);
             entity.setUri(facetValueUri);
+            entity.setGnd(facetValueGnd);
             entity.setName(facetValueName);
             String type = "concept";
             if (facetId.equals("entityPerson"))
