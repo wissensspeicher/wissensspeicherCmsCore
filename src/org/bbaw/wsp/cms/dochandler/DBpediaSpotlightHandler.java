@@ -129,7 +129,7 @@ public class DBpediaSpotlightHandler {
           }
         }
       }
-      File dbPediaResourceGndFile = new File(dbPediaResourcesDirName + "/infobox-properties-gnds.ttl");
+      File dbPediaResourceGndFile = new File(dbPediaResourcesDirName + "/mappingbased-properties-individualisedGnd.ttl");
       Scanner s3 = new Scanner(dbPediaResourceGndFile, "utf-8");
       while (s3.hasNextLine()) {
         String line = s3.nextLine();
