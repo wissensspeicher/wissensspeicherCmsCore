@@ -228,7 +228,7 @@ public class DBpediaResource implements Comparable<DBpediaResource> {
       String queryLinkEnc = URIUtil.encodeQuery(queryLink);
       retJsonObject.put("referenceQuery", queryLinkEnc);
     } catch (URIException e) {}
-    if (gnd != null)
+    if (gnd != null && ! gnd.isEmpty())
       retJsonObject.put("referenceGnd", "http://d-nb.info/gnd/" + gnd);
     if (support != null)
       retJsonObject.put("dbpediaSpotlightSupport", support);
