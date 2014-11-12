@@ -237,6 +237,7 @@ public class CollectionManager {
       dbPediaSpotlightCollectionRdfStrBuilder.append("   xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" \n");
       dbPediaSpotlightCollectionRdfStrBuilder.append("   xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\" \n");
       dbPediaSpotlightCollectionRdfStrBuilder.append("   xmlns:dc=\"http://purl.org/dc/elements/1.1/\" \n");
+      dbPediaSpotlightCollectionRdfStrBuilder.append("   xmlns:gnd=\"http://d-nb.info/standards/elementset/gnd#/\" \n");
       dbPediaSpotlightCollectionRdfStrBuilder.append("   xmlns:dcterms=\"http://purl.org/dc/terms/\" \n");
       dbPediaSpotlightCollectionRdfStrBuilder.append("   xmlns:dbpedia-spotlight=\"http://spotlight.dbpedia.org/spotlight#\" \n");
       dbPediaSpotlightCollectionRdfStrBuilder.append(">\n");
