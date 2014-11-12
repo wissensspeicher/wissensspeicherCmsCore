@@ -46,6 +46,7 @@ public class DBpediaSpotlightHandler {
   private HttpClient httpClient; 
   private XQueryEvaluator xQueryEvaluator;
   private Hashtable<String, DBpediaResource> dbPediaResources;
+  private Hashtable<String, String> germanStopwords;
   private int counter = 0;
 
   public static DBpediaSpotlightHandler getInstance() throws ApplicationException {
@@ -73,8 +74,28 @@ public class DBpediaSpotlightHandler {
   
   private void initDBpediaResources() throws ApplicationException {
     dbPediaResources = new Hashtable<String, DBpediaResource>();
+    germanStopwords = new Hashtable<String, String>();
+    initStopwords();
     initDBpediaResourceLabels();
     LOGGER.info("DBpediaSpotlightHandler initialized with: " + dbPediaResources.size() + " DBpedia resources");
+  }
+  
+  private void initStopwords() throws ApplicationException {
+    String dbPediaResourcesDirName = Constants.getInstance().getExternalDocumentsDir() +  "/dbPediaResources";
+    File spotlightStopwordFileGerman = new File(dbPediaResourcesDirName + "/spotlight-stopwords-de.txt");
+    if (! spotlightStopwordFileGerman.exists()) {
+      LOGGER.info("DBpediaSpotlightHandler could not be initialized. File: " + spotlightStopwordFileGerman.getAbsolutePath() + " does not exist");
+      return;
+    }
+    try {
+      Scanner s = new Scanner(spotlightStopwordFileGerman, "utf-8");
+      while (s.hasNextLine()) {
+        String stopword = s.nextLine().trim();
+        germanStopwords.put(stopword, stopword);
+      }
+    } catch (Exception e) {
+      throw new ApplicationException(e);
+    }
   }
   
   private void initDBpediaResourceLabels() throws ApplicationException {
@@ -149,15 +170,17 @@ public class DBpediaSpotlightHandler {
     }
   }
 
-  public Annotation annotate(String docId, String text, String confidence, int count) throws ApplicationException {
+  public Annotation annotate(String docId, String textInput, String confidence, int count) throws ApplicationException {
     counter++;
     if (counter == 100) {
       counter = 0;
       init(); // so that the handler has new objects and garbage collection of old objects could be done
     }
     String testStr = "";
+    String text = textInput.replaceAll("&#[0-9];|&#1[0-9];|&#2[0-9];|&#30;|&#31;|&#32;", ""); // remove all steuerzeichen such as "&#0;"
     NameValuePair textParam = new NameValuePair("text", text);
     NameValuePair confidenceParam = new NameValuePair("confidence", confidence);
+    // NameValuePair spotterParam = new NameValuePair("spotter", "Default"); // other values: NESpotter, ...
     // NameValuePair typesParam = new NameValuePair("types", "Person"); // Person, Organisation, Place (Category ??) Einschränkung liefert evtl. zu wenige Entitäten
     // NameValuePair supportParam = new NameValuePair("support", "20"); // how many incoming links are on the DBpedia-Resource 
     // NameValuePair whitelistSparqlParam = new NameValuePair("sparql", "select ...");
@@ -165,8 +188,8 @@ public class DBpediaSpotlightHandler {
     String spotlightAnnotationXmlStr = performPostRequest("annotate", params, "text/xml");
     List<DBpediaResource> resources = null; 
     try {
-      spotlightAnnotationXmlStr = spotlightAnnotationXmlStr.replaceAll("&#[0-9];|&#1[0-9];|&#2[0-9];|&#30;|&#31;|&#32;", ""); // remove all steuerzeichen such as "&#0;"
       XdmValue xmdValueResources = xQueryEvaluator.evaluate(spotlightAnnotationXmlStr, "//Resource[not(@URI = preceding::Resource/@URI)]");  // no double resources
+      String annotationText = xQueryEvaluator.evaluateAsString(spotlightAnnotationXmlStr, "string(/Annotation/@text)"); 
       if (xmdValueResources != null && xmdValueResources.size() > 0) {
         resources = new ArrayList<DBpediaResource>();
         XdmSequenceIterator xmdValueResourcesIterator = xmdValueResources.iterator();
@@ -178,6 +201,20 @@ public class DBpediaSpotlightHandler {
           String supportStr = xQueryEvaluator.evaluateAsString(resourceStr, "string(/Resource/@support)"); 
           String similarityStr = xQueryEvaluator.evaluateAsString(resourceStr, "string(/Resource/@similarityScore)"); 
           String typesStr = xQueryEvaluator.evaluateAsString(resourceStr, "string(/Resource/@types)"); 
+          String surfaceFormStr = xQueryEvaluator.evaluateAsString(resourceStr, "string(/Resource/@surfaceForm)"); 
+          int offset = Integer.valueOf(xQueryEvaluator.evaluateAsString(resourceStr, "string(/Resource/@offset)"));
+          String surfaceFormContextStr = null;
+          if (offset < annotationText.length()) {
+            int leftContextBegin = offset - 20;
+            if (leftContextBegin < 0)
+              leftContextBegin = 0;
+            int rightContextEnd = offset + surfaceFormStr.length() + 20;
+            if (rightContextEnd > annotationText.length())
+              rightContextEnd = annotationText.length();
+            String surfaceFormLeftContextStr = annotationText.substring(leftContextBegin, offset); 
+            String surfaceFormRightContextStr = annotationText.substring(offset + surfaceFormStr.length(), rightContextEnd); 
+            surfaceFormContextStr = "(...) " + surfaceFormLeftContextStr + "||" + surfaceFormStr + "||" + surfaceFormRightContextStr + " (...)"; 
+          } 
           String uriStrEscaped = StringUtils.deresolveXmlEntities(uriStr);
           uriStrEscaped = uriStrEscaped.replaceAll("'", "&apos;");
           String frequencyStr = xQueryEvaluator.evaluateAsString(spotlightAnnotationXmlStr, "count(//Resource[@URI = '" + uriStrEscaped + "'])");
@@ -213,7 +250,9 @@ public class DBpediaSpotlightHandler {
               r.setType("concept");
           }
           r.setFrequency(new Integer(frequencyStr));
-          resources.add(r);
+          r.setContext(surfaceFormContextStr);
+          if (isProper(surfaceFormStr))
+            resources.add(r);
         }
       }
     } catch (Exception e) {
@@ -235,12 +274,24 @@ public class DBpediaSpotlightHandler {
     return annotation;
   }
   
+  private boolean isProper(String surfaceForm) {
+    boolean isProper = true;
+    if (surfaceForm.length() <= 2)
+      isProper = false;
+    else if (surfaceForm.contains("-") || surfaceForm.contains(".."))
+      isProper = false;
+    else if (germanStopwords.get(surfaceForm) != null)
+      isProper = false;
+    return isProper;
+  }
+  
   private String performPostRequest(String serviceName, NameValuePair[] params, String outputFormat) throws ApplicationException {
     String resultStr = null;
     try {
       String portPart = ":" + PORT;
       String urlStr = "http://" + HOSTNAME + portPart + "/" + SERVICE_PATH + "/" + serviceName;
       PostMethod method = new PostMethod(urlStr);
+      method.getParams().setContentCharset("utf-8");
       for (int i=0; i<params.length; i++) {
         NameValuePair param = params[i];
         method.addParameter(param);
