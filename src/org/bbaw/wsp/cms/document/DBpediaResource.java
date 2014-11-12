@@ -23,6 +23,7 @@ public class DBpediaResource implements Comparable<DBpediaResource> {
   private String type;
   private Double similarity;
   private Integer frequency;
+  private String context;
 
   public static Comparator<DBpediaResource> FrequencyComparatorDESC = new Comparator<DBpediaResource>() {
     public int compare(DBpediaResource r1, DBpediaResource r2) {
@@ -150,6 +151,12 @@ public class DBpediaResource implements Comparable<DBpediaResource> {
   public void setFrequency(Integer frequency) {
     this.frequency = frequency;
   }
+  public String getContext() {
+    return context;
+  }
+  public void setContext(String context) {
+    this.context = context;
+  }
 
   public String toXmlStr() {
     if (uri == null)
@@ -189,12 +196,19 @@ public class DBpediaResource implements Comparable<DBpediaResource> {
     String typeUrl = getTypeUrl(type);
     retStr = retStr + "    <rdf:type rdf:resource=\"" + typeUrl + "\"/>\n";
     retStr = retStr + "    <rdfs:label>" + nameEscaped + "</rdfs:label>\n";
+    if (gnd != null)
+      retStr = retStr + "    <gnd:gndIdentifier rdf:resource=\"http://d-nb.info/gnd/" + gnd + "\"/>\n";
     if (support != null)
       retStr = retStr + "    <dbpedia-spotlight:support>" + support + "</dbpedia-spotlight:support>\n";
     if (similarity != null)
       retStr = retStr + "    <dbpedia-spotlight:similarity>" + similarity + "</dbpedia-spotlight:similarity>\n"; 
     if (frequency != null)
       retStr = retStr + "    <dbpedia-spotlight:frequency>" + frequency + "</dbpedia-spotlight:frequency>\n";
+    if (context != null) {
+      String contextEscaped = StringUtils.deresolveXmlEntities(context);
+      contextEscaped = contextEscaped.replaceAll("'", "&apos;");
+      retStr = retStr + "    <dbpedia-spotlight:context>" + contextEscaped + "</dbpedia-spotlight:context>\n";
+    }
     retStr = retStr + "  </rdf:Description>\n";
     retStr = retStr + "</dcterms:relation>\n";
     return retStr;
