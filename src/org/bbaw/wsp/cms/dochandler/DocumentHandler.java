@@ -532,7 +532,7 @@ public class DocumentHandler {
       Annotation docContentAnnotation = null;
       Annotation docTitleAnnotation = null;
       try {
-        String docContent = docTokensOrig;
+        String docContent = content; // docTokensOrig;
         if (docTokensOrig == null && mdRecord.getDescription() != null && ! mdRecord.getDescription().isEmpty())
           docContent = mdRecord.getDescription();
         docContentAnnotation = dbPediaSpotlightHandler.annotate(docId, docContent, "0.99", 50);
