@@ -562,6 +562,10 @@ public class DocumentHandler {
           StringBuilder dbPediaResourcesXmlStrBuilder = new StringBuilder();
           dbPediaResourcesXmlStrBuilder.append("<resources>\n");
           StringBuilder dbPediaSpotlightCollectionRdfStrBuilder = coll.getDbPediaSpotlightRdfStrBuilder();
+          if (mdRecord.isEdocRecord()) {
+            Collection edocColl = CollectionReader.getInstance().getCollection("edoc");
+            dbPediaSpotlightCollectionRdfStrBuilder = edocColl.getDbPediaSpotlightRdfStrBuilder();
+          }
           String uri = mdRecord.getUri();
           uri = StringUtils.deresolveXmlEntities(uri);
           if (dbPediaSpotlightCollectionRdfStrBuilder != null) {
