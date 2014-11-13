@@ -171,13 +171,14 @@ public class DBpediaSpotlightHandler {
   }
 
   public Annotation annotate(String docId, String textInput, String confidence, int count) throws ApplicationException {
-    counter++;
-    if (counter == 100) {
-      counter = 0;
-      init(); // so that the handler has new objects and garbage collection of old objects could be done
-    }
+    // counter++;
+    // if (counter == 100) {
+    //   counter = 0;
+    //   init(); // so that the handler has new objects and garbage collection of old objects could be done
+    // }
     String testStr = "";
-    String text = textInput.replaceAll("&#[0-9];|&#1[0-9];|&#2[0-9];|&#30;|&#31;|&#32;", ""); // remove all steuerzeichen such as "&#0;"
+    String text = textInput.replaceAll("-[ \n]+|&#[0-9];|&#1[0-9];|&#2[0-9];|&#30;|&#31;|&#32;|\uffff", ""); // entferne Bindestriche vor Blank/Zeilenende und Steuerzeichen wie "&#0;"
+    text = text.replaceAll("\n", " "); // new lines durch blank ersetzen (da sonst das Steuerzeichen &#10; erzeugt wird)
     NameValuePair textParam = new NameValuePair("text", text);
     NameValuePair confidenceParam = new NameValuePair("confidence", confidence);
     // NameValuePair spotterParam = new NameValuePair("spotter", "Default"); // other values: NESpotter, ...
@@ -186,6 +187,8 @@ public class DBpediaSpotlightHandler {
     // NameValuePair whitelistSparqlParam = new NameValuePair("sparql", "select ...");
     NameValuePair[] params = {textParam, confidenceParam};
     String spotlightAnnotationXmlStr = performPostRequest("annotate", params, "text/xml");
+    spotlightAnnotationXmlStr = spotlightAnnotationXmlStr.replaceAll("&#[0-9];", "XXXX"); // ersetze Steuerzeichen durch X (dann bleibt die Länge erhalten)
+    spotlightAnnotationXmlStr = spotlightAnnotationXmlStr.replaceAll("&#1[0-9];|&#2[0-9];|&#30;|&#31;|&#32;", "XXXXX"); // ersetze Steuerzeichen durch X (dann bleibt die Länge erhalten)
     List<DBpediaResource> resources = null; 
     try {
       XdmValue xmdValueResources = xQueryEvaluator.evaluate(spotlightAnnotationXmlStr, "//Resource[not(@URI = preceding::Resource/@URI)]");  // no double resources
