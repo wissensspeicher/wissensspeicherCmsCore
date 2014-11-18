@@ -47,7 +47,6 @@ public class DBpediaSpotlightHandler {
   private XQueryEvaluator xQueryEvaluator;
   private Hashtable<String, DBpediaResource> dbPediaResources;
   private Hashtable<String, String> germanStopwords;
-  private int counter = 0;
 
   public static DBpediaSpotlightHandler getInstance() throws ApplicationException {
     if (instance == null) {
@@ -81,8 +80,8 @@ public class DBpediaSpotlightHandler {
   }
   
   private void initStopwords() throws ApplicationException {
-    String dbPediaResourcesDirName = Constants.getInstance().getExternalDocumentsDir() +  "/dbPediaResources";
-    File spotlightStopwordFileGerman = new File(dbPediaResourcesDirName + "/spotlight-stopwords-de.txt");
+    String dbPediaSpotlightDirName = Constants.getInstance().getMdsystemConfDir() +  "/dbPediaSpotlight";
+    File spotlightStopwordFileGerman = new File(dbPediaSpotlightDirName + "/spotlight-stopwords-de.txt");
     if (! spotlightStopwordFileGerman.exists()) {
       LOGGER.info("DBpediaSpotlightHandler could not be initialized. File: " + spotlightStopwordFileGerman.getAbsolutePath() + " does not exist");
       return;
@@ -171,11 +170,6 @@ public class DBpediaSpotlightHandler {
   }
 
   public Annotation annotate(String docId, String textInput, String confidence, int count) throws ApplicationException {
-    // counter++;
-    // if (counter == 100) {
-    //   counter = 0;
-    //   init(); // so that the handler has new objects and garbage collection of old objects could be done
-    // }
     String testStr = "";
     String text = textInput.replaceAll("-[ \n]+|&#[0-9];|&#1[0-9];|&#2[0-9];|&#30;|&#31;|&#32;|\uffff", ""); // entferne Bindestriche vor Blank/Zeilenende und Steuerzeichen wie "&#0;"
     text = text.replaceAll("\n", " "); // new lines durch blank ersetzen (da sonst das Steuerzeichen &#10; erzeugt wird)
