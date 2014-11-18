@@ -83,7 +83,7 @@ public class DBpediaResource implements Comparable<DBpediaResource> {
         }
         entity.setName(name);
         String gnd = xQueryEvaluator.evaluateAsString(xdmItemStr, "string(/resource/gnd)");
-        if (gnd != null)
+        if (gnd != null && ! gnd.isEmpty())
           entity.setGnd(gnd);
         String supportStr = xQueryEvaluator.evaluateAsString(xdmItemStr, "string(/resource/support)");
         if (supportStr != null)
