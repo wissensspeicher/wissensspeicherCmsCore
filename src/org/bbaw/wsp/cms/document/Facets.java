@@ -58,8 +58,9 @@ public class Facets implements Iterable<Facet> {
               int from = facetValue.indexOf("<gnd>") + 5;
               int to = facetValue.indexOf("</gnd>");
               String gnd = facetValue.substring(from, to);
-              facetNameValue.setGnd(gnd);
-              facetValue = facetValue.replaceAll("<gnd>.+</gnd>", "");
+              if (gnd != null && ! gnd.isEmpty())
+                facetNameValue.setGnd(gnd);
+              facetValue = facetValue.replaceAll("<gnd>.*</gnd>", "");
             }
             facetNameValue.setName(facetValue);
             facetNameValue.setValue(String.valueOf(facetCountHits));
