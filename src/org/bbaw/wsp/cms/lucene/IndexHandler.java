@@ -381,7 +381,7 @@ public class IndexHandler {
           String entityUri = entity.getUri();
           String entityFacetStr = entityName + "<uri>" + entityUri + "</uri>";
           String entityGnd = entity.getGnd();
-          if (entityGnd != null)
+          if (entityGnd != null && ! entityGnd.isEmpty())
             entityFacetStr = entityFacetStr + "<gnd>" + entityGnd + "</gnd>";
           if (entityType != null && entityType.equals("person"))
             categories.add(new CategoryPath("entityPerson", entityFacetStr));
