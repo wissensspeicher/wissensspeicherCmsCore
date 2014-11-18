@@ -237,7 +237,7 @@ public class Facets implements Iterable<Facet> {
         }
         jsonFacetValue.put("count", facetValueValue); 
         String facetValueUri = facetValue.getUri();
-        String facetValueGnd = facetValue.getUri();
+        String facetValueGnd = facetValue.getGnd();
         if (facetValueUri == null) {
           jsonFacetValue.put("value", facetValueName);
         } else {
