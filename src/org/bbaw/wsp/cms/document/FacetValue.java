@@ -21,7 +21,13 @@ public class FacetValue {
   }
   
   public String toString() {
-    return name + " [" + count + "] : " + value;
+    String nameStr = name;
+    if (uri != null && ! uri.isEmpty() && gnd != null && !gnd.isEmpty())
+      nameStr = nameStr + " [" + uri + ", " + gnd + "]";
+    else if (uri != null && ! uri.isEmpty())
+      nameStr = nameStr + " [" + uri + "]";
+    String retStr = nameStr + ": " + value;
+    return retStr;
   }
 
   public Integer getCount() {
