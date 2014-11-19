@@ -21,6 +21,7 @@ import de.mpg.mpiwg.berlin.mpdl.util.Util;
 public class Facets implements Iterable<Facet> {
   protected String baseUrl;
   protected Hashtable<String, Facet> facets;
+  protected Hashtable<String, String[]> constraints;
 
   public String getBaseUrl() {
     return baseUrl;
@@ -30,7 +31,20 @@ public class Facets implements Iterable<Facet> {
     this.baseUrl = baseUrl;
   }
 
+  public Hashtable<String, String[]> getConstraints() {
+    return constraints;
+  }
+
+  public void setConstraints(Hashtable<String, String[]> constraints) {
+    this.constraints = constraints;
+  }
+
   public Facets(List<FacetResult> facetResults) {
+    this(facetResults, null);
+  }
+  
+  public Facets(List<FacetResult> facetResults, Hashtable<String, String[]> constraints) {
+    this.constraints = constraints;
     for (int i=0; i<facetResults.size(); i++) {
       FacetResult facetResult = facetResults.get(i);
       FacetResultNode facetResultRootNode = facetResult.getFacetResultNode();
@@ -45,7 +59,8 @@ public class Facets implements Iterable<Facet> {
           if (facet.getId() == null)
             facet.setId(facetName);
           boolean isFacetValueProper = isProperValue(facetValue);
-          if (facetName != null && isFacetValueProper) {
+          boolean isFacetValueInConstraints = isFacetValueInConstraints(facetName, facetValue);
+          if (facetName != null && isFacetValueProper && isFacetValueInConstraints) {
             FacetValue facetNameValue = new FacetValue();
             if (facetValue.contains("<uri>")) {
               int from = facetValue.indexOf("<uri>") + 5;
@@ -91,6 +106,24 @@ public class Facets implements Iterable<Facet> {
     if (newVal.toLowerCase().equals("null"))
       return false;
     return true;
+  }
+  
+  private boolean isFacetValueInConstraints(String fieldName, String val) {
+    boolean isFacetValueInConstraints = true;
+    if (constraints != null) {
+      String[] facetConstraints = constraints.get(fieldName);
+      if (facetConstraints != null) {
+        isFacetValueInConstraints = false;
+        for (int j=0; j<facetConstraints.length; j++) {
+          String fc = facetConstraints[j];
+          if (val.contains(fc)) {
+            isFacetValueInConstraints = true;
+            break;
+          }
+        }
+      }
+    }
+    return isFacetValueInConstraints;
   }
   
   public int size() {
