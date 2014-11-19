@@ -678,12 +678,14 @@ public class IndexHandler {
       QueryParser queryParser = new QueryParser(Version.LUCENE_35, defaultQueryFieldName, documentsPerFieldAnalyzer);
       queryParser.setAllowLeadingWildcard(true);
       Query query = null;
+      Hashtable<String, String[]> facetConstraints = null;
       if (queryStr.equals("*")) {
         query = new MatchAllDocsQuery();
       } else {
         if (queryLanguage != null && queryLanguage.equals("gl")) {
           queryStr = translateGoogleLikeQueryToLucene(queryStr);
         }
+        facetConstraints = getFacetConstraints(queryStr);
         query = buildFieldExpandedQuery(queryParser, queryStr, fieldExpansion);
       }
       LanguageHandler languageHandler = new LanguageHandler();
@@ -724,8 +726,9 @@ public class IndexHandler {
       TopDocs resultDocs = topFieldCollector.topDocs();
       Facets facets = null;
       List<FacetResult> tmpFacetResult = facetsCollector.getFacetResults();
-      if (tmpFacetResult != null && ! tmpFacetResult.isEmpty())
-        facets = new Facets(tmpFacetResult);
+      if (tmpFacetResult != null && ! tmpFacetResult.isEmpty()) {
+        facets = new Facets(tmpFacetResult, facetConstraints);
+      }
       resultDocs.setMaxScore(1);
       int toTmp = to;
       if (resultDocs.totalHits <= to)
@@ -808,6 +811,21 @@ public class IndexHandler {
     return hits;
   }
 
+  private Hashtable<String, String[]> getFacetConstraints(String luceneQueryStr) {
+    Hashtable<String, String[]> facetConstraints = null;
+    String authorFieldValues = luceneQueryStr.replaceAll("(.*?)author:\\((.*?)\\)(.*)", "$2");  // TODO weitere Felder
+    if (authorFieldValues != null) {
+      String[] fieldValues = authorFieldValues.split(" \"");
+      if (fieldValues != null) {
+        for (int i=0; i<fieldValues.length; i++)
+          fieldValues[i] = fieldValues[i].replaceAll("\"", "");
+      }
+      facetConstraints = new Hashtable<String, String[]>();
+      facetConstraints.put("author", fieldValues);
+    }
+    return facetConstraints;
+  }
+  
   public Hits queryDocument(String docId, String queryStr, int from, int to) throws ApplicationException {
     Hits hits = null;
     IndexSearcher searcher = null;
