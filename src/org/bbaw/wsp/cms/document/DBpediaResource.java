@@ -16,12 +16,14 @@ import de.mpg.mpiwg.berlin.mpdl.xml.xquery.XQueryEvaluator;
 
 public class DBpediaResource implements Comparable<DBpediaResource> {
   private String baseUrl;
+  private String type;
+  private String language;
   private String uri;
   private String name;
   private String gnd;
   private Integer support;
-  private String type;
   private Double similarity;
+  private Float score;
   private Integer frequency;
   private String context;
 
@@ -151,6 +153,18 @@ public class DBpediaResource implements Comparable<DBpediaResource> {
   public void setFrequency(Integer frequency) {
     this.frequency = frequency;
   }
+  public String getLanguage() {
+    return language;
+  }
+  public void setLanguage(String language) {
+    this.language = language;
+  }
+  public Float getScore() {
+    return score;
+  }
+  public void setScore(Float score) {
+    this.score = score;
+  }
   public String getContext() {
     return context;
   }
@@ -217,13 +231,19 @@ public class DBpediaResource implements Comparable<DBpediaResource> {
   public String toHtmlStr() {
     if (name == null || uri == null)
       return null;
-    String retStr = "<span class=\"" + type + "\">";
+    String retStr = "<span>";
     String queryHtmlStr = "<a href=\"" + baseUrl + "/query/QueryDocuments?query=entities:&quot;" + name + "&quot;\">" + name + "</a>";
     String refHtmlStr = "<a href=\"" + uri + "\"><img src=\"../images/rdfSmall.gif\" alt=\"DBpedia resource\" border=\"0\" height=\"15\" width=\"15\"></a>";
     String gndHtmlStr = "";
     if (gnd != null && ! gnd.isEmpty())
       gndHtmlStr = ", <a href=\"" + "http://d-nb.info/gnd/" + gnd + "\">GND</a>" ;
-    retStr = retStr + queryHtmlStr + " (" + refHtmlStr + gndHtmlStr + ")" + "</span>";
+    String scoreHtmlStr = "";
+    if (score != null)
+      scoreHtmlStr = ", " + score;
+    String typeHtmlStr = "";
+    if (type != null)
+      typeHtmlStr = ", " + type;
+    retStr = retStr + queryHtmlStr + " (" + refHtmlStr + gndHtmlStr + scoreHtmlStr + typeHtmlStr + ")" + "</span>";
     retStr = retStr + "</span>";
     return retStr;
   }
@@ -232,18 +252,24 @@ public class DBpediaResource implements Comparable<DBpediaResource> {
     JSONObject retJsonObject = new JSONObject();
     if (name == null || uri == null)
       return null;
-    retJsonObject.put("name", name);
+    retJsonObject.put("label", name);
     if (type != null && ! type.isEmpty())
       retJsonObject.put("type", type);
+    if (language != null)
+      retJsonObject.put("language", language);
+    else 
+      retJsonObject.put("language", "ger");
     try {
       String refEnc = URIUtil.encodeQuery(uri);
-      retJsonObject.put("reference", refEnc);
+      retJsonObject.put("uri", refEnc);
       String queryLink = baseUrl + "/query/QueryDocuments?query=entities:\"" + name + "\"";
       String queryLinkEnc = URIUtil.encodeQuery(queryLink);
-      retJsonObject.put("referenceQuery", queryLinkEnc);
+      retJsonObject.put("uriFulltextQuery", queryLinkEnc);
     } catch (URIException e) {}
     if (gnd != null && ! gnd.isEmpty())
-      retJsonObject.put("referenceGnd", "http://d-nb.info/gnd/" + gnd);
+      retJsonObject.put("uriGnd", "http://d-nb.info/gnd/" + gnd);
+    if (score != null)
+      retJsonObject.put("score", score);
     if (support != null)
       retJsonObject.put("dbpediaSpotlightSupport", support);
     if (similarity != null)
