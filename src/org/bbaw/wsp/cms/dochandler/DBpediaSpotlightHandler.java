@@ -2,8 +2,10 @@ package org.bbaw.wsp.cms.dochandler;
 
 import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileFilter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Hashtable;
@@ -18,7 +20,9 @@ import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.NameValuePair;
 import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.apache.log4j.Logger;
 import org.bbaw.wsp.cms.document.Annotation;
 import org.bbaw.wsp.cms.document.DBpediaResource;
@@ -47,11 +51,29 @@ public class DBpediaSpotlightHandler {
   private XQueryEvaluator xQueryEvaluator;
   private Hashtable<String, DBpediaResource> dbPediaResources;
   private Hashtable<String, String> germanStopwords;
+  private Hashtable<String, Integer> germanSupports;
 
+  public static void main(String[] args) throws ApplicationException {
+    try {
+      DBpediaSpotlightHandler dbPediaSpotlightHandler = DBpediaSpotlightHandler.getSupportInstance();
+      dbPediaSpotlightHandler.writeDBpediaSupports();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+      
   public static DBpediaSpotlightHandler getInstance() throws ApplicationException {
     if (instance == null) {
       instance = new DBpediaSpotlightHandler();
       instance.init();
+    }
+    return instance;
+  }
+  
+  public static DBpediaSpotlightHandler getSupportInstance() throws ApplicationException {
+    if (instance == null) {
+      instance = new DBpediaSpotlightHandler();
+      instance.initDBpediaSupports();
     }
     return instance;
   }
@@ -92,9 +114,78 @@ public class DBpediaSpotlightHandler {
         String stopword = s.nextLine().trim();
         germanStopwords.put(stopword, stopword);
       }
+      s.close();
     } catch (Exception e) {
       throw new ApplicationException(e);
     }
+  }
+  
+  private void initDBpediaSupports() throws ApplicationException {
+    xQueryEvaluator = new XQueryEvaluator();
+    germanSupports = new Hashtable<String, Integer>();
+    String dbPediaSpotlightDirName = Constants.getInstance().getExternalDocumentsDir() +  "/dbPediaSpotlightResources";
+    File spotlightSupportFileGerman = new File(dbPediaSpotlightDirName + "/spotlight-supports-de.txt");
+    if (! spotlightSupportFileGerman.exists()) {
+      LOGGER.info("DBpediaSpotlightHandler could not be initialized. File: " + spotlightSupportFileGerman.getAbsolutePath() + " does not exist");
+      return;
+    }
+    try {
+      Scanner s = new Scanner(spotlightSupportFileGerman, "utf-8");
+      while (s.hasNextLine()) {
+        String line = s.nextLine().trim();
+        if (line != null && ! line.isEmpty()) {
+          String[] supportPair = line.split(" ");
+          String uri = supportPair[0];
+          Integer support = new Integer(supportPair[1]);
+          germanSupports.put(uri, support);
+        }
+      }
+      s.close();
+    } catch (Exception e) {
+      throw new ApplicationException(e);
+    }
+  }
+  
+  private void writeDBpediaSupports() throws ApplicationException {
+    germanSupports = new Hashtable<String, Integer>();
+    String dbPediaSpotlightDirName = Constants.getInstance().getExternalDocumentsDir() +  "/dbPediaSpotlightResources";
+    File spotlightSupportFileGerman = new File(dbPediaSpotlightDirName + "/spotlight-supports-de.txt");
+    StringBuilder supportStrBuilder = new StringBuilder();
+    try {
+      String rdfFileFilterStr = "*.rdf"; 
+      FileFilter rdfFileFilter = new WildcardFileFilter(rdfFileFilterStr);
+      File dbPediaSpotlightDir = new File(dbPediaSpotlightDirName);
+      File[] files = dbPediaSpotlightDir.listFiles(rdfFileFilter);
+      if (files != null && files.length > 0) {
+        for (int i = 0; i < files.length; i++) {
+          File projectDBpediaSpotlightFile = files[i];
+          URL dbPediaSpotlightFileUrl = projectDBpediaSpotlightFile.toURI().toURL();
+          XdmValue xmdValueEntities = xQueryEvaluator.evaluate(dbPediaSpotlightFileUrl, "//*:relation/*:Description");
+          XdmSequenceIterator xmdValueEntitiesIterator = xmdValueEntities.iterator();
+          if (xmdValueEntities != null && xmdValueEntities.size() > 0) {
+            while (xmdValueEntitiesIterator.hasNext()) {
+              XdmItem xdmItemEntity = xmdValueEntitiesIterator.next();
+              String xdmItemEntityStr = xdmItemEntity.toString();
+              String uri = xQueryEvaluator.evaluateAsString(xdmItemEntityStr, "string(/*:Description/@*:about)");
+              if (! germanSupports.containsKey(uri)) { 
+                String supportStr = xQueryEvaluator.evaluateAsString(xdmItemEntityStr, "/*:Description/*:support/text()");
+                Integer support = new Integer(supportStr);
+                supportStrBuilder.append(uri + " " + supportStr + "\n");
+                germanSupports.put(uri, support);
+              }
+            }
+          }
+        }
+      }
+      FileUtils.writeStringToFile(spotlightSupportFileGerman, supportStrBuilder.toString(), "utf-8");
+      LOGGER.info("DBpedia Spotlight support file: \"" + spotlightSupportFileGerman + "\" sucessfully created");
+    } catch (Exception e) {
+      throw new ApplicationException(e);
+    }
+  }
+  
+  public Integer getSupport(String uri) {
+    return germanSupports.get(uri);
   }
   
   private void initDBpediaResourceLabels() throws ApplicationException {
@@ -164,6 +255,9 @@ public class DBpediaSpotlightHandler {
           }
         }
       }
+      s.close();
+      s2.close();
+      s3.close();
     } catch (IOException e) {
       throw new ApplicationException(e);
     }
