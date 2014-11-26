@@ -722,6 +722,7 @@ public class IndexHandler {
       facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("type"), 1000));
       FacetsCollector facetsCollector = new FacetsCollector(facetSearchParams, documentsIndexReader, taxonomyReader);
       Collector facetsCollectorWrapper = MultiCollector.wrap(topFieldCollector, facetsCollector);
+      searcher.setDefaultFieldSortScoring(true, true);
       searcher.search(morphQuery, facetsCollectorWrapper);
       TopDocs resultDocs = topFieldCollector.topDocs();
       Facets facets = null;
@@ -729,14 +730,15 @@ public class IndexHandler {
       if (tmpFacetResult != null && ! tmpFacetResult.isEmpty()) {
         facets = new Facets(tmpFacetResult, facetConstraints);
       }
-      resultDocs.setMaxScore(1);
       int toTmp = to;
       if (resultDocs.totalHits <= to)
         toTmp = resultDocs.totalHits - 1;
       if (resultDocs != null) {
         ArrayList<org.bbaw.wsp.cms.document.Document> docs = new ArrayList<org.bbaw.wsp.cms.document.Document>();
+        ArrayList<Float> scores = new ArrayList<Float>();
         for (int i=from; i<=toTmp; i++) { 
           int docID = resultDocs.scoreDocs[i].doc;
+          float score = resultDocs.scoreDocs[i].score;
           FieldSelector docFieldSelector = getDocFieldSelector();
           Document luceneDoc = searcher.doc(docID, docFieldSelector);
           org.bbaw.wsp.cms.document.Document doc = new org.bbaw.wsp.cms.document.Document(luceneDoc);
@@ -784,11 +786,14 @@ public class IndexHandler {
           }
           */
           docs.add(doc);
+          scores.add(score);
         }
         int sizeTotalDocuments = documentsIndexReader.numDocs();
         int sizeTotalTerms = tokens.size(); // term count over tokenOrig
         if (docs != null) {
           hits = new Hits(docs, from, to);
+          hits.setMaxScore(resultDocs.getMaxScore());
+          hits.setScores(scores);
           hits.setSize(resultDocs.totalHits);
           hits.setSizeTotalDocuments(sizeTotalDocuments);
           hits.setSizeTotalTerms(sizeTotalTerms);
