@@ -1,9 +1,26 @@
 package org.bbaw.wsp.cms.document;
 
+import java.util.Comparator;
+
 public class FacetValue {
+  public static Comparator<FacetValue> COUNT_COMPARATOR = new Comparator<FacetValue>() {
+    public int compare(FacetValue fv1, FacetValue fv2) {
+      return fv2.getCount().compareTo(fv1.getCount());
+    }
+  };
+  public static Comparator<FacetValue> SCORE_COMPARATOR = new Comparator<FacetValue>() {
+    public int compare(FacetValue fv1, FacetValue fv2) {
+      if (fv1.getScore() == null || fv2.getScore() == null)
+        return 0;
+      else 
+        return fv2.getScore().compareTo(fv1.getScore());
+    }
+  };
   private String name;
   private String value;
-  private Integer count;
+  private String type;  // person, place or concept
+  private Integer count; // number of documents for this facet
+  private Float score; // normalized score of this facet
   private String uri;
   private String gnd;
 
@@ -19,7 +36,12 @@ public class FacetValue {
   public void setValue(String value) {
     this.value = value;
   }
-  
+  public String getType() {
+    return type;
+  }
+  public void setType(String type) {
+    this.type = type;
+  }
   public String toString() {
     String nameStr = name;
     if (uri != null && ! uri.isEmpty() && gnd != null && !gnd.isEmpty())
@@ -38,6 +60,12 @@ public class FacetValue {
     this.count = count;
   }
   
+  public Float getScore() {
+    return score;
+  }
+  public void setScore(Float score) {
+    this.score = score;
+  }
   public String getUri() {
     return uri;
   }
