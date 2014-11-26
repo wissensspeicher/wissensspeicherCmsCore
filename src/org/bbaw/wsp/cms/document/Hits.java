@@ -6,6 +6,8 @@ import org.apache.lucene.search.Query;
 
 public class Hits {
   private ArrayList<Document> hits;
+  private float maxScore;  // maximum score of all hits 
+  private ArrayList<Float> scores;  // scores of the hits
   private Query query;
   private int from;
   private int to;
@@ -18,6 +20,22 @@ public class Hits {
     this.hits = hits;
     this.from = from;
     this.to = to;
+  }
+
+  public Float getMaxScore() {
+    return maxScore;
+  }
+
+  public void setMaxScore(Float maxScore) {
+    this.maxScore = maxScore;
+  }
+
+  public ArrayList<Float> getScores() {
+    return scores;
+  }
+
+  public void setScores(ArrayList<Float> scores) {
+    this.scores = scores;
   }
 
   public int getSize() {
