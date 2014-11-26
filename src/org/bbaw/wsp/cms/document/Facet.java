@@ -1,8 +1,14 @@
 package org.bbaw.wsp.cms.document;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class Facet {
+  public static Comparator<Facet> ID_COMPARATOR = new Comparator<Facet>() {
+    public int compare(Facet f1, Facet f2) {
+      return f1.getId().compareTo(f2.getId());
+    }
+  };
   private String id;
   private ArrayList<FacetValue> values;
 
