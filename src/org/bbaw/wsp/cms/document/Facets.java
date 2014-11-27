@@ -23,6 +23,7 @@ public class Facets implements Iterable<Facet> {
   private static float FACET_COUNT_WEIGHT = new Float(0.5);
   private static float SUPPORT_WEIGHT = new Float(0.5);
   protected String baseUrl;
+  protected String outputOptions = "showAllFacets";
   protected Hashtable<String, Facet> facets;
   protected Hashtable<String, String[]> constraints;
 
@@ -32,6 +33,14 @@ public class Facets implements Iterable<Facet> {
 
   public void setBaseUrl(String baseUrl) {
     this.baseUrl = baseUrl;
+  }
+
+  public String getOutputOptions() {
+    return outputOptions;
+  }
+
+  public void setOutputOptions(String outputOptions) {
+    this.outputOptions = outputOptions;
   }
 
   public Hashtable<String, String[]> getConstraints() {
@@ -259,41 +268,43 @@ public class Facets implements Iterable<Facet> {
         Collections.sort(facetValues, FacetValue.SCORE_COMPARATOR);
       else
         Collections.sort(facetValues, FacetValue.COUNT_COMPARATOR);
-      retStr = retStr + "<li>" + facetId;
-      retStr = retStr + "<ul>";
-      for (int j=0; j<facetValues.size(); j++) {
-        FacetValue facetValue = facetValues.get(j);
-        String facetValueName = facetValue.getName();
-        String facetValueValue = facetValue.getValue();
-        float facetValueScore = facetValue.getScore();
-        String facetValueUri = facetValue.getUri();
-        String gnd = facetValue.getGnd();
-        String facetValueNameHtml = facetValueName;
-        if (facetValueUri != null) {
-          facetValueNameHtml = " <uri>" + facetValueName + "</uri>";
-          if (facetId.contains("entity") || facetId.equals("mainEntities")) {
-            DBpediaResource entity = new DBpediaResource();
-            entity.setBaseUrl(baseUrl);
-            entity.setUri(facetValueUri);
-            entity.setGnd(gnd);
-            entity.setName(facetValueName);
-            entity.setScore(facetValueScore);
-            String type = "concept";
-            String facetValueType = facetValue.getType();
-            if (facetValueType != null)
-              type = facetValueType;
-            if (facetId.equals("entityPerson"))
-              type = "person";
-            else if (facetId.equals("entityPlace"))
-              type = "place";
-            entity.setType(type);
-            facetValueNameHtml = entity.toHtmlStr();
+      if ((outputOptions.contains("showMainEntitiesFacet") && facetId.equals("mainEntities")) || outputOptions.contains("showAllFacets") || outputOptions.contains("showAll")) {
+        retStr = retStr + "<li>" + facetId;
+        retStr = retStr + "<ul>";
+        for (int j=0; j<facetValues.size(); j++) {
+          FacetValue facetValue = facetValues.get(j);
+          String facetValueName = facetValue.getName();
+          String facetValueValue = facetValue.getValue();
+          float facetValueScore = facetValue.getScore();
+          String facetValueUri = facetValue.getUri();
+          String gnd = facetValue.getGnd();
+          String facetValueNameHtml = facetValueName;
+          if (facetValueUri != null) {
+            facetValueNameHtml = " <uri>" + facetValueName + "</uri>";
+            if (facetId.contains("entity") || facetId.equals("mainEntities")) {
+              DBpediaResource entity = new DBpediaResource();
+              entity.setBaseUrl(baseUrl);
+              entity.setUri(facetValueUri);
+              entity.setGnd(gnd);
+              entity.setName(facetValueName);
+              entity.setScore(facetValueScore);
+              String type = "concept";
+              String facetValueType = facetValue.getType();
+              if (facetValueType != null)
+                type = facetValueType;
+              if (facetId.equals("entityPerson"))
+                type = "person";
+              else if (facetId.equals("entityPlace"))
+                type = "place";
+              entity.setType(type);
+              facetValueNameHtml = entity.toHtmlStr();
+            }
           }
+          retStr = retStr + "<li>" + facetValueNameHtml + ": " + facetValueValue + "</li>";
         }
-        retStr = retStr + "<li>" + facetValueNameHtml + ": " + facetValueValue + "</li>";
+        retStr = retStr + "</ul>";
+        retStr = retStr + "</li>";
       }
-      retStr = retStr + "</ul>";
-      retStr = retStr + "</li>";
     }
     retStr = retStr + "</ul>";
     return retStr;
@@ -308,61 +319,63 @@ public class Facets implements Iterable<Facet> {
     for (int i=0; i<facetList.size(); i++) {
       Facet facet = facetList.get(i);
       String facetId = facet.getId();
-      ArrayList<FacetValue> facetValues = facet.getValues();
-      Collections.sort(facetValues, FacetValue.COUNT_COMPARATOR);
-      JSONArray jsonValuesFacets = new JSONArray();
-      for (int j=0; j<facetValues.size(); j++) {
-        FacetValue facetValue = facetValues.get(j);
-        String facetValueName = facetValue.getName();
-        String facetValueValue = facetValue.getValue();
-        facetValueValue = StringUtils.resolveXmlEntities(facetValueValue);
-        float facetValueScore = facetValue.getScore();
-        JSONObject jsonFacetValue = new JSONObject();
-        if (facetId != null && facetId.equals("collectionNames")) {
-          try {
-            Collection coll = CollectionReader.getInstance().getCollection(facetValueName);
-            String rdfId = coll.getRdfId();
-            if (rdfId == null)
-              rdfId = "none";
-            jsonFacetValue.put("rdfUri", rdfId); 
-            Date lastModified = coll.getLastModified();
-            if (lastModified != null) {
-              String xsDateStrLastModified = new Util().toXsDate(lastModified);
-              jsonFacetValue.put("lastModified", xsDateStrLastModified);
+      if ((outputOptions.contains("showMainEntitiesFacet") && facetId.equals("mainEntities")) || outputOptions.contains("showAllFacets") || outputOptions.contains("showAll")) {
+        ArrayList<FacetValue> facetValues = facet.getValues();
+        Collections.sort(facetValues, FacetValue.COUNT_COMPARATOR);
+        JSONArray jsonValuesFacets = new JSONArray();
+        for (int j=0; j<facetValues.size(); j++) {
+          FacetValue facetValue = facetValues.get(j);
+          String facetValueName = facetValue.getName();
+          String facetValueValue = facetValue.getValue();
+          facetValueValue = StringUtils.resolveXmlEntities(facetValueValue);
+          float facetValueScore = facetValue.getScore();
+          JSONObject jsonFacetValue = new JSONObject();
+          if (facetId != null && facetId.equals("collectionNames")) {
+            try {
+              Collection coll = CollectionReader.getInstance().getCollection(facetValueName);
+              String rdfId = coll.getRdfId();
+              if (rdfId == null)
+                rdfId = "none";
+              jsonFacetValue.put("rdfUri", rdfId); 
+              Date lastModified = coll.getLastModified();
+              if (lastModified != null) {
+                String xsDateStrLastModified = new Util().toXsDate(lastModified);
+                jsonFacetValue.put("lastModified", xsDateStrLastModified);
+              }
+            } catch (Exception e) {
+              jsonFacetValue.put("rdfUri", "none"); 
             }
-          } catch (Exception e) {
-            jsonFacetValue.put("rdfUri", "none"); 
           }
-        }
-        jsonFacetValue.put("count", facetValueValue); 
-        String facetValueUri = facetValue.getUri();
-        String facetValueGnd = facetValue.getGnd();
-        if (facetValueUri == null) {
-          jsonFacetValue.put("value", facetValueName);
-        } else {
-          if (facetId.contains("entity") || facetId.equals("mainEntities")) {
-            DBpediaResource entity = new DBpediaResource();
-            entity.setBaseUrl(baseUrl);
-            entity.setUri(facetValueUri);
-            entity.setGnd(facetValueGnd);
-            entity.setName(facetValueName);
-            entity.setScore(facetValueScore);
-            String type = "concept";
-            String facetValueType = facetValue.getType();
-            if (facetValueType != null)
-              type = facetValueType;
-            if (facetId.equals("entityPerson"))
-              type = "person";
-            else if (facetId.equals("entityPlace"))
-              type = "place";
-            entity.setType(type);
-            JSONObject jsonEntity = entity.toJsonObject();
-            jsonFacetValue = jsonEntity;
+          jsonFacetValue.put("count", facetValueValue); 
+          String facetValueUri = facetValue.getUri();
+          String facetValueGnd = facetValue.getGnd();
+          if (facetValueUri == null) {
+            jsonFacetValue.put("value", facetValueName);
+          } else {
+            if (facetId.contains("entity") || facetId.equals("mainEntities")) {
+              DBpediaResource entity = new DBpediaResource();
+              entity.setBaseUrl(baseUrl);
+              entity.setUri(facetValueUri);
+              entity.setGnd(facetValueGnd);
+              entity.setName(facetValueName);
+              entity.setScore(facetValueScore);
+              String type = "concept";
+              String facetValueType = facetValue.getType();
+              if (facetValueType != null)
+                type = facetValueType;
+              if (facetId.equals("entityPerson"))
+                type = "person";
+              else if (facetId.equals("entityPlace"))
+                type = "place";
+              entity.setType(type);
+              JSONObject jsonEntity = entity.toJsonObject();
+              jsonFacetValue = jsonEntity;
+            }
           }
+          jsonValuesFacets.add(jsonFacetValue);
         }
-        jsonValuesFacets.add(jsonFacetValue);
+        retJsonObject.put(facet.getId(), jsonValuesFacets);
       }
-      retJsonObject.put(facet.getId(), jsonValuesFacets);
     }
     return retJsonObject;
   }
