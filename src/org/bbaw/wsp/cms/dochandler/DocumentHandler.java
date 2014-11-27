@@ -567,6 +567,9 @@ public class DocumentHandler {
             dbPediaSpotlightCollectionRdfStrBuilder = edocColl.getDbPediaSpotlightRdfStrBuilder();
           }
           String uri = mdRecord.getUri();
+          String webUri = mdRecord.getWebUri();
+          if (webUri != null)
+            uri = webUri;
           uri = StringUtils.deresolveXmlEntities(uri);
           if (dbPediaSpotlightCollectionRdfStrBuilder != null) {
             dbPediaSpotlightCollectionRdfStrBuilder.append("<rdf:Description rdf:about=\"" + uri + "\">\n");
