@@ -42,6 +42,7 @@ import de.mpg.mpiwg.berlin.mpdl.xml.xquery.XQueryEvaluator;
 public class DBpediaSpotlightHandler {
   private static Logger LOGGER = Logger.getLogger(DBpediaSpotlightHandler.class);
   private static DBpediaSpotlightHandler instance;
+  private static DBpediaSpotlightHandler instanceSupport;
   private static int SOCKET_TIMEOUT = 200 * 1000;
   // private static String HOSTNAME = "localhost";
   private static String HOSTNAME = "wspdev.bbaw.de";
@@ -71,11 +72,11 @@ public class DBpediaSpotlightHandler {
   }
   
   public static DBpediaSpotlightHandler getSupportInstance() throws ApplicationException {
-    if (instance == null) {
-      instance = new DBpediaSpotlightHandler();
-      instance.initDBpediaSupports();
+    if (instanceSupport == null) {
+      instanceSupport = new DBpediaSpotlightHandler();
+      instanceSupport.initDBpediaSupports();
     }
-    return instance;
+    return instanceSupport;
   }
   
   private void init() throws ApplicationException {
@@ -397,6 +398,8 @@ public class DBpediaSpotlightHandler {
     } catch (HttpException e) {
       throw new ApplicationException(e);
     } catch (IOException e) {
+      throw new ApplicationException(e);
+    } catch (Exception e) {
       throw new ApplicationException(e);
     }
     return resultStr;
