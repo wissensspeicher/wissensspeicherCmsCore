@@ -733,13 +733,13 @@ public class IndexHandler {
       int toTmp = to;
       if (resultDocs.totalHits <= to)
         toTmp = resultDocs.totalHits - 1;
+      FieldSelector docFieldSelector = getDocFieldSelector();
       if (resultDocs != null) {
         ArrayList<org.bbaw.wsp.cms.document.Document> docs = new ArrayList<org.bbaw.wsp.cms.document.Document>();
         ArrayList<Float> scores = new ArrayList<Float>();
         for (int i=from; i<=toTmp; i++) { 
           int docID = resultDocs.scoreDocs[i].doc;
           float score = resultDocs.scoreDocs[i].score;
-          FieldSelector docFieldSelector = getDocFieldSelector();
           Document luceneDoc = searcher.doc(docID, docFieldSelector);
           org.bbaw.wsp.cms.document.Document doc = new org.bbaw.wsp.cms.document.Document(luceneDoc);
           if (withHitFragments) {
@@ -788,6 +788,42 @@ public class IndexHandler {
           docs.add(doc);
           scores.add(score);
         }
+        // fetch the "best" hits
+        boolean withBestHits = false;  // TODO
+        Hits bestHits = null;
+        if (withBestHits && resultDocs != null) {
+          int numberOfBestHits = 1000;
+          int maxDocsForEachProject = 5;
+          TopFieldCollector topFieldCollectorBestDocs = TopFieldCollector.create(sort, numberOfBestHits, true, true, true, true); 
+          searcher.search(morphQuery, topFieldCollectorBestDocs);
+          TopDocs resultBestDocs = topFieldCollectorBestDocs.topDocs();
+          ArrayList<org.bbaw.wsp.cms.document.Document> bestDocs = new ArrayList<org.bbaw.wsp.cms.document.Document>();
+          ArrayList<Float> bestScores = new ArrayList<Float>();
+          Hashtable<String, Integer> collCounters = new Hashtable<String, Integer>();
+          for (int i=0; i<numberOfBestHits; i++) { 
+            int docID = resultBestDocs.scoreDocs[i].doc;
+            float score = resultBestDocs.scoreDocs[i].score;
+            FieldSelector docCollectionNameFieldSelector = getDocFieldSelectorCollectionName();
+            Document luceneDoc = searcher.doc(docID, docCollectionNameFieldSelector);
+            String collName = luceneDoc.getFieldable("collectionNames").stringValue();
+            Integer collCounter = collCounters.get(collName);
+            if (collCounter == null) {
+              collCounter = new Integer(0);
+            }
+            collCounter++;
+            collCounters.put(collName, collCounter);
+            if (collCounter <= maxDocsForEachProject) {
+              Document fullLuceneDoc = searcher.doc(docID, docFieldSelector);
+              org.bbaw.wsp.cms.document.Document fullDoc = new org.bbaw.wsp.cms.document.Document(fullLuceneDoc);
+              bestDocs.add(fullDoc);
+              bestScores.add(score);
+            }
+          }
+          int bestTo = from + numberOfBestHits;
+          if (from == 0)
+            bestTo = numberOfBestHits - 1;
+          bestHits = new Hits(bestDocs, from, bestTo);
+        }
         int sizeTotalDocuments = documentsIndexReader.numDocs();
         int sizeTotalTerms = tokens.size(); // term count over tokenOrig
         if (docs != null) {
@@ -799,6 +835,7 @@ public class IndexHandler {
           hits.setSizeTotalTerms(sizeTotalTerms);
           hits.setQuery(morphQuery);
           hits.setFacets(facets);
+          // hits.setBestHits(bestHits); // TODO
         }
       }
     } catch (Exception e) {
@@ -1917,6 +1954,13 @@ public class IndexHandler {
     fields.add("personsDetails");
     fields.add("places");
     fields.add("content");
+    FieldSelector fieldSelector = new SetBasedFieldSelector(fields, fields);
+    return fieldSelector;
+  }
+  
+  private FieldSelector getDocFieldSelectorCollectionName() {
+    HashSet<String> fields = new HashSet<String>();
+    fields.add("collectionNames");
     FieldSelector fieldSelector = new SetBasedFieldSelector(fields, fields);
     return fieldSelector;
   }
