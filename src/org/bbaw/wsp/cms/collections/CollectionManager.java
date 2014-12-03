@@ -288,7 +288,7 @@ public class CollectionManager {
       URL rdfRessourcesFileUrl = rdfRessourcesFile.toURI().toURL();
       String namespaceDeclaration = "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; declare namespace dc=\"http://purl.org/dc/elements/1.1/\"; declare namespace dcterms=\"http://purl.org/dc/terms/\"; ";
       XQueryEvaluator xQueryEvaluator = new XQueryEvaluator();
-      XdmValue xmdValueResources = xQueryEvaluator.evaluate(rdfRessourcesFileUrl, namespaceDeclaration + "/rdf:RDF/rdf:Description");
+      XdmValue xmdValueResources = xQueryEvaluator.evaluate(rdfRessourcesFileUrl, namespaceDeclaration + "/rdf:RDF/rdf:Description[rdf:type/@rdf:resource = 'http://purl.org/dc/terms/BibliographicResource']");
       XdmSequenceIterator xmdValueResourcesIterator = xmdValueResources.iterator();
       int maxIdcounter = IndexHandler.getInstance().findMaxId();  // find the highest value, so that each following id is a real new id
       if (xmdValueResources != null && xmdValueResources.size() > 0) {
