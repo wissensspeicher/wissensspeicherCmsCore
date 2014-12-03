@@ -1,79 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rdf:RDF 
-   xmlns="http://wsp.normdata.rdf/AvHForschungsstelle/Sekundärliteratur" 
-   xml:base="http://wsp.normdata.rdf/AvHForschungsstelle/Sekundärliteratur" 
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
-   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" 
-   xmlns:dc="http://purl.org/dc/elements/1.1/" 
-   xmlns:dcterms="http://purl.org/dc/terms/" 
-   xmlns:foaf="http://xmlns.com/foaf/0.1/" 
-   xmlns:gnd="http://d-nb.info/standards/elementset/gnd#" 
-   xmlns:ore="http://www.openarchives.org/ore/terms/" 
->
+<!DOCTYPE rdf:RDF [
+    <!ENTITY dcterms "http://purl.org/dc/terms/" >
+    <!ENTITY foaf "http://xmlns.com/foaf/0.1/" >
+    <!ENTITY dcmitype "http://purl.org/dc/dcmitype/" >
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY dc "http://purl.org/dc/elements/1.1/" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY edm "http://www.europeana.eu/schemas/edm/" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY ore "http://www.openarchives.org/ore/terms/" >
+    <!ENTITY gnd "http://d-nb.info/standards/elementset/gnd#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY vs "http://www.w3.org/2003/06/sw-vocab-status/ns#" >
+]>
+
+
+<rdf:RDF xmlns="http://wsp.normdata.rdf/"
+  xml:base="http://wsp.normdata.rdf/"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:gnd="http://d-nb.info/standards/elementset/gnd#"
+  xmlns:edm="http://www.europeana.eu/schemas/edm/"
+  xmlns:foaf="http://xmlns.com/foaf/0.1/"
+  xmlns:dcmitype="http://purl.org/dc/dcmitype/"
+  xmlns:ore="http://www.openarchives.org/ore/terms/"
+  xmlns:vs="http://www.w3.org/2003/06/sw-vocab-status/ns#"
+  xmlns:dcterms="http://purl.org/dc/terms/"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:owl="http://www.w3.org/2002/07/owl#"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <owl:Ontology rdf:about="http://wsp.normdata.rdf/"/>
+  
+  <rdf:Description rdf:about="http://wsp.normdata.rdf/AvHForschungsstelle/Sekundärliteratur">
+    <rdf:type rdf:resource="&foaf;Project"/>
+    <dc:language>ger</dc:language>
+    <foaf:name>Alexander von Humboldt Forschungsstelle: Sekundärliteraturdatenbank zu Alexander von Humboldt</foaf:name>
+    <foaf:nick>avhseklit</foaf:nick>
+    <foaf:homepage rdf:resource="http://avh.bbaw.de/biblio"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle"/>
+    <dcterms:temporal rdf:datatype="&dcterms;Period">start=1718; end=2012; name=Publikationszeitraum</dcterms:temporal>
+    <dc:description>Version 2.0.2 r3</dc:description>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/Telota"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dc:publisher rdf:resource="http://wsp.normdata.rdf/BBAW"/>
+    <dcterms:rightsHolder rdf:resource="http://wsp.normdata.rdf/BBAW"/>
+    <dcterms:issued rdf:datatype="&xsd;date">2009</dcterms:issued>
+    <dcterms:rightsHolder rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle"/>
+    <dcterms:tableOfContents>Suche nach beteiligten Personen, Titel, Veröffentlichungsort, Veröffentlichungsjahr und Schlagwort; Autorenregister, Bibliographienverzeichnis, Ortsregister, Personenregister, Stichwortregister und Titelregister.</dcterms:tableOfContents>
+    <dcterms:abstract>Enthält alle Artikel, die Alexander von Humboldt zum Thema haben, und die in der Alexander-von-Humboldt-Forschungsstelle der Berlin-Brandenburgischen Akademie der Wissenschaften bibliographisch erfasst sind.</dcterms:abstract>
+    <dcterms:modified rdf:datatype="&xsd;date">2012</dcterms:modified>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/Mikosch"/>
+    <dc:title>Sekundärliteraturdatenbank zu Alexander von Humboldt</dc:title>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/Roeder"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/Hildebrand"/>
+  </rdf:Description>
+  
+  
 <rdf:Description rdf:about="http://avh.bbaw.de/biblio/">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Sekundärliteratur"/>
-  <dc:identifier rdf:resource="http://avh.bbaw.de/biblio/"/>
-  <dcterms:temporal>start=1718; end=2012; name=Publikationszeitraum</dcterms:temporal>
-  <dc:description>Version 2.0.2 r3</dc:description>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Telota"/>
-  <dc:format rdf:resource="http://wsp.normdata.rdf/app_x_sql"/>
-  <dc:publisher rdf:resource="http://wsp.normdata.rdf/BBAW"/>
-  <dcterms:rightsHolder rdf:resource="http://wsp.normdata.rdf/BBAW"/>
-  <dcterms:issued>2009</dcterms:issued>
-  <dcterms:rightsHolder rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle"/>
-  <dcterms:tableOfContents>Suche nach beteiligten Personen, Titel, Veröffentlichungsort, Veröffentlichungsjahr und Schlagwort; Autorenregister, Bibliographienverzeichnis, Ortsregister, Personenregister, Stichwortregister und Titelregister.</dcterms:tableOfContents>
-  <dcterms:abstract>Enthält alle Artikel, die Alexander von Humboldt zum Thema haben, und die in der Alexander-von-Humboldt-Forschungsstelle der Berlin-Brandenburgischen Akademie der Wissenschaften bibliographisch erfasst sind.</dcterms:abstract>
-  <dcterms:modified>2012</dcterms:modified>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Mikosch"/>
-  <dc:title>Sekundärliteraturdatenbank zu Alexander von Humboldt</dc:title>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Roeder"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Hildebrand"/>
+  <dc:identifier rdf:resource="http://avh.bbaw.de/biblio"/>
 </rdf:Description>
   <rdf:Description rdf:about="http://avh.bbaw.de/biblio/indices.php?id=o">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-    <dc:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    
     <dc:identifier rdf:resource="http://avh.bbaw.de/biblio/indices.php?id=o"/>
-    <dcterms:isPartOf rdf:resource="http://avh.bbaw.de/biblio/"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Sekundärliteratur"/>
     <dc:title>Ortsregister</dc:title>
   </rdf:Description>
   <rdf:Description rdf:about="http://avh.bbaw.de/biblio/indices.php?id=a">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-    <dc:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+
     <dc:identifier rdf:resource="http://avh.bbaw.de/biblio/indices.php?id=a"/>
-    <dcterms:isPartOf rdf:resource="http://avh.bbaw.de/biblio/"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Sekundärliteratur"/>
     <dc:title>Autorenregister</dc:title>
     <dcterms:extent>A-Z</dcterms:extent>
   </rdf:Description>
   <rdf:Description rdf:about="http://avh.bbaw.de/biblio/indices.php?id=s">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-    <dc:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+
     <dc:identifier rdf:resource="http://avh.bbaw.de/biblio/indices.php?id=s"/>
-    <dcterms:isPartOf rdf:resource="http://avh.bbaw.de/biblio/"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Sekundärliteratur"/>
     <dc:title>Stichwortregister</dc:title>
     
   </rdf:Description>
   <rdf:Description rdf:about="http://avh.bbaw.de/biblio/indices.php?id=p">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-    <dc:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+
     <dc:identifier rdf:resource="http://avh.bbaw.de/biblio/indices.php?id=p"/>
-    <dcterms:isPartOf rdf:resource="http://avh.bbaw.de/biblio/"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Sekundärliteratur"/>
     <dc:title>Personenregister</dc:title>
     <dcterms:extent>ca. 4600 Personeneinträge</dcterms:extent>
   </rdf:Description>
   <rdf:Description rdf:about="http://avh.bbaw.de/biblio/indices.php?id=t">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-    <dc:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+
     <dc:identifier rdf:resource="http://avh.bbaw.de/biblio/indices.php?id=t"/>
-    <dcterms:isPartOf rdf:resource="http://avh.bbaw.de/biblio/"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Sekundärliteratur"/>
     <dc:title>Titelregister</dc:title>
     <dcterms:extent>ca. 7350 Titeleinträge</dcterms:extent>
   </rdf:Description>
   <rdf:Description rdf:about="http://avh.bbaw.de/biblio/indices.php?id=b">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-    <dc:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+
     <dc:identifier rdf:resource="http://avh.bbaw.de/biblio/indices.php?id=b"/>
-    <dcterms:isPartOf rdf:resource="http://avh.bbaw.de/biblio/"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Sekundärliteratur"/>
     <dc:title>Bibliographienverzeichnis</dc:title>
 
   </rdf:Description>
