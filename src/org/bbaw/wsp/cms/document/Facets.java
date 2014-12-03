@@ -150,6 +150,8 @@ public class Facets implements Iterable<Facet> {
   }
 
   private Facet buildMainEntitiesFacet() {
+    if (facets == null)
+      return null;
     ArrayList<FacetValue> mainEntityValues = new ArrayList<FacetValue>();
     Facet facetEntityPerson = facets.get("entityPerson");
     Facet facetEntityPlace = facets.get("entityPlace");
@@ -297,7 +299,9 @@ public class Facets implements Iterable<Facet> {
               else if (facetId.equals("entityPlace"))
                 type = "place";
               entity.setType(type);
-              facetValueNameHtml = entity.toHtmlStr();
+              facetValueNameHtml = entity.toHtmlStr(false);
+              if (facetId.equals("mainEntities"))
+                facetValueNameHtml = entity.toHtmlStr(true);
             }
           }
           retStr = retStr + "<li>" + facetValueNameHtml + ": " + facetValueValue + "</li>";
