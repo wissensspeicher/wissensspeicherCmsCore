@@ -374,15 +374,19 @@ public class IndexHandler {
       }
       if (mdRecord.getEntitiesDetails() != null) {
         ArrayList<DBpediaResource> entities = DBpediaResource.fromXmlStr(xQueryEvaluator, mdRecord.getEntitiesDetails());
+        String entitiesUris = "";
         for (int i=0; i<entities.size(); i++) {
           DBpediaResource entity = entities.get(i);
           String entityType = entity.getType();
           String entityName = entity.getName();
           String entityUri = entity.getUri();
+          entitiesUris = entitiesUris + " " + entityUri;
           String entityFacetStr = entityName + "<uri>" + entityUri + "</uri>";
           String entityGnd = entity.getGnd();
-          if (entityGnd != null && ! entityGnd.isEmpty())
+          if (entityGnd != null && ! entityGnd.isEmpty()) {
             entityFacetStr = entityFacetStr + "<gnd>" + entityGnd + "</gnd>";
+            entitiesUris = entitiesUris + " " + entityGnd;
+          }
           if (entityType != null && entityType.equals("person"))
             categories.add(new CategoryPath("entityPerson", entityFacetStr));
           else if (entityType != null && entityType.equals("place"))
@@ -394,6 +398,8 @@ public class IndexHandler {
         }
         Field entitiesDetailsField = new Field("entitiesDetails", mdRecord.getEntitiesDetails(), Field.Store.YES, Field.Index.NOT_ANALYZED);
         doc.add(entitiesDetailsField);
+        Field entitiesUrisField = new Field("entitiesUris", entitiesUris, Field.Store.YES, Field.Index.ANALYZED);
+        doc.add(entitiesUrisField);
       }
       if (mdRecord.getPersons() != null) {
         Field personsField = new Field("persons", mdRecord.getPersons(), Field.Store.YES, Field.Index.ANALYZED);
