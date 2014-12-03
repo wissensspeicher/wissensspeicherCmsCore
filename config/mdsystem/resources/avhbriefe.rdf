@@ -1,15 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rdf:RDF 
-   xmlns="http://wsp.normdata.rdf/AvHForschungsstelle/Briefe" 
-   xml:base="http://wsp.normdata.rdf/AvHForschungsstelle/Briefe" 
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
-   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" 
-   xmlns:dc="http://purl.org/dc/elements/1.1/" 
-   xmlns:dcterms="http://purl.org/dc/terms/" 
-   xmlns:foaf="http://xmlns.com/foaf/0.1/" 
-   xmlns:gnd="http://d-nb.info/standards/elementset/gnd#" 
-   xmlns:ore="http://www.openarchives.org/ore/terms/" 
->
+<!DOCTYPE rdf:RDF [
+    <!ENTITY dcterms "http://purl.org/dc/terms/" >
+    <!ENTITY foaf "http://xmlns.com/foaf/0.1/" >
+    <!ENTITY dcmitype "http://purl.org/dc/dcmitype/" >
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY dc "http://purl.org/dc/elements/1.1/" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY edm "http://www.europeana.eu/schemas/edm/" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY ore "http://www.openarchives.org/ore/terms/" >
+    <!ENTITY gnd "http://d-nb.info/standards/elementset/gnd#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY vs "http://www.w3.org/2003/06/sw-vocab-status/ns#" >
+]>
+
+
+<rdf:RDF xmlns="http://wsp.normdata.rdf/"
+  xml:base="http://wsp.normdata.rdf/"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:gnd="http://d-nb.info/standards/elementset/gnd#"
+  xmlns:edm="http://www.europeana.eu/schemas/edm/"
+  xmlns:foaf="http://xmlns.com/foaf/0.1/"
+  xmlns:dcmitype="http://purl.org/dc/dcmitype/"
+  xmlns:ore="http://www.openarchives.org/ore/terms/"
+  xmlns:vs="http://www.w3.org/2003/06/sw-vocab-status/ns#"
+  xmlns:dcterms="http://purl.org/dc/terms/"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:owl="http://www.w3.org/2002/07/owl#"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <owl:Ontology rdf:about="http://wsp.normdata.rdf/"/>
+  
 <rdf:Description rdf:about="http://avh.bbaw.de/publikationen/digitale-veroeffentlichungen/alexander-von-humboldt-2013-christian-gottfried-ehrenberg.-briefwechsel">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Briefe"/>
@@ -21,4 +42,21 @@
   <dc:identifier rdf:resource="http://telota.bbaw.de:8085/exist/rest/db/AvHBriefedition/"/>
   <dc:type>eXistDir</dc:type>
 </rdf:Description>
+  
+  <rdf:Description rdf:about="http://wsp.normdata.rdf/AvHForschungsstelle/Briefe">
+    <rdf:type rdf:resource="&foaf;Project"/>
+    <foaf:nick>avhbriefe</foaf:nick>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/Jobst"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/Knobloch"/>
+    <dc:publisher rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle"/>
+    <dcterms:rightsHolder rdf:resource="http://wsp.normdata.rdf/BBAW"/>
+    <foaf:name>Alexander von Humboldt Forschungsstelle: Alexander von Humboldt – Christian Gottfried Ehrenberg. Briefwechsel</foaf:name>
+    <dc:language>ger</dc:language>
+    <foaf:homepage rdf:resource="http://avh.bbaw.de/publikationen/digitale-veroeffentlichungen/alexander-von-humboldt-2013-christian-gottfried-ehrenberg.-briefwechsel"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle"/>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/HumboldtAlexander"/>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/EhrenbergChristian"/>
+    <dcterms:abstract>Es handelt sich um die elektronische Edition des Briefwechsels zwischen Christian Gottfried Ehrenberg und Alexander von Humboldt aus den Jahren 1820 bis 1859, dem Todesjahr von Alexander von Humboldt. Der Briefwechsel wird von Anne Jobst unter Mitwirkung von Eberhard Knobloch an der Alexander-von-Humboldt-Forschungsstelle der BBAW herausgegeben.</dcterms:abstract>
+    <dcterms:temporal rdf:datatype="&dcterms;Period">start=1820; end=1859</dcterms:temporal>
+  </rdf:Description>
 </rdf:RDF>
