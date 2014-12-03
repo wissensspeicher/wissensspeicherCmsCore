@@ -228,11 +228,11 @@ public class DBpediaResource implements Comparable<DBpediaResource> {
     return retStr;
   }
   
-  public String toHtmlStr() {
+  public String toHtmlStr(boolean showType) {
     if (name == null || uri == null)
       return null;
     String retStr = "<span>";
-    String queryHtmlStr = "<a href=\"" + baseUrl + "/query/QueryDocuments?query=entities:&quot;" + name + "&quot;\">" + name + "</a>";
+    String queryHtmlStr = "<a href=\"" + baseUrl + "/query/QueryDocuments?query=entitiesUris:&quot;" + uri + "&quot;\">" + name + "</a>";
     String refHtmlStr = "<a href=\"" + uri + "\"><img src=\"../images/rdfSmall.gif\" alt=\"DBpedia resource\" border=\"0\" height=\"15\" width=\"15\"></a>";
     String gndHtmlStr = "";
     if (gnd != null && ! gnd.isEmpty())
@@ -241,7 +241,7 @@ public class DBpediaResource implements Comparable<DBpediaResource> {
     if (score != null)
       scoreHtmlStr = ", " + score;
     String typeHtmlStr = "";
-    if (type != null)
+    if (showType && type != null)
       typeHtmlStr = ", " + type;
     retStr = retStr + queryHtmlStr + " (" + refHtmlStr + gndHtmlStr + scoreHtmlStr + typeHtmlStr + ")" + "</span>";
     retStr = retStr + "</span>";
@@ -262,7 +262,7 @@ public class DBpediaResource implements Comparable<DBpediaResource> {
     try {
       String refEnc = URIUtil.encodeQuery(uri);
       retJsonObject.put("uri", refEnc);
-      String queryLink = baseUrl + "/query/QueryDocuments?query=entities:\"" + name + "\"";
+      String queryLink = baseUrl + "/query/QueryDocuments?query=entitiesUris:\"" + uri + "\"";
       String queryLinkEnc = URIUtil.encodeQuery(queryLink);
       retJsonObject.put("uriFulltextQuery", queryLinkEnc);
     } catch (URIException e) {}
