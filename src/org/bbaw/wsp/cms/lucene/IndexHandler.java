@@ -208,6 +208,8 @@ public class IndexHandler {
         categories.add(new CategoryPath("collectionNames", collectionNames));
         Field collectionNamesField = new Field("collectionNames", collectionNames, Field.Store.YES, Field.Index.ANALYZED);
         doc.add(collectionNamesField);
+        if (collectionNames.equals("jdg"))
+          doc.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
       }
       String author = mdRecord.getCreator();
       if (author != null) {
