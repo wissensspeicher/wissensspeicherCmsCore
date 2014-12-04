@@ -101,10 +101,15 @@ public class CollectionReader {
           String xdmItemStr = xdmItem.toString();
           String surname = xQueryEvaluator.evaluateAsString(xdmItemStr, "/*:Description/*:familyName/text()");
           String forename = xQueryEvaluator.evaluateAsString(xdmItemStr, "/*:Description/*:givenName/text()");
-          if (surname != null && ! surname.isEmpty())
+          if (surname != null && ! surname.isEmpty()) {
             person.setSurname(surname);
-          if (forename != null && ! forename.isEmpty())
+            person.setName(surname);
+          }
+          if (forename != null && ! forename.isEmpty()) {
             person.setForename(forename);
+            if (person.getSurname() != null) 
+              person.setName(person.getSurname() + ", " + forename);
+          }
           String aboutId = xQueryEvaluator.evaluateAsString(xdmItemStr, "string(/*:Description/@*:about)");
           persons.put(aboutId, person);
         }
