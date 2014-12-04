@@ -578,12 +578,17 @@ public class CollectionManager {
       while (xmdValueAuthorsIterator.hasNext()) {
         XdmItem xdmItemAuthor = xmdValueAuthorsIterator.next();
         String name = xdmItemAuthor.getStringValue();
-        if (name != null) {
-          name = name.replaceAll("\n|\\s\\s+", " ").trim();
-        }
         if (name != null && ! name.isEmpty()) {
+          name = name.replaceAll("\n|\\s\\s+", " ").trim();
           Person author = new Person(name);
           authors.add(author);
+        } 
+        String xdmItemAuthorStr = xdmItemAuthor.toString();
+        String resourceId = xQueryEvaluator.evaluateAsString(xdmItemAuthorStr, "string(/*:creator/@*:resource)");
+        if (resourceId != null && ! resourceId.isEmpty()) {
+          Person creator = CollectionReader.getInstance().getPerson(resourceId.trim());
+          if (creator != null)
+            authors.add(creator);
         }
       }
       String creator = "";
