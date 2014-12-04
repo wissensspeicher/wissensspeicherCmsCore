@@ -256,21 +256,22 @@ public class DocumentHandler {
     String collectionId = docOperation.getDocIdentifier();  // collectionId
     if (collectionId == null || collectionId.trim().equals(""))
       throw new ApplicationException("Delete collection: Your collection id is empty. Please specify a collection id");
-    String documentsDirectory = Constants.getInstance().getDocumentsDir();
-    File collectionDir = new File(documentsDirectory + "/" + collectionId);
     // perform operation on Lucene
     IndexHandler indexHandler = IndexHandler.getInstance();
     int countDeletedDocs = indexHandler.deleteCollection(collectionId);
     LOGGER.info(countDeletedDocs + " lucene documents in collection: \"" + collectionId + "\" successfully deleted");
-
     // perform operation on file system
-    docOperation.setStatus("Delete collection directory: " + collectionDir + " in CMS");
-    FileUtils.deleteQuietly(collectionDir);
-    LOGGER.info("Collection directory: " + collectionDir + " successfully deleted");
-    String oaiproviderDirStr = Constants.getInstance().getOaiproviderDir() + "/" + collectionId;
-    File oaiproviderDir = new File(oaiproviderDirStr);
-    FileUtils.deleteQuietly(oaiproviderDir);
-    LOGGER.info("OAI provider directory: " + oaiproviderDirStr + " successfully deleted");
+    try {
+      String collectionDirStr = Constants.getInstance().getDocumentsDir() + "/" + collectionId;
+      docOperation.setStatus("Delete collection directory: " + collectionDirStr + " in CMS");
+      Runtime.getRuntime().exec("rm -rf " + collectionDirStr);  // fast also when the directory contains many files
+      LOGGER.info("Collection directory: " + collectionDirStr + " successfully deleted");
+      String oaiproviderDirStr = Constants.getInstance().getOaiproviderDir() + "/" + collectionId;
+      Runtime.getRuntime().exec("rm -rf " + oaiproviderDirStr);  // fast also when the directory contains many files
+      LOGGER.info("OAI provider directory: " + oaiproviderDirStr + " successfully deleted");
+    } catch (IOException e) {
+      throw new ApplicationException(e);
+    }
   }
   
   private void writeOaiproviderFile(MetadataRecord mdRecord, XQueryEvaluator xQueryEvaluator) throws ApplicationException {
