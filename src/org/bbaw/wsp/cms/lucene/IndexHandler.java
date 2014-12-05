@@ -863,15 +863,17 @@ public class IndexHandler {
 
   private Hashtable<String, String[]> getFacetConstraints(String luceneQueryStr) {
     Hashtable<String, String[]> facetConstraints = null;
-    String authorFieldValues = luceneQueryStr.replaceAll("(.*?)author:\\((.*?)\\)(.*)", "$2");  // TODO weitere Felder
-    if (authorFieldValues != null) {
-      String[] fieldValues = authorFieldValues.split(" \"");
-      if (fieldValues != null) {
-        for (int i=0; i<fieldValues.length; i++)
-          fieldValues[i] = fieldValues[i].replaceAll("\"", "");
+    if (luceneQueryStr.contains("author:")) {
+      String authorFieldValues = luceneQueryStr.replaceAll("(.*?)author:\\((.*?)\\)(.*)", "$2");  // TODO weitere Felder
+      if (authorFieldValues != null) {
+        String[] fieldValues = authorFieldValues.split(" \"");
+        if (fieldValues != null) {
+          for (int i=0; i<fieldValues.length; i++)
+            fieldValues[i] = fieldValues[i].replaceAll("\"", "");
+        }
+        facetConstraints = new Hashtable<String, String[]>();
+        facetConstraints.put("author", fieldValues);
       }
-      facetConstraints = new Hashtable<String, String[]>();
-      facetConstraints.put("author", fieldValues);
     }
     return facetConstraints;
   }
