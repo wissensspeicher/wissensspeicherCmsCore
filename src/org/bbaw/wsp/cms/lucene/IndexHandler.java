@@ -391,6 +391,8 @@ public class IndexHandler {
           }
           if (entityType != null && entityType.equals("person"))
             categories.add(new CategoryPath("entityPerson", entityFacetStr));
+          else if (entityType != null && entityType.equals("organisation"))
+            categories.add(new CategoryPath("entityOrganisation", entityFacetStr));
           else if (entityType != null && entityType.equals("place"))
             categories.add(new CategoryPath("entityPlace", entityFacetStr));
           else if (entityType != null && entityType.equals("concept"))
@@ -725,6 +727,7 @@ public class IndexHandler {
       facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("swd"), 10));
       facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("ddc"), 10));
       facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("entityPerson"), 100));
+      facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("entityOrganisation"), 100));
       facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("entityPlace"), 100));
       facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("entityConcept"), 100));
       facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("type"), 1000));
