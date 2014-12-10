@@ -3325,7 +3325,7 @@ use controlled Vocab, like GND or Getty Thesaurus of Geo Names</rdfs:comment>
         <dc:format rdf:resource="http://wsp.normdata.rdf/InteractiveResource"/>
         <gnd:contributingCorporateBody rdf:resource="http://wsp.normdata.rdf/Muenzkabinett"/>
         <dc:contributor rdf:resource="http://wsp.normdata.rdf/Peter"/>
-        <foaf:homepage rdf:resource="http://wsp.normdata.rdfhttp://www.corpus-nummorum.eu/"/>
+        <foaf:homepage rdf:resource="http://www.corpus-nummorum.eu/"/>
     </rdf:Description>
     
 
@@ -16073,6 +16073,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
 
     <rdf:Description rdf:about="http://wsp.normdata.rdf/VerhaeltnisWissenschaftOeffentlichkeitMedien">
         <rdf:type rdf:resource="&foaf;Project"/>
+        <dc:language>ger</dc:language>
         <dcterms:valid rdf:datatype="&dcterms;Period">start=2012-01; end=2014-05</dcterms:valid>
         <dc:subject>Gesellschaftsforschung</dc:subject>
         <foaf:nick>vwom</foaf:nick>
@@ -17086,6 +17087,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
     <rdf:Description rdf:about="http://wsp.normdata.rdf/ZitatParaphrase">
         <rdf:type rdf:resource="&foaf;Project"/>
         <dc:type>Interdisziplinäre Arbeitsgruppe</dc:type>
+        <dc:language>ger</dc:language>
         <dc:subject>Wissensforschung</dc:subject>
         <foaf:status>aktiv</foaf:status>
         <foaf:name>Zitat und Paraphrase</foaf:name>
