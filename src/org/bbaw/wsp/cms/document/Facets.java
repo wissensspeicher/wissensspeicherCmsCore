@@ -109,6 +109,8 @@ public class Facets implements Iterable<Facet> {
             facetNameValue.setCount(facetCountHits);
             if (facetName.equals("entityPerson"))
               facetNameValue.setType("person");
+            else if (facetName.equals("entityOrganisation"))
+              facetNameValue.setType("organisation");
             else if (facetName.equals("entityPlace"))
               facetNameValue.setType("place");
             else if (facetName.equals("entityConcept"))
@@ -154,6 +156,7 @@ public class Facets implements Iterable<Facet> {
       return null;
     ArrayList<FacetValue> mainEntityValues = new ArrayList<FacetValue>();
     Facet facetEntityPerson = facets.get("entityPerson");
+    Facet facetEntityOrganisation = facets.get("entityOrganisation");
     Facet facetEntityPlace = facets.get("entityPlace");
     Facet facetEntityConcept = facets.get("entityConcept");
     if (facetEntityPerson != null) {
@@ -164,6 +167,16 @@ public class Facets implements Iterable<Facet> {
         countPersons = facetValuesPerson.size();
       for (int i=0; i<countPersons; i++) {
         mainEntityValues.add(facetValuesPerson.get(i));
+      }
+    }
+    if (facetEntityOrganisation != null) {
+      ArrayList<FacetValue> facetValuesOrganisation = facetEntityOrganisation.getValues();
+      Collections.sort(facetValuesOrganisation, FacetValue.SCORE_COMPARATOR);
+      int countOrganisations = 3;
+      if (facetValuesOrganisation.size() < countOrganisations)
+        countOrganisations = facetValuesOrganisation.size();
+      for (int i=0; i<countOrganisations; i++) {
+        mainEntityValues.add(facetValuesOrganisation.get(i));
       }
     }
     if (facetEntityPlace != null) {
@@ -296,6 +309,8 @@ public class Facets implements Iterable<Facet> {
                 type = facetValueType;
               if (facetId.equals("entityPerson"))
                 type = "person";
+              else if (facetId.equals("entityOrganisation"))
+                type = "organisation";
               else if (facetId.equals("entityPlace"))
                 type = "place";
               entity.setType(type);
@@ -369,6 +384,8 @@ public class Facets implements Iterable<Facet> {
                 type = facetValueType;
               if (facetId.equals("entityPerson"))
                 type = "person";
+              else if (facetId.equals("entityOrganisation"))
+                type = "organisation";
               else if (facetId.equals("entityPlace"))
                 type = "place";
               entity.setType(type);
