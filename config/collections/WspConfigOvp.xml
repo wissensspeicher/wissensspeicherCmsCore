@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp>
+  <collection>
+    <id>ovp</id>
+    <rdfId>http://wsp.normdata.rdf/OttoVonPassau</rdfId>
+    <name>Ausgabe der &apos;Vierundzwanzig Alten&apos; Ottos von Passau</name>
+    <url>
+      <webBaseUrl>http://www.bbaw.de/forschung/otto-von-passau</webBaseUrl>
+    </url>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>html</format>
+    </formats> 
+  </collection>
+</wsp>
+
