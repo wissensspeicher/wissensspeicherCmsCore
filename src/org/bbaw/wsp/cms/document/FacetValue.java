@@ -1,29 +1,55 @@
 package org.bbaw.wsp.cms.document;
 
+import java.util.Comparator;
+
 public class FacetValue {
+  public static Comparator<FacetValue> COUNT_COMPARATOR = new Comparator<FacetValue>() {
+    public int compare(FacetValue fv1, FacetValue fv2) {
+      return fv2.getCount().compareTo(fv1.getCount());
+    }
+  };
+  public static Comparator<FacetValue> SCORE_COMPARATOR = new Comparator<FacetValue>() {
+    public int compare(FacetValue fv1, FacetValue fv2) {
+      if (fv1.getScore() == null || fv2.getScore() == null)
+        return 0;
+      else 
+        return fv2.getScore().compareTo(fv1.getScore());
+    }
+  };
   private String name;
   private String value;
-  private Integer count;
+  private String type;  // person, place or concept
+  private Integer count; // number of documents for this facet
+  private Float score; // normalized score of this facet
+  private String uri;
+  private String gnd;
 
   public String getName() {
     return name;
   }
-  
   public void setName(String name) {
     this.name = name;
   }
-  
-
-public String getValue() {
+  public String getValue() {
     return value;
   }
-  
   public void setValue(String value) {
     this.value = value;
   }
-  
+  public String getType() {
+    return type;
+  }
+  public void setType(String type) {
+    this.type = type;
+  }
   public String toString() {
-    return name + " [" + count + "] : " + value;
+    String nameStr = name;
+    if (uri != null && ! uri.isEmpty() && gnd != null && !gnd.isEmpty())
+      nameStr = nameStr + " [" + uri + ", " + gnd + "]";
+    else if (uri != null && ! uri.isEmpty())
+      nameStr = nameStr + " [" + uri + "]";
+    String retStr = nameStr + ": " + value;
+    return retStr;
   }
 
   public Integer getCount() {
@@ -34,6 +60,26 @@ public String getValue() {
     this.count = count;
   }
   
+  public Float getScore() {
+    return score;
+  }
+  public void setScore(Float score) {
+    this.score = score;
+  }
+  public String getUri() {
+    return uri;
+  }
+
+  public void setUri(String uri) {
+    this.uri = uri;
+  }
+
+  public String getGnd() {
+    return gnd;
+  }
+  public void setGnd(String gnd) {
+    this.gnd = gnd;
+  }
   @Override
   public int hashCode() {
   	final int prime = 31;

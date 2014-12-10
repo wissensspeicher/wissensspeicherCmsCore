@@ -17928,6 +17928,19 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
         <foaf:homepage rdf:resource="http://telota.bbaw.de/wvh/db-start.jsf"/>
         <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/WilhelmVonHumboldt"/>
     </rdf:Description>
+
+  <rdf:Description rdf:about="http://wsp.normdata.rdf/Test">
+    <dc:language>eng</dc:language>
+    <rdf:type rdf:resource="&foaf;Project"/>
+    <foaf:nick rdf:datatype="http://www.w3.org/2001/XMLSchema#string">test</foaf:nick>
+    <foaf:name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Testprojekt (nicht beachten)</foaf:name>
+    <foaf:homepage rdf:resource="http://wspdev/test/"/>
+    <gnd:definition>NA</gnd:definition>
+    <dc:description rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NA</dc:description>
+    <dcterms:abstract rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NA</dcterms:abstract>
+    <dcterms:valid rdf:datatype="http://purl.org/dc/terms/Period">NA</dcterms:valid>
+    <gnd:topic rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NA</gnd:topic>
+  </rdf:Description>
 </rdf:RDF>
 
 

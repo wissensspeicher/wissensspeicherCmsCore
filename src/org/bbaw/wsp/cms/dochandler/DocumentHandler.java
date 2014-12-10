@@ -256,21 +256,22 @@ public class DocumentHandler {
     String collectionId = docOperation.getDocIdentifier();  // collectionId
     if (collectionId == null || collectionId.trim().equals(""))
       throw new ApplicationException("Delete collection: Your collection id is empty. Please specify a collection id");
-    String documentsDirectory = Constants.getInstance().getDocumentsDir();
-    File collectionDir = new File(documentsDirectory + "/" + collectionId);
     // perform operation on Lucene
     IndexHandler indexHandler = IndexHandler.getInstance();
     int countDeletedDocs = indexHandler.deleteCollection(collectionId);
     LOGGER.info(countDeletedDocs + " lucene documents in collection: \"" + collectionId + "\" successfully deleted");
-
     // perform operation on file system
-    docOperation.setStatus("Delete collection directory: " + collectionDir + " in CMS");
-    FileUtils.deleteQuietly(collectionDir);
-    LOGGER.info("Collection directory: " + collectionDir + " successfully deleted");
-    String oaiproviderDirStr = Constants.getInstance().getOaiproviderDir() + "/" + collectionId;
-    File oaiproviderDir = new File(oaiproviderDirStr);
-    FileUtils.deleteQuietly(oaiproviderDir);
-    LOGGER.info("OAI provider directory: " + oaiproviderDirStr + " successfully deleted");
+    try {
+      String collectionDirStr = Constants.getInstance().getDocumentsDir() + "/" + collectionId;
+      docOperation.setStatus("Delete collection directory: " + collectionDirStr + " in CMS");
+      Runtime.getRuntime().exec("rm -rf " + collectionDirStr);  // fast also when the directory contains many files
+      LOGGER.info("Collection directory: " + collectionDirStr + " successfully deleted");
+      String oaiproviderDirStr = Constants.getInstance().getOaiproviderDir() + "/" + collectionId;
+      Runtime.getRuntime().exec("rm -rf " + oaiproviderDirStr);  // fast also when the directory contains many files
+      LOGGER.info("OAI provider directory: " + oaiproviderDirStr + " successfully deleted");
+    } catch (IOException e) {
+      throw new ApplicationException(e);
+    }
   }
   
   private void writeOaiproviderFile(MetadataRecord mdRecord, XQueryEvaluator xQueryEvaluator) throws ApplicationException {
@@ -532,7 +533,10 @@ public class DocumentHandler {
       Annotation docContentAnnotation = null;
       Annotation docTitleAnnotation = null;
       try {
-        docContentAnnotation = dbPediaSpotlightHandler.annotate(docId, docTokensOrig, "0.99", 50);
+        String docContent = content; // docTokensOrig;
+        if (docTokensOrig == null && mdRecord.getDescription() != null && ! mdRecord.getDescription().isEmpty())
+          docContent = mdRecord.getDescription();
+        docContentAnnotation = dbPediaSpotlightHandler.annotate(docId, docContent, "0.99", 50);
         String docTitle = mdRecord.getTitle();
         if (docTitle != null)
           docTitleAnnotation = dbPediaSpotlightHandler.annotate(docId, docTitle, "0.5", 50);
@@ -559,7 +563,15 @@ public class DocumentHandler {
           StringBuilder dbPediaResourcesXmlStrBuilder = new StringBuilder();
           dbPediaResourcesXmlStrBuilder.append("<resources>\n");
           StringBuilder dbPediaSpotlightCollectionRdfStrBuilder = coll.getDbPediaSpotlightRdfStrBuilder();
+          if (mdRecord.isEdocRecord()) {
+            Collection edocColl = CollectionReader.getInstance().getCollection("edoc");
+            dbPediaSpotlightCollectionRdfStrBuilder = edocColl.getDbPediaSpotlightRdfStrBuilder();
+          }
           String uri = mdRecord.getUri();
+          String webUri = mdRecord.getWebUri();
+          if (webUri != null)
+            uri = webUri;
+          uri = StringUtils.deresolveXmlEntities(uri);
           if (dbPediaSpotlightCollectionRdfStrBuilder != null) {
             dbPediaSpotlightCollectionRdfStrBuilder.append("<rdf:Description rdf:about=\"" + uri + "\">\n");
             dbPediaSpotlightCollectionRdfStrBuilder.append("  <rdf:type rdf:resource=\"http://purl.org/dc/terms/BibliographicResource\"/>\n");

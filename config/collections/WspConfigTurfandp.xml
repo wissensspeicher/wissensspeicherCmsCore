@@ -14,5 +14,28 @@
       <format>html</format>
       <format>pdf</format>
     </formats>
+    <db>
+      <type>mysql</type>
+      <name>idp</name>
+      <xmlDump>
+        <sql>
+        </sql>
+      </xmlDump>
+      <mainResourcesTable>
+        <name>Items</name>
+        <idField>Pressmark</idField>
+        <field>
+          <dc>title</dc>
+          <db>Pressmark</db>
+        </field>
+        <field>
+          <dc>abstract</dc>
+          <db>abstract</db>
+        </field>
+      </mainResourcesTable>
+      <webId>
+        <preStr>http://idp.bbaw.de:80/database/oo_Loader.a4d?pm=</preStr>
+      </webId>
+    </db>
   </collection>
 </wsp>

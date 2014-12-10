@@ -237,6 +237,7 @@ public class CollectionManager {
       dbPediaSpotlightCollectionRdfStrBuilder.append("   xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" \n");
       dbPediaSpotlightCollectionRdfStrBuilder.append("   xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\" \n");
       dbPediaSpotlightCollectionRdfStrBuilder.append("   xmlns:dc=\"http://purl.org/dc/elements/1.1/\" \n");
+      dbPediaSpotlightCollectionRdfStrBuilder.append("   xmlns:gnd=\"http://d-nb.info/standards/elementset/gnd#/\" \n");
       dbPediaSpotlightCollectionRdfStrBuilder.append("   xmlns:dcterms=\"http://purl.org/dc/terms/\" \n");
       dbPediaSpotlightCollectionRdfStrBuilder.append("   xmlns:dbpedia-spotlight=\"http://spotlight.dbpedia.org/spotlight#\" \n");
       dbPediaSpotlightCollectionRdfStrBuilder.append(">\n");
@@ -287,7 +288,7 @@ public class CollectionManager {
       URL rdfRessourcesFileUrl = rdfRessourcesFile.toURI().toURL();
       String namespaceDeclaration = "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; declare namespace dc=\"http://purl.org/dc/elements/1.1/\"; declare namespace dcterms=\"http://purl.org/dc/terms/\"; ";
       XQueryEvaluator xQueryEvaluator = new XQueryEvaluator();
-      XdmValue xmdValueResources = xQueryEvaluator.evaluate(rdfRessourcesFileUrl, namespaceDeclaration + "/rdf:RDF/rdf:Description");
+      XdmValue xmdValueResources = xQueryEvaluator.evaluate(rdfRessourcesFileUrl, namespaceDeclaration + "/rdf:RDF/rdf:Description[rdf:type/@rdf:resource = 'http://purl.org/dc/terms/BibliographicResource']");
       XdmSequenceIterator xmdValueResourcesIterator = xmdValueResources.iterator();
       int maxIdcounter = IndexHandler.getInstance().findMaxId();  // find the highest value, so that each following id is a real new id
       if (xmdValueResources != null && xmdValueResources.size() > 0) {
@@ -549,8 +550,11 @@ public class CollectionManager {
     // download url of resource
     String resourceIdUrlStr = xQueryEvaluator.evaluateAsString(xmlRdfStr, namespaceDeclaration + "string(/rdf:Description/dc:identifier/@rdf:resource)");
     resourceIdUrlStr = StringUtils.resolveXmlEntities(resourceIdUrlStr);
-    if (resourceIdUrlStr == null || resourceIdUrlStr.trim().isEmpty())
-      LOGGER.error("No identifier given in resource: \"" + xmlRdfStr + "\"");
+    if (resourceIdUrlStr == null || resourceIdUrlStr.trim().isEmpty()) {
+      resourceIdUrlStr = xQueryEvaluator.evaluateAsString(xmlRdfStr, namespaceDeclaration + "string(/rdf:Description/@rdf:about)");
+      if (resourceIdUrlStr == null || resourceIdUrlStr.trim().isEmpty())
+        LOGGER.error("No identifier given in resource: \"" + xmlRdfStr + "\"");
+    }
     MetadataRecord mdRecord = getNewMdRecord(resourceIdUrlStr);
     // web url of resource
     String resourceIdentifierStr = xQueryEvaluator.evaluateAsString(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dc:identifier/text()");
@@ -574,12 +578,17 @@ public class CollectionManager {
       while (xmdValueAuthorsIterator.hasNext()) {
         XdmItem xdmItemAuthor = xmdValueAuthorsIterator.next();
         String name = xdmItemAuthor.getStringValue();
-        if (name != null) {
-          name = name.replaceAll("\n|\\s\\s+", " ").trim();
-        }
         if (name != null && ! name.isEmpty()) {
+          name = name.replaceAll("\n|\\s\\s+", " ").trim();
           Person author = new Person(name);
           authors.add(author);
+        } 
+        String xdmItemAuthorStr = xdmItemAuthor.toString();
+        String resourceId = xQueryEvaluator.evaluateAsString(xdmItemAuthorStr, "string(/*:creator/@*:resource)");
+        if (resourceId != null && ! resourceId.isEmpty()) {
+          Person creator = CollectionReader.getInstance().getPerson(resourceId.trim());
+          if (creator != null)
+            authors.add(creator);
         }
       }
       String creator = "";

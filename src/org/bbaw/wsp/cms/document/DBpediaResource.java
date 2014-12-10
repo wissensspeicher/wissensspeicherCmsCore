@@ -16,12 +16,16 @@ import de.mpg.mpiwg.berlin.mpdl.xml.xquery.XQueryEvaluator;
 
 public class DBpediaResource implements Comparable<DBpediaResource> {
   private String baseUrl;
+  private String type;
+  private String language;
   private String uri;
   private String name;
+  private String gnd;
   private Integer support;
-  private String type;
   private Double similarity;
+  private Float score;
   private Integer frequency;
+  private String context;
 
   public static Comparator<DBpediaResource> FrequencyComparatorDESC = new Comparator<DBpediaResource>() {
     public int compare(DBpediaResource r1, DBpediaResource r2) {
@@ -75,9 +79,14 @@ public class DBpediaResource implements Comparable<DBpediaResource> {
         if (uri != null)
           entity.setUri(uri);
         String name = xQueryEvaluator.evaluateAsString(xdmItemStr, "string(/resource/name)");
-        if (name != null && ! name.isEmpty()) {
-          entity.setName(name);
+        if (name == null || name.isEmpty()) {
+          int begin = uri.lastIndexOf("resource/") + 9;
+          name = uri.substring(begin);
         }
+        entity.setName(name);
+        String gnd = xQueryEvaluator.evaluateAsString(xdmItemStr, "string(/resource/gnd)");
+        if (gnd != null && ! gnd.isEmpty())
+          entity.setGnd(gnd);
         String supportStr = xQueryEvaluator.evaluateAsString(xdmItemStr, "string(/resource/support)");
         if (supportStr != null)
           entity.setSupport(new Integer(supportStr));
@@ -92,7 +101,6 @@ public class DBpediaResource implements Comparable<DBpediaResource> {
           entity.setFrequency(new Integer(frequencyStr));
         retEntities.add(entity);
       }
-      // Collections.sort(retEntities);
     }
     return retEntities;
   }
@@ -108,8 +116,6 @@ public class DBpediaResource implements Comparable<DBpediaResource> {
   }
   public void setUri(String uri) {
     this.uri = uri;
-    int begin = uri.lastIndexOf("resource/") + 9;
-    name = uri.substring(begin);
   }
   public String getName() {
     return name;
@@ -119,6 +125,12 @@ public class DBpediaResource implements Comparable<DBpediaResource> {
   }
   public Integer getSupport() {
     return support;
+  }
+  public String getGnd() {
+    return gnd;
+  }
+  public void setGnd(String gnd) {
+    this.gnd = gnd;
   }
   public void setSupport(Integer support) {
     this.support = support;
@@ -141,6 +153,24 @@ public class DBpediaResource implements Comparable<DBpediaResource> {
   public void setFrequency(Integer frequency) {
     this.frequency = frequency;
   }
+  public String getLanguage() {
+    return language;
+  }
+  public void setLanguage(String language) {
+    this.language = language;
+  }
+  public Float getScore() {
+    return score;
+  }
+  public void setScore(Float score) {
+    this.score = score;
+  }
+  public String getContext() {
+    return context;
+  }
+  public void setContext(String context) {
+    this.context = context;
+  }
 
   public String toXmlStr() {
     if (uri == null)
@@ -151,6 +181,13 @@ public class DBpediaResource implements Comparable<DBpediaResource> {
     retStr = retStr + "\n<uri>" + uriStrEscaped + "</uri>";
     if (type != null)
       retStr = retStr + "\n<type>" + type + "</type>";
+    if (name != null) {
+      String nameEscaped = StringUtils.deresolveXmlEntities(name);
+      nameEscaped = nameEscaped.replaceAll("'", "&apos;");
+      retStr = retStr + "\n<name>" + nameEscaped + "</name>";
+    }
+    if (gnd != null)
+      retStr = retStr + "\n<gnd>" + gnd + "</gnd>";
     if (support != null)
       retStr = retStr + "\n<support>" + support + "</support>";
     if (similarity != null)
@@ -168,45 +205,71 @@ public class DBpediaResource implements Comparable<DBpediaResource> {
     uriStrEscaped = uriStrEscaped.replaceAll("'", "&apos;");
     String nameEscaped = StringUtils.deresolveXmlEntities(name);
     nameEscaped = nameEscaped.replaceAll("'", "&apos;");
-    String retStr = "<dcterms:relation rdf:resource=\"" + uriStrEscaped + "\">\n";
+    String retStr = "<dcterms:relation>\n";
+    retStr = retStr + "  <rdf:Description rdf:about=\"" + uriStrEscaped + "\">\n";
     String typeUrl = getTypeUrl(type);
-    retStr = retStr + "  <rdf:type rdf:resource=\"" + typeUrl + "\"/>\n";
-    retStr = retStr + "  <rdfs:label>" + nameEscaped + "</rdfs:label>\n";
+    retStr = retStr + "    <rdf:type rdf:resource=\"" + typeUrl + "\"/>\n";
+    retStr = retStr + "    <rdfs:label>" + nameEscaped + "</rdfs:label>\n";
+    if (gnd != null)
+      retStr = retStr + "    <gnd:gndIdentifier rdf:resource=\"http://d-nb.info/gnd/" + gnd + "\"/>\n";
     if (support != null)
-      retStr = retStr + "  <dbpedia-spotlight:support>" + support + "</dbpedia-spotlight:support>\n";
+      retStr = retStr + "    <dbpedia-spotlight:support>" + support + "</dbpedia-spotlight:support>\n";
     if (similarity != null)
-      retStr = retStr + "  <dbpedia-spotlight:similarity>" + similarity + "</dbpedia-spotlight:similarity>\n"; 
+      retStr = retStr + "    <dbpedia-spotlight:similarity>" + similarity + "</dbpedia-spotlight:similarity>\n"; 
     if (frequency != null)
-      retStr = retStr + "  <dbpedia-spotlight:frequency>" + frequency + "</dbpedia-spotlight:frequency>\n";
+      retStr = retStr + "    <dbpedia-spotlight:frequency>" + frequency + "</dbpedia-spotlight:frequency>\n";
+    if (context != null) {
+      String contextEscaped = StringUtils.deresolveXmlEntities(context);
+      contextEscaped = contextEscaped.replaceAll("'", "&apos;");
+      retStr = retStr + "    <dbpedia-spotlight:context>" + contextEscaped + "</dbpedia-spotlight:context>\n";
+    }
+    retStr = retStr + "  </rdf:Description>\n";
     retStr = retStr + "</dcterms:relation>\n";
     return retStr;
   }
   
-  public String toHtmlStr() {
+  public String toHtmlStr(boolean showType) {
     if (name == null || uri == null)
       return null;
-    String retStr = "<span class=\"" + type + "\">";
-    String queryHtmlStr = "<a href=\"" + baseUrl + "/query/QueryDocuments?query=entities:&quot;" + name + "&quot;\">" + name + "</a>";
+    String retStr = "<span>";
+    String queryHtmlStr = "<a href=\"" + baseUrl + "/query/QueryDocuments?query=entitiesUris:&quot;" + uri + "&quot;\">" + name + "</a>";
     String refHtmlStr = "<a href=\"" + uri + "\"><img src=\"../images/rdfSmall.gif\" alt=\"DBpedia resource\" border=\"0\" height=\"15\" width=\"15\"></a>";
-    retStr = retStr + queryHtmlStr + " (" + refHtmlStr + ")" + "</span>";
+    String gndHtmlStr = "";
+    if (gnd != null && ! gnd.isEmpty())
+      gndHtmlStr = ", <a href=\"" + "http://d-nb.info/gnd/" + gnd + "\">GND</a>" ;
+    String scoreHtmlStr = "";
+    if (score != null)
+      scoreHtmlStr = ", " + score;
+    String typeHtmlStr = "";
+    if (showType && type != null)
+      typeHtmlStr = ", " + type;
+    retStr = retStr + queryHtmlStr + " (" + refHtmlStr + gndHtmlStr + scoreHtmlStr + typeHtmlStr + ")" + "</span>";
     retStr = retStr + "</span>";
     return retStr;
   }
 
-  public JSONObject toJsonObject() throws ApplicationException {
+  public JSONObject toJsonObject() {
     JSONObject retJsonObject = new JSONObject();
     if (name == null || uri == null)
       return null;
-    retJsonObject.put("name", name);
+    retJsonObject.put("label", name);
     if (type != null && ! type.isEmpty())
       retJsonObject.put("type", type);
+    if (language != null)
+      retJsonObject.put("language", language);
+    else 
+      retJsonObject.put("language", "ger");
     try {
       String refEnc = URIUtil.encodeQuery(uri);
-      retJsonObject.put("reference", refEnc);
-      String queryLink = baseUrl + "/query/QueryDocuments?query=entities:\"" + name + "\"";
+      retJsonObject.put("uri", refEnc);
+      String queryLink = baseUrl + "/query/QueryDocuments?query=entitiesUris:\"" + uri + "\"";
       String queryLinkEnc = URIUtil.encodeQuery(queryLink);
-      retJsonObject.put("referenceQuery", queryLinkEnc);
+      retJsonObject.put("uriFulltextQuery", queryLinkEnc);
     } catch (URIException e) {}
+    if (gnd != null && ! gnd.isEmpty())
+      retJsonObject.put("uriGnd", "http://d-nb.info/gnd/" + gnd);
+    if (score != null)
+      retJsonObject.put("score", score);
     if (support != null)
       retJsonObject.put("dbpediaSpotlightSupport", support);
     if (similarity != null)

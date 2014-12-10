@@ -73,6 +73,7 @@ import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.Version;
 import org.bbaw.wsp.cms.collections.Collection;
 import org.bbaw.wsp.cms.collections.CollectionReader;
+import org.bbaw.wsp.cms.document.DBpediaResource;
 import org.bbaw.wsp.cms.document.Facets;
 import org.bbaw.wsp.cms.document.Hits;
 import org.bbaw.wsp.cms.document.MetadataRecord;
@@ -207,6 +208,8 @@ public class IndexHandler {
         categories.add(new CategoryPath("collectionNames", collectionNames));
         Field collectionNamesField = new Field("collectionNames", collectionNames, Field.Store.YES, Field.Index.ANALYZED);
         doc.add(collectionNamesField);
+        if (collectionNames.equals("jdg"))
+          doc.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
       }
       String author = mdRecord.getCreator();
       if (author != null) {
@@ -368,17 +371,37 @@ public class IndexHandler {
         categories.add(new CategoryPath("type", "unbekannt"));
       }
       if (mdRecord.getEntities() != null) {
-        String[] entities = mdRecord.getEntities().split("###");
-        for (int i=0; i<entities.length; i++) {
-          String entityName = entities[i];
-          categories.add(new CategoryPath("entity", entityName));
-        }
         Field entitiesField = new Field("entities", mdRecord.getEntities(), Field.Store.YES, Field.Index.ANALYZED);
         doc.add(entitiesField);
       }
       if (mdRecord.getEntitiesDetails() != null) {
+        ArrayList<DBpediaResource> entities = DBpediaResource.fromXmlStr(xQueryEvaluator, mdRecord.getEntitiesDetails());
+        String entitiesUris = "";
+        for (int i=0; i<entities.size(); i++) {
+          DBpediaResource entity = entities.get(i);
+          String entityType = entity.getType();
+          String entityName = entity.getName();
+          String entityUri = entity.getUri();
+          entitiesUris = entitiesUris + " " + entityUri;
+          String entityFacetStr = entityName + "<uri>" + entityUri + "</uri>";
+          String entityGnd = entity.getGnd();
+          if (entityGnd != null && ! entityGnd.isEmpty()) {
+            entityFacetStr = entityFacetStr + "<gnd>" + entityGnd + "</gnd>";
+            entitiesUris = entitiesUris + " " + entityGnd;
+          }
+          if (entityType != null && entityType.equals("person"))
+            categories.add(new CategoryPath("entityPerson", entityFacetStr));
+          else if (entityType != null && entityType.equals("place"))
+            categories.add(new CategoryPath("entityPlace", entityFacetStr));
+          else if (entityType != null && entityType.equals("concept"))
+            categories.add(new CategoryPath("entityConcept", entityFacetStr));
+          else
+            categories.add(new CategoryPath("entityConcept", entityFacetStr));
+        }
         Field entitiesDetailsField = new Field("entitiesDetails", mdRecord.getEntitiesDetails(), Field.Store.YES, Field.Index.NOT_ANALYZED);
         doc.add(entitiesDetailsField);
+        Field entitiesUrisField = new Field("entitiesUris", entitiesUris, Field.Store.YES, Field.Index.ANALYZED);
+        doc.add(entitiesUrisField);
       }
       if (mdRecord.getPersons() != null) {
         Field personsField = new Field("persons", mdRecord.getPersons(), Field.Store.YES, Field.Index.ANALYZED);
@@ -455,6 +478,8 @@ public class IndexHandler {
           XQuery xQueryWebId = xqueriesHashtable.get("webId");
           if (xQueryWebId != null) {
             String webId = xQueryWebId.getResult();
+            if (webId != null)
+              webId = StringUtils.resolveXmlEntities(webId);
             // Hack: if xQuery code is "fileName"
             boolean codeIsFileName = false;
             if (xQueryWebId.getCode() != null && xQueryWebId.getCode().equals("xxxFileName"))
@@ -661,12 +686,14 @@ public class IndexHandler {
       QueryParser queryParser = new QueryParser(Version.LUCENE_35, defaultQueryFieldName, documentsPerFieldAnalyzer);
       queryParser.setAllowLeadingWildcard(true);
       Query query = null;
+      Hashtable<String, String[]> facetConstraints = null;
       if (queryStr.equals("*")) {
         query = new MatchAllDocsQuery();
       } else {
         if (queryLanguage != null && queryLanguage.equals("gl")) {
           queryStr = translateGoogleLikeQueryToLucene(queryStr);
         }
+        facetConstraints = getFacetConstraints(queryStr);
         query = buildFieldExpandedQuery(queryParser, queryStr, fieldExpansion);
       }
       LanguageHandler languageHandler = new LanguageHandler();
@@ -697,25 +724,30 @@ public class IndexHandler {
       facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("subjectControlled"), 10));
       facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("swd"), 10));
       facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("ddc"), 10));
-      facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("entity"), 100));
+      facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("entityPerson"), 100));
+      facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("entityPlace"), 100));
+      facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("entityConcept"), 100));
       facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("type"), 1000));
       FacetsCollector facetsCollector = new FacetsCollector(facetSearchParams, documentsIndexReader, taxonomyReader);
       Collector facetsCollectorWrapper = MultiCollector.wrap(topFieldCollector, facetsCollector);
+      searcher.setDefaultFieldSortScoring(true, true);
       searcher.search(morphQuery, facetsCollectorWrapper);
       TopDocs resultDocs = topFieldCollector.topDocs();
       Facets facets = null;
       List<FacetResult> tmpFacetResult = facetsCollector.getFacetResults();
-      if (tmpFacetResult != null && ! tmpFacetResult.isEmpty())
-        facets = new Facets(tmpFacetResult);
-      resultDocs.setMaxScore(1);
+      if (tmpFacetResult != null && ! tmpFacetResult.isEmpty()) {
+        facets = new Facets(tmpFacetResult, facetConstraints);
+      }
       int toTmp = to;
       if (resultDocs.totalHits <= to)
         toTmp = resultDocs.totalHits - 1;
+      FieldSelector docFieldSelector = getDocFieldSelector();
       if (resultDocs != null) {
         ArrayList<org.bbaw.wsp.cms.document.Document> docs = new ArrayList<org.bbaw.wsp.cms.document.Document>();
+        ArrayList<Float> scores = new ArrayList<Float>();
         for (int i=from; i<=toTmp; i++) { 
           int docID = resultDocs.scoreDocs[i].doc;
-          FieldSelector docFieldSelector = getDocFieldSelector();
+          float score = resultDocs.scoreDocs[i].score;
           Document luceneDoc = searcher.doc(docID, docFieldSelector);
           org.bbaw.wsp.cms.document.Document doc = new org.bbaw.wsp.cms.document.Document(luceneDoc);
           if (withHitFragments) {
@@ -762,16 +794,56 @@ public class IndexHandler {
           }
           */
           docs.add(doc);
+          scores.add(score);
+        }
+        // fetch the "best" hits
+        boolean withBestHits = false;  // TODO
+        Hits bestHits = null;
+        if (withBestHits && resultDocs != null) {
+          int numberOfBestHits = 1000;
+          int maxDocsForEachProject = 5;
+          TopFieldCollector topFieldCollectorBestDocs = TopFieldCollector.create(sort, numberOfBestHits, true, true, true, true); 
+          searcher.search(morphQuery, topFieldCollectorBestDocs);
+          TopDocs resultBestDocs = topFieldCollectorBestDocs.topDocs();
+          ArrayList<org.bbaw.wsp.cms.document.Document> bestDocs = new ArrayList<org.bbaw.wsp.cms.document.Document>();
+          ArrayList<Float> bestScores = new ArrayList<Float>();
+          Hashtable<String, Integer> collCounters = new Hashtable<String, Integer>();
+          for (int i=0; i<numberOfBestHits; i++) { 
+            int docID = resultBestDocs.scoreDocs[i].doc;
+            float score = resultBestDocs.scoreDocs[i].score;
+            FieldSelector docCollectionNameFieldSelector = getDocFieldSelectorCollectionName();
+            Document luceneDoc = searcher.doc(docID, docCollectionNameFieldSelector);
+            String collName = luceneDoc.getFieldable("collectionNames").stringValue();
+            Integer collCounter = collCounters.get(collName);
+            if (collCounter == null) {
+              collCounter = new Integer(0);
+            }
+            collCounter++;
+            collCounters.put(collName, collCounter);
+            if (collCounter <= maxDocsForEachProject) {
+              Document fullLuceneDoc = searcher.doc(docID, docFieldSelector);
+              org.bbaw.wsp.cms.document.Document fullDoc = new org.bbaw.wsp.cms.document.Document(fullLuceneDoc);
+              bestDocs.add(fullDoc);
+              bestScores.add(score);
+            }
+          }
+          int bestTo = from + numberOfBestHits;
+          if (from == 0)
+            bestTo = numberOfBestHits - 1;
+          bestHits = new Hits(bestDocs, from, bestTo);
         }
         int sizeTotalDocuments = documentsIndexReader.numDocs();
         int sizeTotalTerms = tokens.size(); // term count over tokenOrig
         if (docs != null) {
           hits = new Hits(docs, from, to);
+          hits.setMaxScore(resultDocs.getMaxScore());
+          hits.setScores(scores);
           hits.setSize(resultDocs.totalHits);
           hits.setSizeTotalDocuments(sizeTotalDocuments);
           hits.setSizeTotalTerms(sizeTotalTerms);
           hits.setQuery(morphQuery);
           hits.setFacets(facets);
+          // hits.setBestHits(bestHits); // TODO
         }
       }
     } catch (Exception e) {
@@ -789,6 +861,23 @@ public class IndexHandler {
     return hits;
   }
 
+  private Hashtable<String, String[]> getFacetConstraints(String luceneQueryStr) {
+    Hashtable<String, String[]> facetConstraints = null;
+    if (luceneQueryStr.contains("author:")) {
+      String authorFieldValues = luceneQueryStr.replaceAll("(.*?)author:\\((.*?)\\)(.*)", "$2");  // TODO weitere Felder
+      if (authorFieldValues != null) {
+        String[] fieldValues = authorFieldValues.split(" \"");
+        if (fieldValues != null) {
+          for (int i=0; i<fieldValues.length; i++)
+            fieldValues[i] = fieldValues[i].replaceAll("\"", "");
+        }
+        facetConstraints = new Hashtable<String, String[]>();
+        facetConstraints.put("author", fieldValues);
+      }
+    }
+    return facetConstraints;
+  }
+  
   public Hits queryDocument(String docId, String queryStr, int from, int to) throws ApplicationException {
     Hits hits = null;
     IndexSearcher searcher = null;
@@ -1875,6 +1964,13 @@ public class IndexHandler {
     fields.add("personsDetails");
     fields.add("places");
     fields.add("content");
+    FieldSelector fieldSelector = new SetBasedFieldSelector(fields, fields);
+    return fieldSelector;
+  }
+  
+  private FieldSelector getDocFieldSelectorCollectionName() {
+    HashSet<String> fields = new HashSet<String>();
+    fields.add("collectionNames");
     FieldSelector fieldSelector = new SetBasedFieldSelector(fields, fields);
     return fieldSelector;
   }

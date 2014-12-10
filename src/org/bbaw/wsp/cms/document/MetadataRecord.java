@@ -516,6 +516,13 @@ public class MetadataRecord implements Cloneable {
     xmlElements = null;
   }
   
+  public boolean isEdocRecord() {
+    boolean isEdocRecord = false;
+    if (docId != null && docId.startsWith("/edoc"))
+      isEdocRecord = true;
+    return isEdocRecord;
+  }
+  
   public MetadataRecord clone() {
     MetadataRecord mdRecord = null;
     try {

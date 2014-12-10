@@ -17,6 +17,7 @@ import net.sf.saxon.s9api.XdmValue;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
+import org.bbaw.wsp.cms.document.Person;
 import org.bbaw.wsp.cms.document.XQuery;
 import org.bbaw.wsp.cms.general.Constants;
 
@@ -33,12 +34,14 @@ public class CollectionReader {
   private URL inputNormdataFileUrl;
 	private HashMap<String, Collection> collectionContainer;  // key is collectionId string and value is collection
   private HashMap<String, WspUrl> wspUrls;  // key is wspUrl string and value is wspUrl 
+  private HashMap<String, Person> persons;   
 	
 	private CollectionReader() throws ApplicationException {
 		collectionContainer = new HashMap<String, Collection>();
 		wspUrls = new HashMap<String, WspUrl>();
 		init();
 		readConfFiles();
+		readNormdataFile();
 	}
 
 	public static CollectionReader getInstance() throws ApplicationException {
@@ -81,6 +84,42 @@ public class CollectionReader {
 		return collection;
 	}
 
+	public Person getPerson(String aboutId) {
+	  return persons.get(aboutId);
+	}
+	
+	private void readNormdataFile() {
+    try {
+      persons = new HashMap<String, Person>();
+      String foafPerson = "http://xmlns.com/foaf/0.1/Person";
+      XdmValue xmdValues = xQueryEvaluator.evaluate(inputNormdataFileUrl, NAMESPACE_DECLARATION + "/rdf:RDF/*:Description[rdf:type/@rdf:resource='" + foafPerson + "']");
+      XdmSequenceIterator xmdValuesIterator = xmdValues.iterator();
+      if (xmdValues != null && xmdValues.size() > 0) {
+        while (xmdValuesIterator.hasNext()) {
+          Person person = new Person();
+          XdmItem xdmItem = xmdValuesIterator.next();
+          String xdmItemStr = xdmItem.toString();
+          String surname = xQueryEvaluator.evaluateAsString(xdmItemStr, "/*:Description/*:familyName/text()");
+          String forename = xQueryEvaluator.evaluateAsString(xdmItemStr, "/*:Description/*:givenName/text()");
+          if (surname != null && ! surname.isEmpty()) {
+            person.setSurname(surname);
+            person.setName(surname);
+          }
+          if (forename != null && ! forename.isEmpty()) {
+            person.setForename(forename);
+            if (person.getSurname() != null) 
+              person.setName(person.getSurname() + ", " + forename);
+          }
+          String aboutId = xQueryEvaluator.evaluateAsString(xdmItemStr, "string(/*:Description/@*:about)");
+          persons.put(aboutId, person);
+        }
+      }
+    } catch (Exception e) {
+      LOGGER.error("Reading of: " + inputNormdataFileUrl + " failed");
+      e.printStackTrace();
+    }
+	}
+	
 	private void readConfFiles() throws ApplicationException {
 		try {
 			// liest alle Konfigurationsdateien ein
@@ -334,7 +373,6 @@ public class CollectionReader {
           LOGGER.error("Reading of: " + name + " failed");
           e.printStackTrace();
 				}
-
 			}
 		} catch (Exception e) {
 			throw new ApplicationException(e);
