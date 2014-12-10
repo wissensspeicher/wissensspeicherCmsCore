@@ -17881,7 +17881,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
     <owl:NamedIndividual rdf:about="http://wsp.normdata.rdf/Turfan/Dunhuang">
         <rdf:type rdf:resource="&foaf;Project"/>
         <foaf:nick>turfandp</foaf:nick>
-        <foaf:name>Internationles Dunhuang Projekt</foaf:name>
+        <foaf:name>International Dunhuang Project: Die Seidenstraße online</foaf:name>
         <dc:language>ger</dc:language>
         <foaf:homepage rdf:resource="http://idp.bbaw.de"/>
         <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Turfan"/>
