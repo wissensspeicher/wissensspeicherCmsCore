@@ -14,60 +14,84 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum"/>
   <dc:identifier rdf:resource="http://cmg.bbaw.de"/>
+  <dc:title>Startseite</dc:title>
+  <dc:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
 </rdf:Description>
 <rdf:Description rdf:about="http://cmg.bbaw.de/arbeitsstelle/geschichte">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum"/>
   <dc:identifier rdf:resource="http://cmg.bbaw.de/arbeitsstelle/geschichte"/>
+  <dc:title>Geschichte des CMG</dc:title>
+  <dc:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
 </rdf:Description>
 <rdf:Description rdf:about="http://cmg.bbaw.de/arbeitsstelle/arbeitsmittel">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum"/>
   <dc:identifier rdf:resource="http://cmg.bbaw.de/arbeitsstelle/arbeitsmittel"/>
+  <dc:title>Arbeitsmittel</dc:title>
+  <dc:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
 </rdf:Description>
 <rdf:Description rdf:about="http://cmg.bbaw.de/publikationen/publikationen-cmg">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum"/>
   <dc:identifier rdf:resource="http://cmg.bbaw.de/publikationen/publikationen-cmg"/>
+  <dc:titel>Corpus Medicorum Graecorum</dc:titel>
+  <dc:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
 </rdf:Description>
 <rdf:Description rdf:about="http://cmg.bbaw.de/publikationen/supplementum">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum"/>
   <dc:identifier rdf:resource="http://cmg.bbaw.de/publikationen/supplementum"/>
+  <dc:title>Supplementum zum Corpus Medicorum Graecorum</dc:title>
+  <dc:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
 </rdf:Description>
 <rdf:Description rdf:about="http://cmg.bbaw.de/publikationen/supplementum-orientale">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum"/>
   <dc:identifier rdf:resource="http://cmg.bbaw.de/publikationen/supplementum-orientale"/>
+  <dc:title>Supplementum Orientale zum Corpus Medicorum Graecorum</dc:title>
+  <dc:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
 </rdf:Description>
 <rdf:Description rdf:about="http://cmg.bbaw.de/publikationen/publikationen-cml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum"/>
   <dc:identifier rdf:resource="http://cmg.bbaw.de/publikationen/publikationen-cml"/>
+  <dc:title>Corpus Medicorum Latinorum</dc:title>
+  <dc:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
 </rdf:Description>
 <rdf:Description rdf:about="http://cmg.bbaw.de/publikationen/corpus-medicorum-graecorum">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum"/>
   <dc:identifier rdf:resource="http://cmg.bbaw.de/publikationen/corpus-medicorum-graecorum"/>
+  <dc:title>Lieferbare Bändes des Corpus Medicorum Graecorum</dc:title>
+  <dc:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
 </rdf:Description>
 <rdf:Description rdf:about="http://cmg.bbaw.de/publikationen/corpus-medicorum-graecorum-1">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum"/>
   <dc:identifier rdf:resource="http://cmg.bbaw.de/publikationen/corpus-medicorum-graecorum-1"/>
+  <dc:title>Publikationen in Vorbereitung</dc:title>
+  <dc:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
 </rdf:Description>
 <rdf:Description rdf:about="http://cmg.bbaw.de/wissen-kompakt/schrifttum">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum"/>
   <dc:identifier rdf:resource="http://cmg.bbaw.de/wissen-kompakt/schrifttum"/>
+  <dc:title>Das medizinische Schrifttum der Antike (Überblick)</dc:title>
+  <dc:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
 </rdf:Description>
 <rdf:Description rdf:about="http://cmg.bbaw.de/wissen-kompakt/von-der-handschrift">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum"/>
   <dc:identifier rdf:resource="http://cmg.bbaw.de/wissen-kompakt/von-der-handschrift"/>
+  <dc:title>Von der Handschrift zur Edition (Einführung)</dc:title>
+  <dc:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
 </rdf:Description>
 <rdf:Description rdf:about="http://cmg.bbaw.de/wissen-kompakt/lexikon">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum"/>
   <dc:identifier rdf:resource="http://cmg.bbaw.de/wissen-kompakt/lexikon"/>
+  <dc:title>Personen und Sachen</dc:title>
+  <dc:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
 </rdf:Description>
 </rdf:RDF>

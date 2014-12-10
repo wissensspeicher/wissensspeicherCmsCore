@@ -10,21 +10,43 @@
    xmlns:gnd="http://d-nb.info/standards/elementset/gnd#" 
    xmlns:ore="http://www.openarchives.org/ore/terms/" 
 >
-<rdf:Description rdf:about="http://wvh.bbaw.de">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/WilhelmVonHumboldt"/>
-  <dc:identifier rdf:resource="http://wvh.bbaw.de"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://wvh.bbaw.de/ueberblick">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/WilhelmVonHumboldt"/>
-  <dc:identifier rdf:resource="http://wvh.bbaw.de/ueberblick"/>
-</rdf:Description>
+
 <rdf:Description rdf:about="http://wvh.bbaw.de/bilder/gkatlv5r.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/WilhelmVonHumboldt"/>
   <dc:identifier rdf:resource="http://wvh.bbaw.de/bilder/gkatlv5r.pdf"/>
   <dc:title>Bibliographie der neueren Sekundärliteratur zu Wilhelm von Humboldt</dc:title>
   <dc:date>2010</dc:date>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Tintemann"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_pdf"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://wvh.bbaw.de">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/WilhelmVonHumboldt/Briefdatenbank"/>
+    <dc:identifier rdf:resource="http://wvh.bbaw.de"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://wvh.bbaw.de/ueberblick">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/WilhelmVonHumboldt/Briefdatenbank"/>
+    <dc:identifier rdf:resource="http://wvh.bbaw.de/ueberblick"/>
+    <dc:title>Überblick</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://wvh.bbaw.de/publikationen">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/WilhelmVonHumboldt/Briefdatenbank"/>
+    <dc:identifier rdf:resource="http://wvh.bbaw.de/publikationen"/>
+    <dc:title>Publikationen</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://wvh.bbaw.de/aktuelles">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/WilhelmVonHumboldt/Briefdatenbank"/>
+    <dc:identifier rdf:resource="http://wvh.bbaw.de/aktuelles"/>
+    <dc:title>Aktuelles</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://wvh.bbaw.de/links">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/WilhelmVonHumboldt/Briefdatenbank"/>
+    <dc:identifier rdf:resource="http://wvh.bbaw.de/links"/>
+    <dc:title>Links</dc:title>
+  </rdf:Description>
 </rdf:RDF>

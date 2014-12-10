@@ -1,20 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rdf:RDF 
-   xmlns="http://wsp.normdata.rdf/DTM/Handschriftenarchiv" 
-   xml:base="http://wsp.normdata.rdf/DTM/Handschriftenarchiv" 
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
-   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" 
-   xmlns:dc="http://purl.org/dc/elements/1.1/" 
-   xmlns:dcterms="http://purl.org/dc/terms/" 
-   xmlns:foaf="http://xmlns.com/foaf/0.1/" 
-   xmlns:gnd="http://d-nb.info/standards/elementset/gnd#" 
-   xmlns:ore="http://www.openarchives.org/ore/terms/" 
->
+<!DOCTYPE rdf:RDF [
+    <!ENTITY dcterms "http://purl.org/dc/terms/" >
+    <!ENTITY foaf "http://xmlns.com/foaf/0.1/" >
+    <!ENTITY dcmitype "http://purl.org/dc/dcmitype/" >
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY dc "http://purl.org/dc/elements/1.1/" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY edm "http://www.europeana.eu/schemas/edm/" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY ore "http://www.openarchives.org/ore/terms/" >
+    <!ENTITY gnd "http://d-nb.info/standards/elementset/gnd#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY vs "http://www.w3.org/2003/06/sw-vocab-status/ns#" >
+]>
+
+
+<rdf:RDF xmlns="http://wsp.normdata.rdf/"
+  xml:base="http://wsp.normdata.rdf/"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:gnd="http://d-nb.info/standards/elementset/gnd#"
+  xmlns:edm="http://www.europeana.eu/schemas/edm/"
+  xmlns:foaf="http://xmlns.com/foaf/0.1/"
+  xmlns:dcmitype="http://purl.org/dc/dcmitype/"
+  xmlns:ore="http://www.openarchives.org/ore/terms/"
+  xmlns:vs="http://www.w3.org/2003/06/sw-vocab-status/ns#"
+  xmlns:dcterms="http://purl.org/dc/terms/"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:owl="http://www.w3.org/2002/07/owl#"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <owl:Ontology rdf:about="http://wsp.normdata.rdf/"/>
+  
+  <rdf:Description rdf:about="http://wsp.normdata.rdf/DTM/Handschriftenarchiv">
+    <rdf:type rdf:resource="&foaf;Project"/>
+    <foaf:name>Deutsche Texte des Mittelalters: Handschriftenarchiv</foaf:name>
+    <foaf:nick>dtmh</foaf:nick>
+    <dc:language>ger</dc:language>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DTM"/>
+    <foaf:homepage rdf:resource="http://www.bbaw.de/forschung/dtm/HSA/startseite-hsa.html"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+    <dcterms:abstract>Das Handschriftenarchiv der BBAW verwahrt rund 20.000 hochwertige Beschreibungen von deutschsprachigen Handschriften aus dem Mittelalter aus etwa 600 öffentlichen und privaten Sammlungen in über 350 Orten Europas und Amerikas. Die Beschreibungen wurden in den Jahren 1904 bis 1944 im Auftrag der Preußischen Akademie der Wissenschaften von Fachleuten gemäß der von der Deutschen Kommission für die Handschrifteninventarisierung formulierten "Grundsätze" erstellt. Sie markieren den Beginn der modernen Handschriftenkunde für die Germanistik und dienten als Muster für die 'Richtlinien Handschriftenkatalogisierung der Deutschen Forschungsgemeinschaft' . Während die mit großem Aufwand erstellten Register (über 1.000.000 Katalogzettel) 1945 verbrannten, sind die Beschreibungen selbst erhalten geblieben. Sie werden sukzessive im Internet zugänglich gemacht und mit den einschlägigen digitalen Ressourcen der Handschriftenforschung vernetzt.</dcterms:abstract>
+  </rdf:Description>
+  
+  
 <rdf:Description rdf:about="http://www.bbaw.de/forschung/dtm/HSA/startseite-hsa.html">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DTM/Handschriftenarchiv"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/dtm/HSA/startseite-hsa.html"/>
-  <dc:title>Handschriftenarchiv></dc:title>
+  <dc:title>Handschriftenarchiv</dc:title>
 </rdf:Description>
   <rdf:Description rdf:about="http://www.bbaw.de/forschung/dtm/HSA/hsa-index.html">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>

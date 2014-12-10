@@ -1,16 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rdf:RDF 
-   xmlns="http://wsp.normdata.rdf/DTM/Transkription" 
-   xml:base="http://wsp.normdata.rdf/DTM/Transkription" 
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
-   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" 
-   xmlns:dc="http://purl.org/dc/elements/1.1/" 
-   xmlns:dcterms="http://purl.org/dc/terms/" 
-   xmlns:foaf="http://xmlns.com/foaf/0.1/" 
-   xmlns:gnd="http://d-nb.info/standards/elementset/gnd#" 
-   xmlns:ore="http://www.openarchives.org/ore/terms/" 
->
-<!-- URL geändert -->
+<!DOCTYPE rdf:RDF [
+    <!ENTITY dcterms "http://purl.org/dc/terms/" >
+    <!ENTITY foaf "http://xmlns.com/foaf/0.1/" >
+    <!ENTITY dcmitype "http://purl.org/dc/dcmitype/" >
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY dc "http://purl.org/dc/elements/1.1/" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY edm "http://www.europeana.eu/schemas/edm/" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY ore "http://www.openarchives.org/ore/terms/" >
+    <!ENTITY gnd "http://d-nb.info/standards/elementset/gnd#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY vs "http://www.w3.org/2003/06/sw-vocab-status/ns#" >
+]>
+
+
+<rdf:RDF xmlns="http://wsp.normdata.rdf/"
+  xml:base="http://wsp.normdata.rdf/"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:gnd="http://d-nb.info/standards/elementset/gnd#"
+  xmlns:edm="http://www.europeana.eu/schemas/edm/"
+  xmlns:foaf="http://xmlns.com/foaf/0.1/"
+  xmlns:dcmitype="http://purl.org/dc/dcmitype/"
+  xmlns:ore="http://www.openarchives.org/ore/terms/"
+  xmlns:vs="http://www.w3.org/2003/06/sw-vocab-status/ns#"
+  xmlns:dcterms="http://purl.org/dc/terms/"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:owl="http://www.w3.org/2002/07/owl#"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <owl:Ontology rdf:about="http://wsp.normdata.rdf/"/>
+  
+  <rdf:Description rdf:about="http://wsp.normdata.rdf/DTM/Transkription">
+    <rdf:type rdf:resource="&foaf;Project"/>
+    <dc:language>ger</dc:language>
+    <foaf:nick>dtmt</foaf:nick>
+    <foaf:name>Deutsche Texte des Mittelalters: Transkription</foaf:name>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DTM"/>
+    <foaf:homepage rdf:resource="http://dtm.bbaw.de/publikationen/transkriptionen"/>
+    <dcterms:abstract>Sukzessive werden Stelle Transkriptionen zu bereits erschienenen DTM-Bänden und zu in Arbeit befindlichen Editionsprojekten zur Verfügung gestellt. Als Grundlage für die Erstellung einer kritischen Edition wird zumindest von der als Leithandschrift ausgewählten Handschrift eine Transkription angefertigt, die in der Regel in die gedruckte Edition nicht aufgenommen wird, gleichwohl aber äußerst interessant sein kann, beispielsweise für sprachwissenschaftliche Untersuchungen.</dcterms:abstract>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_pdf"/>
+  </rdf:Description>
+  
+  
+
 <rdf:Description rdf:about="http://dtm.bbaw.de/publikationen/transkriptionen">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DTM/Transkription"/>
@@ -22,21 +55,22 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DTM/Transkription"/>
   <dc:identifier rdf:resource="http://dtm.bbaw.de/bilder/elihss.pdf"/>
   <dc:title>Johannes Rothe: Elisabethleben. Transkription der Handschrift S.</dc:title>
-  <dc:description>Erfurt/Gotha, UFB - FB Gotha, Chart. B 180: Bl. 72v-135v</dc:description>
+  <dcterms:identifier>Erfurt/Gotha, UFB - FB Gotha, Chart. B 180: Bl. 72v-135v</dcterms:identifier>
   <dc:date>1415</dc:date>
   <dc:date>2013</dc:date>
   <dc:creator rdf:resource="http://wsp.normdata.rdf/HaaseA"/>
   <dc:creator rdf:resource="http://wsp.normdata.rdf/Schubert"/>
+  <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/RotheJohannes"/>
 </rdf:Description>
 <rdf:Description rdf:about="http://dtm.bbaw.de/bilder/christh.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DTM/Transkription"/>
   <dc:identifier rdf:resource="http://dtm.bbaw.de/bilder/christh.pdf"/>
   <dc:title>Christherre-Chronik</dc:title>
-  <dc:description>: Göttingen, SUB, Cod. 2° philol. 188/10 Cim. (olim: Gotha, Membr. I. 88)</dc:description>
+  <dcterms:identifier>Göttingen, SUB, Cod. 2° philol. 188/10 Cim. (olim: Gotha, Membr. I. 88)</dcterms:identifier>
   <dc:date>1991</dc:date>
   <dc:creator rdf:resource="http://wsp.normdata.rdf/GaertnerK"/>
-  <dc:creator>Monika Schwabbauer</dc:creator>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Schwabbauer"/>
 </rdf:Description>
 <rdf:Description rdf:about="http://dtm.bbaw.de/bilder/christherrechronik-teilausgabe.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
@@ -46,7 +80,7 @@
   <dc:description>V. 7161-12450 der in den 'Deutschen Texten des Mittelalters' erscheinenden Ausgabe nach der Göttinger Handschrift Cod. 2° Philol. 188/10 (olim Gotha, Membr. I 88).</dc:description>
   <dc:date>1998</dc:date>
   <dc:creator rdf:resource="http://wsp.normdata.rdf/GaertnerK"/>
-  <dc:creator>Ralf Plate</dc:creator>
-  <dc:creator>Monika Schwabbauer</dc:creator>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Plate"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Schwabbauer"/>
 </rdf:Description>
 </rdf:RDF>

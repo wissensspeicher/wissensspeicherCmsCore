@@ -1,15 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rdf:RDF 
-   xmlns="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen" 
-   xml:base="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen" 
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
-   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" 
-   xmlns:dc="http://purl.org/dc/elements/1.1/" 
-   xmlns:dcterms="http://purl.org/dc/terms/" 
-   xmlns:foaf="http://xmlns.com/foaf/0.1/" 
-   xmlns:gnd="http://d-nb.info/standards/elementset/gnd#" 
-   xmlns:ore="http://www.openarchives.org/ore/terms/" 
->
+<!DOCTYPE rdf:RDF [
+    <!ENTITY dcterms "http://purl.org/dc/terms/" >
+    <!ENTITY foaf "http://xmlns.com/foaf/0.1/" >
+    <!ENTITY dcmitype "http://purl.org/dc/dcmitype/" >
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY dc "http://purl.org/dc/elements/1.1/" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY edm "http://www.europeana.eu/schemas/edm/" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY ore "http://www.openarchives.org/ore/terms/" >
+    <!ENTITY gnd "http://d-nb.info/standards/elementset/gnd#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY vs "http://www.w3.org/2003/06/sw-vocab-status/ns#" >
+]>
+
+
+<rdf:RDF xmlns="http://wsp.normdata.rdf/"
+  xml:base="http://wsp.normdata.rdf/"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:gnd="http://d-nb.info/standards/elementset/gnd#"
+  xmlns:edm="http://www.europeana.eu/schemas/edm/"
+  xmlns:foaf="http://xmlns.com/foaf/0.1/"
+  xmlns:dcmitype="http://purl.org/dc/dcmitype/"
+  xmlns:ore="http://www.openarchives.org/ore/terms/"
+  xmlns:vs="http://www.w3.org/2003/06/sw-vocab-status/ns#"
+  xmlns:dcterms="http://purl.org/dc/terms/"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:owl="http://www.w3.org/2002/07/owl#"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <owl:Ontology rdf:about="http://wsp.normdata.rdf/"/>
+  
+  
+  
+  <rdf:Description rdf:about="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen">
+    <rdf:type rdf:resource="&foaf;Project"/>
+    <foaf:nick>cmgeo</foaf:nick>
+    <foaf:name>Corpus Medicorum Graecorum / Latinorum: Editionen Online</foaf:name>
+    <dc:language>ger</dc:language>
+    <foaf:homepage rdf:resource="http://cmg.bbaw.de/epubl/online/editionen.html"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum"/>
+    <dcterms:abstract>Im Rahmen der "Berliner Erklärung über offenen Zugang zu wissenschaftlichem Wissen" ist das CMG bestrebt, die an der Arbeitsstelle erarbeiteten Ergebnisse der wissenschaftlichen Gemeinschaft und einer größeren Öffentlichkeit frei zugänglich zu machen.
+      Dabei sollen insbesondere auch vergriffene Bände, die oft nur noch in kleiner Stückzahl öffentlich einsehbar sind, der wissenschaftlichen Gemeinschaft wieder zur Verfügung gestellt werden.  Editionen online: Unter Editionen online findet der Besucher alle Bände der Reihen CMG, CML, Suppl. und Suppl. Or. zur Einsicht bereit. Die Bände können angewählt und virtuell durchgeblättert oder seitengenau aufgeschlagen werden.</dcterms:abstract>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/editionen.html">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
@@ -19,435 +53,2152 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_01_01.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cmg_01_01.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cmg_01_01.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_01_01.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm: Hippocratis Opera (CMG I 1)</dc:title>
+    <dcterms:abstract>Indices librorum, Iusiurandum, Lex, De arte, De medico, De decente habitu, Praeceptiones, De prisca medicina, De aere locis aquis, De alimento, De liquidorum usu, De flatibus.</dcterms:abstract>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Hippocrates"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/NachmansonErnst"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/MewaldtJohannes"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/HeibergJohanLudvig"/>
+    <dc:date>1927</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+</rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cmg_01_01_02.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_01_01_02.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cmg_01_01_02.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cmg_01_01_02.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_01_01_02.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm: Hippocratis De aere aquis locis (CMG I 1,2)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Hippocrates"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/DillerHans"/>
+    <dc:date>1999</dc:date>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/French"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cmg_01_01_03.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_01_01_03.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cmg_01_01_03.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cmg_01_01_03.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_01_01_03.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm: Hippocratis De natura hominis (CMG I 1,3)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Hippocrates"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/JouannaJacques"/>
+    <dc:date>2002</dc:date>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/French"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cmg_01_02_01.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_01_02_01.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
-<rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cmg_01_02_02.xml">
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cmg_01_02_01.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cmg_01_02_01.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_01_02_01.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm: Hippocratis De octimestri partu, De septimestri partu (spurium) (CMG I 2,1)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Hippocrates"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/GrensemannHermann"/>
+    <dc:date>1968</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
+  <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cmg_01_02_02.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_01_02_02.xml"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cmg_01_02_02.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cmg_01_02_02.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_01_02_02.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm: Hippocratis De superfetatione (CMG I 2,2)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Hippocrates"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/LienauCay"/>
+    <dc:date>1973</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cmg_01_02_03.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_01_02_03.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cmg_01_02_03.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cmg_01_02_03.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_01_02_03.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm: Hippocratis De morbis III (CMG I 2,3)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Hippocrates"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/PotterPaul"/>
+    <dc:date>1980</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cmg_01_02_04.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_01_02_04.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cmg_01_02_04.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cmg_01_02_04.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_01_02_04.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm: Hippocratis De diaeta (CMG I 2,4)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Hippocrates"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/JolyRobert"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/BylSimon"/>
+    <dc:date>2003</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/French"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cmg_01_04_01.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_01_04_01.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cmg_01_04_01.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cmg_01_04_01.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_01_04_01.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm: Hippocratis De capitis vulneribus (CMG I 4,1)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Hippocrates"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/HansonMaury"/>
+    <dc:date>1999</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/English"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cmg_02.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_02.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cmg_02.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cmg_02.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_02.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm: Aretaeus (CMG II)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Aretaeus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/HudeKarl"/>
+    <dc:date>1958</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cmg_03_01.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_03_01.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cmg_03_01.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cmg_03_01.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_03_01.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm: Rufi Ephesii De renum et vesicae morbis (CMG III 1)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/EphesiusRufus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/SiderasAlexander"/>
+    <dc:date>1977</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cmg_04.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_04.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cmg_04.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cmg_04.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_04.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm: Sorani Gynaeciorum libri IV, De signis fracturarum, De fasciis, Vita Hippocratis secundum Soranum (CMG IV)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/EphesiusSoranus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/IlbergIoannes"/>
+    <dc:date>1927</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cmg_05_01_01.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_05_01_01.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cmg_05_01_01.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cmg_05_01_01.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_04.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm: Galeni De optimo docendi genere, Exhortatio ad medicinam (Protrepticus) (CMG V 1,1)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Galenus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/BarigazziAdelmo"/>
+    <dc:date>1991</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Italian"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
+  
+    
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cmg_05_01_02.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_05_01_02.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cmg_05_01_02.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cmg_05_01_02.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_05_01_02.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm: Galeni De elementis ex Hippocratis sententia (CMG V 1,2)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Galenus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/DeLacyPhillip"/>
+    <dc:date>1996</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/English"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cmg_05_01_03.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_05_01_03.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cmg_05_01_03.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cmg_05_01_03.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_05_01_03.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm: Galeni De constitutione artis medicae ad Patrophilum (CMG V 1,3)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Galenus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/FortunaStefania"/>
+    <dc:date>1997</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Italian"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cmg_05_02_01.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_05_02_01.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cmg_05_02_01.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cmg_05_02_01.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_05_02_01.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm: Galeni De uteri dissectione (CMG V 2,1)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Galenus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/NickelDiethard"/>
+    <dc:date>1971</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Italian"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Anatomie"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cmg_05_03_01.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_05_03_01.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cmg_05_03_01.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cmg_05_03_01.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_05_03_01.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm: Galeni De semine (CMG V 3,1)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Galenus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/DeLacyPhillip"/>
+    <dc:date>1992</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/English"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cmg_05_03_02.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_05_03_02.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cmg_05_03_02.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cmg_05_03_02.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_05_03_02.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm: Galeni De propriis placitis (CMG V 3,2)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Galenus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/NuttonVivian"/>
+    <dc:date>1999</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/English"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cmg_05_03_03.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_05_03_03.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cmg_05_03_03.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cmg_05_03_03.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_05_03_03.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm: Galeni De foetuum formatione (CMG V 3,3)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Galenus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/NickelDiethard"/>
+    <dc:date>2001</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/German"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Embryologie"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cmg_05_04_01_01.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_05_04_01_01.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cmg_05_04_01_01.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cmg_05_04_01_01.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_05_04_01_01.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm: Galeni De propriorum animi cuiuslibet affectuum dignotione et curatione, De animi cuiuslibet peccatorum dignotione et curatione, De atra bile (CMG V 4,1,1)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Galenus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/DeBoerWilko"/>
+    <dc:date>1937</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Embryologie"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cmg_05_04_01_02.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_05_04_01_02.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cmg_05_04_01_02.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cmg_05_04_01_02.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_05_04_01_02.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm: Galeni De placitis Hippocratis et Platonis (CMG V 4,1,2)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Galenus"/>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Hippocrates"/>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Platon"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/DeLacyPhillip"/>
+    <dc:date>2005</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/English"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Physiologie"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cmg_05_04_02.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_05_04_02.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cmg_05_04_02.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cmg_05_04_02.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_05_04_02.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm: Galeni De sanitate tuenda, De alimentorum facultatibus, De bonis malisque sucis, De victu attenuante, De ptisana (CMG V 4,2)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Galenus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/KochKonradus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/HelmreichGeorgius"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/KalbfleischKarl"/>
+    <dc:date>1923</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cmg_05_05_01.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cmg_05_05_01.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <!--<dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_05_04_02.xml"/>-->
+    <dc:title>Corpvs Medicorvm Graecorvm: Galeni De symptomatum differentiis (CMG V 5,1)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Galenus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/GundertBeate"/>
+    <dc:date>2009</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/German"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cmg_05_08_01.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_05_08_01.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cmg_05_08_01.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cmg_05_08_01.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_05_08_01.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm: Galeni De praecognitione (CMG V 8,1)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Galenus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/NuttonVivian"/>
+    <dc:date>1979</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/English"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cmg_05_09_01.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_05_09_01.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cmg_05_09_01.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cmg_05_09_01.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_05_09_01.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm: Galeni In Hippocratis De natura hominis commentaria III, In Hippocratis De victu acutorum commentaria IV, De diaeta Hippocratis in morbis acutis (CMG V 9,1)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Galenus"/>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Hippocrates"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/MewaldJohannes"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/HelmreichGeorgius"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/WestenbergerJoannes"/>
+    <dc:date>1914</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cmg_05_09_02.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_05_09_02.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cmg_05_09_02.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cmg_05_09_02.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_05_09_02.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm: Galeni In Hippocratis Prorrheticum I commentaria III, De comate secundum Hippocratem, In Hippocratis Prognosticum commentaria III (CMG V 9,2)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Galenus"/>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Hippocrates"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/MewaldJohannes"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/DielsHermann"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/HeegJosephus"/>
+    <dc:date>1915</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cmg_05_10_01.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_05_10_01.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cmg_05_10_01.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cmg_05_10_01.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_05_10_01.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm: Galeni In Hippocratis Epidemiarum librum I commentaria III (CMG V 10,1)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Galenus"/>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Hippocrates"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/WenkebachErnst"/>>
+    <dc:date>1934</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cmg_05_10_02_01.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_05_10_02_01.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cmg_05_10_02_01.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cmg_05_10_02_01.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_05_10_02_01.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm: Galeni In Hippocratis Epidemiarum librum III commentaria III (CMG V 10,2,1)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Galenus"/>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Hippocrates"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/WenkebachErnst"/>>
+    <dc:date>1936</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cmg_05_10_02_02.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_05_10_02_02.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cmg_05_10_02_02.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cmg_05_10_02_02.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_05_10_02_02.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm: Galeni In Hippocratis Epidemiarum librum VI commentaria I-VI (CMG V 10,2,2)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Galenus"/>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Hippocrates"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/WenkebachErnst"/>>
+    <dc:date>1956</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/German"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cmg_05_10_02_03.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_05_10_02_03.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cmg_05_10_02_03.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cmg_05_10_02_03.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_05_10_02_03.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm: Galeni In Hippocratis Epidemiarum libros commentaria, Indices nominum et verborum Graecorum (CMG V 10,2,3)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Galenus"/>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Hippocrates"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/WenkebachErnst"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/SchubringKonrad"/>>
+    <dc:date>1955</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cmg_05_10_02_04.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_05_10_02_04.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cmg_05_10_02_04.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cmg_05_10_02_04.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_05_10_02_04.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm: Galens Kommentare zu den Epidemien des Hippokrates, Indizes der aus dem Arabischen übersetzten Namen und Wörter, Die als sogenannte Simulantenschrift griechisch überlieferten Stücke des 2. Kommentars zu Epidemien II (CMG V 10,2,4)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Galenus"/>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Hippocrates"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/DeichgräberKarl"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/KudlienFridolf"/>
+    <dc:date>1960</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/German"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cmg_05_10_03.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_05_10_03.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cmg_05_10_03.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cmg_05_10_03.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_05_10_03.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm: Galeni Adversus Lycum, Adversus Iulianum (CMG V 10,3)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Galenus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/WenkebachErnst"/>
+    <dc:date>1951</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cmg_06_01_01.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_06_01_01.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cmg_06_01_01.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cmg_06_01_01.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_06_01_01.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm: Oribasii Collectionum medicarum reliquiae, libri I-VIII (CMG VI 1,1)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Oribasius"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/RaederJoannes"/>
+    <dc:date>1928</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cmg_06_01_02.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_06_01_02.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cmg_06_01_02.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cmg_06_01_02.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_06_01_02.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm: Oribasii Collectionum medicarum reliquiae, libri IX-XVI (CMG VI 1,2)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Oribasius"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/RaederJoannes"/>
+    <dc:date>1929</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cmg_06_02_01.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_06_02_01.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cmg_06_02_01.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cmg_06_02_01.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_06_02_01.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm: Oribasii Collectionum medicarum reliquiae, libri XXIV-XXV. XLIII-XLVIII (CMG VI 2,1)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Oribasius"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/RaederJoannes"/>
+    <dc:date>1931</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cmg_06_02_02.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_06_02_02.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cmg_06_02_02.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cmg_06_02_02.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_06_02_02.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm: Oribasii Collectionum medicarum reliquiae, libri XLIX-L, libri incerti, eclogae medicamentorum (CMG VI 2,2)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Oribasius"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/RaederJoannes"/>
+    <dc:date>1933</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cmg_06_03.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_06_03.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cmg_06_03.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cmg_06_03.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_06_03.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm: Oribasii Synopsis ad Eustathium, Libri ad Eunapium (CMG VI 3)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Oribasius"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/RaederJoannes"/>
+    <dc:date>1926</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cmg_08_01.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_08_01.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cmg_08_01.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cmg_08_01.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_08_01.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm: Aetii Amideni Libri medicinales I-IV (CMG VIII 1)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/AetiusAmidenus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/OlivieriAlexander"/>
+    <dc:date>1935</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cmg_08_02.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_08_02.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cmg_08_02.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cmg_08_02.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_08_02.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm: Aetii Amideni Libri medicinales V-VIII (CMG VIII 2)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/AetiusAmidenus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/OlivieriAlexander"/>
+    <dc:date>1950</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cmg_09_01.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_09_01.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cmg_09_01.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cmg_09_01.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_09_01.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm: Paulus Aegineta, Libri I-IV (CMG IX 1)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/PaulusAegineta"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/HeibergJohannLudvig"/>
+    <dc:date>1921</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cmg_09_02.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_09_02.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cmg_09_02.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cmg_09_02.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_09_02.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm: Paulus Aegineta, Libri V-VII (CMG IX 2)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/PaulusAegineta"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/HeibergJohannLudvig"/>
+    <dc:date>1924</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cmg_10_01_01.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_10_01_01.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cmg_10_01_01.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cmg_10_01_01.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_10_01_01.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm: Philumeni De venenatis animalibus eorumque remediis (CMG X 1,1)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/PhilumenusAlexandrinus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/WellmannMax"/>
+    <dc:date>1908</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cmg_10_04.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_10_04.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cmg_10_04.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cmg_10_04.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_10_04.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm: Leonis medici De natura hominum synopsis (CMG X 4)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/LeoMedicus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/RenehanRobert"/>
+    <dc:date>1965</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/English"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cmg_11_01_01.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_11_01_01.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cmg_11_01_01.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cmg_11_01_01.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_11_01_01.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm: Apollonii Citiensis In Hippocratis De articulis commentarius (CMG XI 1,1)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/AppoloniusMedicus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/KudlienFridolf"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/NickelDiethard"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/KolleschJutta"/>
+    <dc:date>1965</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/German"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cmg_11_01_02.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_11_01_02.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cmg_11_01_02.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cmg_11_01_02.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_11_01_02.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm: Stephani Philosophi In Hippocratis Prognosticum commentaria III (CMG XI 1,2)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Hippocrates"/>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/StephanusMedicus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/DuffyJohnM"/>
+    <dc:date>1983</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/German"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cmg_11_01_03_01.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_11_01_03_01.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cmg_11_01_03_01.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cmg_11_01_03_01.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_11_01_03_01.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm: Stephani Atheniensis In Hippocratis Aphorismos commentaria I-II (CMG XI 1,3,1)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Hippocrates"/>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/StephanusMedicus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/WesterinkLeendert"/>
+    <dc:date>1998</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/English"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cmg_11_01_03_02.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_11_01_03_02.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cmg_11_01_03_02.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cmg_11_01_03_02.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_11_01_03_02.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm: Stephani Atheniensis In Hippocratis Aphorismos commentaria III-IV (CMG XI 1,3,2)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Hippocrates"/>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/StephanusMedicus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/WesterinkLeendert"/>
+    <dc:date>1992</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/English"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cmg_11_01_03_03.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_11_01_03_03.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cmg_11_01_03_03.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cmg_11_01_03_03.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_11_01_03_03.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm: Stephani Atheniensis In Hippocratis Aphorismos commentaria V-VI (CMG XI 1,3,3)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Hippocrates"/>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/StephanusMedicus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/WesterinkLeendert"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/NickelDiethard"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/KolleschJutta"/>
+    <dc:date>1995</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/English"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cmg_11_01_04.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_11_01_04.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cmg_11_01_04.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cmg_11_01_04.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_11_01_04.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm: Ioannis Alexandrini In Hippocratis Epidemiarum librum VI commentarii fragmenta, Anonymi In Hippocratis Epidemiarum librum VI commentarii fragmenta, Ioannis Alexandrini In Hippocratis De natura pueri commentarium (CMG XI 1,4)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Hippocrates"/>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/IoannesAlexandrinus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/DuffyJohnM"/>
+    <dc:date>1997</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/English"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cmg_11_02_01.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_11_02_01.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cmg_11_02_01.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cmg_11_02_01.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cmg_11_02_01.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm: Pseudogaleni In Hippocratis De septimanis commentarium ab Hunaino q. f. Arabice versum (CMG XI 2,1)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Galenus"/>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/IoannesAlexandrinus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/BergstraesserGotthelf"/>
+    <dc:date>1914</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Arabian"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/German"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/suppl_01.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/suppl_01.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/suppl_01.html">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/suppl_01.html"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/suppl_01.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm Svpplementvm: Galeni In Platonis Timaeum commentarii fragmenta (Suppl. I)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Galenus"/>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Platon"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/KahlePaul"/>
+    <dc:date>1934</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/German"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/suppl_02.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/suppl_02.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/suppl_02.html">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/suppl_02.html"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/suppl_02.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm Svpplementvm: Galeni De causis procatarcticis libellus a Nicolao Regino in sermonem Latinum translatus (Suppl. II)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Galenus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/BardongKurt"/>
+    <dc:date>1937</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/German"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/suppl_03.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/suppl_03.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/suppl_03.html">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/suppl_03.html"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/suppl_03.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm Svpplementvm: Galeni De consuetudinibus (Suppl. III)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Galenus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/SchmutteJoseph"/>
+    <dc:date>1941</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/German"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/suppl_04.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/suppl_04.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/suppl_04.html">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/suppl_04.html"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/suppl_04.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm Svpplementvm: Rufi Ephesii Quaestiones medicinales (Suppl. IV)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/EphesiusRufus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/GaertnerHans"/>
+    <dc:date>1962</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/German"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/suppl_05.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/suppl_05.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/suppl_05.html">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/suppl_05.html"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/suppl_05.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm Svpplementvm: Galeni De instrumento odoratus (Suppl. V)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Galenus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/KolleschJutta"/>
+    <dc:date>1964</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/German"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/suppl_or_01.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/suppl_or_01.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/suppl_or_01.html">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/suppl_or_01.html"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/suppl_or_01.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm Svpplementvm Orientale: Galeni In Hippocratis De officina medici commentariorum versio Arabica et excerpta, quae 'Alī ibn Ridwān ex eis sumpsit (Suppl. Or. I)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Galenus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/LyonsMalcom"/>
+    <dc:date>1963</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Arabian"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/English"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/suppl_or_02.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/suppl_or_02.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/suppl_or_02.html">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/suppl_or_02.html"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/suppl_or_02.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm Svpplementvm Orientale: Galeni De partibus artis medicativae, De causis contentivis, De diaeta in morbis acutis secundum Hippocratem, e partibus artis medicativae, De causis contentivis libelli (Suppl. Or. II))</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Galenus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/LyonsMalcom"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/SchoeneHermann"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/KolleschJutta"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/NickelDiethard"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/KalbfleischKarl"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/StrohmaierG"/>
+    <dc:date>1969</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Arabian"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/English"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/suppl_or_03.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/suppl_or_03.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/suppl_or_03.html">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/suppl_or_03.html"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/suppl_or_03.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm Svpplementvm Orientale: Galeni De partium homoeomerium differentia libelli versio Arabica (Suppl. Or. III)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Galenus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/StrohmaierGotthard"/>
+    <dc:date>1970</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Arabian"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/German"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/suppl_or_04.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/suppl_or_04.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/suppl_or_04.html">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/suppl_or_04.html"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/suppl_or_04.xml"/>
+    <dc:title>Corpvs Medicorvm Graecorvm Svpplementvm Orientale: Galeni De optimo medico cognoscendo libelli versio Arabica (Suppl. Or. IV)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Galenus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/IskandarAlbert"/>
+    <dc:date>1988</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Arabian"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/English"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cml_01.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cml_01.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cml_01.html">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cml_01.html"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cml_01.xml"/>
+    <dc:title>Corpvs Medicorvm Latinorvm: A. Cornelii Celsi quae supersunt (CML I)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/CelsusAulusCornelius"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/MarxFriedrich"/>
+    <dc:date>1915</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/German"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cml_02_03.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cml_02_03.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cml_02_03.html">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cml_02_03.html"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cml_02_03.xml"/>
+    <dc:title>Corpvs Medicorvm Latinorvm: Quinti Sereni Liber medicinalis (CML II 3)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/SerenusQuintus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/VollmerFriedrich"/>
+    <dc:date>1916</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/German"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cml_03.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cml_03.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cml_03.html">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cml_03.html"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cml_03.xml"/>
+    <dc:title>Corpvs Medicorvm Latinorvm: Plinii Secundi Iunioris qui feruntur De medicina libri tres (CML III)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Plinius"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/OennerforsAlf"/>
+    <dc:date>1964</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/German"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cml_04.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cml_04.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cml_04.html">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cml_04.html"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cml_04.xml"/>
+    <dc:title>Corpvs Medicorvm Latinorvm: Antonii Musae De herba Vettonica liber, Pseudoapulei Herbarius, Anonymi De taxone liber, Sexti Placiti Liber medicinae ex animalibus (CML IV)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/MusaAntonius"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/HowaldErnst"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/SigeristHenry"/>
+    <dc:date>1927</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/German"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cml_05.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cml_05.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cml_05.html">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cml_05.html"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cml_05.xml"/>
+    <dc:title>Corpvs Medicorvm Latinorvm: Marcelli De medicamentis liber (CML V)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/MarcellusEmpiricus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/NiedermannMax"/>
+    <dc:date>1968</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/German"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cml_06_01.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cml_06_01.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cml_06_01.html">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cml_06_01.html"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cml_06_01.xml"/>
+    <dc:title>Corpvs Medicorvm Latinorvm: Caelii Aureliani Celerum passionum libri III, Tardarum passionum libri V (CML VI 1)</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/CaeliusAurelianus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/BendzGerhard"/>
+    <dc:date>2002</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/German"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/cml_08_01.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/cml_08_01.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/cml_08_01.html">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/cml_08_01.html"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/cml_08_01.xml"/>
+    <dc:title>Corpvs Medicorvm Latinorvm: Anthimi De observatione ciborum ad Theodoricum regem Francorum epistula. CML VIII 1</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/AnthimusMedicus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/LiechtenhanEduard"/>
+    <dc:date>1963</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/German"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/wa_galen_an_ut.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/wa_galen_an_ut.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/wa_galen_an_ut.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/wa_galen_an_ut.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/wa_galen_an_ut.xml"/>
+    <dc:title>Galeni qui fertur libellus Ει ζψον το κατα γαστροσ</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Galenus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/WagnerHermann"/>
+    <dc:date>1914</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/wa_galen_art_sang.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/wa_galen_art_sang.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/wa_galen_art_sang.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/wa_galen_art_sang.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/wa_galen_art_sang.xml"/>
+    <dc:title>Galeni libellus An in arteriis natura sanguis contineatur</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Galenus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/AlbrechtFriedrich"/>
+    <dc:date>1911</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/wa_galen_capt_dict.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/wa_galen_capt_dict.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/wa_galen_capt_dict.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/wa_galen_capt_dict.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/wa_galen_capt_dict.xml"/>
+    <dc:title>Galeni libellus De captionibus quae per dictionem fiunt</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Galenus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/GablerKarl"/>
+    <dc:date>1903</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/wa_galen_hist_phil.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/wa_galen_hist_phil.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/wa_galen_hist_phil.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/wa_galen_hist_phil.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/wa_galen_hist_phil.xml"/>
+    <dc:title>Galeni Historia philosopha, in: Doxographi Graeci</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Galenus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/DielsHermann"/>
+    <dc:date>1879</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/wa_galen_inst_log.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/wa_galen_inst_log.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/wa_galen_inst_log.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/wa_galen_inst_log.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/wa_galen_inst_log.xml"/>
+    <dc:title>Galeni Institutio logica</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Galenus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/KalbfleischKarl"/>
+    <dc:date>1896</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/wa_galen_opt_corp_const.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/wa_galen_opt_corp_const.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/wa_galen_opt_corp_const.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/wa_galen_opt_corp_const.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/wa_galen_opt_corp_const.xml"/>
+    <dc:title>Galeni De optima corporis constitutione</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Galenus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/HelmreichGeorgius"/>
+    <dc:date>1901</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/wa_galen_part_phil.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/wa_galen_part_phil.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/wa_galen_part_phil.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/wa_galen_part_phil.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/wa_galen_part_phil.xml"/>
+    <dc:title>Galeni qui fertur De partibus philosophiae libellus</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Galenus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/WellmannEduard"/>
+    <dc:date>1882</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Philosophie"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/wa_galen_parv_pil.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/wa_galen_parv_pil.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/wa_galen_parv_pil.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/wa_galen_parv_pil.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/wa_galen_parv_pil.xml"/>
+    <dc:title>De Galeni qui fertur De parvae pilae exercitio libello</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Galenus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/SchaeferWilhelm"/>
+    <dc:date>1908</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/wa_galen_qual_inc.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/wa_galen_qual_inc.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/wa_galen_qual_inc.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/wa_galen_qual_inc.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/wa_galen_qual_inc.xml"/>
+    <dc:title>Galeni qui fertur De qualitatibus incorporeis libellus</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Galenus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/WestenbergerIoannes"/>
+    <dc:date>1906</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/wa_galen_scripta_min_1.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/wa_galen_scripta_min_1.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/wa_galen_scripta_min_1.php">
+  <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/wa_galen_scripta_min_1.php"/>
+  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+  <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/wa_galen_scripta_min_1.xml"/>
+  <dc:title>Claudii Galeni Pergameni Scripta minora, Bd. I</dc:title>
+  <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Galenus"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/MarquardtIoannes"/>
+  <dc:date>1884</dc:date>
+  <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+  <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+  <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+  <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/wa_galen_scripta_min_2.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/wa_galen_scripta_min_2.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/wa_galen_scripta_min_2.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/wa_galen_scripta_min_2.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/wa_galen_scripta_min_2.xml"/>
+    <dc:title>Claudii Galeni Pergameni Scripta minora, Bd. II</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Galenus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/MuellerIwan"/>
+    <dc:date>1891</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/wa_galen_scripta_min_3.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/wa_galen_scripta_min_3.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/wa_galen_scripta_min_3.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/wa_galen_scripta_min_3.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/wa_galen_scripta_min_3.xml"/>
+    <dc:title>Claudii Galeni Pergameni Scripta minora, Bd. III</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Galenus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/HelmreichGeorgius"/>
+    <dc:date>1883</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/wa_galen_temp.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/wa_galen_temp.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/wa_galen_temp.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/wa_galen_temp.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/wa_galen_temp.xml"/>
+    <dc:title>Galeni De temperamentis libri tres</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Galenus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/HelmreichGeorgius"/>
+    <dc:date>1904</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/wa_galen_usu_part_1.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/wa_galen_usu_part_1.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/wa_galen_usu_part_1.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/wa_galen_usu_part_1.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/wa_galen_usu_part_1.xml"/>
+    <dc:title>Galeni De usu partium libri XVII</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Galenus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/HelmreichGeorgius"/>
+    <dc:date>1907</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/wa_galen_usu_part_2.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/wa_galen_usu_part_2.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/wa_galen_usu_part_2.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/wa_galen_usu_part_2.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/wa_galen_usu_part_2.xml"/>
+    <dc:title>Galeni De usu partium libri XVII</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Galenus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/HelmreichGeorgius"/>
+    <dc:date>1907</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/wa_galen_ut_resp.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/wa_galen_ut_resp.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/wa_galen_ut_resp.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/wa_galen_ut_resp.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/wa_galen_ut_resp.xml"/>
+    <dc:title>Galeni περι χρειασ αναπνοησ libellus</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Galenus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/NollRudolf"/>
+    <dc:date>1915</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/wa_hippocrates_op_1.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/wa_hippocrates_op_1.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/wa_hippocrates_op_1.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/wa_hippocrates_op_1.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/wa_hippocrates_op_1.xml"/>
+    <dc:title>Hippocratis Opera quae feruntur omnia</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Hippocrates"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/KuehleweinHugo"/>
+    <dc:date>1894</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/wa_hippocrates_op_2.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/wa_hippocrates_op_2.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/wa_hippocrates_op_1.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/wa_hippocrates_op_1.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/wa_hippocrates_op_2.xml"/>
+    <dc:title>Hippocratis Opera quae feruntur omnia</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Hippocrates"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/KuehleweinHugo"/>
+    <dc:date>1902</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/wa_anon_lond.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/wa_anon_lond.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/wa_anon_lond.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/wa_anon_lond.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/wa_anon_lond.xml"/>
+    <dc:title>Anonymi Londinensis ex Aristotelis Iatricis Menoniis et aliis medicis eclogae</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Aristoteles"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/DielsHermann"/>
+    <dc:date>1893</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/wa_dioscurides_mat_med_lib_1_2.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/wa_dioscurides_mat_med_lib_1_2.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/wa_dioscurides_mat_med_lib_1_2.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/wa_dioscurides_mat_med_lib_1_2.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/wa_dioscurides_mat_med_lib_1_2.xml"/>
+    <dc:title>Pedanii Dioscuridis Anazarbei De materia medica, Bd. I</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Diodcorides"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/WellmannMax"/>
+    <dc:date>1907</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/wa_dioscurides_mat_med_lib_3_4.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/wa_dioscurides_mat_med_lib_3_4.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/wa_dioscurides_mat_med_lib_3_4.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/wa_dioscurides_mat_med_lib_3_4.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/wa_dioscurides_mat_med_lib_3_4.xml"/>
+    <dc:title>Pedanii Dioscuridis Anazarbei De materia medica, Bd. II</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Diodcorides"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/WellmannMax"/>
+    <dc:date>1906</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/wa_dioscurides_mat_med_lib_5_crat_sext_nig_simpl.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/wa_dioscurides_mat_med_lib_5_crat_sext_nig_simpl.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/wa_dioscurides_mat_med_lib_5_crat_sext_nig_simpl.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/wa_dioscurides_mat_med_lib_5_crat_sext_nig_simpl.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/wa_dioscurides_mat_med_lib_5_crat_sext_nig_simpl.xml"/>
+    <dc:title>Pedanii Dioscuridis Anazarbei De materia medica, Bd. III</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Diodcorides"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/WellmannMax"/>
+    <dc:date>1914</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="https://telotadev.bbaw.de/CMG/METS/wa_prisc_eupor.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
   <dc:identifier rdf:resource="https://telotadev.bbaw.de/CMG/METS/wa_prisc_eupor.xml"/>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_mets_xml"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/wa_prisc_eupor.php">
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/wa_prisc_eupor.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:isFormatOf rdf:resource="https://telotadev.bbaw.de/CMG/METS/wa_prisc_eupor.xml"/>
+    <dc:title>Theodori Prisciani Euporiston libri III</dc:title>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Theodorus"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/RoseValentin"/>
+    <dc:date>1894</dc:date>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
+    <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Medizin"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Griechenland"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/Editionen"/>
+  </rdf:Description>
 </rdf:RDF>

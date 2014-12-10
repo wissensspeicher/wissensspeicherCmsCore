@@ -15,4 +15,10 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AltaegyptWB"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/altaegyptwb"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://www.bbaw.de/forschung/altaegyptwb/projektdarstellung">
+    <dc:identifier rdf:resource="http://www.bbaw.de/forschung/altaegyptwb/projektdarstellung"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AltaegyptWB"/>
+    <dc:title>Projektdarstellung</dc:title>
+  </rdf:Description>
 </rdf:RDF>

@@ -14,30 +14,20 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/dspin"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/deutsche-sprachressourcen-infrastruktur"/>
+  <dc:title>Übersicht</dc:title>
 </rdf:Description>
-<rdf:Description rdf:about="http://www.bbaw.de/forschung/deutsche-sprachressourcen-infrastruktur/ubersicht">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/dspin"/>
-  <dc:identifier rdf:resource="http://www.bbaw.de/forschung/deutsche-sprachressourcen-infrastruktur/ubersicht"/>
-</rdf:Description>
+
 <rdf:Description rdf:about="http://www.bbaw.de/forschung/deutsche-sprachressourcen-infrastruktur/projektdarstellung">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/dspin"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/deutsche-sprachressourcen-infrastruktur/projektdarstellung"/>
+  <dc:title>Projektdarstellung</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.bbaw.de/forschung/deutsche-sprachressourcen-infrastruktur/mitarbeiter">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/dspin"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/deutsche-sprachressourcen-infrastruktur/mitarbeiter"/>
+  <dc:title>Mitarbeiter</dc:title>
 </rdf:Description>
-<rdf:Description rdf:about="http://www.bbaw.de/forschung/deutsche-sprachressourcen-infrastruktur/ubersicht">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/dspin"/>
-  <dc:identifier rdf:resource="http://www.bbaw.de/forschung/deutsche-sprachressourcen-infrastruktur/ubersicht"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.bbaw.de/forschung/deutsche-sprachressourcen-infrastruktur/ubersicht">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/dspin"/>
-  <dc:identifier rdf:resource="http://www.bbaw.de/forschung/deutsche-sprachressourcen-infrastruktur/ubersicht"/>
-</rdf:Description>
+
 </rdf:RDF>

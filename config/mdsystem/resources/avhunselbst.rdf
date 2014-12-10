@@ -1,18 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rdf:RDF 
-   xmlns="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften" 
-   xml:base="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften" 
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
-   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" 
-   xmlns:dc="http://purl.org/dc/elements/1.1/" 
-   xmlns:dcterms="http://purl.org/dc/terms/" 
-   xmlns:foaf="http://xmlns.com/foaf/0.1/" 
-   xmlns:gnd="http://d-nb.info/standards/elementset/gnd#" 
-   xmlns:ore="http://www.openarchives.org/ore/terms/" 
->
-<rdf:Description rdf:about="http://telota.bbaw.de/avh/uns/">
+<!DOCTYPE rdf:RDF [
+    <!ENTITY dcterms "http://purl.org/dc/terms/" >
+    <!ENTITY foaf "http://xmlns.com/foaf/0.1/" >
+    <!ENTITY dcmitype "http://purl.org/dc/dcmitype/" >
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY dc "http://purl.org/dc/elements/1.1/" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY edm "http://www.europeana.eu/schemas/edm/" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY ore "http://www.openarchives.org/ore/terms/" >
+    <!ENTITY gnd "http://d-nb.info/standards/elementset/gnd#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY vs "http://www.w3.org/2003/06/sw-vocab-status/ns#" >
+]>
+
+
+<rdf:RDF xmlns="http://wsp.normdata.rdf/"
+  xml:base="http://wsp.normdata.rdf/"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:gnd="http://d-nb.info/standards/elementset/gnd#"
+  xmlns:edm="http://www.europeana.eu/schemas/edm/"
+  xmlns:foaf="http://xmlns.com/foaf/0.1/"
+  xmlns:dcmitype="http://purl.org/dc/dcmitype/"
+  xmlns:ore="http://www.openarchives.org/ore/terms/"
+  xmlns:vs="http://www.w3.org/2003/06/sw-vocab-status/ns#"
+  xmlns:dcterms="http://purl.org/dc/terms/"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:owl="http://www.w3.org/2002/07/owl#"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <owl:Ontology rdf:about="http://wsp.normdata.rdf/"/>
+  
+  <rdf:Description rdf:about="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften">
+    <rdf:type rdf:resource="&foaf;Project"/>
+    <foaf:nick>avhunselbst</foaf:nick>
+    <foaf:name>Alexander von Humboldt Forschungsstelle: Die unselbständigen Schriften Alexander von Humboldts</foaf:name>
+    <dc:language>ger</dc:language>
+    <dc:language>lat</dc:language>
+    <dc:language>eng</dc:language>
+    <dc:language>fra</dc:language>
+    <foaf:homepage rdf:resource="http://telota.bbaw.de/avh/uns"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle"/>
+    <dc:description>Version 3.1 r3</dc:description>
+    <dc:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
+    <dcterms:issued rdf:datatype="&xsd;date">2011</dcterms:issued>
+    <dcterms:temporal rdf:datatype="&dcterms;Period">start=1789; end=1859; name=Publikationszeitraum</dcterms:temporal>
+    <dcterms:rightsHolder rdf:resource="http://wsp.normdata.rdf/BBAW"/>
+    <dc:format rdf:resource="http://wsp.normdata.rdf/Bibliographische Datenbank"/>
+    <dcterms:publisher rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle"/>
+    <dcterms:modified rdf:datatype="&xsd;date">2011</dcterms:modified>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/Leitner"/>
+    <dc:publisher rdf:resource="http://wsp.normdata.rdf/BBAW"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/Roeder"/>
+    <dcterms:abstract>Enthält unselbständig erschienene Aufsätze aus wissenschaftlichen Fachzeitschriften von Alexander von Humboldt.</dcterms:abstract>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/HumboldtAlexander"/>
+  </rdf:Description>
+  
+  
+<rdf:Description rdf:about="http://telota.bbaw.de/avh/uns">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
-  <dc:identifier rdf:resource="http://telota.bbaw.de/avh/uns/"/>
+  <dc:identifier rdf:resource="http://telota.bbaw.de/avh/uns"/>
 </rdf:Description>
+  <rdf:Description rdf:about="http://avh.bbaw.de/uns/keywords.php">
+    <dc:identifier rdf:resource="http://avh.bbaw.de/uns/keywords.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dc:title>Schlagworte</dc:title>
+    <dcterms:extent>559 Schlagworte</dcterms:extent>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://avh.bbaw.de/uns/groups.php">
+    <dc:identifier rdf:resource="http://avh.bbaw.de/uns/groups.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dc:title>Gruppen</dc:title>
+    <dc:extent>13 Gruppen</dc:extent>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://avh.bbaw.de/uns/dating.php">
+    <dc:title>Datierung</dc:title>
+    <dc:identifier rdf:resource="http://avh.bbaw.de/uns/dating.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dc:extent>1789-1859</dc:extent>
+    <dcterms:temporal rdf:datatype="&dcterms;Period">start=1789; end=1859; name=Zeitraum</dcterms:temporal>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://avh.bbaw.de/uns/articles.php">
+    <dc:identifier rdf:resource="http://avh.bbaw.de/uns/articles.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dc:extent>479 Schriften</dc:extent>
+    <dc:title>Schriften</dc:title>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://avh.bbaw.de/uns/publications.php">
+    <dc:identifier rdf:resource="http://avh.bbaw.de/uns/publications.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dc:title>Publikationen</dc:title>
+    <dc:extent>732 Publikationen</dc:extent>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://avh.bbaw.de/uns/persons.php">
+    <dc:identifier rdf:resource="http://avh.bbaw.de/uns/persons.php"/>
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dc:title>Autoren</dc:title>
+    <dc:extent>21 Autoren</dc:extent>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
+  </rdf:Description>
+  
 </rdf:RDF>

@@ -1,16 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rdf:RDF 
-   xmlns="http://wsp.normdata.rdf/AltaegyptWB/Erbkam" 
-   xml:base="http://wsp.normdata.rdf/AltaegyptWB/Erbkam" 
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
-   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" 
-   xmlns:dc="http://purl.org/dc/elements/1.1/" 
-   xmlns:dcterms="http://purl.org/dc/terms/" 
-   xmlns:foaf="http://xmlns.com/foaf/0.1/" 
-   xmlns:gnd="http://d-nb.info/standards/elementset/gnd#" 
-   xmlns:ore="http://www.openarchives.org/ore/terms/" 
->
-<rdf:Description rdf:about="http://aaew.bbaw.de/archive/erbkam-tagebuch">
+<!DOCTYPE rdf:RDF [
+    <!ENTITY dcterms "http://purl.org/dc/terms/" >
+    <!ENTITY foaf "http://xmlns.com/foaf/0.1/" >
+    <!ENTITY dcmitype "http://purl.org/dc/dcmitype/" >
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY dc "http://purl.org/dc/elements/1.1/" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY edm "http://www.europeana.eu/schemas/edm/" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY ore "http://www.openarchives.org/ore/terms/" >
+    <!ENTITY gnd "http://d-nb.info/standards/elementset/gnd#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY vs "http://www.w3.org/2003/06/sw-vocab-status/ns#" >
+]>
+
+
+<rdf:RDF xmlns="http://wsp.normdata.rdf/"
+  xml:base="http://wsp.normdata.rdf/"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:gnd="http://d-nb.info/standards/elementset/gnd#"
+  xmlns:edm="http://www.europeana.eu/schemas/edm/"
+  xmlns:foaf="http://xmlns.com/foaf/0.1/"
+  xmlns:dcmitype="http://purl.org/dc/dcmitype/"
+  xmlns:ore="http://www.openarchives.org/ore/terms/"
+  xmlns:vs="http://www.w3.org/2003/06/sw-vocab-status/ns#"
+  xmlns:dcterms="http://purl.org/dc/terms/"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:owl="http://www.w3.org/2002/07/owl#"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <owl:Ontology rdf:about="http://wsp.normdata.rdf/"/>
+  
+  <rdf:Description rdf:about="http://wsp.normdata.rdf/AltaegyptWB/Erbkam">
+    <rdf:type rdf:resource="&foaf;Project"/>
+    <dc:language>ger</dc:language>
+    <foaf:nick>aaewerbkam</foaf:nick>
+    <foaf:name>Georg Gustav Erbkam: Tagebuch meiner egyptischen Reise</foaf:name>
+    <foaf:homepage rdf:resource="http://aaew.bbaw.de/archive/erbkam-tagebuch"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AltaegyptWB"/>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/ErbkamGeorg"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/Grunert"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/Freier"/>
+    <dcterms:created rdf:datatype="&xsd;date">2007-12-07</dcterms:created>
+    <dc:publisher rdf:resource="http://wsp.normdata.rdf/AltaegyptWB"/>
+    <dcterms:rightsHolder rdf:resource="http://wsp.normdata.rdf/BBAW"/>
+    <dcterms:abstract>Während der Expedition führte Georg Erbkam gewissenhaft Tagebuch. In drei Bänden folgen seine Eintragungen Tag für Tag dem Verlauf der Reise. Sie geben Auskunft über den praktischen Ablauf, die Lebensbedingungen, die persönlichen Verhältnisse der Expeditionsmitglieder und erzählen mit Humor manche spannende Episode, die die Expedition erlebte. Aufmerksame Leser werden auch vielfältig aufschlußreiche Informationen zu den politischen und kulturellen Verhältnissen im Ägypten der Mitte des 19. Jahrhunderts finden, vor allem aber zu den persönlichen Eindrücken, die der junge Erbkam in dem fremden Land empfing und wie er sie vor dem Hintergrund seiner sozialen und kulturellen Herkunft verarbeitete. Dieses kulturhistorisch und biographisch so aufschlußreiche Dokument wird hier zum ersten Mal vorgelegt.</dcterms:abstract>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/ErbkamGeorg"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Aegypten"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Alexandria"/>
+    <dc:coverage rdf:resource="http://wsp.normdata.rdf/Sinai"/>
+    <dcterms:temporal rdf:datatype="&dcterms;Period">start=1842; end=1845; name=Forschungsexpedition nach Ägypten</dcterms:temporal>
+    <dc:format rdf:resource="http://wsp.normdata.rdf/DigitaleEdition"/>
+  </rdf:Description>
+  
+  
+  
+  <rdf:Description rdf:about="http://aaew.bbaw.de/archive/erbkam-tagebuch">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AltaegyptWB/Erbkam"/>
   <dc:identifier rdf:resource="http://aaew.bbaw.de/archive/erbkam-tagebuch"/>

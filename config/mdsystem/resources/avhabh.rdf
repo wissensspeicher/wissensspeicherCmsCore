@@ -1,21 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rdf:RDF 
-   xmlns="http://wsp.normdata.rdf/AvHForschungsstelle/Abhandlungen" 
-   xml:base="http://wsp.normdata.rdf/AvHForschungsstelle/Abhandlungen" 
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
-   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" 
-   xmlns:dc="http://purl.org/dc/elements/1.1/" 
-   xmlns:dcterms="http://purl.org/dc/terms/" 
-   xmlns:foaf="http://xmlns.com/foaf/0.1/" 
-   xmlns:gnd="http://d-nb.info/standards/elementset/gnd#" 
-   xmlns:ore="http://www.openarchives.org/ore/terms/" 
->
-<rdf:Description rdf:about="http://avh.bbaw.de/publikationen/digitale-veroeffentlichungen/abhandlungen-nach-vortraegen-an-der-koeniglich-preussischen-akademie-der-wissenschaften-zu-berlin">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Abhandlungen"/>
-  <dc:identifier rdf:resource="http://avh.bbaw.de/publikationen/digitale-veroeffentlichungen/abhandlungen-nach-vortraegen-an-der-koeniglich-preussischen-akademie-der-wissenschaften-zu-berlin"/>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
+
+  <!DOCTYPE rdf:RDF [
+    <!ENTITY dcterms "http://purl.org/dc/terms/" >
+    <!ENTITY foaf "http://xmlns.com/foaf/0.1/" >
+    <!ENTITY dcmitype "http://purl.org/dc/dcmitype/" >
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY dc "http://purl.org/dc/elements/1.1/" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY edm "http://www.europeana.eu/schemas/edm/" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY ore "http://www.openarchives.org/ore/terms/" >
+    <!ENTITY gnd "http://d-nb.info/standards/elementset/gnd#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY vs "http://www.w3.org/2003/06/sw-vocab-status/ns#" >
+]>
+
+
+  <rdf:RDF xmlns="http://wsp.normdata.rdf/"
+    xml:base="http://wsp.normdata.rdf/"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:gnd="http://d-nb.info/standards/elementset/gnd#"
+    xmlns:edm="http://www.europeana.eu/schemas/edm/"
+    xmlns:foaf="http://xmlns.com/foaf/0.1/"
+    xmlns:dcmitype="http://purl.org/dc/dcmitype/"
+    xmlns:ore="http://www.openarchives.org/ore/terms/"
+    xmlns:vs="http://www.w3.org/2003/06/sw-vocab-status/ns#"
+    xmlns:dcterms="http://purl.org/dc/terms/"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+    <owl:Ontology rdf:about="http://wsp.normdata.rdf/"/>
+
+
+  
+  <rdf:Description rdf:about="http://wsp.normdata.rdf/AvHForschungsstelle/Abhandlungen">
+    <rdf:type rdf:resource="&foaf;Project"/>
+    <foaf:name>Alexander von Humboldt Forschungsstelle: Abhandlungen</foaf:name>
+    <foaf:nick>avhabh</foaf:nick>
+    <dc:language>ger</dc:language>
+    <foaf:homepage rdf:resource="http://avh.bbaw.de/publikationen/digitale-veroeffentlichungen/abhandlungen-nach-vortraegen-an-der-koeniglich-preussischen-akademie-der-wissenschaften-zu-berlin"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/Czmiel"/>
+    <dcterms:issued>2006-10</dcterms:issued>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/Knobloch"/>
+    <dcterms:abstract>In der vorliegenden elektronischen Edition werden Alexander von Humboldts Abhandlungen nach Akademiereden erstmals geschlossen präsentiert, kritisch ediert und kommentiert. Zusätzlich zu den verlinkten Registereinträgen ist eine Suche über den gesamten Text möglich. Damit ergibt sich für den Leser auch die Chance über einzelne Texte hinweg zu verfolgen, ob und wie es Humboldt gelungen ist, Natur-Ansichten zu entwickeln, die "durch Größe des Gegenstandes, vielleicht auch durch ein sorgfältiges Hinweisen auf das Gemeinsame in den Erscheinungen, ein allgemeineres Interesse erregen würden" und die Gegenstände "in der Behandlung auf etwas Gemeinsames, auf die Begründung einer allgemeinen vergleichenden Naturkunde zurückzuführen".</dcterms:abstract>
+    <foaf:name>Alexander von Humboldts Abhandlungen nach Vorträgen an der Königlich Preußischen Akademie der Wissenschaften zu Berlin</foaf:name>
+    <dcterms:extent>21 Abhandlungen</dcterms:extent>
+    <dcterms:rightsHolder rdf:resource="http://wsp.normdata.rdf/BBAW"/>
+    <dcterms:temporal rdf:datatype="&dcterms;Period">start=1805-11-21; end=1856-05-22; name=Zeitraum der Veröffentlichung der Abhandlungen</dcterms:temporal>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_tei_xml"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/Jobst"/>
+    <dc:publisher rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle"/>
+    <dcterms:rightsHolder rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/Telota"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/Fritze"/>
+    <dcterms:tableOfContents>Vorwort, Editionsprinzipien, Zeittafel, Chronologisches Verzeichnis der Vorträge, Abhandlungen, Register</dcterms:tableOfContents>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/HumboldtAlexander"/>
+  </rdf:Description>
+  
+    <rdf:Description rdf:about="http://avh.bbaw.de/publikationen/digitale-veroeffentlichungen/abhandlungen-nach-vortraegen-an-der-koeniglich-preussischen-akademie-der-wissenschaften-zu-berlin">
+      <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+      <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Abhandlungen"/>
+      <dc:identifier rdf:resource="http://avh.bbaw.de/publikationen/digitale-veroeffentlichungen/abhandlungen-nach-vortraegen-an-der-koeniglich-preussischen-akademie-der-wissenschaften-zu-berlin"/>
+      <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+    </rdf:Description>
+  
 <rdf:Description rdf:about="http://telota.bbaw.de:8088/exist/servlet/db/avh/">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Abhandlungen"/>
@@ -23,193 +74,191 @@
   <dc:type>eXistDir</dc:type>
 </rdf:Description>
   <rdf:Description rdf:about="http://telota.bbaw.de/avh">
-    
-    <dc:creator rdf:resource="http://wsp.normdata.rdf/Czmiel"/>
-    <dcterms:issued>2006-10</dcterms:issued>
-    <dc:creator rdf:resource="http://wsp.normdata.rdf/Knobloch"/>
-    <dcterms:abstract>In der vorliegenden elektronischen Edition werden Alexander von Humboldts Abhandlungen nach Akademiereden erstmals geschlossen präsentiert, kritisch ediert und kommentiert. Zusätzlich zu den verlinkten Registereinträgen ist eine Suche über den gesamten Text möglich. Damit ergibt sich für den Leser auch die Chance über einzelne Texte hinweg zu verfolgen, ob und wie es Humboldt gelungen ist, Natur-Ansichten zu entwickeln, die "durch Größe des Gegenstandes, vielleicht auch durch ein sorgfältiges Hinweisen auf das Gemeinsame in den Erscheinungen, ein allgemeineres Interesse erregen würden" und die Gegenstände "in der Behandlung auf etwas Gemeinsames, auf die Begründung einer allgemeinen vergleichenden Naturkunde zurückzuführen".</dcterms:abstract>
-    <dc:title>Alexander von Humboldts Abhandlungen nach Vorträgen an der Königlich Preußischen Akademie der Wissenschaften zu Berlin</dc:title>
-    <dcterms:extent>21 Abhandlungen</dcterms:extent>
-    <dcterms:rightsHolder rdf:resource="http://wsp.normdata.rdf/Telota"/>
-    <dcterms:temporal>start=1805-11-21; end=1856-05-22; name=Zeitraum der Veröffentlichung der Abhandlungen</dcterms:temporal>
-    <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_tei_xml"/>
-    <dc:creator rdf:resource="http://wsp.normdata.rdf/Jobst"/>
-    <dc:creator rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle"/>
-
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Abhandlungen"/>
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-    
-    <dc:publisher rdf:resource="http://wsp.normdata.rdf/BBAW"/>
-    
-    <dcterms:rightsHolder rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle"/>
-    <dc:creator rdf:resource="http://wsp.normdata.rdf/Telota"/>
-    
     <dc:identifier rdf:resource="http://telota.bbaw.de/avh"/>
-    <dc:creator rdf:resource="http://wsp.normdata.rdf/Fritze"/>
-    
-    <dcterms:tableOfContents>Vorwort, Editionsprinzipien, Zeittafel, Chronologisches Verzeichnis der Vorträge, Abhandlungen, Register</dcterms:tableOfContents>
   </rdf:Description>
   
   <rdf:Description rdf:about="http://wsp.normdata.rdf/Dok_1805-11-21">
     <rdf:type rdf:resource="http://purl.org/dc/terms/PhysicalResource"/>
-    <gnd:creator rdf:resource="http://wsp.normdata.rdf/HumboldtAlexander"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Abhandlungen"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/HumboldtAlexander"/>
     <dc:title>21. November 1805. Plenum.</dc:title>
-    <dcterms:bibliographicCitation>ABBAW, I-IV, 34, a Bl. 117</dcterms:bibliographicCitation>
-    <dcterms:issued>1805-11-21</dcterms:issued>
+    <dcterms:identifier>ABBAW, I-IV, 34, a Bl. 117</dcterms:identifier>
+    <dcterms:issued rdf:datatype="&xsd;date">1805-11-21</dcterms:issued>
     <dcterms:isFormatOf rdf:resource="http://telota.bbaw.de:8088/exist/servlet/db/avh/b/Abhandlung%201B.xml"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://wsp.normdata.rdf/Dok_1851-03-20">
     <rdf:type rdf:resource="http://purl.org/dc/terms/PhysicalResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Abhandlungen"/>
     <dc:creator rdf:resource="http://wsp.normdata.rdf/HumboldtAlexander"/>
     <dc:title>20. März 1851. Gesamtsitzung.</dc:title>
-    <dcterms:issued>1851-03-20</dcterms:issued>
-    <dcterms:bibliographicCitation>ABBAW II-V, 32, S. 70.</dcterms:bibliographicCitation>
+    <dcterms:issued rdf:datatype="&xsd;date">1851-03-20</dcterms:issued>
+    <dcterms:identifier>ABBAW II-V, 32, S. 70.</dcterms:identifier>
     <dcterms:isFormatOf rdf:resource="http://telota.bbaw.de:8088/exist/servlet/db/avh/b/Abhandlung%2019B.xml"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://wsp.normdata.rdf/Dok_1806-01-30">
     <rdf:type rdf:resource="http://purl.org/dc/terms/PhysicalResource"/>
-    <dcterms:issued>1806-01-30</dcterms:issued>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Abhandlungen"/>
+    <dcterms:issued rdf:datatype="&xsd;date">1806-01-30</dcterms:issued>
     <dc:creator rdf:resource="http://wsp.normdata.rdf/HumboldtAlexander"/>
     <dc:title>30. Januar 1806, Plenum (Séance publique).</dc:title>
-    <dcterms:bibliographicCitation>ABBAW I-IV, 35, Bl. 3Rs.</dcterms:bibliographicCitation>
+    <dcterms:identifier>ABBAW I-IV, 35, Bl. 3Rs.</dcterms:identifier>
     <dcterms:isFormatOf rdf:resource="http://telota.bbaw.de:8088/exist/servlet/db/avh/b/Abhandlung%202C.xml"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://wsp.normdata.rdf/Dok_1855-07-26">
     <rdf:type rdf:resource="http://purl.org/dc/terms/PhysicalResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Abhandlungen"/>
     <dc:creator rdf:resource="http://wsp.normdata.rdf/HumboldtAlexander"/>
     <dc:title>26. Juli 1855 Gesamtsitzung der Akademie der Wissenschaften.</dc:title>
-    <dcterms:issued>1855-07-26</dcterms:issued>
-    <dcterms:bibliographicCitation>ABBAW, II-V, 36, S. 78.</dcterms:bibliographicCitation>
+    <dcterms:issued rdf:datatype="&xsd;date">1855-07-26</dcterms:issued>
+    <dcterms:identifier>ABBAW, II-V, 36, S. 78.</dcterms:identifier>
     <dcterms:isFormatOf rdf:resource="http://telota.bbaw.de:8088/exist/servlet/db/avh/b/Abhandlung%2021B.xml"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://wsp.normdata.rdf/Dok_1833-06-27">
     <rdf:type rdf:resource="http://purl.org/dc/terms/PhysicalResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Abhandlungen"/>
     <dc:title>3. Juni 1833 Sitzung der physikalisch-mathematischen Klasse.</dc:title>
     <dc:creator rdf:resource="http://wsp.normdata.rdf/HumboldtAlexander"/>
-    <dcterms:issued>1833-06-27</dcterms:issued>
-    <dcterms:bibliographicCitation>ABBAW I-V, 110, S.20.</dcterms:bibliographicCitation>
-    <dcterms:bibliographicCitation>ABBAW II-V, 14, S.105.</dcterms:bibliographicCitation>
+    <dcterms:issued rdf:datatype="&xsd;date">1833-06-27</dcterms:issued>
+    <dcterms:identifier>ABBAW I-V, 110, S.20.</dcterms:identifier>
+    <dcterms:identifier>ABBAW II-V, 14, S.105.</dcterms:identifier>
     <dcterms:isFormatOf rdf:resource="http://telota.bbaw.de:8088/exist/servlet/db/avh/b/Abhandlung%2011B.xml"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://wsp.normdata.rdf/Dok_1853-02-03">
     <rdf:type rdf:resource="http://purl.org/dc/terms/PhysicalResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Abhandlungen"/>
     <dc:creator rdf:resource="http://wsp.normdata.rdf/HumboldtAlexander"/>
     <dc:title>3. Februar 1853. Gesamtsitzung der Akademie der Wissenschaften.</dc:title>
-    <dcterms:issued>1853-02-03</dcterms:issued>
-    <dcterms:bibliographicCitation>ABBAW II-V, 34, S. 24</dcterms:bibliographicCitation>
+    <dcterms:issued rdf:datatype="&xsd;date">1853-02-03</dcterms:issued>
+    <dcterms:identifier>ABBAW II-V, 34, S. 24</dcterms:identifier>
     <dcterms:isFormatOf rdf:resource="http://telota.bbaw.de:8088/exist/servlet/db/avh/b/Abhandlung%2020B.xml"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://wsp.normdata.rdf/Dok_1806-03-20">
-    <dcterms:issued>1807-09-17</dcterms:issued>
+    <dcterms:issued rdf:datatype="&xsd;date">1807-09-17</dcterms:issued>
     <rdf:type rdf:resource="http://purl.org/dc/terms/PhysicalResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Abhandlungen"/>
     <dc:title>20. März 1806. Plenum. Fortsetzung: 17. September 1807.</dc:title>
-    <dcterms:issued>1806-03-20</dcterms:issued>
+    <dcterms:issued rdf:datatype="&xsd;date">1806-03-20</dcterms:issued>
     <dc:creator rdf:resource="http://wsp.normdata.rdf/HumboldtAlexander"/>
-    <dcterms:bibliographicCitation>ABBAW I-IV, 35, Bl. 7.</dcterms:bibliographicCitation>
+    <dcterms:identifier>ABBAW I-IV, 35, Bl. 7.</dcterms:identifier>
     <dcterms:isFormatOf rdf:resource="http://telota.bbaw.de:8088/exist/servlet/db/avh/b/Abhandlung%203B.xml"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://wsp.normdata.rdf/Dok_1839-11-28">
     <rdf:type rdf:resource="http://purl.org/dc/terms/PhysicalResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Abhandlungen"/>
     <dc:creator rdf:resource="http://wsp.normdata.rdf/HumboldtAlexander"/>
-    <dcterms:bibliographicCitation>ABBAW II-V, 20, S. 162.</dcterms:bibliographicCitation>
-    <dcterms:issued>1839-11-28</dcterms:issued>
+    <dcterms:identifier>ABBAW II-V, 20, S. 162.</dcterms:identifier>
+    <dcterms:issued rdf:datatype="&xsd;date">1839-11-28</dcterms:issued>
     <dc:title>28. November 1839. Gesamtsitzung der Akademie.</dc:title>
-    <dcterms:bibliographicCitation>ABBAW II-V, 20, 159. </dcterms:bibliographicCitation>
+    <dcterms:identifier>ABBAW II-V, 20, 159. </dcterms:identifier>
     <dcterms:isFormatOf rdf:resource="http://telota.bbaw.de:8088/exist/servlet/db/avh/b/Abhandlung%2015B.xml"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://wsp.normdata.rdf/Dok_1838-05-10">
     <rdf:type rdf:resource="http://purl.org/dc/terms/PhysicalResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Abhandlungen"/>
     <dc:creator rdf:resource="http://wsp.normdata.rdf/HumboldtAlexander"/>
     <dc:title>10. Mai 1838. Gesamtsitzung der Akademie.</dc:title>
-    <dcterms:issued>1838-05-10</dcterms:issued>
-    <dcterms:bibliographicCitation>ABBAW II-V, 19, S. 70.</dcterms:bibliographicCitation>
+    <dcterms:issued rdf:datatype="&xsd;date">1838-05-10</dcterms:issued>
+    <dcterms:identifier>ABBAW II-V, 19, S. 70.</dcterms:identifier>
     <dcterms:isFormatOf rdf:resource="http://telota.bbaw.de:8088/exist/servlet/db/avh/b/Abhandlung%2014B.xml"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://wsp.normdata.rdf/Dok_1829-03-02">
     <dc:title>2. März 1829. Physikalische Klasse.</dc:title>
-    <dcterms:issued>1829-03-02</dcterms:issued>
+    <dcterms:issued rdf:datatype="&xsd;date">1829-03-02</dcterms:issued>
     <dc:creator rdf:resource="http://wsp.normdata.rdf/HumboldtAlexander"/>
     <rdf:type rdf:resource="http://purl.org/dc/terms/PhysicalResource"/>
-    <dcterms:bibliographicCitation>ABBAW II-V, 106, S. 53.</dcterms:bibliographicCitation>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Abhandlungen"/>
+    <dcterms:identifier>ABBAW II-V, 106, S. 53.</dcterms:identifier>
     <dcterms:isFormatOf rdf:resource="http://telota.bbaw.de:8088/exist/servlet/db/avh/b/Abhandlung%209B.xml"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://wsp.normdata.rdf/Dok_1837-02-09">
     <dc:title>9. Febr. 1837. Gesamtsitzung der Akademie.</dc:title>
     <rdf:type rdf:resource="http://purl.org/dc/terms/PhysicalResource"/>
-    <dcterms:issued>1837-02-09</dcterms:issued>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Abhandlungen"/>
+    <dcterms:issued rdf:datatype="&xsd;date">1837-02-09</dcterms:issued>
     <dc:creator rdf:resource="http://wsp.normdata.rdf/HumboldtAlexander"/>
-    <dcterms:bibliographicCitation>ABBAW II-V, 18, S.12.</dcterms:bibliographicCitation>
+    <dcterms:identifier>ABBAW II-V, 18, S.12.</dcterms:identifier>
     <dcterms:isFormatOf rdf:resource="http://telota.bbaw.de:8088/exist/servlet/db/avh/b/Abhandlung%2012B.xml"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://wsp.normdata.rdf/Dok_1827-07-03">
-    <dcterms:bibliographicCitation>Protokoll fehlt in ABBAW II-V, 8.</dcterms:bibliographicCitation>
+    <dcterms:identifier>Protokoll fehlt in ABBAW II-V, 8.</dcterms:identifier>
     <dc:title>3. Juli 1827 Gesamtsitzung der Akademie der Wissenschaften zu Berlin.</dc:title>
     <dc:creator rdf:resource="http://wsp.normdata.rdf/HumboldtAlexander"/>
     <rdf:type rdf:resource="http://purl.org/dc/terms/PhysicalResource"/>
-    <dcterms:issued>1827-07-03</dcterms:issued>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Abhandlungen"/>
+    <dcterms:issued rdf:datatype="&xsd;date">1827-07-03</dcterms:issued>
     <dcterms:isFormatOf rdf:resource="http://telota.bbaw.de:8088/exist/servlet/db/avh/b/Abhandlung%208B.xml"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://wsp.normdata.rdf/Dok_1807-08-06">
     <rdf:type rdf:resource="http://purl.org/dc/terms/PhysicalResource"/>
-    <dcterms:issued>1807-08-06</dcterms:issued>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Abhandlungen"/>
+    <dcterms:issued rdf:datatype="&xsd;date">1807-08-06</dcterms:issued>
     <dc:creator rdf:resource="http://wsp.normdata.rdf/HumboldtAlexander"/>
     <dc:title>6. August 1807. Plenum.</dc:title>
-    <dcterms:bibliographicCitation>ABBAW I-IV, 35, Bl. 51-51Rs.</dcterms:bibliographicCitation>
+    <dcterms:identifier>ABBAW I-IV, 35, Bl. 51-51Rs.</dcterms:identifier>
     <dcterms:isFormatOf rdf:resource="http://telota.bbaw.de:8088/exist/servlet/db/avh/b/Abhandlung%205C.xml"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://wsp.normdata.rdf/Dok_1807-01-29">
-    <dcterms:issued>1807-01-29</dcterms:issued>
+    <dcterms:issued rdf:datatype="&xsd;date">1807-01-29</dcterms:issued>
     <dc:creator rdf:resource="http://wsp.normdata.rdf/HumboldtAlexander"/>
     <dc:title>29. Januar 1807. Plenum.</dc:title>
     <rdf:type rdf:resource="http://purl.org/dc/terms/PhysicalResource"/>
-    <dcterms:bibliographicCitation>ABBAW I-IV, 35, Bl. 29.</dcterms:bibliographicCitation>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Abhandlungen"/>
+    <dcterms:identifier>ABBAW I-IV, 35, Bl. 29.</dcterms:identifier>
     <dcterms:isFormatOf rdf:resource="http://telota.bbaw.de:8088/exist/servlet/db/avh/b/Abhandlung%204C.xml"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://wsp.normdata.rdf/Dok_1823-01-24">
     <dc:title>24. Januar 1823. Plenum.</dc:title>
-    <dcterms:issued>1823-01-24</dcterms:issued>
+    <dcterms:issued rdf:datatype="&xsd;date">1823-01-24</dcterms:issued>
     <dc:creator rdf:resource="http://wsp.normdata.rdf/HumboldtAlexander"/>
     <rdf:type rdf:resource="http://purl.org/dc/terms/PhysicalResource"/>
-    <dcterms:bibliographicCitation>Das Protokoll fehlt in ABBAW II-V, 4.</dcterms:bibliographicCitation>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Abhandlungen"/>
+    <dcterms:identifier>Das Protokoll fehlt in ABBAW II-V, 4.</dcterms:identifier>
     <dcterms:isFormatOf rdf:resource="http://telota.bbaw.de:8088/exist/servlet/db/avh/b/Abhandlung%206C.xml"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://wsp.normdata.rdf/Dok_1838-03-19">
     <rdf:type rdf:resource="http://purl.org/dc/terms/PhysicalResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Abhandlungen"/>
     <dc:creator rdf:resource="http://wsp.normdata.rdf/HumboldtAlexander"/>
     <dc:title>19. März 1838. Sitzung der physikalisch-mathematischen Klasse.</dc:title>
-    <dcterms:issued>1838-03-19</dcterms:issued>
-    <dcterms:bibliographicCitation>ABBAW II-V, 111, S. 22.</dcterms:bibliographicCitation>
+    <dcterms:issued rdf:datatype="&xsd;date">1838-03-19</dcterms:issued>
+    <dcterms:identifier>ABBAW II-V, 111, S. 22.</dcterms:identifier>
     <dcterms:isFormatOf rdf:resource="http://telota.bbaw.de:8088/exist/servlet/db/avh/b/Abhandlung%2013B.xml"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://wsp.normdata.rdf/Dok_1844-01-25">
     <rdf:type rdf:resource="http://purl.org/dc/terms/PhysicalResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Abhandlungen"/>
     <dc:creator rdf:resource="http://wsp.normdata.rdf/HumboldtAlexander"/>
     <dcterms:isFormatOf rdf:resource="http://telota.bbaw.de:8088/exist/servlet/db/avh/b/Abhandlung%2018B.xml"/>
-    <dcterms:issued>1844-01-25</dcterms:issued>
+    <dcterms:issued rdf:datatype="&xsd;date">1844-01-25</dcterms:issued>
     <dc:title>25. Januar 1844. Gesamtsitzung.</dc:title>
   </rdf:Description>
   <rdf:Description rdf:about="http://wsp.normdata.rdf/Dok_1829-04-02">
-    <dcterms:issued>1829-04-02</dcterms:issued>
+    <dcterms:issued rdf:datatype="&xsd;date">1829-04-02</dcterms:issued>
     <dc:title>2. April 1829. Plenum.</dc:title>
     <dc:creator rdf:resource="http://wsp.normdata.rdf/HumboldtAlexander"/>
     <rdf:type rdf:resource="http://purl.org/dc/terms/PhysicalResource"/>
-    <dcterms:bibliographicCitation>ABBAW II-V, 10, S. 60.</dcterms:bibliographicCitation>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Abhandlungen"/>
+    <dcterms:identifier>ABBAW II-V, 10, S. 60.</dcterms:identifier>
     <dcterms:isFormatOf rdf:resource="http://telota.bbaw.de:8088/exist/servlet/db/avh/b/Abhandlung%2010B.xml"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://wsp.normdata.rdf/Dok_1842-07-18">
     <rdf:type rdf:resource="http://purl.org/dc/terms/PhysicalResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Abhandlungen"/>
     <dc:creator rdf:resource="http://wsp.normdata.rdf/HumboldtAlexander"/>
-    <dcterms:issued>1842-07-18</dcterms:issued>
+    <dcterms:issued rdf:datatype="&xsd;date">1842-07-18</dcterms:issued>
     <dc:title>21. November 1805. Plenum.</dc:title>
-    <dcterms:bibliographicCitation>ABBAW, II-V, 112, S. 24.</dcterms:bibliographicCitation>
+    <dcterms:identifier>ABBAW, II-V, 112, S. 24.</dcterms:identifier>
     <dcterms:isFormatOf rdf:resource="http://telota.bbaw.de:8088/exist/servlet/db/avh/b/Abhandlung%2017C.xml"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://wsp.normdata.rdf/Dok_1826-11-16">
-    <dcterms:issued>1826-11-16</dcterms:issued>
+    <dcterms:issued rdf:datatype="&xsd;date">1826-11-16</dcterms:issued>
     <dc:title>16. November 1826 Plenum.</dc:title>
     <dc:creator rdf:resource="http://wsp.normdata.rdf/HumboldtAlexander"/>
     <rdf:type rdf:resource="http://purl.org/dc/terms/PhysicalResource"/>
-    <dcterms:bibliographicCitation>ABBAW II-V, 7, S. 164.</dcterms:bibliographicCitation>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/Abhandlungen"/>
+    <dcterms:identifier>ABBAW II-V, 7, S. 164.</dcterms:identifier>
     <dcterms:isFormatOf rdf:resource="http://telota.bbaw.de:8088/exist/servlet/db/avh/b/Abhandlung%207B.xml"/>
   </rdf:Description>
 </rdf:RDF>

@@ -16,6 +16,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusInscriptLatinarum"/>
   <dc:identifier rdf:resource="http://cil.bbaw.de/"/>
+  <dc:title>Corpus Inscriptionum Latinarum</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://cil.bbaw.de/dateien/forschung.html">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>

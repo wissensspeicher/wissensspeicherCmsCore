@@ -1,15 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rdf:RDF 
-   xmlns="http://wsp.normdata.rdf/CensusOfAntiqueWorks/MirabiliaUrbisRomae" 
-   xml:base="http://wsp.normdata.rdf/CensusOfAntiqueWorks/MirabiliaUrbisRomae" 
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
-   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" 
-   xmlns:dc="http://purl.org/dc/elements/1.1/" 
-   xmlns:dcterms="http://purl.org/dc/terms/" 
-   xmlns:foaf="http://xmlns.com/foaf/0.1/" 
-   xmlns:gnd="http://d-nb.info/standards/elementset/gnd#" 
-   xmlns:ore="http://www.openarchives.org/ore/terms/" 
->
+<!DOCTYPE rdf:RDF [
+    <!ENTITY dcterms "http://purl.org/dc/terms/" >
+    <!ENTITY foaf "http://xmlns.com/foaf/0.1/" >
+    <!ENTITY dcmitype "http://purl.org/dc/dcmitype/" >
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY dc "http://purl.org/dc/elements/1.1/" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY edm "http://www.europeana.eu/schemas/edm/" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY ore "http://www.openarchives.org/ore/terms/" >
+    <!ENTITY gnd "http://d-nb.info/standards/elementset/gnd#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY vs "http://www.w3.org/2003/06/sw-vocab-status/ns#" >
+]>
+
+
+<rdf:RDF xmlns="http://wsp.normdata.rdf/"
+  xml:base="http://wsp.normdata.rdf/"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:gnd="http://d-nb.info/standards/elementset/gnd#"
+  xmlns:edm="http://www.europeana.eu/schemas/edm/"
+  xmlns:foaf="http://xmlns.com/foaf/0.1/"
+  xmlns:dcmitype="http://purl.org/dc/dcmitype/"
+  xmlns:ore="http://www.openarchives.org/ore/terms/"
+  xmlns:vs="http://www.w3.org/2003/06/sw-vocab-status/ns#"
+  xmlns:dcterms="http://purl.org/dc/terms/"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:owl="http://www.w3.org/2002/07/owl#"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <owl:Ontology rdf:about="http://wsp.normdata.rdf/"/>
+  
+  <rdf:Description rdf:about="http://wsp.normdata.rdf/CensusOfAntiqueWorks/MirabiliaUrbisRomae">
+    <rdf:type rdf:resource="&foaf;Project"/>
+    <dc:language>ger</dc:language>
+    <dc:language>ita</dc:language>
+    <foaf:nick>censusmir</foaf:nick>
+    <foaf:name>Mirabilia Urbis Romae (Pilotprojekt)</foaf:name>
+    <foaf:homepage rdf:resource="http://telota.bbaw.de/census/fulltext/"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/Strauch"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/Telota"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/Rose"/>
+    <dc:publisher rdf:resource="http://wsp.normdata.rdf/BBAW"/>
+    <dc:publisher rdf:resource="http://wsp.normdata.rdf/HUBerlin"/>
+    <dcterms:abstract>Die Census-Datenbank erschließt schriftliche Dokumente der Antikenkenntnis grundsätzlich in Form von Textzitaten, d.h. nur der Textabschnitt, in dem das antike Monument beschrieben oder erwähnt ist, wird erfasst, der engere und weitere textliche Zusammenhang, aus dem der Abschnitt stammt, ist für den Nutzer der Datenbank nicht ersichtlich. Die elektronische Volltext-Edition, die mit der Census-Datenbank verknüpft ist, wurde konzipiert, um dieses Manko auszugleichen. Von den einzelnen Textzitaten in der Census-Datenbank führt ein Link in das Census-Volltextangebot. Der Nutzer gelangt an die entsprechende Stelle im Text und kann so den unmittelbaren Kontext, aus dem das Zitat stammt, einsehen und das komplette Textdokument lesen. Für die Initialisierung der Census-Volltextausgabe wurden drei mittelalterliche Mirabilien-Texte als Pilotprojekt ausgewählt. Die zwei Handschriften und eine Inkunabel wurden in italiano volgare verfasst.</dcterms:abstract>
+  </rdf:Description>
+  
+  
 <rdf:Description rdf:about="http://telota.bbaw.de/census/fulltext/">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks/MirabiliaUrbisRomae"/>

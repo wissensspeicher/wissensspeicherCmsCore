@@ -1,169 +1,206 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rdf:RDF 
-   xmlns="http://wsp.normdata.rdf/CensusOfAntiqueWorks" 
-   xml:base="http://wsp.normdata.rdf/CensusOfAntiqueWorks" 
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
-   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" 
-   xmlns:dc="http://purl.org/dc/elements/1.1/" 
-   xmlns:dcterms="http://purl.org/dc/terms/" 
-   xmlns:foaf="http://xmlns.com/foaf/0.1/" 
-   xmlns:gnd="http://d-nb.info/standards/elementset/gnd#" 
-   xmlns:ore="http://www.openarchives.org/ore/terms/" 
->
-<rdf:Description rdf:about="http://www.census.de">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
-  <dc:identifier rdf:resource="http://www.census.de"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://telota.bbaw.de/census">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
-  <dc:identifier rdf:resource="http://telota.bbaw.de/census"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.census.de/census/datenbank/benutzerhandbuch/Census-Hilfe.pdf">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
-  <dc:identifier rdf:resource="http://www.census.de/census/datenbank/benutzerhandbuch/Census-Hilfe.pdf"/>
-</rdf:Description>
+<!DOCTYPE rdf:RDF [
+    <!ENTITY dcterms "http://purl.org/dc/terms/" >
+    <!ENTITY foaf "http://xmlns.com/foaf/0.1/" >
+    <!ENTITY dcmitype "http://purl.org/dc/dcmitype/" >
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY dc "http://purl.org/dc/elements/1.1/" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY edm "http://www.europeana.eu/schemas/edm/" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY ore "http://www.openarchives.org/ore/terms/" >
+    <!ENTITY gnd "http://d-nb.info/standards/elementset/gnd#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY vs "http://www.w3.org/2003/06/sw-vocab-status/ns#" >
+]>
+
+
+<rdf:RDF xmlns="http://wsp.normdata.rdf/"
+  xml:base="http://wsp.normdata.rdf/"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:gnd="http://d-nb.info/standards/elementset/gnd#"
+  xmlns:edm="http://www.europeana.eu/schemas/edm/"
+  xmlns:foaf="http://xmlns.com/foaf/0.1/"
+  xmlns:dcmitype="http://purl.org/dc/dcmitype/"
+  xmlns:ore="http://www.openarchives.org/ore/terms/"
+  xmlns:vs="http://www.w3.org/2003/06/sw-vocab-status/ns#"
+  xmlns:dcterms="http://purl.org/dc/terms/"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:owl="http://www.w3.org/2002/07/owl#"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <owl:Ontology rdf:about="http://wsp.normdata.rdf/"/>
+  
+
+
 <rdf:Description rdf:about="http://edok01.tib.uni-hannover.de/edoks/e01fb04/471269336.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
   <dc:identifier rdf:resource="http://edok01.tib.uni-hannover.de/edoks/e01fb04/471269336.pdf"/>
+  <dc:title>Schlussbericht zur Census-Projektförderung durch das BMBF</dc:title>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Nesselrath"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Seiler"/>
+  <dcterms:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2008-09-26</dcterms:modified>
+  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_pdf"/>
 </rdf:Description>
-<rdf:Description rdf:about="http://www.census.de/census">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
-  <dc:identifier rdf:resource="http://www.census.de/census"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.census.de/census/datenbank">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
-  <dc:identifier rdf:resource="http://www.census.de/census/datenbank"/>
-</rdf:Description>
+
 <rdf:Description rdf:about="http://www.census.de/census/datenbank/benutzerhandbuch">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
   <dc:identifier rdf:resource="http://www.census.de/census/datenbank/benutzerhandbuch"/>
+  <dc:title>Benutzerhandbuch</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.census.de/census/datenbank/geocensus">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
   <dc:identifier rdf:resource="http://www.census.de/census/datenbank/geocensus"/>
+  <dc:title>GeoCensus und Map View: Kartenbasierter Zugang zur Census-Datenbank und Anzeige der Suchergebnismengen auf Google-Maps</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.census.de/census/inhalte">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
   <dc:identifier rdf:resource="http://www.census.de/census/inhalte"/>
+  <dc:title>Projekt: Zur Geschichte des Census</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.census.de/census/inhalte/schwerpunktthema-2009-2013-1">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
   <dc:identifier rdf:resource="http://www.census.de/census/inhalte/schwerpunktthema-2009-2013-1"/>
+  <dc:title>Schwerpunktthema 2009-2013: Zeichnungen nach antiker Architektur aus dem Gabinetto Stampe e Disegni degli Uffizi in Florenz</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.census.de/census/inhalte/schwerpunktthema-2009-2013-1/studientag-2013-1">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
   <dc:identifier rdf:resource="http://www.census.de/census/inhalte/schwerpunktthema-2009-2013-1/studientag-2013-1"/>
+  <dc:title>Studientag 2013:  Bericht über den internationalen Studientag „Zeichnungen nach antiker Architektur im Gabinetto Disegni e Stampe degli Uffizi“, Berlin, 7./8. November 2013</dc:title>
+  <dcterms:temporal rdf:datatype="http://purl.org/dc/terms/Period">start=2013-11-07; end=2013-11-09; name=Studientag</dcterms:temporal>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.census.de/census/inhalte/schwerpunktthema-2009-2013-1/studientag-2013-1/porgramm">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
   <dc:identifier rdf:resource="http://www.census.de/census/inhalte/schwerpunktthema-2009-2013-1/studientag-2013-1/porgramm"/>
+  <dc:title>Programm: Internationaler Census-Studientag zu Zeichnungen nach antiker Architektur im Gabinetto Disegni e Stampe degli Uffizi</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.census.de/census/inhalte/schwerpunktthema-2014">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
   <dc:identifier rdf:resource="http://www.census.de/census/inhalte/schwerpunktthema-2014"/>
+  <dc:title>Schwerpunktthema 2014-2017: Architekturzeichnungen des 16. Jahrhunderts aus europäischen und amerikanischen Sammlungen </dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.census.de/census/inhalte/mitarbeiterinnen">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
   <dc:identifier rdf:resource="http://www.census.de/census/inhalte/mitarbeiterinnen"/>
+  <dc:title>MitarbeiterInnen</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.census.de/census/inhalte/beirat">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
   <dc:identifier rdf:resource="http://www.census.de/census/inhalte/beirat"/>
+  <dc:title>Beirat</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.census.de/census/inhalte/literatur">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
   <dc:identifier rdf:resource="http://www.census.de/census/inhalte/literatur"/>
+  <dc:title>Literatur zum Cenus</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.census.de/census/publikationen">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
   <dc:identifier rdf:resource="http://www.census.de/census/publikationen"/>
+  <dc:title>Publikationen</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.census.de/census/publikationen/pegasus">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
   <dc:identifier rdf:resource="http://www.census.de/census/publikationen/pegasus"/>
+  <dc:title>Pegasus - Berliner Beiträge zum Nachleben der Antike</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.census.de/census/publikationen/cyriacus-studien-zur-rezeption-der-antike">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
   <dc:identifier rdf:resource="http://www.census.de/census/publikationen/cyriacus-studien-zur-rezeption-der-antike"/>
+  <dc:title>Cyriacus -Studien zur Rezption der Antike</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.census.de/census/volltexte">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
   <dc:identifier rdf:resource="http://www.census.de/census/volltexte"/>
+  <dc:title>Census Volltexte</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.census.de/census/volltexte/mirabilia">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
   <dc:identifier rdf:resource="http://www.census.de/census/volltexte/mirabilia"/>
+  <dc:title>Mirabilia Urbis Romae</dc:title>
 </rdf:Description>
+  <rdf:Description rdf:about="http://www.census.de/census/volltexte/mirabilia/codex-gaddiano">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
+    <dc:identifier rdf:resource="http://www.census.de/census/volltexte/mirabilia/codex-gaddiano"/>
+    <dc:title>Codex Gaddiano</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.census.de/census/volltexte/mirabilia/edificazione">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
+    <dc:identifier rdf:resource="http://www.census.de/census/volltexte/mirabilia/edificazione"/>
+    <dc:title>Edificazione</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://www.census.de/census/volltexte/mirabilia/codex-riccardiano">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
+    <dc:identifier rdf:resource="http://www.census.de/census/volltexte/mirabilia/codex-riccardiano"/>
+    <dc:title>Codex Riccardiano</dc:title>
+  </rdf:Description>
 <rdf:Description rdf:about="http://www.census.de/census/translatio-nummorum">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
   <dc:identifier rdf:resource="http://www.census.de/census/translatio-nummorum"/>
+  <dc:title>Translatio nummorum: Die Aneignung der antiken Kultur durch Antiquare der Renaissance im Medium der Münzen</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.census.de/census/translatio-nummorum/einfuhrung">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
   <dc:identifier rdf:resource="http://www.census.de/census/translatio-nummorum/einfuhrung"/>
+  <dc:title>Einführung Translatio nummorum: Die Aneignung der antiken Kultur durch Antiquare der Renaissance im Medium der Münzen</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.census.de/census/translatio-nummorum/projektbeschreibung">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
   <dc:identifier rdf:resource="http://www.census.de/census/translatio-nummorum/projektbeschreibung"/>
+  <dc:title>Projektbeschreibung Translatio nummorum</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.census.de/census/translatio-nummorum/publikationen%20tn">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
   <dc:identifier rdf:resource="http://www.census.de/census/translatio-nummorum/publikationen%20tn"/>
+  <dc:title>Publikationen Translatio nummorum</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.census.de/census/translatio-nummorum/ausstellung">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
   <dc:identifier rdf:resource="http://www.census.de/census/translatio-nummorum/ausstellung"/>
+  <dc:title>Ausstellung Translatio nummorum: "translatio nummorum - Die ersten zwölf römischen Caesaren in der Renaissance" eine Wanderausstellung </dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.census.de/census/translatio-nummorum/veranstaltungen%20tn">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
   <dc:identifier rdf:resource="http://www.census.de/census/translatio-nummorum/veranstaltungen%20tn"/>
+  <dc:title>Veranstaltungen Translatio nummorum</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.census.de/census/corpus-winckelmann">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
   <dc:identifier rdf:resource="http://www.census.de/census/corpus-winckelmann"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.census.de/census/corpus-winckelmann/kontakt">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
-  <dc:identifier rdf:resource="http://www.census.de/census/corpus-winckelmann/kontakt"/>
+  <dc:title>Corpus Winckelmann</dc:title>
+  <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/WinckelmannJohannJoachim"/>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.census.de/census/corpus-medii-aevi">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
   <dc:identifier rdf:resource="http://www.census.de/census/corpus-medii-aevi"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.census.de/census/corpus-medii-aevi/mitarbeiter-kontakt">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
-  <dc:identifier rdf:resource="http://www.census.de/census/corpus-medii-aevi/mitarbeiter-kontakt"/>
+  <dc:title>Corpus Medii Aevi: Rezeption und Transformation der Antike in der mittelalterlichen Kunst</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.census.de/census?set_language=en">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
@@ -174,106 +211,122 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
   <dc:identifier rdf:resource="http://www.census.de/census/database/manual?set_language=en"/>
+  <dc:title>Manual</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.census.de/census/project?set_language=en">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
   <dc:identifier rdf:resource="http://www.census.de/census/project?set_language=en"/>
+  <dc:title>Project: History of the Census</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.census.de/census/project/research-focus-2009-2013-1?set_language=en">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
   <dc:identifier rdf:resource="http://www.census.de/census/project/research-focus-2009-2013-1?set_language=en"/>
+  <dc:title>Research Focus 2009-2013: Drawings after antique architecture from the Gabinetto Stampe e Disegni degli Uffizi in Florence</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.census.de/census/project/research-focus-2009-2013-1/study-day-2013">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
   <dc:identifier rdf:resource="http://www.census.de/census/project/research-focus-2009-2013-1/study-day-2013"/>
+  <dc:title>Study Day 2013: Report on the international study day „Drawings after antique architecture in the Gabinetto Disegni e Stampe degli Uffizi“, Berlin, November 7-8, 2013</dc:title>
+  <dcterms:temporal rdf:datatype="http://purl.org/dc/terms/Period">start=2013-11-07; end=2013-11-09; name=Study Day</dcterms:temporal>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.census.de/census/project/research-focus-2009-2013-1/study-day-2013/program">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
   <dc:identifier rdf:resource="http://www.census.de/census/project/research-focus-2009-2013-1/study-day-2013/program"/>
+  <dc:title>Program: International Study Day of the Census on Drawings after Antique Architecture in the Gabinetto Disegni e Stampe degli Uffizi</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.census.de/census/project/research-focus-2014-2017">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
   <dc:identifier rdf:resource="http://www.census.de/census/project/research-focus-2014-2017"/>
+  <dc:title>Research Focus 2014-2017: Sixteenth century architectural drawings from European and American collections</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.census.de/census/project/staff">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
   <dc:identifier rdf:resource="http://www.census.de/census/project/staff"/>
+  <dc:title>Staff</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.census.de/census/project/advisory">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
   <dc:identifier rdf:resource="http://www.census.de/census/project/advisory"/>
+  <dc:title>Advisory Board</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.census.de/census/project/bibliography">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
   <dc:identifier rdf:resource="http://www.census.de/census/project/bibliography"/>
+  <dc:title>Bibliography</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.census.de/census/publications?set_language=en">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
   <dc:identifier rdf:resource="http://www.census.de/census/publications?set_language=en"/>
+  <dc:title>Publications</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.census.de/census/publications/pegasus-1?set_language=en">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
   <dc:identifier rdf:resource="http://www.census.de/census/publications/pegasus-1?set_language=en"/>
+  <dc:title>Pegasus - Berliner Beiträge zum Nachleben der Antike</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.census.de/census/publications/cyriacus?set_language=en">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
   <dc:identifier rdf:resource="http://www.census.de/census/publications/cyriacus?set_language=en"/>
+  <dc:title>Cyriacus - Studien zur Rezeption der Antike</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.census.de/census/full-texts?set_language=en">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
   <dc:identifier rdf:resource="http://www.census.de/census/full-texts?set_language=en"/>
+  <dc:title>Census Full Texts</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.census.de/census/full-texts/mirabilia?set_language=en">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
   <dc:identifier rdf:resource="http://www.census.de/census/full-texts/mirabilia?set_language=en"/>
+  <dc:title>Mirabilia Urbis Romae</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.census.de/census/full-texts/mirabilia/codex-gaddiano?set_language=en">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
   <dc:identifier rdf:resource="http://www.census.de/census/full-texts/mirabilia/codex-gaddiano?set_language=en"/>
+  <dc:title>Codex Gaddiano</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.census.de/census/full-texts/mirabilia/edificazione?set_language=en">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
   <dc:identifier rdf:resource="http://www.census.de/census/full-texts/mirabilia/edificazione?set_language=en"/>
+  <dc:title>Edificazione</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.census.de/census/full-texts/mirabilia/codex-riccardiano?set_language=en">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
   <dc:identifier rdf:resource="http://www.census.de/census/full-texts/mirabilia/codex-riccardiano?set_language=en"/>
+  <dc:title>Codex Riccardiano</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.census.de/census/translatio-nummorum-en?set_language=en">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
   <dc:identifier rdf:resource="http://www.census.de/census/translatio-nummorum-en?set_language=en"/>
+  <dc:title>Translatio nummorum</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.census.de/census/translatio-nummorum-en/introduction-1?set_language=en">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
   <dc:identifier rdf:resource="http://www.census.de/census/translatio-nummorum-en/introduction-1?set_language=en"/>
+  <dc:title>Introducion Translatio nummorum</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.census.de/census/corpus-medii-aevi-1?set_language=en">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
   <dc:identifier rdf:resource="http://www.census.de/census/corpus-medii-aevi-1?set_language=en"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.census.de/census/corpus-medii-aevi-1/staff-contact">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
-  <dc:identifier rdf:resource="http://www.census.de/census/corpus-medii-aevi-1/staff-contact"/>
+  <dc:title>Corpus Medii Aevi: Reception and Transformation of Antique Forms in the Middle Ages</dc:title>
 </rdf:Description>
 
 </rdf:RDF>

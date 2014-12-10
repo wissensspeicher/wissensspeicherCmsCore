@@ -1,18 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rdf:RDF 
-   xmlns="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/DielsscherHandschriftenkatalog" 
-   xml:base="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/DielsscherHandschriftenkatalog" 
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
-   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" 
-   xmlns:dc="http://purl.org/dc/elements/1.1/" 
-   xmlns:dcterms="http://purl.org/dc/terms/" 
-   xmlns:foaf="http://xmlns.com/foaf/0.1/" 
-   xmlns:gnd="http://d-nb.info/standards/elementset/gnd#" 
-   xmlns:ore="http://www.openarchives.org/ore/terms/" 
->
+<!DOCTYPE rdf:RDF [
+    <!ENTITY dcterms "http://purl.org/dc/terms/" >
+    <!ENTITY foaf "http://xmlns.com/foaf/0.1/" >
+    <!ENTITY dcmitype "http://purl.org/dc/dcmitype/" >
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY dc "http://purl.org/dc/elements/1.1/" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY edm "http://www.europeana.eu/schemas/edm/" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY ore "http://www.openarchives.org/ore/terms/" >
+    <!ENTITY gnd "http://d-nb.info/standards/elementset/gnd#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY vs "http://www.w3.org/2003/06/sw-vocab-status/ns#" >
+]>
+
+
+<rdf:RDF xmlns="http://wsp.normdata.rdf/"
+  xml:base="http://wsp.normdata.rdf/"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:gnd="http://d-nb.info/standards/elementset/gnd#"
+  xmlns:edm="http://www.europeana.eu/schemas/edm/"
+  xmlns:foaf="http://xmlns.com/foaf/0.1/"
+  xmlns:dcmitype="http://purl.org/dc/dcmitype/"
+  xmlns:ore="http://www.openarchives.org/ore/terms/"
+  xmlns:vs="http://www.w3.org/2003/06/sw-vocab-status/ns#"
+  xmlns:dcterms="http://purl.org/dc/terms/"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:owl="http://www.w3.org/2002/07/owl#"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <owl:Ontology rdf:about="http://wsp.normdata.rdf/"/>
+  
+  <rdf:Description rdf:about="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/DielsscherHandschriftenkatalog">
+    <rdf:type rdf:resource="&foaf;Project"/>
+    <foaf:name>Corpus Medicorum Graecorum / Latinorum: Der Dielssche Handschriftenkatalog online</foaf:name>
+    <dc:language>ger</dc:language>
+    <foaf:nick>cmgdh</foaf:nick>
+    <foaf:homepage rdf:resource="http://cmg.bbaw.de/online-publikationen/Dielskatalog"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum"/>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/DielsHermann"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/Brunschoen"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/Wittwer"/>
+    <dcterms:rigthsHolder rdf:resource="http://wsp.normdata.rdf/BBAW"/>
+    <dcterms:abstract>Hier findet man den in mancher Hinsicht überholten, aber nach wie vor maßgebenden Handschriftenkatalog zur antiken Ärzteliteratur, der unter der Leitung von Hermann Diels zur Vorbereitung des CMG an der Berliner Akademie entstanden ist. Der Katalog wurde mehrfach ergänzt und korrigiert. Die bibliographischen Angaben zu den publizierten Addenda und Corrigenda sind hier einsehbar. Genauere Angaben zur handschriftlichen Überlieferung sind den publizierten Bänden zu entnehmen oder können auf Anfrage von der Arbeitsstelle gemacht werden.</dcterms:abstract>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="http://cmg.bbaw.de/online-publikationen/Dielskatalog">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum/DielsscherHandschriftenkatalog"/>
   <dc:identifier rdf:resource="http://cmg.bbaw.de/online-publikationen/Dielskatalog"/>
-</rdf:Description>
+  <dc:title>Der Dielssche Handschriftenkatalog online</dc:title>
+ </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/diels_01.html">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/diels_01.html"/>
+    <dc:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+    <dc:format rdf:resource="http://wsp.normdata.rdf/image_png"/>
+    <dc:title>Die Handschriften der antiken Ärtze</dc:title>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/DielsHermann"/>
+    <dcterms:bibliographicCitation>Hermann Diels: Die Handschriften der antiken Ärzte. Griechische Abteilung, hrsg. v. H. Diels, Abh. d. Königl. Preuß. Akademie d. Wiss. 1905/1906, Berlin 1906.</dcterms:bibliographicCitation>
+    <dc:date>1906</dc:date>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/diels_02.html">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/diels_02.html"/>
+    <dc:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+    <dc:format rdf:resource="http://wsp.normdata.rdf/image_png"/>
+    <dc:title>Die Handschriften der antiken Ärtze</dc:title>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/DielsHermann"/>
+    <dcterms:bibliographicCitation>Hermann Diels: Die Handschriften der antiken Ärzte. I. Teil: Hippokrates und Galenos. Abh. d. Königl. Preuß. Akademie d. Wiss. 1905, phil.-hist. Kl. 3, Berlin 1905.</dcterms:bibliographicCitation>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Hippocrates"/>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Galenus"/>
+    <dc:date>1905</dc:date>
+  </rdf:Description>
+  
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/diels_03.html">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/diels_03.html"/>
+    <dc:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+    <dc:format rdf:resource="http://wsp.normdata.rdf/image_png"/>
+    <dc:title>Die Handschriften der antiken Ärtze</dc:title>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/DielsHermann"/>
+    <dcterms:bibliographicCitation>Hermann Diels: Die Handschriften der antiken Ärzte. II. Teil: Die übrigen griechischen Ärzte außer Hippokrates und Galenos. Abh. d. Königl. Preuß. Akademie d. Wiss. 1906, phil.-hist. Kl. 1, Berlin 1906.</dcterms:bibliographicCitation>
+    <dc:date>1906</dc:date>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/diels_04.html">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dc:identifier rdf:resource="http://cmg.bbaw.de/epubl/online/diels_04.html"/>
+    <dc:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+    <dc:format rdf:resource="http://wsp.normdata.rdf/image_png"/>
+    <dc:title>Die Handschriften der antiken Ärtze</dc:title>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/DielsHermann"/>
+    <dcterms:bibliographicCitation>Hermann Diels: Bericht über den Stand des interakademischen Corpus Medicorum Antiquorum und Erster Nachtrag zu den in den Abhandlungen 1905 und 1906 veröffentlichen Katalogen: die Handschriften der antiken Ärzte, I. und II. Teil, Berlin 1908</dcterms:bibliographicCitation>
+    <dc:date>1908</dc:date>
+  </rdf:Description>
 </rdf:RDF>
