@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsp>
+  <collection>
+    <id>vwom</id>
+    <rdfId>http://wsp.normdata.rdf/VerhaeltnisWissenschaftOeffentlichkeitMedien</rdfId>
+    <name>Zum Verhältnis zwischen Wissenschaft, Öffentlichkeit und Medien</name>
+    <url>
+      <webBaseUrl>http://www.bbaw.de/forschung/wissenschaft-oeffentlichkeit-medien/uebersicht</webBaseUrl>
+    </url>
+    <mainLanguage>ger</mainLanguage>
+    <formats>
+      <format>html</format>
+    </formats> 
+  </collection>
+</wsp>
+
