@@ -91,7 +91,7 @@ public class CollectionManager {
   public void updateCollections() throws ApplicationException {
     ArrayList<Collection> collections = collectionReader.getCollections();
     for (Collection collection : collections) {
-      addDocuments(collection);
+      addDocuments(collection, true);
     }
   }
 
@@ -107,7 +107,7 @@ public class CollectionManager {
       if (startingCollectionId.equals(collId))
         start = true;
       if (start)
-        addDocuments(collection);
+        addDocuments(collection, true);
     }
   }
 
@@ -118,12 +118,18 @@ public class CollectionManager {
    */
   public void updateCollection(String collectionId) throws ApplicationException {
     Collection collection = collectionReader.getCollection(collectionId);
-    addDocuments(collection);
+    addDocuments(collection, true);
+  }
+
+  public void updateCollection(String collectionId, boolean withDatabases) throws ApplicationException {
+    Collection collection = collectionReader.getCollection(collectionId);
+    addDocuments(collection, withDatabases);
   }
 
   public void deleteCollection(String collectionId) throws ApplicationException {
     DocumentHandler docHandler = new DocumentHandler();
-    CmsDocOperation docOp = new CmsDocOperation("deleteCollection", null, null, collectionId);
+    CmsDocOperation docOp = new CmsDocOperation("deleteCollection", null, null, null);
+    docOp.setCollectionId(collectionId);
     try {
       docHandler.doOperation(docOp);
     } catch (Exception e) {
@@ -131,7 +137,7 @@ public class CollectionManager {
     }
   }
   
-  private void addDocuments(Collection collection) throws ApplicationException {
+  private void addDocuments(Collection collection, boolean withDatabases) throws ApplicationException {
     int counter = 0;
     String collId = collection.getId();
     LOGGER.info("Create collection: " + collId + " ...");
@@ -143,7 +149,7 @@ public class CollectionManager {
       counter = counter + countDocs;
       ArrayList<Database> collectionDBs = collection.getDatabases();
       // add the database records 
-      if (collectionDBs != null) {
+      if (collectionDBs != null && withDatabases) {
         for (int i=0; i<collectionDBs.size(); i++) {
           Database collectionDB = collectionDBs.get(i);
           countDocs = addDocuments(collection, collectionDB);
