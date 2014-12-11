@@ -343,7 +343,7 @@ public class DBpediaSpotlightHandler {
           }
           r.setFrequency(new Integer(frequencyStr));
           r.setContext(surfaceFormContextStr);
-          if (isProper(surfaceFormStr))
+          if (isProper(surfaceFormStr) && isProperUri(uriStr))
             resources.add(r);
         }
       }
@@ -366,13 +366,20 @@ public class DBpediaSpotlightHandler {
     return annotation;
   }
   
-  private boolean isProper(String surfaceForm) {
+  public boolean isProper(String surfaceForm) {
     boolean isProper = true;
     if (surfaceForm.length() <= 2)
       isProper = false;
     else if (surfaceForm.contains("-") || surfaceForm.contains(".."))
       isProper = false;
     else if (germanStopwords.get(surfaceForm) != null)
+      isProper = false;
+    return isProper;
+  }
+  
+  public boolean isProperUri(String dbPediaUri) {
+    boolean isProper = true;
+    if (germanStopwords.get(dbPediaUri) != null)
       isProper = false;
     return isProper;
   }
