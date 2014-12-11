@@ -1,3 +1,18 @@
 Ph.D.
 Dr.
+http://de.dbpedia.org/resource/Bundesautobahn_1
+http://de.dbpedia.org/resource/Bundesautobahn_2
+http://de.dbpedia.org/resource/Bundesautobahn_3
+http://de.dbpedia.org/resource/Bundesautobahn_4
+http://de.dbpedia.org/resource/Bundesautobahn_5
+http://de.dbpedia.org/resource/Bundesautobahn_6
+http://de.dbpedia.org/resource/Bundesautobahn_7
+http://de.dbpedia.org/resource/Bundesautobahn_8
+http://de.dbpedia.org/resource/Bundesautobahn_9
+http://de.dbpedia.org/resource/Bundesautobahn_10
+http://de.dbpedia.org/resource/Bundesautobahn_11
+http://de.dbpedia.org/resource/Bundesautobahn_12
+http://de.dbpedia.org/resource/Bundesautobahn_13
+http://de.dbpedia.org/resource/Bundesautobahn_14
+http://de.dbpedia.org/resource/Bundesautobahn_15
 
