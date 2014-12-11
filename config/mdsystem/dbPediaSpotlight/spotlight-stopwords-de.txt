@@ -15,4 +15,12 @@ http://de.dbpedia.org/resource/Bundesautobahn_12
 http://de.dbpedia.org/resource/Bundesautobahn_13
 http://de.dbpedia.org/resource/Bundesautobahn_14
 http://de.dbpedia.org/resource/Bundesautobahn_15
-
+http://de.dbpedia.org/resource/Bundesautobahn_16
+http://de.dbpedia.org/resource/Bundesautobahn_17
+http://de.dbpedia.org/resource/Bundesautobahn_18
+http://de.dbpedia.org/resource/Bundesautobahn_19
+http://de.dbpedia.org/resource/Bundesautobahn_20
+http://de.dbpedia.org/resource/Bundesautobahn_21
+http://de.dbpedia.org/resource/Bundesautobahn_22
+http://de.dbpedia.org/resource/Bundesautobahn_23
+http://de.dbpedia.org/resource/Bundesautobahn_24
