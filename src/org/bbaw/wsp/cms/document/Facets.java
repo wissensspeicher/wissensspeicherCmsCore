@@ -166,7 +166,9 @@ public class Facets implements Iterable<Facet> {
       if (facetValuesPerson.size() < countPersons)
         countPersons = facetValuesPerson.size();
       for (int i=0; i<countPersons; i++) {
-        mainEntityValues.add(facetValuesPerson.get(i));
+        FacetValue fv = facetValuesPerson.get(i);
+        if (isProper(fv))
+          mainEntityValues.add(fv);
       }
     }
     if (facetEntityOrganisation != null) {
@@ -176,7 +178,9 @@ public class Facets implements Iterable<Facet> {
       if (facetValuesOrganisation.size() < countOrganisations)
         countOrganisations = facetValuesOrganisation.size();
       for (int i=0; i<countOrganisations; i++) {
-        mainEntityValues.add(facetValuesOrganisation.get(i));
+        FacetValue fv = facetValuesOrganisation.get(i);
+        if (isProper(fv))
+          mainEntityValues.add(fv);
       }
     }
     if (facetEntityPlace != null) {
@@ -186,7 +190,9 @@ public class Facets implements Iterable<Facet> {
       if (facetValuesPlace.size() < countPlaces)
         countPlaces = facetValuesPlace.size();
       for (int i=0; i<countPlaces; i++) {
-        mainEntityValues.add(facetValuesPlace.get(i));
+        FacetValue fv = facetValuesPlace.get(i);
+        if (isProper(fv))
+          mainEntityValues.add(fv);
       }
     }
     if (facetEntityConcept != null) {
@@ -196,12 +202,28 @@ public class Facets implements Iterable<Facet> {
       if (facetValuesConcept.size() < countConcepts)
         countConcepts = facetValuesConcept.size();
       for (int i=0; i<countConcepts; i++) {
-        mainEntityValues.add(facetValuesConcept.get(i));
+        FacetValue fv = facetValuesConcept.get(i);
+        if (isProper(fv))
+          mainEntityValues.add(fv);
       }
     }
     Collections.sort(mainEntityValues, FacetValue.SCORE_COMPARATOR);
     Facet mainEntityFacet = new Facet("mainEntities", mainEntityValues);
     return mainEntityFacet;
+  }
+  
+  private boolean isProper(FacetValue fv) {
+    DBpediaSpotlightHandler dbPediaSpotlightHandler = null;
+    try {
+      dbPediaSpotlightHandler = DBpediaSpotlightHandler.getInstance();
+    } catch (ApplicationException e) {
+      // nothing
+    }
+    String uri = fv.getUri();
+    if (dbPediaSpotlightHandler != null && dbPediaSpotlightHandler.isProperUri(uri))
+      return true;
+    else 
+      return false;
   }
   
   private boolean isProperValue(String val) {
