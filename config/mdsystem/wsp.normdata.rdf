@@ -11256,7 +11256,7 @@ Das Projekt konzentrierte sich auf einen ausgewählten Bereich im weiten Spektru
         <rdf:type rdf:resource="&foaf;Project"/>
         <dcterms:valid rdf:datatype="&dcterms;Period">start=1999; name=Laufzeit</dcterms:valid>
         <foaf:name>Marx-Engels-Gesamtausgabe</foaf:name>
-        <dcterms:abstract>Die &apos;Marx-Engels-Gesamtausgabe&apos; (MEGA) ist gemäß den 1992 revidierten Editionsrichtlinien die vollständige, historisch-kritische Ausgabe der Veröffentlichungen, der Handschriften und des Briefwechsels von Karl Marx (1818–1883) und Friedrich Engels (1820–1895). Sie gliedert sich in vier Abteilungen: Erste Abteilung: Werke. Artikel. Entwürfe; Zweite Abteilung: &apos;Das Kapital&apos; und Vorarbeiten; Dritte Abteilung: Briefwechsel; Vierte Abteilung: Exzerpte. Notizen. Marginalien.</dcterms:abstract>
+        <dcterms:abstract>Die Marx-Engels-Gesamtausgabe (MEGA) ist gemäß den 1992 revidierten Editionsrichtlinien die vollständige, historisch-kritische Ausgabe der Veröffentlichungen, der Handschriften und des Briefwechsels von Karl Marx (1818–1883) und Friedrich Engels (1820–1895). Sie gliedert sich in vier Abteilungen: Erste Abteilung: Werke. Artikel. Entwürfe; Zweite Abteilung: &apos;Das Kapital&apos; und Vorarbeiten; Dritte Abteilung: Briefwechsel; Vierte Abteilung: Exzerpte. Notizen. Marginalien.</dcterms:abstract>
         <dc:type>Vorhaben</dc:type>
         <foaf:status>aktiv</foaf:status>
         <dc:subject>Geschichte</dc:subject>
