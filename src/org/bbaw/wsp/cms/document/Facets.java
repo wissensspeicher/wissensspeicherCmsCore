@@ -109,6 +109,8 @@ public class Facets implements Iterable<Facet> {
             facetNameValue.setCount(facetCountHits);
             if (facetName.equals("entityPerson"))
               facetNameValue.setType("person");
+            else if (facetName.equals("entityOrganisation"))
+              facetNameValue.setType("organisation");
             else if (facetName.equals("entityPlace"))
               facetNameValue.setType("place");
             else if (facetName.equals("entityConcept"))
@@ -154,6 +156,7 @@ public class Facets implements Iterable<Facet> {
       return null;
     ArrayList<FacetValue> mainEntityValues = new ArrayList<FacetValue>();
     Facet facetEntityPerson = facets.get("entityPerson");
+    Facet facetEntityOrganisation = facets.get("entityOrganisation");
     Facet facetEntityPlace = facets.get("entityPlace");
     Facet facetEntityConcept = facets.get("entityConcept");
     if (facetEntityPerson != null) {
@@ -163,7 +166,21 @@ public class Facets implements Iterable<Facet> {
       if (facetValuesPerson.size() < countPersons)
         countPersons = facetValuesPerson.size();
       for (int i=0; i<countPersons; i++) {
-        mainEntityValues.add(facetValuesPerson.get(i));
+        FacetValue fv = facetValuesPerson.get(i);
+        if (isProper(fv))
+          mainEntityValues.add(fv);
+      }
+    }
+    if (facetEntityOrganisation != null) {
+      ArrayList<FacetValue> facetValuesOrganisation = facetEntityOrganisation.getValues();
+      Collections.sort(facetValuesOrganisation, FacetValue.SCORE_COMPARATOR);
+      int countOrganisations = 3;
+      if (facetValuesOrganisation.size() < countOrganisations)
+        countOrganisations = facetValuesOrganisation.size();
+      for (int i=0; i<countOrganisations; i++) {
+        FacetValue fv = facetValuesOrganisation.get(i);
+        if (isProper(fv))
+          mainEntityValues.add(fv);
       }
     }
     if (facetEntityPlace != null) {
@@ -173,7 +190,9 @@ public class Facets implements Iterable<Facet> {
       if (facetValuesPlace.size() < countPlaces)
         countPlaces = facetValuesPlace.size();
       for (int i=0; i<countPlaces; i++) {
-        mainEntityValues.add(facetValuesPlace.get(i));
+        FacetValue fv = facetValuesPlace.get(i);
+        if (isProper(fv))
+          mainEntityValues.add(fv);
       }
     }
     if (facetEntityConcept != null) {
@@ -183,12 +202,28 @@ public class Facets implements Iterable<Facet> {
       if (facetValuesConcept.size() < countConcepts)
         countConcepts = facetValuesConcept.size();
       for (int i=0; i<countConcepts; i++) {
-        mainEntityValues.add(facetValuesConcept.get(i));
+        FacetValue fv = facetValuesConcept.get(i);
+        if (isProper(fv))
+          mainEntityValues.add(fv);
       }
     }
     Collections.sort(mainEntityValues, FacetValue.SCORE_COMPARATOR);
     Facet mainEntityFacet = new Facet("mainEntities", mainEntityValues);
     return mainEntityFacet;
+  }
+  
+  private boolean isProper(FacetValue fv) {
+    DBpediaSpotlightHandler dbPediaSpotlightHandler = null;
+    try {
+      dbPediaSpotlightHandler = DBpediaSpotlightHandler.getInstance();
+    } catch (ApplicationException e) {
+      // nothing
+    }
+    String uri = fv.getUri();
+    if (dbPediaSpotlightHandler != null && dbPediaSpotlightHandler.isProperUri(uri))
+      return true;
+    else 
+      return false;
   }
   
   private boolean isProperValue(String val) {
@@ -296,6 +331,8 @@ public class Facets implements Iterable<Facet> {
                 type = facetValueType;
               if (facetId.equals("entityPerson"))
                 type = "person";
+              else if (facetId.equals("entityOrganisation"))
+                type = "organisation";
               else if (facetId.equals("entityPlace"))
                 type = "place";
               entity.setType(type);
@@ -369,6 +406,8 @@ public class Facets implements Iterable<Facet> {
                 type = facetValueType;
               if (facetId.equals("entityPerson"))
                 type = "person";
+              else if (facetId.equals("entityOrganisation"))
+                type = "organisation";
               else if (facetId.equals("entityPlace"))
                 type = "place";
               entity.setType(type);

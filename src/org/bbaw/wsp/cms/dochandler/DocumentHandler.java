@@ -253,7 +253,7 @@ public class DocumentHandler {
   }
   
   private void deleteCollection(CmsDocOperation docOperation) throws ApplicationException {
-    String collectionId = docOperation.getDocIdentifier();  // collectionId
+    String collectionId = docOperation.getCollectionId();
     if (collectionId == null || collectionId.trim().equals(""))
       throw new ApplicationException("Delete collection: Your collection id is empty. Please specify a collection id");
     // perform operation on Lucene
@@ -536,7 +536,9 @@ public class DocumentHandler {
         String docContent = content; // docTokensOrig;
         if (docTokensOrig == null && mdRecord.getDescription() != null && ! mdRecord.getDescription().isEmpty())
           docContent = mdRecord.getDescription();
-        docContentAnnotation = dbPediaSpotlightHandler.annotate(docId, docContent, "0.99", 50);
+        if (docContent != null) {
+          docContentAnnotation = dbPediaSpotlightHandler.annotate(docId, docContent, "0.99", 50);
+        }
         String docTitle = mdRecord.getTitle();
         if (docTitle != null)
           docTitleAnnotation = dbPediaSpotlightHandler.annotate(docId, docTitle, "0.5", 50);
