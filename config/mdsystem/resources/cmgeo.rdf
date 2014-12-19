@@ -42,6 +42,11 @@
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum"/>
     <dcterms:abstract>Im Rahmen der "Berliner Erklärung über offenen Zugang zu wissenschaftlichem Wissen" ist das CMG bestrebt, die an der Arbeitsstelle erarbeiteten Ergebnisse der wissenschaftlichen Gemeinschaft und einer größeren Öffentlichkeit frei zugänglich zu machen.
       Dabei sollen insbesondere auch vergriffene Bände, die oft nur noch in kleiner Stückzahl öffentlich einsehbar sind, der wissenschaftlichen Gemeinschaft wieder zur Verfügung gestellt werden.  Editionen online: Unter Editionen online findet der Besucher alle Bände der Reihen CMG, CML, Suppl. und Suppl. Or. zur Einsicht bereit. Die Bände können angewählt und virtuell durchgeblättert oder seitengenau aufgeschlagen werden.</dcterms:abstract>
+    <dc:publisher rdf:resource="http://wsp.normdata.rdf/BBAW"/>
+    <dcterms:rightsHolder rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/Grabsch"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/Brunschoen"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/Wittwer"/>
   </rdf:Description>
   
 <rdf:Description rdf:about="http://cmg.bbaw.de/epubl/online/editionen.html">

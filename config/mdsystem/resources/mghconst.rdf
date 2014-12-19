@@ -30,14 +30,32 @@
   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
   <owl:Ontology rdf:about="http://wsp.normdata.rdf/"/>
   
-  <owl:NamedIndividual rdf:about="http://wsp.normdata.rdf/MonumentaGermaniaeHistorica/Constitutiones">
+  <rdf:Description rdf:about="http://wsp.normdata.rdf/MonumentaGermaniaeHistorica/Constitutiones">
     <rdf:type rdf:resource="&foaf;Project"/>
-    <foaf:name>Monumenta Germaniae Historica: Constitutiones et acta publica imperatorum et regum</foaf:name>
+    <foaf:name>Monumenta Germaniae Historica: Constitutiones et acta publica imperatorum et regum 1357-1378</foaf:name>
     <dc:language>ger</dc:language>
     <foaf:nick>mghconst</foaf:nick>
     <foaf:homepage rdf:resource="http://telota.bbaw.de/constitutiones/"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MonumentaGermaniaeHistorica"/>
-  </owl:NamedIndividual>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/KarlIV"/>
+    <dc:subject>Urkunden</dc:subject>
+    <gnd:relatedPlaceOrGeographicName rdf:resource="http://wsp.normdata.rdf/Berlin"/>
+    <gnd:relatedPlaceOrGeographicName rdf:resource="http://wsp.normdata.rdf/Brandenburg"/>
+    <gnd:relatedPlaceOrGeographicName rdf:resource="http://wsp.normdata.rdf/SachsenAnhalt"/>
+    <gnd:relatedPlaceOrGeographicName rdf:resource="http://wsp.normdata.rdf/Sachsen"/>
+    <gnd:relatedPlaceOrGeographicName rdf:resource="http://wsp.normdata.rdf/Thueringen"/>
+    <gnd:relatedPlaceOrGeographicName rdf:resource="http://wsp.normdata.rdf/Niedersachsen"/>
+    <gnd:relatedPlaceOrGeographicName rdf:resource="http://wsp.normdata.rdf/Hamburg"/>
+    <gnd:relatedPlaceOrGeographicName rdf:resource="http://wsp.normdata.rdf/Bremen"/>
+    <gnd:relatedPlaceOrGeographicName rdf:resource="http://wsp.normdata.rdf/SchleswigHolstein"/>
+    <gnd:relatedPlaceOrGeographicName rdf:resource="http://wsp.normdata.rdf/MeckPom"/>
+    <dc:format rdf:resource="http://wsp.normdata.rdf/DigitaleEdition"/>
+    <dc:publisher rdf:resource="http://wsp.normdata.rdf/BBAW"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/Telota"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/MonumentaGermaniaeHistorica"/>
+    <dcterms:temporal rdf:datatype="&dcterms;Period">start=1357; end=1378; name=Regierungszeit Karl IV:</dcterms:temporal>
+    <dcterms:abstract>Das in elektronischer Form dargebotene Urkundenmaterial umfasst knapp 500 Urkunden aus allen mittel- und norddeutschen Archiven (d. h. aus Berlin, Brandenburg, Sachsen-Anhalt, Sachsen, Thüringen, Niedersachsen, Hamburg, Bremen, Schleswig-Holstein, Mecklenburg-Vorpommern) sowie aus Dänemark, die dem editorischen Anspruch der Monumenta Germaniae Historica entsprechen und bis zum Erscheinen der jeweiligen Constitutiones-Bände (2011–2027) den maßgeblichen und zitierfähigen Editionsstand bieten.</dcterms:abstract>
+  </rdf:Description>
   
 <rdf:Description rdf:about="http://telota.bbaw.de/constitutiones/">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>

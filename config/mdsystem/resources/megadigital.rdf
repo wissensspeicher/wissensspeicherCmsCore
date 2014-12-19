@@ -1,15 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rdf:RDF 
-   xmlns="http://wsp.normdata.rdf/MarxEngelsGA" 
-   xml:base="http://wsp.normdata.rdf/MarxEngelsGA" 
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
-   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" 
-   xmlns:dc="http://purl.org/dc/elements/1.1/" 
-   xmlns:dcterms="http://purl.org/dc/terms/" 
-   xmlns:foaf="http://xmlns.com/foaf/0.1/" 
-   xmlns:gnd="http://d-nb.info/standards/elementset/gnd#" 
-   xmlns:ore="http://www.openarchives.org/ore/terms/" 
->
+<!DOCTYPE rdf:RDF [
+    <!ENTITY dcterms "http://purl.org/dc/terms/" >
+    <!ENTITY foaf "http://xmlns.com/foaf/0.1/" >
+    <!ENTITY dcmitype "http://purl.org/dc/dcmitype/" >
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY dc "http://purl.org/dc/elements/1.1/" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY edm "http://www.europeana.eu/schemas/edm/" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY ore "http://www.openarchives.org/ore/terms/" >
+    <!ENTITY gnd "http://d-nb.info/standards/elementset/gnd#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY vs "http://www.w3.org/2003/06/sw-vocab-status/ns#" >
+]>
+
+
+<rdf:RDF xmlns="http://wsp.normdata.rdf/"
+  xml:base="http://wsp.normdata.rdf/"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:gnd="http://d-nb.info/standards/elementset/gnd#"
+  xmlns:edm="http://www.europeana.eu/schemas/edm/"
+  xmlns:foaf="http://xmlns.com/foaf/0.1/"
+  xmlns:dcmitype="http://purl.org/dc/dcmitype/"
+  xmlns:ore="http://www.openarchives.org/ore/terms/"
+  xmlns:vs="http://www.w3.org/2003/06/sw-vocab-status/ns#"
+  xmlns:dcterms="http://purl.org/dc/terms/"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:owl="http://www.w3.org/2002/07/owl#"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <owl:Ontology rdf:about="http://wsp.normdata.rdf/"/>
+  
+  
+  
+  <rdf:Description rdf:about="http://wsp.normdata.rdf/MarxEngelsGAdigital">
+    <rdf:type rdf:resource="&foaf;Project"/>
+    <foaf:name>MEGAdigital. Ökonomische Texte von Karl Marx im Internet</foaf:name>
+    <dc:subject>Geschichte</dc:subject>
+    <dcterms:abstract>Die Marx-Engels-Gesamtausgabe ist die historisch-kritische Edition der Veröffentlichungen, der Manuskripte und des Briefwechsels von Karl Marx und Friedrich Engels. Für die digitale Ausgabe der MEGA werden die Edierten Texte der II. Abteilung und Teile der Editorischen Apparate im Rahmen eines Projekts der Telota-Arbeitsgruppe der BBAW und des Akademienvorhabens MEGA mit Unterstützung einer japanischen Forschergruppe sukzessive im Internet präsentiert. Damit werden zum einen die "Grundrisse" in historisch-kritischer Fassung online zugänglich gemacht, und zum anderen können die zahlreichen Manuskript-, Redaktions- und Druckfassungen zum ersten und zweiten Buch des "Kapital" verglichen werden.</dcterms:abstract>
+    <foaf:nick>megadigital</foaf:nick>
+    <dc:language>ger</dc:language>
+    <foaf:homepage rdf:resource="http://mega.bbaw.de/megadigital"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
+    <dc:publisher rdf:resource="http://wsp.normdata.rdf/BBAW"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/Roth"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/Neumann"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/Mori"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/Telota"/>
+    <gnd:contributingCorporateBody rdf:resource="http://wsp.normdata.rdf/TohokuUni"/>
+    <dc:format rdf:resource="http://wsp.normdata.rdf/DigitaleEdition"/>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/MarxKarl"/>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/EngelsFriedrich"/>
+  </rdf:Description>
+  
+  
 <rdf:Description rdf:about="http://mega.bbaw.de/megadigital">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
@@ -136,6 +180,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B001-02_ETX.xml"/>
+  <dcterms:hasFormat rdf:resource="http://wsp.normdata.rdf/OekoManuscr1857_58"/>
   <!-- controlled vocabulary: DBpedia -->
   <dcterms:subject>
     <rdf:Description rdf:about="http://de.dbpedia.org/resource/Kategorie:Weltdokumentenerbe_(Deutschland)">
@@ -232,6 +277,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B004-01_ETX.xml"/>
+  <dcterms:hasFormat rdf:resource="http://wsp.normdata.rdf/OekoManuscr1863_67"/>
   <!-- controlled vocabulary: DBpedia -->
   <dcterms:subject>
     <rdf:Description rdf:about="http://de.dbpedia.org/resource/Kategorie:Weltdokumentenerbe_(Deutschland)">
@@ -328,6 +374,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B005-00_ETX.xml"/>
+  <dcterms:hasFormat rdf:resource="http://wsp.normdata.rdf/DasKapital1867"/>
   <!-- controlled vocabulary: DBpedia -->
   <dcterms:subject>
     <rdf:Description rdf:about="http://de.dbpedia.org/resource/Kategorie:Weltdokumentenerbe_(Deutschland)">
@@ -424,6 +471,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B011-00_ETX.xml"/>
+  <dcterms:hasFormat rdf:resource="http://wsp.normdata.rdf/DasKapital1868_81"/>
   <!-- controlled vocabulary: DBpedia -->
   <dcterms:subject>
     <rdf:Description rdf:about="http://de.dbpedia.org/resource/Kategorie:Weltdokumentenerbe_(Deutschland)">
@@ -520,6 +568,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B012-00_ETX.xml"/>
+  <dcterms:hasFormat rdf:resource="http://wsp.normdata.rdf/DasKapital1884_85"/>
   <!-- controlled vocabulary: DBpedia -->
   <dcterms:subject>
     <rdf:Description rdf:about="http://de.dbpedia.org/resource/Kategorie:Weltdokumentenerbe_(Deutschland)">
@@ -616,6 +665,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B013-00_ETX.xml"/>
+  <dcterms:hasFormat rdf:resource="http://wsp.normdata.rdf/DasKapital1885"/>
   <!-- controlled vocabulary: DBpedia -->
   <dcterms:subject>
     <rdf:Description rdf:about="http://de.dbpedia.org/resource/Kategorie:Weltdokumentenerbe_(Deutschland)">
@@ -712,6 +762,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MarxEngelsGA"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de:8091/exist/rest/db/mega/docs/MEGA_A2_B015-00_ETX.xml"/>
+  <dcterms:hasFormat rdf:resource="http://wsp.normdata.rdf/DasKapital1894"/>
   <!-- controlled vocabulary: DBpedia -->
   <dcterms:subject>
     <rdf:Description rdf:about="http://de.dbpedia.org/resource/Kategorie:Weltdokumentenerbe_(Deutschland)">

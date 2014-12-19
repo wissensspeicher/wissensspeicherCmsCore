@@ -30,14 +30,23 @@
   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
   <owl:Ontology rdf:about="http://wsp.normdata.rdf/"/>
   
-  <owl:NamedIndividual rdf:about="http://wsp.normdata.rdf/MonumentaGermaniaeHistorica/DieGoldeneBulle">
+  <rdf:Description rdf:about="http://wsp.normdata.rdf/MonumentaGermaniaeHistorica/DieGoldeneBulle">
     <rdf:type rdf:resource="&foaf;Project"/>
     <dc:language>ger</dc:language>
     <foaf:nick>mghgb</foaf:nick>
     <foaf:name>Monumenta Germaniae Historica: Die Goldene Bulle</foaf:name>
     <foaf:homepage rdf:resource="http://telota.bbaw.de/mgh/"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MonumentaGermaniaeHistorica"/>
-  </owl:NamedIndividual>
+    <dcterms:abstract></dcterms:abstract>
+    <dc:publisher rdf:resource="http://wsp.normdata.rdf/BBAW"/>
+    <dc:creator rdf:resoource="http://wsp.normdata.rdf/Menzel"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/Telota"/>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/KarlIV"/>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/"/>
+    <dc:date rdf:datatype="&xsd;date">1356</dc:date>
+    <dc:subject>Reichsgesetz</dc:subject>  
+    <dc:format rdf:resource="http://wsp.normdata.rdf/DigitaleEdition"/>
+  </rdf:Description>
   
 <rdf:Description rdf:about="http://telota.bbaw.de/mgh/">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
