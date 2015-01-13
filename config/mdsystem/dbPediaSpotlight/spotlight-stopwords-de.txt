@@ -1,5 +1,9 @@
 Ph.D.
 Dr.
+omi
+http://de.dbpedia.org/resource/Oblaten_(OMI)
+http://de.dbpedia.org/resource/Data_Encryption_Standard
+http://de.dbpedia.org/resource/Deutsche_Forschungsgemeinschaft
 http://de.dbpedia.org/resource/Bundesautobahn_1
 http://de.dbpedia.org/resource/Bundesautobahn_2
 http://de.dbpedia.org/resource/Bundesautobahn_3
