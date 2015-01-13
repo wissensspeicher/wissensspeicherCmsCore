@@ -1057,6 +1057,11 @@ public class IndexHandler {
       Fieldable typeField = doc.getFieldable("type");
       if (typeField != null)
         type = typeField.stringValue();
+      String entitiesDetailsStr = null;
+      Fieldable entitiesDetailsField = doc.getFieldable("entitiesDetails");
+      if (entitiesDetailsField != null) {
+        entitiesDetailsStr = entitiesDetailsField.stringValue();
+      }
       String personsStr = null;
       Fieldable personsField = doc.getFieldable("persons");
       if (personsField != null) {
@@ -1103,6 +1108,7 @@ public class IndexHandler {
       mdRecord.setAccessRights(accessRights);
       mdRecord.setPageCount(pageCount);
       mdRecord.setType(type);
+      mdRecord.setEntitiesDetails(entitiesDetailsStr);
       mdRecord.setPersons(personsStr);
       mdRecord.setPersonsDetails(personsDetailsStr);
       mdRecord.setPlaces(placesStr);
