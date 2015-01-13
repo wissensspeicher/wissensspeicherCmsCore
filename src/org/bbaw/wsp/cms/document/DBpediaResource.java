@@ -232,7 +232,7 @@ public class DBpediaResource implements Comparable<DBpediaResource> {
     if (name == null || uri == null)
       return null;
     String retStr = "<span>";
-    String queryHtmlStr = "<a href=\"" + baseUrl + "/query/QueryDocuments?query=entitiesUris:&quot;" + uri + "&quot;\">" + name + "</a>";
+    String queryHtmlStr = "<a href=\"" + baseUrl + "/query/QueryDocuments?queryLanguage=lucene&query=entitiesUris:%22" + uri + "%22&fieldExpansion=none\">" + name + "</a>";
     String refHtmlStr = "<a href=\"" + uri + "\"><img src=\"../images/rdfSmall.gif\" alt=\"DBpedia resource\" border=\"0\" height=\"15\" width=\"15\"></a>";
     String gndHtmlStr = "";
     if (gnd != null && ! gnd.isEmpty())
