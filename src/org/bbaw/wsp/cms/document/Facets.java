@@ -163,53 +163,48 @@ public class Facets implements Iterable<Facet> {
       ArrayList<FacetValue> facetValuesPerson = facetEntityPerson.getValues();
       Collections.sort(facetValuesPerson, FacetValue.SCORE_COMPARATOR);
       int countPersons = 3;
-      if (facetValuesPerson.size() < countPersons)
-        countPersons = facetValuesPerson.size();
-      for (int i=0; i<countPersons; i++) {
-        FacetValue fv = facetValuesPerson.get(i);
-        if (isProper(fv))
-          mainEntityValues.add(fv);
-      }
+      ArrayList<FacetValue> facetValues = extractFacetValues(countPersons, facetValuesPerson);
+      mainEntityValues.addAll(facetValues);
     }
     if (facetEntityOrganisation != null) {
       ArrayList<FacetValue> facetValuesOrganisation = facetEntityOrganisation.getValues();
       Collections.sort(facetValuesOrganisation, FacetValue.SCORE_COMPARATOR);
       int countOrganisations = 3;
-      if (facetValuesOrganisation.size() < countOrganisations)
-        countOrganisations = facetValuesOrganisation.size();
-      for (int i=0; i<countOrganisations; i++) {
-        FacetValue fv = facetValuesOrganisation.get(i);
-        if (isProper(fv))
-          mainEntityValues.add(fv);
-      }
+      ArrayList<FacetValue> facetValues = extractFacetValues(countOrganisations, facetValuesOrganisation);
+      mainEntityValues.addAll(facetValues);
     }
     if (facetEntityPlace != null) {
       ArrayList<FacetValue> facetValuesPlace = facetEntityPlace.getValues();
       Collections.sort(facetValuesPlace, FacetValue.SCORE_COMPARATOR);
       int countPlaces = 3;
-      if (facetValuesPlace.size() < countPlaces)
-        countPlaces = facetValuesPlace.size();
-      for (int i=0; i<countPlaces; i++) {
-        FacetValue fv = facetValuesPlace.get(i);
-        if (isProper(fv))
-          mainEntityValues.add(fv);
-      }
+      ArrayList<FacetValue> facetValues = extractFacetValues(countPlaces, facetValuesPlace);
+      mainEntityValues.addAll(facetValues);
     }
     if (facetEntityConcept != null) {
       ArrayList<FacetValue> facetValuesConcept = facetEntityConcept.getValues();
       Collections.sort(facetValuesConcept, FacetValue.SCORE_COMPARATOR);
       int countConcepts = 15 - mainEntityValues.size();
-      if (facetValuesConcept.size() < countConcepts)
-        countConcepts = facetValuesConcept.size();
-      for (int i=0; i<countConcepts; i++) {
-        FacetValue fv = facetValuesConcept.get(i);
-        if (isProper(fv))
-          mainEntityValues.add(fv);
-      }
+      ArrayList<FacetValue> facetValues = extractFacetValues(countConcepts, facetValuesConcept);
+      mainEntityValues.addAll(facetValues);
     }
     Collections.sort(mainEntityValues, FacetValue.SCORE_COMPARATOR);
     Facet mainEntityFacet = new Facet("mainEntities", mainEntityValues);
     return mainEntityFacet;
+  }
+
+  private ArrayList<FacetValue> extractFacetValues(int count, ArrayList<FacetValue> facetValues) {
+    int counter = 0;
+    ArrayList<FacetValue> retFacetValues = new ArrayList<FacetValue>();
+    while (counter < count && counter < facetValues.size()) {
+      FacetValue fv = facetValues.get(counter);
+      if (isProper(fv)) {
+        retFacetValues.add(fv);
+      } else {
+        count++; // if value is not proper then count is incremented
+      }
+      counter++;
+    }
+    return retFacetValues;
   }
   
   private boolean isProper(FacetValue fv) {
@@ -220,7 +215,7 @@ public class Facets implements Iterable<Facet> {
       // nothing
     }
     String uri = fv.getUri();
-    if (dbPediaSpotlightHandler != null && dbPediaSpotlightHandler.isProperUri(uri))
+    if (dbPediaSpotlightHandler != null && uri != null && dbPediaSpotlightHandler.isProperUri(uri))
       return true;
     else 
       return false;
@@ -362,7 +357,10 @@ public class Facets implements Iterable<Facet> {
       String facetId = facet.getId();
       if ((outputOptions.contains("showMainEntitiesFacet") && facetId.equals("mainEntities")) || outputOptions.contains("showAllFacets") || outputOptions.contains("showAll")) {
         ArrayList<FacetValue> facetValues = facet.getValues();
-        Collections.sort(facetValues, FacetValue.COUNT_COMPARATOR);
+        if (facetId.contains("entity") || facetId.equals("mainEntities"))
+          Collections.sort(facetValues, FacetValue.SCORE_COMPARATOR);
+        else
+          Collections.sort(facetValues, FacetValue.COUNT_COMPARATOR);
         JSONArray jsonValuesFacets = new JSONArray();
         for (int j=0; j<facetValues.size(); j++) {
           FacetValue facetValue = facetValues.get(j);
