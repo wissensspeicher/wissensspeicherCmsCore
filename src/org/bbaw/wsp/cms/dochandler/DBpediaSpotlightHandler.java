@@ -7,7 +7,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Scanner;
@@ -52,6 +54,7 @@ public class DBpediaSpotlightHandler {
   private XQueryEvaluator xQueryEvaluator;
   private Hashtable<String, DBpediaResource> dbPediaResources;
   private Hashtable<String, String> germanStopwords;
+  private Hashtable<String, String> germanStopwordExpressions;
   private Hashtable<String, Integer> germanSupports;
 
   public static void main(String[] args) throws ApplicationException {
@@ -97,6 +100,7 @@ public class DBpediaSpotlightHandler {
   private void initDBpediaResources() throws ApplicationException {
     dbPediaResources = new Hashtable<String, DBpediaResource>();
     germanStopwords = new Hashtable<String, String>();
+    germanStopwordExpressions = new Hashtable<String, String>();
     initStopwords();
     initDBpediaResourceLabels();
     LOGGER.info("DBpediaSpotlightHandler initialized with: " + dbPediaResources.size() + " DBpedia resources");
@@ -113,7 +117,12 @@ public class DBpediaSpotlightHandler {
       Scanner s = new Scanner(spotlightStopwordFileGerman, "utf-8");
       while (s.hasNextLine()) {
         String stopword = s.nextLine().trim();
-        germanStopwords.put(stopword, stopword);
+        if (stopword != null && ! stopword.isEmpty()) {
+          if (stopword.endsWith("*"))
+            germanStopwordExpressions.put(stopword, stopword);
+          else
+            germanStopwords.put(stopword, stopword);
+        }
       }
       s.close();
     } catch (Exception e) {
@@ -381,6 +390,14 @@ public class DBpediaSpotlightHandler {
     boolean isProper = true;
     if (germanStopwords.get(dbPediaUri) != null)
       isProper = false;
+    Enumeration<String> stopwordExpressions = germanStopwordExpressions.keys();
+    while (stopwordExpressions.hasMoreElements()) {
+      String stopwordExpression = stopwordExpressions.nextElement();
+      if (dbPediaUri.matches(stopwordExpression)) {
+        isProper = false;
+        break;
+      }
+    }
     return isProper;
   }
   
