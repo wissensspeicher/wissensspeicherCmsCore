@@ -115,7 +115,8 @@ public class Facets implements Iterable<Facet> {
               facetNameValue.setType("place");
             else if (facetName.equals("entityConcept"))
               facetNameValue.setType("concept");
-            facetValues.add(facetNameValue);
+            if (isProper(facetNameValue))
+              facetValues.add(facetNameValue);
           }
         }
         if (! facetValues.isEmpty()) {
