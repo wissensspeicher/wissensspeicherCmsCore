@@ -184,7 +184,7 @@ public class Facets implements Iterable<Facet> {
     if (facetEntityConcept != null) {
       ArrayList<FacetValue> facetValuesConcept = facetEntityConcept.getValues();
       Collections.sort(facetValuesConcept, FacetValue.SCORE_COMPARATOR);
-      int countConcepts = 15 - mainEntityValues.size();
+      int countConcepts = 18 - mainEntityValues.size();
       ArrayList<FacetValue> facetValues = extractFacetValues(countConcepts, facetValuesConcept);
       mainEntityValues.addAll(facetValues);
     }
