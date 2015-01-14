@@ -533,15 +533,17 @@ public class DocumentHandler {
       Annotation docContentAnnotation = null;
       Annotation docTitleAnnotation = null;
       try {
+        String collectionId = mdRecord.getCollectionNames();
+        Collection collection = CollectionReader.getInstance().getCollection(collectionId);
         String docContent = content; // docTokensOrig;
         if (docTokensOrig == null && mdRecord.getDescription() != null && ! mdRecord.getDescription().isEmpty())
           docContent = mdRecord.getDescription();
         if (docContent != null) {
-          docContentAnnotation = dbPediaSpotlightHandler.annotate(docId, docContent, "0.99", 50);
+          docContentAnnotation = dbPediaSpotlightHandler.annotate(collection, docId, docContent, "0.99", 50);
         }
         String docTitle = mdRecord.getTitle();
         if (docTitle != null)
-          docTitleAnnotation = dbPediaSpotlightHandler.annotate(docId, docTitle, "0.5", 50);
+          docTitleAnnotation = dbPediaSpotlightHandler.annotate(collection, docId, docTitle, "0.5", 50);
       } catch (ApplicationException e) {
         LOGGER.error(e);
       }
