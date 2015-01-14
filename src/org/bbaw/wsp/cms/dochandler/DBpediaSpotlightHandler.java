@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -26,6 +25,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.apache.log4j.Logger;
+import org.bbaw.wsp.cms.collections.Collection;
 import org.bbaw.wsp.cms.document.Annotation;
 import org.bbaw.wsp.cms.document.DBpediaResource;
 import org.bbaw.wsp.cms.general.Constants;
@@ -273,7 +273,7 @@ public class DBpediaSpotlightHandler {
     }
   }
 
-  public Annotation annotate(String docId, String textInput, String confidence, int count) throws ApplicationException {
+  public Annotation annotate(Collection collection, String docId, String textInput, String confidence, int count) throws ApplicationException {
     String testStr = "";
     String text = textInput.replaceAll("-[ \n]+|&#[0-9];|&#1[0-9];|&#2[0-9];|&#30;|&#31;|&#32;|\uffff", ""); // entferne Bindestriche vor Blank/Zeilenende und Steuerzeichen wie "&#0;"
     text = text.replaceAll("\n", " "); // new lines durch blank ersetzen (da sonst das Steuerzeichen &#10; erzeugt wird)
@@ -334,25 +334,32 @@ public class DBpediaSpotlightHandler {
               r.setName(name);
             }
           }
+          boolean isProper = isProper(surfaceFormStr) && isProperUri(uriStr);
           if (supportStr != null && ! supportStr.isEmpty())
             r.setSupport(new Integer(supportStr));
           if (similarityStr != null && ! similarityStr.isEmpty())
             r.setSimilarity(new Double(similarityStr));
+          String coverage = collection.getCoverage();
           if (r.getType() == null) {
-            if (typesStr == null || typesStr.trim().isEmpty())
+            if (typesStr == null || typesStr.trim().isEmpty()) {
               r.setType("concept");
-            else if (typesStr.contains("Person"))
+            } else if (typesStr.contains("Person")) {
               r.setType("person");
-            else if (typesStr.contains("Organization") || typesStr.contains("Organisation"))
-              r.setType("organisation");
-            else if (typesStr.contains("Place"))
-              r.setType("place");
-            else 
+            } else if (typesStr.contains("DBpedia:Band") || typesStr.contains("Schema:MusicGroup")) {
               r.setType("concept");
+              if (coverage != null && ! coverage.contains("Gegenwart")) // only add music bands, if project is in "Gegenwart"
+                isProper = false;
+            } else if (typesStr.contains("Organization") || typesStr.contains("Organisation")) {
+              r.setType("organisation");
+            } else if (typesStr.contains("Place")) {
+              r.setType("place");
+            } else {
+              r.setType("concept");
+            }
           }
           r.setFrequency(new Integer(frequencyStr));
           r.setContext(surfaceFormContextStr);
-          if (isProper(surfaceFormStr) && isProperUri(uriStr))
+          if (isProper)
             resources.add(r);
         }
       }
