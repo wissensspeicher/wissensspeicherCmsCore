@@ -19,6 +19,7 @@ public class Collection {
   private String metadataRedundantUrlPrefix;  // prefix of metadataUrl which is not relevant as id 
   private String excludesStr; // excludes below dataUrl separated by a blank
   private String mainLanguage;
+  private String coverage;  // e.g.: http://wsp.normdata.rdf/Gegenwart or http://wsp.normdata.rdf/Neuzeit
   private ArrayList<String> fields;
   private Hashtable<String, Service> services;
   private Hashtable<String, XQuery> xQueries;
@@ -132,6 +133,14 @@ public class Collection {
 
   public void setMainLanguage(String mainLanguage) {
     this.mainLanguage = mainLanguage;
+  }
+
+  public String getCoverage() {
+    return coverage;
+  }
+
+  public void setCoverage(String coverage) {
+    this.coverage = coverage;
   }
 
   public ArrayList<String> getFields() {
