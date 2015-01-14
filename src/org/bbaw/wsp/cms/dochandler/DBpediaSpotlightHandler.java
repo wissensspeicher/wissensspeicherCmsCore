@@ -346,8 +346,12 @@ public class DBpediaSpotlightHandler {
             } else if (typesStr.contains("Person")) {
               r.setType("person");
             } else if (typesStr.contains("DBpedia:Band") || typesStr.contains("Schema:MusicGroup")) {
-              r.setType("concept");
+              r.setType("organisation");
               if (coverage != null && ! coverage.contains("Gegenwart")) // only add music bands, if project is in "Gegenwart"
+                isProper = false;
+            } else if (typesStr.contains("DBpedia:Company")) {
+              r.setType("organisation");
+              if (coverage != null && ! coverage.contains("Gegenwart")) // only add companies, if project is in "Gegenwart"
                 isProper = false;
             } else if (typesStr.contains("Organization") || typesStr.contains("Organisation")) {
               r.setType("organisation");
