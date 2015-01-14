@@ -17286,6 +17286,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
         <foaf:status>abgeschlossen</foaf:status>
         <dc:language>ger</dc:language>
         <foaf:homepage rdf:resource="http://www.bbaw.de/forschung/deutsche-sprachressourcen-infrastruktur"/>
+        <dc:coverage rdf:resource="http://wsp.normdata.rdf/Gegenwart"/>
     </rdf:Description>
     
 
@@ -17408,6 +17409,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
         <foaf:homepage rdf:resource="http://aaew.bbaw.de/archive/erbkam-tagebuch"/>
         <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AltaegyptWB"/>
         <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/ErbkamGeorg"/>
+        <dc:coverage rdf:resource="http://wsp.normdata.rdf/Antike"/>
     </rdf:Description>
     
 
@@ -17421,6 +17423,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
         <foaf:nick>aaewpreussen</foaf:nick>
         <foaf:homepage rdf:resource="http://aaew.bbaw.de/archive/lepsius-archiv/archiv-startseite_lepsius"/>
         <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AltaegyptWB"/>
+        <dc:coverage rdf:resource="http://wsp.normdata.rdf/Antike"/>
     </rdf:Description>
     
 
@@ -17434,6 +17437,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
         <foaf:nick>aaewtla</foaf:nick>
         <foaf:homepage rdf:resource="http://aaew.bbaw.de/tla/"/>
         <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AltaegyptWB"/>
+        <dc:coverage rdf:resource="http://wsp.normdata.rdf/Antike"/>
     </rdf:Description>
     
 
@@ -17447,6 +17451,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
         <dc:language>ger</dc:language>
         <foaf:homepage rdf:resource="http://aaew.bbaw.de/tla/servlet/S05?d=d003&amp;h=h017"/>
         <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AltaegyptWB"/>
+        <dc:coverage rdf:resource="http://wsp.normdata.rdf/Antike"/>
     </rdf:Description>
     
 
@@ -17460,6 +17465,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
         <dc:language>ger</dc:language>
         <foaf:homepage rdf:resource="http://aaew.bbaw.de/archive/das-digitalisierte-zettelarchiv/einfuehrung/einfuehrung_dza"/>
         <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AltaegyptWB"/>
+        <dc:coverage rdf:resource="http://wsp.normdata.rdf/Antike"/>
     </rdf:Description>
     
 
@@ -17473,6 +17479,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
         <dc:language>ger</dc:language>
         <foaf:homepage rdf:resource="http://avh.bbaw.de/publikationen/digitale-veroeffentlichungen/abhandlungen-nach-vortraegen-an-der-koeniglich-preussischen-akademie-der-wissenschaften-zu-berlin"/>
         <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle"/>
+        <dc:coverage rdf:resource="http://wsp.normdata.rdf/Neuzeit"/>
     </rdf:Description>
     
 
@@ -17486,6 +17493,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
         <dc:language>ger</dc:language>
         <foaf:homepage rdf:resource="http://avh.bbaw.de/publikationen/digitale-veroeffentlichungen/alexander-von-humboldt-2013-christian-gottfried-ehrenberg.-briefwechsel"/>
         <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle"/>
+        <dc:coverage rdf:resource="http://wsp.normdata.rdf/Neuzeit"/>
     </rdf:Description>
     
 
@@ -17499,6 +17507,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
         <dc:language>ger</dc:language>
         <foaf:homepage rdf:resource="http://avh.bbaw.de/chronologie"/>
         <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle"/>
+        <dc:coverage rdf:resource="http://wsp.normdata.rdf/Neuzeit"/>
     </rdf:Description>
     
 
@@ -17513,6 +17522,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
         <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle"/>
         <dc:coverage rdf:resource="http://wsp.normdata.rdf/Orinoco"/>
         <foaf:homepage rdf:resource="http://www.bbaw.de/forschung/avh/orinoco/index.html"/>
+        <dc:coverage rdf:resource="http://wsp.normdata.rdf/Neuzeit"/>
     </rdf:Description>
     
 
@@ -17526,6 +17536,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
         <foaf:nick>avhseklit</foaf:nick>
         <foaf:homepage rdf:resource="http://avh.bbaw.de/biblio/"/>
         <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle"/>
+        <dc:coverage rdf:resource="http://wsp.normdata.rdf/Neuzeit"/>
     </rdf:Description>
     
 
@@ -17539,6 +17550,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
         <dc:language>ger</dc:language>
         <foaf:homepage rdf:resource="http://telota.bbaw.de/avh/uns/"/>
         <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle"/>
+        <dc:coverage rdf:resource="http://wsp.normdata.rdf/Neuzeit"/>
     </rdf:Description>
     
 
@@ -17552,6 +17564,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
         <foaf:name>Census of Antique Works of Art and Architecture Known in the Renaissance: Census Database</foaf:name>
         <foaf:homepage rdf:resource="http://census.bbaw.de"/>
         <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
+        <dc:coverage rdf:resource="http://wsp.normdata.rdf/Antike"/>
     </rdf:Description>
     
 
@@ -17565,6 +17578,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
         <foaf:name>Mirabilia Urbis Romae (Pilotprojekt)</foaf:name>
         <foaf:homepage rdf:resource="http://telota.bbaw.de/census/fulltext/"/>
         <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CensusOfAntiqueWorks"/>
+        <dc:coverage rdf:resource="http://wsp.normdata.rdf/Antike"/>
     </rdf:Description>
     
 
@@ -17578,6 +17592,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
         <foaf:nick>cmgdh</foaf:nick>
         <foaf:homepage rdf:resource="http://cmg.bbaw.de/online-publikationen/Dielskatalog"/>
         <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum"/>
+        <dc:coverage rdf:resource="http://wsp.normdata.rdf/Antike"/>
     </rdf:Description>
     
 
@@ -17591,6 +17606,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
         <dc:language>ger</dc:language>
         <foaf:homepage rdf:resource="http://cmg.bbaw.de/epubl/online/editionen.html"/>
         <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum"/>
+        <dc:coverage rdf:resource="http://wsp.normdata.rdf/Antike"/>
     </rdf:Description>
     
 
@@ -17604,6 +17620,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
         <foaf:name>Corpus Medicorum Graecorum / Latinorum: Hippokrates- und  Galenbibliographie</foaf:name>
         <foaf:homepage rdf:resource="http://cmg.bbaw.de/online-publikationen/hippokrates-und-galenbibliographie-fichtner"/>
         <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum"/>
+        <dc:coverage rdf:resource="http://wsp.normdata.rdf/Antike"/>
     </rdf:Description>
     
 
@@ -17617,6 +17634,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
         <dc:language>ger</dc:language>
         <foaf:homepage rdf:resource="http://cmg.bbaw.de/online-publikationen/probeedition-online"/>
         <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum"/>
+        <dc:coverage rdf:resource="http://wsp.normdata.rdf/Antike"/>
     </rdf:Description>
     
 
@@ -17630,6 +17648,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
         <foaf:nick>dtme</foaf:nick>
         <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DTM"/>
         <foaf:homepage rdf:resource="http://www.handschriftencensus.de/editionsbericht/"/>
+        <dc:coverage rdf:resource="http://wsp.normdata.rdf/Mittelalter"/>
     </rdf:Description>
     
 
@@ -17643,6 +17662,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
         <dc:language>ger</dc:language>
         <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DTM"/>
         <foaf:homepage rdf:resource="http://www.bbaw.de/forschung/dtm/HSA/startseite-hsa.html"/>
+        <dc:coverage rdf:resource="http://wsp.normdata.rdf/Mittelalter"/>
     </rdf:Description>
     
 
@@ -17656,6 +17676,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
         <foaf:name>Deutsche Texte des Mittelalters: Transkription</foaf:name>
         <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/DTM"/>
         <foaf:homepage rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/dtm/de/Transkriptionen"/>
+        <dc:coverage rdf:resource="http://wsp.normdata.rdf/Mittelalter"/>
     </rdf:Description>
     
 
@@ -17669,6 +17690,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
         <foaf:nick>gcslietz</foaf:nick>
         <foaf:homepage rdf:resource="http://gcs.bbaw.de/hans-lietzmann-vorlesung"/>
         <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/GriechischChristlichSchriftsteller"/>
+        <dc:coverage rdf:resource="http://wsp.normdata.rdf/Neuzeit"/>
     </rdf:Description>
     
 
@@ -17682,6 +17704,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
         <foaf:name>GCS-Texte zum Download</foaf:name>
         <foaf:homepage rdf:resource="http://gcs.bbaw.de/gcs-texte-zum-download"/>
         <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/GriechischChristlichSchriftsteller"/>
+        <dc:coverage rdf:resource="http://wsp.normdata.rdf/Neuzeit"/>
     </rdf:Description>
     
 
@@ -17695,6 +17718,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
         <foaf:name>Jahresberichte fuer deutsche Geschichte aus der Zwischenkriegszeit</foaf:name>
         <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JahresberichteDeutscheGeschichte"/>
         <foaf:homepage rdf:resource="http://www.jdg-online.de/projekte/die-jahresberichte-der-zwischenkriegszeit"/>
+        <dc:coverage rdf:resource="http://wsp.normdata.rdf/Neuzeit"/>
     </rdf:Description>
     
 
@@ -17708,6 +17732,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
         <dc:language>ger</dc:language>
         <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JeanPaul"/>
         <foaf:homepage rdf:resource="http://www.bbaw.de/forschung/jean_paul"/>
+        <dc:coverage rdf:resource="http://wsp.normdata.rdf/Neuzeit"/>
     </rdf:Description>
     
 
@@ -17721,6 +17746,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
         <dc:language>ger</dc:language>
         <foaf:homepage rdf:resource="http://kant.bbaw.de/die-drei-kritiken"/>
         <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KantSchriften"/>
+        <dc:coverage rdf:resource="http://wsp.normdata.rdf/Neuzeit"/>
     </rdf:Description>
     
 
@@ -17734,6 +17760,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
         <foaf:name>Kant’s gesammelte Schriften: Opus Postumum</foaf:name>
         <foaf:homepage rdf:resource="http://kant.bbaw.de/opus-postumum"/>
         <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KantSchriften"/>
+        <dc:coverage rdf:resource="http://wsp.normdata.rdf/Neuzeit"/>
     </rdf:Description>
     
 
@@ -17747,6 +17774,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
         <dc:language>ger</dc:language>
         <foaf:homepage rdf:resource="http://kant.bbaw.de/physische-geographie"/>
         <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KantSchriften"/>
+        <dc:coverage rdf:resource="http://wsp.normdata.rdf/Neuzeit"/>
     </rdf:Description>
     
 
@@ -17760,6 +17788,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
         <foaf:nick>kmames</foaf:nick>
         <foaf:homepage rdf:resource="http://telota.bbaw.de/mze"/>
         <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KarlPhilippMoritz"/>
+        <dc:coverage rdf:resource="http://wsp.normdata.rdf/Neuzeit"/>
     </rdf:Description>
     
 
@@ -17773,6 +17802,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
         <dc:language>ger</dc:language>
         <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KarlPhilippMoritz"/>
         <foaf:homepage rdf:resource="http://www.bbaw.de/forschung/moritz/biblio/index.html"/>
+        <dc:coverage rdf:resource="http://wsp.normdata.rdf/Neuzeit"/>
     </rdf:Description>
     
 
@@ -17786,6 +17816,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
         <foaf:name>Leibniz-Edition Berlin: Sachregister</foaf:name>
         <foaf:homepage rdf:resource="http://leibniz-berlin.bbaw.de"/>
         <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionBerlin"/>
+        <dc:coverage rdf:resource="http://wsp.normdata.rdf/Neuzeit"/>
     </rdf:Description>
     
 
@@ -17799,6 +17830,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
         <foaf:nick>leibpotsbaende</foaf:nick>
         <foaf:homepage rdf:resource="http://leibniz-potsdam.bbaw.de"/>
         <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam"/>
+        <dc:coverage rdf:resource="http://wsp.normdata.rdf/Neuzeit"/>
     </rdf:Description>
     
 
@@ -17812,6 +17844,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
         <foaf:name>Leibniz-Edition Potsdam: Kumulierter index nominum der Ausgaben von Dutens und deuhardt (Philosophische und Mathematische Schriften)</foaf:name>
         <foaf:homepage rdf:resource="http://leibniz-potsdam.bbaw.de"/>
         <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam"/>
+        <dc:coverage rdf:resource="http://wsp.normdata.rdf/Neuzeit"/>
     </rdf:Description>
     
 
@@ -17825,6 +17858,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
         <foaf:nick>leibpotsps</foaf:nick>
         <foaf:homepage rdf:resource="http://leibniz-potsdam.bbaw.de"/>
         <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam"/>
+        <dc:coverage rdf:resource="http://wsp.normdata.rdf/Neuzeit"/>
     </rdf:Description>
     
 
@@ -17838,6 +17872,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
         <dc:language>ger</dc:language>
         <foaf:homepage rdf:resource="http://ritter.bbaw.de"/>
         <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam"/>
+        <dc:coverage rdf:resource="http://wsp.normdata.rdf/Neuzeit"/>
     </rdf:Description>
     
 
@@ -17851,6 +17886,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
         <foaf:nick>mghconst</foaf:nick>
         <foaf:homepage rdf:resource="http://telota.bbaw.de/constitutiones/"/>
         <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MonumentaGermaniaeHistorica"/>
+        <dc:coverage rdf:resource="http://wsp.normdata.rdf/Mittelalter"/>
     </rdf:Description>
     
 
@@ -17864,6 +17900,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
         <foaf:name>Monumenta Germaniae Historica: Die Goldene Bulle</foaf:name>
         <foaf:homepage rdf:resource="http://telota.bbaw.de/mgh/"/>
         <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MonumentaGermaniaeHistorica"/>
+        <dc:coverage rdf:resource="http://wsp.normdata.rdf/Mittelalter"/>
     </rdf:Description>
     
 
@@ -17877,6 +17914,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
         <foaf:name>Digitales Turfan-Archiv</foaf:name>
         <foaf:homepage rdf:resource="http://turfan.bbaw.de/dta-i"/>
         <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Turfan"/>
+        <dc:coverage rdf:resource="http://wsp.normdata.rdf/Antike"/>
     </rdf:Description>
     
 
@@ -17890,6 +17928,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
         <dc:language>ger</dc:language>
         <foaf:homepage rdf:resource="http://idp.bbaw.de"/>
         <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Turfan"/>
+        <dc:coverage rdf:resource="http://wsp.normdata.rdf/Antike"/>
     </rdf:Description>
     
 
@@ -17903,6 +17942,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
         <foaf:name>Iranische Texte in der Turfansammlung</foaf:name>
         <foaf:homepage rdf:resource="http://turfan.bbaw.de/texte-en/iranische-texte-in-der-turfansammlung"/>
         <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Turfan"/>
+        <dc:coverage rdf:resource="http://wsp.normdata.rdf/Antike"/>
     </rdf:Description>
     
 
@@ -17916,6 +17956,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
         <dc:language>eng</dc:language>
         <foaf:homepage rdf:resource="http://turfan.bbaw.de/bilder/mirtext-2"/>
         <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Turfan"/>
+        <dc:coverage rdf:resource="http://wsp.normdata.rdf/Antike"/>
     </rdf:Description>
     
 
@@ -17929,6 +17970,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
         <foaf:name>Wilhelm von Humboldt: Schriften zur Sprachwissenschaft - Briefdatenbank</foaf:name>
         <foaf:homepage rdf:resource="http://telota.bbaw.de/wvh/db-start.jsf"/>
         <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/WilhelmVonHumboldt"/>
+        <dc:coverage rdf:resource="http://wsp.normdata.rdf/Neuzeit"/>
     </rdf:Description>
 
   <rdf:Description rdf:about="http://wsp.normdata.rdf/Test">
