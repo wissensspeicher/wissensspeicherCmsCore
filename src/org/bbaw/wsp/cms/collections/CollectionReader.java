@@ -233,6 +233,10 @@ public class CollectionReader {
           } else {
             LOGGER.error("Project: \"" + rdfId + "\" in: \"" + inputNormdataFileUrl + "\" has no language: Please provide a main language for this project");
           }
+          String coverage = xQueryEvaluator.evaluateAsString(projectRdfStr, NAMESPACE_DECLARATION + "string-join(/rdf:Description/dc:coverage/@rdf:resource, ' ')");
+          if (coverage != null && ! coverage.isEmpty()) {
+            collection.setCoverage(coverage);
+          } 
 					// wsp/collection/metadata fields are only used in edoc-Collection
           String metadataUrlStr = xQueryEvaluator.evaluateAsStringValueJoined(configFileUrl, "/wsp/collection/metadata/url");
 					if (metadataUrlStr != null) {
