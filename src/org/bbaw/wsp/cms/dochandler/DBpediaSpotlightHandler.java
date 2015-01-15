@@ -341,17 +341,17 @@ public class DBpediaSpotlightHandler {
             r.setSimilarity(new Double(similarityStr));
           String coverage = collection.getCoverage();
           if (r.getType() == null) {
+            boolean isPresentOrganisationType = 
+                typesStr.contains("DBpedia:Band") || typesStr.contains("Schema:MusicGroup") || 
+                typesStr.contains("DBpedia:Broadcaster") || typesStr.contains("DBpedia:Company") ||
+                typesStr.contains("DBpedia:SoccerClub") || typesStr.contains("DBpedia:PoliticalParty");
             if (typesStr == null || typesStr.trim().isEmpty()) {
               r.setType("concept");
-            } else if (typesStr.contains("Person")) {
+            } else if (typesStr.contains("Person") || typesStr.contains("DBpedia:Agent")) {
               r.setType("person");
-            } else if (typesStr.contains("DBpedia:Band") || typesStr.contains("Schema:MusicGroup")) {
+            } else if (isPresentOrganisationType) {
               r.setType("organisation");
-              if (coverage != null && ! coverage.contains("Gegenwart")) // only add music bands, if project is in "Gegenwart"
-                isProper = false;
-            } else if (typesStr.contains("DBpedia:Company")) {
-              r.setType("organisation");
-              if (coverage != null && ! coverage.contains("Gegenwart")) // only add companies, if project is in "Gegenwart"
+              if (coverage != null && ! coverage.contains("Gegenwart")) // only add music bands and companies, if project is in "Gegenwart"
                 isProper = false;
             } else if (typesStr.contains("Organization") || typesStr.contains("Organisation")) {
               r.setType("organisation");
