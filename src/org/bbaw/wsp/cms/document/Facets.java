@@ -216,7 +216,9 @@ public class Facets implements Iterable<Facet> {
       // nothing
     }
     String uri = fv.getUri();
-    if (dbPediaSpotlightHandler != null && uri != null && dbPediaSpotlightHandler.isProperUri(uri))
+    if (uri == null)
+      return true;
+    else if (dbPediaSpotlightHandler != null && uri != null && dbPediaSpotlightHandler.isProperUri(uri))
       return true;
     else 
       return false;
