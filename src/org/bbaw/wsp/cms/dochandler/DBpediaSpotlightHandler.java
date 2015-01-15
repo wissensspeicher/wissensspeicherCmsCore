@@ -347,7 +347,7 @@ public class DBpediaSpotlightHandler {
                 typesStr.contains("DBpedia:SoccerClub") || typesStr.contains("DBpedia:PoliticalParty");
             if (typesStr == null || typesStr.trim().isEmpty()) {
               r.setType("concept");
-            } else if (typesStr.contains("Person") || typesStr.contains("DBpedia:Agent")) {
+            } else if (typesStr.contains("Person")) {
               r.setType("person");
             } else if (isPresentOrganisationType) {
               r.setType("organisation");
