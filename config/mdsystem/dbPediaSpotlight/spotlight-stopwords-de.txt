@@ -4,8 +4,10 @@ omi
 http://de.dbpedia.org/resource/Oblaten_(OMI)
 http://de.dbpedia.org/resource/Data_Encryption_Standard
 http://de.dbpedia.org/resource/Deutsche_Forschungsgemeinschaft
+http://de.dbpedia.org/resource/Jungsorbische
 
 http://de.dbpedia.org/resource/Bundesautobahn_.*
 http://de.dbpedia.org/resource/Bundesstraße_.*
 http://de.dbpedia.org/resource/Europastraße_.*
 http://de.dbpedia.org/resource/Interstate_.*
+http://de.dbpedia.org/resource/Lotus_.*
