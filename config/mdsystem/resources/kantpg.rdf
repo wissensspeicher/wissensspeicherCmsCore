@@ -1,24 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rdf:RDF 
-   xmlns="http://wsp.normdata.rdf/KantSchriften/PhysischeGeographie" 
-   xml:base="http://wsp.normdata.rdf/KantSchriften/PhysischeGeographie" 
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
-   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" 
-   xmlns:dc="http://purl.org/dc/elements/1.1/" 
-   xmlns:dcterms="http://purl.org/dc/terms/" 
-   xmlns:foaf="http://xmlns.com/foaf/0.1/" 
-   xmlns:gnd="http://d-nb.info/standards/elementset/gnd#" 
-   xmlns:ore="http://www.openarchives.org/ore/terms/" 
->
+<!DOCTYPE rdf:RDF [
+    <!ENTITY dcterms "http://purl.org/dc/terms/" >
+    <!ENTITY foaf "http://xmlns.com/foaf/0.1/" >
+    <!ENTITY dcmitype "http://purl.org/dc/dcmitype/" >
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY dc "http://purl.org/dc/elements/1.1/" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY edm "http://www.europeana.eu/schemas/edm/" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY ore "http://www.openarchives.org/ore/terms/" >
+    <!ENTITY gnd "http://d-nb.info/standards/elementset/gnd#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY vs "http://www.w3.org/2003/06/sw-vocab-status/ns#" >
+]>
+
+
+<rdf:RDF xmlns="http://wsp.normdata.rdf/"
+  xml:base="http://wsp.normdata.rdf/"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:gnd="http://d-nb.info/standards/elementset/gnd#"
+  xmlns:edm="http://www.europeana.eu/schemas/edm/"
+  xmlns:foaf="http://xmlns.com/foaf/0.1/"
+  xmlns:dcmitype="http://purl.org/dc/dcmitype/"
+  xmlns:ore="http://www.openarchives.org/ore/terms/"
+  xmlns:vs="http://www.w3.org/2003/06/sw-vocab-status/ns#"
+  xmlns:dcterms="http://purl.org/dc/terms/"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:owl="http://www.w3.org/2002/07/owl#"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <owl:Ontology rdf:about="http://wsp.normdata.rdf/"/>
+  
+  
+  <rdf:Description rdf:about="http://wsp.normdata.rdf/NeueditionKant/PhysischeGeographie">
+    <rdf:type rdf:resource="&foaf;Project"/>
+    <dcterms:abstract>Die Vorlesungen über Physische Geographie sind bisher nur in verschiedenen, unzulänglichen Bearbeitungen veröffentlicht.  Ziel des Vorhabens ist sowohl eine adäquate Darstellung der Überlieferung in Form einer elektronischen Dokumentation als auch die Herstellung lesbarer, kritisch geprüfter und erläuterter Texte für den Buchdruck.</dcterms:abstract>
+    <foaf:name>Kant’s gesammelte Schriften: Vorlesungen über Physische Geographie</foaf:name>
+    <foaf:nick>kantpg</foaf:nick>
+    <dc:language>ger</dc:language>
+    <foaf:homepage rdf:resource="http://kant.bbaw.de/physische-geographie"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/NeueditionKant"/>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="http://kant.bbaw.de/physische-geographie">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KantSchriften/PhysischeGeographie"/>
   <dc:identifier rdf:resource="http://kant.bbaw.de/physische-geographie"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://kant.bbaw.de/physische-geographie/das-editionsvorhaben">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KantSchriften/PhysischeGeographie"/>
-  <dc:identifier rdf:resource="http://kant.bbaw.de/physische-geographie/das-editionsvorhaben"/>
+  <dc:title>Vorlesungen über Physische Geographie</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://kant.bbaw.de/physische-geographie/das-editionsvorhaben">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
@@ -32,4 +62,10 @@
   <dc:identifier rdf:resource="http://kant.bbaw.de/physische-geographie/informationen"/>
   <dc:title>Informationen zu den "Vorlesungen über physische Geographie"</dc:title>
 </rdf:Description>
+  <rdf:Description rdf:about="http://kant.bbaw.de/physische-geographie/dokumentation-der-vorlesungen">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KantSchriften/PhysischeGeographie"/>
+    <dc:identifier rdf:resource="http://kant.bbaw.de/physische-geographie/dokumentation-der-vorlesungen"/>
+    <dc:title>Dokumentation der Vorlesungen</dc:title>
+  </rdf:Description>
 </rdf:RDF>
