@@ -15,9 +15,209 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant"/>
   <dc:identifier rdf:resource="http://kant.bbaw.de"/>
 </rdf:Description>
-<rdf:Description rdf:about="http://telota.bbaw.de/kant">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant"/>
-  <dc:identifier rdf:resource="http://telota.bbaw.de/kant"/>
-</rdf:Description>
+
+  
+  
+  <rdf:Description rdf:about="http://kant.bbaw.de/arbeitsstelle/mitarbeiter">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant"/>
+    <dc:identifier rdf:resource="http://kant.bbaw.de/arbeitsstelle/mitarbeiter"/>
+    <dc:title>Mitarbeiter</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://kant.bbaw.de/arbeitsstelle/publikationen/gerhardt">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant"/>
+    <dc:identifier rdf:resource="http://kant.bbaw.de/arbeitsstelle/publikationen/gerhardt"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/Gerhardt"/>
+    <dc:title>Publikationen</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://kant.bbaw.de/arbeitsstelle/publikationen/karl">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant"/>
+    <dc:identifier rdf:resource="http://kant.bbaw.de/arbeitsstelle/publikationen/karl"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/Karl"/>
+    <dc:title>Publikationen</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://kant.bbaw.de/arbeitsstelle/publikationen/nikolaos-loukidelis">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant"/>
+    <dc:identifier rdf:resource="http://kant.bbaw.de/arbeitsstelle/publikationen/nikolaos-loukidelis"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/Loukidelis"/>
+    <dc:title>Publikationen</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://kant.bbaw.de/arbeitsstelle/publikationen/stark">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant"/>
+    <dc:identifier rdf:resource="http://kant.bbaw.de/arbeitsstelle/publikationen/stark"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/Stark"/>
+    <dc:title>Publikationen</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://kant.bbaw.de/arbeitsstelle/publikationen/gemeinsame-publikationen">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant"/>
+    <dc:identifier rdf:resource="http://kant.bbaw.de/arbeitsstelle/publikationen/gemeinsame-publikationen"/>
+    <dc:title>Gemeinsame Publikationen</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://kant.bbaw.de/die-akademie-ausgabe/ubersicht">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant"/>
+    <dc:identifier rdf:resource="http://kant.bbaw.de/die-akademie-ausgabe/ubersicht"/>
+    <dc:title>Übersicht zur Ausgabe</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://kant.bbaw.de/die-akademie-ausgabe/abteilung-i-werke">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant"/>
+    <dc:identifier rdf:resource="http://kant.bbaw.de/die-akademie-ausgabe/abteilung-i-werke"/>
+    <dc:title>Abteilung I. Werke </dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://kant.bbaw.de/die-akademie-ausgabe/abteilung-ii-briefwechsel">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant"/>
+    <dc:identifier rdf:resource="http://kant.bbaw.de/die-akademie-ausgabe/abteilung-ii-briefwechsel"/>
+    <dc:title>Abteilung II. Briefwechsel</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://kant.bbaw.de/die-akademie-ausgabe/abteilung-iii-handschriftlicher-nachlas">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant"/>
+    <dc:identifier rdf:resource="http://kant.bbaw.de/die-akademie-ausgabe/abteilung-iii-handschriftlicher-nachlas"/>
+    <dc:title>Abteilung III. Handschriftlicher Nachlaß </dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://kant.bbaw.de/die-akademie-ausgabe/abteilung-iv-vorlesungen">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant"/>
+    <dc:identifier rdf:resource="http://kant.bbaw.de/die-akademie-ausgabe/abteilung-iv-vorlesungen"/>
+    <dc:title>Abteilung IV. Vorlesungen </dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://kant.bbaw.de/die-akademie-ausgabe/geplante-editionsvorhaben">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant"/>
+    <dc:identifier rdf:resource="http://kant.bbaw.de/die-akademie-ausgabe/geplante-editionsvorhaben"/>
+    <dc:title>Geplante Editionsvorhaben </dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://kant.bbaw.de/die-akademie-ausgabe/abteilung-i-werke/band-i">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant"/>
+    <dc:identifier rdf:resource="http://kant.bbaw.de/die-akademie-ausgabe/abteilung-i-werke/band-i"/>
+    <dc:title>Band I. Vorkritische Schriften I. 1747–1756</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://kant.bbaw.de/die-akademie-ausgabe/abteilung-i-werke/band-ii">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant"/>
+    <dc:identifier rdf:resource="http://kant.bbaw.de/die-akademie-ausgabe/abteilung-i-werke/band-ii"/>
+    <dc:title>Band II. Vorkritische Schriften II. 1757–1777</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://kant.bbaw.de/die-akademie-ausgabe/abteilung-i-werke/band-viii">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant"/>
+    <dc:identifier rdf:resource="http://kant.bbaw.de/die-akademie-ausgabe/abteilung-i-werke/band-viii"/>
+    <dc:title>Band VIII. Abhandlungen nach 1781</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://kant.bbaw.de/die-akademie-ausgabe/abteilung-ii-briefwechsel/band-xii">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant"/>
+    <dc:identifier rdf:resource="http://kant.bbaw.de/die-akademie-ausgabe/abteilung-ii-briefwechsel/band-xii"/>
+    <dc:title>Band XII. Briefe, 1795–1803</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://kant.bbaw.de/die-akademie-ausgabe/abteilung-ii-briefwechsel/band-xiii">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant"/>
+    <dc:identifier rdf:resource="http://kant.bbaw.de/die-akademie-ausgabe/abteilung-ii-briefwechsel/band-xiii"/>
+    <dc:title>Band XIII. Briefe, Anmerkungen und Register</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://kant.bbaw.de/die-akademie-ausgabe/abteilung-ii-briefwechsel/nachtraege-in-bd.-xxiii">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant"/>
+    <dc:identifier rdf:resource="http://kant.bbaw.de/die-akademie-ausgabe/abteilung-ii-briefwechsel/nachtraege-in-bd.-xxiii"/>
+    <dc:title>Nachträge in Band XXIII</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://kant.bbaw.de/die-akademie-ausgabe/abteilung-iii-handschriftlicher-nachlas/band-xiv">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant"/>
+    <dc:identifier rdf:resource="http://kant.bbaw.de/die-akademie-ausgabe/abteilung-iii-handschriftlicher-nachlas/band-xiv"/>
+    <dc:title>Band XIV. Mathematik – Physik und Chemie – Physische Geographie</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://kant.bbaw.de/die-akademie-ausgabe/abteilung-iii-handschriftlicher-nachlas/band-xv-1-und-2">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant"/>
+    <dc:identifier rdf:resource="http://kant.bbaw.de/die-akademie-ausgabe/abteilung-iii-handschriftlicher-nachlas/band-xv-1-und-2"/>
+    <dc:title>Band XV, 1 und 2. Anthropologie</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://kant.bbaw.de/die-akademie-ausgabe/abteilung-iii-handschriftlicher-nachlas/band-xvi">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant"/>
+    <dc:identifier rdf:resource="http://kant.bbaw.de/die-akademie-ausgabe/abteilung-iii-handschriftlicher-nachlas/band-xvi"/>
+    <dc:title>Band XVI. Logik</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://kant.bbaw.de/die-akademie-ausgabe/abteilung-iii-handschriftlicher-nachlas/band-xvii">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant"/>
+    <dc:identifier rdf:resource="http://kant.bbaw.de/die-akademie-ausgabe/abteilung-iii-handschriftlicher-nachlas/band-xvii"/>
+    <dc:title>Band XVII. Metaphysik, 1. Theil</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://kant.bbaw.de/die-akademie-ausgabe/abteilung-iii-handschriftlicher-nachlas/band-xviii">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant"/>
+    <dc:identifier rdf:resource="http://kant.bbaw.de/die-akademie-ausgabe/abteilung-iii-handschriftlicher-nachlas/band-xviii"/>
+    <dc:title>Band XVIII. Metaphysik, 2. Theil</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://kant.bbaw.de/die-akademie-ausgabe/abteilung-iii-handschriftlicher-nachlas/band-xix">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant"/>
+    <dc:identifier rdf:resource="http://kant.bbaw.de/die-akademie-ausgabe/abteilung-iii-handschriftlicher-nachlas/band-xix"/>
+    <dc:title>Band XIX. Moralphilosophie, Rechtsphilosophie und Religionsphilosophie</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://kant.bbaw.de/die-akademie-ausgabe/abteilung-iii-handschriftlicher-nachlas/band-xx">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant"/>
+    <dc:identifier rdf:resource="http://kant.bbaw.de/die-akademie-ausgabe/abteilung-iii-handschriftlicher-nachlas/band-xx"/>
+    <dc:title>Band XX. Vorarbeiten und Nachträge</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://kant.bbaw.de/die-akademie-ausgabe/abteilung-iii-handschriftlicher-nachlas/band-xxiii">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant"/>
+    <dc:identifier rdf:resource="http://kant.bbaw.de/die-akademie-ausgabe/abteilung-iii-handschriftlicher-nachlas/band-xxiii"/>
+    <dc:title>Band XXIII. Vorarbeiten und Nachträge</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://kant.bbaw.de/die-akademie-ausgabe/abteilung-iv-vorlesungen/band-xxiv-1-und-2">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant"/>
+    <dc:identifier rdf:resource="http://kant.bbaw.de/die-akademie-ausgabe/abteilung-iv-vorlesungen/band-xxiv-1-und-2"/>
+    <dc:title>Band XXIV, 1 und 2. Vorlesungen über Logik</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://kant.bbaw.de/die-akademie-ausgabe/abteilung-iv-vorlesungen/band-xxv-1-und-2">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant"/>
+    <dc:identifier rdf:resource="http://kant.bbaw.de/die-akademie-ausgabe/abteilung-iv-vorlesungen/band-xxv-1-und-2"/>
+    <dc:title>Band XXV, 1 und 2. Vorlesungen über Anthropologie</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://kant.bbaw.de/die-akademie-ausgabe/abteilung-iv-vorlesungen/band-xxvi">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant"/>
+    <dc:identifier rdf:resource="http://kant.bbaw.de/die-akademie-ausgabe/abteilung-iv-vorlesungen/band-xxvi"/>
+    <dc:title>Band XXVI, 1 und 2. Vorlesungen über Physische Geographie</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://kant.bbaw.de/die-akademie-ausgabe/abteilung-iv-vorlesungen/band-xxvii-1-2-1-und-2-2">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant"/>
+    <dc:identifier rdf:resource="http://kant.bbaw.de/die-akademie-ausgabe/abteilung-iv-vorlesungen/band-xxvii-1-2-1-und-2-2"/>
+    <dc:title>Band XXVII, 1, 2,1 und 2,2. Vorlesungen über Moralphilosophie</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://kant.bbaw.de/die-akademie-ausgabe/abteilung-iv-vorlesungen/band-xxviii-1-2-1-und-2-2">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant"/>
+    <dc:identifier rdf:resource="http://kant.bbaw.de/die-akademie-ausgabe/abteilung-iv-vorlesungen/band-xxviii-1-2-1-und-2-2"/>
+    <dc:title>Band XXVIII, 1, 2,1 und 2,2. Vorlesungen über Metaphysik und Rationaltheologie</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://kant.bbaw.de/die-akademie-ausgabe/abteilung-iv-vorlesungen/band-xxix-1-und-2">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant"/>
+    <dc:identifier rdf:resource="http://kant.bbaw.de/die-akademie-ausgabe/abteilung-iv-vorlesungen/band-xxix-1-und-2"/>
+    <dc:title>Band XXIX, 1 und 2. Kleinere Vorlesungen (Enzyklopädie, Mathematik, Physik) und Ergänzungen</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://kant.bbaw.de/die-akademie-ausgabe/abteilung-iv-vorlesungen/in-der-akademie-ausgabe-enthaltene-aber-nicht-der-abteilung-iv-zugeordnete-vorlesungen">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant"/>
+    <dc:identifier rdf:resource="http://kant.bbaw.de/die-akademie-ausgabe/abteilung-iv-vorlesungen/in-der-akademie-ausgabe-enthaltene-aber-nicht-der-abteilung-iv-zugeordnete-vorlesungen"/>
+    <dc:title>In der Akademie-Ausgabe enthaltene, aber nicht der Abteilung IV zugeordnete Vorlesungen</dc:title>
+  </rdf:Description>
 </rdf:RDF>
