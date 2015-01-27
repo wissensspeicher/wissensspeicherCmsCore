@@ -398,20 +398,21 @@ public class DBpediaSpotlightHandler {
   }
   
   public boolean isProperUri(String dbPediaUri) {
-    boolean isProper = true;
     if (germanStopwords.get(dbPediaUri) != null)
-      isProper = false;
+      return false;
+    boolean isProper = true;
     Enumeration<String> stopwordExpressions = germanStopwordExpressions.keys();
+    String stopwordExpressionOR = "";
     while (stopwordExpressions.hasMoreElements()) {
       String stopwordExpression = stopwordExpressions.nextElement();
-      if (dbPediaUri.matches(stopwordExpression)) {
-        isProper = false;
-        break;
-      }
+      stopwordExpressionOR = stopwordExpressionOR + stopwordExpression + "|";
+    }
+    if (! stopwordExpressionOR.isEmpty() && dbPediaUri.matches(stopwordExpressionOR)) {
+      isProper = false;
     }
     return isProper;
   }
-  
+
   private String performPostRequest(String serviceName, NameValuePair[] params, String outputFormat) throws ApplicationException {
     String resultStr = null;
     try {
