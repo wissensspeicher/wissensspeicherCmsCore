@@ -1,36 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rdf:RDF 
-   xmlns="http://wsp.normdata.rdf/KantSchriften/OpusPostumum" 
-   xml:base="http://wsp.normdata.rdf/KantSchriften/OpusPostumum" 
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
-   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" 
-   xmlns:dc="http://purl.org/dc/elements/1.1/" 
-   xmlns:dcterms="http://purl.org/dc/terms/" 
-   xmlns:foaf="http://xmlns.com/foaf/0.1/" 
-   xmlns:gnd="http://d-nb.info/standards/elementset/gnd#" 
-   xmlns:ore="http://www.openarchives.org/ore/terms/" 
->
+<!DOCTYPE rdf:RDF [
+    <!ENTITY dcterms "http://purl.org/dc/terms/" >
+    <!ENTITY foaf "http://xmlns.com/foaf/0.1/" >
+    <!ENTITY dcmitype "http://purl.org/dc/dcmitype/" >
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY dc "http://purl.org/dc/elements/1.1/" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY edm "http://www.europeana.eu/schemas/edm/" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY ore "http://www.openarchives.org/ore/terms/" >
+    <!ENTITY gnd "http://d-nb.info/standards/elementset/gnd#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY vs "http://www.w3.org/2003/06/sw-vocab-status/ns#" >
+]>
+<rdf:RDF xmlns="http://wsp.normdata.rdf/"
+  xml:base="http://wsp.normdata.rdf/"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:gnd="http://d-nb.info/standards/elementset/gnd#"
+  xmlns:edm="http://www.europeana.eu/schemas/edm/"
+  xmlns:foaf="http://xmlns.com/foaf/0.1/"
+  xmlns:dcmitype="http://purl.org/dc/dcmitype/"
+  xmlns:ore="http://www.openarchives.org/ore/terms/"
+  xmlns:vs="http://www.w3.org/2003/06/sw-vocab-status/ns#"
+  xmlns:dcterms="http://purl.org/dc/terms/"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:owl="http://www.w3.org/2002/07/owl#"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <owl:Ontology rdf:about="http://wsp.normdata.rdf/"/>
+  
+  <rdf:Description rdf:about="http://wsp.normdata.rdf/NeueditionKant/OpusPostumum">
+    <rdf:type rdf:resource="&foaf;Project"/>
+    <foaf:nick>kantop</foaf:nick>
+    <dc:language>ger</dc:language>
+    <foaf:name>Kant’s gesammelte Schriften: Opus Postumum</foaf:name>
+    <foaf:homepage rdf:resource="http://kant.bbaw.de/opus-postumum"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant"/>
+    <gnd:relatedPerson rdf:resource="KantImmanuel"/>
+    <dcterms:abstract>Das Opus postumum ist bereits 1936/38 als Bände XXI und XXII der Akademie-Ausgabe von Artur Buchenau und Gerhard Lehmann herausgegeben worden. Diese erste vollständige diplomatische Edition verfährt gänzlich unkritisch und ist deshalb seit Langem schweren Einwänden ausgesetzt. Aufgrund der editorischen Unzulänglichkeiten wird jetzt eine kritische, wissenschaftlichen Ansprüchen genügende Edition dieses Nachlasswerkes in Angriff genommen, welches als das von Kants Werken philologisch am schwierigsten zu edierende Werk gilt.</dcterms:abstract>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/Karl"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/Gerber"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/Telota"/>
+    <dc:format rdf:resource="http://wsp.normdata.rdf/DigitaleEdition"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_xml"/>
+    <dcterms:publisher rdf:resource="http://wsp.normdata.rdf/BBAW"/>
+    <dcterms:temporal rdf:datatype="&xsd;date">start=1790; end=1804; name=Entstehungszeit</dcterms:temporal>
+  </rdf:Description>
+  
+  <rdf:Description rdf:about="http://telota.bbaw.de/kant_op/">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant/OpusPostumum"/>
+    <dc:identifier rdf:resource="http://telota.bbaw.de/kant_op/"/>
+    <dc:title>Immanuel Kant - der Autor, der "mit der Feder in der Hand" denkt</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://kant.bbaw.de/opus-postumum/das-editionsvorhaben">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant/OpusPostumum"/>
+    <dc:identifier rdf:resource="http://kant.bbaw.de/opus-postumum/das-editionsvorhaben"/>
+    <dc:title>Das Editionsvorhaben</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://kant.bbaw.de/opus-postumum/online-edition">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant/OpusPostumum"/>
+    <dc:identifier rdf:resource="http://kant.bbaw.de/opus-postumum/online-edition"/>
+    <dc:title>Online-Edition</dc:title>
+  </rdf:Description>
 <rdf:Description rdf:about="http://kant.bbaw.de/opus-postumum">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KantSchriften/OpusPostumum"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant/OpusPostumum"/>
   <dc:identifier rdf:resource="http://kant.bbaw.de/opus-postumum"/>
+  <dc:title>Opus Postumum</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://kant.bbaw.de/opus-postumum/faksimiles-chronologisch">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KantSchriften/OpusPostumum"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant/OpusPostumum"/>
   <dc:identifier rdf:resource="http://kant.bbaw.de/opus-postumum/faksimiles-chronologisch"/>
+  <dc:title>Faksimiles in chronologischer Anordnung</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://kant.bbaw.de/opus-postumum/faksimiles-diplomatisch">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KantSchriften/OpusPostumum"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant/OpusPostumum"/>
   <dc:identifier rdf:resource="http://kant.bbaw.de/opus-postumum/faksimiles-diplomatisch"/>
+  <dc:title>Faksimiles diplomatisch</dc:title>
 </rdf:Description>
+  <rdf:Description rdf:about="http://kant.bbaw.de/opus-postumum/benutzungshinweise">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant/OpusPostumum"/>
+    <dc:identifier rdf:resource="http://kant.bbaw.de/opus-postumum/benutzungshinweise"/>
+    <dc:title>Benutzungshinweise</dc:title>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://kant.bbaw.de/opus-postumum/digitalisierung">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant/OpusPostumum"/>
+    <dc:identifier rdf:resource="http://kant.bbaw.de/opus-postumum/digitalisierung"/>
+    <dc:title>Digitalisierung</dc:title>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="http://kvmmove3.bbaw.de:8188/exist/rest/db/kant/text/">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KantSchriften/OpusPostumum"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant/OpusPostumum"/>
   <dc:identifier rdf:resource="http://kvmmove3.bbaw.de:8188/exist/rest/db/kant/text/"/>
   <dc:type>eXistDir</dc:type>
-  <dc:creator>Kant, Immanuel</dc:creator>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/KantImmanuel"/>
   <dc:title>Kant: Opus Postumum: Online Edition</dc:title>
 </rdf:Description>
 </rdf:RDF>
