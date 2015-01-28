@@ -20,8 +20,8 @@
     <xqueries>
       <xquery>
         <name>webId</name>
-        <code>replace(string(/*:TEI/*:text/*:body/*:div/@xml:id), 'P_', '')</code>
-        <preStr>http://telota.bbaw.de/kant_op/edition.html#/C02/</preStr>
+        <code>concat(string(/*:TEI/*:text/*:body/@xml:id), '/', replace(string(/*:TEI/*:text/*:body/*:div/@xml:id), 'P_', ''))</code>
+        <preStr>http://telota.bbaw.de/kant_op/edition.html#/</preStr>
       </xquery>
     </xqueries>
   </collection>
