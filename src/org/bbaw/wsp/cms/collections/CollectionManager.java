@@ -96,10 +96,10 @@ public class CollectionManager {
   }
 
   /**
-   * Update of all collections
+   * Update of all collections from that startingCollection onwards alphabetically
    * @throws ApplicationException
    */
-  public void updateCollections(String startingCollectionId) throws ApplicationException {
+  public void updateCollections(String startingCollectionId, boolean withDatabases) throws ApplicationException {
     boolean start = false;
     ArrayList<Collection> collections = collectionReader.getCollections();
     for (Collection collection : collections) {
@@ -107,7 +107,51 @@ public class CollectionManager {
       if (startingCollectionId.equals(collId))
         start = true;
       if (start)
-        addDocuments(collection, true);
+        addDocuments(collection, withDatabases);
+    }
+  }
+
+  /**
+   * Update of all collections with these collection ids
+   * @throws ApplicationException
+   */
+  public void updateCollections(String[] collectionIds, boolean withDatabases) throws ApplicationException {
+    for (String collId : collectionIds) {
+      Collection collection = collectionReader.getCollection(collId);
+      if (collection != null)
+        addDocuments(collection, withDatabases);
+      else
+        LOGGER.info("Update collection not possible. Collection id: " + collId + " does not exist");
+    }
+  }
+
+  /**
+   * Delete of all collections from that startingCollection onwards alphabetically
+   * @throws ApplicationException
+   */
+  public void deleteCollections(String startingCollectionId) throws ApplicationException {
+    boolean start = false;
+    ArrayList<Collection> collections = collectionReader.getCollections();
+    for (Collection collection : collections) {
+      String collId = collection.getId();
+      if (startingCollectionId.equals(collId))
+        start = true;
+      if (start)
+        deleteCollection(collId);
+    }
+  }
+
+  /**
+   * Update of all collections with these collection ids
+   * @throws ApplicationException
+   */
+  public void deleteCollections(String[] collectionIds) throws ApplicationException {
+    for (String collId : collectionIds) {
+      Collection collection = collectionReader.getCollection(collId);
+      if (collection != null)
+        deleteCollection(collId);
+      else
+        LOGGER.info("Delete collection not possible. Collection id: " + collId + " does not exist");
     }
   }
 
