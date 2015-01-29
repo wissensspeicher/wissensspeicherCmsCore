@@ -292,7 +292,7 @@ public class Facets implements Iterable<Facet> {
   public String toHtmlString() {
     if (facets == null || facets.values() == null)
       return "";
-    String retStr = "<ul>";
+    String retStr = "<ul class=\"easyui-tree\">";
     ArrayList<Facet> facetList = new ArrayList<Facet>(facets.values());
     Collections.sort(facetList, Facet.ID_COMPARATOR);
     for (int i=0; i<facetList.size(); i++) {
@@ -304,7 +304,10 @@ public class Facets implements Iterable<Facet> {
       else
         Collections.sort(facetValues, FacetValue.COUNT_COMPARATOR);
       if ((outputOptions.contains("showMainEntitiesFacet") && facetId.equals("mainEntities")) || outputOptions.contains("showAllFacets") || outputOptions.contains("showAll")) {
-        retStr = retStr + "<li>" + facetId;
+        if (facetId.equals("mainEntities"))
+          retStr = retStr + "<li>" + "<span>" + facetId + "</span>";
+        else 
+          retStr = retStr + "<li data-options=\"state:'closed'\">" + "<span>" + facetId + "</span>";
         retStr = retStr + "<ul>";
         for (int j=0; j<facetValues.size(); j++) {
           FacetValue facetValue = facetValues.get(j);
