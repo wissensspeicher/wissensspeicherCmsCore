@@ -112,7 +112,28 @@ public class CollectionManager {
   }
 
   /**
-   * Update of all collections with these collection ids
+   * Update of all collections from that startingCollection onwards till endingCollectionId alphabetically
+   * @throws ApplicationException
+   */
+  public void updateCollections(String startingCollectionId, String endingCollectionId, boolean withDatabases) throws ApplicationException {
+    boolean start = false;
+    boolean end = false;
+    ArrayList<Collection> collections = collectionReader.getCollections();
+    for (Collection collection : collections) {
+      String collId = collection.getId();
+      if (startingCollectionId.equals(collId))
+        start = true;
+      if (start && ! end)
+        addDocuments(collection, withDatabases);
+      if (endingCollectionId.equals(collId)) {
+        end = true;
+        break;
+      }
+    }
+  }
+
+  /**
+   * Update all collections with these collection ids
    * @throws ApplicationException
    */
   public void updateCollections(String[] collectionIds, boolean withDatabases) throws ApplicationException {
@@ -126,7 +147,7 @@ public class CollectionManager {
   }
 
   /**
-   * Delete of all collections from that startingCollection onwards alphabetically
+   * Delete all collections from that startingCollection onwards alphabetically
    * @throws ApplicationException
    */
   public void deleteCollections(String startingCollectionId) throws ApplicationException {
@@ -138,6 +159,27 @@ public class CollectionManager {
         start = true;
       if (start)
         deleteCollection(collId);
+    }
+  }
+
+  /**
+   * Delete all collections from that startingCollection onwards till endingCollectionId alphabetically
+   * @throws ApplicationException
+   */
+  public void deleteCollections(String startingCollectionId, String endingCollectionId) throws ApplicationException {
+    boolean start = false;
+    boolean end = false;
+    ArrayList<Collection> collections = collectionReader.getCollections();
+    for (Collection collection : collections) {
+      String collId = collection.getId();
+      if (startingCollectionId.equals(collId))
+        start = true;
+      if (start && ! end)
+        deleteCollection(collId);
+      if (endingCollectionId.equals(collId)) {
+        end = true;
+        break;
+      }
     }
   }
 
