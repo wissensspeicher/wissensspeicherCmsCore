@@ -292,7 +292,7 @@ public class Facets implements Iterable<Facet> {
   public String toHtmlString() {
     if (facets == null || facets.values() == null)
       return "";
-    String retStr = "<ul class=\"easyui-tree\">";
+    StringBuilder retStrBuilder = new StringBuilder();
     ArrayList<Facet> facetList = new ArrayList<Facet>(facets.values());
     Collections.sort(facetList, Facet.ID_COMPARATOR);
     for (int i=0; i<facetList.size(); i++) {
@@ -304,11 +304,12 @@ public class Facets implements Iterable<Facet> {
       else
         Collections.sort(facetValues, FacetValue.COUNT_COMPARATOR);
       if ((outputOptions.contains("showMainEntitiesFacet") && facetId.equals("mainEntities")) || outputOptions.contains("showAllFacets") || outputOptions.contains("showAll")) {
-        if (facetId.equals("mainEntities"))
-          retStr = retStr + "<li>" + "<span>" + facetId + "</span>";
-        else 
-          retStr = retStr + "<li data-options=\"state:'closed'\">" + "<span>" + facetId + "</span>";
-        retStr = retStr + "<ul>";
+        if (facetId.equals("mainEntities")) {
+          retStrBuilder.append("<ul><li data-jstree='{\"icon\":\"glyphicon glyphicon-th-large\",\"opened\":true,\"selected\":true}'>" + facetId);
+        } else { 
+          retStrBuilder.append("<ul><li data-jstree='{\"icon\":\"glyphicon glyphicon-th-large\"}'>" + facetId);
+        }
+        retStrBuilder.append("<ul>");
         for (int j=0; j<facetValues.size(); j++) {
           FacetValue facetValue = facetValues.get(j);
           String facetValueName = facetValue.getName();
@@ -337,19 +338,22 @@ public class Facets implements Iterable<Facet> {
               else if (facetId.equals("entityPlace"))
                 type = "place";
               entity.setType(type);
-              facetValueNameHtml = entity.toHtmlStr(false);
               if (facetId.equals("mainEntities"))
-                facetValueNameHtml = entity.toHtmlStr(true);
+                facetValueNameHtml = entity.toJsTreeHtmlStr(true);
+              else
+                facetValueNameHtml = entity.toJsTreeHtmlStr(false);
             }
           }
-          retStr = retStr + "<li>" + facetValueNameHtml + ": " + facetValueValue + "</li>";
+          if (j==0)
+            retStrBuilder.append("<li data-jstree='{\"icon\":\"glyphicon glyphicon-star\",\"opened\":true}'>" + facetValueNameHtml + ": " + facetValueValue + "</li>");
+          else
+            retStrBuilder.append("<li data-jstree='{\"icon\":\"glyphicon glyphicon-star\"}'>" + facetValueNameHtml + ": " + facetValueValue + "</li>");
         }
-        retStr = retStr + "</ul>";
-        retStr = retStr + "</li>";
+        retStrBuilder.append("</ul>");
       }
+      retStrBuilder.append("</ul>");
     }
-    retStr = retStr + "</ul>";
-    return retStr;
+    return retStrBuilder.toString();
   }
 
   public JSONObject toJsonObject() {
