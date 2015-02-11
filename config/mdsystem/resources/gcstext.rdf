@@ -1,55 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rdf:RDF 
-   xmlns="http://wsp.normdata.rdf/GriechischChristlichSchriftsteller/Text" 
-   xml:base="http://wsp.normdata.rdf/GriechischChristlichSchriftsteller/Text" 
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
-   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" 
-   xmlns:dc="http://purl.org/dc/elements/1.1/" 
-   xmlns:dcterms="http://purl.org/dc/terms/" 
-   xmlns:foaf="http://xmlns.com/foaf/0.1/" 
-   xmlns:gnd="http://d-nb.info/standards/elementset/gnd#" 
-   xmlns:ore="http://www.openarchives.org/ore/terms/" 
->
+<!DOCTYPE rdf:RDF [
+    <!ENTITY dcterms "http://purl.org/dc/terms/" >
+    <!ENTITY foaf "http://xmlns.com/foaf/0.1/" >
+    <!ENTITY dcmitype "http://purl.org/dc/dcmitype/" >
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY dc "http://purl.org/dc/elements/1.1/" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY edm "http://www.europeana.eu/schemas/edm/" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY ore "http://www.openarchives.org/ore/terms/" >
+    <!ENTITY gnd "http://d-nb.info/standards/elementset/gnd#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY vs "http://www.w3.org/2003/06/sw-vocab-status/ns#" >
+]>
+
+
+<rdf:RDF xmlns="http://wsp.normdata.rdf/"
+  xml:base="http://wsp.normdata.rdf/"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:gnd="http://d-nb.info/standards/elementset/gnd#"
+  xmlns:edm="http://www.europeana.eu/schemas/edm/"
+  xmlns:foaf="http://xmlns.com/foaf/0.1/"
+  xmlns:dcmitype="http://purl.org/dc/dcmitype/"
+  xmlns:ore="http://www.openarchives.org/ore/terms/"
+  xmlns:vs="http://www.w3.org/2003/06/sw-vocab-status/ns#"
+  xmlns:dcterms="http://purl.org/dc/terms/"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:owl="http://www.w3.org/2002/07/owl#"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <owl:Ontology rdf:about="http://wsp.normdata.rdf/"/>
+  
+  <rdf:Description rdf:about="http://wsp.normdata.rdf/GriechischChristlichSchriftsteller/Text">
+    <rdf:type rdf:resource="&foaf;Project"/>
+    <dc:language>grc</dc:language>
+    <foaf:nick>gcstext</foaf:nick>
+    <foaf:name>GCS-Texte zum Download</foaf:name>
+    <foaf:homepage rdf:resource="http://gcs.bbaw.de/gcs-texte-zum-download"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/GriechischChristlichSchriftsteller"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_pdf"/>
+    <dcterms:abstract>Ab dem 7. Band NF werden in loser Folge Lesetexte der Editionen in der Reihe GCS zum unentgeltlichen download bereitgestellt. Einige Dokumente, die sonst nicht zugänglich sind, ergänzen das Angebot.</dcterms:abstract>
+  </rdf:Description>  
+
+
 <rdf:Description rdf:about="http://gcs.bbaw.de/gcs-texte-zum-download">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/GriechischChristlichSchriftsteller/Text"/>
   <dc:identifier rdf:resource="http://gcs.bbaw.de/gcs-texte-zum-download"/>
   <dc:title>GCS-Texte zum Download</dc:title>
 </rdf:Description>
-<rdf:Description rdf:about="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/ProkopOnline.pdf">
+<rdf:Description rdf:about="http://gcs.bbaw.de/bilder/ProkopOnline.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/GriechischChristlichSchriftsteller/Text"/>
-  <dc:identifier rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/ProkopOnline.pdf"/>
+  <dc:identifier rdf:resource="http://gcs.bbaw.de/bilder/ProkopOnline.pdf"/>
   <dc:title>Prokop von Gaza, Genesiskommentar aus der so genannten Oktateuchkatene</dc:title>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Metzler"/>
+  <dc:date>2010</dc:date>
 </rdf:Description>
-<rdf:Description rdf:about="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/anonyme_kirchengeschichte.pdf">
+<rdf:Description rdf:about="http://gcs.bbaw.de/bilder/anonyme-kirchengeschichte-gelasius-cyzicenus">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/GriechischChristlichSchriftsteller/Text"/>
-  <dc:identifier rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/anonyme_kirchengeschichte.pdf"/>
+  <dc:identifier rdf:resource="http://gcs.bbaw.de/bilder/anonyme-kirchengeschichte-gelasius-cyzicenus"/>
   <dc:title>Anonyme Kirchengeschichte. (Gelasius Cyzicenus, CPG 6034)</dc:title>
+  <dc:publisher rdf:resource="http://wsp.normdata.rdf/Hansen"/>
 </rdf:Description>
-<rdf:Description rdf:about="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/daniel.pdf">
+<rdf:Description rdf:about="http://gcs.bbaw.de/bilder/daniel-kommentar-hippolyts">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/GriechischChristlichSchriftsteller/Text"/>
-  <dc:identifier rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/daniel.pdf"/>
+  <dc:identifier rdf:resource="http://gcs.bbaw.de/bilder/daniel-kommentar-hippolyts"/>
   <dc:title>Daniel-Kommentar Hippolyts</dc:title>
 </rdf:Description>
-<rdf:Description rdf:about="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/ehrhard.pdf">
+<rdf:Description rdf:about="http://gcs.bbaw.de/bilder/handschriften-register-zu-albert-ehrhard">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/GriechischChristlichSchriftsteller/Text"/>
-  <dc:identifier rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/ehrhard.pdf"/>
+  <dc:identifier rdf:resource="http://gcs.bbaw.de/bilder/handschriften-register-zu-albert-ehrhard"/>
   <dc:title>Handschriften-Register zu Albert Ehrhard</dc:title>
+  <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/EhrhardAlbert"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Risch"/>
 </rdf:Description>
-<rdf:Description rdf:about="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/martyrium.pdf">
+<rdf:Description rdf:about="http://gcs.bbaw.de/bilder/martyrium-clementis">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/GriechischChristlichSchriftsteller/Text"/>
-  <dc:identifier rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/martyrium.pdf"/>
+  <dc:identifier rdf:resource="http://gcs.bbaw.de/bilder/martyrium-clementis"/>
   <dc:title>Martyrium Clementis</dc:title>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Risch"/>
 </rdf:Description>
-<rdf:Description rdf:about="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/mirClem.pdf">
+<rdf:Description rdf:about="http://gcs.bbaw.de/bilder/miraculum-clementis-codex-parisinus-graecus-1510-d">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/GriechischChristlichSchriftsteller/Text"/>
-  <dc:identifier rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/gcs/bilder/mirClem.pdf"/>
+  <dc:identifier rdf:resource="http://gcs.bbaw.de/bilder/miraculum-clementis-codex-parisinus-graecus-1510-d"/>
   <dc:title>Miraculum Clementis - Codex Parisinus graecus 1510 (D)</dc:title>
 </rdf:Description>
 </rdf:RDF>
