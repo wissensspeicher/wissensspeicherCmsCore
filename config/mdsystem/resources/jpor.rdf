@@ -1,47 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rdf:RDF 
-   xmlns="http://wsp.normdata.rdf/JeanPaul/Onlineregister" 
-   xml:base="http://wsp.normdata.rdf/JeanPaul/Onlineregister" 
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
-   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" 
-   xmlns:dc="http://purl.org/dc/elements/1.1/" 
-   xmlns:dcterms="http://purl.org/dc/terms/" 
-   xmlns:foaf="http://xmlns.com/foaf/0.1/" 
-   xmlns:gnd="http://d-nb.info/standards/elementset/gnd#" 
-   xmlns:ore="http://www.openarchives.org/ore/terms/" 
->
+<!DOCTYPE rdf:RDF [
+    <!ENTITY dcterms "http://purl.org/dc/terms/" >
+    <!ENTITY foaf "http://xmlns.com/foaf/0.1/" >
+    <!ENTITY dcmitype "http://purl.org/dc/dcmitype/" >
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY dc "http://purl.org/dc/elements/1.1/" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY edm "http://www.europeana.eu/schemas/edm/" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY ore "http://www.openarchives.org/ore/terms/" >
+    <!ENTITY gnd "http://d-nb.info/standards/elementset/gnd#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY vs "http://www.w3.org/2003/06/sw-vocab-status/ns#" >
+]>
 
+
+<rdf:RDF xmlns="http://wsp.normdata.rdf/"
+  xml:base="http://wsp.normdata.rdf/"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:gnd="http://d-nb.info/standards/elementset/gnd#"
+  xmlns:edm="http://www.europeana.eu/schemas/edm/"
+  xmlns:foaf="http://xmlns.com/foaf/0.1/"
+  xmlns:dcmitype="http://purl.org/dc/dcmitype/"
+  xmlns:ore="http://www.openarchives.org/ore/terms/"
+  xmlns:vs="http://www.w3.org/2003/06/sw-vocab-status/ns#"
+  xmlns:dcterms="http://purl.org/dc/terms/"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:owl="http://www.w3.org/2002/07/owl#"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <owl:Ontology rdf:about="http://wsp.normdata.rdf/"/>
+  
+  <rdf:Description rdf:about="http://wsp.normdata.rdf/JeanPaul/Onlineregister">
+    <rdf:type rdf:resource="&foaf;Project"/>
+    <foaf:name>Jean Paul Edition: Online-Register des Jean Paul Briefwechsels</foaf:name>
+    <foaf:nick>jpor</foaf:nick>
+    <dc:language>ger</dc:language>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JeanPaul"/>
+    <foaf:homepage rdf:resource="http://www.bbaw.de/forschung/jean_paul"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/JeanPaul"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/Telota"/>
+    <dc:publisher rdf:resource="http://wsp.normdata.rdf/BBAW"/>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/PaulJean"/>
+    <dcterms:temporal rdf:datatype="&dcterms;Period">start=1780; end=1800</dcterms:temporal>
+    <dcterms:abstract>Das Jean Paul Register erschließt die Briefe von und an Jean Paul in der dritten und vierten Abteilung der von Eduard Berend begründeten Historisch-kritischen Jean Paul Ausgabe. Derzeit können die Einträge zur dritten Abteilung, Briefe von Jean Paul 1780-1825, und zum ersten bis fünften Band der vierten Abteilung, Briefe an Jean Paul 1781 bis September 1800, online abgefragt werden. Die Datenbank wird kumulativ um die Register zu den späteren »Briefen an Jean Paul« erweitert, parallel zur Veröffentlichung der gedruckten Briefbände. Das Online Register enthält einige Einträge, die in die Druckfassung nicht aufgenommen wurden, z. B. zu Personen, die in den biographischen Einführungen des Kommentars als Angehörige genannt, im Textteil aber nicht erwähnt werden.</dcterms:abstract>
+  </rdf:Description>
 
 <rdf:Description rdf:about="http://jean-paul.bbaw.de/online-register-des-jean-paul-briefwechsels">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ElitenIntegration"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JeanPaul/Onlineregister"/>
   <dc:identifier rdf:resource="http://jean-paul.bbaw.de/online-register-des-jean-paul-briefwechsels"/>
 </rdf:Description>
+  
+  <rdf:Description rdf:about="http://telota.bbaw.de/jeanpaul/jp_index.html">
+    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JeanPaul/Onlineregister"/>
+    <dc:identifier rdf:resource="http://telota.bbaw.de/jeanpaul/jp_index.html"/>
+    <dc:title>Register der Jean Paul Edition</dc:title>
+  </rdf:Description>
 
 <!-- DB -->
 <rdf:Description rdf:about="http://telota.bbaw.de/jeanpaul/jp_personen.php">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ElitenIntegration"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JeanPaul/Onlineregister"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/jeanpaul/jp_personen.php"/>
+  <dc:title>Namensregister</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://telota.bbaw.de/jeanpaul/jp_werke.php">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ElitenIntegration"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JeanPaul/Onlineregister"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/jeanpaul/jp_werke.php"/>
+  <dc:title>Werkregister</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://telota.bbaw.de/jeanpaul/jp_jpwerke.php">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ElitenIntegration"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JeanPaul/Onlineregister"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/jeanpaul/jp_jpwerke.php"/>
+  <dc:title>Werkregister Jean Paul</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://telota.bbaw.de/jeanpaul/jp_orte.php">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ElitenIntegration"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JeanPaul/Onlineregister"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/jeanpaul/jp_orte.php"/>
+  <dc:title>Ortsregister</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://telota.bbaw.de/jeanpaul/jp_impressum.html">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ElitenIntegration"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JeanPaul/Onlineregister"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/jeanpaul/jp_impressum.html"/>
+  <dc:title>Impressum</dc:title>
 </rdf:Description>
 </rdf:RDF>
