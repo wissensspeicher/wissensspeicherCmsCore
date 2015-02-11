@@ -1,15 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rdf:RDF 
-   xmlns="http://wsp.normdata.rdf/JahresberichteDeutscheGeschichte/Zwischenkriegszeit" 
-   xml:base="http://wsp.normdata.rdf/JahresberichteDeutscheGeschichte/Zwischenkriegszeit" 
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
-   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" 
-   xmlns:dc="http://purl.org/dc/elements/1.1/" 
-   xmlns:dcterms="http://purl.org/dc/terms/" 
-   xmlns:foaf="http://xmlns.com/foaf/0.1/" 
-   xmlns:gnd="http://d-nb.info/standards/elementset/gnd#" 
-   xmlns:ore="http://www.openarchives.org/ore/terms/" 
->
+<!DOCTYPE rdf:RDF [
+    <!ENTITY dcterms "http://purl.org/dc/terms/" >
+    <!ENTITY foaf "http://xmlns.com/foaf/0.1/" >
+    <!ENTITY dcmitype "http://purl.org/dc/dcmitype/" >
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY dc "http://purl.org/dc/elements/1.1/" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY edm "http://www.europeana.eu/schemas/edm/" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY ore "http://www.openarchives.org/ore/terms/" >
+    <!ENTITY gnd "http://d-nb.info/standards/elementset/gnd#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY vs "http://www.w3.org/2003/06/sw-vocab-status/ns#" >
+]>
+
+
+<rdf:RDF xmlns="http://wsp.normdata.rdf/"
+  xml:base="http://wsp.normdata.rdf/"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:gnd="http://d-nb.info/standards/elementset/gnd#"
+  xmlns:edm="http://www.europeana.eu/schemas/edm/"
+  xmlns:foaf="http://xmlns.com/foaf/0.1/"
+  xmlns:dcmitype="http://purl.org/dc/dcmitype/"
+  xmlns:ore="http://www.openarchives.org/ore/terms/"
+  xmlns:vs="http://www.w3.org/2003/06/sw-vocab-status/ns#"
+  xmlns:dcterms="http://purl.org/dc/terms/"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:owl="http://www.w3.org/2002/07/owl#"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <owl:Ontology rdf:about="http://wsp.normdata.rdf/"/>
+  
+  
+  <rdf:Description rdf:about="http://wsp.normdata.rdf/JahresberichteDeutscheGeschichte/Zwischenkriegszeit">
+    <rdf:type rdf:resource="&foaf;Project"/>
+    <dc:language>ger</dc:language>
+    <foaf:nick>jdgzkz</foaf:nick>
+    <foaf:name>Jahresberichte fuer deutsche Geschichte aus der Zwischenkriegszeit</foaf:name>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/JahresberichteDeutscheGeschichte"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/Telota"/>
+    <dc:publisher rdf:resource="http://wsp.normdata.rdf/BBAW"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JahresberichteDeutscheGeschichte"/>
+    <foaf:homepage rdf:resource="http://www.jdg-online.de/projekte/die-jahresberichte-der-zwischenkriegszeit"/>
+    <dcterms:temporal rdf:dataty="&dcterms;Period">start=1925; end=1938</dcterms:temporal>
+    <dcterms:absract>Die Bibliographie Jahresberichte für deutsche Geschichte erschließt umfassend die deutsch- und fremdsprachige Fachliteratur zur deutschen Geschichte. Diese Jahresberichte für die Berichtsjahre 1925 bis 1938, die zwischen 1927 und 1940 erschienen, dokumentieren in besonderer Weise die Entwicklung der deutschen Geschichtswissenschaft in der Weimarer Republik und im Nationalsozialismus. In dieser Zeit enthielten die Jahresberichte neben der Bibliografie auch detaillierte Forschungsberichte. In den Berichten und in der Systematik spiegeln sich der Weg von der Weimarer Republik zur NS-Diktatur und die Reaktionen herausragender Vertreter des Fachs wider. Die Online-Publikation macht dieses Material der modernen Forschung zugänglich.</dcterms:absract>
+  </rdf:Description>
+  
+  
 <rdf:Description rdf:about="http://www.jdg-online.de/projekte/die-jahresberichte-der-zwischenkriegszeit">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JahresberichteDeutscheGeschichte/Zwischenkriegszeit"/>
@@ -24,390 +61,390 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JahresberichteDeutscheGeschichte/Zwischenkriegszeit"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/exist/servlet/db/JDG/1925/1925bib.xml">http://pom.bbaw.de/JDG/1925.html</dc:identifier>
-  <dc:creator>Brackmann, Albert</dc:creator>
-  <dc:creator>Hartung, Fritz</dc:creator>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Brackmann"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Hartung"/>
   <dc:title>Jahresberichte für deutsche Geschichte aus der Zwischenkriegszeit: 1. Jahrgang 1925</dc:title>
-  <dc:publisher>Köhler, Leipzig</dc:publisher>
+  <dc:publisher rdf:resource="http://wsp.normdata.rdf/Koehler"/>
   <dc:date>1927</dc:date>
 </rdf:Description>
 <rdf:Description rdf:about="http://telota.bbaw.de/exist/servlet/db/JDG/1925/1925fb.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JahresberichteDeutscheGeschichte/Zwischenkriegszeit"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/exist/servlet/db/JDG/1925/1925fb.xml">http://pom.bbaw.de/JDG/1925.html</dc:identifier>
-  <dc:creator>Brackmann, Albert</dc:creator>
-  <dc:creator>Hartung, Fritz</dc:creator>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Brackmann"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Hartung"/>
   <dc:title>Jahresberichte für deutsche Geschichte aus der Zwischenkriegszeit: 1. Jahrgang 1925</dc:title>
-  <dc:publisher>Köhler, Leipzig</dc:publisher>
+  <dc:publisher rdf:resource="http://wsp.normdata.rdf/Koehler"/>
   <dc:date>1927</dc:date>
 </rdf:Description>
 <rdf:Description rdf:about="http://telota.bbaw.de/exist/servlet/db/JDG/1925/1925reg.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JahresberichteDeutscheGeschichte/Zwischenkriegszeit"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/exist/servlet/db/JDG/1925/1925reg.xml">http://pom.bbaw.de/JDG/1925.html</dc:identifier>
-  <dc:creator>Brackmann, Albert</dc:creator>
-  <dc:creator>Hartung, Fritz</dc:creator>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Brackmann"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Hartung"/>
   <dc:title>Jahresberichte für deutsche Geschichte aus der Zwischenkriegszeit: 1. Jahrgang 1925</dc:title>
-  <dc:publisher>Köhler, Leipzig</dc:publisher>
+  <dc:publisher rdf:resource="http://wsp.normdata.rdf/Koehler"/>
   <dc:date>1927</dc:date>
 </rdf:Description>
 <rdf:Description rdf:about="http://telota.bbaw.de/exist/servlet/db/JDG/1926/1926bib.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JahresberichteDeutscheGeschichte/Zwischenkriegszeit"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/exist/servlet/db/JDG/1926/1926bib.xml">http://pom.bbaw.de/JDG/1926.html</dc:identifier>
-  <dc:creator>Brackmann, Albert</dc:creator>
-  <dc:creator>Hartung, Fritz</dc:creator>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Brackmann"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Hartung"/>
   <dc:title>Jahresberichte für deutsche Geschichte aus der Zwischenkriegszeit: 2. Jahrgang 1926</dc:title>
-  <dc:publisher>Köhler, Leipzig</dc:publisher>
+  <dc:publisher rdf:resource="http://wsp.normdata.rdf/Koehler"/>
   <dc:date>1928</dc:date>
 </rdf:Description>
 <rdf:Description rdf:about="http://telota.bbaw.de/exist/servlet/db/JDG/1926/1926fb.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JahresberichteDeutscheGeschichte/Zwischenkriegszeit"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/exist/servlet/db/JDG/1926/1926fb.xml">http://pom.bbaw.de/JDG/1926.html</dc:identifier>
-  <dc:creator>Brackmann, Albert</dc:creator>
-  <dc:creator>Hartung, Fritz</dc:creator>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Brackmann"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Hartung"/>
   <dc:title>Jahresberichte für deutsche Geschichte aus der Zwischenkriegszeit: 2. Jahrgang 1926</dc:title>
-  <dc:publisher>Köhler, Leipzig</dc:publisher>
+  <dc:publisher rdf:resource="http://wsp.normdata.rdf/Koehler"/>
   <dc:date>1928</dc:date>
 </rdf:Description>
 <rdf:Description rdf:about="http://telota.bbaw.de/exist/servlet/db/JDG/1926/1926reg.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JahresberichteDeutscheGeschichte/Zwischenkriegszeit"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/exist/servlet/db/JDG/1926/1926reg.xml">http://pom.bbaw.de/JDG/1926.html</dc:identifier>
-  <dc:creator>Brackmann, Albert</dc:creator>
-  <dc:creator>Hartung, Fritz</dc:creator>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Brackmann"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Hartung"/>
   <dc:title>Jahresberichte für deutsche Geschichte aus der Zwischenkriegszeit: 2. Jahrgang 1926</dc:title>
-  <dc:publisher>Köhler, Leipzig</dc:publisher>
+  <dc:publisher rdf:resource="http://wsp.normdata.rdf/Koehler"/>
   <dc:date>1928</dc:date>
 </rdf:Description>
 <rdf:Description rdf:about="http://telota.bbaw.de/exist/servlet/db/JDG/1927/1927bib.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JahresberichteDeutscheGeschichte/Zwischenkriegszeit"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/exist/servlet/db/JDG/1927/1927bib.xml">http://pom.bbaw.de/JDG/1927.html</dc:identifier>
-  <dc:creator>Brackmann, Albert</dc:creator>
-  <dc:creator>Hartung, Fritz</dc:creator>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Brackmann"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Hartung"/>
   <dc:title>Jahresberichte für deutsche Geschichte aus der Zwischenkriegszeit: 3. Jahrgang 1927</dc:title>
-  <dc:publisher>Köhler, Leipzig</dc:publisher>
+  <dc:publisher rdf:resource="http://wsp.normdata.rdf/Koehler"/>
   <dc:date>1929</dc:date>
 </rdf:Description>
 <rdf:Description rdf:about="http://telota.bbaw.de/exist/servlet/db/JDG/1927/1927fb.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JahresberichteDeutscheGeschichte/Zwischenkriegszeit"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/exist/servlet/db/JDG/1927/1927fb.xml">http://pom.bbaw.de/JDG/1927.html</dc:identifier>
-  <dc:creator>Brackmann, Albert</dc:creator>
-  <dc:creator>Hartung, Fritz</dc:creator>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Brackmann"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Hartung"/>
   <dc:title>Jahresberichte für deutsche Geschichte aus der Zwischenkriegszeit: 3. Jahrgang 1927</dc:title>
-  <dc:publisher>Köhler, Leipzig</dc:publisher>
+  <dc:publisher rdf:resource="http://wsp.normdata.rdf/Koehler"/>
   <dc:date>1929</dc:date>
 </rdf:Description>
 <rdf:Description rdf:about="http://telota.bbaw.de/exist/servlet/db/JDG/1927/1927reg.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JahresberichteDeutscheGeschichte/Zwischenkriegszeit"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/exist/servlet/db/JDG/1927/1927reg.xml">http://pom.bbaw.de/JDG/1927.html</dc:identifier>
-  <dc:creator>Brackmann, Albert</dc:creator>
-  <dc:creator>Hartung, Fritz</dc:creator>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Brackmann"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Hartung"/>
   <dc:title>Jahresberichte für deutsche Geschichte aus der Zwischenkriegszeit: 3. Jahrgang 1927</dc:title>
-  <dc:publisher>Köhler, Leipzig</dc:publisher>
+  <dc:publisher rdf:resource="http://wsp.normdata.rdf/Koehler"/>
   <dc:date>1929</dc:date>
 </rdf:Description>
 <rdf:Description rdf:about="http://telota.bbaw.de/exist/servlet/db/JDG/1928/1928bib.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JahresberichteDeutscheGeschichte/Zwischenkriegszeit"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/exist/servlet/db/JDG/1928/1928bib.xml">http://pom.bbaw.de/JDG/1928.html</dc:identifier>
-  <dc:creator>Brackmann, Albert</dc:creator>
-  <dc:creator>Hartung, Fritz</dc:creator>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Brackmann"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Hartung"/>
   <dc:title>Jahresberichte für deutsche Geschichte aus der Zwischenkriegszeit: 4. Jahrgang 1928</dc:title>
-  <dc:publisher>Köhler, Leipzig</dc:publisher>
+  <dc:publisher rdf:resource="http://wsp.normdata.rdf/Koehler"/>
   <dc:date>1930</dc:date>
 </rdf:Description>
 <rdf:Description rdf:about="http://telota.bbaw.de/exist/servlet/db/JDG/1928/1928fb.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JahresberichteDeutscheGeschichte/Zwischenkriegszeit"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/exist/servlet/db/JDG/1928/1928fb.xml">http://pom.bbaw.de/JDG/1928.html</dc:identifier>
-  <dc:creator>Brackmann, Albert</dc:creator>
-  <dc:creator>Hartung, Fritz</dc:creator>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Brackmann"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Hartung"/>
   <dc:title>Jahresberichte für deutsche Geschichte aus der Zwischenkriegszeit: 4. Jahrgang 1928</dc:title>
-  <dc:publisher>Köhler, Leipzig</dc:publisher>
+  <dc:publisher rdf:resource="http://wsp.normdata.rdf/Koehler"/>
   <dc:date>1930</dc:date>
 </rdf:Description>
 <rdf:Description rdf:about="http://telota.bbaw.de/exist/servlet/db/JDG/1928/1928reg.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JahresberichteDeutscheGeschichte/Zwischenkriegszeit"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/exist/servlet/db/JDG/1928/1928reg.xml">http://pom.bbaw.de/JDG/1928.html</dc:identifier>
-  <dc:creator>Brackmann, Albert</dc:creator>
-  <dc:creator>Hartung, Fritz</dc:creator>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Brackmann"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Hartung"/>
   <dc:title>Jahresberichte für deutsche Geschichte aus der Zwischenkriegszeit: 4. Jahrgang 1928</dc:title>
-  <dc:publisher>Köhler, Leipzig</dc:publisher>
+  <dc:publisher rdf:resource="http://wsp.normdata.rdf/Koehler"/>
   <dc:date>1930</dc:date>
 </rdf:Description>
 <rdf:Description rdf:about="http://telota.bbaw.de/exist/servlet/db/JDG/1929/1929bib.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JahresberichteDeutscheGeschichte/Zwischenkriegszeit"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/exist/servlet/db/JDG/1929/1929bib.xml">http://pom.bbaw.de/JDG/1929.html</dc:identifier>
-  <dc:creator>Brackmann, Albert</dc:creator>
-  <dc:creator>Hartung, Fritz</dc:creator>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Brackmann"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Hartung"/>
   <dc:title>Jahresberichte für deutsche Geschichte aus der Zwischenkriegszeit: 5. Jahrgang 1929</dc:title>
-  <dc:publisher>Köhler, Leipzig</dc:publisher>
+  <dc:publisher rdf:resource="http://wsp.normdata.rdf/Koehler"/>
   <dc:date>1931</dc:date>
 </rdf:Description>
 <rdf:Description rdf:about="http://telota.bbaw.de/exist/servlet/db/JDG/1929/1929fb.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JahresberichteDeutscheGeschichte/Zwischenkriegszeit"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/exist/servlet/db/JDG/1929/1929fb.xml">http://pom.bbaw.de/JDG/1929.html</dc:identifier>
-  <dc:creator>Brackmann, Albert</dc:creator>
-  <dc:creator>Hartung, Fritz</dc:creator>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Brackmann"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Hartung"/>
   <dc:title>Jahresberichte für deutsche Geschichte aus der Zwischenkriegszeit: 5. Jahrgang 1929</dc:title>
-  <dc:publisher>Köhler, Leipzig</dc:publisher>
+  <dc:publisher rdf:resource="http://wsp.normdata.rdf/Koehler"/>
   <dc:date>1931</dc:date>
 </rdf:Description>
 <rdf:Description rdf:about="http://telota.bbaw.de/exist/servlet/db/JDG/1929/1929reg.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JahresberichteDeutscheGeschichte/Zwischenkriegszeit"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/exist/servlet/db/JDG/1929/1929reg.xml">http://pom.bbaw.de/JDG/1929.html</dc:identifier>
-  <dc:creator>Brackmann, Albert</dc:creator>
-  <dc:creator>Hartung, Fritz</dc:creator>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Brackmann"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Hartung"/>
   <dc:title>Jahresberichte für deutsche Geschichte aus der Zwischenkriegszeit: 5. Jahrgang 1929</dc:title>
-  <dc:publisher>Köhler, Leipzig</dc:publisher>
+  <dc:publisher rdf:resource="http://wsp.normdata.rdf/Koehler"/>
   <dc:date>1931</dc:date>
 </rdf:Description>
 <rdf:Description rdf:about="http://telota.bbaw.de/exist/servlet/db/JDG/1930/1930bib.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JahresberichteDeutscheGeschichte/Zwischenkriegszeit"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/exist/servlet/db/JDG/1930/1930bib.xml">http://pom.bbaw.de/JDG/1930.html</dc:identifier>
-  <dc:creator>Brackmann, Albert</dc:creator>
-  <dc:creator>Hartung, Fritz</dc:creator>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Brackmann"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Hartung"/>
   <dc:title>Jahresberichte für deutsche Geschichte aus der Zwischenkriegszeit: 6. Jahrgang 1930</dc:title>
-  <dc:publisher>Köhler, Leipzig</dc:publisher>
+  <dc:publisher rdf:resource="http://wsp.normdata.rdf/Koehler"/>
   <dc:date>1932</dc:date>
 </rdf:Description>
 <rdf:Description rdf:about="http://telota.bbaw.de/exist/servlet/db/JDG/1930/1930fb.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JahresberichteDeutscheGeschichte/Zwischenkriegszeit"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/exist/servlet/db/JDG/1930/1930fb.xml">http://pom.bbaw.de/JDG/1930.html</dc:identifier>
-  <dc:creator>Brackmann, Albert</dc:creator>
-  <dc:creator>Hartung, Fritz</dc:creator>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Brackmann"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Hartung"/>
   <dc:title>Jahresberichte für deutsche Geschichte aus der Zwischenkriegszeit: 6. Jahrgang 1930</dc:title>
-  <dc:publisher>Köhler, Leipzig</dc:publisher>
+  <dc:publisher rdf:resource="http://wsp.normdata.rdf/Koehler"/>
   <dc:date>1932</dc:date>
 </rdf:Description>
 <rdf:Description rdf:about="http://telota.bbaw.de/exist/servlet/db/JDG/1930/1930reg.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JahresberichteDeutscheGeschichte/Zwischenkriegszeit"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/exist/servlet/db/JDG/1930/1930reg.xml">http://pom.bbaw.de/JDG/1930.html</dc:identifier>
-  <dc:creator>Brackmann, Albert</dc:creator>
-  <dc:creator>Hartung, Fritz</dc:creator>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Brackmann"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Hartung"/>
   <dc:title>Jahresberichte für deutsche Geschichte aus der Zwischenkriegszeit: 6. Jahrgang 1930</dc:title>
-  <dc:publisher>Köhler, Leipzig</dc:publisher>
+  <dc:publisher rdf:resource="http://wsp.normdata.rdf/Koehler"/>
   <dc:date>1932</dc:date>
 </rdf:Description>
 <rdf:Description rdf:about="http://telota.bbaw.de/exist/servlet/db/JDG/1931/1931bib.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JahresberichteDeutscheGeschichte/Zwischenkriegszeit"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/exist/servlet/db/JDG/1931/1931bib.xml">http://pom.bbaw.de/JDG/1931.html</dc:identifier>
-  <dc:creator>Brackmann, Albert</dc:creator>
-  <dc:creator>Hartung, Fritz</dc:creator>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Brackmann"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Hartung"/>
   <dc:title>Jahresberichte für deutsche Geschichte aus der Zwischenkriegszeit: 7. Jahrgang 1931</dc:title>
-  <dc:publisher>Köhler, Leipzig</dc:publisher>
+  <dc:publisher rdf:resource="http://wsp.normdata.rdf/Koehler"/>
   <dc:date>1934</dc:date>
 </rdf:Description>
 <rdf:Description rdf:about="http://telota.bbaw.de/exist/servlet/db/JDG/1931/1931fb.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JahresberichteDeutscheGeschichte/Zwischenkriegszeit"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/exist/servlet/db/JDG/1931/1931fb.xml">http://pom.bbaw.de/JDG/1931.html</dc:identifier>
-  <dc:creator>Brackmann, Albert</dc:creator>
-  <dc:creator>Hartung, Fritz</dc:creator>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Brackmann"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Hartung"/>
   <dc:title>Jahresberichte für deutsche Geschichte aus der Zwischenkriegszeit: 7. Jahrgang 1931</dc:title>
-  <dc:publisher>Köhler, Leipzig</dc:publisher>
+  <dc:publisher rdf:resource="http://wsp.normdata.rdf/Koehler"/>
   <dc:date>1934</dc:date>
 </rdf:Description>
 <rdf:Description rdf:about="http://telota.bbaw.de/exist/servlet/db/JDG/1931/1931reg.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JahresberichteDeutscheGeschichte/Zwischenkriegszeit"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/exist/servlet/db/JDG/1931/1931reg.xml">http://pom.bbaw.de/JDG/1931.html</dc:identifier>
-  <dc:creator>Brackmann, Albert</dc:creator>
-  <dc:creator>Hartung, Fritz</dc:creator>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Brackmann"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Hartung"/>
   <dc:title>Jahresberichte für deutsche Geschichte aus der Zwischenkriegszeit: 7. Jahrgang 1931</dc:title>
-  <dc:publisher>Köhler, Leipzig</dc:publisher>
+  <dc:publisher rdf:resource="http://wsp.normdata.rdf/Koehler"/>
   <dc:date>1934</dc:date>
 </rdf:Description>
 <rdf:Description rdf:about="http://telota.bbaw.de/exist/servlet/db/JDG/1932/1932bib.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JahresberichteDeutscheGeschichte/Zwischenkriegszeit"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/exist/servlet/db/JDG/1932/1932bib.xml">http://pom.bbaw.de/JDG/1932.html</dc:identifier>
-  <dc:creator>Brackmann, Albert</dc:creator>
-  <dc:creator>Hartung, Fritz</dc:creator>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Brackmann"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Hartung"/>
   <dc:title>Jahresberichte für deutsche Geschichte aus der Zwischenkriegszeit: 8. Jahrgang 1932</dc:title>
-  <dc:publisher>Köhler, Leipzig</dc:publisher>
+  <dc:publisher rdf:resource="http://wsp.normdata.rdf/Koehler"/>
   <dc:date>1934</dc:date>
 </rdf:Description>
 <rdf:Description rdf:about="http://telota.bbaw.de/exist/servlet/db/JDG/1932/1932fb.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JahresberichteDeutscheGeschichte/Zwischenkriegszeit"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/exist/servlet/db/JDG/1932/1932fb.xml">http://pom.bbaw.de/JDG/1932.html</dc:identifier>
-  <dc:creator>Brackmann, Albert</dc:creator>
-  <dc:creator>Hartung, Fritz</dc:creator>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Brackmann"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Hartung"/>
   <dc:title>Jahresberichte für deutsche Geschichte aus der Zwischenkriegszeit: 8. Jahrgang 1932</dc:title>
-  <dc:publisher>Köhler, Leipzig</dc:publisher>
+  <dc:publisher rdf:resource="http://wsp.normdata.rdf/Koehler"/>
   <dc:date>1934</dc:date>
 </rdf:Description>
 <rdf:Description rdf:about="http://telota.bbaw.de/exist/servlet/db/JDG/1932/1932reg.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JahresberichteDeutscheGeschichte/Zwischenkriegszeit"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/exist/servlet/db/JDG/1932/1932reg.xml">http://pom.bbaw.de/JDG/1932.html</dc:identifier>
-  <dc:creator>Brackmann, Albert</dc:creator>
-  <dc:creator>Hartung, Fritz</dc:creator>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Brackmann"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Hartung"/>
   <dc:title>Jahresberichte für deutsche Geschichte aus der Zwischenkriegszeit: 8. Jahrgang 1932</dc:title>
-  <dc:publisher>Köhler, Leipzig</dc:publisher>
+  <dc:publisher rdf:resource="http://wsp.normdata.rdf/Koehler"/>
   <dc:date>1934</dc:date>
 </rdf:Description>
 <rdf:Description rdf:about="http://telota.bbaw.de/exist/servlet/db/JDG/1933-34/1933-34bib.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JahresberichteDeutscheGeschichte/Zwischenkriegszeit"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/exist/servlet/db/JDG/1933-34/1933-34bib.xml">http://pom.bbaw.de/JDG/1933-34.html</dc:identifier>
-  <dc:creator>Brackmann, Albert</dc:creator>
-  <dc:creator>Hartung, Fritz</dc:creator>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Brackmann"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Hartung"/>
   <dc:title>Jahresberichte für deutsche Geschichte aus der Zwischenkriegszeit: 9./10. Jahrgang 1933/1934</dc:title>
-  <dc:publisher>Köhler, Leipzig</dc:publisher>
+  <dc:publisher rdf:resource="http://wsp.normdata.rdf/Koehler"/>
   <dc:date>1936</dc:date>
 </rdf:Description>
 <rdf:Description rdf:about="http://telota.bbaw.de/exist/servlet/db/JDG/1933-34/1933-34fb.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JahresberichteDeutscheGeschichte/Zwischenkriegszeit"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/exist/servlet/db/JDG/1933-34/1933-34fb.xml">http://pom.bbaw.de/JDG/1933-34.html</dc:identifier>
-  <dc:creator>Brackmann, Albert</dc:creator>
-  <dc:creator>Hartung, Fritz</dc:creator>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Brackmann"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Hartung"/>
   <dc:title>Jahresberichte für deutsche Geschichte aus der Zwischenkriegszeit: 9./10. Jahrgang 1933/1934</dc:title>
-  <dc:publisher>Köhler, Leipzig</dc:publisher>
+  <dc:publisher rdf:resource="http://wsp.normdata.rdf/Koehler"/>
   <dc:date>1936</dc:date>
 </rdf:Description>
 <rdf:Description rdf:about="http://telota.bbaw.de/exist/servlet/db/JDG/1933-34/1933-34reg.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JahresberichteDeutscheGeschichte/Zwischenkriegszeit"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/exist/servlet/db/JDG/1933-34/1933-34reg.xml">http://pom.bbaw.de/JDG/1933-34.html</dc:identifier>
-  <dc:creator>Brackmann, Albert</dc:creator>
-  <dc:creator>Hartung, Fritz</dc:creator>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Brackmann"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Hartung"/>
   <dc:title>Jahresberichte für deutsche Geschichte aus der Zwischenkriegszeit: 9./10. Jahrgang 1933/1934</dc:title>
-  <dc:publisher>Köhler, Leipzig</dc:publisher>
+  <dc:publisher rdf:resource="http://wsp.normdata.rdf/Koehler"/>
   <dc:date>1936</dc:date>
 </rdf:Description>
 <rdf:Description rdf:about="http://telota.bbaw.de/exist/servlet/db/JDG/1935/1935bib.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JahresberichteDeutscheGeschichte/Zwischenkriegszeit"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/exist/servlet/db/JDG/1935/1935bib.xml">http://pom.bbaw.de/JDG/1935.html</dc:identifier>
-  <dc:creator>Brackmann, Albert</dc:creator>
-  <dc:creator>Hartung, Fritz</dc:creator>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Brackmann"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Hartung"/>
   <dc:title>Jahresberichte für deutsche Geschichte aus der Zwischenkriegszeit: 11. Jahrgang 1935</dc:title>
-  <dc:publisher>Köhler, Leipzig</dc:publisher>
+  <dc:publisher rdf:resource="http://wsp.normdata.rdf/Koehler"/>
   <dc:date>1936</dc:date>
 </rdf:Description>
 <rdf:Description rdf:about="http://telota.bbaw.de/exist/servlet/db/JDG/1935/1935fb.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JahresberichteDeutscheGeschichte/Zwischenkriegszeit"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/exist/servlet/db/JDG/1935/1935fb.xml">http://pom.bbaw.de/JDG/1935.html</dc:identifier>
-  <dc:creator>Brackmann, Albert</dc:creator>
-  <dc:creator>Hartung, Fritz</dc:creator>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Brackmann"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Hartung"/>
   <dc:title>Jahresberichte für deutsche Geschichte aus der Zwischenkriegszeit: 11. Jahrgang 1935</dc:title>
-  <dc:publisher>Köhler, Leipzig</dc:publisher>
+  <dc:publisher rdf:resource="http://wsp.normdata.rdf/Koehler"/>
   <dc:date>1936</dc:date>
 </rdf:Description>
 <rdf:Description rdf:about="http://telota.bbaw.de/exist/servlet/db/JDG/1935/1935reg.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JahresberichteDeutscheGeschichte/Zwischenkriegszeit"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/exist/servlet/db/JDG/1935/1935reg.xml">http://pom.bbaw.de/JDG/1935.html</dc:identifier>
-  <dc:creator>Brackmann, Albert</dc:creator>
-  <dc:creator>Hartung, Fritz</dc:creator>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Brackmann"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Hartung"/>
   <dc:title>Jahresberichte für deutsche Geschichte aus der Zwischenkriegszeit: 11. Jahrgang 1935</dc:title>
-  <dc:publisher>Köhler, Leipzig</dc:publisher>
+  <dc:publisher rdf:resource="http://wsp.normdata.rdf/Koehler"/>
   <dc:date>1936</dc:date>
 </rdf:Description>
 <rdf:Description rdf:about="http://telota.bbaw.de/exist/servlet/db/JDG/1936/1936bib.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JahresberichteDeutscheGeschichte/Zwischenkriegszeit"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/exist/servlet/db/JDG/1936/1936bib.xml">http://pom.bbaw.de/JDG/1936.html</dc:identifier>
-  <dc:creator>Brackmann, Albert</dc:creator>
-  <dc:creator>Hartung, Fritz</dc:creator>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Brackmann"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Hartung"/>
   <dc:title>Jahresberichte für deutsche Geschichte aus der Zwischenkriegszeit: 12. Jahrgang 1936</dc:title>
-  <dc:publisher>Köhler, Leipzig</dc:publisher>
+  <dc:publisher rdf:resource="http://wsp.normdata.rdf/Koehler"/>
   <dc:date>1937</dc:date>
 </rdf:Description>
 <rdf:Description rdf:about="http://telota.bbaw.de/exist/servlet/db/JDG/1936/1936fb.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JahresberichteDeutscheGeschichte/Zwischenkriegszeit"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/exist/servlet/db/JDG/1936/1936fb.xml">http://pom.bbaw.de/JDG/1936.html</dc:identifier>
-  <dc:creator>Brackmann, Albert</dc:creator>
-  <dc:creator>Hartung, Fritz</dc:creator>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Brackmann"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Hartung"/>
   <dc:title>Jahresberichte für deutsche Geschichte aus der Zwischenkriegszeit: 12. Jahrgang 1936</dc:title>
-  <dc:publisher>Köhler, Leipzig</dc:publisher>
+  <dc:publisher rdf:resource="http://wsp.normdata.rdf/Koehler"/>
   <dc:date>1937</dc:date>
 </rdf:Description>
 <rdf:Description rdf:about="http://telota.bbaw.de/exist/servlet/db/JDG/1936/1936reg.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JahresberichteDeutscheGeschichte/Zwischenkriegszeit"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/exist/servlet/db/JDG/1936/1936reg.xml">http://pom.bbaw.de/JDG/1936.html</dc:identifier>
-  <dc:creator>Brackmann, Albert</dc:creator>
-  <dc:creator>Hartung, Fritz</dc:creator>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Brackmann"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Hartung"/>
   <dc:title>Jahresberichte für deutsche Geschichte aus der Zwischenkriegszeit: 12. Jahrgang 1936</dc:title>
-  <dc:publisher>Köhler, Leipzig</dc:publisher>
+  <dc:publisher rdf:resource="http://wsp.normdata.rdf/Koehler"/>
   <dc:date>1937</dc:date>
 </rdf:Description>
 <rdf:Description rdf:about="http://telota.bbaw.de/exist/servlet/db/JDG/1937/1937bib.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JahresberichteDeutscheGeschichte/Zwischenkriegszeit"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/exist/servlet/db/JDG/1937/1937bib.xml">http://pom.bbaw.de/JDG/1937.html</dc:identifier>
-  <dc:creator>Brackmann, Albert</dc:creator>
-  <dc:creator>Hartung, Fritz</dc:creator>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Brackmann"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Hartung"/>
   <dc:title>Jahresberichte für deutsche Geschichte aus der Zwischenkriegszeit: 13. Jahrgang 1937</dc:title>
-  <dc:publisher>Köhler, Leipzig</dc:publisher>
+  <dc:publisher rdf:resource="http://wsp.normdata.rdf/Koehler"/>
   <dc:date>1939</dc:date>
 </rdf:Description>
 <rdf:Description rdf:about="http://telota.bbaw.de/exist/servlet/db/JDG/1937/1937fb.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JahresberichteDeutscheGeschichte/Zwischenkriegszeit"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/exist/servlet/db/JDG/1937/1937fb.xml">http://pom.bbaw.de/JDG/1937.html</dc:identifier>
-  <dc:creator>Brackmann, Albert</dc:creator>
-  <dc:creator>Hartung, Fritz</dc:creator>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Brackmann"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Hartung"/>
   <dc:title>Jahresberichte für deutsche Geschichte aus der Zwischenkriegszeit: 13. Jahrgang 1937</dc:title>
-  <dc:publisher>Köhler, Leipzig</dc:publisher>
+  <dc:publisher rdf:resource="http://wsp.normdata.rdf/Koehler"/>
   <dc:date>1939</dc:date>
 </rdf:Description>
 <rdf:Description rdf:about="http://telota.bbaw.de/exist/servlet/db/JDG/1937/1937reg.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JahresberichteDeutscheGeschichte/Zwischenkriegszeit"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/exist/servlet/db/JDG/1937/1937reg.xml">http://pom.bbaw.de/JDG/1937.html</dc:identifier>
-  <dc:creator>Brackmann, Albert</dc:creator>
-  <dc:creator>Hartung, Fritz</dc:creator>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Brackmann"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Hartung"/>
   <dc:title>Jahresberichte für deutsche Geschichte aus der Zwischenkriegszeit: 13. Jahrgang 1937</dc:title>
-  <dc:publisher>Köhler, Leipzig</dc:publisher>
+  <dc:publisher rdf:resource="http://wsp.normdata.rdf/Koehler"/>
   <dc:date>1939</dc:date>
 </rdf:Description>
 <rdf:Description rdf:about="http://telota.bbaw.de/exist/servlet/db/JDG/1938/1938bib.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JahresberichteDeutscheGeschichte/Zwischenkriegszeit"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/exist/servlet/db/JDG/1938/1938bib.xml">http://pom.bbaw.de/JDG/1938.html</dc:identifier>
-  <dc:creator>Brackmann, Albert</dc:creator>
-  <dc:creator>Hartung, Fritz</dc:creator>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Brackmann"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Hartung"/>
   <dc:title>Jahresberichte für deutsche Geschichte aus der Zwischenkriegszeit: 14. Jahrgang 1938</dc:title>
-  <dc:publisher>Köhler, Leipzig</dc:publisher>
+  <dc:publisher rdf:resource="http://wsp.normdata.rdf/Koehler"/>
   <dc:date>1940</dc:date>
 </rdf:Description>
 <rdf:Description rdf:about="http://telota.bbaw.de/exist/servlet/db/JDG/1938/1938fb.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JahresberichteDeutscheGeschichte/Zwischenkriegszeit"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/exist/servlet/db/JDG/1938/1938fb.xml">http://pom.bbaw.de/JDG/1938.html</dc:identifier>
-  <dc:creator>Brackmann, Albert</dc:creator>
-  <dc:creator>Hartung, Fritz</dc:creator>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Brackmann"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Hartung"/>
   <dc:title>Jahresberichte für deutsche Geschichte aus der Zwischenkriegszeit: 14. Jahrgang 1938</dc:title>
-  <dc:publisher>Köhler, Leipzig</dc:publisher>
+  <dc:publisher rdf:resource="http://wsp.normdata.rdf/Koehler"/>
   <dc:date>1940</dc:date>
 </rdf:Description>
 <rdf:Description rdf:about="http://telota.bbaw.de/exist/servlet/db/JDG/1938/1938reg.xml">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/JahresberichteDeutscheGeschichte/Zwischenkriegszeit"/>
   <dc:identifier rdf:resource="http://telota.bbaw.de/exist/servlet/db/JDG/1938/1938reg.xml">http://pom.bbaw.de/JDG/1938.html</dc:identifier>
-  <dc:creator>Brackmann, Albert</dc:creator>
-  <dc:creator>Hartung, Fritz</dc:creator>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Brackmann"/>
+  <dc:creator rdf:resource="http://wsp.normdata.rdf/Hartung"/>
   <dc:title>Jahresberichte für deutsche Geschichte aus der Zwischenkriegszeit: 14. Jahrgang 1938</dc:title>
-  <dc:publisher>Köhler, Leipzig</dc:publisher>
+  <dc:publisher rdf:resource="http://wsp.normdata.rdf/Koehler"/>
   <dc:date>1940</dc:date>
 </rdf:Description>
 </rdf:RDF>
