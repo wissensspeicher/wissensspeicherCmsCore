@@ -1,15 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rdf:RDF 
-   xmlns="http://wsp.normdata.rdf/KarlPhilippMoritz/Erfahrungsseelenkunde" 
-   xml:base="http://wsp.normdata.rdf/KarlPhilippMoritz/Erfahrungsseelenkunde" 
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
-   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" 
-   xmlns:dc="http://purl.org/dc/elements/1.1/" 
-   xmlns:dcterms="http://purl.org/dc/terms/" 
-   xmlns:foaf="http://xmlns.com/foaf/0.1/" 
-   xmlns:gnd="http://d-nb.info/standards/elementset/gnd#" 
-   xmlns:ore="http://www.openarchives.org/ore/terms/" 
->
+<!DOCTYPE rdf:RDF [
+    <!ENTITY dcterms "http://purl.org/dc/terms/" >
+    <!ENTITY foaf "http://xmlns.com/foaf/0.1/" >
+    <!ENTITY dcmitype "http://purl.org/dc/dcmitype/" >
+    <!ENTITY owl "http://www.w3.org/2002/07/owl#" >
+    <!ENTITY dc "http://purl.org/dc/elements/1.1/" >
+    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
+    <!ENTITY edm "http://www.europeana.eu/schemas/edm/" >
+    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
+    <!ENTITY ore "http://www.openarchives.org/ore/terms/" >
+    <!ENTITY gnd "http://d-nb.info/standards/elementset/gnd#" >
+    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
+    <!ENTITY vs "http://www.w3.org/2003/06/sw-vocab-status/ns#" >
+]>
+
+
+<rdf:RDF xmlns="http://wsp.normdata.rdf/"
+  xml:base="http://wsp.normdata.rdf/"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:gnd="http://d-nb.info/standards/elementset/gnd#"
+  xmlns:edm="http://www.europeana.eu/schemas/edm/"
+  xmlns:foaf="http://xmlns.com/foaf/0.1/"
+  xmlns:dcmitype="http://purl.org/dc/dcmitype/"
+  xmlns:ore="http://www.openarchives.org/ore/terms/"
+  xmlns:vs="http://www.w3.org/2003/06/sw-vocab-status/ns#"
+  xmlns:dcterms="http://purl.org/dc/terms/"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:owl="http://www.w3.org/2002/07/owl#"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <owl:Ontology rdf:about="http://wsp.normdata.rdf/"/>
+  
+  
+  <rdf:Description rdf:about="http://wsp.normdata.rdf/KarlPhilippMoritz/Erfahrungsseelenkunde">
+    <rdf:type rdf:resource="&foaf;Project"/>
+    <foaf:name>Kritische Karl-Philipp-Moritz-Ausgabe: Magazin für Erfahrungsseelenkunde</foaf:name>
+    <dc:language>ger</dc:language>
+    <foaf:nick>kmames</foaf:nick>
+    <foaf:homepage rdf:resource="http://telota.bbaw.de/mze"/>
+    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KarlPhilippMoritz"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/Wingertszahn"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/Goldmann"/>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/Dickson"/>
+    <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Psychologie"/>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/MoritzKarlPhilipp"/>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/PockelsKarlFriedrich"/>
+    <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/MaimonSalomon"/>
+    <dc:publisher rdf:resource="http://wsp.normdata.rdf/BBAW"/>
+    <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_xml"/>
+    <dcterms:temporal rdf:datatype="&dcterms;Period">start=1783; end=1793</dcterms:temporal>
+    <dcterms:abstract>Digitale Edition des 'Magazin zur Erfahrungsseelenkunde'. Das Magazin, 1783 bis 1793 in zehn Bänden erschienen, ist die erste psychologische Zeitschrift in Deutschland. Begründet und herausgegeben von dem Schullehrer und Schriftsteller Karl Philipp Moritz (1756-1793) und unterstützt von prominenten Vertretern der Berliner Aufklärung, darunter der jüdische Philosoph Moses Mendelssohn (1729-1786) und der philosophische Arzt Marcus Herz (1747-1803), bildete es ein Forum für Fachleute und Laien zur Erörterung psychischer Pathologie und sozialer Devianz.</dcterms:abstract>
+  </rdf:Description>
+  
 <rdf:Description rdf:about="http://telota.bbaw.de/mze">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KarlPhilippMoritz/Erfahrungsseelenkunde"/>
