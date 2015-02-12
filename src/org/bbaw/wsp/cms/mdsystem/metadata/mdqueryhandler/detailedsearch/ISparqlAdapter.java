@@ -4,10 +4,8 @@
 package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.detailedsearch;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
-import org.bbaw.wsp.cms.collections.Collection;
 
 import com.hp.hpl.jena.rdf.model.Resource;
 
@@ -29,6 +27,16 @@ public interface ISparqlAdapter {
    * @return
    */
   HitGraphContainer buildSparqlQuery(String literal);
+  /**
+   * Build a sparql query from only one literal. Query the default graph. Here, the pf:textmatch method is used.
+   * 
+   * @TODO not only index search
+   * 
+   * @param literal
+   *          the literal String.
+   * @return
+   */
+  String buildTextMatchSparqlQuery(String variables, String textMatchingGraph, String type);
 
   /**
    * Build a sparql query from only one literal. Here, the pf:textmatch method is used.
