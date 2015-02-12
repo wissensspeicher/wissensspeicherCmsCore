@@ -4,9 +4,11 @@
 package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.detailedsearch;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map.Entry;
 
 import com.hp.hpl.jena.rdf.model.RDFNode;
@@ -67,6 +69,21 @@ public class HitGraphContainer extends HashMap<URL, HitGraph> {
     return values();
   }
 
+  /**
+   * Return a {@link Collection} of {@link IHitRecord} which holds all the query data of the named graphes.
+   * 
+   * @return
+   */
+  public ArrayList<String> getSubjectList(final URL namedGraphUrl) {
+    ArrayList<String> subjectsList = null;
+    if(get(namedGraphUrl) != null){
+      subjectsList = get(namedGraphUrl).getHitSubjects();
+    }else{
+      subjectsList = new ArrayList<String>();
+    }
+    return subjectsList;
+  }
+  
   /**
    * Add another {@link IHitRecord}. This should be done from the {@link SparqlAdapter} after a query was performed.
    * 
