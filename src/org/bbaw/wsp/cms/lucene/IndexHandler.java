@@ -370,6 +370,10 @@ public class IndexHandler {
       } else {
         categories.add(new CategoryPath("type", "unbekannt"));
       }
+      if (mdRecord.getSystem() != null) {
+        Field systemTypeField = new Field("systemType", mdRecord.getSystem(), Field.Store.YES, Field.Index.NOT_ANALYZED);
+        doc.add(systemTypeField);
+      }
       if (mdRecord.getEntities() != null) {
         Field entitiesField = new Field("entities", mdRecord.getEntities(), Field.Store.YES, Field.Index.ANALYZED);
         doc.add(entitiesField);
