@@ -1,5 +1,6 @@
 package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.detailedsearch;
 
+import java.io.ByteArrayOutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -8,23 +9,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.httpclient.URIException;
-import org.apache.commons.httpclient.util.URIUtil;
 import org.apache.log4j.Logger;
-import org.bbaw.wsp.cms.collections.Collection;
 import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.MdSystemResultType;
 import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.detailedsearch.RelatedHitStatement.Relationship;
-import org.junit.internal.RealSystem;
 
 import com.hp.hpl.jena.query.QuerySolution;
 import com.hp.hpl.jena.query.ResultSet;
+import com.hp.hpl.jena.query.ResultSetFormatter;
 import com.hp.hpl.jena.rdf.model.Literal;
 import com.hp.hpl.jena.rdf.model.RDFNode;
 import com.hp.hpl.jena.rdf.model.Resource;
-import com.hp.hpl.jena.rdf.model.impl.LiteralImpl;
 import com.hp.hpl.jena.rdf.model.impl.ResourceImpl;
-
-import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 
 /**
  * This Class is meant to be the connector between @QueryHandler sent by the GUI and the @RdfHandler. It combines Strings to valid Sparql queries
@@ -348,8 +343,9 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
    */
   private void handleSolution(final HitGraphContainer container, final QuerySolution solution, List<String> resultVars) {
       HitGraph hitGraph = null;
+      URL graphUrl = null;
       try {
-        URL graphUrl = new URL("http://wsp.normdata.rdf/");
+        graphUrl = new URL("http://wsp.normdata.rdf/");
       if (!container.contains(graphUrl)) {
         hitGraph = new HitGraph(graphUrl);
         container.addHitRecord(graphUrl, hitGraph);
@@ -365,6 +361,11 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
 //      List<String> valueList;
       if (solution.get("s") != null) {
         subject = solution.get("s");
+        if(resultVars.size() == 1){
+          hitGraph.addStatement(subject.toString());
+          HitGraphContainer hgc = new HitGraphContainer();
+          hgc.addHitRecord(graphUrl, hitGraph); 
+        }
         if(!allNdSubjects.contains(subject.toString())){
           allNdSubjects.add(subject.toString());
           currentDescription = new HashMap<String, List<String>>();
@@ -397,12 +398,12 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
           }
           String encodedLiteral = null;
           String currentLiteral = null;
-//          logger.info("predicate.toString() : "+predicate.toString());
           //ausnahmen
           if(predicate.toString().contains("homepage") || predicate.toString().contains("relatedCorporateBody") || 
               predicate.toString().contains("contributingCorporateBody") || predicate.toString().contains("contributor")
               || predicate.toString().contains("coverage") || predicate.toString().contains("contributingPerson") 
-              || predicate.toString().contains("identifier") || predicate.toString().contains("gndIdentifier")){
+              || predicate.toString().contains("identifier") || predicate.toString().contains("gndIdentifier") || predicate.toString().contains("nick")
+              || predicate.toString().contains("name")){
             currentLiteral = literal.toString();
           }else{
             encodedLiteral = checkForLiteral(literal);
@@ -418,10 +419,10 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
             valueeList.add(currentLiteral);
             currentDescription.put(currentPred, valueeList);
           }
+          
         }
       }
       hitGraph.addStatement(subject.toString(), currentDescription);
-
       // set result type
 //      statement.setResultType(MdSystemResultType.LITERAL_NAMED_GRAPH);
   }
@@ -804,10 +805,26 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
     freeQueryStrategy();
     return this.handleProjectIdResults(results);
   }
+  
+  @Override
+  public String buildTextMatchSparqlQuery(String variables, String textMatchQuery, String graphPattern) {
+    logger.info("building Sparql Query");
+    final T results = queryStrategy.queryGraphOfLiteral(variables, textMatchQuery, graphPattern);
+    freeQueryStrategy();
+    String json = null ;
+    if (results instanceof ResultSet) { // QueryStrategyFuseki
+      final ResultSet realResults = (ResultSet) results;
+      ByteArrayOutputStream b = new ByteArrayOutputStream();
+      ResultSetFormatter.outputAsJSON(b, realResults);
+      json = b.toString( );
+    } else if (results instanceof HashMap<?, ?>) { 
+      json = "";
+    }
+    return json;
+  }
 
   private HitGraphContainer handleProjectIdResults(T results) {
-    final HitGraphContainer container = new HitGraphContainer(new Date()); // result
-    // container
+    final HitGraphContainer container = new HitGraphContainer(new Date()); // result container
     if (results instanceof ResultSet) { // QueryStrategyFuseki
       final ResultSet realResults = (ResultSet) results;
       List<String> resultVars = realResults.getResultVars();
@@ -836,6 +853,8 @@ public class SparqlAdapter<T> implements ISparqlAdapter {
     freeQueryStrategy();
     return this.handleProjectIdResults(results);
   }
+  
+//  public HitGraphContainer 
   
   @Override
   public HitGraphContainer sparqlDirectly(String pattern){
