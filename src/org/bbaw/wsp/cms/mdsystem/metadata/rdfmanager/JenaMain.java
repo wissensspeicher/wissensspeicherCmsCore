@@ -6,8 +6,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.MdSystemQueryHandler;
-import org.bbaw.wsp.cms.mdsystem.util.MdSystemConfigReader;
 
 import com.hp.hpl.jena.query.Dataset;
 import com.hp.hpl.jena.query.Query;
@@ -29,7 +27,7 @@ import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
  */
 public class JenaMain {
 
-  private static final String datasetPath = MdSystemConfigReader.getInstance().getRdfMdDir();
+  private static final String datasetPath = "/home/juergens/datasets/141210-dataset"; //MdSystemConfigReader.getInstance().getRdfMdDir();
 
   protected RdfHandler rdfHandler;
   protected WspRdfStore wspStore;
@@ -63,7 +61,7 @@ public class JenaMain {
    */
   private void doYourWork() {
     wspStore.setForce(true);
-    createNamedModelsFromOreSets("/home/juergens/wspEtc/rdfData/wspNormdata/");
+    createNamedModelsFromOreSets("/home/juergens/wspEtc/rdfData/projektRdf/gesammelteRdfFuerImport/");
     // createNewModelFromSingleOre(oreBiblioNeu);
     // getAllNamedModelsInDataset();
     // wspStore.openDataset();
@@ -90,14 +88,12 @@ public class JenaMain {
   private void createNamedModelsFromOreSets(final String location) {
     // read all rdf
     final List<String> pathList = extractPathLocally(location);
-    logger.info("pathlist : " + pathList.size());
 
     final long start = System.currentTimeMillis();
     wspStore.openDataset();
     for (final String string : pathList) {
       final Model freshsModel = wspStore.getFreshModel();
       final Model m = rdfHandler.fillModelFromFile(freshsModel, string);
-      logger.info("File path: " + string);
       final String rdfAbout = rdfHandler.scanID(string);
       if (rdfAbout != null) {
         try {
