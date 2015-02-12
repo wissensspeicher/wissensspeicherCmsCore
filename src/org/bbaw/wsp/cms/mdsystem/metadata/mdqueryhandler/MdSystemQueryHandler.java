@@ -24,8 +24,6 @@ import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.WspRdfStore;
 import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.fuseki.FusekiClient;
 import org.bbaw.wsp.cms.mdsystem.util.StatisticsScheduler;
 
-import sun.util.logging.resources.logging;
-
 import com.hp.hpl.jena.query.ResultSet;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
@@ -106,7 +104,7 @@ public class MdSystemQueryHandler {
           "GRAPH <http://wsp.normdata.rdf/> { ?s ?p ?o }\n"+ 
         "}");
     String sparqlPattern = sb.toString();
-    logger.info("preloadAllProjectInf, sparqlPattern: "+sparqlPattern);
+    logger.info("preloadAllProjectInf : "+sparqlPattern);
     return sparqlAdapter.sparqlDirectly(sparqlPattern);
 //    return sparqlAdapter.sparqlAllProjectInf(sparqlPattern);
   }
