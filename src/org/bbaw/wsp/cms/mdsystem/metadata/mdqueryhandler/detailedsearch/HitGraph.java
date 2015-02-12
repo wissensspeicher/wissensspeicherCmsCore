@@ -13,8 +13,6 @@ import java.util.Map.Entry;
 import org.apache.log4j.Logger;
 import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.WspRdfStore;
 
-import com.hp.hpl.jena.rdf.model.RDFNode;
-
 /**
  * @author <a href="mailto:sascha.feldmann@gmx.de">Sascha Feldmann</a>
  * @since 04.02.2013
@@ -24,6 +22,9 @@ public class HitGraph {
 
   private final URL namedGraphUrl;
   private final ArrayList<HitStatement> hitStatements;
+  private final ArrayList<String> hitSubjects;
+
+
   private final HashMap<String, HashMap<String, List<String>>> hitStatementsMap;
   private double avgScore;
   private double highestScore;
@@ -40,6 +41,7 @@ public class HitGraph {
   public HitGraph(final URL namedGraphUrl) {
     this.namedGraphUrl = namedGraphUrl;
     hitStatements = new ArrayList<HitStatement>();
+    hitSubjects = new ArrayList<String>();
     hitStatementsMap = new HashMap<String, HashMap<String, List<String>>>();
     avgScore = DEFAULT_SCORE;
     highestScore = DEFAULT_SCORE;
@@ -91,6 +93,18 @@ public class HitGraph {
     calcHighestScore(statement);
   }
 
+  /**
+   * if you need just an arraylist of strings as result
+   * @param subject
+   */
+  public void addStatement(String subject) {
+    hitSubjects.add(subject);
+  }
+  
+  public ArrayList<String> getHitSubjects() {
+    return hitSubjects;
+  }
+  
   private void calcHighestScore(final HitStatement statement) {
     if (highestScore == 0) {
       highestScore = statement.getScore();
@@ -147,15 +161,28 @@ public class HitGraph {
     StringBuilder sb = new StringBuilder();
     sb.append("HitGraph [namedGraphUrl=" + namedGraphUrl + ", hitStatementsMap= \n");
     for (Entry<String, HashMap<String, List<String>>> entry : hitStatementsMap.entrySet()) {
-      sb.append("  "+(entry.getKey() + " : \n"));
+      if(entry.getKey() != null) {
+        sb.append("  "+(entry.getKey() + " : \n"));
+      }else{
+        sb.append("");
+      }
       sb.append("\n");
-      HashMap<String, List<String>> hmRdfnode = entry.getValue();
-      for (Entry<String, List<String>> entryRdf : hmRdfnode.entrySet()) {
-        sb.append("    "+(entryRdf.getKey() + " : " + entryRdf.getValue()));
-        sb.append("\n");
+      if(entry.getValue() !=null ){
+        HashMap<String, List<String>> hmRdfnode = entry.getValue();
+        for (Entry<String, List<String>> entryRdf : hmRdfnode.entrySet()) {
+          if(entryRdf.getValue() !=null) {
+            sb.append("    "+(entryRdf.getKey() + " : " + entryRdf.getValue()));  
+          }else{
+            sb.append("    "+(entryRdf.getKey() + " : " + "value null"));
+          }
+          sb.append("\n");
+        }
+      }else{
       }
       sb.append("\n");
     }
+//    logger.info("avgScore : "+avgScore);
+//    logger.info("highestScore : "+highestScore);
     sb.append(", avgScore=" + avgScore + ", highestScore=" + highestScore + "]");
     sb.append("\n");
     return sb.toString();
