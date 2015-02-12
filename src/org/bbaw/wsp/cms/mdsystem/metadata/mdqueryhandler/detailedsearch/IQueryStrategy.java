@@ -4,9 +4,6 @@
 package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.detailedsearch;
 
 import java.net.URL;
-import java.util.ArrayList;
-
-import org.bbaw.wsp.cms.collections.Collection;
 import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.tools.SparqlCommandBuilder;
 
 import com.hp.hpl.jena.query.ResultSet;
@@ -38,6 +35,15 @@ public interface IQueryStrategy<T> {
    * @return the generic type as specified in the concrete strategy class. Mostly it's a {@link ResultSet}.
    */
   T queryLiteral(String literal);
+  
+  /**
+  * Delegate a sparqlQuery to a useful handler instance and execute it. Use the {@link SparqlCommandBuilder} to build a valid sparql statement.
+  * 
+  * @param literal
+  *          the literal as String
+  * @return the generic type as specified in the concrete strategy class. Mostly it's a {@link ResultSet}.
+  */
+  T queryGraphOfLiteral(String variables, String literal, String type);
 
   /**
    * Delegate a sparqlQuery to a useful handler instance and execute it. Use the {@link SparqlCommandBuilder} to build a valid sparql statement.
