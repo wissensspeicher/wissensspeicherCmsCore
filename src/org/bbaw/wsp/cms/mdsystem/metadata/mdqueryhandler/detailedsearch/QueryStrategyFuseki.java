@@ -4,10 +4,8 @@
 package org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.detailedsearch;
 
 import java.net.URL;
-import java.util.ArrayList;
 
 import org.apache.log4j.Logger;
-import org.bbaw.wsp.cms.collections.Collection;
 import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.fuseki.FusekiClient;
 import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.tools.SparqlCommandBuilder;
 
@@ -68,6 +66,18 @@ public class QueryStrategyFuseki implements IQueryStrategy<ResultSet> {
     return delegateQuery(query);
   }
 
+  @Override
+  /*
+   * (non-Javadoc)
+   * 
+   * @see org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.adapter.IQueryStrategy #queryLiteral(java.lang.String)
+   */
+  public ResultSet queryGraphOfLiteral(String variables, String literal, String pattern) {
+    final String query = SparqlCommandBuilder.SELECT_USING_INDEX_CONTAINING_NAMED_GRAPH.getSelectQueryString(variables, null, literal, null, pattern);
+    logger.info("queryGraphOfLiteral : "+query);
+    return delegateQuery(query);
+  }
+  
   @Override
   /*
    * (non-Javadoc)
