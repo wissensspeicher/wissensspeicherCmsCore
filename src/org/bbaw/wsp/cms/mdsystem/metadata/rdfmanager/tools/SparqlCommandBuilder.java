@@ -32,7 +32,7 @@ public enum SparqlCommandBuilder {
   /**
    * @return the sparql query command as {@link String}
    */
-  public String getSelectQueryString(final String toSelect, final URL graphName, final String graphPattern, final String projectId, final String projectUri) {
+  public String getSelectQueryString(final String toSelect, final URL graphName, final String graphPattern, final String projectId, final String variable) {
     switch (this) {
     case SELECT_DEFAULT:
       return "SELECT " + toSelect + " { " + graphPattern + "}";
@@ -42,18 +42,18 @@ public enum SparqlCommandBuilder {
       // return "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n" +
       // "SELECT " + toSelect + " { GRAPH ?g { ?o pf:textMatch '" + graphPattern
       // + "'. ?s ?p ?o. } }";
-      return "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n" + "SELECT DISTINCT " + toSelect + " { (?lit ?score )  pf:textMatch '" + graphPattern + "'. ?s ?p ?lit\n OPTIONAL {?sParent ?pParent ?s\n FILTER (isBlank(?s))}}";
+      return "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n" + "SELECT DISTINCT " + toSelect + " { (?lit ?score )  pf:textMatch '" + graphPattern + "'. ?s ?p ?lit\n OPTIONAL {?sParent ?pParent ?s\n FILTER (isBlank(?s))}\n}";
     case SELECT_NAMED_USING_INDEX:
       return "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n" + "SELECT DISTINCT " + toSelect + " FROM NAMED <" + graphName + "> { (?lit ?score ) pf:textMatch '" + graphPattern + "'.?doc ?p ?lit\n }";
     case SELECT_USING_INDEX_CONTAINING_NAMED_GRAPH:
-      return "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n" + "SELECT DISTINCT " + toSelect + " {  (?lit ?score ) pf:textMatch '" + graphPattern + "'. GRAPH ?g { ?s ?p ?lit}\n OPTIONAL {?sParent ?pParent ?s\n FILTER (isBlank(?s))}}";
-    case SELECT_CONTAINING_NAMED_GRAPH:
+      return "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n PREFIX gnd: <http://d-nb.info/standards/elementset/gnd#> \n PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n prefix foaf: <http://xmlns.com/foaf/0.1/> \n" + "SELECT DISTINCT " + toSelect + " {  ?lit pf:textMatch '+" + graphPattern + "'. GRAPH ?g { ?s ?p ?lit.\n ?s rdf:type " + variable +"}\n}";
+    case SELECT_CONTAINING_NAMED_GRAPH: 
       return "SELECT DISTINCT " + toSelect + " {  GRAPH ?g { " + graphPattern + " }}";
       // return "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n" +
       // "SELECT " + toSelect + " {  ?o pf:textMatch '" + graphPattern +
       // "'. GRAPH ?g { ?s ?p ?o}  }";
     case SELECT_ALL_PROJECT_INFO_FOR_GIVEN_ID:
-      return "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n prefix foaf: <http://xmlns.com/foaf/0.1/> \n" + "SELECT " + toSelect + " { ?sbjct  pf:textMatch '"+ projectId +"'.\n ?s foaf:nick ?sbjct. \n ?s ?p ?o.\n } ";
+      return "PREFIX pf: <http://jena.hpl.hp.com/ARQ/property#>\n" + "SELECT " + toSelect + " { ?sbjct  pf:textMatch '"+ projectId +"'.\n ?s foaf:nick ?sbjct. \n ?s ?p ?o.\n } ";
     case SELECT_ALL_PROJECT_INFO_AND_RESOlVE_FOR_GIVEN_ID:
       return "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n " 
     + "PREFIX dc:  <http://purl.org/dc/elements/1.1/>\n" 
@@ -62,7 +62,7 @@ public enum SparqlCommandBuilder {
       + "PREFIX dc:  <http://purl.org/dc/elements/1.1/>\n" 
     + "PREFIX gnd: <http://d-nb.info/standards/elementset/gnd#>\n" 
       + "SELECT DISTINCT ?p ?o ?resolvedPer ?resolvedLing  ?resolvedTime ?resolvedProj ?resolvedLoc ?resolvedOrg ?resolvedMed ?resolvedEvnt  { " 
-    + "<" + projectUri + ">" + " ?p ?o .\n" 
+    + "<" + variable + ">" + " ?p ?o .\n" 
     + "OPTIONAL { ?o rdf:type foaf:Person.\n" 
       + "?o ?resolvedPredPer ?resolvedPer }\n" 
       + "OPTIONAL { ?o rdf:type foaf:Project.\n" 
@@ -86,7 +86,7 @@ public enum SparqlCommandBuilder {
         + "PREFIX foaf: <http://xmlns.com/foaf/0.1/>\n" 
           + "PREFIX dc:  <http://purl.org/dc/elements/1.1/>\n" 
         + "PREFIX gnd: <http://d-nb.info/standards/elementset/gnd#>\n" 
-          + projectUri 
+          + variable 
         + "OPTIONAL { ?o rdf:type foaf:Person.\n" 
           + "?o ?resolvedPredPer ?resolvedPer }\n" 
           + "OPTIONAL { ?o rdf:type foaf:Project.\n" 
