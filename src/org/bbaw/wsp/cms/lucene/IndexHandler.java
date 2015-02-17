@@ -1840,6 +1840,7 @@ public class IndexHandler {
       documentsFieldAnalyzers.put("license", new StandardAnalyzer(Version.LUCENE_35));
       documentsFieldAnalyzers.put("accessRights", new StandardAnalyzer(Version.LUCENE_35));
       documentsFieldAnalyzers.put("type", new KeywordAnalyzer()); // e.g. mime type "text/xml"
+      documentsFieldAnalyzers.put("systemType", new KeywordAnalyzer()); // e.g. "dbRecord"
       documentsFieldAnalyzers.put("pageCount", new KeywordAnalyzer()); 
       documentsFieldAnalyzers.put("schemaName", new StandardAnalyzer(Version.LUCENE_35));
       documentsFieldAnalyzers.put("lastModified", new KeywordAnalyzer());
@@ -1968,6 +1969,7 @@ public class IndexHandler {
     fields.add("rights");
     fields.add("license");
     fields.add("type");
+    fields.add("systemType");
     fields.add("pageCount");
     fields.add("schemaName");
     fields.add("lastModified");
