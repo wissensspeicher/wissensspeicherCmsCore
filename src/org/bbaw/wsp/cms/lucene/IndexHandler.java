@@ -1061,6 +1061,10 @@ public class IndexHandler {
       Fieldable typeField = doc.getFieldable("type");
       if (typeField != null)
         type = typeField.stringValue();
+      String systemType = null;
+      Fieldable systemTypeField = doc.getFieldable("systemType");
+      if (systemTypeField != null)
+        systemType = systemTypeField.stringValue();
       String entitiesDetailsStr = null;
       Fieldable entitiesDetailsField = doc.getFieldable("entitiesDetails");
       if (entitiesDetailsField != null) {
@@ -1112,6 +1116,7 @@ public class IndexHandler {
       mdRecord.setAccessRights(accessRights);
       mdRecord.setPageCount(pageCount);
       mdRecord.setType(type);
+      mdRecord.setSystem(systemType);
       mdRecord.setEntitiesDetails(entitiesDetailsStr);
       mdRecord.setPersons(personsStr);
       mdRecord.setPersonsDetails(personsDetailsStr);
