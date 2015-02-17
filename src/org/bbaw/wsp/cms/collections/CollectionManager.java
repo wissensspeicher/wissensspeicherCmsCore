@@ -420,6 +420,7 @@ public class CollectionManager {
                   mdRecordEXist.setTitle(mdRecord.getTitle());
                   mdRecordEXist.setPublisher(mdRecord.getPublisher());
                   mdRecordEXist.setDate(mdRecord.getDate());
+                  mdRecordEXist.setSystem("eXistDir");
                   if (mdRecord.getLanguage() != null)
                     mdRecordEXist.setLanguage(mdRecord.getLanguage());
                   mdRecordsEXist.add(mdRecordEXist);
