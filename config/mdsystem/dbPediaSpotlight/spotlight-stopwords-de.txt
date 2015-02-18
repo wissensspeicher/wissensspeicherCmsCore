@@ -1,6 +1,7 @@
 Ph.D.
 Dr.
 omi
+http://de.dbpedia.org/resource/JavaScript
 http://de.dbpedia.org/resource/Oblaten_(OMI)
 http://de.dbpedia.org/resource/Data_Encryption_Standard
 http://de.dbpedia.org/resource/Deutsche_Forschungsgemeinschaft
