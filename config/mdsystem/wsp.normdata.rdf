@@ -17447,7 +17447,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
     <rdf:Description rdf:about="http://wsp.normdata.rdf/AltaegyptWB/Vormanuskript">
         <rdf:type rdf:resource="&foaf;Project"/>
         <foaf:nick>aaewvor</foaf:nick>
-        <foaf:name>Altägyptisches Wörterbuch: Das Vormanuskript des Wörterbuchs der Ägyptischen Sprache</foaf:name>
+        <foaf:name>Altägyptisches Wörterbuch: Das Vormanuskript des Wörterbuchs der Ägyptischen Sprache 1906-1909</foaf:name>
         <dc:language>ger</dc:language>
         <foaf:homepage rdf:resource="http://aaew.bbaw.de/tla/servlet/S05?d=d003&amp;h=h017"/>
         <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AltaegyptWB"/>
@@ -17474,7 +17474,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
 
     <rdf:Description rdf:about="http://wsp.normdata.rdf/AvHForschungsstelle/Abhandlungen">
         <rdf:type rdf:resource="&foaf;Project"/>
-        <foaf:name>Alexander von Humboldt Forschungsstelle: Abhandlungen</foaf:name>
+        <foaf:name>Alexander von Humboldts Abhandlungen nach Vorträgen an der Königlich Preußischen Akademie der Wissenschaften zu Berlin</foaf:name>
         <foaf:nick>avhabh</foaf:nick>
         <dc:language>ger</dc:language>
         <foaf:homepage rdf:resource="http://avh.bbaw.de/publikationen/digitale-veroeffentlichungen/abhandlungen-nach-vortraegen-an-der-koeniglich-preussischen-akademie-der-wissenschaften-zu-berlin"/>
@@ -17516,7 +17516,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
 
     <rdf:Description rdf:about="http://wsp.normdata.rdf/AvHForschungsstelle/Orinoco">
         <rdf:type rdf:resource="&foaf;Project"/>
-        <foaf:name>Alexander von Humboldt Forschungsstelle: Alexander von Humboldt am Orinoco (31.März-7. April 1800)</foaf:name>
+        <foaf:name>Alexander von Humboldt Forschungsstelle: Alexander von Humboldt am Orinoco (31. März-7. April 1800)</foaf:name>
         <dc:language>ger</dc:language>
         <foaf:nick>avhorinoco</foaf:nick>
         <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle"/>
