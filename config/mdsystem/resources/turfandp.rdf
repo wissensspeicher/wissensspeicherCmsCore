@@ -37,7 +37,7 @@
   <rdf:Description rdf:about="http://wsp.normdata.rdf/Turfan/Dunhuang">
     <rdf:type rdf:resource="&foaf;Project"/>
     <foaf:nick>turfandp</foaf:nick>
-    <foaf:name>Internationel Dunhuang Projekt/ Berlin</foaf:name>
+    <foaf:name>International Dunhuang Project: Die Seidenstraße online</foaf:name>
     <dc:language>ger</dc:language>
     <dc:language>eng</dc:language>
     <foaf:homepage rdf:resource="http://idp.bbaw.de"/>

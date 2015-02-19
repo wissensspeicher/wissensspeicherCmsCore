@@ -39,7 +39,7 @@
     <dc:language>lat</dc:language>
     <dc:language>eng</dc:language>
     <dc:language>fra</dc:language>
-    <foaf:homepage rdf:resource="http://telota.bbaw.de/avh/uns"/>
+    <foaf:homepage rdf:resource="http://telota.bbaw.de/avh/uns/"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle"/>
     <dc:description>Version 3.1 r3</dc:description>
     <dc:format rdf:resource="http://wsp.normdata.rdf/app_x_httpd_php"/>
@@ -57,10 +57,10 @@
   </rdf:Description>
   
   
-<rdf:Description rdf:about="http://telota.bbaw.de/avh/uns">
+<rdf:Description rdf:about="http://telota.bbaw.de/avh/uns/">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AvHForschungsstelle/UnselbstständigeSchriften"/>
-  <dc:identifier rdf:resource="http://telota.bbaw.de/avh/uns"/>
+  <dc:identifier rdf:resource="http://telota.bbaw.de/avh/uns/"/>
 </rdf:Description>
   <rdf:Description rdf:about="http://avh.bbaw.de/uns/keywords.php">
     <dc:identifier rdf:resource="http://avh.bbaw.de/uns/keywords.php"/>
