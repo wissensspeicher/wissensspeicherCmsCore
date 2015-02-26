@@ -248,6 +248,26 @@ public class DBpediaResource implements Comparable<DBpediaResource> {
     return retStr;
   }
 
+  public String toHtmlSmartStr(boolean showType) {
+    if (name == null || uri == null)
+      return null;
+    String retStr = "<span>";
+    String queryHtmlStr = "<a href=\"" + baseUrl + "/query/query.html?queryLanguage=lucene&query=entitiesUris:%22" + uri + "%22&fieldExpansion=none\">" + name + "</a>";
+    String refHtmlStr = "<a href=\"" + uri + "\"><img src=\"../images/rdfSmall.gif\" alt=\"DBpedia resource\" border=\"0\" height=\"15\" width=\"15\"></a>";
+    String gndHtmlStr = "";
+    if (gnd != null && ! gnd.isEmpty())
+      gndHtmlStr = ", <a href=\"" + "http://d-nb.info/gnd/" + gnd + "\">GND</a>" ;
+    String scoreHtmlStr = "";
+    if (score != null)
+      scoreHtmlStr = ", " + score;
+    String typeHtmlStr = "";
+    if (showType && type != null)
+      typeHtmlStr = ", " + type;
+    retStr = retStr + queryHtmlStr + " (" + refHtmlStr + gndHtmlStr + scoreHtmlStr + typeHtmlStr + ")" + "</span>";
+    retStr = retStr + "</span>";
+    return retStr;
+  }
+
   public String toJsTreeHtmlStr(boolean showType) {
     if (name == null || uri == null)
       return null;
