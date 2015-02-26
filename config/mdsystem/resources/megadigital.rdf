@@ -35,7 +35,7 @@
   
   <rdf:Description rdf:about="http://wsp.normdata.rdf/MarxEngelsGAdigital">
     <rdf:type rdf:resource="&foaf;Project"/>
-    <foaf:name>MEGAdigital. Ökonomische Texte von Karl Marx im Internet</foaf:name>
+    <foaf:name>MEGAdigital -- Ökonomische Texte von Karl Marx im Internet</foaf:name>
     <dc:subject>Geschichte</dc:subject>
     <dcterms:abstract>Die Marx-Engels-Gesamtausgabe ist die historisch-kritische Edition der Veröffentlichungen, der Manuskripte und des Briefwechsels von Karl Marx und Friedrich Engels. Für die digitale Ausgabe der MEGA werden die Edierten Texte der II. Abteilung und Teile der Editorischen Apparate im Rahmen eines Projekts der Telota-Arbeitsgruppe der BBAW und des Akademienvorhabens MEGA mit Unterstützung einer japanischen Forschergruppe sukzessive im Internet präsentiert. Damit werden zum einen die "Grundrisse" in historisch-kritischer Fassung online zugänglich gemacht, und zum anderen können die zahlreichen Manuskript-, Redaktions- und Druckfassungen zum ersten und zweiten Buch des "Kapital" verglichen werden.</dcterms:abstract>
     <foaf:nick>megadigital</foaf:nick>

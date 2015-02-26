@@ -36,7 +36,7 @@
   
   <rdf:Description rdf:about="http://wsp.normdata.rdf/AvHForschungsstelle/Abhandlungen">
     <rdf:type rdf:resource="&foaf;Project"/>
-    <foaf:name>Alexander von Humboldt Forschungsstelle: Abhandlungen</foaf:name>
+    <foaf:name>Alexander von Humboldts Abhandlungen nach Vorträgen an der Königlich Preußischen Akademie der Wissenschaften zu Berlin</foaf:name>
     <foaf:nick>avhabh</foaf:nick>
     <dc:language>ger</dc:language>
     <foaf:homepage rdf:resource="http://avh.bbaw.de/publikationen/digitale-veroeffentlichungen/abhandlungen-nach-vortraegen-an-der-koeniglich-preussischen-akademie-der-wissenschaften-zu-berlin"/>

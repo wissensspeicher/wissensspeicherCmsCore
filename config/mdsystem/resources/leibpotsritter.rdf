@@ -36,7 +36,7 @@
     <foaf:name>Online-Ritterkatalog</foaf:name>
     <foaf:nick>leibpotsritter</foaf:nick>
     <dc:language>ger</dc:language>
-    <dc:creator rdf:reosurce="http://wsp.normdata.de/LeibnizEditionBerlin"/>"
+    <dc:creator rdf:reosurce="http://wsp.normdata.de/LeibnizEditionBerlin"/>
     <dc:publisher rdf:resource="http://wsp.normdata.de/LeibnizEditionBerlin"/>
     <foaf:homepage rdf:resource="http://ritter.bbaw.de"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam"/>

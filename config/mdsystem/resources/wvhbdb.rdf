@@ -45,7 +45,7 @@
     <dcterms:rigthsHolder rdf="http://wsp.normdata.rdf/BBAW"/>
     <foaf:name>Wilhelm von Humboldt: Schriften zur Sprachwissenschaft - Briefdatenbank</foaf:name>
     <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/HumboldtWilhelm"/>
-    <foaf:homepage rdf:resource="http://wvh.bbaw.de/"/>
+    <foaf:homepage rdf:resource="http://telota.bbaw.de/wvh/db-start.jsf"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/WilhelmVonHumboldt"/>
     <dc:abstract>Die Briefdatenbank ist einerseits der Erschließung von Humboldts sprachwissenschaftlichem Briefwechsel für die Kommentierung der einzelnen Bände der Edition; andererseits ist sie eine Vorarbeit zur Edition der sprachwissenschaftlichen Korrespondenz Wilhelm von Humboldts. In der Datenbank werden die in beiden Verzeichnissen aufgenommenen Briefe mit sprachwissenschaftlichem, philosophischem und anthropologischem Inhalt zusammengeführt, ggfs. aktualisiert und durch neue Brieffunde ergänzt.</dc:abstract>
 </rdf:Description>

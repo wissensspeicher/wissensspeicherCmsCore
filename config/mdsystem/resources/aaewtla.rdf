@@ -34,7 +34,7 @@
   
   <rdf:Description rdf:about="http://wsp.normdata.rdf/AltaegyptWB/TLA">
     <rdf:type rdf:resource="&foaf;Project"/>
-    <foaf:name>Altägyptisches Wörterbuch: Der Thesaurus Linguae Aegyptiae im Internet</foaf:name>
+    <foaf:name>Altägyptisches Wörterbuch: Thesaurus Linguae Aegyptiae (TLA)</foaf:name>
     <dc:language>ger</dc:language>
     <foaf:nick>aaewtla</foaf:nick>
     <foaf:homepage rdf:resource="http://aaew.bbaw.de/tla/"/>
