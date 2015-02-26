@@ -289,7 +289,7 @@ public class Facets implements Iterable<Facet> {
     return retStr;
   }
 
-  public String toHtmlString() {
+  public String toHtmlString(boolean smart) {
     if (facets == null || facets.values() == null)
       return "";
     StringBuilder retStrBuilder = new StringBuilder();
@@ -339,9 +339,9 @@ public class Facets implements Iterable<Facet> {
                 type = "place";
               entity.setType(type);
               if (facetId.equals("mainEntities"))
-                facetValueNameHtml = entity.toJsTreeHtmlStr(true);
+                facetValueNameHtml = entity.toJsTreeHtmlStr(true, smart);
               else
-                facetValueNameHtml = entity.toJsTreeHtmlStr(false);
+                facetValueNameHtml = entity.toJsTreeHtmlStr(false, smart);
             }
           }
           if (j==0)
