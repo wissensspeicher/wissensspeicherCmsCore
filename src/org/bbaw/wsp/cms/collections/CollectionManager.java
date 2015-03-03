@@ -56,22 +56,6 @@ public class CollectionManager {
   private static int COMMIT_INTERVAL_DB = 1000;
   private CollectionReader collectionReader;
 
-  public static void main(String[] args) throws ApplicationException {
-    try {
-      if (args != null) {
-        String operation = args[0];
-        String collectionId = args[1];
-        CollectionManager collectionManager = getInstance();
-        if (operation.equals("update"))
-          collectionManager.updateCollection(collectionId);
-        else if (operation.equals("delete"))
-          collectionManager.deleteCollection(collectionId);
-      }
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-  }
-
   public static CollectionManager getInstance() throws ApplicationException {
     if(confManager == null) {
       confManager = new CollectionManager();
@@ -95,6 +79,22 @@ public class CollectionManager {
     }
   }
 
+  /**
+   * Update all collections with these collection ids
+   * @throws ApplicationException
+   */
+  public void updateCollections(String[] collectionIds) throws ApplicationException {
+    updateCollections(collectionIds, true);
+  }
+  
+  /**
+   * Update of all collections from that startingCollection onwards till endingCollectionId alphabetically
+   * @throws ApplicationException
+   */
+  public void updateCollections(String startingCollectionId, String endingCollectionId) throws ApplicationException {
+    updateCollections(startingCollectionId, endingCollectionId, true);
+  }
+  
   /**
    * Update of all collections from that startingCollection onwards alphabetically
    * @throws ApplicationException
