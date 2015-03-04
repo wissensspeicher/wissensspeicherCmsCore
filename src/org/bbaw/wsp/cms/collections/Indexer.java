@@ -72,7 +72,7 @@ public class Indexer {
   private void createProjectResources() throws ApplicationException {
     /** please comment out, what you want to do **/
     /** create all resources of project "aaew" **/
-    collectionManager.updateCollection("aaew");
+    // collectionManager.updateCollection("aaew");
     /** create all resources of all projects alphabetically named between "aaew" and dta inclusive **/
     // collectionManager.updateCollections("aaew", "dta");
     /** create all resources of all projects named in this projectIds array **/
