@@ -172,7 +172,7 @@
   <dc:creator rdf:resource="http://wsp.normdata.rdf/Rudolph"/>
   <dc:creator rdf:resource="http://wsp.normdata.rdf/Sellschopp"/>
   <dc:creator rdf:resource="http://wsp.normdata.rdf/Waldhoff"/>
-  <dcterms:temporal rdf:datatype="&amp;xsd;date">start=1692; end=1694</dcterms:temporal>
+  <dcterms:temporal rdf:datatype="&xsd;date">start=1692; end=1694</dcterms:temporal>
   <dcterms:bibliographicCitation>Band IV,5 mit Schriften von 1692-1694 1. Aufl. 2004.</dcterms:bibliographicCitation>
 </rdf:Description>
 <rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/bilder/IV5text.pdf">
@@ -189,7 +189,7 @@
   <dc:creator rdf:resource="http://wsp.normdata.rdf/Rudolph"/>
   <dc:creator rdf:resource="http://wsp.normdata.rdf/Sellschopp"/>
   <dc:creator rdf:resource="http://wsp.normdata.rdf/Waldhoff"/>
-  <dcterms:temporal rdf:datatype="&amp;xsd;date">start=1692; end=1694</dcterms:temporal>
+  <dcterms:temporal rdf:datatype="&xsd;date">start=1692; end=1694</dcterms:temporal>
   <dc:title>Band IV,5 mit Schriften von 1692-1694 1. Aufl. 2004.</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/bilder/IV6TITa.pdf">
@@ -208,7 +208,7 @@
   <dc:creator rdf:resource="http://wsp.normdata.rdf/Krayer"/>
   <dc:creator rdf:resource="http://wsp.normdata.rdf/Li"/>
   <dc:creator rdf:resource="http://wsp.normdata.rdf/Luckscheiter"/>
-  <dcterms:temporal rdf:datatype="&amp;xsd;date">start=1695; end=1697</dcterms:temporal>
+  <dcterms:temporal rdf:datatype="&xsd;date">start=1695; end=1697</dcterms:temporal>
   <dc:title>Band IV,6 mit Schriften von 1695-1697 1. Aufl. 2008.</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/bilder/IV6text.pdf">
@@ -227,7 +227,7 @@
   <dc:creator rdf:resource="http://wsp.normdata.rdf/Li"/>
   <dc:creator rdf:resource="http://wsp.normdata.rdf/Luckscheiter"/>
   <dc:extent>906 Seiten</dc:extent>
-  <dcterms:temporal rdf:datatype="&amp;xsd;date">start=1695; end=1697</dcterms:temporal>
+  <dcterms:temporal rdf:datatype="&xsd;date">start=1695; end=1697</dcterms:temporal>
   <dc:title>Band IV,6 mit Schriften von 1695-1697 1. Aufl. 2008.</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/bilder/IV7TIT.pdf">
@@ -238,7 +238,7 @@
   <dc:date>2011</dc:date>
   <dc:extent>65 Seiten</dc:extent>
   <dc:creator rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam"/>
-  <dcterms:temporal rdf:datatype="&amp;xsd;date">start=1697; end=1699</dcterms:temporal>
+  <dcterms:temporal rdf:datatype="&xsd;date">start=1697; end=1699</dcterms:temporal>
   <dc:title>Band IV,7 mit Schriften von 1697 bis Anfang 1699.</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/bilder/IV7text.pdf">
@@ -249,7 +249,7 @@
   <dc:date>2011</dc:date>
   <dc:extent>1015 Seiten</dc:extent>
   <dc:creator rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam"/>
-  <dcterms:temporal rdf:datatype="&amp;xsd;date">start=1697; end=1699</dcterms:temporal>
+  <dcterms:temporal rdf:datatype="&xsd;date">start=1697; end=1699</dcterms:temporal>
   <dc:title>Band IV,7 mit Schriften von 1697 bis Anfang 1699.</dc:title>
 </rdf:Description>
 <rdf:Description rdf:about="http://leibniz-potsdam.bbaw.de/bilder/Corrigenda.pdf">
