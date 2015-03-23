@@ -53,8 +53,9 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant/DieDreiKritiken"/>
   <dc:identifier rdf:resource="http://kant.bbaw.de/die-drei-kritiken"/>
+  <!-- test änderung -->
+  <!--<dc:title>Die Drei Kritiken</dc:title>-->
   <dcterms:subject>
-    <dc:title>Die Drei Kritiken</dc:title>
     <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Philosophisches_Werk">
       <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
       <rdfs:label>Philosophisches Werk</rdfs:label>
