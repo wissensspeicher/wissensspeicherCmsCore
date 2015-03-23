@@ -3318,7 +3318,7 @@ use controlled Vocab, like GND or Getty Thesaurus of Geo Names</rdfs:comment>
         <dcterms:abstract>Corpus Nummorum Thracorum: The web portal Corpus Nummorum Thracorum offers a platform to find and research Thracian coins. It is based on collections found in Berlin, but it is growing by incorporating coins from other museums and institutions world wide.</dcterms:abstract>
         <foaf:name xml:lang="de">Die antiken Münzen Thrakiens</foaf:name>
         <dc:type>Drittmittelprojekt</dc:type>
-        <foaf:name xml:lang="en">The ancient coins of Thrace</foaf:name>
+        <!-- <foaf:name xml:lang="en">The ancient coins of Thrace</foaf:name> -->
         <dc:coverage rdf:resource="http://wsp.normdata.rdf/Antike"/>
         <foaf:fundedBy rdf:resource="http://wsp.normdata.rdf/DFG"/>
         <dc:contributor rdf:resource="http://wsp.normdata.rdf/Hanrahan"/>
@@ -17798,7 +17798,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
     <rdf:Description rdf:about="http://wsp.normdata.rdf/KarlPhilippMoritz/NeuereWerkausgabenSekundaerliteratur">
         <rdf:type rdf:resource="&foaf;Project"/>
         <foaf:nick>kmabib</foaf:nick>
-        <foaf:name>Kritische Karl-Philipp-Moritz-Ausgabe: Moritz-Bibliographie. Neuere Werkausgaben und Sekundärliteratur</foaf:name>
+        <foaf:name>Moritz-Bibliographie. Neuere Werkausgaben und Sekundärliteratur</foaf:name>
         <dc:language>ger</dc:language>
         <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KarlPhilippMoritz"/>
         <foaf:homepage rdf:resource="http://www.bbaw.de/forschung/moritz/biblio/index.html"/>
@@ -17826,7 +17826,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
     <rdf:Description rdf:about="http://wsp.normdata.rdf/LeibnizEditionPotsdam/Baende">
         <rdf:type rdf:resource="&foaf;Project"/>
         <dc:language>ger</dc:language>
-        <foaf:name>Leibniz-Edition Potsdam: Bände</foaf:name>
+        <foaf:name>Leibniz-Edition Potsdam: Politische Schriften</foaf:name>
         <foaf:nick>leibpotsbaende</foaf:nick>
         <foaf:homepage rdf:resource="http://leibniz-potsdam.bbaw.de"/>
         <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionPotsdam"/>
@@ -17881,7 +17881,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
 
     <rdf:Description rdf:about="http://wsp.normdata.rdf/MonumentaGermaniaeHistorica/Constitutiones">
         <rdf:type rdf:resource="&foaf;Project"/>
-        <foaf:name>Monumenta Germaniae Historica: Constitutiones et acta publica imperatorum et regum</foaf:name>
+        <foaf:name>Monumenta Germaniae Historica: Constitutiones et acta publica imperatorum et regum 1357-1378</foaf:name>
         <dc:language>ger</dc:language>
         <foaf:nick>mghconst</foaf:nick>
         <foaf:homepage rdf:resource="http://telota.bbaw.de/constitutiones/"/>
