@@ -706,7 +706,7 @@
     <dc:title>Corpvs Medicorvm Graecorvm: Galeni In Hippocratis Epidemiarum librum III commentaria III (CMG V 10,2,1)</dc:title>
     <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Galenus"/>
     <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Hippocrates"/>
-    <dc:creator rdf:resource="http://wsp.normdata.rdf/WenkebachErnst"/>>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/WenkebachErnst"/>
     <dc:date>1936</dc:date>
     <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
     <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
@@ -731,7 +731,7 @@
     <dc:title>Corpvs Medicorvm Graecorvm: Galeni In Hippocratis Epidemiarum librum VI commentaria I-VI (CMG V 10,2,2)</dc:title>
     <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Galenus"/>
     <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Hippocrates"/>
-    <dc:creator rdf:resource="http://wsp.normdata.rdf/WenkebachErnst"/>>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/WenkebachErnst"/>
     <dc:date>1956</dc:date>
     <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
     <dcterms:language rdf:resource="http://wsp.normdata.rdf/German"/>
@@ -757,7 +757,7 @@
     <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Galenus"/>
     <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/Hippocrates"/>
     <dc:creator rdf:resource="http://wsp.normdata.rdf/WenkebachErnst"/>
-    <dc:creator rdf:resource="http://wsp.normdata.rdf/SchubringKonrad"/>>
+    <dc:creator rdf:resource="http://wsp.normdata.rdf/SchubringKonrad"/>
     <dc:date>1955</dc:date>
     <dcterms:language rdf:resource="http://wsp.normdata.rdf/AncientGreek"/>
     <dcterms:language rdf:resource="http://wsp.normdata.rdf/Latin"/>
