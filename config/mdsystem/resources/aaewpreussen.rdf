@@ -91,7 +91,7 @@
   </rdf:Description>
 
   <!-- Images der Doku -->
-  <rdf:Description rdf:resource="http://aaew.bbaw.de/archive/lepsius-archiv/doku_lepsius/lepsius_schriften/atct_album_image?b_start:int=0">
+  <rdf:Description rdf:about="http://aaew.bbaw.de/archive/lepsius-archiv/doku_lepsius/lepsius_schriften/atct_album_image?b_start:int=0">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AltaegyptWB/Preussen"/>
     <dc:title>Eine Doppelseite der von Kurt Sethe angefertigten Kladde zum Lepsius-Archiv</dc:title>
@@ -99,7 +99,7 @@
     <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html_jpeg"/>
   </rdf:Description>
   
-  <rdf:Description rdf:resource="http://aaew.bbaw.de/archive/lepsius-archiv/doku_lepsius/lepsius_schriften/kgb2.jpg/view">
+  <rdf:Description rdf:about="http://aaew.bbaw.de/archive/lepsius-archiv/doku_lepsius/lepsius_schriften/kgb2.jpg/view">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AltaegyptWB/Preussen"/>
     <dc:title>Georg Gustav Erbkam: Tagebuch, Eintragung vom 15. Oktober 1842</dc:title>
@@ -108,7 +108,7 @@
     <dc:identifier rdf:resource="http://aaew.bbaw.de/archive/lepsius-archiv/doku_lepsius/lepsius_schriften/kgb2.jpg/view"/>
     <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
   </rdf:Description>
-  <rdf:Description rdf:resource="http://aaew.bbaw.de/archive/lepsius-archiv/doku_lepsius/lepsius_schriften/lpstgb1.jpg/view">
+  <rdf:Description rdf:about="http://aaew.bbaw.de/archive/lepsius-archiv/doku_lepsius/lepsius_schriften/lpstgb1.jpg/view">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AltaegyptWB/Preussen"/>
     <dc:title>Titelseite des 1. Foliobandes der Tagebücher von Richard Lepsius</dc:title>
@@ -116,7 +116,7 @@
     <dc:identifier rdf:resource="http://aaew.bbaw.de/archive/lepsius-archiv/doku_lepsius/lepsius_schriften/lpstgb1.jpg/view"/>
     <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
   </rdf:Description>
-  <rdf:Description rdf:resource="http://aaew.bbaw.de/archive/lepsius-archiv/doku_lepsius/lepsius_schriften/lpstgb1.jpg/view">
+  <rdf:Description rdf:about="http://aaew.bbaw.de/archive/lepsius-archiv/doku_lepsius/lepsius_schriften/lpstgb1.jpg/view">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AltaegyptWB/Preussen"/>
     <dc:title>Seiten 172-173 aus dem Notizbuch I von Richard Lepsius</dc:title>
@@ -124,7 +124,7 @@
     <dc:identifier rdf:resource="http://aaew.bbaw.de/archive/lepsius-archiv/doku_lepsius/lepsius_schriften/lpstgb1.jpg/view"/>
     <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
   </rdf:Description>
-  <rdf:Description rdf:resource="http://aaew.bbaw.de/archive/lepsius-archiv/doku_lepsius/lepsius_schriften/atct_album_image?b_start:int=4">
+  <rdf:Description rdf:about="http://aaew.bbaw.de/archive/lepsius-archiv/doku_lepsius/lepsius_schriften/atct_album_image?b_start:int=4">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AltaegyptWB/Preussen"/>
     <dc:title>Seiten 16-17 aus dem Notizbuch II von Richard Lepsius</dc:title>
@@ -132,7 +132,7 @@
     <dc:identifier rdf:resource="http://aaew.bbaw.de/archive/lepsius-archiv/doku_lepsius/lepsius_schriften/atct_album_image?b_start:int=4"/>
     <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
   </rdf:Description>
-  <rdf:Description rdf:resource="http://aaew.bbaw.de/archive/lepsius-archiv/doku_lepsius/lepsius_schriften/atct_album_image?b_start:int=5">
+  <rdf:Description rdf:about="http://aaew.bbaw.de/archive/lepsius-archiv/doku_lepsius/lepsius_schriften/atct_album_image?b_start:int=5">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AltaegyptWB/Preussen"/>
     <dc:title>Pyramiden von Gizeh. Oberer Eingang der Cheops-Pyramide mit der hieroglyphischen Inschrift zur Geburtstagsfeier des Preußischen Königs. Signiert J. F.</dc:title>
@@ -145,7 +145,7 @@
     <dc:description>Bleistiftzeichnung</dc:description>
     <dcterms:identifier>Archiv Inv.-Nr. 2427</dcterms:identifier>
   </rdf:Description>
-  <rdf:Description rdf:resource="http://aaew.bbaw.de/archive/lepsius-archiv/doku_lepsius/lepsius_schriften/atct_album_image?b_start:int=6">
+  <rdf:Description rdf:about="http://aaew.bbaw.de/archive/lepsius-archiv/doku_lepsius/lepsius_schriften/atct_album_image?b_start:int=6">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AltaegyptWB/Preussen"/>
     <dc:title>Titelblatt der Lepsius gehörigen Kopie des Verzeichnisses der während der Reise gesammelten Monumente, Papierabdrücke, Zeichnungen etc.</dc:title>
@@ -155,7 +155,7 @@
   </rdf:Description>
   
   <!-- Images Zeichnungen -->
-  <rdf:Description rdf:resource="http://aaew.bbaw.de/archive/lepsius-archiv/zeichnungen_lepsius/lepsius_zeichnungen/atct_album_image?b_start:int=0">
+  <rdf:Description rdf:about="http://aaew.bbaw.de/archive/lepsius-archiv/zeichnungen_lepsius/lepsius_zeichnungen/atct_album_image?b_start:int=0">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AltaegyptWB/Preussen"/>
     <dc:title>Amarna. Nördliche Gräber. Grab Nr. 6. Signiert: E. W.</dc:title>
@@ -165,7 +165,7 @@
     <dcterms:identifier>Archiv Inv.-Nr. 1021</dcterms:identifier>
     <dc:coverage rdf:resource="http://wsp.normdata.rdf/Amarna"/>
   </rdf:Description>
-  <rdf:Description rdf:resource="http://aaew.bbaw.de/archive/lepsius-archiv/zeichnungen_lepsius/lepsius_zeichnungen/benihas1.jpg/view">
+  <rdf:Description rdf:about="http://aaew.bbaw.de/archive/lepsius-archiv/zeichnungen_lepsius/lepsius_zeichnungen/benihas1.jpg/view">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AltaegyptWB/Preussen"/>
     <dc:title>Benihassan. Grab Nr. 1. Unsigniert</dc:title>
@@ -175,7 +175,7 @@
     <dcterms:identifier>Archiv Inv.-Nr. 598</dcterms:identifier>
     <dc:coverage rdf:resource="http://wsp.normdata.rdf/BeniHasan"/>
   </rdf:Description>
-  <rdf:Description rdf:resource="http://aaew.bbaw.de/archive/lepsius-archiv/zeichnungen_lepsius/lepsius_zeichnungen/benihas2.jpg/view">
+  <rdf:Description rdf:about="http://aaew.bbaw.de/archive/lepsius-archiv/zeichnungen_lepsius/lepsius_zeichnungen/benihas2.jpg/view">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AltaegyptWB/Preussen"/>
     <dc:title>Benihassan. Grab Nr. 2., Nordseite. Unsigniert</dc:title>
@@ -185,7 +185,7 @@
     <dcterms:identifier>Archiv Inv.-Nr. 541</dcterms:identifier>
     <dc:coverage rdf:resource="http://wsp.normdata.rdf/BeniHasan"/>
   </rdf:Description>
-  <rdf:Description rdf:resource="http://aaew.bbaw.de/archive/lepsius-archiv/zeichnungen_lepsius/lepsius_zeichnungen/eule.jpg/view">
+  <rdf:Description rdf:about="http://aaew.bbaw.de/archive/lepsius-archiv/zeichnungen_lepsius/lepsius_zeichnungen/eule.jpg/view">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AltaegyptWB/Preussen"/>
     <dc:title>Faium. Nachteule nach der Natur. Signiert: J. F.</dc:title>
@@ -194,7 +194,7 @@
     <dcterms:identifier>Archiv Inv.-Nr. 2446</dcterms:identifier>
     <dc:coverage rdf:resource="http://wsp.normdata.rdf/Faium"/>
   </rdf:Description>
-  <rdf:Description rdf:resource="http://aaew.bbaw.de/archive/lepsius-archiv/zeichnungen_lepsius/lepsius_zeichnungen/fetekta.jpg/view">
+  <rdf:Description rdf:about="http://aaew.bbaw.de/archive/lepsius-archiv/zeichnungen_lepsius/lepsius_zeichnungen/fetekta.jpg/view">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AltaegyptWB/Preussen"/>
     <dc:title>Sakara. Grab des Fetekta. Kammer A, Nr. 1, westlicher Teil der Nordseite. Signiert: J. B.</dc:title>
@@ -204,7 +204,7 @@
     <dcterms:identifier>Archiv Inv.-Nr. 395</dcterms:identifier>
     <dc:coverage rdf:resource="http://wsp.normdata.rdf/Sakkara"/>
   </rdf:Description>
-  <rdf:Description rdf:resource="http://aaew.bbaw.de/archive/lepsius-archiv/zeichnungen_lepsius/lepsius_zeichnungen/lpscamel.jpg/view">
+  <rdf:Description rdf:about="http://aaew.bbaw.de/archive/lepsius-archiv/zeichnungen_lepsius/lepsius_zeichnungen/lpscamel.jpg/view">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AltaegyptWB/Preussen"/>
     <dc:title>Richard Lepsius in türkischer Tracht auf einem Kamel vor Pyramiden. Unsigniert</dc:title>
@@ -216,7 +216,7 @@
     <dcterms:temporal rdf:datatype="&xsd;date">1845-07</dcterms:temporal>
     <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/LepsiusCarlRichard"/>
   </rdf:Description>
-  <rdf:Description rdf:resource="http://aaew.bbaw.de/archive/lepsius-archiv/zeichnungen_lepsius/lepsius_zeichnungen/nfrbaw.jpg/view">
+  <rdf:Description rdf:about="http://aaew.bbaw.de/archive/lepsius-archiv/zeichnungen_lepsius/lepsius_zeichnungen/nfrbaw.jpg/view">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AltaegyptWB/Preussen"/>
     <dc:title>Pyramiden von Gizeh. Grab des Neferbauptah. Zimmer C, Westseite. Signiert: Gem. E. W.</dc:title>
@@ -226,7 +226,7 @@
     <dcterms:identifier>Archiv Inv.-Nr. 319</dcterms:identifier>
     <dc:coverage rdf:resource="http://wsp.normdata.rdf/Gizeh"/>
   </rdf:Description>
-  <rdf:Description rdf:resource="http://aaew.bbaw.de/archive/lepsius-archiv/zeichnungen_lepsius/lepsius_zeichnungen/plan1.jpg/view">
+  <rdf:Description rdf:about="http://aaew.bbaw.de/archive/lepsius-archiv/zeichnungen_lepsius/lepsius_zeichnungen/plan1.jpg/view">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AltaegyptWB/Preussen"/>
     <dc:title>Pyramiden von Gizeh. Grab des Chuuiwer, Nr. 95. Unsigniert.</dc:title>
@@ -236,7 +236,7 @@
     <dcterms:identifier>Archiv Inv.-Nr. 31</dcterms:identifier>
     <dc:coverage rdf:resource="http://wsp.normdata.rdf/Gizeh"/>
   </rdf:Description>
-  <rdf:Description rdf:resource="http://aaew.bbaw.de/archive/lepsius-archiv/zeichnungen_lepsius/lepsius_zeichnungen/plan2.jpg/view">
+  <rdf:Description rdf:about="http://aaew.bbaw.de/archive/lepsius-archiv/zeichnungen_lepsius/lepsius_zeichnungen/plan2.jpg/view">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AltaegyptWB/Preussen"/>
     <dc:title>Generalplan der Ruinen von El Amarna. Signiert: Augneommen v. Lepsius</dc:title>
@@ -247,7 +247,7 @@
     <dc:coverage rdf:resource="http://wsp.normdata.rdf/Amarna"/>
     <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/LepsiusCarlRichard"/>
   </rdf:Description>
-  <rdf:Description rdf:resource="http://aaew.bbaw.de/archive/lepsius-archiv/zeichnungen_lepsius/lepsius_zeichnungen/pyrparty.jpg/view">
+  <rdf:Description rdf:about="http://aaew.bbaw.de/archive/lepsius-archiv/zeichnungen_lepsius/lepsius_zeichnungen/pyrparty.jpg/view">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AltaegyptWB/Preussen"/>
     <dc:title>Aufhissen der preußischen Fahne auf der Pyramide des Cheops unter Führung des Prof. Lepsius</dc:title>
@@ -258,7 +258,7 @@
     <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/LepsiusCarlRichard"/>
     <dcterms:temporal rdf:datatype="&xsd;date">1842-10-15</dcterms:temporal>
   </rdf:Description>
-  <rdf:Description rdf:resource="http://aaew.bbaw.de/archive/lepsius-archiv/zeichnungen_lepsius/lepsius_zeichnungen/pyrsphnx.jpg/view">
+  <rdf:Description rdf:about="http://aaew.bbaw.de/archive/lepsius-archiv/zeichnungen_lepsius/lepsius_zeichnungen/pyrsphnx.jpg/view">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AltaegyptWB/Preussen"/>
     <dc:title>Pyramiden von Gizeh. Sphinx von S. O. Signiert: J. B. </dc:title>
@@ -268,7 +268,7 @@
     <dc:coverage rdf:resource="http://wsp.normdata.rdf/Gizeh"/>
     <dcterms:identifier>Archiv Inv.-Nr. 2428</dcterms:identifier>
   </rdf:Description>
-  <rdf:Description rdf:resource="http://aaew.bbaw.de/archive/lepsius-archiv/zeichnungen_lepsius/lepsius_zeichnungen/weihier1.jpg/view">
+  <rdf:Description rdf:about="http://aaew.bbaw.de/archive/lepsius-archiv/zeichnungen_lepsius/lepsius_zeichnungen/weihier1.jpg/view">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AltaegyptWB/Preussen"/>
     <dc:title>Maasara. Felsentafel in den Steinbrüchen. Signiert: M. W.</dc:title>
@@ -278,7 +278,7 @@
     <dc:coverage rdf:resource="http://wsp.normdata.rdf/Maasara"/>
     <dcterms:identifier>Archiv Inv.-Nr. 677</dcterms:identifier>
   </rdf:Description>
-  <rdf:Description rdf:resource="http://aaew.bbaw.de/archive/lepsius-archiv/zeichnungen_lepsius/lepsius_zeichnungen/weihier2.jpg/view">
+  <rdf:Description rdf:about="http://aaew.bbaw.de/archive/lepsius-archiv/zeichnungen_lepsius/lepsius_zeichnungen/weihier2.jpg/view">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AltaegyptWB/Preussen"/>
     <dc:title>Ohne Titel (Theben. Dêr el Medinet. Grab 9). Unsigniert</dc:title>
@@ -287,7 +287,7 @@
     <dc:description>Bleistift-/ Federzeichnung</dc:description>
     <dcterms:identifier>Archiv Inv.-Nr. 670</dcterms:identifier>
   </rdf:Description>
-  <rdf:Description rdf:resource="http://aaew.bbaw.de/archive/lepsius-archiv/zeichnungen_lepsius/lepsius_zeichnungen/pyramiden-von-gizeh.-sphinx-mit-traumstele-thutmosis-iv.-bleistiftzeichnung.-signiert-orig.-von-wild-kop.-n.-frey.-archiv-inv.-nr.-2429/view">
+  <rdf:Description rdf:about="http://aaew.bbaw.de/archive/lepsius-archiv/zeichnungen_lepsius/lepsius_zeichnungen/pyramiden-von-gizeh.-sphinx-mit-traumstele-thutmosis-iv.-bleistiftzeichnung.-signiert-orig.-von-wild-kop.-n.-frey.-archiv-inv.-nr.-2429/view">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AltaegyptWB/Preussen"/>
     <dc:title>Pyramiden von Gizeh. Sphinx mit Traumstele Thutmosis' IV. Signiert: Orig. von Wild Kop. N. Frey</dc:title>
@@ -299,7 +299,7 @@
   </rdf:Description>
   
   <!-- Images Abklatsche -->
-  <rdf:Description rdf:resource="http://aaew.bbaw.de/archive/lepsius-archiv/abklatsche_lepsius/lepsius-abklatsche/atct_album_image?b_start:int=0">
+  <rdf:Description rdf:about="http://aaew.bbaw.de/archive/lepsius-archiv/abklatsche_lepsius/lepsius-abklatsche/atct_album_image?b_start:int=0">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AltaegyptWB/Preussen"/>
     <dc:title>Statuette des Neferabet im Museum zu Valetta, Malta</dc:title>
@@ -308,7 +308,7 @@
     <dcterms:identifier>Abklatsch-Archiv Serie 1, Blatt 1, 11(3), 5, 6 mit Original-Umschlag</dcterms:identifier>
     <dc:description>Abklatsch</dc:description>
   </rdf:Description>
-  <rdf:Description rdf:resource="http://aaew.bbaw.de/archive/lepsius-archiv/abklatsche_lepsius/lepsius-abklatsche/a132col.jpg/view">
+  <rdf:Description rdf:about="http://aaew.bbaw.de/archive/lepsius-archiv/abklatsche_lepsius/lepsius-abklatsche/a132col.jpg/view">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AltaegyptWB/Preussen"/>
     <dc:title>Original-Umschlag zur Serie 132</dc:title>
@@ -317,7 +317,7 @@
     <dcterms:identifier>Abklatsch-Archiv Serie 132, Original-Umschlag</dcterms:identifier>
     <dc:description>Abklatsch</dc:description>
   </rdf:Description>
-  <rdf:Description rdf:resource="http://aaew.bbaw.de/archive/lepsius-archiv/abklatsche_lepsius/lepsius-abklatsche/a507_1.jpg/view">
+  <rdf:Description rdf:about="http://aaew.bbaw.de/archive/lepsius-archiv/abklatsche_lepsius/lepsius-abklatsche/a507_1.jpg/view">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AltaegyptWB/Preussen"/>
     <dc:title>El Tell, 3. Grab, rechte Wand der Hauptkammer</dc:title>
@@ -326,7 +326,7 @@
     <dcterms:identifier>Abklatsch-Archiv Serie 507, Blatt 1</dcterms:identifier>
     <dc:description>Abklatsch</dc:description>
   </rdf:Description>
-  <rdf:Description rdf:resource="http://aaew.bbaw.de/archive/lepsius-archiv/abklatsche_lepsius/lepsius-abklatsche/a507_1.jpg/view">
+  <rdf:Description rdf:about="http://aaew.bbaw.de/archive/lepsius-archiv/abklatsche_lepsius/lepsius-abklatsche/a507_1.jpg/view">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AltaegyptWB/Preussen"/>
     <dc:title>El Tell, 3. Grab, rechte Wand der Hauptkammer</dc:title>
@@ -335,7 +335,7 @@
     <dcterms:identifier>Abklatsch-Archiv Serie 507, Blatt 1</dcterms:identifier>
     <dc:description>Abklatsch</dc:description>
   </rdf:Description>
-  <rdf:Description rdf:resource="http://aaew.bbaw.de/archive/lepsius-archiv/abklatsche_lepsius/lepsius-abklatsche/a2127.jpg/view">
+  <rdf:Description rdf:about="http://aaew.bbaw.de/archive/lepsius-archiv/abklatsche_lepsius/lepsius-abklatsche/a2127.jpg/view">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AltaegyptWB/Preussen"/>
     <dc:title>Alabaster Vase. Gastand (heute: Ägyptisches Museum Berlin, Inv.-Nr. 7342)</dc:title>
@@ -344,7 +344,7 @@
     <dcterms:identifier>Abklatsch-Archiv Serie 2127, Blatt 1</dcterms:identifier>
     <dc:description>Abklatsch</dc:description>
   </rdf:Description>
-  <rdf:Description rdf:resource="http://aaew.bbaw.de/archive/lepsius-archiv/abklatsche_lepsius/lepsius-abklatsche/amarna1.jpg/view">
+  <rdf:Description rdf:about="http://aaew.bbaw.de/archive/lepsius-archiv/abklatsche_lepsius/lepsius-abklatsche/amarna1.jpg/view">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AltaegyptWB/Preussen"/>
     <dc:title>Amarna, Foto des Abklatsches aus dem Grab 7 der Nordgruppe. Fotoarchiv</dc:title>
@@ -354,7 +354,7 @@
     <dc:coverage rdf:resource="http://wsp.normdata.rdf/Amarna"/>
     <dc:description>Abklatsch</dc:description>
   </rdf:Description>
-  <rdf:Description rdf:resource="http://aaew.bbaw.de/archive/lepsius-archiv/abklatsche_lepsius/lepsius-abklatsche/amarna2.jpg/view">
+  <rdf:Description rdf:about="http://aaew.bbaw.de/archive/lepsius-archiv/abklatsche_lepsius/lepsius-abklatsche/amarna2.jpg/view">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AltaegyptWB/Preussen"/>
     <dc:title>Amarna, Foto-Detail des Abklatsches aus dem Grab 7 der Nordgruppe. Fotoarchiv</dc:title>
@@ -364,7 +364,7 @@
     <dc:coverage rdf:resource="http://wsp.normdata.rdf/Amarna"/>
     <dc:description>Abklatsch</dc:description>
   </rdf:Description>
-  <rdf:Description rdf:resource="http://aaew.bbaw.de/archive/lepsius-archiv/abklatsche_lepsius/lepsius-abklatsche/amarna4.jpg/view">
+  <rdf:Description rdf:about="http://aaew.bbaw.de/archive/lepsius-archiv/abklatsche_lepsius/lepsius-abklatsche/amarna4.jpg/view">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AltaegyptWB/Preussen"/>
     <dc:title>Grab 7 von Et Tell (natürliche Größe). Signiert: Max Weidenbach</dc:title>
@@ -373,7 +373,7 @@
     <dcterms:identifier>Archiv Inv.-Nr. 1024</dcterms:identifier>
     <dc:description>Bleistiftzeichnung</dc:description>
   </rdf:Description>
-  <rdf:Description rdf:resource="http://aaew.bbaw.de/archive/lepsius-archiv/abklatsche_lepsius/lepsius-abklatsche/amarna6.jpg/view">
+  <rdf:Description rdf:about="http://aaew.bbaw.de/archive/lepsius-archiv/abklatsche_lepsius/lepsius-abklatsche/amarna6.jpg/view">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AltaegyptWB/Preussen"/>
     <dc:title>Grab 6 von Et Tell</dc:title>
@@ -382,7 +382,7 @@
     <dcterms:identifier>Abklatsch-Archiv Serie 131, Blatt 4, Inv.-Nr. 319</dcterms:identifier>
     <dc:description>Abklatsch</dc:description>
   </rdf:Description>
-  <rdf:Description rdf:resource="http://aaew.bbaw.de/archive/lepsius-archiv/abklatsche_lepsius/lepsius-abklatsche/not2_16.jpg/view">
+  <rdf:Description rdf:about="http://aaew.bbaw.de/archive/lepsius-archiv/abklatsche_lepsius/lepsius-abklatsche/not2_16.jpg/view">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AltaegyptWB/Preussen"/>
     <dc:title>Seiten 16-17 aus dem Notizbuch II von Richard Lepsius</dc:title>
@@ -390,7 +390,7 @@
     <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
     <dc:description>Abklatsch</dc:description>
   </rdf:Description>
-  <rdf:Description rdf:resource="http://aaew.bbaw.de/archive/lepsius-archiv/abklatsche_lepsius/lepsius-abklatsche/verza1_4.jpg/view">
+  <rdf:Description rdf:about="http://aaew.bbaw.de/archive/lepsius-archiv/abklatsche_lepsius/lepsius-abklatsche/verza1_4.jpg/view">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AltaegyptWB/Preussen"/>
     <dc:title>Seite 5 aus dem Original-Verzeichnis der während der Reise gesammelten Monumente, Papierabdrücke, Zeichnungen etc.</dc:title>
@@ -398,7 +398,7 @@
     <dcterms:format rdf:resource="http://wsp.normdata.rdf/image_jpeg"/>
     <dc:description>Abklatsch</dc:description>
   </rdf:Description>
-  <rdf:Description rdf:resource="http://aaew.bbaw.de/archive/lepsius-archiv/abklatsche_lepsius/lepsius-abklatsche/eine-seite-der-von-kurt-sethe-angefertigten-kladde-zum-lepsius-archiv/view">
+  <rdf:Description rdf:about="http://aaew.bbaw.de/archive/lepsius-archiv/abklatsche_lepsius/lepsius-abklatsche/eine-seite-der-von-kurt-sethe-angefertigten-kladde-zum-lepsius-archiv/view">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AltaegyptWB/Preussen"/>
     <dc:title>Eine Seite der von Kurt Sethe angefertigten Kladde zum Lepsius-Archiv</dc:title>
