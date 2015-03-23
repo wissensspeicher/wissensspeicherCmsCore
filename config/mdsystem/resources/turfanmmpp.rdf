@@ -34,7 +34,7 @@
   <rdf:Description rdf:about="http://wsp.normdata.rdf/Turfan/ManichaeanMiddlePersianTexts">
     <rdf:type rdf:resource="&foaf;Project"/>
     <foaf:nick>turfanmmpp</foaf:nick>
-    <foaf:name>Published Manichaean Middle Persian and Parthian Texts Purpose</foaf:name>
+    <foaf:name>Published Manichaean Middle Persian and Parthian Texts</foaf:name>
     <dc:language>eng</dc:language>
     <foaf:homepage rdf:resource="http://turfan.bbaw.de/bilder/mirtext-2"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Turfan"/>
