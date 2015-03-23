@@ -36,7 +36,7 @@
     <rdf:type rdf:resource="&foaf;Project"/>
     <dc:language>ger</dc:language>
     <foaf:nick>leibbersach</foaf:nick>
-    <foaf:name>Kumuliertes Sachverzeichnis der bisher erschienenen Bände der Leibniz-Akademieausgabe und einiger Leibniz-Teilausgaben</foaf:name>
+    <foaf:name>Leibniz-Edition Berlin: Sachregister</foaf:name>
     <foaf:homepage rdf:resource="http://telota.bbaw.de/leibniziv/Sachregister/sachreg_start.html"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizEditionBerlin"/>
     <dcterms:modified rdf:datatype="&xsd;date">2012-06</dcterms:modified>
