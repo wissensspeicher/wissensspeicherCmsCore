@@ -15,10 +15,10 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ProsopographiaImperiiRomani"/>
   <dc:identifier rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/pir/de/Startseite"/>
 </rdf:Description>
-<rdf:Description rdf:about=" http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/pir/de/blanko.2005-02-17.2432643101">
+<rdf:Description rdf:about="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/pir/de/blanko.2005-02-17.2432643101">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/ProsopographiaImperiiRomani"/>
-  <dc:identifier rdf:resource=" http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/pir/de/blanko.2005-02-17.2432643101"/>
+  <dc:identifier rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/pir/de/blanko.2005-02-17.2432643101"/>
 </rdf:Description>
 <rdf:Description rdf:about="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/pir/de/blanko.2005-02-17.7966795951">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
