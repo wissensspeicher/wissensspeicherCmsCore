@@ -60,7 +60,7 @@
     
  <rdf:Description rdf:about="http://akademieregistres.bbaw.de">
    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-   <dcterms:identifier rdf:about="http://akademieregistres.bbaw.de"/>
+   <dcterms:identifier rdf:resource="http://akademieregistres.bbaw.de"/>
    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Registres"/>
  </rdf:Description>   
 <rdf:Description rdf:about="http://telota.bbaw.de:9979/exist/rest/db/registres/">
