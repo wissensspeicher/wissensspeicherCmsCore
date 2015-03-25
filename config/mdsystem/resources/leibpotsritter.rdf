@@ -33,7 +33,7 @@
   
   <rdf:Description rdf:about="http://wsp.normdata.rdf/LeibnizEditionPotsdam/RitterKatalog">
     <rdf:type rdf:resource="&foaf;Project"/>
-    <foaf:name>Online-Ritterkatalog</foaf:name>
+    <foaf:name>Leibniz-Edition Potsdam: Ritter Katalog</foaf:name>
     <foaf:nick>leibpotsritter</foaf:nick>
     <dc:language>ger</dc:language>
     <dc:creator rdf:reosurce="http://wsp.normdata.de/LeibnizEditionBerlin"/>
