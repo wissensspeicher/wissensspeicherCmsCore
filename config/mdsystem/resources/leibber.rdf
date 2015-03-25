@@ -4111,7 +4111,7 @@
 <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/pdf/Sur%2Bl%2527exp%2526eacute%253Brience%2Bet%2Bl%2527appareil%2Bde%2BFoucher%2Bpour%2Bl%2527evaluation%2Bdu%2Bpoids%2Bde%2Bl%2527air%2Brar%2526eacute%253Bfi%2526eacute%253B/LH038_144r/LH038,_144%2Bra1.png"/><rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dc:title>Sur l'expérience et l'appareil de Foucher pour l'evaluation du poids de l'air raréfié</dc:title>
   <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Technik"/>
-  <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/4012315-7">Dijon</gnd:gndRelatedPlaceOrGeographicName>
+  <gnd:gndRelatedPlaceOrGeographicName rdf:resource="http://d-nb.info/gnd/4012315-7"/>
   <gnd:gndRelatedPerson rdf:resource="http://wsp.normdata.rdf/FoucherSimon"/>
 </rdf:Description>
     <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Sur%2Bl%2527exp%2526eacute%253Brience%2Bet%2Bl%2527appareil%2Bde%2BFoucher%2Bpour%2Bl%2527evaluation%2Bdu%2Bpoids%2Bde%2Bl%2527air%2Brar%2526eacute%253Bfi%2526eacute%253B/LH038_144r/index.html">
