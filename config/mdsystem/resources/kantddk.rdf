@@ -32,7 +32,7 @@
     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
     <owl:Ontology rdf:about="http://wsp.normdata.rdf/"/>
   
-  <rdf:Description rdf:about="http://wsp.normdata.rdf/NeueditionKant/DieDreiKritiken">
+  <rdf:Description rdf:about="http://wsp.normdata.rdf/KantSchriften/DieDreiKritiken">
     <rdf:type rdf:resource="&foaf;Project"/>
     <foaf:name>Kant’s gesammelte Schriften: Die drei Kritiken</foaf:name>
     <foaf:nick>kantddk</foaf:nick>
@@ -51,7 +51,7 @@
   
 <rdf:Description rdf:about="http://kant.bbaw.de/die-drei-kritiken">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant/DieDreiKritiken"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KantSchriften/DieDreiKritiken"/>
   <dc:identifier rdf:resource="http://kant.bbaw.de/die-drei-kritiken"/>
   <!-- test änderung -->
   <!--<dc:title>Die Drei Kritiken</dc:title>-->
@@ -84,7 +84,7 @@
 <!-- WEB  -->
 <rdf:Description rdf:about="http://kant.bbaw.de/die-drei-kritiken/edition">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant/DieDreiKritiken"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KantSchriften/DieDreiKritiken"/>
   <dc:identifier rdf:resource="http://kant.bbaw.de/die-drei-kritiken/edition"/>
   <dcterms:subject>
     <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Philosophisches_Werk">
@@ -114,7 +114,7 @@
 
 <rdf:Description rdf:about="http://kant.bbaw.de/die-drei-kritiken/critik-der-reinen-vernunft">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant/DieDreiKritiken"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KantSchriften/DieDreiKritiken"/>
   <dc:identifier rdf:resource="http://kant.bbaw.de/die-drei-kritiken/critik-der-reinen-vernunft"/>
   <dc:title>Critik der reinen Vernunft</dc:title>
   <dcterms:subject>
@@ -151,7 +151,7 @@
 
 <rdf:Description rdf:about="http://kant.bbaw.de/die-drei-kritiken/critik-der-practischen-vernunft-handexemplar">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant/DieDreiKritiken"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KantSchriften/DieDreiKritiken"/>
   <dc:identifier rdf:resource="http://kant.bbaw.de/die-drei-kritiken/critik-der-practischen-vernunft-handexemplar"/>
   <dc:title>Critik der practischen Vernunft (Handexemplar)</dc:title>
   <dcterms:subject>
@@ -188,7 +188,7 @@
 
 <rdf:Description rdf:about="http://kant.bbaw.de/die-drei-kritiken/critik-der-urtheilskraft">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant/DieDreiKritiken"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KantSchriften/DieDreiKritiken"/>
   <dc:identifier rdf:resource="http://kant.bbaw.de/die-drei-kritiken/critik-der-urtheilskraft"/>
   <dc:title>Critik der Urtheilskraft</dc:title>
   <dcterms:subject>
@@ -225,21 +225,21 @@
 
 <rdf:Description rdf:about="http://kant.bbaw.de/die-drei-kritiken/zeit-stiftung">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant/DieDreiKritiken"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KantSchriften/DieDreiKritiken"/>
   <dc:identifier rdf:resource="http://kant.bbaw.de/die-drei-kritiken/zeit-stiftung"/>
   <dc:title>Zeit-Stiftung</dc:title>
 </rdf:Description>
 
 <rdf:Description rdf:about="http://kant.bbaw.de/die-drei-kritiken/walter-de-gruyter-stiftung">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant/DieDreiKritiken"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KantSchriften/DieDreiKritiken"/>
   <dc:identifier rdf:resource="http://kant.bbaw.de/die-drei-kritiken/walter-de-gruyter-stiftung"/>
   <dc:title>Walter de Gruyter Stiftung</dc:title>
 </rdf:Description>
 
 <rdf:Description rdf:about="http://kant.bbaw.de/die-drei-kritiken/hamburger-stiftung-zur-foerderung-von-wissenschaft-und-kultur">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant/DieDreiKritiken"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KantSchriften/DieDreiKritiken"/>
   <dc:identifier rdf:resource="http://kant.bbaw.de/die-drei-kritiken/hamburger-stiftung-zur-foerderung-von-wissenschaft-und-kultur"/>
   <dc:title>Hamburger Stiftung zur Förderung von Wissenschaft und Kultur</dc:title>
 </rdf:Description>
@@ -248,7 +248,7 @@
 <!-- Erstausgabe Kritik der reinen Vernunft Retrodigitalisat  -->
 <rdf:Description rdf:about="http://kant.bbaw.de/die-drei-kritiken/critik-der-reinen-vernunft/crva">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant/DieDreiKritiken"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KantSchriften/DieDreiKritiken"/>
   <dc:identifier rdf:resource="http://kant.bbaw.de/die-drei-kritiken/critik-der-reinen-vernunft/crva"/>
   
   <dcterms:subject>
@@ -296,7 +296,7 @@
 <!-- Zweitausgabe Kritik der reinen Vernunft Retrodigitalisat  -->
 <rdf:Description rdf:about="http://kant.bbaw.de/die-drei-kritiken/critik-der-reinen-vernunft/crvb">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant/DieDreiKritiken"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KantSchriften/DieDreiKritiken"/>
   <dc:identifier rdf:resource="http://kant.bbaw.de/die-drei-kritiken/critik-der-reinen-vernunft/crvb"/>
   <dcterms:subject>
     <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Kritik_der_reinen_Vernunft">
@@ -343,7 +343,7 @@
 <!-- Erstausgabe Kritik der praktischen Vernunft Retrodigitalisat  -->
 <rdf:Description rdf:about="http://kant.bbaw.de/die-drei-kritiken/critik-der-practischen-vernunft-handexemplar/CpV">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant/DieDreiKritiken"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KantSchriften/DieDreiKritiken"/>
   <dc:identifier rdf:resource="http://kant.bbaw.de/die-drei-kritiken/critik-der-practischen-vernunft-handexemplar/CpV"/>
   <dcterms:subject>
     <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Philosophisches_Werk">
@@ -386,7 +386,7 @@
 <!-- Erstausgabe Kritik der Urteilskraft Retrodigitalisat  -->
 <rdf:Description rdf:about="http://kant.bbaw.de/die-drei-kritiken/critik-der-urtheilskraft/critik-der-urtheilskraft">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant/DieDreiKritiken"/>
+  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KantSchriften/DieDreiKritiken"/>
   <dc:identifier rdf:resource="http://kant.bbaw.de/die-drei-kritiken/critik-der-urtheilskraft/critik-der-urtheilskraft"/>
    <dcterms:subject>
     <rdf:Description rdf:about="http://de.dbpedia.org/page/Kategorie:Philosophisches_Werk">
