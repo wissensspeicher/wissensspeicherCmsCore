@@ -32,7 +32,7 @@
   <owl:Ontology rdf:about="http://wsp.normdata.rdf/"/>
   
   
-  <rdf:Description rdf:about="http://wsp.normdata.rdf/NeueditionKant/PhysischeGeographie">
+  <rdf:Description rdf:about="http://wsp.normdata.rdf/KantSchriften/PhysischeGeographie">
     <rdf:type rdf:resource="&foaf;Project"/>
     <dcterms:abstract>Die Vorlesungen über Physische Geographie sind bisher nur in verschiedenen, unzulänglichen Bearbeitungen veröffentlicht.  Ziel des Vorhabens ist sowohl eine adäquate Darstellung der Überlieferung in Form einer elektronischen Dokumentation als auch die Herstellung lesbarer, kritisch geprüfter und erläuterter Texte für den Buchdruck.</dcterms:abstract>
     <foaf:name>Kant’s gesammelte Schriften: Vorlesungen über Physische Geographie</foaf:name>
