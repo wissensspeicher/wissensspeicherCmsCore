@@ -17745,7 +17745,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
         <foaf:nick>kantddk</foaf:nick>
         <dc:language>ger</dc:language>
         <foaf:homepage rdf:resource="http://kant.bbaw.de/die-drei-kritiken"/>
-        <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/KantSchriften"/>
+        <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/NeueditionKant"/>
         <dc:coverage rdf:resource="http://wsp.normdata.rdf/Neuzeit"/>
     </rdf:Description>
     
