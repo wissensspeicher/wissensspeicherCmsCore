@@ -84,6 +84,7 @@ public class DBpediaSpotlightHandler {
   
   private void init() throws ApplicationException {
     initHttpClient();
+    testCall();
     initDBpediaResources();
   }
   
@@ -97,6 +98,20 @@ public class DBpediaSpotlightHandler {
     xQueryEvaluator = new XQueryEvaluator();
   }
   
+  private void testCall() throws ApplicationException {
+    HttpClient httpClient = new HttpClient();
+    int smallSocketTimeout = 2000;
+    // timeout seems to work
+    httpClient.getParams().setParameter("http.socket.timeout", smallSocketTimeout);
+    httpClient.getParams().setParameter("http.connection.timeout", smallSocketTimeout);
+    httpClient.getParams().setParameter("http.connection-manager.timeout", new Long(smallSocketTimeout));
+    httpClient.getParams().setParameter("http.protocol.head-body-timeout", smallSocketTimeout);
+    NameValuePair textParam = new NameValuePair("text", "test");
+    NameValuePair confidenceParam = new NameValuePair("confidence", "0.99");
+    NameValuePair[] params = {textParam, confidenceParam};
+    performPostRequest(httpClient, "annotate", params, "text/xml");
+  }
+
   private void initDBpediaResources() throws ApplicationException {
     dbPediaResources = new Hashtable<String, DBpediaResource>();
     germanStopwords = new Hashtable<String, String>();
@@ -415,9 +430,9 @@ public class DBpediaSpotlightHandler {
 
   private String performPostRequest(String serviceName, NameValuePair[] params, String outputFormat) throws ApplicationException {
     String resultStr = null;
+    String portPart = ":" + PORT;
+    String urlStr = "http://" + HOSTNAME + portPart + "/" + SERVICE_PATH + "/" + serviceName;
     try {
-      String portPart = ":" + PORT;
-      String urlStr = "http://" + HOSTNAME + portPart + "/" + SERVICE_PATH + "/" + serviceName;
       PostMethod method = new PostMethod(urlStr);
       method.getParams().setContentCharset("utf-8");
       for (int i=0; i<params.length; i++) {
@@ -432,13 +447,46 @@ public class DBpediaSpotlightHandler {
       in.close();
       method.releaseConnection();
     } catch (HttpException e) {
+      LOGGER.info("DBpediaSpotlightHandler: " + urlStr + " not reachable");
       throw new ApplicationException(e);
     } catch (IOException e) {
+      LOGGER.info("DBpediaSpotlightHandler: " + urlStr + " not reachable");
       throw new ApplicationException(e);
     } catch (Exception e) {
+      LOGGER.info("DBpediaSpotlightHandler: " + urlStr + " not reachable");
       throw new ApplicationException(e);
     }
     return resultStr;
   }
 
+  private String performPostRequest(HttpClient httpClient, String serviceName, NameValuePair[] params, String outputFormat) throws ApplicationException {
+    String resultStr = null;
+    String portPart = ":" + PORT;
+    String urlStr = "http://" + HOSTNAME + portPart + "/" + SERVICE_PATH + "/" + serviceName;
+    try {
+      PostMethod method = new PostMethod(urlStr);
+      method.getParams().setContentCharset("utf-8");
+      for (int i=0; i<params.length; i++) {
+        NameValuePair param = params[i];
+        method.addParameter(param);
+      }
+      method.addRequestHeader("Accept", outputFormat);  // values are: text/xml, application/json, text/html, application/xhtml+xml (RDFa: see http://www.w3.org/2007/08/pyRdfa/)
+      httpClient.executeMethod(method);
+      InputStream is = method.getResponseBodyAsStream();
+      BufferedInputStream in = new BufferedInputStream(is);
+      resultStr = IOUtils.toString(in, "utf-8");
+      in.close();
+      method.releaseConnection();
+    } catch (HttpException e) {
+      LOGGER.info("DBpediaSpotlightHandler could not be initialized: " + urlStr + " not reachable");
+      throw new ApplicationException(e);
+    } catch (IOException e) {
+      LOGGER.info("DBpediaSpotlightHandler could not be initialized: " + urlStr + " not reachable");
+      throw new ApplicationException(e);
+    } catch (Exception e) {
+      LOGGER.info("DBpediaSpotlightHandler could not be initialized: " + urlStr + " not reachable");
+      throw new ApplicationException(e);
+    }
+    return resultStr;
+  }
 }
