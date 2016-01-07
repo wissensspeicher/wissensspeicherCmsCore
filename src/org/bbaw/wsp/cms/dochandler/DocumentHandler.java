@@ -529,77 +529,81 @@ public class DocumentHandler {
         mdRecord.setTokenMorph(docTokensMorph);
         mdRecord.setContent(content);
       }
-      DBpediaSpotlightHandler dbPediaSpotlightHandler = DBpediaSpotlightHandler.getInstance(); 
-      Annotation docContentAnnotation = null;
-      Annotation docTitleAnnotation = null;
-      try {
-        String collectionId = mdRecord.getCollectionNames();
-        Collection collection = CollectionReader.getInstance().getCollection(collectionId);
-        String docContent = content; // docTokensOrig;
-        if (docTokensOrig == null && mdRecord.getDescription() != null && ! mdRecord.getDescription().isEmpty())
-          docContent = mdRecord.getDescription();
-        if (docContent != null) {
-          docContentAnnotation = dbPediaSpotlightHandler.annotate(collection, docId, docContent, "0.99", 50);
+      // build DBpedia Spotlight entities 
+      boolean useDBpediaSpotlight = Constants.getInstance().useDBpediaSpotlight();
+      if (useDBpediaSpotlight) {
+        DBpediaSpotlightHandler dbPediaSpotlightHandler = DBpediaSpotlightHandler.getInstance(); 
+        Annotation docContentAnnotation = null;
+        Annotation docTitleAnnotation = null;
+        try {
+          String collectionId = mdRecord.getCollectionNames();
+          Collection collection = CollectionReader.getInstance().getCollection(collectionId);
+          String docContent = content; // docTokensOrig;
+          if (docTokensOrig == null && mdRecord.getDescription() != null && ! mdRecord.getDescription().isEmpty())
+            docContent = mdRecord.getDescription();
+          if (docContent != null) {
+            docContentAnnotation = dbPediaSpotlightHandler.annotate(collection, docId, docContent, "0.99", 50);
+          }
+          String docTitle = mdRecord.getTitle();
+          if (docTitle != null)
+            docTitleAnnotation = dbPediaSpotlightHandler.annotate(collection, docId, docTitle, "0.5", 50);
+        } catch (ApplicationException e) {
+          LOGGER.error(e);
         }
-        String docTitle = mdRecord.getTitle();
-        if (docTitle != null)
-          docTitleAnnotation = dbPediaSpotlightHandler.annotate(collection, docId, docTitle, "0.5", 50);
-      } catch (ApplicationException e) {
-        LOGGER.error(e);
-      }
-      if (docContentAnnotation != null && ! docContentAnnotation.isEmpty()) {
-        List<DBpediaResource> resources = docContentAnnotation.getResources();
-        if (docTitleAnnotation != null) {
-          List<DBpediaResource> docTitleResources = docTitleAnnotation.getResources();
-          if (docTitleResources != null) {
-            for (int i=docTitleResources.size()-1; i>=0; i--) {
-              DBpediaResource r = docTitleResources.get(i);
-              if (! resources.contains(r))
-                resources.add(0, r); // add title entities at the beginning
+        if (docContentAnnotation != null && ! docContentAnnotation.isEmpty()) {
+          List<DBpediaResource> resources = docContentAnnotation.getResources();
+          if (docTitleAnnotation != null) {
+            List<DBpediaResource> docTitleResources = docTitleAnnotation.getResources();
+            if (docTitleResources != null) {
+              for (int i=docTitleResources.size()-1; i>=0; i--) {
+                DBpediaResource r = docTitleResources.get(i);
+                if (! resources.contains(r))
+                  resources.add(0, r); // add title entities at the beginning
+              }
             }
           }
-        }
-        String collName = mdRecord.getCollectionNames();
-        Collection coll = CollectionReader.getInstance().getCollection(collName);
-        String collRdfId = coll.getRdfId();
-        if (resources != null) {
-          StringBuilder dbPediaResourceNamesStrBuilder = new StringBuilder();
-          StringBuilder dbPediaResourcesXmlStrBuilder = new StringBuilder();
-          dbPediaResourcesXmlStrBuilder.append("<resources>\n");
-          StringBuilder dbPediaSpotlightCollectionRdfStrBuilder = coll.getDbPediaSpotlightRdfStrBuilder();
-          if (mdRecord.isEdocRecord()) {
-            Collection edocColl = CollectionReader.getInstance().getCollection("edoc");
-            dbPediaSpotlightCollectionRdfStrBuilder = edocColl.getDbPediaSpotlightRdfStrBuilder();
-          }
-          String uri = mdRecord.getUri();
-          String webUri = mdRecord.getWebUri();
-          if (webUri != null)
-            uri = webUri;
-          uri = StringUtils.deresolveXmlEntities(uri);
-          if (dbPediaSpotlightCollectionRdfStrBuilder != null) {
-            dbPediaSpotlightCollectionRdfStrBuilder.append("<rdf:Description rdf:about=\"" + uri + "\">\n");
-            dbPediaSpotlightCollectionRdfStrBuilder.append("  <rdf:type rdf:resource=\"http://purl.org/dc/terms/BibliographicResource\"/>\n");
-            dbPediaSpotlightCollectionRdfStrBuilder.append("  <dcterms:isPartOf rdf:resource=\"" + collRdfId + "\"/>\n");
-            dbPediaSpotlightCollectionRdfStrBuilder.append("  <dc:identifier rdf:resource=\"" + uri + "\"/>\n");
-          }
-          for (int i=0; i<resources.size(); i++) {
-            DBpediaResource r = resources.get(i);
-            dbPediaResourcesXmlStrBuilder.append(r.toXmlStr());
+          String collName = mdRecord.getCollectionNames();
+          Collection coll = CollectionReader.getInstance().getCollection(collName);
+          String collRdfId = coll.getRdfId();
+          if (resources != null) {
+            StringBuilder dbPediaResourceNamesStrBuilder = new StringBuilder();
+            StringBuilder dbPediaResourcesXmlStrBuilder = new StringBuilder();
+            dbPediaResourcesXmlStrBuilder.append("<resources>\n");
+            StringBuilder dbPediaSpotlightCollectionRdfStrBuilder = coll.getDbPediaSpotlightRdfStrBuilder();
+            if (mdRecord.isEdocRecord()) {
+              Collection edocColl = CollectionReader.getInstance().getCollection("edoc");
+              dbPediaSpotlightCollectionRdfStrBuilder = edocColl.getDbPediaSpotlightRdfStrBuilder();
+            }
+            String uri = mdRecord.getUri();
+            String webUri = mdRecord.getWebUri();
+            if (webUri != null)
+              uri = webUri;
+            uri = StringUtils.deresolveXmlEntities(uri);
             if (dbPediaSpotlightCollectionRdfStrBuilder != null) {
-              dbPediaSpotlightCollectionRdfStrBuilder.append(r.toRdfStr());
+              dbPediaSpotlightCollectionRdfStrBuilder.append("<rdf:Description rdf:about=\"" + uri + "\">\n");
+              dbPediaSpotlightCollectionRdfStrBuilder.append("  <rdf:type rdf:resource=\"http://purl.org/dc/terms/BibliographicResource\"/>\n");
+              dbPediaSpotlightCollectionRdfStrBuilder.append("  <dcterms:isPartOf rdf:resource=\"" + collRdfId + "\"/>\n");
+              dbPediaSpotlightCollectionRdfStrBuilder.append("  <dc:identifier rdf:resource=\"" + uri + "\"/>\n");
             }
-            String resourceName = r.getName();
-            if (i == resources.size() - 1)
-              dbPediaResourceNamesStrBuilder.append(resourceName);
-            else
-              dbPediaResourceNamesStrBuilder.append(resourceName + "###");
+            for (int i=0; i<resources.size(); i++) {
+              DBpediaResource r = resources.get(i);
+              dbPediaResourcesXmlStrBuilder.append(r.toXmlStr());
+              if (dbPediaSpotlightCollectionRdfStrBuilder != null) {
+                dbPediaSpotlightCollectionRdfStrBuilder.append(r.toRdfStr());
+              }
+              String resourceName = r.getName();
+              if (i == resources.size() - 1)
+                dbPediaResourceNamesStrBuilder.append(resourceName);
+              else
+                dbPediaResourceNamesStrBuilder.append(resourceName + "###");
+            }
+            if (dbPediaSpotlightCollectionRdfStrBuilder != null) {
+              dbPediaSpotlightCollectionRdfStrBuilder.append("</rdf:Description>\n");
+            }
+            dbPediaResourcesXmlStrBuilder.append("</resources>\n");
+            mdRecord.setEntities(dbPediaResourceNamesStrBuilder.toString());
+            mdRecord.setEntitiesDetails(dbPediaResourcesXmlStrBuilder.toString());
           }
-          if (dbPediaSpotlightCollectionRdfStrBuilder != null) {
-            dbPediaSpotlightCollectionRdfStrBuilder.append("</rdf:Description>\n");
-          }
-          dbPediaResourcesXmlStrBuilder.append("</resources>\n");
-          mdRecord.setEntities(dbPediaResourceNamesStrBuilder.toString());
-          mdRecord.setEntitiesDetails(dbPediaResourcesXmlStrBuilder.toString());
         }
       }
     } catch (Exception e) {
