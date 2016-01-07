@@ -52,6 +52,7 @@ public class DBpediaSpotlightHandler {
   private static String SERVICE_PATH = "spotlight/rest";
   private HttpClient httpClient; 
   private XQueryEvaluator xQueryEvaluator;
+  private boolean serviceAnnotateReachable = true;
   private Hashtable<String, DBpediaResource> dbPediaResources;
   private Hashtable<String, String> germanStopwords;
   private Hashtable<String, String> germanStopwordExpressions;
@@ -109,7 +110,16 @@ public class DBpediaSpotlightHandler {
     NameValuePair textParam = new NameValuePair("text", "test");
     NameValuePair confidenceParam = new NameValuePair("confidence", "0.99");
     NameValuePair[] params = {textParam, confidenceParam};
-    performPostRequest(httpClient, "annotate", params, "text/xml");
+    try {
+      performPostRequest(httpClient, "annotate", params, "text/xml");
+    } catch (Exception e) {
+      serviceAnnotateReachable = false;
+      boolean useDBpediaSpotlight = Constants.getInstance().useDBpediaSpotlight();
+      if (useDBpediaSpotlight) {
+        String urlStr = "http://" + HOSTNAME + ":" + PORT + "/" + SERVICE_PATH + "/" + "annotate";
+        LOGGER.info("DBpediaSpotlightHandler: Service: " + urlStr + " not reachable");
+      }
+    }
   }
 
   private void initDBpediaResources() throws ApplicationException {
@@ -289,6 +299,11 @@ public class DBpediaSpotlightHandler {
   }
 
   public Annotation annotate(Collection collection, String docId, String textInput, String confidence, int count) throws ApplicationException {
+    if (! serviceAnnotateReachable) {
+      String urlStr = "http://" + HOSTNAME + ":" + PORT + "/" + SERVICE_PATH + "/" + "annotate";
+      LOGGER.info("DBpediaSpotlightHandler: Service: " + urlStr + " not reachable");
+      return null;
+    }
     String testStr = "";
     String text = textInput.replaceAll("-[ \n]+|&#[0-9];|&#1[0-9];|&#2[0-9];|&#30;|&#31;|&#32;|\uffff", ""); // entferne Bindestriche vor Blank/Zeilenende und Steuerzeichen wie "&#0;"
     text = text.replaceAll("\n", " "); // new lines durch blank ersetzen (da sonst das Steuerzeichen &#10; erzeugt wird)
@@ -447,13 +462,13 @@ public class DBpediaSpotlightHandler {
       in.close();
       method.releaseConnection();
     } catch (HttpException e) {
-      LOGGER.info("DBpediaSpotlightHandler: " + urlStr + " not reachable");
+      LOGGER.info("DBpediaSpotlightHandler: Service annotate: " + urlStr + " not reachable");
       throw new ApplicationException(e);
     } catch (IOException e) {
-      LOGGER.info("DBpediaSpotlightHandler: " + urlStr + " not reachable");
+      LOGGER.info("DBpediaSpotlightHandler: Service annotate: " + urlStr + " not reachable");
       throw new ApplicationException(e);
     } catch (Exception e) {
-      LOGGER.info("DBpediaSpotlightHandler: " + urlStr + " not reachable");
+      LOGGER.info("DBpediaSpotlightHandler: Service annotate: " + urlStr + " not reachable");
       throw new ApplicationException(e);
     }
     return resultStr;
@@ -478,13 +493,10 @@ public class DBpediaSpotlightHandler {
       in.close();
       method.releaseConnection();
     } catch (HttpException e) {
-      LOGGER.info("DBpediaSpotlightHandler could not be initialized: " + urlStr + " not reachable");
       throw new ApplicationException(e);
     } catch (IOException e) {
-      LOGGER.info("DBpediaSpotlightHandler could not be initialized: " + urlStr + " not reachable");
       throw new ApplicationException(e);
     } catch (Exception e) {
-      LOGGER.info("DBpediaSpotlightHandler could not be initialized: " + urlStr + " not reachable");
       throw new ApplicationException(e);
     }
     return resultStr;
