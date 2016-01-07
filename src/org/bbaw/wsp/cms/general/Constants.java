@@ -199,4 +199,14 @@ public class Constants {
     }
   }
 
+  public boolean useDBpediaSpotlight() {
+    boolean useDBpediaSpotlight = true;
+    if (properties != null) {
+      String useDBpediaSpotlightStr = properties.getProperty("useDBpediaSpotlight");
+      if (useDBpediaSpotlightStr != null && useDBpediaSpotlightStr.equals("false"))
+        useDBpediaSpotlight = false;
+    } 
+    return useDBpediaSpotlight;
+  }
+
 }
