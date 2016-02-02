@@ -63,10 +63,10 @@
    <dcterms:identifier rdf:resource="http://akademieregistres.bbaw.de"/>
    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Registres"/>
  </rdf:Description>   
-<rdf:Description rdf:about="http://telota.bbaw.de:9979/exist/rest/db/registres/">
+<rdf:Description rdf:about="http://kvmmove3.bbaw.de:8022/exist/apps/SadeRegistres/data/">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Registres"/>
-  <dc:identifier rdf:resource="http://telota.bbaw.de:9979/exist/rest/db/registres/"/>
+  <dc:identifier rdf:resource="http://kvmmove3.bbaw.de:8022/exist/apps/SadeRegistres/data/"/>
   <dc:type>eXistDir</dc:type>
 </rdf:Description>
   <rdf:Description rdf:about="http://akademieregistres.bbaw.de/indexmehr.html">
