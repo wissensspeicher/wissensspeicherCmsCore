@@ -28,7 +28,7 @@
 <rdf:Description rdf:about="http://kvmmove3.bbaw.de:9021/exist/rest/db/projects/cagb/data">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CommentariaAristotelem"/>
-  <dc:identifier rdf:resource="http://kvmmove3.bbaw.de:9021/exist/rest/db/projects/cagb/data"/>
+  <dc:identifier rdf:resource="http://kvmmove3.bbaw.de:8022/exist/rest/db/projects/cagb/data"/>
   <dc:type>eXistDir</dc:type>
 </rdf:Description>
 </rdf:RDF>
