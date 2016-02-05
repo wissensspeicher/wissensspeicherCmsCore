@@ -61,7 +61,7 @@ public class Indexer {
   private void deleteProjectResources() throws ApplicationException {
     /** please comment out, what you want to do **/
     /** delete all resources of project "aaew" **/
-    // collectionManager.deleteCollection("cvma");
+    // collectionManager.deleteCollection("aaew");
     /** delete all resources of all projects alphabetically named between "aaew" and dta inclusive **/
     // collectionManager.deleteCollections("aaew", "dta");
     /** delete all resources of all projects named in this projectIds array **/
@@ -72,13 +72,12 @@ public class Indexer {
   private void createProjectResources() throws ApplicationException {
     /** please comment out, what you want to do **/
     /** create all resources of project "aaew" **/
-    // collectionManager.updateCollection("cvma");
-    /** create all resources of all projects alphabetically named between "aaew" and dta inclusive **/
-    // collectionManager.updateCollections("aaew", "dta");
-    // collectionManager.updateCollections("aaew", "dspin"); // 1 Stunde
-    // collectionManager.updateCollections("jdgzkz", "zwk");  // 2,5 Stunden
-    // collectionManager.updateCollections("dtm", "jdg");  // 4 Stunden
-    // collectionManager.updateCollection("dta"); // 4,5 Stunden
+    // collectionManager.updateCollection("aaew");
+    /** create all resources of all projects alphabetically named between "aaew" and "dspin" inclusive **/
+    // collectionManager.updateCollections("aaew", "dspin"); // 1 hour
+    // collectionManager.updateCollections("jdgzkz", "zwk");  // 2,5 hours
+    // collectionManager.updateCollections("dtm", "jdg");  // 4 hours
+    // collectionManager.updateCollection("dta"); // 4,5 hours
     /** create all resources of all projects named in this projectIds array **/
     // String[] projectIds = {"aaew" , "aaewerbkam", "aaewpreussen", "aaewtla", "aaewvor", "aaewzettel"};
     // collectionManager.updateCollections(projectIds);
