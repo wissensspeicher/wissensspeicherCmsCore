@@ -7,8 +7,8 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.lucene.facet.search.results.FacetResult;
-import org.apache.lucene.facet.search.results.FacetResultNode;
+import org.apache.lucene.facet.FacetResult;
+import org.apache.lucene.facet.LabelAndValue;
 import org.bbaw.wsp.cms.collections.Collection;
 import org.bbaw.wsp.cms.collections.CollectionReader;
 import org.bbaw.wsp.cms.dochandler.DBpediaSpotlightHandler;
@@ -65,85 +65,83 @@ public class Facets implements Iterable<Facet> {
     }
     for (int i=0; i<facetResults.size(); i++) {
       FacetResult facetResult = facetResults.get(i);
-      FacetResultNode facetResultRootNode = facetResult.getFacetResultNode();
-      if (facetResultRootNode.getSubResults() != null) {
-        Facet facet = new Facet();
-        ArrayList<FacetValue> facetValues = new ArrayList<FacetValue>();
-        int maxFacetCountHits = -1;
-        int maxFacetSupport = -1;
-        for ( Iterator<? extends FacetResultNode> facetIterator = facetResultRootNode.getSubResults().iterator(); facetIterator.hasNext(); ) {
-          FacetResultNode facetResultNode = facetIterator.next();
-          String facetName = facetResultNode.getLabel().getComponent(0);  // e.g. "collectionNames"
-          String facetValue = facetResultNode.getLabel().getComponent(1);  // e.g. "mega"
-          int facetCountHits = (int) facetResultNode.getValue();
-          if (facetCountHits > maxFacetCountHits)
-            maxFacetCountHits = facetCountHits;
-          if (facet.getId() == null)
-            facet.setId(facetName);
-          boolean isFacetValueProper = isProperValue(facetValue);
-          boolean isFacetValueInConstraints = isFacetValueInConstraints(facetName, facetValue);
-          if (facetName != null && isFacetValueProper && isFacetValueInConstraints) {
-            FacetValue facetNameValue = new FacetValue();
-            if (facetValue.contains("<uri>")) {
-              int from = facetValue.indexOf("<uri>") + 5;
-              int to = facetValue.indexOf("</uri>");
-              String uri = facetValue.substring(from, to);
-              Integer support = dbPediaSpotlightHandler.getSupport(uri);
-              if (support != null) {
-                if (support > maxFacetSupport)
-                  maxFacetSupport = support;
-              }
-              facetNameValue.setUri(uri);
-              facetValue = facetValue.replaceAll("<uri>.+</uri>", "");
+      Facet facet = new Facet();
+      ArrayList<FacetValue> facetValues = new ArrayList<FacetValue>();
+      int maxFacetCountHits = -1;
+      int maxFacetSupport = -1;
+      LabelAndValue[] labelValues = facetResult.labelValues;
+      for (int j=0; j<labelValues.length; j++) {
+        LabelAndValue labelValue = labelValues[j];
+        String facetName = facetResult.dim;
+        String facetValue = labelValue.label; 
+        int facetCountHits = labelValue.value.intValue();
+        if (facetCountHits > maxFacetCountHits)
+          maxFacetCountHits = facetCountHits;
+        if (facet.getId() == null)
+          facet.setId(facetName);
+        boolean isFacetValueProper = isProperValue(facetValue);
+        boolean isFacetValueInConstraints = isFacetValueInConstraints(facetName, facetValue);
+        if (facetName != null && isFacetValueProper && isFacetValueInConstraints) {
+          FacetValue facetNameValue = new FacetValue();
+          if (facetValue.contains("<uri>")) {
+            int from = facetValue.indexOf("<uri>") + 5;
+            int to = facetValue.indexOf("</uri>");
+            String uri = facetValue.substring(from, to);
+            Integer support = dbPediaSpotlightHandler.getSupport(uri);
+            if (support != null) {
+              if (support > maxFacetSupport)
+                maxFacetSupport = support;
             }
-            if (facetValue.contains("<gnd>")) {
-              int from = facetValue.indexOf("<gnd>") + 5;
-              int to = facetValue.indexOf("</gnd>");
-              String gnd = facetValue.substring(from, to);
-              if (gnd != null && ! gnd.isEmpty())
-                facetNameValue.setGnd(gnd);
-              facetValue = facetValue.replaceAll("<gnd>.*</gnd>", "");
-            }
-            facetNameValue.setName(facetValue);
-            facetNameValue.setValue(String.valueOf(facetCountHits));
-            facetNameValue.setCount(facetCountHits);
-            if (facetName.equals("entityPerson"))
-              facetNameValue.setType("person");
-            else if (facetName.equals("entityOrganisation"))
-              facetNameValue.setType("organisation");
-            else if (facetName.equals("entityPlace"))
-              facetNameValue.setType("place");
-            else if (facetName.equals("entityConcept"))
-              facetNameValue.setType("concept");
-            if (isProper(facetNameValue))
-              facetValues.add(facetNameValue);
+            facetNameValue.setUri(uri);
+            facetValue = facetValue.replaceAll("<uri>.+</uri>", "");
           }
-        }
-        if (! facetValues.isEmpty()) {
-          for (int j=0; j<facetValues.size(); j++) {
-            FacetValue fv = facetValues.get(j);
-            float count = (float) fv.getCount();
-            String uri = fv.getUri();
-            float score = count / maxFacetCountHits; // e.g.: 55 / 92
-            if (uri != null) {
-              float facetCountScore = score;
-              Integer support = dbPediaSpotlightHandler.getSupport(uri);
-              if (support != null) {
-                float supportLength = support.toString().length();
-                float maxFacetSupportLength = new Integer(maxFacetSupport).toString().length();
-                // score = (count * supportLength) / (maxFacetCountHits * maxFacetSupportLength); // e.g.: 55 * 5 / 92 * 6
-                // float supportScore = support / maxFacetSupport;
-                float supportScore = supportLength / maxFacetSupportLength;
-                score = (facetCountScore * FACET_COUNT_WEIGHT) + (supportScore * SUPPORT_WEIGHT); // e.g. Lohnarbeit = (3/8 * 0.5) + (3/5 * 0.5) = 0.4875
-              }
-            }
-            fv.setScore(score);
+          if (facetValue.contains("<gnd>")) {
+            int from = facetValue.indexOf("<gnd>") + 5;
+            int to = facetValue.indexOf("</gnd>");
+            String gnd = facetValue.substring(from, to);
+            if (gnd != null && ! gnd.isEmpty())
+              facetNameValue.setGnd(gnd);
+            facetValue = facetValue.replaceAll("<gnd>.*</gnd>", "");
           }
-          facet.setValues(facetValues);
-          if (facets == null)
-            facets = new Hashtable<String, Facet>();
-          facets.put(facet.getId(), facet);
+          facetNameValue.setName(facetValue);
+          facetNameValue.setValue(String.valueOf(facetCountHits));
+          facetNameValue.setCount(facetCountHits);
+          if (facetName.equals("entityPerson"))
+            facetNameValue.setType("person");
+          else if (facetName.equals("entityOrganisation"))
+            facetNameValue.setType("organisation");
+          else if (facetName.equals("entityPlace"))
+            facetNameValue.setType("place");
+          else if (facetName.equals("entityConcept"))
+            facetNameValue.setType("concept");
+          if (isProper(facetNameValue))
+            facetValues.add(facetNameValue);
         }
+      }
+      if (! facetValues.isEmpty()) {
+        for (int j=0; j<facetValues.size(); j++) {
+          FacetValue fv = facetValues.get(j);
+          float count = (float) fv.getCount();
+          String uri = fv.getUri();
+          float score = count / maxFacetCountHits; // e.g.: 55 / 92
+          if (uri != null) {
+            float facetCountScore = score;
+            Integer support = dbPediaSpotlightHandler.getSupport(uri);
+            if (support != null) {
+              float supportLength = support.toString().length();
+              float maxFacetSupportLength = new Integer(maxFacetSupport).toString().length();
+              // score = (count * supportLength) / (maxFacetCountHits * maxFacetSupportLength); // e.g.: 55 * 5 / 92 * 6
+              // float supportScore = support / maxFacetSupport;
+              float supportScore = supportLength / maxFacetSupportLength;
+              score = (facetCountScore * FACET_COUNT_WEIGHT) + (supportScore * SUPPORT_WEIGHT); // e.g. Lohnarbeit = (3/8 * 0.5) + (3/5 * 0.5) = 0.4875
+            }
+          }
+          fv.setScore(score);
+        }
+        facet.setValues(facetValues);
+        if (facets == null)
+          facets = new Hashtable<String, Facet>();
+        facets.put(facet.getId(), facet);
       }
     }
     // add the virtual mainEntities facet
@@ -431,9 +429,9 @@ public class Facets implements Iterable<Facet> {
     return retJsonObject;
   }
 
-	@Override
-	public Iterator<Facet> iterator() {
-		return facets.values().iterator();
-	}
+  @Override
+  public Iterator<Facet> iterator() {
+    return facets.values().iterator();
+  }
 
 }
