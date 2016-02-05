@@ -4,11 +4,6 @@
 	<classpathentry kind="src" path="config/log"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/junit.jar"/>
-	<classpathentry kind="lib" path="lib/lucene-core-3.5.0.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/wspCmsCore/lib/lucene-core-3.5.0-javadoc.jar!/"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="lib" path="lib/quartz-1.6.5.jar"/>
 	<classpathentry kind="lib" path="lib/commons-io-2.0.1.jar"/>
 	<classpathentry kind="lib" path="lib/commons-lang3-3.0.1.jar"/>
@@ -24,14 +19,7 @@
 	<classpathentry kind="lib" path="lib/httpcore-4.1.2.jar"/>
 	<classpathentry kind="lib" path="lib/microsoft-translator-java-api-0.4.jar"/>
 	<classpathentry kind="lib" path="lib/json_simple-1.1.jar"/>
-	<classpathentry kind="lib" path="lib/lucene-highlighter-3.5.0.jar" sourcepath="lib/lucene-highlighter-3.5.0-javadoc.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="jar:platform:/resource/wspCmsCore/lib/lucene-highlighter-3.5.0-javadoc.jar!/"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="lib" path="lib/commons-codec-1.5.jar"/>
-	<classpathentry kind="lib" path="lib/lucene-memory-3.5.0.jar"/>
-	<classpathentry kind="lib" path="lib/lucene-queries-3.5.0.jar"/>
 	<classpathentry kind="lib" path="lib/tika-core-1.2.jar"/>
 	<classpathentry kind="lib" path="lib/tika-parsers-1.2.jar"/>
 	<classpathentry kind="lib" path="lib/pdfbox-1.7.1.jar"/>
@@ -43,8 +31,6 @@
 	<classpathentry kind="lib" path="lib/jena-core-2.7.3.jar" sourcepath="sources"/>
 	<classpathentry kind="lib" path="lib/jena-iri-0.9.3.jar"/>
 	<classpathentry kind="lib" path="lib/jena-tdb-0.9.3.jar"/>
-	<classpathentry kind="lib" path="lib/lucene-facet-3.5.0.jar"/>
-	<classpathentry kind="lib" path="lib/lucene-highlighter-3.5.0-javadoc.jar"/>
 	<classpathentry kind="lib" path="lib/jena-fuseki-client.jar"/>
 	<classpathentry kind="lib" path="lib/batik-ext-1.7.jar"/>
 	<classpathentry kind="lib" path="lib/log4j-1.2.16.jar"/>
@@ -54,8 +40,15 @@
 	<classpathentry kind="lib" path="lib/jena-larq.jar"/>
 	<classpathentry kind="lib" path="lib/jcsv-1.4.0.jar"/>
 	<classpathentry kind="lib" path="lib/mysql-connector-java-5.0.8-bin.jar"/>
-	<classpathentry kind="lib" path="lib/lucene-spellchecker-3.5.0.jar"/>
 	<classpathentry kind="lib" path="lib/tika-1.2-poi.jar"/>
 	<classpathentry kind="lib" path="lib/org.hamcrest.core_1.1.0.v20090501071000.jar"/>
+	<classpathentry kind="lib" path="lib/lucene-analyzers-common-5.4.0.jar"/>
+	<classpathentry kind="lib" path="lib/lucene-core-5.4.0.jar" sourcepath="lib/lucene-core-5.4.0-javadoc.jar"/>
+	<classpathentry kind="lib" path="lib/lucene-facet-5.4.0.jar"/>
+	<classpathentry kind="lib" path="lib/lucene-highlighter-5.4.0.jar"/>
+	<classpathentry kind="lib" path="lib/lucene-memory-5.4.0.jar"/>
+	<classpathentry kind="lib" path="lib/lucene-queries-5.4.0.jar"/>
+	<classpathentry kind="lib" path="lib/lucene-queryparser-5.4.0.jar"/>
+	<classpathentry kind="lib" path="lib/lucene-spellchecker-3.5.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
