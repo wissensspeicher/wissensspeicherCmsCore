@@ -1,942 +1,486 @@
-<?xml version="1.0" encoding="utf-8"?>
-<rdf:RDF 
-   xmlns="http://wsp.normdata.rdf/BerlinerKlassik" 
-   xml:base="http://wsp.normdata.rdf/BerlinerKlassik" 
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
-   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" 
-   xmlns:dc="http://purl.org/dc/elements/1.1/" 
-   xmlns:dcterms="http://purl.org/dc/terms/" 
-   xmlns:foaf="http://xmlns.com/foaf/0.1/" 
-   xmlns:gnd="http://d-nb.info/standards/elementset/gnd#" 
-   xmlns:ore="http://www.openarchives.org/ore/terms/"
-   xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
->
-<!-- Web Ressources -->
-<rdf:Description rdf:about="http://www.berliner-klassik.de/">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://berlinerklassik.bbaw.de/BK">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://berlinerklassik.bbaw.de/BK"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/projekt/conrad-wiedemann">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/projekt/conrad-wiedemann"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Wiedemann"/>
-  <dc:title>Über das Projekt "Berliner Klassik"</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/projekt/uta-motschmann">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/projekt/uta-motschmann"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Motschmann"/>
-  <dc:title>Die Stadt Berlin um 1800</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/projekt/presse/index_html">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/projekt/presse/index_html"/>
-  <dc:title>Presseberichte</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/mitarbeiter">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/mitarbeiter"/>
-  <dc:title>Mitarbeiter</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung"/>
-  <dc:title>Aktuelle Forschungsprojekte des Vorhabens</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/nationaltheater">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/nationaltheater"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Gerlach"/>
-  <dc:title>Das Königliche Nationaltheater zu Berlin - Schmelztiegel urbaner Geselligkeit</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/lebeninberlin">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/lebeninberlin"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Motschmann"/>
-  <dc:title>Geselliges Leben in Berlin um 1800</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/geschmackspolitik">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/geschmackspolitik"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Sedlarz"/>
-  <dc:title>Geschmackspolitik. Die reformierte Berliner Kunstakademie im Kontext von Stadt, Staat und Hof</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/werkvertraege/hahn_dekorationsmalerei/hahn_dekorationsmalerei.pdf">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/werkvertraege/hahn_dekorationsmalerei/hahn_dekorationsmalerei.pdf"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Hahn"/>
-  <dc:title>Der Einfluß der Geschmacksdiskussion und der von der Akademie betriebenen Handwerkerschulung auf die Dekorationsmalerei zwischen 1780 und 1820</dc:title>
-  <dcterms:created rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2001</dcterms:created>
-  <dcterms:rigthsHolder rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_pdf"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/werkvertraege/hahn_leipziger/hahn_leipzigerstr.pdf">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/werkvertraege/hahn_leipziger/hahn_leipzigerstr.pdf"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Hahn"/>
-  <dc:title>Statistische Angaben zur Architektur und zur Soziologie der Eigentümer und Bewohner der Häuser in der Leipziger Straße in Berlin in den Jahren 1785 - 1815</dc:title>
-  <dcterms:created rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2003</dcterms:created>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_pdf"/>
-</rdf:Description>
-<rdf:Description rdf:about=" http://www.berliner-klassik.de/publikationen/werkvertraege/lacher_protokolle/lacher_protokolle_adk.pdf">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource=" http://www.berliner-klassik.de/publikationen/werkvertraege/lacher_protokolle/lacher_protokolle_adk.pdf"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Lacher"/>
-  <dc:title>Die Konferenzen der Berliner Kunstakademie 1786-1815 - Annalen des Berliner Kunstalltags</dc:title>
-  <dcterms:created rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2004</dcterms:created>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_pdf"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/werkvertraege/lacher_autobiografien/lacher_biografien.pdf">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/werkvertraege/lacher_autobiografien/lacher_biografien.pdf"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Lacher"/>
-  <dc:title>Künstler(auto)biografien</dc:title>
-  <dcterms:created rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2005</dcterms:created>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/forschung/Nathaus-Minister/">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/forschung/Nathaus-Minister/"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Nathaus"/>
-  <dc:title>Die Minister unter Friedrich Wilhelm II. (1786-1797)</dc:title>
-  <dcterms:temporal rdf:datatype="http://purl.org/dc/terms/Period">start=1786; end=1797</dcterms:temporal>
-  <dcterms:created rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2005</dcterms:created>
-  <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/FriedrichWilhelmII"/>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/Nathaus-Minister/alvensleben-hundisburg">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/Nathaus-Minister/alvensleben-hundisburg"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Nathaus"/>
-  <dc:title>Philipp Carl Graf von Alvensleben-Hundisburg</dc:title>
-  <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/PhilippKarlAlvensleben"/>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/Nathaus-Minister/arnim-boitzenburg">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/Nathaus-Minister/arnim-boitzenburg"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Nathaus"/>
-  <dc:title>Friedrich Wilhelm Graf von Arnim-Boitzenburg, Minister beim Generaldirektorium</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/Nathaus-Minister/blumenthal">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/Nathaus-Minister/blumenthal"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Nathaus"/>
-  <dc:title>Joachim Christian Graf von Blumenthal, Minister beim Generaldirektorium</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/Nathaus-Minister/buggenhagen">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/Nathaus-Minister/buggenhagen"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Nathaus"/>
-  <dc:title>Julius Heinrich von Buggenhagen, Minister beim Generaldirektorium</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/Nathaus-Minister/carmer">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/Nathaus-Minister/carmer"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Nathaus"/>
-  <dc:title>Johann Heinrich Casimir Graf von Carmer, Großkanzler</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/Nathaus-Minister/danckelmann">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/Nathaus-Minister/danckelmann"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Nathaus"/>
-  <dc:title>Adolph Albrecht Heinrich Leopold Freiherr von Danckelmann, Justizminister in Schlesien</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/Nathaus-Minister/doenhoff">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/Nathaus-Minister/doenhoff"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Nathaus"/>
-  <dc:title>Christian Ludwig August Carl Reichsgraf von Dönhoff, Staatsminister, Landhofmeister in Königsberg</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/Nathaus-Minister/doernberg">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/Nathaus-Minister/doernberg"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Nathaus"/>
-  <dc:title>Wolfgang Ferdinand Freiherr von Dörnberg, Justizminister</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/Nathaus-Minister/finckenstein">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/Nathaus-Minister/finckenstein"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Nathaus"/>
-  <dc:title>Carl Friedrich Ludwig Albrecht Graf Finck von Finckenstein, Oberpräsident der ostpreußischen Regierung</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/Nathaus-Minister/cw-finckenstein">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/Nathaus-Minister/cw-finckenstein"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Nathaus"/>
-  <dc:title>Carl Wilhelm Graf Fink von Finckenstein, Kabinettsminister</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/Nathaus-Minister/gaudy">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/Nathaus-Minister/gaudy"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Nathaus"/>
-  <dc:title>Leopold Otto von Gaudy, Minister beim Generaldirektorium</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/Nathaus-Minister/geusau">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/Nathaus-Minister/geusau"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Nathaus"/>
-  <dc:title>Levin von Geusau, Oberkriegskollegium, Chef des Militärdepartements beim Generaldirektorium</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/Nathaus-Minister/goldbeck-und-reinhart">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/Nathaus-Minister/goldbeck-und-reinhart"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Nathaus"/>
-  <dc:title>Heinrich Julius von Goldbeck und Reinhart, Großkanzler (Justizminister)</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/Nathaus-Minister/groeben">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/Nathaus-Minister/groeben"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Nathaus"/>
-  <dc:title>Georg Dietrich von der Gröben, Chef des Militärdepartements beim Generaldirektorium</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/Nathaus-Minister/hardenberg">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/Nathaus-Minister/hardenberg"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Nathaus"/>
-  <dc:title>Carl August Fürst von Hardenberg, Dirigierender Minister in Ansbach-Bayreuth, später Staatskanzler</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/Nathaus-Minister/haugwitz">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/Nathaus-Minister/haugwitz"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Nathaus"/>
-  <dc:title>Heinrich Christian Curt Graf von Haugwitz, Freiherr zu Kappritz, Kabinettsminister</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/Nathaus-Minister/heinitz">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/Nathaus-Minister/heinitz"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Nathaus"/>
-  <dc:title>Friedrich Anton Freiherr von Heinitz (auch Heynitz), Minister im Generaldirektorium</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/Nathaus-Minister/hertzberg">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/Nathaus-Minister/hertzberg"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Nathaus"/>
-  <dc:title>Ewald Friedrich Graf von Hertzberg, Kabinettsminister</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/Nathaus-Minister/hoym">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/Nathaus-Minister/hoym"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Nathaus"/>
-  <dc:title>Carl George Heinrich Graf von Hoym, Dirigierender Finanzminister in Schlesien</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/Nathaus-Minister/kannewurff">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/Nathaus-Minister/kannewurff"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Nathaus"/>
-  <dc:title>Heinrich Gottlieb von Kannewurff, Oberkriegskollegium, Chef des Militärdepartements beim Generaldirektorium</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/Nathaus-Minister/knobloch">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/Nathaus-Minister/knobloch"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Nathaus"/>
-  <dc:title>Melchior Ernst von Knobloch, Minister beim ostpreußischen Staatsministerium</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/Nathaus-Minister/kupferberg">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/Nathaus-Minister/kupferberg"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Nathaus"/>
-  <dc:title>Carl Joseph Maximilian Fürst von Kupferberg, Großkanzler (Justizminister)</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/Nathaus-Minister/lucchesini">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/Nathaus-Minister/lucchesini"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Nathaus"/>
-  <dc:title>Girolamo (Jerome) Marchese di Lucchesini, Preußischer Gesandter im Rang eines wirklichen Staats- und Kriegsministers</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/Nathaus-Minister/mauschwitz">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/Nathaus-Minister/mauschwitz"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Nathaus"/>
-  <dc:title>Carl Maximilian Ferdinand von Mauschwitz, Minister beim Generaldirektorium</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/Nathaus-Minister/ostau">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/Nathaus-Minister/ostau"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Nathaus"/>
-  <dc:title>Christoph Albrecht von Ostau, Minister beim ostpreußischen Staatsministerium</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/Nathaus-Minister/sacken">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/Nathaus-Minister/sacken"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Nathaus"/>
-  <dc:title>Carl Fürst von der Osten, gen. Sacken, Ober-Kammerherr, Mitglied des Geheimen Staatsrats</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/Nathaus-Minister/reck">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/Nathaus-Minister/reck"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Nathaus"/>
-  <dc:title>Eberhard Friedrich Christoph Ludwig Freiherr von der Reck(e), Justizminister</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/Nathaus-Minister/rohdich">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/Nathaus-Minister/rohdich"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Nathaus"/>
-  <dc:title>Friedrich Wilhelm von Rohdich, Oberkriegskollegium</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/Nathaus-Minister/schlitz">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/Nathaus-Minister/schlitz"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Nathaus"/>
-  <dc:title>Johann Eustach Graf von Schlitz gen. von Görtz, Preußischer Gesandter im Rang eines Staats- und Kriegsministers</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/Nathaus-Minister/schroetter">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/Nathaus-Minister/schroetter"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Nathaus"/>
-  <dc:title>Friedrich Leopold Reichsfreiherr von Schrötter, Minister beim Generaldirektorium</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/Nathaus-Minister/graf-von-der-schulenburg">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/Nathaus-Minister/graf-von-der-schulenburg"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Nathaus"/>
-  <dc:title>Gebhard Werner Graf von der Schulenburg, Hofmarschall, Mitglied des Geheimen Staatsrats</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/Nathaus-Minister/schulenburg">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/Nathaus-Minister/schulenburg"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Nathaus"/>
-  <dc:title>Lewin Rudolph von der Schulenburg, Oberkriegskollegium</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/Nathaus-Minister/schulenburg-blumenberg">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/Nathaus-Minister/schulenburg-blumenberg"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Nathaus"/>
-  <dc:title>Alexander Friedrich George Graf von der Schulenburg-Blumenberg, Minister beim Generaldirektorium</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/Nathaus-Minister/schulenburg-kehnert">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/Nathaus-Minister/schulenburg-kehnert"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Nathaus"/>
-  <dc:title>Friedrich Wilhelm Graf von der Schulenburg-Kehnert, Minister beim Generaldirektorium und beim Oberkriegskollegium, Kabinettsminister</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/Nathaus-Minister/schwerin">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/Nathaus-Minister/schwerin"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Nathaus"/>
-  <dc:title>Friedrich Albrecht Graf von Schwerin, Ober-Stallmeister, Mitglied des Geheimen Staatsrats</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/Nathaus-Minister/struensee">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/Nathaus-Minister/struensee"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Nathaus"/>
-  <dc:title>Carl August Struensee (von Carlsbach), Minister beim Generaldirektorium</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/Nathaus-Minister/thulemeier">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/Nathaus-Minister/thulemeier"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Nathaus"/>
-  <dc:title>Friedrich Wilhelm von Thulemeier, Justizminister</dc:title>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/Nathaus-Minister/voss">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/Nathaus-Minister/voss"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Nathaus"/>
-  <dc:title>Otto Carl Friedrich von Voß, Minister beim Generaldirektorium</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/Nathaus-Minister/werder">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/Nathaus-Minister/werder"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Nathaus"/>
-  <dc:title>Hans Ernst Dietrich von Werder, Minister beim Generaldirektorium</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/Nathaus-Minister/woellner">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/Nathaus-Minister/woellner"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Nathaus"/>
-  <dc:title>Johann Christoph (von) Wöllner, Justizminister</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/Nathaus-Minister/zedlitz">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/Nathaus-Minister/zedlitz"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Nathaus"/>
-  <dc:title>Carl Abraham Freiherr von Zedlitz, Justizminister</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/publizistik-und-verlagswesen-um-1800/bibliographie-verlagswesen/">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/publizistik-und-verlagswesen-um-1800/bibliographie-verlagswesen/"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Panwitz"/>
-  <dc:title>Bibliographie zum Verlagswesen</dc:title>
-  <dcterms:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2001-05-01</dcterms:modified>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/publizistik-und-verlagswesen-um-1800/bibliographie-verleger/">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/publizistik-und-verlagswesen-um-1800/bibliographie-verleger/"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Panwitz"/>
-  <dc:title>Bibliographie zu Berliner Verlegern und Verlagshäusern</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/publizistik-und-verlagswesen-um-1800/verleger-verlagshaeuser/verleger-verlagshaeuser/">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/publizistik-und-verlagswesen-um-1800/verleger-verlagshaeuser/verleger-verlagshaeuser/"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Panwitz"/>
-  <dc:title>Berliner Verleger und Verlagshäuser - Kurzbiographien und Sekundärliteratur</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/publizistik-und-verlagswesen-um-1800/verleger-verlagshaeuser/decker/">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/publizistik-und-verlagswesen-um-1800/verleger-verlagshaeuser/decker/"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Panwitz"/>
-  <dc:title>Georg Jakob Decker - Geheimer Oberhofbuchdrucker und Verleger</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/publizistik-und-verlagswesen-um-1800/verleger-verlagshaeuser/dieterici/">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/publizistik-und-verlagswesen-um-1800/verleger-verlagshaeuser/dieterici/"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Panwitz"/>
-  <dc:title>Wilhelm Dieterici - Verleger</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/publizistik-und-verlagswesen-um-1800/verleger-verlagshaeuser/dummler/">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/publizistik-und-verlagswesen-um-1800/verleger-verlagshaeuser/dummler/"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Panwitz"/>
-  <dc:title>Ferdinand Dümmler - Verleger</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/publizistik-und-verlagswesen-um-1800/verleger-verlagshaeuser/duncker/">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/publizistik-und-verlagswesen-um-1800/verleger-verlagshaeuser/duncker/"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Panwitz"/>
-  <dc:title>Karl Duncker - Verleger</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/publizistik-und-verlagswesen-um-1800/verleger-verlagshaeuser/enslin/">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/publizistik-und-verlagswesen-um-1800/verleger-verlagshaeuser/enslin/"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Panwitz"/>
-  <dc:title>Theodor Enslin - Verleger</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/publizistik-und-verlagswesen-um-1800/verleger-verlagshaeuser/gaedicke/">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/publizistik-und-verlagswesen-um-1800/verleger-verlagshaeuser/gaedicke/"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Panwitz"/>
-  <dc:title>Johann Christian Gädicke - Buchhändler, Publizist und Verleger</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/publizistik-und-verlagswesen-um-1800/verleger-verlagshaeuser/hitzig/">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/publizistik-und-verlagswesen-um-1800/verleger-verlagshaeuser/hitzig/"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Panwitz"/>
-  <dc:title>Julius Eduard Hitzig - Jurist, Verleger und Schriftsteller</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/publizistik-und-verlagswesen-um-1800/verleger-verlagshaeuser/mittler/">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/publizistik-und-verlagswesen-um-1800/verleger-verlagshaeuser/mittler/"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Panwitz"/>
-  <dc:title>Ernst Siegfried Mittler - Verleger</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/publizistik-und-verlagswesen-um-1800/verleger-verlagshaeuser/reimer/">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/publizistik-und-verlagswesen-um-1800/verleger-verlagshaeuser/reimer/"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Panwitz"/>
-  <dc:title>Georg Andreas Reimer - Verleger</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/publizistik-und-verlagswesen-um-1800/verleger-verlagshaeuser/sander/">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/publizistik-und-verlagswesen-um-1800/verleger-verlagshaeuser/sander/"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Panwitz"/>
-  <dc:title>Johann Daniel Sander - Verleger</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/publizistik-und-verlagswesen-um-1800/verleger-verlagshaeuser/vieweg/">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/publizistik-und-verlagswesen-um-1800/verleger-verlagshaeuser/vieweg/"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Panwitz"/>
-  <dc:title>Friedrich Vieweg - Verleger</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/publizistik-und-verlagswesen-um-1800/verleger-verlagshaeuser/voss/">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/publizistik-und-verlagswesen-um-1800/verleger-verlagshaeuser/voss/"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Panwitz"/>
-  <dc:title>Christian Friedrich Voß - Verleger</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/publizistik-und-verlagswesen-um-1800/verleger-verlagshaeuser/unger/">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/publizistik-und-verlagswesen-um-1800/verleger-verlagshaeuser/unger/"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Panwitz"/>
-  <dc:title>Der Verleger, Buchdrucker, Schriftreformer und Holzschneider Johann Friedrich Unger</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/werkvertraege/panwitz_vereine/panwitz_vereine.pdf">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/werkvertraege/panwitz_vereine/panwitz_vereine.pdf"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Panwitz"/>
-  <dc:title>Die Berliner Vereine 1786-1815</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/thietz">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/thietz"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Thietz"/>
-  <dc:title>Polemik und Programm – Die streitbaren Theaterkritiken von August Ferdinand Bernhardi als Beitrag zur romantischen Hermeneutik </dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/reihe-berliner-klassik/">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/reihe-berliner-klassik/"/>
-  <dc:title>Reihe "Berliner Klassik"</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/inhalt/inhalt_hirt">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/inhalt/inhalt_hirt"/>
-  <dc:title>Aloys Hirt: Archäologe, Historiker, Kunstkenner</dc:title>
-  <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/HirtAloys"/>
-  <dc:publisher rdf:resource="http://wsp.normdata.rdf/Sedlarz"/>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/inhalt/inhalt_moritz">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/inhalt/inhalt_moritz"/>
-  <dc:title>Karl Philipp Moritz in Berlin 1789 –1793</dc:title>
-  <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/MoritzKarlPhilipp"/>
-  <dc:publisher rdf:resource="http://wsp.normdata.rdf/Tintemann"/>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/inhalt/inhalt_fichte">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/inhalt/inhalt_fichte"/>
-  <dc:title>Fichte in Berlin: Spekulative Ansätze einer Philosophie der Praxis</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/resolveUid/f92fa9c7503ba1ff6e1ecbcf870253fe">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/resolveUid/f92fa9c7503ba1ff6e1ecbcf870253fe"/>
-  <dc:title>„Die Königsstadt“. Stadtraum und Wohnräume in Berlin um 1800</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/inhalt/inhalt_engel">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/inhalt/inhalt_engel"/>
-  <dc:title>Johann Jakob Engel (1741–1802). Philosoph für die Welt, Ästhetiker und Dichter</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/inhalt/inhalt_altertum">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/inhalt/inhalt_altertum"/>
-  <dc:title>Altertumswissenschaften in Berlin um 1800 an Akademie, Schule und Universität</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/inhalt/inhalt_eisenband">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/inhalt/inhalt_eisenband"/>
-  <dc:title>Berliner Eisen. Die Königliche Eisengießerei Berlin. Zur Geschichte eines preußischen Unternehmens</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/inhalt/inhalt_tableau">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/inhalt/inhalt_tableau"/>
-  <dc:title>Tableau de Berlin. Beiträge zur "Berliner Klassik" (1786-1815)</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/resolveUid/93a8991e7c6815d0eeb268395a32686c">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/resolveUid/93a8991e7c6815d0eeb268395a32686c"/>
-  <dc:title>Der gesellschaftliche Wandel um 1800 und das Nationaltheater</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/tagungsband_sprache/index">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/tagungsband_sprache/index"/>
-  <dc:publisher rdf:resource="http://wsp.normdata.rdf/Tintemann"/>
-  <dc:publisher rdf:resource="http://wsp.normdata.rdf/Trabant"/>
-  <dc:title>Sprache und Sprachen in Berlin um 1800</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/tagungsband_sprache/vorwort">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/tagungsband_sprache/vorwort"/>
-  <dc:publisher rdf:resource="http://wsp.normdata.rdf/Tintemann"/>
-  <dc:publisher rdf:resource="http://wsp.normdata.rdf/Trabant"/>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-  <dc:title>Vorwort</dc:title>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/tagungsband_sprache/gessinger">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/tagungsband_sprache/gessinger"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Gessinger"/>
-  <dc:title>Kritik der sprachlichen Unvernunft. Joachim Heinrich Campe und die Preisfrage der Berliner Akademie zur Reinheit der deutschen Sprache</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/tagungsband_sprache/boehm">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/tagungsband_sprache/boehm"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Boehm"/>
-  <dc:title>Akkulturation und Mehrsprachigkeit am Waisenhaus der Französischen Kolonie in Berlin um 1800</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/tagungsband_sprache/boehm">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/tagungsband_sprache/boehm"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Volmer"/>
-  <dc:title>Sprachbewußtsein durch Diglossie. Der Übersetzer Samuel-Henri Catel</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/tagungsband_sprache/wiedemann">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/tagungsband_sprache/wiedemann"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Wiedemann"/>
-  <dc:title>Deutsch-französische Rederaison. Louis Ferdinand, Pauline Wiesel und Rahel Levin führen einen Brief-Disput über die Liebe</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/tagungsband_sprache/gruschka">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/tagungsband_sprache/gruschka"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Gruschka"/>
-  <dc:title>Jiddisch und jüdische Identität in Berlin um 1800. Der Sprachenkosmos in Isaak Euchels Aufklärungskomödie Reb Henoch</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/tagungsband_sprache/schmidt">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/tagungsband_sprache/schmidt"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/SchmidtH"/>
-  <dc:title>Moses Mendelssohns Versuch einer Bibelübersetzung für jüdische und auch christliche Leser</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/tagungsband_sprache/trabant">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/tagungsband_sprache/trabant"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Trabant"/>
-  <dc:title>Mithridates in Berlin</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/tagungsband_sprache/hassler">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/tagungsband_sprache/hassler"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Haßler"/>
-  <dc:title>Typologie und Anthropologie bei Lorenzo Hervás y Panduro</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/tagungsband_sprache/kaltz">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/tagungsband_sprache/kaltz"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Kaltz"/>
-  <dc:title>»Deutsche gründliche Kritik«. Christian Jacob Kraus zu Pallas' Vergleichendem Glossarium aller Sprachen</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/tagungsband_sprache/tintemann">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/tagungsband_sprache/tintemann"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Tintemann"/>
-  <dc:title>Asia polyglotta. Zu den Sprachstudien von Julius Heinrich Klaproth</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/tagungsband_sprache/schlieben-lange_weydt">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/tagungsband_sprache/schlieben-lange_weydt"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/SchliebenLange"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Weydt"/>
-  <dc:title> Die Antwort Daniel Jenischs auf die Preisfrage der Berliner Akademie zur »Vergleichung der Hauptsprachen Europas« von 1794</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/tagungsband_sprache/marazzini">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/tagungsband_sprache/marazzini"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Marazzini"/>
-  <dc:title>Carlo Deninas Beitrag zur Geschichte der Sprachwissenschaft</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/tagungsband_sprache/rousseau">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/tagungsband_sprache/rousseau"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Rousseau"/>
-  <dc:title> August-Ludwig von Schlözer: un chaînon manquant dans la genèse de la théorie linguistique de Wilhelm von Humboldt</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-  <dc:language>fra</dc:language>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/tagungsband_sprache/thouard">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/tagungsband_sprache/thouard"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Thouard"/>
-  <dc:title>De la grammaire générale à l'étude comparée des langues: langage et langues à Berlin entre August Ferdinand Bernhardi et Wilhelm von Humboldt</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-  <dc:language>fra</dc:language>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/tagungsband_sprache/zollna">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/tagungsband_sprache/zollna"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Zollna"/>
-  <dc:title>Bernhardi und Destutt de Tracy</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/werkvertraege/johannsen_catel/01.html">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/werkvertraege/johannsen_catel/01.html"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Johannsen"/>
-  <dc:title>Ludwig Friedrich (Louis) Catel. Biografie</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/werkvertraege/johannsen_catel/02.html">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/werkvertraege/johannsen_catel/02.html"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Johannsen"/>
-  <dc:title>Ludwig Friedrich (Louis) Catel. Tätigkeiten, Schriften und Werke</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/werkvertraege/johannsen_catel/03.html">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/werkvertraege/johannsen_catel/03.html"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Johannsen"/>
-  <dc:title>Ludwig Friedrich (Louis) Catel. Schriftenverzeichnis</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/werkvertraege/johannsen_catel/04.html">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/werkvertraege/johannsen_catel/04.html"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Johannsen"/>
-  <dc:title>Ludwig Friedrich (Louis) Catel. Nachgewiesene Archivalien und Briefe</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/werkvertraege/johannsen_catel/05.html">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/werkvertraege/johannsen_catel/05.html"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Johannsen"/>
-  <dc:title>Ludwig Friedrich (Louis) Catel. Literaturverzeichnis</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/werkvertraege/johannsen_levezow/01.html">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/werkvertraege/johannsen_levezow/01.html"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Johannsen"/>
-  <dc:title>Jakob Andreas Konrad Levezow. Biografie</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/werkvertraege/johannsen_levezow/02.html">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/werkvertraege/johannsen_levezow/02.html"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Johannsen"/>
-  <dc:title>Jakob Andreas Konrad Levezow. Schriftenverzeichnis</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/werkvertraege/johannsen_levezow/03.html">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/werkvertraege/johannsen_levezow/03.html"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Johannsen"/>
-  <dc:title>Jakob Andreas Konrad Levezow. Archivalien und Briefe</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/werkvertraege/johannsen_levezow/04.html">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/werkvertraege/johannsen_levezow/04.html"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Johannsen"/>
-  <dc:title>Jakob Andreas Konrad Levezow. Literaturverzeichnis</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/werkvertraege/zimmermann_langhans/01.html">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/werkvertraege/zimmermann_langhans/01.html"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Zimmermann"/>
-  <dc:title>Carl Gotthard Langhans. 1732 - 1808</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/werkvertraege/zimmermann_langhans/02.html">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/werkvertraege/zimmermann_langhans/02.html"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Zimmermann"/>
-  <dc:title>Carl Gotthard Langhans. Kommentar</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/werkvertraege/zimmermann_langhans/03.html">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/werkvertraege/zimmermann_langhans/03.html"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Zimmermann"/>
-  <dc:title>Carl Gotthard Langhans. Die „practischen Beiträge“</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/werkvertraege/zimmermann_langhans/04.html">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/werkvertraege/zimmermann_langhans/04.html"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Zimmermann"/>
-  <dc:title>Carl Gotthard Langhans. Das Nationaltheater</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/werkvertraege/zimmermann_langhans/05.html">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/werkvertraege/zimmermann_langhans/05.html"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Zimmermann"/>
-  <dc:title>Carl Gotthard Langhans. Antikenrezeption</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/werkvertraege/zimmermann_langhans/06.html">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
-  <dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/werkvertraege/zimmermann_langhans/06.html"/>
-  <dc:creator rdf:resource="http://wsp.normdata.rdf/Zimmermann"/>
-  <dc:title>Carl Gotthard Langhans. Literaturverzeichnis</dc:title>
-  <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
-</rdf:Description>
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns="http://wsp.normdata.rdf/BerlinerKlassik" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:gnd="http://d-nb.info/standards/elementset/gnd#" xmlns:ore="http://www.openarchives.org/ore/terms/" xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
+	<!-- Web Ressources -->
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/"/>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://berlinerklassik.bbaw.de/BK">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://berlinerklassik.bbaw.de/BK"/>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/projekt">
+	 	<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/projekt"/>
+		<dc:creator rdf:resource="http://wsp.normdata.rdf/Wiedemann"/>
+		<dc:title>Über das Projekt "Berliner Klassik"</dc:title>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+	</rdf:Description> 
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/projekt/historische-situation-in-berlin-um-1800">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/projekt/historische-situation-in-berlin-um-1800"/>
+		<dc:creator rdf:resource="http://wsp.normdata.rdf/Motschmann"/>
+		<dc:title>Die Stadt Berlin um 1800</dc:title>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+	</rdf:Description> 
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/projekt/presse-medienberichte">
+	 	<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/projekt/presse-medienberichte"/>
+		<dc:title>Presseberichte</dc:title>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+	</rdf:Description> 
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/mitarbeiter">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/mitarbeiter"/>
+		<dc:title>Mitarbeiter</dc:title>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung"/>
+		<dc:title>Aktuelle Forschungsprojekte des Vorhabens</dc:title>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/nationaltheater">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/nationaltheater"/>
+		<dc:creator rdf:resource="http://wsp.normdata.rdf/Gerlach"/>
+		<dc:title>Das Königliche Nationaltheater zu Berlin - Schmelztiegel urbaner Geselligkeit</dc:title>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/geselliges-leben-in-berlin-um-1800">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/geselliges-leben-in-berlin-um-1800"/>
+		<dc:creator rdf:resource="http://wsp.normdata.rdf/Motschmann"/>
+		<dc:title>Geselliges Leben in Berlin um 1800</dc:title>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+	</rdf:Description> 
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/geschmackspolitik">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/geschmackspolitik"/>
+		<dc:creator rdf:resource="http://wsp.normdata.rdf/Sedlarz"/>
+		<dc:title>Geschmackspolitik. Die reformierte Berliner Kunstakademie im Kontext von Stadt, Staat und Hof</dc:title>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/werkvertraege">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/werkvertraege"/>
+		<dc:title>Werkverträge</dc:title>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/dateien/hahn_dekorationsmalerei.pdf">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/dateien/hahn_dekorationsmalerei.pdf"/>
+		<dc:creator rdf:resource="http://wsp.normdata.rdf/Hahn"/>
+		<dc:title>Der Einfluß der Geschmacksdiskussion und der von der Akademie betriebenen Handwerkerschulung auf die Dekorationsmalerei zwischen 1780 und 1820</dc:title>
+		<dcterms:created rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2001</dcterms:created>
+		<dcterms:rigthsHolder rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_pdf"/>
+	</rdf:Description> 
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/dateien/hahn_leipzigerstr.pdf">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/dateien/hahn_leipzigerstr.pdf"/>
+		<dc:creator rdf:resource="http://wsp.normdata.rdf/Hahn"/>
+		<dc:title>Statistische Angaben zur Architektur und zur Soziologie der Eigentümer und Bewohner der Häuser in der Leipziger Straße in Berlin in den Jahren 1785 - 1815</dc:title>
+		<dcterms:created rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2003</dcterms:created>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_pdf"/>
+	</rdf:Description> 
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/dateien/lacher_protokolle_adk.pdf">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/dateien/lacher_protokolle_adk.pdf"/>
+		<dc:creator rdf:resource="http://wsp.normdata.rdf/Lacher"/>
+		<dc:title>Die Konferenzen der Berliner Kunstakademie 1786-1815 - Annalen des Berliner Kunstalltags</dc:title>
+		<dcterms:created rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2004</dcterms:created>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_pdf"/>
+	</rdf:Description> 
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/dateien/lacher_biografien.pdf">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/dateien/lacher_biografien.pdf"/>
+		<dc:creator rdf:resource="http://wsp.normdata.rdf/Lacher"/>
+		<dc:title>Künstler(auto)biografien</dc:title>
+		<dcterms:created rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2005</dcterms:created>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_pdf"/>
+	</rdf:Description> 
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/dateien/Bibliographie-Verlagswesen.pdf">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/dateien/Bibliographie-Verlagswesen.pdf"/>
+		<dc:creator rdf:resource="http://wsp.normdata.rdf/Panwitz"/>
+		<dc:title>Berliner Verleger und Verlagshäuser: Bibliographie / Kurzbiographien und Sekundärliteratur</dc:title>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_pdf"/>
+	</rdf:Description> 
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/dateien/panwitz_vereine.pdf">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/dateien/panwitz_vereine.pdf"/>
+		<dc:creator rdf:resource="http://wsp.normdata.rdf/Panwitz"/>
+		<dc:title>Die Berliner Vereine 1786-1815</dc:title>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_pdf"/>
+	</rdf:Description> 
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/dateien/thietz-Polemik-und-Prgramm.pdf">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/dateien/thietz-Polemik-und-Prgramm.pdf"/>
+		<dc:creator rdf:resource="http://wsp.normdata.rdf/Thietz"/>
+		<dc:title>Polemik und Programm – Die streitbaren Theaterkritiken von August Ferdinand Bernhardi als Beitrag zur romantischen Hermeneutik</dc:title>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_pdf"/>
+	</rdf:Description> 
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/reihe-berliner-klassik/">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/reihe-berliner-klassik/"/>
+		<dc:title>Reihe "Berliner Klassik"</dc:title>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/einzelne-publikationen-als-seiten/band-1-aloys-hirt-archaeologe-historiker-kunstkenner">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/einzelne-publikationen-als-seiten/band-1-aloys-hirt-archaeologe-historiker-kunstkenner"/>
+		<dc:title>Aloys Hirt: Archäologe, Historiker, Kunstkenner</dc:title>
+		<gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/HirtAloys"/>
+		<dc:publisher rdf:resource="http://wsp.normdata.rdf/Sedlarz"/>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+	</rdf:Description> 
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/einzelne-publikationen-als-seiten/band-2-daniel-jenisch-kant-exeget-popularphilosoph-und-literat-in-berlin">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/einzelne-publikationen-als-seiten/band-2-daniel-jenisch-kant-exeget-popularphilosoph-und-literat-in-berlin"/>
+		<dc:title>Kant-Exeget, Popularphilosoph und Literat in Berlin</dc:title>
+		<dc:creator>Daniel Jenisch</dc:creator>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+	</rdf:Description> 
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/einzelne-publikationen-als-seiten/band-4-karl-philipp-moritz-in-berlin-1786-1793">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+	 	<dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/einzelne-publikationen-als-seiten/band-4-karl-philipp-moritz-in-berlin-1786-1793"/>
+		<dc:title>Karl Philipp Moritz in Berlin 1789 –1793</dc:title>
+		<gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/MoritzKarlPhilipp"/>
+		<dc:publisher rdf:resource="http://wsp.normdata.rdf/Tintemann"/>
+		<dc:publisher rdf:resource="http://wsp.normdata.rdf/Wingertszahn"/>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+	</rdf:Description> 
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/einzelne-publikationen-als-seiten/band-5-fichte-in-berlin.-spekulative-ansaetze-einer-philosophie-der-praxis">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/einzelne-publikationen-als-seiten/band-5-fichte-in-berlin.-spekulative-ansaetze-einer-philosophie-der-praxis"/>
+		<dc:title>Fichte in Berlin: Spekulative Ansätze einer Philosophie der Praxis</dc:title>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+	</rdf:Description> 
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/einzelne-publikationen-als-seiten/band-6-die-koenigsstadt.-stadtraum-und-wohnraeume-in-berlin-um-1800">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/einzelne-publikationen-als-seiten/band-6-die-koenigsstadt.-stadtraum-und-wohnraeume-in-berlin-um-1800"/>
+		<dc:title>„Die Königsstadt“. Stadtraum und Wohnräume in Berlin um 1800</dc:title>
+		<dc:publisher rdf:resource="http://wsp.normdata.rdf/Sedlarz"/>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+	</rdf:Description> 
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/einzelne-publikationen-als-seiten/band-7-johann-jakob-engel-philosoph-fuer-die-welt-aesthetiker-und-dichter">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/einzelne-publikationen-als-seiten/band-7-johann-jakob-engel-philosoph-fuer-die-welt-aesthetiker-und-dichter"/>
+		<dc:title>Johann Jakob Engel (1741–1802). Philosoph für die Welt, Ästhetiker und Dichter</dc:title>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+	</rdf:Description> 
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/einzelne-publikationen-als-seiten/band-8-die-altertumswissenschaften-in-berlin-um-1800-an-akademie-schule-und-universitaet">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/einzelne-publikationen-als-seiten/band-8-die-altertumswissenschaften-in-berlin-um-1800-an-akademie-schule-und-universitaet"/>
+		<dc:title>Die Altertumswissenschaften in Berlin um 1800 an Akademie, Schule und Universität</dc:title>
+		<dc:publisher rdf:resource="http://wsp.normdata.rdf/Seidensticker"/>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+	</rdf:Description> 
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/einzelne-publikationen-als-seiten/band-9-berliner-eisen.-die-koenigliche-eisengiesserei-berlin.-zur-geschichte-eines-preussischen-unternehmens">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/einzelne-publikationen-als-seiten/band-9-berliner-eisen.-die-koenigliche-eisengiesserei-berlin.-zur-geschichte-eines-preussischen-unternehmens"/>
+		<dc:title>Berliner Eisen. Die Königliche Eisengießerei Berlin. Zur Geschichte eines preußischen Unternehmens</dc:title>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+	</rdf:Description> 
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/einzelne-publikationen-als-seiten/band-10-tableau-de-berlin.-beitraege-zur-berliner-klassik-1786-1815">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/einzelne-publikationen-als-seiten/band-10-tableau-de-berlin.-beitraege-zur-berliner-klassik-1786-1815"/>
+		<dc:title>Tableau de Berlin. Beiträge zur "Berliner Klassik" (1786-1815)</dc:title>
+		<dc:publisher rdf:resource="http://wsp.normdata.rdf/Sedlarz"/>
+		<dc:publisher rdf:resource="http://wsp.normdata.rdf/Disselkamp"/>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/einzelne-publikationen-als-seiten/band-11-ute-tintemann-grammatikvermittlung-und-sprachreflexion.-karl-philipp-moritz-italiaenische-sprachlehre-fuer-die-deutschen">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/einzelne-publikationen-als-seiten/band-11-ute-tintemann-grammatikvermittlung-und-sprachreflexion.-karl-philipp-moritz-italiaenische-sprachlehre-fuer-die-deutschen"/>
+		<dc:title>Ute Tintemann: Grammatikvermittlung und Sprachreflexion. Karl Philipp Moritz' Italiänische Sprachlehre für die Deutschen</dc:title>
+		<dc:creator rdf:resource="http://wsp.normdata.rdf/Tintemann"/>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+	</rdf:Description> 
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/einzelne-publikationen-als-seiten/band-12-claudia-sedlarz-rom-sehen-und-darueber-reden.-karl-philipp-moritz2019-italienreise-178620131788-und-die-literarische-darstellung-eines-neuen-kunstdiskurses">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/einzelne-publikationen-als-seiten/band-12-claudia-sedlarz-rom-sehen-und-darueber-reden.-karl-philipp-moritz2019-italienreise-178620131788-und-die-literarische-darstellung-eines-neuen-kunstdiskurses"/>
+		<dc:title>Rom sehen und darüber reden. Karl Philipp Moritz’ Italienreise 1786–1788 und die literarische Darstellung eines neuen Kunstdiskurses</dc:title>
+		<dc:creator rdf:resource="http://wsp.normdata.rdf/Sedlarz"/>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+	</rdf:Description> 
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/einzelne-publikationen-als-seiten/band-13-eine-experimentalpoetik.-texte-zum-berliner-nationaltheater">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/einzelne-publikationen-als-seiten/band-13-eine-experimentalpoetik.-texte-zum-berliner-nationaltheater"/>
+		<dc:title>Eine Experimentalpoetik. Texte zum Berliner Nationaltheater</dc:title>
+		<dc:publisher rdf:resource="http://wsp.normdata.rdf/Gerlach"/>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+	</rdf:Description> 
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/einzelne-publikationen-als-seiten/band-14-uta-motschmann-schule-des-geistes-des-geschmacks-und-der-geselligkeit-die-berliner-gesellschaft-der-freunde-der-humanitaet-1797-1861">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/einzelne-publikationen-als-seiten/band-14-uta-motschmann-schule-des-geistes-des-geschmacks-und-der-geselligkeit-die-berliner-gesellschaft-der-freunde-der-humanitaet-1797-1861"/>
+		<dc:title>Schule des Geistes, des Geschmacks und der Geselligkeit, Die Berliner "Gesellschaft der Freunde der Humanität" (1797-1861)</dc:title>
+		<dc:creator rdf:resource="http://wsp.normdata.rdf/Motschmann"/>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+	</rdf:Description> 
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/einzelne-publikationen-als-seiten/band-15-der-gesellschaftliche-wandel-um-1800-und-das-berliner-nationaltheater">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/einzelne-publikationen-als-seiten/band-15-der-gesellschaftliche-wandel-um-1800-und-das-berliner-nationaltheater"/>
+		<dc:title>Der gesellschaftliche Wandel um 1800 und das Nationaltheater</dc:title>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+	</rdf:Description> 
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/einzelne-publikationen-als-seiten/band-3-sprache-und-sprachen-in-berlin-um-1800">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/einzelne-publikationen-als-seiten/band-3-sprache-und-sprachen-in-berlin-um-1800"/>
+		<dc:publisher rdf:resource="http://wsp.normdata.rdf/Tintemann"/>
+		<dc:publisher rdf:resource="http://wsp.normdata.rdf/Trabant"/>
+		<dc:title>Sprache und Sprachen in Berlin um 1800</dc:title>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+	</rdf:Description> 
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/einzelne-publikationen-als-seiten/band-16-matthias-hahn-schauplatz-der-moderne.-berlin-um-1800-2013-ein-topographischer-wegweiser">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/einzelne-publikationen-als-seiten/band-16-matthias-hahn-schauplatz-der-moderne.-berlin-um-1800-2013-ein-topographischer-wegweiser"/>
+		<dc:title>Schauplatz der Moderne. Berlin um 1800 – ein topographischer Wegweiser</dc:title>
+		<dc:creator rdf:resource="http://wsp.normdata.rdf/Hahn"/>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+	</rdf:Description> 
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/einzelne-publikationen-als-seiten/band-17-felix-saure-karl-friedrich-schinkel.-ein-deutscher-idealist-zwischen-klassik-und-gotik">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/einzelne-publikationen-als-seiten/band-17-felix-saure-karl-friedrich-schinkel.-ein-deutscher-idealist-zwischen-klassik-und-gotik"/>
+		<dc:title>Karl Friedrich Schinkel. Ein deutscher Idealist zwischen "Klassik" und "Gotik"</dc:title>
+		<dc:creator>Felix Saure</dc:creator>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+	</rdf:Description> 
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/einzelne-publikationen-als-seiten/band-18-urbane-musikkultur.-berlin-um-1800">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/einzelne-publikationen-als-seiten/band-18-urbane-musikkultur.-berlin-um-1800"/>
+		<dc:title>Urbane Musikkultur. Berlin um 1800</dc:title>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+	</rdf:Description> 
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/dateien/Louis_Catel_Dez_2001_Johannsen.pdf">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/dateien/Louis_Catel_Dez_2001_Johannsen.pdf"/>
+		<dc:creator rdf:resource="http://wsp.normdata.rdf/Johannsen"/>
+		<dc:title>Ludwig Friedrich (Louis) Catel. Biographie, kommentiertes Schriften- und Werkverzeichnis</dc:title>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_pdf"/>
+	</rdf:Description> 
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/dateien/LevezowGESAMT.pdf">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/dateien/LevezowGESAMT.pdf"/>
+		<dc:creator rdf:resource="http://wsp.normdata.rdf/Johannsen"/>
+		<dc:title>Jakob Andreas Konrad Levezow. Biographie und kommentiertes Schriftenverzeichnis</dc:title>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_pdf"/>
+	</rdf:Description> 
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/dateien/Carl-Gotthard-Langhans.pdf">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/forschung/dateien/Carl-Gotthard-Langhans.pdf"/>
+		<dc:creator rdf:resource="http://wsp.normdata.rdf/Zimmermann"/>
+		<dc:title>Carl Gotthard Langhans. 1732 - 1808 / Schriftenverzeichnis und Kommentar (mit Sekundärliteratur), kommentierte Bibliographie der Schriften Langhans</dc:title>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_pdf"/>
+	</rdf:Description> 
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/veranstaltungen/tagungen">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/veranstaltungen/tagungen"/>
+		<dc:title>Tagungen</dc:title>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+	</rdf:Description> 
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/veranstaltungen/vortragsreihen">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/veranstaltungen/vortragsreihen"/>
+		<dc:title>Vortragsreihen</dc:title>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+	</rdf:Description> 
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/veranstaltungen/vortragsreihen/arbeitskreis">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/veranstaltungen/vortragsreihen/arbeitskreis"/>
+		<dc:title>Arbeitskreis zur Kunst im 18. und 19. Jahrhundert</dc:title>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+	</rdf:Description> 
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/veranstaltungen/vortragsreihen/montagsklub">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/veranstaltungen/vortragsreihen/montagsklub"/>
+		<dc:title>Montagsklub</dc:title>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/reihe-berliner-klassik">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/reihe-berliner-klassik"/>
+		<dc:title>Reihe "Berliner Klassik"</dc:title>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/weitere-publikationen">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/weitere-publikationen"/>
+		<dc:title>Weitere Publikationen</dc:title>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/conrad-wiedemann">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/conrad-wiedemann"/>
+		<dc:title>Conrad Wiedemann</dc:title>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/publikationen/conrad-wiedemann">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/publikationen/conrad-wiedemann"/>
+		<dc:title>Conrad Wiedemann</dc:title>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/bk_stadtplan/gui/index.html">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/bk_stadtplan/gui/index.html"/>
+		<dc:title>Berliner Klassik - Virtuelles Berlin um 1800</dc:title>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/veranstaltungen/vortragsreihen/montagsklub/2007">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/veranstaltungen/vortragsreihen/montagsklub/2007"/>
+		<dc:title>Montagsklub 2007</dc:title>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/veranstaltungen/vortragsreihen/montagsklub/2008">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/veranstaltungen/vortragsreihen/montagsklub/2008"/>
+		<dc:title>Montagsklub 2008</dc:title>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/veranstaltungen/vortragsreihen/montagsklub/2009">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/veranstaltungen/vortragsreihen/montagsklub/2009"/>
+		<dc:title>Montagsklub 2009</dc:title>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/veranstaltungen/vortragsreihen/montagsklub/2010">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/veranstaltungen/vortragsreihen/montagsklub/2010"/>
+		<dc:title>Montagsklub 2010</dc:title>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/veranstaltungen/vortragsreihen/montagsklub/2011">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/veranstaltungen/vortragsreihen/montagsklub/2011"/>
+		<dc:title>Montagsklub 2011</dc:title>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/veranstaltungen/vortragsreihen/montagsklub/2012">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/veranstaltungen/vortragsreihen/montagsklub/2012"/>
+		<dc:title>Montagsklub 2012</dc:title>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/veranstaltungen/vortragsreihen/arbeitskreis/2003">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/veranstaltungen/vortragsreihen/arbeitskreis/2003"/>
+		<dc:title>Arbeitskreis zur Kunst im 18. und 19. Jahrhundert: 2003</dc:title>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/veranstaltungen/vortragsreihen/arbeitskreis/2004">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/veranstaltungen/vortragsreihen/arbeitskreis/2004"/>
+		<dc:title>Arbeitskreis zur Kunst im 18. und 19. Jahrhundert: 2004</dc:title>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/veranstaltungen/vortragsreihen/arbeitskreis/2005">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/veranstaltungen/vortragsreihen/arbeitskreis/2005"/>
+		<dc:title>Arbeitskreis zur Kunst im 18. und 19. Jahrhundert: 2005</dc:title>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/veranstaltungen/vortragsreihen/arbeitskreis/2006">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/veranstaltungen/vortragsreihen/arbeitskreis/2006"/>
+		<dc:title>Arbeitskreis zur Kunst im 18. und 19. Jahrhundert: 2006</dc:title>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/veranstaltungen/vortragsreihen/arbeitskreis/2007">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/veranstaltungen/vortragsreihen/arbeitskreis/2007"/>
+		<dc:title>Arbeitskreis zur Kunst im 18. und 19. Jahrhundert: 2007</dc:title>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/veranstaltungen/vortragsreihen/arbeitskreis/2008">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/veranstaltungen/vortragsreihen/arbeitskreis/2008"/>
+		<dc:title>Arbeitskreis zur Kunst im 18. und 19. Jahrhundert: 2008</dc:title>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/veranstaltungen/vortragsreihen/arbeitskreis/2010">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/veranstaltungen/vortragsreihen/arbeitskreis/2010"/>
+		<dc:title>Arbeitskreis zur Kunst im 18. und 19. Jahrhundert: 2010</dc:title>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/veranstaltungen/vortragsreihen/arbeitskreis/2011">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/veranstaltungen/vortragsreihen/arbeitskreis/2011"/>
+		<dc:title>Arbeitskreis zur Kunst im 18. und 19. Jahrhundert: 2011</dc:title>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+	</rdf:Description>
+	<rdf:Description rdf:about="http://www.berliner-klassik.de/veranstaltungen/vortragsreihen/arbeitskreis/2012">
+		<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+		<dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dc:identifier rdf:resource="http://www.berliner-klassik.de/veranstaltungen/vortragsreihen/arbeitskreis/2012"/>
+		<dc:title>Arbeitskreis zur Kunst im 18. und 19. Jahrhundert: 2012</dc:title>
+		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
+	</rdf:Description>
 </rdf:RDF>
