@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.lucene.facet.search.results.FacetResult;
+import org.apache.lucene.facet.FacetResult;
 import org.bbaw.wsp.cms.document.FacetValue;
 import org.bbaw.wsp.cms.document.clustering.YearClusterer;
 import org.bbaw.wsp.cms.document.clustering.YearMapper;

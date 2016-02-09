@@ -2,7 +2,7 @@ package org.bbaw.wsp.cms.document;
 
 import java.util.ArrayList;
 
-import org.apache.lucene.document.Fieldable;
+import org.apache.lucene.index.IndexableField;
 
 public class Document {
   private org.apache.lucene.document.Document document;
@@ -17,9 +17,9 @@ public class Document {
     return document;
   }
 
-  public Fieldable getFieldable(String field) {
+  public IndexableField getField(String field) {
     if (document != null)
-      return document.getFieldable(field);
+      return document.getField(field);
     else 
       return null;
   }

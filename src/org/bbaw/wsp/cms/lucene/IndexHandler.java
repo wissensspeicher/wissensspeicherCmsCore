@@ -1,8 +1,9 @@
 package org.bbaw.wsp.cms.lucene;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -15,44 +16,45 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.lang3.ArrayUtils;
 import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.KeywordAnalyzer;
-import org.apache.lucene.analysis.PerFieldAnalyzerWrapper;
+import org.apache.lucene.analysis.core.KeywordAnalyzer;
+import org.apache.lucene.analysis.miscellaneous.PerFieldAnalyzerWrapper;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
-import org.apache.lucene.document.FieldSelector;
-import org.apache.lucene.document.Fieldable;
-import org.apache.lucene.document.NumericField;
-import org.apache.lucene.document.SetBasedFieldSelector;
-import org.apache.lucene.facet.index.CategoryDocumentBuilder;
-import org.apache.lucene.facet.search.FacetsCollector;
-import org.apache.lucene.facet.search.params.CountFacetRequest;
-import org.apache.lucene.facet.search.params.FacetSearchParams;
-import org.apache.lucene.facet.search.results.FacetResult;
-import org.apache.lucene.facet.taxonomy.CategoryPath;
+import org.apache.lucene.document.FieldType;
+import org.apache.lucene.document.IntField;
+import org.apache.lucene.document.SortedDocValuesField;
+import org.apache.lucene.document.StoredField;
+import org.apache.lucene.facet.FacetField;
+import org.apache.lucene.facet.FacetsCollector;
+import org.apache.lucene.facet.FacetsConfig;
+import org.apache.lucene.facet.FacetResult;
+import org.apache.lucene.facet.taxonomy.FastTaxonomyFacetCounts;
 import org.apache.lucene.facet.taxonomy.TaxonomyReader;
 import org.apache.lucene.facet.taxonomy.TaxonomyWriter;
 import org.apache.lucene.facet.taxonomy.directory.DirectoryTaxonomyReader;
 import org.apache.lucene.facet.taxonomy.directory.DirectoryTaxonomyWriter;
-import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.index.DirectoryReader;
+import org.apache.lucene.index.DocValuesType;
+import org.apache.lucene.index.IndexOptions;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.IndexWriterConfig.OpenMode;
+import org.apache.lucene.index.IndexableField;
+import org.apache.lucene.index.MultiFields;
+import org.apache.lucene.index.PostingsEnum;
 import org.apache.lucene.index.Term;
-import org.apache.lucene.index.TermEnum;
-import org.apache.lucene.index.TermFreqVector;
-import org.apache.lucene.queryParser.ParseException;
-import org.apache.lucene.queryParser.QueryParser;
+import org.apache.lucene.index.Terms;
+import org.apache.lucene.index.TermsEnum;
+import org.apache.lucene.queryparser.classic.ParseException;
+import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
-import org.apache.lucene.search.Collector;
 import org.apache.lucene.search.FuzzyQuery;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.MatchAllDocsQuery;
-import org.apache.lucene.search.MultiCollector;
 import org.apache.lucene.search.NumericRangeQuery;
 import org.apache.lucene.search.PhraseQuery;
 import org.apache.lucene.search.PrefixQuery;
@@ -60,17 +62,18 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.SearcherManager;
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.SortField;
+import org.apache.lucene.search.SortField.Type;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TermRangeQuery;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.TopFieldCollector;
-import org.apache.lucene.search.similar.MoreLikeThis;
+import org.apache.lucene.queries.mlt.MoreLikeThis;
 import org.apache.lucene.search.suggest.tst.TSTLookup;
 import org.apache.lucene.search.vectorhighlight.FastVectorHighlighter;
 import org.apache.lucene.search.vectorhighlight.FieldQuery;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
-import org.apache.lucene.util.Version;
+import org.apache.lucene.util.BytesRef;
 import org.bbaw.wsp.cms.collections.Collection;
 import org.bbaw.wsp.cms.collections.CollectionReader;
 import org.bbaw.wsp.cms.document.DBpediaResource;
@@ -99,18 +102,18 @@ public class IndexHandler {
   private static Logger LOGGER = Logger.getLogger(IndexHandler.class);
   private static final String[] QUERY_EXPANSION_FIELDS_ALL = {"author", "title", "description", "subject", "subjectControlled", "swd", "ddc", "entities", "persons", "places", "tokenOrig"};
   private static final String[] QUERY_EXPANSION_FIELDS_ALL_MORPH = {"author", "title", "description", "subject", "subjectControlled", "swd", "ddc", "entities", "persons", "places", "tokenMorph"};
+  private HashMap<String, Integer> facetFieldCounts = new HashMap<String, Integer>();
   private IndexWriter documentsIndexWriter;
   private IndexWriter nodesIndexWriter;
   private SearcherManager documentsSearcherManager;
   private SearcherManager nodesSearcherManager;
-  private IndexReader documentsIndexReader;
+  private DirectoryReader documentsIndexReader;
   private PerFieldAnalyzerWrapper documentsPerFieldAnalyzer;
   private PerFieldAnalyzerWrapper nodesPerFieldAnalyzer;
   private ArrayList<Token> tokens; // all tokens in tokenOrig
   private TSTLookup suggester;
   private TaxonomyWriter taxonomyWriter;
   private TaxonomyReader taxonomyReader;
-  private CategoryDocumentBuilder categoryDocBuilder;
   private XQueryEvaluator xQueryEvaluator;
   private int commitInterval = 10;  // default: commit after each 10th document
   private int commitCounter = 0;
@@ -125,16 +128,27 @@ public class IndexHandler {
 
   private void init() throws ApplicationException {
     documentsIndexWriter = getDocumentsWriter();
-    documentsIndexWriter.setMaxFieldLength(1000000);
     nodesIndexWriter = getNodesWriter();
-    nodesIndexWriter.setMaxFieldLength(1000000);
     documentsSearcherManager = getNewSearcherManager(documentsIndexWriter);
     nodesSearcherManager = getNewSearcherManager(nodesIndexWriter);
     documentsIndexReader = getDocumentsReader();
     taxonomyWriter = getTaxonomyWriter();
     taxonomyReader = getTaxonomyReader();
-    categoryDocBuilder = getCategoryDocumentBuilder();
     xQueryEvaluator = new XQueryEvaluator();
+    facetFieldCounts.put("collectionNames", 1000);
+    facetFieldCounts.put("language", 1000);
+    facetFieldCounts.put("author", 10);
+    facetFieldCounts.put("publisher", 10);
+    facetFieldCounts.put("date", 10);
+    facetFieldCounts.put("subject", 10);
+    facetFieldCounts.put("subjectControlled", 10);
+    facetFieldCounts.put("swd", 10);
+    facetFieldCounts.put("ddc", 10);
+    facetFieldCounts.put("entityPerson", 100);
+    facetFieldCounts.put("entityOrganisation", 100);
+    facetFieldCounts.put("entityPlace", 100);
+    facetFieldCounts.put("entityConcept", 100);
+    facetFieldCounts.put("type", 1000);
     Date before = new Date();
     tokens = getToken("tokenOrig", "", 10000000); // get all token: needs ca. 4 sec. for 3 Mio tokens
     Date after = new Date();
@@ -177,67 +191,92 @@ public class IndexHandler {
   private void indexDocumentLocal(CmsDocOperation docOperation) throws ApplicationException {
     try {
       MetadataRecord mdRecord = docOperation.getMdRecord();
-      List<CategoryPath> categories = new ArrayList<CategoryPath>();
       Document doc = new Document();
+      FieldType ftStoredAnalyzed = new FieldType();
+      ftStoredAnalyzed.setStored(true);
+      ftStoredAnalyzed.setIndexOptions(IndexOptions.DOCS_AND_FREQS_AND_POSITIONS_AND_OFFSETS);
+      ftStoredAnalyzed.setTokenized(true);
+      ftStoredAnalyzed.setStoreTermVectors(true);
+      ftStoredAnalyzed.setStoreTermVectorOffsets(true);
+      ftStoredAnalyzed.setStoreTermVectorPositions(true);
+      ftStoredAnalyzed.setStoreTermVectorPayloads(true);
+      FieldType ftStoredNotAnalyzed = new FieldType();
+      ftStoredNotAnalyzed.setStored(true);
+      ftStoredNotAnalyzed.setIndexOptions(IndexOptions.DOCS_AND_FREQS_AND_POSITIONS_AND_OFFSETS);
+      ftStoredNotAnalyzed.setTokenized(false);
+      FieldType ftNumericStored = new FieldType();
+      ftNumericStored.setStored(true);      
+      ftNumericStored.setIndexOptions(IndexOptions.DOCS);
+      ftNumericStored.setOmitNorms(true);
+      ftNumericStored.setNumericType(FieldType.NumericType.INT);
+      ftNumericStored.setDocValuesType(DocValuesType.NUMERIC);
       int id = mdRecord.getId(); // short id (auto incremented)
       if (id != -1) { 
-        NumericField idField = new NumericField("id", Field.Store.YES, true);
-        idField.setIntValue(id);
+        Field idField = new IntField("id", id, ftNumericStored);
         doc.add(idField);
       }
       String docId = mdRecord.getDocId();
-      Field docIdField = new Field("docId", docId, Field.Store.YES, Field.Index.ANALYZED);
+      Field docIdField = new Field("docId", docId, ftStoredAnalyzed); 
       doc.add(docIdField);
       String docIdSortedStr = docId.toLowerCase();  // so that sorting is lower case
-      Field docIdFieldSorted = new Field("docIdSorted", docIdSortedStr, Field.Store.YES, Field.Index.NOT_ANALYZED); 
+      Field docIdFieldSorted = new SortedDocValuesField("docIdSorted", new BytesRef(docIdSortedStr)); // the sort field is indexed but not stored (no doc(docId) is possible in this field
       doc.add(docIdFieldSorted);
       String identifier = mdRecord.getIdentifier();
       if (identifier != null) {
-        Field identifierField = new Field("identifier", identifier, Field.Store.YES, Field.Index.ANALYZED);
+        Field identifierField = new Field("identifier", identifier, ftStoredAnalyzed);
         doc.add(identifierField);
       }
       String uri = mdRecord.getUri();
       if (uri == null)
         uri = docOperation.getSrcUrl();
       if (uri != null) {
-        Field uriField = new Field("uri", uri, Field.Store.YES, Field.Index.ANALYZED);
+        Field uriField = new Field("uri", uri, ftStoredAnalyzed);
         doc.add(uriField);
       }
       String collectionNames = mdRecord.getCollectionNames();
       if (collectionNames != null) {
-        categories.add(new CategoryPath("collectionNames", collectionNames));
-        Field collectionNamesField = new Field("collectionNames", collectionNames, Field.Store.YES, Field.Index.ANALYZED);
-        doc.add(collectionNamesField);
+        Field collectionNamesField = new Field("collectionNames", collectionNames, ftStoredAnalyzed);
         if (collectionNames.equals("jdg"))
-          doc.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
+          collectionNamesField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
+        doc.add(collectionNamesField);
+        FacetField facetField = new FacetField("collectionNames", collectionNames);
+        doc.add(facetField);
       }
       String author = mdRecord.getCreator();
       if (author != null) {
         String[] authors = author.split(";");
         for (int i=0; i<authors.length; i++) {
           String a = authors[i].trim();
-          categories.add(new CategoryPath("author", a));
+          if (! a.isEmpty()) {
+            FacetField facetField = new FacetField("author", a);
+            doc.add(facetField);
+          }
         }
-        Field authorField = new Field("author", author, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
+        Field authorField = new Field("author", author, ftStoredAnalyzed);
         doc.add(authorField);
+        if (collectionNames.equals("jdg"))
+          authorField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
         if (author != null)
           author = author.toLowerCase();  // so that sorting is lower case
-        Field authorFieldSorted = new Field("authorSorted", author, Field.Store.YES, Field.Index.NOT_ANALYZED);
+        Field authorFieldSorted = new SortedDocValuesField("authorSorted", new BytesRef(author));
         doc.add(authorFieldSorted);
       } else {
-        categories.add(new CategoryPath("author", "unbekannt"));
+        FacetField facetField = new FacetField("author", "unbekannt");
+        doc.add(facetField);
       }
       if (mdRecord.getCreatorDetails() != null) {
-        Field authorDetailsField = new Field("authorDetails", mdRecord.getCreatorDetails(), Field.Store.YES, Field.Index.NOT_ANALYZED);
+        Field authorDetailsField = new StoredField("authorDetails", mdRecord.getCreatorDetails());
         doc.add(authorDetailsField);
       }
       if (mdRecord.getTitle() != null) {
-        Field titleField = new Field("title", mdRecord.getTitle(), Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
+        Field titleField = new Field("title", mdRecord.getTitle(), ftStoredAnalyzed);
         doc.add(titleField);
+        if (collectionNames.equals("jdg"))
+          titleField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
         String titleStr = mdRecord.getTitle();
         if (titleStr != null)
           titleStr = titleStr.toLowerCase();  // so that sorting is lower case
-        Field titleFieldSorted = new Field("titleSorted", titleStr, Field.Store.YES, Field.Index.NOT_ANALYZED);
+        Field titleFieldSorted = new SortedDocValuesField("titleSorted", new BytesRef(titleStr));
         doc.add(titleFieldSorted);
       }
       String publisher = mdRecord.getPublisher();
@@ -245,16 +284,22 @@ public class IndexHandler {
         String[] publishers = publisher.split(";");
         for (int i=0; i<publishers.length; i++) {
           String p = publishers[i].trim();
-          categories.add(new CategoryPath("publisher", p));
+          if (! p.isEmpty()) {
+            FacetField facetField = new FacetField("publisher", p);
+            doc.add(facetField);
+          }
         }
-        Field publisherField = new Field("publisher", publisher, Field.Store.YES, Field.Index.ANALYZED);
+        Field publisherField = new Field("publisher", publisher, ftStoredAnalyzed);
         doc.add(publisherField);
+        if (collectionNames.equals("jdg"))
+          publisherField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
         if (publisher != null)
           publisher = publisher.toLowerCase();  // so that sorting is lower case
-        Field publisherFieldSorted = new Field("publisherSorted", publisher, Field.Store.YES, Field.Index.NOT_ANALYZED);
+        Field publisherFieldSorted = new SortedDocValuesField("publisherSorted", new BytesRef(publisher));
         doc.add(publisherFieldSorted);
       } else {
-        categories.add(new CategoryPath("publisher", "unbekannt"));
+        FacetField facetField = new FacetField("publisher", "unbekannt");
+        doc.add(facetField);
       }
       String yearStr = mdRecord.getYear();
       if (yearStr == null) {
@@ -267,20 +312,30 @@ public class IndexHandler {
         }
       }
       if (yearStr != null) {
-        categories.add(new CategoryPath("date", yearStr));
-        Field dateField = new Field("date", yearStr, Field.Store.YES, Field.Index.ANALYZED);
+        Field dateField = new Field("date", yearStr, ftStoredAnalyzed);
         doc.add(dateField);
-        Field dateFieldSorted = new Field("dateSorted", yearStr, Field.Store.YES, Field.Index.NOT_ANALYZED);
+        if (collectionNames.equals("jdg"))
+          dateField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
+        Field dateFieldSorted = new SortedDocValuesField("dateSorted", new BytesRef(yearStr));
         doc.add(dateFieldSorted);
+        FacetField facetField = new FacetField("date", yearStr);
+        doc.add(facetField);
       } else {
-        categories.add(new CategoryPath("date", "unbekannt"));
+        FacetField facetField = new FacetField("date", "unbekannt");
+        doc.add(facetField);
       }
       if (mdRecord.getDescription() != null) {
-        Field descriptionField = new Field("description", mdRecord.getDescription(), Field.Store.YES, Field.Index.ANALYZED);
+        Field descriptionField = new Field("description", mdRecord.getDescription(), ftStoredAnalyzed);
         doc.add(descriptionField);
+        if (collectionNames.equals("jdg"))
+          descriptionField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
       }
       String subject = mdRecord.getSubject();
       if (subject != null) {
+        Field subjectField = new Field("subject", subject, ftStoredAnalyzed);
+        doc.add(subjectField);
+        if (collectionNames.equals("jdg"))
+          subjectField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
         String[] subjects = subject.split(",");
         if (subject.contains(";"))
           subjects = subject.split(";");
@@ -288,95 +343,114 @@ public class IndexHandler {
           subjects = subject.split("###");
         for (int i=0; i<subjects.length; i++) {
           String s = subjects[i].trim();
-          if (! s.isEmpty())
-            categories.add(new CategoryPath("subject", s));
+          if (! s.isEmpty()) {
+            FacetField facetField = new FacetField("subject", s);
+            doc.add(facetField);
+          }
         }
-        Field subjectField = new Field("subject", subject, Field.Store.YES, Field.Index.ANALYZED);
-        doc.add(subjectField);
       } else {
-        categories.add(new CategoryPath("subject", "unbekannt"));
+        FacetField facetField = new FacetField("subject", "unbekannt");
+        doc.add(facetField);
       }
       String subjectControlledDetails = mdRecord.getSubjectControlledDetails();
       if (subjectControlledDetails != null) {
         String namespaceDeclaration = "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; declare namespace rdfs=\"http://www.w3.org/2000/01/rdf-schema#\"; declare namespace dc=\"http://purl.org/dc/elements/1.1/\"; declare namespace dcterms=\"http://purl.org/dc/terms/\"; ";
         String dcTermsSubjectsStr = xQueryEvaluator.evaluateAsStringValueJoined(subjectControlledDetails, namespaceDeclaration + "/subjects/dcterms:subject/rdf:Description/rdfs:label", "###");
+        Field subjectControlledField = new Field("subjectControlled", dcTermsSubjectsStr, ftStoredAnalyzed);
+        doc.add(subjectControlledField);
+        Field subjectControlledDetailsField = new Field("subjectControlledDetails", subjectControlledDetails, ftStoredNotAnalyzed);
+        doc.add(subjectControlledDetailsField);
         String[] dcTermsSubjects = dcTermsSubjectsStr.split("###");
         for (int i=0; i<dcTermsSubjects.length; i++) {
           String s = dcTermsSubjects[i].trim();
-          if (! s.isEmpty())
-            categories.add(new CategoryPath("subjectControlled", s));
+          if (! s.isEmpty()) {
+            FacetField facetField = new FacetField("subjectControlled", s);
+            doc.add(facetField);
+          }
         }
-        Field subjectControlledField = new Field("subjectControlled", dcTermsSubjectsStr, Field.Store.YES, Field.Index.ANALYZED);
-        doc.add(subjectControlledField);
-        Field subjectControlledDetailsField = new Field("subjectControlledDetails", subjectControlledDetails, Field.Store.YES, Field.Index.NOT_ANALYZED);
-        doc.add(subjectControlledDetailsField);
       }
       String swd = mdRecord.getSwd();
       if (swd != null) {
+        Field swdField = new Field("swd", swd, ftStoredAnalyzed);
+        doc.add(swdField);
+        if (collectionNames.equals("jdg"))
+          swdField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
         String[] swds = swd.split(",");
         if (swd.contains(";"))
           swds = swd.split(";");
         for (int i=0; i<swds.length; i++) {
           String s = swds[i].trim();
-          categories.add(new CategoryPath("swd", s));
+          if (! s.isEmpty()) {
+            FacetField facetField = new FacetField("swd", s);
+            doc.add(facetField);
+          }
         }
-        Field swdField = new Field("swd", swd, Field.Store.YES, Field.Index.ANALYZED);
-        doc.add(swdField);
       } else {
-        categories.add(new CategoryPath("swd", "unbekannt"));
+        FacetField facetField = new FacetField("swd", "unbekannt");
+        doc.add(facetField);
       }
       if (mdRecord.getDdc() != null) {
-        categories.add(new CategoryPath("ddc", mdRecord.getDdc()));
-        Field ddcField = new Field("ddc", mdRecord.getDdc(), Field.Store.YES, Field.Index.ANALYZED);
+        Field ddcField = new Field("ddc", mdRecord.getDdc(), ftStoredAnalyzed);
         doc.add(ddcField);
+        if (collectionNames.equals("jdg"))
+          ddcField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
+        FacetField facetField = new FacetField("ddc", mdRecord.getDdc());
+        doc.add(facetField);
       } else {
-        categories.add(new CategoryPath("ddc", "unbekannt"));
+        FacetField facetField = new FacetField("ddc", "unbekannt");
+        doc.add(facetField);
       }
       if (mdRecord.getRights() != null) {
-        Field rightsField = new Field("rights", mdRecord.getRights(), Field.Store.YES, Field.Index.ANALYZED);
+        Field rightsField = new Field("rights", mdRecord.getRights(), ftStoredAnalyzed);
         doc.add(rightsField);
       }
       if (mdRecord.getLicense() != null) {
-        Field licenseField = new Field("license", mdRecord.getLicense(), Field.Store.YES, Field.Index.ANALYZED);
+        Field licenseField = new Field("license", mdRecord.getLicense(), ftStoredAnalyzed);
         doc.add(licenseField);
       }
       if (mdRecord.getAccessRights() != null) {
-        Field accessRightsField = new Field("accessRights", mdRecord.getAccessRights(), Field.Store.YES, Field.Index.ANALYZED);
+        Field accessRightsField = new Field("accessRights", mdRecord.getAccessRights(), ftStoredAnalyzed);
         doc.add(accessRightsField);
       }
       if (mdRecord.getLastModified() != null) {
         Date lastModified = mdRecord.getLastModified();
         String xsDateStr = new Util().toXsDate(lastModified);
-        Field lastModifiedField = new Field("lastModified", xsDateStr, Field.Store.YES, Field.Index.ANALYZED);
+        Field lastModifiedField = new Field("lastModified", xsDateStr, ftStoredAnalyzed);
         doc.add(lastModifiedField);
         long time = lastModified.getTime();
         String timeStr = String.valueOf(time);
-        Field lastModifiedFieldSorted = new Field("lastModifiedSorted", timeStr, Field.Store.YES, Field.Index.NOT_ANALYZED);
+        Field lastModifiedFieldSorted = new SortedDocValuesField("lastModifiedSorted", new BytesRef(timeStr));
         doc.add(lastModifiedFieldSorted);
       }
       if (mdRecord.getSchemaName() != null) {
-        Field schemaField = new Field("schemaName", mdRecord.getSchemaName(), Field.Store.YES, Field.Index.ANALYZED);
+        Field schemaField = new Field("schemaName", mdRecord.getSchemaName(), ftStoredAnalyzed);
         doc.add(schemaField);
         String schemaStr = mdRecord.getSchemaName();
         if (schemaStr != null)
           schemaStr = schemaStr.toLowerCase();  // so that sorting is lower case
-        Field schemaFieldSorted = new Field("schemaNameSorted", schemaStr, Field.Store.YES, Field.Index.NOT_ANALYZED);
+        Field schemaFieldSorted = new SortedDocValuesField("schemaNameSorted", new BytesRef(schemaStr));
         doc.add(schemaFieldSorted);
       }
       if (mdRecord.getType() != null) {
-        categories.add(new CategoryPath("type", mdRecord.getType()));
-        Field typeField = new Field("type", mdRecord.getType(), Field.Store.YES, Field.Index.ANALYZED);
+        Field typeField = new Field("type", mdRecord.getType(), ftStoredAnalyzed);
         doc.add(typeField);
+        if (collectionNames.equals("jdg"))
+          typeField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
+        FacetField facetField = new FacetField("type", mdRecord.getType());
+        doc.add(facetField);
       } else {
-        categories.add(new CategoryPath("type", "unbekannt"));
+        FacetField facetField = new FacetField("type", "unbekannt");
+        doc.add(facetField);
       }
       if (mdRecord.getSystem() != null) {
-        Field systemTypeField = new Field("systemType", mdRecord.getSystem(), Field.Store.YES, Field.Index.NOT_ANALYZED);
+        Field systemTypeField = new Field("systemType", mdRecord.getSystem(), ftStoredNotAnalyzed);
         doc.add(systemTypeField);
       }
       if (mdRecord.getEntities() != null) {
-        Field entitiesField = new Field("entities", mdRecord.getEntities(), Field.Store.YES, Field.Index.ANALYZED);
+        Field entitiesField = new Field("entities", mdRecord.getEntities(), ftStoredAnalyzed);
         doc.add(entitiesField);
+        if (collectionNames.equals("jdg"))
+          entitiesField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
       }
       if (mdRecord.getEntitiesDetails() != null) {
         ArrayList<DBpediaResource> entities = DBpediaResource.fromXmlStr(xQueryEvaluator, mdRecord.getEntitiesDetails());
@@ -393,82 +467,108 @@ public class IndexHandler {
             entityFacetStr = entityFacetStr + "<gnd>" + entityGnd + "</gnd>";
             entitiesUris = entitiesUris + " " + entityGnd;
           }
-          if (entityType != null && entityType.equals("person"))
-            categories.add(new CategoryPath("entityPerson", entityFacetStr));
-          else if (entityType != null && entityType.equals("organisation"))
-            categories.add(new CategoryPath("entityOrganisation", entityFacetStr));
-          else if (entityType != null && entityType.equals("place"))
-            categories.add(new CategoryPath("entityPlace", entityFacetStr));
-          else if (entityType != null && entityType.equals("concept"))
-            categories.add(new CategoryPath("entityConcept", entityFacetStr));
-          else
-            categories.add(new CategoryPath("entityConcept", entityFacetStr));
+          if (entityType != null && entityType.equals("person")) {
+            FacetField facetField = new FacetField("entityPerson", entityFacetStr);
+            doc.add(facetField);
+          } else if (entityType != null && entityType.equals("organisation")) {
+            FacetField facetField = new FacetField("entityOrganisation", entityFacetStr);
+            doc.add(facetField);
+          } else if (entityType != null && entityType.equals("place")) {
+            FacetField facetField = new FacetField("entityPlace", entityFacetStr);
+            doc.add(facetField);
+          } else if (entityType != null && entityType.equals("concept")) {
+            FacetField facetField = new FacetField("entityConcept", entityFacetStr);
+            doc.add(facetField);
+          } else {
+            FacetField facetField = new FacetField("entityConcept", entityFacetStr);
+            doc.add(facetField);
+          }
         }
-        Field entitiesDetailsField = new Field("entitiesDetails", mdRecord.getEntitiesDetails(), Field.Store.YES, Field.Index.NOT_ANALYZED);
+        Field entitiesDetailsField = new StoredField("entitiesDetails", mdRecord.getEntitiesDetails());
         doc.add(entitiesDetailsField);
-        Field entitiesUrisField = new Field("entitiesUris", entitiesUris, Field.Store.YES, Field.Index.ANALYZED);
+        Field entitiesUrisField = new Field("entitiesUris", entitiesUris, ftStoredAnalyzed);
         doc.add(entitiesUrisField);
       }
       if (mdRecord.getPersons() != null) {
-        Field personsField = new Field("persons", mdRecord.getPersons(), Field.Store.YES, Field.Index.ANALYZED);
+        Field personsField = new Field("persons", mdRecord.getPersons(), ftStoredAnalyzed);
         doc.add(personsField);
+        if (collectionNames.equals("jdg"))
+          personsField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
       }
       if (mdRecord.getPersonsDetails() != null) {
-        Field personsDetailsField = new Field("personsDetails", mdRecord.getPersonsDetails(), Field.Store.YES, Field.Index.NOT_ANALYZED);
+        Field personsDetailsField = new StoredField("personsDetails", mdRecord.getPersonsDetails());
         doc.add(personsDetailsField);
       }
       if (mdRecord.getPlaces() != null) {
-        Field placesField = new Field("places", mdRecord.getPlaces(), Field.Store.YES, Field.Index.ANALYZED);
+        Field placesField = new Field("places", mdRecord.getPlaces(), ftStoredAnalyzed);
         doc.add(placesField);
+        if (collectionNames.equals("jdg"))
+          placesField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
       }
       String language = mdRecord.getLanguage();
       if (language != null) {
-        categories.add(new CategoryPath("language", mdRecord.getLanguage()));
-        Field languageField = new Field("language", mdRecord.getLanguage(), Field.Store.YES, Field.Index.ANALYZED);
+        Field languageField = new Field("language", mdRecord.getLanguage(), ftStoredAnalyzed);
         doc.add(languageField);
+        if (collectionNames.equals("jdg"))
+          languageField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
         String langStr = mdRecord.getLanguage();
         if (langStr != null)
           langStr = langStr.toLowerCase();  // so that sorting is lower case
-        Field languageFieldSorted = new Field("languageSorted", langStr, Field.Store.YES, Field.Index.NOT_ANALYZED);
+        Field languageFieldSorted = new SortedDocValuesField("languageSorted", new BytesRef(langStr));
         doc.add(languageFieldSorted);
+        FacetField facetField = new FacetField("language", mdRecord.getLanguage());
+        doc.add(facetField);
       } else {
-        categories.add(new CategoryPath("language", "unbekannt"));
+        FacetField facetField = new FacetField("language", "unbekannt");
+        doc.add(facetField);
       }
       int pageCount = mdRecord.getPageCount();
       if (pageCount != -1) {
         String pageCountStr = String.valueOf(pageCount);
-        Field pageCountField = new Field("pageCount", pageCountStr, Field.Store.YES, Field.Index.ANALYZED);
+        Field pageCountField = new Field("pageCount", pageCountStr, ftStoredAnalyzed);
         doc.add(pageCountField);
       }
       String docTokensOrig = mdRecord.getTokenOrig();
       if (docTokensOrig != null) {
-        Field tokenOrigField = new Field("tokenOrig", docTokensOrig, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
+        Field tokenOrigField = new Field("tokenOrig", docTokensOrig, ftStoredAnalyzed);
         doc.add(tokenOrigField);
+        if (collectionNames.equals("jdg"))
+          tokenOrigField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
       }
       String docTokensReg = mdRecord.getTokenReg();
       if (docTokensReg != null) {
-        Field tokenRegField = new Field("tokenReg", docTokensReg, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
+        Field tokenRegField = new Field("tokenReg", docTokensReg, ftStoredAnalyzed);
         doc.add(tokenRegField);
+        if (collectionNames.equals("jdg"))
+          tokenRegField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
       }
       String docTokensNorm = mdRecord.getTokenNorm();
       if (docTokensNorm != null) {
-        Field tokenNormField = new Field("tokenNorm", docTokensNorm, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
+        Field tokenNormField = new Field("tokenNorm", docTokensNorm, ftStoredAnalyzed);
         doc.add(tokenNormField);
+        if (collectionNames.equals("jdg"))
+          tokenNormField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
       }
       String docTokensMorph = mdRecord.getTokenMorph();
       if (docTokensMorph != null) {
-        Field tokenMorphField = new Field("tokenMorph", docTokensMorph, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
+        Field tokenMorphField = new Field("tokenMorph", docTokensMorph, ftStoredAnalyzed);
         doc.add(tokenMorphField);
+        if (collectionNames.equals("jdg"))
+          tokenMorphField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
       }
       String contentXml = mdRecord.getContentXml();
       if (contentXml != null) {
-        Field contentXmlField = new Field("xmlContent", contentXml, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
+        Field contentXmlField = new Field("xmlContent", contentXml, ftStoredAnalyzed);
         doc.add(contentXmlField);
+        if (collectionNames.equals("jdg"))
+          contentXmlField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
       }
       String content = mdRecord.getContent();
       if (content != null) {
-        Field contentField = new Field("content", content, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
+        Field contentField = new Field("content", content, ftStoredAnalyzed);
         doc.add(contentField);
+        if (collectionNames.equals("jdg"))
+          contentField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
       }
       // save the webUrl field  
       String webUri = mdRecord.getWebUri();
@@ -513,15 +613,24 @@ public class IndexHandler {
       }
       mdRecord.setWebUri(webUri);
       if (webUri != null) {
-        Field webUriField = new Field("webUri", webUri, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
+        Field webUriField = new Field("webUri", webUri, ftStoredAnalyzed);
         doc.add(webUriField);
       }
 
       // facet creation
-      categoryDocBuilder.setCategoryPaths(categories);
-      categoryDocBuilder.build(doc);
+      FacetsConfig facetsConfig = new FacetsConfig();
+      facetsConfig.setMultiValued("author", true);
+      facetsConfig.setMultiValued("publisher", true);
+      facetsConfig.setMultiValued("subject", true);
+      facetsConfig.setMultiValued("subjectControlled", true);
+      facetsConfig.setMultiValued("swd", true);
+      facetsConfig.setMultiValued("entityPerson", true);
+      facetsConfig.setMultiValued("entityOrganisation", true);
+      facetsConfig.setMultiValued("entityPlace", true);
+      facetsConfig.setMultiValued("entityConcept", true);
+      Document docWithFacets = facetsConfig.build(taxonomyWriter, doc);
 
-      documentsIndexWriter.addDocument(doc);
+      documentsIndexWriter.addDocument(docWithFacets);
       
       // to save Lucene disk space and to gain performance the document nodes index is set off:
       /* 
@@ -667,8 +776,8 @@ public class IndexHandler {
         // delete all nodes of each document in collection
         for (int i=0; i<collectionDocs.size(); i++) {
           org.bbaw.wsp.cms.document.Document doc = collectionDocs.get(i);
-          Fieldable docIdFieldable = doc.getFieldable("docId");
-          String docId = docIdFieldable.stringValue();
+          IndexableField docIdField = doc.getField("docId");
+          String docId = docIdField.stringValue();
           Term termDocId = new Term("docId", docId);
           nodesIndexWriter.deleteDocuments(termDocId);
         }
@@ -689,7 +798,7 @@ public class IndexHandler {
       makeDocumentsSearcherManagerUpToDate();
       searcher = documentsSearcherManager.acquire();
       String defaultQueryFieldName = "tokenOrig";
-      QueryParser queryParser = new QueryParser(Version.LUCENE_35, defaultQueryFieldName, documentsPerFieldAnalyzer);
+      QueryParser queryParser = new QueryParser(defaultQueryFieldName, documentsPerFieldAnalyzer);
       queryParser.setAllowLeadingWildcard(true);
       Query query = null;
       Hashtable<String, String[]> facetConstraints = null;
@@ -712,54 +821,48 @@ public class IndexHandler {
       if (query instanceof PhraseQuery || query instanceof PrefixQuery || query instanceof FuzzyQuery || query instanceof TermRangeQuery) {
         highlighterQuery = query;  // TODO wenn sie rekursiv enthalten sind 
       }
-      FastVectorHighlighter highlighter = new FastVectorHighlighter(true, false);
       Sort sort = new Sort();
-      SortField scoreSortField = new SortField(null, SortField.SCORE); // default sort
+      SortField scoreSortField = new SortField(null, Type.SCORE); // default sort
       sort.setSort(scoreSortField);
       if (sortFieldNames != null) {
         sort = buildSort(sortFieldNames, "doc");  // build sort criteria
       }
-      TopFieldCollector topFieldCollector = TopFieldCollector.create(sort, to + 1, true, true, true, true); // default topFieldCollector for TopDocs results, numHits: maximum is "to" (performance gain for every bigger result)
-      FacetSearchParams facetSearchParams = new FacetSearchParams();
-      facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("collectionNames"), 1000));
-      facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("language"), 1000));
-      facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("author"), 10));
-      facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("publisher"), 10));
-      facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("date"), 10));
-      facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("subject"), 10));
-      facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("subjectControlled"), 10));
-      facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("swd"), 10));
-      facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("ddc"), 10));
-      facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("entityPerson"), 100));
-      facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("entityOrganisation"), 100));
-      facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("entityPlace"), 100));
-      facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("entityConcept"), 100));
-      facetSearchParams.addFacetRequest(new CountFacetRequest(new CategoryPath("type"), 1000));
-      FacetsCollector facetsCollector = new FacetsCollector(facetSearchParams, documentsIndexReader, taxonomyReader);
-      Collector facetsCollectorWrapper = MultiCollector.wrap(topFieldCollector, facetsCollector);
-      searcher.setDefaultFieldSortScoring(true, true);
-      searcher.search(morphQuery, facetsCollectorWrapper);
-      TopDocs resultDocs = topFieldCollector.topDocs();
+      FacetsCollector facetsCollector = new FacetsCollector(true);
+      TopDocs resultDocs = FacetsCollector.search(searcher, morphQuery, to + 1, sort, true, true, facetsCollector);
+      FacetsConfig facetsConfig = new FacetsConfig();
+      FastTaxonomyFacetCounts facetCounts = new FastTaxonomyFacetCounts(taxonomyReader, facetsConfig, facetsCollector);
+      List<FacetResult> tmpFacetResult = new ArrayList<FacetResult>();
+      String[] facetsStr = {"collectionNames", "language", "author", "publisher", "date", "subject", "subjectControlled", "swd", "ddc", "entityPerson", "entityOrganisation", "entityPlace", "entityConcept", "type"};
+      for (int f=0; f<facetsStr.length; f++) {
+        String facetStr = facetsStr[f];
+        Integer facetFieldCount = 1000;
+        Integer tmpFacetFieldCount = facetFieldCounts.get(facetStr);
+        if (tmpFacetFieldCount != null)
+          facetFieldCount = tmpFacetFieldCount;
+        FacetResult facetResult = facetCounts.getTopChildren(facetFieldCount, facetStr);
+        if (facetResult != null)
+          tmpFacetResult.add(facetResult);
+      }
       Facets facets = null;
-      List<FacetResult> tmpFacetResult = facetsCollector.getFacetResults();
-      if (tmpFacetResult != null && ! tmpFacetResult.isEmpty()) {
+      if (! tmpFacetResult.isEmpty()) {
         facets = new Facets(tmpFacetResult, facetConstraints);
       }
       int toTmp = to;
       if (resultDocs.totalHits <= to)
         toTmp = resultDocs.totalHits - 1;
-      FieldSelector docFieldSelector = getDocFieldSelector();
+      HashSet<String> docFields = getDocFields();
       if (resultDocs != null) {
         ArrayList<org.bbaw.wsp.cms.document.Document> docs = new ArrayList<org.bbaw.wsp.cms.document.Document>();
         ArrayList<Float> scores = new ArrayList<Float>();
+        FastVectorHighlighter highlighter = new FastVectorHighlighter(true, false);
         for (int i=from; i<=toTmp; i++) { 
           int docID = resultDocs.scoreDocs[i].doc;
           float score = resultDocs.scoreDocs[i].score;
-          Document luceneDoc = searcher.doc(docID, docFieldSelector);
+          Document luceneDoc = searcher.doc(docID, docFields);
           org.bbaw.wsp.cms.document.Document doc = new org.bbaw.wsp.cms.document.Document(luceneDoc);
           if (withHitFragments) {
             ArrayList<String> hitFragments = new ArrayList<String>();
-            Fieldable docContentField = luceneDoc.getFieldable("content");
+            IndexableField docContentField = luceneDoc.getField("content");
             if (docContentField != null) {
               FieldQuery highlighterFieldQuery = highlighter.getFieldQuery(highlighterQuery);
               String[] textfragments = highlighter.getBestFragments(highlighterFieldQuery, documentsIndexReader, docID, docContentField.name(), 100, 2);
@@ -809,7 +912,7 @@ public class IndexHandler {
         if (withBestHits && resultDocs != null) {
           int numberOfBestHits = 1000;
           int maxDocsForEachProject = 5;
-          TopFieldCollector topFieldCollectorBestDocs = TopFieldCollector.create(sort, numberOfBestHits, true, true, true, true); 
+          TopFieldCollector topFieldCollectorBestDocs = TopFieldCollector.create(sort, numberOfBestHits, true, true, true); 
           searcher.search(morphQuery, topFieldCollectorBestDocs);
           TopDocs resultBestDocs = topFieldCollectorBestDocs.topDocs();
           ArrayList<org.bbaw.wsp.cms.document.Document> bestDocs = new ArrayList<org.bbaw.wsp.cms.document.Document>();
@@ -818,9 +921,9 @@ public class IndexHandler {
           for (int i=0; i<numberOfBestHits; i++) { 
             int docID = resultBestDocs.scoreDocs[i].doc;
             float score = resultBestDocs.scoreDocs[i].score;
-            FieldSelector docCollectionNameFieldSelector = getDocFieldSelectorCollectionName();
-            Document luceneDoc = searcher.doc(docID, docCollectionNameFieldSelector);
-            String collName = luceneDoc.getFieldable("collectionNames").stringValue();
+            HashSet<String> docCollectionNameField = getDocFieldCollectionName();
+            Document luceneDoc = searcher.doc(docID, docCollectionNameField);
+            String collName = luceneDoc.getField("collectionNames").stringValue();
             Integer collCounter = collCounters.get(collName);
             if (collCounter == null) {
               collCounter = new Integer(0);
@@ -828,7 +931,7 @@ public class IndexHandler {
             collCounter++;
             collCounters.put(collName, collCounter);
             if (collCounter <= maxDocsForEachProject) {
-              Document fullLuceneDoc = searcher.doc(docID, docFieldSelector);
+              Document fullLuceneDoc = searcher.doc(docID, docFields);
               org.bbaw.wsp.cms.document.Document fullDoc = new org.bbaw.wsp.cms.document.Document(fullLuceneDoc);
               bestDocs.add(fullDoc);
               bestScores.add(score);
@@ -840,7 +943,11 @@ public class IndexHandler {
           bestHits = new Hits(bestDocs, from, bestTo);
         }
         int sizeTotalDocuments = documentsIndexReader.numDocs();
+        // terms.size() does not work: delivers -1
+        // Terms terms = MultiFields.getTerms(documentsIndexReader, "tokenOrig");
+        // int sizeTotalTerms = (int) terms.size(); // TODO test performance
         int sizeTotalTerms = tokens.size(); // term count over tokenOrig
+        long sizeTotalTermsFreq = documentsIndexReader.getSumTotalTermFreq("tokenOrig");  // count of all words/terms in this field TODO
         if (docs != null) {
           hits = new Hits(docs, from, to);
           hits.setMaxScore(resultDocs.getMaxScore());
@@ -895,11 +1002,11 @@ public class IndexHandler {
       makeNodesSearcherManagerUpToDate();
       searcher = nodesSearcherManager.acquire();
       String fieldNameDocId = "docId";
-      QueryParser queryParser1 = new QueryParser(Version.LUCENE_35, fieldNameDocId, nodesPerFieldAnalyzer);
+      QueryParser queryParser1 = new QueryParser(fieldNameDocId, nodesPerFieldAnalyzer);
       queryParser1.setAllowLeadingWildcard(true);
       Query queryDocId = queryParser1.parse(docId);
       String defaultQueryFieldName = "tokenOrig";
-      QueryParser queryParser2 = new QueryParser(Version.LUCENE_35, defaultQueryFieldName, nodesPerFieldAnalyzer);
+      QueryParser queryParser2 = new QueryParser(defaultQueryFieldName, nodesPerFieldAnalyzer);
       queryParser2.setAllowLeadingWildcard(true);
       Query query = queryParser2.parse(queryStr);
       String language = docMetadataRecord.getLanguage();
@@ -914,10 +1021,11 @@ public class IndexHandler {
       }
       LanguageHandler languageHandler = new LanguageHandler();
       Query morphQuery = buildMorphQuery(query, language, languageHandler);
-      BooleanQuery queryDoc = new BooleanQuery();
-      queryDoc.add(queryDocId, BooleanClause.Occur.MUST);
-      queryDoc.add(morphQuery, BooleanClause.Occur.MUST);
-      Sort sortByPosition = new Sort(new SortField("position", SortField.INT));
+      BooleanQuery.Builder queryDocBuilder = new BooleanQuery.Builder();
+      queryDocBuilder.add(queryDocId, BooleanClause.Occur.MUST);
+      queryDocBuilder.add(morphQuery, BooleanClause.Occur.MUST);
+      BooleanQuery queryDoc = queryDocBuilder.build();
+      Sort sortByPosition = new Sort(new SortField("position", Type.INT));
       TopDocs topDocs = searcher.search(queryDoc, 100000, sortByPosition);
       topDocs.setMaxScore(1);
       int toTmp = to;
@@ -927,11 +1035,11 @@ public class IndexHandler {
         ArrayList<org.bbaw.wsp.cms.document.Document>  docs = new ArrayList<org.bbaw.wsp.cms.document.Document>();
         for (int i=from; i<=toTmp; i++) {
           int docID = topDocs.scoreDocs[i].doc;
-          FieldSelector nodeFieldSelector = getNodeFieldSelector();
-          Document luceneDoc = searcher.doc(docID, nodeFieldSelector);
+          HashSet<String> nodeFields = getNodeFields();
+          Document luceneDoc = searcher.doc(docID, nodeFields);
           org.bbaw.wsp.cms.document.Document doc = new org.bbaw.wsp.cms.document.Document(luceneDoc);
           String pageNumber = "-1";
-          Fieldable fPageNumber = doc.getFieldable("pageNumber");
+          IndexableField fPageNumber = doc.getField("pageNumber");
           if (fPageNumber != null) {
             pageNumber = fPageNumber.stringValue();
           }
@@ -944,7 +1052,6 @@ public class IndexHandler {
           hits.setSize(topDocs.scoreDocs.length);
         }
       }
-      searcher.close();
     } catch (Exception e) {
       throw new ApplicationException(e);
     } finally {
@@ -965,41 +1072,41 @@ public class IndexHandler {
     Document doc = getDocument(docId);
     if (doc != null) {
       int id = -1;
-      Fieldable idField = doc.getFieldable("id");
+      IndexableField idField = doc.getField("id");
       if (idField != null) {
         String idStr = idField.stringValue();
         id = Integer.valueOf(idStr);
       }
       String identifier = null;
-      Fieldable identifierField = doc.getFieldable("identifier");
+      IndexableField identifierField = doc.getField("identifier");
       if (identifierField != null)
         identifier = identifierField.stringValue();
       String uri = null;
-      Fieldable uriField = doc.getFieldable("uri");
+      IndexableField uriField = doc.getField("uri");
       if (uriField != null)
         uri = uriField.stringValue();
       String webUri = null;
-      Fieldable webUriField = doc.getFieldable("webUri");
+      IndexableField webUriField = doc.getField("webUri");
       if (webUriField != null)
         webUri = webUriField.stringValue();
       String collectionNames = null;
-      Fieldable collectionNamesField = doc.getFieldable("collectionNames");
+      IndexableField collectionNamesField = doc.getField("collectionNames");
       if (collectionNamesField != null)
         collectionNames = collectionNamesField.stringValue();
       String author = null;
-      Fieldable authorField = doc.getFieldable("author");
+      IndexableField authorField = doc.getField("author");
       if (authorField != null)
         author = authorField.stringValue();
       String authorDetails = null;
-      Fieldable authorDetailsField = doc.getFieldable("authorDetails");
+      IndexableField authorDetailsField = doc.getField("authorDetails");
       if (authorDetailsField != null)
         authorDetails = authorDetailsField.stringValue();
       String title = null;
-      Fieldable titleField = doc.getFieldable("title");
+      IndexableField titleField = doc.getField("title");
       if (titleField != null)
         title = titleField.stringValue();
       String language = null;
-      Fieldable languageField = doc.getFieldable("language");
+      IndexableField languageField = doc.getField("language");
       if (languageField != null)
         language = languageField.stringValue();
       else {
@@ -1011,7 +1118,7 @@ public class IndexHandler {
         } 
       }
       Date yearDate = null;
-      Fieldable dateField = doc.getFieldable("date");
+      IndexableField dateField = doc.getField("date");
       if (dateField != null) {
         String dateStr = dateField.stringValue();
         if (dateStr != null && !dateStr.equals("")) {
@@ -1024,73 +1131,73 @@ public class IndexHandler {
         }
       }
       String description = null;
-      Fieldable descriptionField = doc.getFieldable("description");
+      IndexableField descriptionField = doc.getField("description");
       if (descriptionField != null)
         description = descriptionField.stringValue();
       String subject = null;
-      Fieldable subjectField = doc.getFieldable("subject");
+      IndexableField subjectField = doc.getField("subject");
       if (subjectField != null)
         subject = subjectField.stringValue();
       String swd = null;
-      Fieldable swdField = doc.getFieldable("swd");
+      IndexableField swdField = doc.getField("swd");
       if (swdField != null)
         swd = swdField.stringValue();
       String ddc = null;
-      Fieldable ddcField = doc.getFieldable("ddc");
+      IndexableField ddcField = doc.getField("ddc");
       if (ddcField != null)
         ddc = ddcField.stringValue();
       String rights = null;
-      Fieldable rightsField = doc.getFieldable("rights");
+      IndexableField rightsField = doc.getField("rights");
       if (rightsField != null)
         rights = rightsField.stringValue();
       String license = null;
-      Fieldable licenseField = doc.getFieldable("license");
+      IndexableField licenseField = doc.getField("license");
       if (licenseField != null)
         license = licenseField.stringValue();
       String accessRights = null;
-      Fieldable accessRightsField = doc.getFieldable("accessRights");
+      IndexableField accessRightsField = doc.getField("accessRights");
       if (accessRightsField != null)
         accessRights = accessRightsField.stringValue();
       int pageCount = -1;
-      Fieldable pageCountField = doc.getFieldable("pageCount");
+      IndexableField pageCountField = doc.getField("pageCount");
       if (pageCountField != null) {
         String pageCountStr = pageCountField.stringValue();
         pageCount = Integer.valueOf(pageCountStr);
       }
       String type = null;
-      Fieldable typeField = doc.getFieldable("type");
+      IndexableField typeField = doc.getField("type");
       if (typeField != null)
         type = typeField.stringValue();
       String systemType = null;
-      Fieldable systemTypeField = doc.getFieldable("systemType");
+      IndexableField systemTypeField = doc.getField("systemType");
       if (systemTypeField != null)
         systemType = systemTypeField.stringValue();
       String entitiesDetailsStr = null;
-      Fieldable entitiesDetailsField = doc.getFieldable("entitiesDetails");
+      IndexableField entitiesDetailsField = doc.getField("entitiesDetails");
       if (entitiesDetailsField != null) {
         entitiesDetailsStr = entitiesDetailsField.stringValue();
       }
       String personsStr = null;
-      Fieldable personsField = doc.getFieldable("persons");
+      IndexableField personsField = doc.getField("persons");
       if (personsField != null) {
         personsStr = personsField.stringValue();
       }
       String personsDetailsStr = null;
-      Fieldable personsDetailsField = doc.getFieldable("personsDetails");
+      IndexableField personsDetailsField = doc.getField("personsDetails");
       if (personsDetailsField != null) {
         personsDetailsStr = personsDetailsField.stringValue();
       }
       String placesStr = null;
-      Fieldable placesField = doc.getFieldable("places");
+      IndexableField placesField = doc.getField("places");
       if (placesField != null) {
         placesStr = placesField.stringValue();
       }
       String schemaName = null;
-      Fieldable schemaNameField = doc.getFieldable("schemaName");
+      IndexableField schemaNameField = doc.getField("schemaName");
       if (schemaNameField != null)
         schemaName = schemaNameField.stringValue();
       Date lastModified = null;
-      Fieldable lastModifiedField = doc.getFieldable("lastModified");
+      IndexableField lastModifiedField = doc.getField("lastModified");
       if (lastModifiedField != null) {
         String lastModifiedXSDateStr = lastModifiedField.stringValue();
         lastModified = new Util().toDate(lastModifiedXSDateStr);
@@ -1130,36 +1237,39 @@ public class IndexHandler {
   public ArrayList<Token> getToken(String fieldName, String value, int count) throws ApplicationException {
     ArrayList<Token> retToken = new ArrayList<Token>();
     int counter = 0;
-    TermEnum terms = null;
     try {
       if (value == null)
         value = "";
-      Term term = new Term(fieldName, value);
       makeIndexReaderUpToDate();
-      terms = documentsIndexReader.terms(term);
-      while (terms != null && fieldName != null && terms.term() != null && fieldName.equals(terms.term().field()) && counter < count) {
-        Term termContent = terms.term();
-        String termContentStr = termContent.text();
-        if (termContentStr.startsWith(value)) {
-          int docFreq = terms.docFreq();
-          Token token = new Token(termContent);
-          token.setFreq(docFreq);
-          retToken.add(token);
-          counter++;
+      Terms terms = MultiFields.getTerms(documentsIndexReader, fieldName);
+      TermsEnum termsEnum = null;
+      if (terms != null) {
+        termsEnum = terms.iterator();
+        termsEnum.seekCeil(new BytesRef(value)); // jumps to the value or if not exactly found jumps to the next ceiling term 
+        BytesRef termBytes = termsEnum.term();
+        while (termBytes != null && counter < count) {
+          termBytes = termsEnum.term();
+          if (termBytes == null)
+            break;
+          String termContentStr = termBytes.utf8ToString();
+          if (termContentStr.startsWith(value)) {
+            Term termContent = new Term(fieldName, termBytes);
+            int docFreq = termsEnum.docFreq();
+            // long totalTermFreq = termsEnum.totalTermFreq(); // TODO
+            // token.setDocFreq(docFreq);
+            // token.setFreq(totalTermFreq);
+            Token token = new Token(termContent);
+            token.setFreq(docFreq);
+            retToken.add(token);
+            counter++;
+          } else {
+            break;
+          }
+          termBytes = termsEnum.next();
         }
-        if (! terms.next() || ! termContentStr.startsWith(value))
-          break;
       }
     } catch (Exception e) {
       throw new ApplicationException(e);
-    } finally {
-      if (terms != null) {
-        try {
-          terms.close();
-        } catch (IOException e) {
-          // nothing
-        }
-      }
     }
     return retToken;
   }
@@ -1178,29 +1288,32 @@ public class IndexHandler {
       TopDocs topDocs = searcher.search(queryDocId, 1);
       if (topDocs != null) {
         int docIdInt = topDocs.scoreDocs[0].doc;
-        TermFreqVector termFreqVector = documentsIndexReader.getTermFreqVector(docIdInt, fieldName);
-        if (termFreqVector != null) {
-          String[] terms = termFreqVector.getTerms();
-          int[] freqs = termFreqVector.getTermFrequencies();
+        Terms terms = documentsIndexReader.getTermVector(docIdInt, fieldName);
+        if (terms != null) {
           boolean success = false;
-          if (terms != null) {
-            retToken = new ArrayList<Token>();
-            for (int i = 0; i < terms.length; i++) {
-              String termStr = terms[i];
-              if (termStr.startsWith(value))
-                success = true;
-              if (success) {
-                counter++;
-                int freq = freqs[i];
-                Term t = new Term(fieldName, termStr);
-                Token tok = new Token(t);
-                tok.setFreq(freq);
-                retToken.add(tok);
-              }
-              if (counter >= count)
-                break;
-              success = false;
+          retToken = new ArrayList<Token>();
+          TermsEnum termsEnum = terms.iterator();
+          PostingsEnum postingsEnum = null;
+          while (counter < count) {
+            BytesRef termBytes = termsEnum.next();
+            if (termBytes == null)
+              break;
+            String termStr = termBytes.utf8ToString();
+            if (termStr.startsWith(value))
+              success = true;
+            if (success) {
+              counter++;
+              postingsEnum = termsEnum.postings(postingsEnum);
+              postingsEnum.nextDoc();  // get the first doc, then freq could be determinded
+              int freq = postingsEnum.freq();
+              Term t = new Term(fieldName, termStr);
+              Token tok = new Token(t);
+              tok.setFreq(freq);
+              retToken.add(tok);
             }
+            if (counter >= count)
+              break;
+            success = false;
           }
         }
       }
@@ -1220,6 +1333,8 @@ public class IndexHandler {
   }
 
   public ArrayList<Token> getFrequentToken(String docId, String fieldName, int count) throws ApplicationException {
+    return null; // TODO
+    /*
     ArrayList<Token> retToken = null;
     IndexSearcher searcher = null;
     try {
@@ -1272,6 +1387,7 @@ public class IndexHandler {
     // Do not use searcher after this!
     searcher = null;
     return retToken;
+  */
   }
 
   public void end() throws ApplicationException {
@@ -1347,23 +1463,23 @@ public class IndexHandler {
     */
     try {
       if (fieldExpansion.equals("all")) {
-        BooleanQuery boolQuery = new BooleanQuery();
+        BooleanQuery.Builder boolQueryBuilder = new BooleanQuery.Builder();
         for (int i=0; i < QUERY_EXPANSION_FIELDS_ALL.length; i++) {
           String expansionField = QUERY_EXPANSION_FIELDS_ALL[i];  // e.g. "author"
           String expansionFieldQueryStr = expansionField + ":(" + queryStr + ")";
           Query q = queryParser.parse(expansionFieldQueryStr);
-          boolQuery.add(q, BooleanClause.Occur.SHOULD);
+          boolQueryBuilder.add(q, BooleanClause.Occur.SHOULD);
         }
-        retQuery = boolQuery;
+        retQuery = boolQueryBuilder.build();
       } else if (fieldExpansion.equals("allMorph")) {
-        BooleanQuery boolQuery = new BooleanQuery();
+        BooleanQuery.Builder boolQueryBuilder = new BooleanQuery.Builder();
         for (int i=0; i < QUERY_EXPANSION_FIELDS_ALL_MORPH.length; i++) {
           String expansionField = QUERY_EXPANSION_FIELDS_ALL_MORPH[i];  // e.g. "author"
           String expansionFieldQueryStr = expansionField + ":(" + queryStr + ")";
           Query q = queryParser.parse(expansionFieldQueryStr);
-          boolQuery.add(q, BooleanClause.Occur.SHOULD);
+          boolQueryBuilder.add(q, BooleanClause.Occur.SHOULD);
         }
-        retQuery = boolQuery;
+        retQuery = boolQueryBuilder.build();
       } else if (fieldExpansion.equals("none")) {
         Query q = queryParser.parse(queryStr);
         retQuery = q;
@@ -1502,24 +1618,26 @@ public class IndexHandler {
   }
 
   private Query buildBooleanShouldQuery(ArrayList<TermQuery> queryTerms) throws ApplicationException {
-    BooleanQuery retBooleanQuery = new BooleanQuery();
+    BooleanQuery.Builder boolQueryBuilder = new BooleanQuery.Builder();
     for (int i = 0; i < queryTerms.size(); i++) {
       TermQuery termQuery = queryTerms.get(i);
-      retBooleanQuery.add(termQuery, BooleanClause.Occur.SHOULD);
+      boolQueryBuilder.add(termQuery, BooleanClause.Occur.SHOULD);
     }
+    BooleanQuery retBooleanQuery = boolQueryBuilder.build();
     return retBooleanQuery;
   }
   
   private Query buildMorphQuery(BooleanQuery query, String language, boolean withAllForms, boolean translate, LanguageHandler languageHandler) throws ApplicationException {
-    BooleanQuery morphBooleanQuery = new BooleanQuery();
-    BooleanClause[] booleanClauses = query.getClauses();
-    for (int i = 0; i < booleanClauses.length; i++) {
-      BooleanClause boolClause = booleanClauses[i];
+    BooleanQuery.Builder morphBoolQueryBuilder = new BooleanQuery.Builder();
+    List<BooleanClause> booleanClauses = query.clauses();
+    for (int i = 0; i < booleanClauses.size(); i++) {
+      BooleanClause boolClause = booleanClauses.get(i);
       Query q = boolClause.getQuery();
       Query morphQuery = buildMorphQuery(q, language, withAllForms, translate, languageHandler);
       BooleanClause.Occur occur = boolClause.getOccur();
-      morphBooleanQuery.add(morphQuery, occur);
+      morphBoolQueryBuilder.add(morphQuery, occur);
     }
+    BooleanQuery morphBooleanQuery = morphBoolQueryBuilder.build();
     return morphBooleanQuery;
   }
 
@@ -1527,7 +1645,7 @@ public class IndexHandler {
     ArrayList<String> terms = null;
     String defaultQueryFieldName = "tokenOrig";
     try {
-      Query query = new QueryParser(Version.LUCENE_35, defaultQueryFieldName, nodesPerFieldAnalyzer).parse(queryStr);
+      Query query = new QueryParser(defaultQueryFieldName, nodesPerFieldAnalyzer).parse(queryStr);
       terms = fetchTerms(query);
     } catch (Exception e) {
       throw new ApplicationException(e);
@@ -1576,9 +1694,9 @@ public class IndexHandler {
 
   private ArrayList<String> fetchTerms(BooleanQuery query) throws ApplicationException {
     ArrayList<String> terms = new ArrayList<String>();
-    BooleanClause[] booleanClauses = query.getClauses();
-    for (int i = 0; i < booleanClauses.length; i++) {
-      BooleanClause boolClause = booleanClauses[i];
+    List<BooleanClause> booleanClauses = query.clauses();
+    for (int i = 0; i < booleanClauses.size(); i++) {
+      BooleanClause boolClause = booleanClauses.get(i);
       Query q = boolClause.getQuery();
       ArrayList<String> qTerms = fetchTerms(q);
       BooleanClause.Occur occur = boolClause.getOccur();
@@ -1597,7 +1715,7 @@ public class IndexHandler {
     ArrayList<String> terms = null;
     String defaultQueryFieldName = "tokenOrig";
     try {
-      Query query = new QueryParser(Version.LUCENE_35, defaultQueryFieldName, nodesPerFieldAnalyzer).parse(queryStr);
+      Query query = new QueryParser(defaultQueryFieldName, nodesPerFieldAnalyzer).parse(queryStr);
       terms = fetchTerms(query, language);
     } catch (Exception e) {
       throw new ApplicationException(e);
@@ -1659,9 +1777,9 @@ public class IndexHandler {
 
   private ArrayList<String> fetchTerms(BooleanQuery query, String language) throws ApplicationException {
     ArrayList<String> terms = new ArrayList<String>();
-    BooleanClause[] booleanClauses = query.getClauses();
-    for (int i = 0; i < booleanClauses.length; i++) {
-      BooleanClause boolClause = booleanClauses[i];
+    List<BooleanClause> booleanClauses = query.clauses();
+    for (int i = 0; i < booleanClauses.size(); i++) {
+      BooleanClause boolClause = booleanClauses.get(i);
       Query q = boolClause.getQuery();
       ArrayList<String> qTerms = fetchTerms(q, language);
       BooleanClause.Occur occur = boolClause.getOccur();
@@ -1681,15 +1799,15 @@ public class IndexHandler {
       String docIdQuery = docId;
       if (docId.contains(" ") || docId.contains(":"))
         docIdQuery = "\"" + docId + "\"";
-      Query queryDocId = new QueryParser(Version.LUCENE_35, fieldNameDocId, documentsPerFieldAnalyzer).parse(docIdQuery);
+      docIdQuery = QueryParser.escape(docIdQuery);
+      Query queryDocId = new QueryParser(fieldNameDocId, documentsPerFieldAnalyzer).parse(docIdQuery);
       TopDocs topDocs = searcher.search(queryDocId, 100000);
       topDocs.setMaxScore(1);
       if (topDocs != null && topDocs.scoreDocs != null && topDocs.scoreDocs.length > 0) {
         int docID = topDocs.scoreDocs[0].doc;
-        FieldSelector docFieldSelector = getDocFieldSelector();
-        doc = searcher.doc(docID, docFieldSelector);
+        HashSet<String> docFields = getDocFields();
+        doc = searcher.doc(docID, docFields);
       }
-      searcher.close();
     } catch (Exception e) {
       throw new ApplicationException(e);
     } finally {
@@ -1723,22 +1841,21 @@ public class IndexHandler {
       searcher = documentsSearcherManager.acquire();
       String fieldNameId = "id";
       String idQuery = "[* TO *]";
-      Query queryId = new QueryParser(Version.LUCENE_35, fieldNameId, documentsPerFieldAnalyzer).parse(idQuery);
+      Query queryId = new QueryParser(fieldNameId, documentsPerFieldAnalyzer).parse(idQuery);
       queryId = NumericRangeQuery.newIntRange(fieldNameId, 0, 10000000, false, false);
-      Sort sortByIdReverse = new Sort(new SortField("id", SortField.INT, true));  // reverse order
+      Sort sortByIdReverse = new Sort(new SortField("id", Type.INT, true));  // reverse order
       TopDocs topDocs = searcher.search(queryId, 1, sortByIdReverse);
       topDocs.setMaxScore(1);
       if (topDocs != null && topDocs.scoreDocs != null && topDocs.scoreDocs.length > 0) {
         int docID = topDocs.scoreDocs[0].doc;
-        FieldSelector docFieldSelector = getDocFieldSelector();
-        Document doc = searcher.doc(docID, docFieldSelector);
+        HashSet<String> docFields = getDocFields();
+        Document doc = searcher.doc(docID, docFields);
         if (doc != null) {
-          Fieldable maxIdField = doc.getFieldable("id");
+          IndexableField maxIdField = doc.getField("id");
           maxIdStr = maxIdField.stringValue();
         }
       }
       
-      searcher.close();
     } catch (Exception e) {
       throw new ApplicationException(e);
     } finally {
@@ -1768,7 +1885,7 @@ public class IndexHandler {
       makeDocumentsSearcherManagerUpToDate();
       searcher1 = documentsSearcherManager.acquire();
       String fieldNameDocId = "docId";
-      Query queryDocId = new QueryParser(Version.LUCENE_35, fieldNameDocId, documentsPerFieldAnalyzer).parse(docId);
+      Query queryDocId = new QueryParser(fieldNameDocId, documentsPerFieldAnalyzer).parse(docId);
       TopDocs topDocs = searcher1.search(queryDocId, 100000);
       topDocs.setMaxScore(1);
       int docID = -1;
@@ -1820,7 +1937,6 @@ public class IndexHandler {
   private IndexWriter getDocumentsWriter() throws ApplicationException {
     IndexWriter writer = null;
     String luceneDocsDirectoryStr = Constants.getInstance().getLuceneDocumentsDir();
-    File luceneDocsDirectory = new File(luceneDocsDirectoryStr);
     try {
       Map<String, Analyzer> documentsFieldAnalyzers = new HashMap<String, Analyzer>();
       documentsFieldAnalyzers.put("id", new KeywordAnalyzer());
@@ -1828,38 +1944,39 @@ public class IndexHandler {
       documentsFieldAnalyzers.put("identifier", new KeywordAnalyzer()); 
       documentsFieldAnalyzers.put("uri", new KeywordAnalyzer());
       documentsFieldAnalyzers.put("webUri", new KeywordAnalyzer());
-      documentsFieldAnalyzers.put("collectionNames", new StandardAnalyzer(Version.LUCENE_35));
-      documentsFieldAnalyzers.put("author", new StandardAnalyzer(Version.LUCENE_35));
-      documentsFieldAnalyzers.put("title", new StandardAnalyzer(Version.LUCENE_35));
-      documentsFieldAnalyzers.put("language", new StandardAnalyzer(Version.LUCENE_35));
-      documentsFieldAnalyzers.put("publisher", new StandardAnalyzer(Version.LUCENE_35));
-      documentsFieldAnalyzers.put("date", new StandardAnalyzer(Version.LUCENE_35));
-      documentsFieldAnalyzers.put("description", new StandardAnalyzer(Version.LUCENE_35));
-      documentsFieldAnalyzers.put("subject", new StandardAnalyzer(Version.LUCENE_35));
-      documentsFieldAnalyzers.put("subjectControlled", new StandardAnalyzer(Version.LUCENE_35));
-      documentsFieldAnalyzers.put("swd", new StandardAnalyzer(Version.LUCENE_35));
-      documentsFieldAnalyzers.put("ddc", new StandardAnalyzer(Version.LUCENE_35));
-      documentsFieldAnalyzers.put("entities", new StandardAnalyzer(Version.LUCENE_35));
-      documentsFieldAnalyzers.put("subject", new StandardAnalyzer(Version.LUCENE_35));
-      documentsFieldAnalyzers.put("rights", new StandardAnalyzer(Version.LUCENE_35));
-      documentsFieldAnalyzers.put("license", new StandardAnalyzer(Version.LUCENE_35));
-      documentsFieldAnalyzers.put("accessRights", new StandardAnalyzer(Version.LUCENE_35));
+      documentsFieldAnalyzers.put("collectionNames", new StandardAnalyzer());
+      documentsFieldAnalyzers.put("author", new StandardAnalyzer());
+      documentsFieldAnalyzers.put("title", new StandardAnalyzer());
+      documentsFieldAnalyzers.put("language", new StandardAnalyzer());
+      documentsFieldAnalyzers.put("publisher", new StandardAnalyzer());
+      documentsFieldAnalyzers.put("date", new StandardAnalyzer());
+      documentsFieldAnalyzers.put("description", new StandardAnalyzer());
+      documentsFieldAnalyzers.put("subject", new StandardAnalyzer());
+      documentsFieldAnalyzers.put("subjectControlled", new StandardAnalyzer());
+      documentsFieldAnalyzers.put("swd", new StandardAnalyzer());
+      documentsFieldAnalyzers.put("ddc", new StandardAnalyzer());
+      documentsFieldAnalyzers.put("entities", new StandardAnalyzer());
+      documentsFieldAnalyzers.put("subject", new StandardAnalyzer());
+      documentsFieldAnalyzers.put("rights", new StandardAnalyzer());
+      documentsFieldAnalyzers.put("license", new StandardAnalyzer());
+      documentsFieldAnalyzers.put("accessRights", new StandardAnalyzer());
       documentsFieldAnalyzers.put("type", new KeywordAnalyzer()); // e.g. mime type "text/xml"
       documentsFieldAnalyzers.put("systemType", new KeywordAnalyzer()); // e.g. "dbRecord"
       documentsFieldAnalyzers.put("pageCount", new KeywordAnalyzer()); 
-      documentsFieldAnalyzers.put("schemaName", new StandardAnalyzer(Version.LUCENE_35));
+      documentsFieldAnalyzers.put("schemaName", new StandardAnalyzer());
       documentsFieldAnalyzers.put("lastModified", new KeywordAnalyzer());
-      documentsFieldAnalyzers.put("tokenOrig", new StandardAnalyzer(Version.LUCENE_35));
-      documentsFieldAnalyzers.put("tokenReg", new StandardAnalyzer(Version.LUCENE_35));
-      documentsFieldAnalyzers.put("tokenNorm", new StandardAnalyzer(Version.LUCENE_35));
-      documentsFieldAnalyzers.put("tokenMorph", new StandardAnalyzer(Version.LUCENE_35));
-      documentsFieldAnalyzers.put("xmlContent", new StandardAnalyzer(Version.LUCENE_35));
-      documentsFieldAnalyzers.put("content", new StandardAnalyzer(Version.LUCENE_35));
-      documentsPerFieldAnalyzer = new PerFieldAnalyzerWrapper(new StandardAnalyzer(Version.LUCENE_35), documentsFieldAnalyzers);
-      IndexWriterConfig conf = new IndexWriterConfig(Version.LUCENE_35, documentsPerFieldAnalyzer);
+      documentsFieldAnalyzers.put("tokenOrig", new StandardAnalyzer());
+      documentsFieldAnalyzers.put("tokenReg", new StandardAnalyzer());
+      documentsFieldAnalyzers.put("tokenNorm", new StandardAnalyzer());
+      documentsFieldAnalyzers.put("tokenMorph", new StandardAnalyzer());
+      documentsFieldAnalyzers.put("xmlContent", new StandardAnalyzer());
+      documentsFieldAnalyzers.put("content", new StandardAnalyzer());
+      documentsPerFieldAnalyzer = new PerFieldAnalyzerWrapper(new StandardAnalyzer(), documentsFieldAnalyzers);
+      IndexWriterConfig conf = new IndexWriterConfig(documentsPerFieldAnalyzer);
       conf.setOpenMode(OpenMode.CREATE_OR_APPEND);
       conf.setRAMBufferSizeMB(300);  // 300 MB because some documents are big; 16 MB is default 
       conf.setMaxBufferedDeleteTerms(1);  // so that indexReader.terms() delivers immediately and without optimize() the correct number of terms
+      Path luceneDocsDirectory = Paths.get(luceneDocsDirectoryStr);
       FSDirectory fsDirectory = FSDirectory.open(luceneDocsDirectory);
       writer = new IndexWriter(fsDirectory, conf);
       writer.commit(); // when directory is empty this creates init files
@@ -1872,11 +1989,10 @@ public class IndexHandler {
   private IndexWriter getNodesWriter() throws ApplicationException {
     IndexWriter writer = null;
     String luceneNodesDirectoryStr = Constants.getInstance().getLuceneNodesDir();
-    File luceneNodesDirectory = new File(luceneNodesDirectoryStr);
     try {
       Map<String, Analyzer> nodesFieldAnalyzers = new HashMap<String, Analyzer>();
       nodesFieldAnalyzers.put("docId", new KeywordAnalyzer());
-      nodesFieldAnalyzers.put("language", new StandardAnalyzer(Version.LUCENE_35)); // language (through xml:id): e.g. "lat"
+      nodesFieldAnalyzers.put("language", new StandardAnalyzer()); // language (through xml:id): e.g. "lat"
       nodesFieldAnalyzers.put("pageNumber", new KeywordAnalyzer()); // page number (through element pb): e.g. "13"
       nodesFieldAnalyzers.put("lineNumber", new KeywordAnalyzer()); // line number on the page (through element lb): e.g. "17"
       nodesFieldAnalyzers.put("elementName", new KeywordAnalyzer()); // element name: e.g. "tei:s"
@@ -1886,15 +2002,16 @@ public class IndexHandler {
       nodesFieldAnalyzers.put("elementPagePosition", new KeywordAnalyzer()); // position in relation to other nodes of the same name: e.g. "213"
       nodesFieldAnalyzers.put("xmlId", new KeywordAnalyzer()); // xml id: e.g. "4711bla"
       nodesFieldAnalyzers.put("xpath", new KeywordAnalyzer()); // xpath: e.g. "/echo[1]/text[1]/p[1]/s[5]"
-      nodesFieldAnalyzers.put("tokenOrig", new StandardAnalyzer(Version.LUCENE_35));
-      nodesFieldAnalyzers.put("tokenReg", new StandardAnalyzer(Version.LUCENE_35));
-      nodesFieldAnalyzers.put("tokenNorm", new StandardAnalyzer(Version.LUCENE_35));
-      nodesFieldAnalyzers.put("tokenMorph", new StandardAnalyzer(Version.LUCENE_35));
-      nodesFieldAnalyzers.put("xmlContent", new StandardAnalyzer(Version.LUCENE_35));
-      nodesPerFieldAnalyzer = new PerFieldAnalyzerWrapper(new StandardAnalyzer(Version.LUCENE_35), nodesFieldAnalyzers);
-      IndexWriterConfig conf = new IndexWriterConfig(Version.LUCENE_35, nodesPerFieldAnalyzer);
+      nodesFieldAnalyzers.put("tokenOrig", new StandardAnalyzer());
+      nodesFieldAnalyzers.put("tokenReg", new StandardAnalyzer());
+      nodesFieldAnalyzers.put("tokenNorm", new StandardAnalyzer());
+      nodesFieldAnalyzers.put("tokenMorph", new StandardAnalyzer());
+      nodesFieldAnalyzers.put("xmlContent", new StandardAnalyzer());
+      nodesPerFieldAnalyzer = new PerFieldAnalyzerWrapper(new StandardAnalyzer(), nodesFieldAnalyzers);
+      IndexWriterConfig conf = new IndexWriterConfig(nodesPerFieldAnalyzer);
       conf.setOpenMode(OpenMode.CREATE_OR_APPEND);
       conf.setRAMBufferSizeMB(300);  // 300 MB because some documents are big; 16 MB is default 
+      Path luceneNodesDirectory = Paths.get(luceneNodesDirectoryStr);
       FSDirectory fsDirectory = FSDirectory.open(luceneNodesDirectory);
       writer = new IndexWriter(fsDirectory, conf);
       writer.commit();
@@ -1909,7 +2026,7 @@ public class IndexHandler {
     ArrayList<SortField> sortFields = new ArrayList<SortField>();
     for (int i=0; i<sortFieldNames.length; i++) {
       String sortFieldName = sortFieldNames[i];
-      int sortFieldType = getDocSortFieldType(sortFieldName);
+      Type sortFieldType = getDocSortFieldType(sortFieldName);
       if (type.equals("node"))
         sortFieldType = getNodeSortFieldType(sortFieldName);
       String realSortFieldName = getDocSortFieldName(sortFieldName);
@@ -1937,21 +2054,21 @@ public class IndexHandler {
     return sortFieldName;
   }
 
-  private int getDocSortFieldType(String fieldName) {
-    int type = SortField.STRING;
+  private Type getDocSortFieldType(String fieldName) {
+    Type type = Type.STRING;
     if (fieldName.equals("lastModified"))
-      type = SortField.LONG;
+      type = Type.LONG;
     return type;
   }
   
-  private int getNodeSortFieldType(String fieldName) {
-    int type = SortField.STRING;
+  private Type getNodeSortFieldType(String fieldName) {
+    Type type = Type.STRING;
     if (fieldName.equals("pageNumber") || fieldName.equals("lineNumber") || fieldName.equals("elementDocPosition")) 
-      type = SortField.INT;
+      type = Type.INT;
     return type;
   }
 
-  private FieldSelector getDocFieldSelector() {
+  private HashSet<String> getDocFields() {
     HashSet<String> fields = new HashSet<String>();
     fields.add("id");
     fields.add("docId");
@@ -1984,18 +2101,16 @@ public class IndexHandler {
     fields.add("personsDetails");
     fields.add("places");
     fields.add("content");
-    FieldSelector fieldSelector = new SetBasedFieldSelector(fields, fields);
-    return fieldSelector;
+    return fields;
   }
   
-  private FieldSelector getDocFieldSelectorCollectionName() {
+  private HashSet<String> getDocFieldCollectionName() {
     HashSet<String> fields = new HashSet<String>();
     fields.add("collectionNames");
-    FieldSelector fieldSelector = new SetBasedFieldSelector(fields, fields);
-    return fieldSelector;
+    return fields;
   }
   
-  private FieldSelector getNodeFieldSelector() {
+  private HashSet<String> getNodeFields() {
     HashSet<String> fields = new HashSet<String>();
     fields.add("docId");
     fields.add("language");
@@ -2010,27 +2125,26 @@ public class IndexHandler {
     fields.add("xpath");
     fields.add("xmlContent");
     fields.add("xmlContentTokenized");
-    FieldSelector fieldSelector = new SetBasedFieldSelector(fields, fields);
-    return fieldSelector;
+    return fields;
   }
   
   private SearcherManager getNewSearcherManager(IndexWriter indexWriter) throws ApplicationException {
     SearcherManager searcherManager = null;
     try {
-      searcherManager = new SearcherManager(indexWriter, true, null, null);
+      searcherManager = new SearcherManager(indexWriter, true, null);
     } catch (IOException e) {
       throw new ApplicationException(e);
     }
     return searcherManager;
   }
 
-  private IndexReader getDocumentsReader() throws ApplicationException {
-    IndexReader reader = null;
+  private DirectoryReader getDocumentsReader() throws ApplicationException {
+    DirectoryReader reader = null;
     String luceneDocsDirectoryStr = Constants.getInstance().getLuceneDocumentsDir();
-    File luceneDocsDirectory = new File(luceneDocsDirectoryStr);
+    Path luceneDocsDirectory = Paths.get(luceneDocsDirectoryStr);
     try {
       FSDirectory fsDirectory = FSDirectory.open(luceneDocsDirectory);
-      reader = IndexReader.open(fsDirectory, true);
+      reader = DirectoryReader.open(fsDirectory);
     } catch (IOException e) {
       throw new ApplicationException(e);
     }
@@ -2040,7 +2154,7 @@ public class IndexHandler {
   private TaxonomyWriter getTaxonomyWriter() throws ApplicationException {
     TaxonomyWriter taxonomyWriter = null;
     String taxonomyDirStr = Constants.getInstance().getLuceneTaxonomyDir();
-    File taxonomyDirF = new File(taxonomyDirStr);
+    Path taxonomyDirF = Paths.get(taxonomyDirStr);
     try {
       Directory taxonomyDir = FSDirectory.open(taxonomyDirF);
       taxonomyWriter = new DirectoryTaxonomyWriter(taxonomyDir, OpenMode.CREATE_OR_APPEND);
@@ -2054,7 +2168,7 @@ public class IndexHandler {
   private TaxonomyReader getTaxonomyReader() throws ApplicationException {
     TaxonomyReader taxonomyReader = null;
     String taxonomyDirStr = Constants.getInstance().getLuceneTaxonomyDir();
-    File taxonomyDirF = new File(taxonomyDirStr);
+    Path taxonomyDirF = Paths.get(taxonomyDirStr);
     try {
       Directory taxonomyDir = FSDirectory.open(taxonomyDirF);
       taxonomyReader = new DirectoryTaxonomyReader(taxonomyDir);
@@ -2064,23 +2178,13 @@ public class IndexHandler {
     return taxonomyReader;
   }
 
-  private CategoryDocumentBuilder getCategoryDocumentBuilder() throws ApplicationException {
-    CategoryDocumentBuilder categoryDocumentBuilder = null;
-    try {
-      categoryDocumentBuilder = new CategoryDocumentBuilder(taxonomyWriter);
-    } catch (IOException e) {
-      throw new ApplicationException(e);
-    }
-    return categoryDocumentBuilder;
-  }
-  
   private void makeIndexReaderUpToDate() throws ApplicationException {
     try {
       boolean isCurrent = documentsIndexReader.isCurrent();
-      if (!isCurrent) {
-        documentsIndexReader = IndexReader.openIfChanged(documentsIndexReader);
+      if (! isCurrent) {
+        documentsIndexReader = DirectoryReader.openIfChanged(documentsIndexReader);
       }
-      taxonomyReader.refresh();
+      TaxonomyReader.openIfChanged(taxonomyReader); 
     } catch (Exception e) {
       throw new ApplicationException(e);
     }
@@ -2089,10 +2193,10 @@ public class IndexHandler {
   private void makeDocumentsSearcherManagerUpToDate() throws ApplicationException {
     try {
       boolean isCurrent = documentsSearcherManager.isSearcherCurrent();
-      if (!isCurrent) {
-        documentsSearcherManager.maybeReopen();
+      if (! isCurrent) {
+        documentsSearcherManager.maybeRefresh();
       }
-      taxonomyReader.refresh(); 
+      TaxonomyReader.openIfChanged(taxonomyReader); 
     } catch (Exception e) {
       throw new ApplicationException(e);
     }
@@ -2102,7 +2206,7 @@ public class IndexHandler {
     try {
       boolean isCurrent = nodesSearcherManager.isSearcherCurrent();
       if (!isCurrent) {
-        nodesSearcherManager.maybeReopen();
+        nodesSearcherManager.maybeRefresh();
       }
     } catch (IOException e) {
       throw new ApplicationException(e);

@@ -48,7 +48,7 @@ public class DBpediaSpotlightHandler {
   private static int SOCKET_TIMEOUT = 200 * 1000;
   // private static String HOSTNAME = "localhost";
   private static String HOSTNAME = "wspdev.bbaw.de";
-  private static int PORT = 2222;
+  private static int PORT = 80;
   private static String SERVICE_PATH = "spotlight/rest";
   private HttpClient httpClient; 
   private XQueryEvaluator xQueryEvaluator;
