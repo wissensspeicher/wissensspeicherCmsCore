@@ -39,10 +39,10 @@
   <dc:identifier rdf:resource="http://telota.bbaw.de/turfan/start.php?aufl=1280"/>
 </rdf:Description>
 <!-- Beitrag im BBAW-Jahresmagazin -->
-<rdf:Description rdf:about="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/turfanforschung/bilder/Turfanforschung_Jahresmagazin.pdf">
+<rdf:Description rdf:about="http://turfan.bbaw.de/bilder/turfanforschung-jahresmagazin.pdf">
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Turfan"/>
-  <dc:identifier rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/turfanforschung/bilder/Turfanforschung_Jahresmagazin.pdf"/>
+  <dc:identifier rdf:resource="http://turfan.bbaw.de/bilder/turfanforschung-jahresmagazin.pdf"/>
   <dc:title>Eine Quelle der Sprachen und Schriften</dc:title>
   <dc:drescription>Zwei Akademievorhaben edieren, katalogisieren und digitalisieren Texte aus der Oase von Turfan in Ostturkistan</dc:drescription>
   <dc:date>2010</dc:date>

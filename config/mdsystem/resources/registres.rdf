@@ -76,10 +76,10 @@
     <dc:title>Einleitung</dc:title>
     <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
   </rdf:Description>
-  <rdf:Description rdf:about="http://akademieregistres.bbaw.de/exist/rest/db/registres/scripts/protokolle.xql">
+  	<rdf:Description rdf:about="http://akademieregistres.bbaw.de/exist/apps/SadeRegistres/modules/scripts/protokolle.xql">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Registres"/>
-    <dc:identifier rdf:resource="http://akademieregistres.bbaw.de/exist/rest/db/registres/scripts/protokolle.xql"/>
+  	<dc:identifier rdf:resource="http://akademieregistres.bbaw.de/exist/apps/SadeRegistres/modules/scripts/protokolle.xql"/>
     <dc:title>Protokollübersicht</dc:title>
     <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_xql"/>
   </rdf:Description>
@@ -90,10 +90,10 @@
     <dc:title>Digitalisierte Akademieschriften</dc:title>
     <dcterms:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
   </rdf:Description>
-  <rdf:Description rdf:about="http://akademieregistres.bbaw.de/exist/rest/db/registres/scripts/personen.xql">
+  	<rdf:Description rdf:about="http://akademieregistres.bbaw.de/exist/apps/SadeRegistres/modules/scripts/personen.xql">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Registres"/>
-    <dc:identifier rdf:resource="http://akademieregistres.bbaw.de/exist/rest/db/registres/scripts/personen.xql"/>
+ 	<dc:identifier rdf:resource="http://akademieregistres.bbaw.de/exist/apps/SadeRegistres/modules/scripts/personen.xql"/>
     <dc:title>Personen</dc:title>
     <dcterms:format rdf:resource="http://wsp.normdata.rdf/app_xql"/>
   </rdf:Description>

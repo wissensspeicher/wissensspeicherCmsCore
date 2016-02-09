@@ -1179,8 +1179,8 @@
     <dc:title>Réflexions de la détermination des lieux sur la mer</dc:title>
     <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Geodäsie"/>
   </rdf:Description>
-  <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/R%2526eacute%253Bflexions%2Bde%2Bla%2Bd%2526eacute%253Bermination%2Bdes%2Blieux%2Bsur%2Bla%2Bmer/LH035%252C15%252C06_021r/index.html">
-    <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/R%2526eacute%253Bflexions%2Bde%2Bla%2Bd%2526eacute%253Bermination%2Bdes%2Blieux%2Bsur%2Bla%2Bmer/LH035%252C15%252C06_021r/index.html"/>
+	<rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/R%2526eacute%253Bflexions%2Bde%2Bla%2Bd%2526eacute%253Btermination%2Bdes%2Blieux%2Bsur%2Bla%2Bmer/LH035%252C15%252C06_021r/index.html">
+		<dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/R%2526eacute%253Bflexions%2Bde%2Bla%2Bd%2526eacute%253Btermination%2Bdes%2Blieux%2Bsur%2Bla%2Bmer/LH035%252C15%252C06_021r/index.html"/>
 <dcterms:isFormatOf rdf:resource="http://leibnizviii.bbaw.de/pdf/R%2526eacute%253Bflexions%2Bde%2Bla%2Bd%2526eacute%253Bermination%2Bdes%2Blieux%2Bsur%2Bla%2Bmer/LH035%252C15%252C06_021r/LH035,15%2106_021%2Bra.png"/><rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
 </rdf:Description>
   
@@ -1889,8 +1889,8 @@
     <gnd:gndRelatedPerson rdf:resource="http://wsp.normdata.rdf/AuzoutAdrien"/>
     <gnd:gndRelatedPerson rdf:resource="http://wsp.normdata.rdf/HookeRobert"/>
   </rdf:Description>
-  <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Brei%2Bopticae%2Bemendatione/LH037%252C02_001v/index.html">
-<dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Brei%2Bopticae%2Bemendatione/LH037%252C02_001v/index.html"/>
+	<rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Aus%2Beiner%2Bfremden%2BSchrift%252C%2BAutor%2Bunbekannt/LH037%252C02_001v/index.html">
+  	    <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Aus%2Beiner%2Bfremden%2BSchrift%252C%2BAutor%2Bunbekannt/LH037%252C02_001v/index.html"/>
 <dcterms:isFormatOf rdf:resource="http://leibnizviii.bbaw.de/pdf/De%2Brei%2Bopticae%2Bemendatione/LH037%252C02_001v/LH037,02_001%2Bva1.png"/><rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
 </rdf:Description>
 
@@ -1905,8 +1905,8 @@
     <gnd:gndRelatedPerson rdf:resource="http://wsp.normdata.rdf/HeveliusJohannes"/>
     <gnd:gndRelatedPerson rdf:resource="http://wsp.normdata.rdf/LanaFrancesco"/>
   </rdf:Description>
-  <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Zu%2BFrancesco%2BLana%252C%2BProdromo%2BOvero%2Bsaggio%2Bdi%2Balcune%2Binventioni%2Bnuove/LH037%252C02_002r/index.html">
-    <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Zu%2BFrancesco%2BLana%252C%2BProdromo%2BOvero%2Bsaggio%2Bdi%2Balcune%2Binventioni%2Bnuove/LH037%252C02_002r/index.html"/>
+	<rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Zu%2BFrancesco%2BLana%252C%2BProdromo%2BOvero%2Bsaggio%2Bdi%2Balcune%2Binventioni%2Bnuove/LH037%252C02_002r/index.html">
+		<dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Zu%2BFrancesco%2BLana%252C%2BProdromo%2BOvero%2Bsaggio%2Bdi%2Balcune%2Binventioni%2Bnuove/LH037%252C02_002r/index.html"/>
 <dcterms:isFormatOf rdf:resource="http://leibnizviii.bbaw.de/pdf/Zu%2BFrancesco%2BLana%252C%2BProdromo%2BOvero%2Bsaggio%2Bdi%2Balcune%2Binventioni%2Bnuove/LH037%252C02_002r/LH037,02_002%2Br.png"/><rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
 </rdf:Description>
 
@@ -1919,8 +1919,8 @@
     <gnd:gndRelatedPerson rdf:resource="http://wsp.normdata.rdf/LanaFrancesco"/>
     <gnd:gndRelatedPerson rdf:resource="http://wsp.normdata.rdf/NeedhamWalter"/>
   </rdf:Description>
-  <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Zu%2BFrancesco%2BLana%252C%2BProdromo%2BOvero%2Bsaggio%2Bdi%2Balcune%2Binventioni%2Bnuove/LH037%252C02_002v/index.html">
-    <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Zu%2BFrancesco%2BLana%252C%2BProdromo%2BOvero%2Bsaggio%2Bdi%2Balcune%2Binventioni%2Bnuove/LH037%252C02_002v/index.html"/>
+	<rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Aus%2Bund%2Bzu%2BFrancesco%2BLana%252C%2BProdromo%2BOvero%2Bsaggio%2Bdi%2Balcune%2Binventioni%2Bnuove/LH037%252C02_002v/index.html">
+		<dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/Aus%2Bund%2Bzu%2BFrancesco%2BLana%252C%2BProdromo%2BOvero%2Bsaggio%2Bdi%2Balcune%2Binventioni%2Bnuove/LH037%252C02_002v/index.html"/>
 <dcterms:isFormatOf rdf:resource="http://leibnizviii.bbaw.de/pdf/Zu%2BFrancesco%2BLana%252C%2BProdromo%2BOvero%2Bsaggio%2Bdi%2Balcune%2Binventioni%2Bnuove/LH037%252C02_002v/LH037,02_002%2Bv.png"/><rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
 </rdf:Description>
 
@@ -2401,8 +2401,8 @@
     <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Optik"/>
     <gnd:gndRelatedPerson rdf:resource="http://wsp.normdata.rdf/RohaultJacques"/>
   </rdf:Description>
-  <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Bcausis%2Breflexionis%2Bet%2Brefractionis/LH037%252C02_101r/index.html">
-<dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2Bcausis%2Breflexionis%2Bet%2Brefractionis/LH037%252C02_101r/index.html"/>
+	<rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2BCartesii%2Bdoctrina%2Bde%2Brefractione/LH037%252C02_101r/index.html">
+  		<dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/De%2BCartesii%2Bdoctrina%2Bde%2Brefractione/LH037%252C02_101r/index.html"/>
 <dcterms:isFormatOf rdf:resource="http://leibnizviii.bbaw.de/pdf/De%2Bcausis%2Breflexionis%2Bet%2Brefractionis/LH037%252C02_101r/LH037,02_101%2Bra1.png"/><rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
 </rdf:Description>
 
@@ -4079,9 +4079,10 @@
   <dc:title>Détermination de la profondeur de l'eau. Deuxième essai</dc:title>
   <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Technik"/>
 </rdf:Description>
-    <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/D%2526eacute%253Btermination%2Bde%2Bla%2Bprofondeur%2Bde%2Bl%2527eau%2B1/LH038_138r/index.html">
-<dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/D%2526eacute%253Btermination%2Bde%2Bla%2Bprofondeur%2Bde%2Bl%2527eau%2B1/LH038_138r/index.html"/>
-<dcterms:isFormatOf rdf:resource="http://leibnizviii.bbaw.de/pdf/D%2526eacute%253Btermination%2Bde%2Bla%2Bprofondeur%2Bde%2Bl%2527eau%2B1/LH038_138r/LH038,_138%2Bra.png"/><rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
+<rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/D%2526eacute%253Btermination%2Bde%2Bla%2Bprofondeur%2Bde%2Bl%2527eau.%2BDeuxi%2526egrave%253Bme%2Bessai/LH038_138r/index.html">
+    <dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/D%2526eacute%253Btermination%2Bde%2Bla%2Bprofondeur%2Bde%2Bl%2527eau.%2BDeuxi%2526egrave%253Bme%2Bessai/LH038_138r/index.html"/>
+    <dcterms:isFormatOf rdf:resource="http://leibnizviii.bbaw.de/pdf/D%2526eacute%253Btermination%2Bde%2Bla%2Bprofondeur%2Bde%2Bl%2527eau%2B1/LH038_138r/LH038,_138%2Bra.png"/>
+	<rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
 </rdf:Description>
 <!--LH038_139r-->
 <rdf:Description rdf:about="http://leibnizviii.bbaw.de/pdf/D%2526eacute%253Btermination%2Bde%2Bla%2Bprofondeur%2Bde%2Bl%2527eau%2B2/LH038_139r/LH038,_139%2Bra.png">
@@ -4090,8 +4091,8 @@
   <dc:title>Détermination de la profondeur de l'eau. Premier essai</dc:title>
   <gnd:gndSubjectCategory rdf:resource="http://wsp.normdata.rdf/Technik"/>
 </rdf:Description>
-    <rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/D%2526eacute%253Btermination%2Bde%2Bla%2Bprofondeur%2Bde%2Bl%2527eau%2B2/LH038_139r/index.html">
-<dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/D%2526eacute%253Btermination%2Bde%2Bla%2Bprofondeur%2Bde%2Bl%2527eau%2B2/LH038_139r/index.html"/>
+	<rdf:Description rdf:about="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/D%2526eacute%253Btermination%2Bde%2Bla%2Bprofondeur%2Bde%2Bl%2527eau.%2BPremier%2Bessai/LH038_139r/index.html">
+		<dc:identifier rdf:resource="http://leibnizviii.bbaw.de/Leibniz_Reihe_8/D%2526eacute%253Btermination%2Bde%2Bla%2Bprofondeur%2Bde%2Bl%2527eau.%2BPremier%2Bessai/LH038_139r/index.html"/>
 <dcterms:isFormatOf rdf:resource="http://leibnizviii.bbaw.de/pdf/D%2526eacute%253Btermination%2Bde%2Bla%2Bprofondeur%2Bde%2Bl%2527eau%2B2/LH038_139r/LH038,_139%2Bra.png"/><rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
 </rdf:Description>
 <!--LH038_139v-->

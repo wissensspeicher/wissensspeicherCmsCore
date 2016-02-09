@@ -28,17 +28,4 @@
   <dc:identifier rdf:resource="http://www.bbaw.de/forschung/fremde/mitarbeiter"/>
   <dc:title>Mitglieder/Mitarbeiter</dc:title>
 </rdf:Description>
-<rdf:Description rdf:about="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/fremde/de/Publikationen">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/HerausforderungDurchDasFremde"/>
-  <dc:identifier rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/fremde/de/Publikationen"/>
-  <dc:title>Publikationen</dc:title>
-</rdf:Description>
-<rdf:Description rdf:about="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/fremde/bilder/fremde.pdf">
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-  <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/HerausforderungDurchDasFremde"/>
-  <dc:identifier rdf:resource="http://www.bbaw.de/bbaw/Forschung/Forschungsprojekte/fremde/bilder/fremde.pdf"/>
-  <dc:title>Die Herausforderung durch das Fremde</dc:title>
-  <dc:creator>Münkler, Herfried</dc:creator>
-</rdf:Description>
 </rdf:RDF>
