@@ -45,7 +45,6 @@
     <dcterms:issued>2006-10</dcterms:issued>
     <dc:creator rdf:resource="http://wsp.normdata.rdf/Knobloch"/>
     <dcterms:abstract>In der vorliegenden elektronischen Edition werden Alexander von Humboldts Abhandlungen nach Akademiereden erstmals geschlossen präsentiert, kritisch ediert und kommentiert. Zusätzlich zu den verlinkten Registereinträgen ist eine Suche über den gesamten Text möglich. Damit ergibt sich für den Leser auch die Chance über einzelne Texte hinweg zu verfolgen, ob und wie es Humboldt gelungen ist, Natur-Ansichten zu entwickeln, die "durch Größe des Gegenstandes, vielleicht auch durch ein sorgfältiges Hinweisen auf das Gemeinsame in den Erscheinungen, ein allgemeineres Interesse erregen würden" und die Gegenstände "in der Behandlung auf etwas Gemeinsames, auf die Begründung einer allgemeinen vergleichenden Naturkunde zurückzuführen".</dcterms:abstract>
-    <foaf:name>Alexander von Humboldts Abhandlungen nach Vorträgen an der Königlich Preußischen Akademie der Wissenschaften zu Berlin</foaf:name>
     <dcterms:extent>21 Abhandlungen</dcterms:extent>
     <dcterms:rightsHolder rdf:resource="http://wsp.normdata.rdf/BBAW"/>
     <dcterms:temporal rdf:datatype="&dcterms;Period">start=1805-11-21; end=1856-05-22; name=Zeitraum der Veröffentlichung der Abhandlungen</dcterms:temporal>
