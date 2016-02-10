@@ -39,7 +39,7 @@
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/MonumentaGermaniaeHistorica"/>
     <dcterms:abstract></dcterms:abstract>
     <dc:publisher rdf:resource="http://wsp.normdata.rdf/BBAW"/>
-    <dc:creator rdf:resoource="http://wsp.normdata.rdf/Menzel"/>
+  	<dc:creator rdf:resource="http://wsp.normdata.rdf/Menzel"/>
     <dc:creator rdf:resource="http://wsp.normdata.rdf/Telota"/>
     <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/KarlIV"/>
     <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/"/>
