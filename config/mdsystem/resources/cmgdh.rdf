@@ -41,7 +41,7 @@
     <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/DielsHermann"/>
     <dc:creator rdf:resource="http://wsp.normdata.rdf/Brunschoen"/>
     <dc:creator rdf:resource="http://wsp.normdata.rdf/Wittwer"/>
-    <dcterms:rigthsHolder rdf:resource="http://wsp.normdata.rdf/BBAW"/>
+  	<dcterms:rightsHolder rdf:resource="http://wsp.normdata.rdf/BBAW"/>
     <dcterms:abstract>Hier findet man den in mancher Hinsicht überholten, aber nach wie vor maßgebenden Handschriftenkatalog zur antiken Ärzteliteratur, der unter der Leitung von Hermann Diels zur Vorbereitung des CMG an der Berliner Akademie entstanden ist. Der Katalog wurde mehrfach ergänzt und korrigiert. Die bibliographischen Angaben zu den publizierten Addenda und Corrigenda sind hier einsehbar. Genauere Angaben zur handschriftlichen Überlieferung sind den publizierten Bänden zu entnehmen oder können auf Anfrage von der Arbeitsstelle gemacht werden.</dcterms:abstract>
   </rdf:Description>
   

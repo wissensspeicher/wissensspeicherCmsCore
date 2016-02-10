@@ -42,7 +42,7 @@
     <dc:creator rdf="http://wsp.normdata.rdf/Tintemann"/>
     <dc:creator rdf="http://wsp.normdata.rdf/ZimmerF"/>
     <dcterms:publisher rdf="http://wsp.normdata.rdf/WilhelmVonHumboldt"/>
-    <dcterms:rigthsHolder rdf="http://wsp.normdata.rdf/BBAW"/>
+  	<dcterms:rightsHolder rdf="http://wsp.normdata.rdf/BBAW"/>
     <foaf:name>Wilhelm von Humboldt: Schriften zur Sprachwissenschaft - Briefdatenbank</foaf:name>
     <gnd:relatedPerson rdf:resource="http://wsp.normdata.rdf/HumboldtWilhelm"/>
     <foaf:homepage rdf:resource="http://telota.bbaw.de/wvh/db-start.jsf"/>

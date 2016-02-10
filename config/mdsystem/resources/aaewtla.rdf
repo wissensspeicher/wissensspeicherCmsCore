@@ -40,7 +40,7 @@
     <foaf:homepage rdf:resource="http://aaew.bbaw.de/tla/"/>
     <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/AltaegyptWB"/>
     <dcterms:abstract>Der Thesaurus Linguae Aegyptiae ist eine Publikationsplattform, die das Akademienvorhaben Strukturen und Transformationen des Wortschatzes der ägyptischen Sprache (vormals Altägyptisches Wörterbuch) an der Berlin-Brandenburgischen Akademie der Wissenschaften im Internet zur Verfügung stellt. Im Thesaurus Linguae Aegyptiae wird ein digitales Corpus von Texten in ägyptischer (auch demotischer) Sprache zur computergestützten Recherche publiziert. Die Lemmatisation und morphosyntaktische Annotation des Textmaterials erlauben die gezielte Recherche unter lexikalischen, philologischen, linguistischen und kulturhistorischen Fragestellungen. Den Texten ist stets eine fortlaufende, sehr am Original orientierte Übersetzung beigegeben, die sowohl Ägyptologen aber auch besonders Nichtspezialisten und Forscher benachbarter Disziplinen bei der Orientierung im Material unterstützen soll.</dcterms:abstract>
-    <dcterms:rigthsHolder rdf:resource="http://wsp.normdata.rdf/BBAW"/>
+  	<dcterms:rightsHolder rdf:resource="http://wsp.normdata.rdf/BBAW"/>
     <dc:creator rdf:resource="http://wsp.normdata.rdf/Seidlmayer"/>
     <dc:creator rdf:resource="http://wsp.normdata.rdf/Hafemann"/>
     <dc:creator rdf:resource="http://wsp.normdata.rdf/Schweitzer"/>
