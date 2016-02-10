@@ -42,7 +42,7 @@
     <dc:creator rdf:resource="http://wsp.normdata.rdf/Brockmann"/>
     <dc:creator rdf:resource="http://wsp.normdata.rdf/Telota"/>
     <dcterms:rightsHolder rdf:resource="http://wsp.normdata.rdf/BBAW"/>
-    <dc:publisher rdf:resouorce="http://wsp.normdata.rdf/BBAW"/>
+  	<dc:publisher rdf:resource="http://wsp.normdata.rdf/BBAW"/>
     <dcterms:abstract>In Zusammenarbeit mit der Telota-Initiative der BBAW präsentiert das CMG im Rahmen des Projekts des Monats 2005 die Vorabedition der Einleitung und der ersten 6 Kommentarabschnitte von Buch I des Galenkommenars zu Hippokrates, Über die Gelenke.</dcterms:abstract>
   </rdf:Description>
   
