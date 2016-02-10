@@ -86,7 +86,7 @@
 		<dc:creator rdf:resource="http://wsp.normdata.rdf/Hahn"/>
 		<dc:title>Der Einfluß der Geschmacksdiskussion und der von der Akademie betriebenen Handwerkerschulung auf die Dekorationsmalerei zwischen 1780 und 1820</dc:title>
 		<dcterms:created rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2001</dcterms:created>
-		<dcterms:rigthsHolder rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
+		<dcterms:rightsHolder rdf:resource="http://wsp.normdata.rdf/BerlinerKlassik"/>
 		<dcterms:format rdf:resource="http://wsp.normdata.rdf/text_pdf"/>
 	</rdf:Description> 
 	<rdf:Description rdf:about="http://www.berliner-klassik.de/forschung/dateien/hahn_leipzigerstr.pdf">
