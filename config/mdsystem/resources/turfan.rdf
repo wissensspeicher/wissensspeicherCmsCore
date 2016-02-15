@@ -44,7 +44,7 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Turfan"/>
   <dc:identifier rdf:resource="http://turfan.bbaw.de/bilder/turfanforschung-jahresmagazin.pdf"/>
   <dc:title>Eine Quelle der Sprachen und Schriften</dc:title>
-  <dc:drescription>Zwei Akademievorhaben edieren, katalogisieren und digitalisieren Texte aus der Oase von Turfan in Ostturkistan</dc:drescription>
+  <dc:description>Zwei Akademievorhaben edieren, katalogisieren und digitalisieren Texte aus der Oase von Turfan in Ostturkistan</dc:description>
   <dc:date>2010</dc:date>
 </rdf:Description>
 </rdf:RDF>

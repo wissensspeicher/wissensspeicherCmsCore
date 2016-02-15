@@ -60,7 +60,7 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Turfan/IranischeTexte"/>
   <dc:identifier rdf:resource="http://turfan.bbaw.de/bilder/texte/psalterbeispiel5v.pdf"/>
   <dc:title>Ein christlicher Text in mittelpersischer Sprache aus Turfan</dc:title>
-  <dcterms:language rdf:reource="http://wsp.normdata.rdf/MiddlePersian"/>
+  <dcterms:language rdf:resource="http://wsp.normdata.rdf/MiddlePersian"/>
   <dc:language>ger</dc:language>
 </rdf:Description>
 <rdf:Description rdf:about="http://turfan.bbaw.de/bilder-import/PsalterMPSyrGrEngversesGlossarySept2012.pdf">

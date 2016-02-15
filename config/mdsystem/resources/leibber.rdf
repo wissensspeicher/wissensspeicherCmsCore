@@ -25,7 +25,6 @@
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/LeibnizGottfriedWilhelm"/>
   <dc:identifier rdf:resource="http://leibniz-berlin.bbaw.de"/>
   <dc:title>Naturwissenschaftlich- medizinisch-technische Schriften</dc:title>
-  <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   </rdf:Description>
   <rdf:Description rdf:about="http://leibnizviii.bbaw.de/">
     <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>

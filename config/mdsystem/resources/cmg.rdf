@@ -35,7 +35,7 @@
   <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
   <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/CorpusMedicorumGraecorum"/>
   <dc:identifier rdf:resource="http://cmg.bbaw.de/publikationen/publikationen-cmg"/>
-  <dc:titel>Corpus Medicorum Graecorum</dc:titel>
+  <dc:title>Corpus Medicorum Graecorum</dc:title>
   <dc:format rdf:resource="http://wsp.normdata.rdf/text_html"/>
 </rdf:Description>
 <rdf:Description rdf:about="http://cmg.bbaw.de/publikationen/supplementum">

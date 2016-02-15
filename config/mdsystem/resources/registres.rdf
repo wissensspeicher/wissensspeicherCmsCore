@@ -60,7 +60,7 @@
     
  <rdf:Description rdf:about="http://akademieregistres.bbaw.de">
    <rdf:type rdf:resource="http://purl.org/dc/terms/BibliographicResource"/>
-   <dcterms:identifier rdf:resource="http://akademieregistres.bbaw.de"/>
+   <dc:identifier rdf:resource="http://akademieregistres.bbaw.de"/>
    <dcterms:isPartOf rdf:resource="http://wsp.normdata.rdf/Registres"/>
  </rdf:Description>   
 <rdf:Description rdf:about="http://kvmmove3.bbaw.de:8022/exist/apps/SadeRegistres/data/">

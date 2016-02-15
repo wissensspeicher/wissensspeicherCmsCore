@@ -5450,7 +5450,7 @@ Erfasst werden die in der Renaissance bekannten antiken Monumente mit den zugeh�
         <rdf:type rdf:resource="&foaf;Person"/>
         <rdfs:label>Dechales, Claude François Milliet</rdfs:label>
         <foaf:givenName>Claude François Milliet</foaf:givenName>
-        <foaf:givenName>Dechales</foaf:givenName>
+    	<foaf:familyName>Dechales</foaf:familyName>
         <gnd:gndIdentifier rdf:resource="http://d-nb.info/gnd/128696346"/>
         <gnd:functionOrRole rdf:resource="http://wsp.normdata.rdf/HistoricalPerson"/>
     </rdf:Description>
@@ -5598,7 +5598,7 @@ Erfasst werden die in der Renaissance bekannten antiken Monumente mit den zugeh�
         <rdf:type rdf:resource="&foaf;Person"/>
         <rdfs:label>Digby, Kenelm</rdfs:label>
         <foaf:familyName>Digby</foaf:familyName>
-        <foaf:familyName>Kenelm</foaf:familyName>
+    	<foaf:givenName>Kenelm</foaf:givenName>
         <gnd:gndIdentifier rdf:resource="http://d-nb.info/gnd/118671936"/>
         <gnd:functionOrRole rdf:resource="http://wsp.normdata.rdf/HistoricalPerson"/>
     </rdf:Description>
@@ -11960,7 +11960,7 @@ Das Projekt konzentrierte sich auf einen ausgewählten Bereich im weiten Spektru
         <rdf:type rdf:resource="&foaf;Person"/>
         <rdfs:label>Needham, Walter</rdfs:label>
         <foaf:familyName>Needham</foaf:familyName>
-        <foaf:familyName>Walter</foaf:familyName>
+    	<foaf:givenName>Walter</foaf:givenName>
         <gnd:gndIdentifier rdf:resource="http://d-nb.info/gnd/1055361944"/>
         <gnd:functionOrRole rdf:resource="http://wsp.normdata.rdf/HistoricalPerson"/>
     </rdf:Description>
@@ -13793,7 +13793,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
         <rdf:type rdf:resource="&foaf;Person"/>
         <rdfs:label>Rohault, Jacques</rdfs:label>
         <foaf:familyName>Rohault</foaf:familyName>
-        <foaf:familyName>Jacques</foaf:familyName>
+    	<foaf:givenName>Jacques</foaf:givenName>
         <gnd:gndIdentifier rdf:resource="http://d-nb.info/gnd/118790943"/>
         <gnd:functionOrRole rdf:resource="http://wsp.normdata.rdf/HistoricalPerson"/>
     </rdf:Description>
@@ -17128,7 +17128,7 @@ Die Protokolle des Preußischen Staatsministeriums bilden einen einzigartigen Ak
         <rdf:type rdf:resource="&foaf;Person"/>
         <rdfs:label>Zucchi, Niccolò</rdfs:label>
         <foaf:familyName>Zucchi</foaf:familyName>
-        <foaf:familyName>Niccolò</foaf:familyName>
+    	<foaf:givenName>Niccolò</foaf:givenName>
         <gnd:gndIdentifier rdf:resource="http://d-nb.info/gnd/13179261X"/>
         <gnd:functionOrRole rdf:resource="http://wsp.normdata.rdf/HistoricalPerson"/>
     </rdf:Description>
