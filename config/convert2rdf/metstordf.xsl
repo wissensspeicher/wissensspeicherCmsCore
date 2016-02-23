@@ -20,7 +20,7 @@
 	xmlns:mets="http://www.loc.gov/METS/" xmlns:dv="http://dfg-viewer.de/"
 	xmlns:xlink="http://www.w3.org/1999/xlink">	
 	<!--  include default stylesheet with general parameters and variables for all our transformations -->
-	<xsl:include href="config/convert2rdf/default.xsl"/> 
+	<xsl:include href="default.xsl"/> 
 	
 	<xsl:output method="xml" version="1.0" encoding="UTF-8"
 		indent="yes" />
