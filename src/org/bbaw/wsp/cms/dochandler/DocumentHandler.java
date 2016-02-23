@@ -530,8 +530,8 @@ public class DocumentHandler {
         mdRecord.setContent(content);
       }
       // build DBpedia Spotlight entities 
-      boolean useDBpediaSpotlight = Constants.getInstance().useDBpediaSpotlight();
-      if (useDBpediaSpotlight) {
+      String dbPediaSpotlightService = Constants.getInstance().getDBpediaSpotlightService();
+      if (dbPediaSpotlightService != null) {
         DBpediaSpotlightHandler dbPediaSpotlightHandler = DBpediaSpotlightHandler.getInstance(); 
         Annotation docContentAnnotation = null;
         Annotation docTitleAnnotation = null;
