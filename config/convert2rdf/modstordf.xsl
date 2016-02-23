@@ -8,7 +8,7 @@
 	xmlns:edm="http://www.europeana.eu/schemas/edm/" xmlns:xi="http://www.w3.org/2001/XInclude">
 	<!-- include default stylesheet with general parameters and variables for 
 		all our transformations -->
-	<xsl:include href="config/convert2rdf/default.xsl" />
+	<xsl:include href="default.xsl" />
 
 	<xsl:output method="xml" version="1.0" encoding="UTF-8"
 		indent="yes" />
