@@ -46,10 +46,7 @@ public class DBpediaSpotlightHandler {
   private static DBpediaSpotlightHandler instance;
   private static DBpediaSpotlightHandler instanceSupport;
   private static int SOCKET_TIMEOUT = 200 * 1000;
-  // private static String HOSTNAME = "localhost";
-  private static String HOSTNAME = "wspdev.bbaw.de";
-  private static int PORT = 80;
-  private static String SERVICE_PATH = "spotlight/rest";
+  private static String SERVICE = "http://wspindex.bbaw.de/spotlight/rest";
   private HttpClient httpClient; 
   private XQueryEvaluator xQueryEvaluator;
   private boolean serviceAnnotateReachable = true;
@@ -84,6 +81,9 @@ public class DBpediaSpotlightHandler {
   }
   
   private void init() throws ApplicationException {
+    String dbPediaSpotlightService = Constants.getInstance().getDBpediaSpotlightService();
+    if (dbPediaSpotlightService != null)
+      SERVICE = dbPediaSpotlightService;
     initHttpClient();
     testCall();
     initDBpediaResources();
@@ -114,11 +114,8 @@ public class DBpediaSpotlightHandler {
       performPostRequest(httpClient, "annotate", params, "text/xml");
     } catch (Exception e) {
       serviceAnnotateReachable = false;
-      boolean useDBpediaSpotlight = Constants.getInstance().useDBpediaSpotlight();
-      if (useDBpediaSpotlight) {
-        String urlStr = "http://" + HOSTNAME + ":" + PORT + "/" + SERVICE_PATH + "/" + "annotate";
-        LOGGER.info("DBpediaSpotlightHandler: Service: " + urlStr + " not reachable");
-      }
+      String urlStr = SERVICE + "/" + "annotate";
+      LOGGER.info("DBpediaSpotlightHandler: Service: " + urlStr + " not reachable");
     }
   }
 
@@ -300,7 +297,7 @@ public class DBpediaSpotlightHandler {
 
   public Annotation annotate(Collection collection, String docId, String textInput, String confidence, int count) throws ApplicationException {
     if (! serviceAnnotateReachable) {
-      String urlStr = "http://" + HOSTNAME + ":" + PORT + "/" + SERVICE_PATH + "/" + "annotate";
+      String urlStr = SERVICE + "/" + "annotate";
       LOGGER.info("DBpediaSpotlightHandler: Service: " + urlStr + " not reachable");
       return null;
     }
@@ -377,7 +374,7 @@ public class DBpediaSpotlightHandler {
                 typesStr.contains("DBpedia:SoccerClub") || typesStr.contains("DBpedia:PoliticalParty");
             if (typesStr == null || typesStr.trim().isEmpty()) {
               r.setType("concept");
-            } else if (typesStr.contains("Person")) {
+            } else if (typesStr.contains("Person") && ! isPresentOrganisationType) {
               r.setType("person");
             } else if (isPresentOrganisationType) {
               r.setType("organisation");
@@ -445,8 +442,7 @@ public class DBpediaSpotlightHandler {
 
   private String performPostRequest(String serviceName, NameValuePair[] params, String outputFormat) throws ApplicationException {
     String resultStr = null;
-    String portPart = ":" + PORT;
-    String urlStr = "http://" + HOSTNAME + portPart + "/" + SERVICE_PATH + "/" + serviceName;
+    String urlStr = SERVICE + "/" + serviceName;
     try {
       PostMethod method = new PostMethod(urlStr);
       method.getParams().setContentCharset("utf-8");
@@ -476,8 +472,7 @@ public class DBpediaSpotlightHandler {
 
   private String performPostRequest(HttpClient httpClient, String serviceName, NameValuePair[] params, String outputFormat) throws ApplicationException {
     String resultStr = null;
-    String portPart = ":" + PORT;
-    String urlStr = "http://" + HOSTNAME + portPart + "/" + SERVICE_PATH + "/" + serviceName;
+    String urlStr = SERVICE + "/" + serviceName;
     try {
       PostMethod method = new PostMethod(urlStr);
       method.getParams().setContentCharset("utf-8");
