@@ -360,8 +360,8 @@ public class CollectionManager {
     if (collectionId.equals("edoc")) {
       mdRecords = getMetadataRecordsEdoc(collection);
     } else {
-      String metadataRdfDir = Constants.getInstance().getMdsystemConfDir() + "/resources/";
-      File rdfRessourcesFile = new File(metadataRdfDir + collectionId + ".rdf");
+      String metadataRdfDir = Constants.getInstance().getMetadataDir() + "/resources";
+      File rdfRessourcesFile = new File(metadataRdfDir + "/" + collectionId + ".rdf");
       mdRecords = getMetadataRecordsByRdfFile(collection, rdfRessourcesFile);
     }
     if (mdRecords.size() == 0)
