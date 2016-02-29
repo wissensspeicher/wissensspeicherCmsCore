@@ -141,8 +141,8 @@ public class CollectionReader {
           } else {
 						collection.setId(collectionId);
 					} 
-          String metadataRdfDir = Constants.getInstance().getMdsystemConfDir() + "/resources/";
-          File rdfResourceFile = new File(metadataRdfDir + collectionId + ".rdf");
+          String metadataRdfDir = Constants.getInstance().getMetadataDir() + "/resources";
+          File rdfResourceFile = new File(metadataRdfDir + "/" + collectionId + ".rdf");
           Date rdfResourceFileLastModified = new Date(rdfResourceFile.lastModified());
           collection.setLastModified(rdfResourceFileLastModified);
           String rdfId = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/rdfId/text()");
