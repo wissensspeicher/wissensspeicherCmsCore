@@ -51,11 +51,12 @@ public class ConvertConfigXml2Rdf {
       ConvertConfigXml2Rdf convertConfigXml2Rdf = new ConvertConfigXml2Rdf();
       convertConfigXml2Rdf.init();
       // convertConfigXml2Rdf.convertAll();
-      // convertConfigXml2Rdf.proofRdfProjects();
+      convertConfigXml2Rdf.proofRdfProjects();
       // convertConfigXml2Rdf.proofCollectionProjects();
       // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("pdr");
       // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("jdg");
-      // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("aaewtla");
+      // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("jpor");
+      // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("turfandp");
       // convertConfigXml2Rdf.convert(c, false);
       // convertConfigXml2Rdf.convertDbXmlFiles(c);
       // convertConfigXml2Rdf.generateDbXmlDumpFiles(c);
@@ -73,7 +74,7 @@ public class ConvertConfigXml2Rdf {
     httpClient.getParams().setParameter("http.connection.timeout", SOCKET_TIMEOUT);
     httpClient.getParams().setParameter("http.connection-manager.timeout", new Long(SOCKET_TIMEOUT));
     httpClient.getParams().setParameter("http.protocol.head-body-timeout", SOCKET_TIMEOUT);
-    resourcesDirName = Constants.getInstance().getMdsystemConfDir() +  "/resources";
+    resourcesDirName = Constants.getInstance().getMetadataDir() + "/resources";
     dbResourcesDirName = Constants.getInstance().getExternalDocumentsDir() + "/db-resources";
     externalResourcesDirName = Constants.getInstance().getExternalDocumentsDir() + "/resources";
     String inputNormdataFileName = Constants.getInstance().getMdsystemNormdataFile();
