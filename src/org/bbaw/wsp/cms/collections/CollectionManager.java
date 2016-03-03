@@ -47,8 +47,10 @@ import de.mpg.mpiwg.berlin.mpdl.xml.xquery.XQueryEvaluator;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
-import com.sun.org.apache.xml.internal.serialize.XMLSerializer;
+import org.w3c.dom.bootstrap.DOMImplementationRegistry;
+import org.w3c.dom.ls.DOMImplementationLS;
+import org.w3c.dom.ls.LSOutput;
+import org.w3c.dom.ls.LSSerializer;
 
 public class CollectionManager {
   private static Logger LOGGER = Logger.getLogger(CollectionManager.class);
@@ -810,8 +812,12 @@ public class CollectionManager {
         else 
           n.setTextContent("false");
         FileOutputStream os = new FileOutputStream(configFile);
-        XMLSerializer ser = new XMLSerializer(os, null);
-        ser.serialize(configFileDocument);  //  Vorsicht: wenn es auf true ist: es wird alles neu indexiert
+        DOMImplementationRegistry reg = DOMImplementationRegistry.newInstance();
+        DOMImplementationLS impl = (DOMImplementationLS) reg.getDOMImplementation("LS");
+        LSSerializer serializer = impl.createLSSerializer();
+        LSOutput lso = impl.createLSOutput();
+        lso.setByteStream(os);
+        serializer.write(configFileDocument, lso); //  Vorsicht: wenn update auf true ist: es wird alles neu indexiert
       }
     } catch (Exception e) {
       throw new ApplicationException(e);
