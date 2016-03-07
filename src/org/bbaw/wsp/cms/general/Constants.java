@@ -54,25 +54,21 @@ public class Constants {
 		}
 		configDirectory = configDir.getAbsolutePath();
 		if (configDir.exists()) {
-			coreConstantsPropFile = new File(configDirectory
-					+ "/core/constants.properties");
+			coreConstantsPropFile = new File(configDirectory + "/core/constants.properties");
 			if (coreConstantsPropFile.exists()) {
 				try {
 					final FileInputStream in = new FileInputStream(coreConstantsPropFile);
 					properties = new Properties();
 					properties.load(in);
-					LOGGER.info("CMS core property file: "
-							+ coreConstantsPropFile.getAbsolutePath() + " loaded");
+					LOGGER.info("CMS core property file: " + coreConstantsPropFile.getAbsolutePath() + " loaded");
 				} catch (final IOException e) {
 					e.printStackTrace();
 				}
 			} else {
-				LOGGER.info("CMS core property file: "
-						+ coreConstantsPropFile.getAbsolutePath() + " not found");
+				LOGGER.info("CMS core property file: " + coreConstantsPropFile.getAbsolutePath() + " not found");
 			}
 		} else {
-			LOGGER.info("Application configuration directory: " + configDirectory
-					+ " not found");
+			LOGGER.info("Application configuration directory: " + configDirectory + " not found");
 		}
 		// a little hack: this is done so that https urls could be fetched (e.g. by
 		// FileUtils.copyURLToFile) without certificate error
@@ -83,14 +79,12 @@ public class Constants {
 			}
 
 			@Override
-			public void checkClientTrusted(final X509Certificate[] certs,
-					final String authType) {
+			public void checkClientTrusted(final X509Certificate[] certs, final String authType) {
 				// No need to implement.
 			}
 
 			@Override
-			public void checkServerTrusted(final X509Certificate[] certs,
-					final String authType) {
+			public void checkServerTrusted(final X509Certificate[] certs, final String authType) {
 				// No need to implement.
 			}
 		} };
@@ -144,29 +138,30 @@ public class Constants {
 		}
 	}
 
-	public String getCollectionConfDir() {
-		return configDirectory + "/collections";
-	}
+  public String getMetadataDir() {
+    if (properties != null) {
+      return properties.getProperty("metadataDir");
+    } else {
+      return "no properties file";
+    }
+  }
 
-	/**
-	 * @return the dir to the mdsystem.xml
-	 */
-	public String getMdsystemConfDir() {
-		return configDirectory + "/mdsystem";
+	public String getCollectionConfDir() {
+		return getMetadataDir() + "/resources-addinfo";
 	}
 
 	/**
 	 * @return the path to the mdsystem.xml
 	 */
 	public String getMdsystemConfFile() {
-		return getMdsystemConfDir() + "/mdsystem.xml";
+		return getMetadataDir() + "/mdsystem.xml";
 	}
 
 	/**
 	 * @return the path to the wsp.normdata.xml
 	 */
 	public String getMdsystemNormdataFile() {
-		return getMdsystemConfDir() + "/wsp.normdata.rdf";
+		return getMetadataDir() + "/wsp.normdata.rdf";
 	}
 
 	/**
