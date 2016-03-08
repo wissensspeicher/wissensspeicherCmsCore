@@ -528,7 +528,8 @@ public class CollectionManager {
           uriPath = uriPath + "/" + fileName;
       }
       String collectionId = collection.getId();
-      String docId = "/" + collectionId + uriPath;
+      String normalizedUriPath = normalize(uriPath);
+      String docId = "/" + collectionId + normalizedUriPath;
       String mimeType = getMimeType(docId);
       if (mimeType == null) {  // last chance: try it with tika
         try {
@@ -782,17 +783,39 @@ public class CollectionManager {
     MetadataRecord mdRecord = new MetadataRecord();
     try {
       URL resourceIdUrl = new URL(urlStr);
-      String identifier = resourceIdUrl.getFile();
-      identifier = StringUtils.deresolveXmlEntities(identifier.trim());
-      if (identifier.startsWith("/"))
-        identifier = identifier.substring(1);
-      mdRecord.setDocId(identifier);
+      String urlFilePath = resourceIdUrl.getFile();
+      urlFilePath = StringUtils.deresolveXmlEntities(urlFilePath.trim());
+      if (urlFilePath.startsWith("/"))
+        urlFilePath = urlFilePath.substring(1);
+      String docId = normalize(urlFilePath);
+      mdRecord.setDocId(docId);
       mdRecord.setWebUri(urlStr);
     } catch (MalformedURLException e) {
       LOGGER.error("Malformed Url \"" +  urlStr + "\" in resource");
       return null;
     }
     return mdRecord;
+  }
+  
+  /**
+   * Normalizes an identifier (file path elements are shortened to maximal of 255 length)
+   * @param urlFilePath
+   * @return the normalized string
+   */
+  private String normalize(String urlFilePath) {
+    String retStr = urlFilePath;
+    if (urlFilePath != null && urlFilePath.contains("/") && urlFilePath.length() > 255) {
+      retStr = "";
+      String[] pathElems = urlFilePath.split("/");
+      for (int i=0; i<pathElems.length; i++) {
+        String pathElem = pathElems[i];
+        if (pathElem.length() > 255)
+          pathElem = pathElem.substring(0, 255);
+        retStr = retStr + pathElem + "/";
+      }
+      retStr = retStr.substring(0, retStr.length() - 1); // without last "/"
+    }
+    return retStr;
   }
   
   /*
