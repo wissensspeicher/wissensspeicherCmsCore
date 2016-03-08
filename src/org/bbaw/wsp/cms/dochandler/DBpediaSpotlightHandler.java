@@ -374,7 +374,7 @@ public class DBpediaSpotlightHandler {
                 typesStr.contains("DBpedia:SoccerClub") || typesStr.contains("DBpedia:PoliticalParty");
             if (typesStr == null || typesStr.trim().isEmpty()) {
               r.setType("concept");
-            } else if (typesStr.contains("Person") && ! isPresentOrganisationType) {
+            } else if (typesStr.contains("Person") && ! isPresentOrganisationType && ! typesStr.contains("SocialPerson") && ! typesStr.contains("Organization")) {
               r.setType("person");
             } else if (isPresentOrganisationType) {
               r.setType("organisation");
