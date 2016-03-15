@@ -148,28 +148,4 @@ public class PathExtractor {
     }
     return isExcluded;
   }
-
-  /**
-   * extrahiert ebenso wie extractDocLocations(String startUri) Pfade, tut dies
-   * aber local und nicht über HTTP
-   * 
-   * @return
-   */
-  public List<String> extractPathLocally(String startUrl) {
-    List<String> pathList = new ArrayList<String>();
-    File f = new File(startUrl);
-    if (f.isDirectory()) {
-      File[] filelist = f.listFiles();
-      for (File file : filelist) {
-        if (file.getName().toLowerCase().contains("config")) {
-          if (!startUrl.endsWith("/")) {
-            pathList.add(startUrl + "/" + file.getName());
-          } else {
-            pathList.add(startUrl + file.getName());
-          }
-        }
-      }
-    }
-    return pathList;
-  }
 }

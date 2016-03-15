@@ -9,7 +9,7 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Hashtable;
-import java.util.List;
+import java.util.Iterator;
 
 import net.sf.saxon.s9api.XdmItem;
 import net.sf.saxon.s9api.XdmSequenceIterator;
@@ -33,12 +33,10 @@ public class CollectionReader {
   private XQueryEvaluator xQueryEvaluator;
   private URL inputNormdataFileUrl;
 	private HashMap<String, Collection> collectionContainer;  // key is collectionId string and value is collection
-  private HashMap<String, WspUrl> wspUrls;  // key is wspUrl string and value is wspUrl 
   private HashMap<String, Person> persons;   
 	
 	private CollectionReader() throws ApplicationException {
 		collectionContainer = new HashMap<String, Collection>();
-		wspUrls = new HashMap<String, WspUrl>();
 		init();
 		readConfFiles();
 		readNormdataFile();
@@ -120,267 +118,246 @@ public class CollectionReader {
     }
 	}
 	
-	private void readConfFiles() throws ApplicationException {
-		try {
-			// liest alle Konfigurationsdateien ein
-			PathExtractor pathExtractor = new PathExtractor();
-			String confDir = Constants.getInstance().getCollectionConfDir();
-      LOGGER.info("Reading all config files from \"" + confDir + "\"");
-			List<String> configsFileList = pathExtractor.extractPathLocally(confDir);
-			for (String configFileName:configsFileList) {
-				String name = "";
-				try {
-					File configFile = new File(configFileName);
-					name = configFile.getName();
-					URL configFileUrl = configFile.toURI().toURL();
-					Collection collection = new Collection();
-					collection.setConfigFileName(configFileName);
-					String collectionId = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/id/text()");
-          if (collectionId == null || collectionId.trim().isEmpty()) {
-            LOGGER.error("No collectionId found in: " + collection.getConfigFileName());
-          } else {
-						collection.setId(collectionId);
-					} 
-          String metadataRdfDir = Constants.getInstance().getMetadataDir() + "/resources";
-          File rdfResourceFile = new File(metadataRdfDir + "/" + collectionId + ".rdf");
-          Date rdfResourceFileLastModified = new Date(rdfResourceFile.lastModified());
-          collection.setLastModified(rdfResourceFileLastModified);
-          String rdfId = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/rdfId/text()");
-          if (rdfId == null || rdfId.trim().isEmpty()) {
-            LOGGER.error("No rdfId found in: " + collection.getConfigFileName());
-          } else {
-            collection.setRdfId(rdfId);
+  private void readConfFiles() throws ApplicationException {
+    try {
+      // read info from project rdf file        
+      String metadataRdfDirStr = Constants.getInstance().getMetadataDir() + "/resources";
+      File metadataRdfDir = new File(metadataRdfDirStr);
+      ArrayList<File> metadataRdfFiles = new ArrayList<File>(FileUtils.listFiles(metadataRdfDir, null, false));
+      Collections.sort(metadataRdfFiles);
+      Iterator<File> filesIter = metadataRdfFiles.iterator();
+      while (filesIter.hasNext()) {
+        File metadataRdfFile = filesIter.next();
+        String metadataRdfFileName = metadataRdfFile.getName().toLowerCase();
+        Collection collection = new Collection();
+        String collectionId = metadataRdfFileName.substring(0, metadataRdfFileName.lastIndexOf("."));
+        collection.setId(collectionId);
+        Date metadataRdfFileLastModified = new Date(metadataRdfFile.lastModified());
+        collection.setLastModified(metadataRdfFileLastModified);
+        URL metadataRdfFileUrl = metadataRdfFile.toURI().toURL();
+        String projectRdfStr = xQueryEvaluator.evaluateAsString(metadataRdfFileUrl, NAMESPACE_DECLARATION + "/rdf:RDF/rdf:Description[rdf:type/@rdf:resource = 'http://xmlns.com/foaf/0.1/Project']");
+        if (projectRdfStr == null || projectRdfStr.trim().isEmpty()) {
+          projectRdfStr = xQueryEvaluator.evaluateAsString(inputNormdataFileUrl, NAMESPACE_DECLARATION + "/rdf:RDF/*:Description[foaf:nick/text() ='" + collectionId + "']");  // TODO entfernen, wenn alle RDF-Dateien eine Projektbeschreibung haben
+        } 
+        String rdfId = xQueryEvaluator.evaluateAsString(projectRdfStr, NAMESPACE_DECLARATION + "string(/rdf:Description/@rdf:about)");
+        if (rdfId == null || rdfId.trim().isEmpty())
+          LOGGER.error("No project rdf id found in: " + metadataRdfFileName + " or in: " + inputNormdataFileUrl);
+        else 
+          collection.setRdfId(rdfId);
+        String projectName = xQueryEvaluator.evaluateAsString(projectRdfStr, NAMESPACE_DECLARATION + "/rdf:Description/foaf:name/text()");
+        if (projectName != null) {
+          collection.setName(projectName);
+        } else {
+          LOGGER.error("Project: \"" + rdfId + "\" has no name: Please provide a name for this project");
+        }
+        String mainLanguage = xQueryEvaluator.evaluateAsString(projectRdfStr, NAMESPACE_DECLARATION + "/rdf:Description/dc:language/text()");
+        if (mainLanguage != null) {
+          collection.setMainLanguage(mainLanguage);
+        } else {
+          LOGGER.error("Project: \"" + rdfId + "\" has no language: Please provide a main language for this project");
+        }
+        String coverage = xQueryEvaluator.evaluateAsString(projectRdfStr, NAMESPACE_DECLARATION + "string-join(/rdf:Description/dc:coverage/@rdf:resource, ' ')");
+        if (coverage != null && ! coverage.isEmpty()) {
+          collection.setCoverage(coverage);
+        } 
+        String projectHomepage = xQueryEvaluator.evaluateAsString(projectRdfStr, NAMESPACE_DECLARATION + "string(/rdf:Description/foaf:homepage/@rdf:resource)");
+        if (projectHomepage != null) {
+          collection.setWebBaseUrl(projectHomepage);
+        } else {
+          LOGGER.error("Project: \"" + rdfId + "\" has no homepage: Please provide a homepage for this project");
+        }
+        // read additional info from xml config file        
+        String configFileName = Constants.getInstance().getMetadataDir() + "/resources-addinfo/" + collectionId + ".xml";
+        File configFile = new File(configFileName);
+        if (configFile.exists()) {
+          collection.setConfigFileName(configFileName);
+          readConfFile(collection);
+        }
+        // add collection
+        Collection coll = collectionContainer.get(collectionId);
+        if (coll != null) {
+          LOGGER.error("Double collectionId \"" + collectionId + "\" (in: \"" + collection.getConfigFileName() + "\" and in \"" + coll.getConfigFileName() + "\"");
+        } else {
+          collectionContainer.put(collectionId, collection);
+        }
+      }
+    } catch (Exception e) {
+      throw new ApplicationException(e);
+    }
+  }
+  
+	private void readConfFile(Collection collection) {
+	  try {
+      File configFile = new File(collection.getConfigFileName());
+      URL configFileUrl = configFile.toURI().toURL();
+      // read db infos
+      XdmValue xmdValueDBs = xQueryEvaluator.evaluate(configFileUrl, "/wsp/collection/db");
+      XdmSequenceIterator xmdValueDBsIterator = xmdValueDBs.iterator();
+      if (xmdValueDBs != null && xmdValueDBs.size() > 0) {
+        ArrayList<Database> collectionDBs = new ArrayList<Database>();
+        while (xmdValueDBsIterator.hasNext()) {
+          Database db = new Database();
+          XdmItem xdmItemDB = xmdValueDBsIterator.next();
+          String xdmItemDBStr = xdmItemDB.toString(); 
+          String dbType = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/type/text()");  // e.g. "mysql" or "postgres" or "oai"
+          db.setType(dbType);
+          String dbName = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/name/text()");
+          db.setName(dbName);
+          String jdbcHost = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/jdbc/host/text()");
+          if (jdbcHost != null) {
+            JdbcConnection jdbcConn = new JdbcConnection();
+            jdbcConn.setType(dbType);
+            jdbcConn.setHost(jdbcHost);
+            String jdbcPort = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/jdbc/port/text()");
+            jdbcConn.setPort(jdbcPort);
+            String jdbcDb = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/jdbc/db/text()");
+            jdbcConn.setDb(jdbcDb);
+            String jdbcUser = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/jdbc/user/text()");
+            jdbcConn.setUser(jdbcUser);
+            String jdbcPw = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/jdbc/pw/text()");
+            jdbcConn.setPw(jdbcPw);
+            db.setJdbcConnection(jdbcConn);
+            String sql = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/sql/text()");
+            db.setSql(sql);
           }
-          XdmValue xmdValueDBs = xQueryEvaluator.evaluate(configFileUrl, "/wsp/collection/db");
-          XdmSequenceIterator xmdValueDBsIterator = xmdValueDBs.iterator();
-          if (xmdValueDBs != null && xmdValueDBs.size() > 0) {
-            ArrayList<Database> collectionDBs = new ArrayList<Database>();
-            while (xmdValueDBsIterator.hasNext()) {
-              Database db = new Database();
-              XdmItem xdmItemDB = xmdValueDBsIterator.next();
-              String xdmItemDBStr = xdmItemDB.toString(); 
-              String dbType = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/type/text()");  // e.g. "mysql" or "postgres" or "oai"
-              db.setType(dbType);
-              String dbName = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/name/text()");
-              db.setName(dbName);
-              String jdbcHost = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/jdbc/host/text()");
-              if (jdbcHost != null) {
-                JdbcConnection jdbcConn = new JdbcConnection();
-                jdbcConn.setType(dbType);
-                jdbcConn.setHost(jdbcHost);
-                String jdbcPort = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/jdbc/port/text()");
-                jdbcConn.setPort(jdbcPort);
-                String jdbcDb = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/jdbc/db/text()");
-                jdbcConn.setDb(jdbcDb);
-                String jdbcUser = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/jdbc/user/text()");
-                jdbcConn.setUser(jdbcUser);
-                String jdbcPw = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/jdbc/pw/text()");
-                jdbcConn.setPw(jdbcPw);
-                db.setJdbcConnection(jdbcConn);
-                String sql = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/sql/text()");
-                db.setSql(sql);
-              }
-              String xmlDumpFileName = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/xmlDump/fileName/text()");
-              if (xmlDumpFileName != null)
-                db.setXmlDumpFileName(xmlDumpFileName);
-              String xmlDumpUrl = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/xmlDump/url/text()");
-              if (xmlDumpUrl != null)
-                db.setXmlDumpUrl(xmlDumpUrl);
-              String xmlDumpSet = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/xmlDump/set/text()");
-              if (xmlDumpSet != null)
-                db.setXmlDumpSet(xmlDumpSet);
-              String mainResourcesTable = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/mainResourcesTable/name/text()");
-              if (mainResourcesTable != null)
-                db.setMainResourcesTable(mainResourcesTable);
-              String mainResourcesTableId = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/mainResourcesTable/idField/text()");
-              if (mainResourcesTableId != null)
-                db.setMainResourcesTableId(mainResourcesTableId);
-              XdmValue mainResourcesTableFields = xQueryEvaluator.evaluate(xdmItemDBStr, "/db/mainResourcesTable/field");
-              XdmSequenceIterator mainResourcesTableFieldsIterator = mainResourcesTableFields.iterator();
-              if (mainResourcesTableFields != null && mainResourcesTableFields.size() > 0) {
-                while (mainResourcesTableFieldsIterator.hasNext()) {
-                  XdmItem mainResourcesTableField = mainResourcesTableFieldsIterator.next();
-                  String mainResourcesTableFieldStr = mainResourcesTableField.toString(); // e.g. <field><dc>title</dc><db>title</db></field>
-                  String dcField = xQueryEvaluator.evaluateAsString(mainResourcesTableFieldStr, "/field/dc/text()");
-                  String dbField = xQueryEvaluator.evaluateAsString(mainResourcesTableFieldStr, "/field/db/text()");
-                  if (dcField != null && dbField != null)
-                    db.addField(dcField, dbField);
-                }
-              }
-              String webIdPreStr = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/webId/preStr/text()");
-              if (webIdPreStr != null)
-                db.setWebIdPreStr(webIdPreStr);
-              String webIdAfterStr = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/webId/afterStr/text()");
-              if (webIdAfterStr != null)
-                db.setWebIdAfterStr(webIdAfterStr);
-              collectionDBs.add(db);
+          String xmlDumpFileName = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/xmlDump/fileName/text()");
+          if (xmlDumpFileName != null)
+            db.setXmlDumpFileName(xmlDumpFileName);
+          String xmlDumpUrl = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/xmlDump/url/text()");
+          if (xmlDumpUrl != null)
+            db.setXmlDumpUrl(xmlDumpUrl);
+          String xmlDumpSet = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/xmlDump/set/text()");
+          if (xmlDumpSet != null)
+            db.setXmlDumpSet(xmlDumpSet);
+          String mainResourcesTable = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/mainResourcesTable/name/text()");
+          if (mainResourcesTable != null)
+            db.setMainResourcesTable(mainResourcesTable);
+          String mainResourcesTableId = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/mainResourcesTable/idField/text()");
+          if (mainResourcesTableId != null)
+            db.setMainResourcesTableId(mainResourcesTableId);
+          XdmValue mainResourcesTableFields = xQueryEvaluator.evaluate(xdmItemDBStr, "/db/mainResourcesTable/field");
+          XdmSequenceIterator mainResourcesTableFieldsIterator = mainResourcesTableFields.iterator();
+          if (mainResourcesTableFields != null && mainResourcesTableFields.size() > 0) {
+            while (mainResourcesTableFieldsIterator.hasNext()) {
+              XdmItem mainResourcesTableField = mainResourcesTableFieldsIterator.next();
+              String mainResourcesTableFieldStr = mainResourcesTableField.toString(); // e.g. <field><dc>title</dc><db>title</db></field>
+              String dcField = xQueryEvaluator.evaluateAsString(mainResourcesTableFieldStr, "/field/dc/text()");
+              String dbField = xQueryEvaluator.evaluateAsString(mainResourcesTableFieldStr, "/field/db/text()");
+              if (dcField != null && dbField != null)
+                db.addField(dcField, dbField);
             }
-            collection.setDatabases(collectionDBs);
           }
-          String projectRdfStr = xQueryEvaluator.evaluateAsString(inputNormdataFileUrl, NAMESPACE_DECLARATION + "/rdf:RDF/*:Description[@*:about='" + rdfId + "']");
-          if (projectRdfStr == null || projectRdfStr.trim().isEmpty()) {
-            LOGGER.error("Project: \"" + rdfId + "\" in: \"" + configFileUrl + "\" does not exist in: \"" + inputNormdataFileUrl + "\": Please insert this project");
+          String webIdPreStr = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/webId/preStr/text()");
+          if (webIdPreStr != null)
+            db.setWebIdPreStr(webIdPreStr);
+          String webIdAfterStr = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/webId/afterStr/text()");
+          if (webIdAfterStr != null)
+            db.setWebIdAfterStr(webIdAfterStr);
+          collectionDBs.add(db);
+        }
+        collection.setDatabases(collectionDBs);
+      }
+      // read exclude directories (used in eXist resources (defined in RDF-file), to eliminate these subdirectories)
+      String excludesStr = xQueryEvaluator.evaluateAsStringValueJoined(configFileUrl, "/wsp/collection/url/exclude"); // is used for fetching files in an eXist directory
+      if (excludesStr != null) {
+        collection.setExcludesStr(excludesStr);
+      }
+      // read edoc metadata  TODO auslagern in RDF
+      String metadataUrlStr = xQueryEvaluator.evaluateAsStringValueJoined(configFileUrl, "/wsp/collection/metadata/url");
+      if (metadataUrlStr != null) {
+        String[] metadataUrls = metadataUrlStr.split(" ");
+        collection.setMetadataUrls(metadataUrls);
+      }
+      String metadataUrlPrefix = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/metadata/urlPrefix/text()");
+      if (metadataUrlPrefix != null) {
+        collection.setMetadataUrlPrefix(metadataUrlPrefix);
+      }
+      String collectionMetadataRedundantUrlPrefix = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/metadata/redundantUrlPrefix/text()");
+      if (collectionMetadataRedundantUrlPrefix != null) {
+        collection.setMetadataRedundantUrlPrefix(collectionMetadataRedundantUrlPrefix);
+      }
+      // read fields (used for parsing XML fulltext documents)
+      String fieldsStr = xQueryEvaluator.evaluateAsStringValueJoined(configFileUrl, "/wsp/collection/fields/field", "###");
+      ArrayList<String> fieldsArrayList = new ArrayList<String>();
+      if (fieldsStr != null) {
+        String[] fields = fieldsStr.split("###");
+        for (int i = 0; i < fields.length; i++) {
+          String field = fields[i].trim();
+          if (!field.isEmpty())
+            fieldsArrayList.add(field);
+        }
+      }
+      collection.setFields(fieldsArrayList);
+      // read xqueries (used for building dynamically a webId for a record) 
+      Hits xQueries = (Hits) xQueryEvaluator.evaluate(configFileUrl, "/wsp/collection/xqueries/xquery", 0, 9, "hits");
+      if (xQueries != null) {
+        Hashtable<String, XQuery> xqueriesHashtable = new Hashtable<String, XQuery>();
+        for (int i = 0; i < xQueries.getSize(); i++) {
+          Hit xqueryHit = xQueries.getHits().get(i);
+          String xqueryStr = xqueryHit.getContent();
+          String xQueryName = xQueryEvaluator.evaluateAsStringValueJoined(xqueryStr, "xquery/name");
+          String xQueryCode = xQueryEvaluator.evaluateAsStringValueJoined(xqueryStr, "xquery/code");
+          String xQueryPreStr = xQueryEvaluator.evaluateAsStringValueJoined(xqueryStr, "xquery/preStr");
+          String xQueryAfterStr = xQueryEvaluator.evaluateAsStringValueJoined(xqueryStr, "xquery/afterStr");
+          if (xQueryName != null && xQueryCode != null) {
+            XQuery xQuery = new XQuery(xQueryName, xQueryCode);
+            if (xQueryPreStr != null && ! xQueryPreStr.isEmpty())
+              xQuery.setPreStr(xQueryPreStr);
+            if (xQueryAfterStr != null && ! xQueryAfterStr.isEmpty())
+              xQuery.setAfterStr(xQueryAfterStr);
+            xqueriesHashtable.put(xQueryName, xQuery);
           }
-          String projectName = xQueryEvaluator.evaluateAsString(projectRdfStr, NAMESPACE_DECLARATION + "/rdf:Description/foaf:name/text()");
-					if (projectName != null) {
-						collection.setName(projectName);
-					} else {
-            LOGGER.error("Project: \"" + rdfId + "\" in: \"" + inputNormdataFileUrl + "\" has no name: Please provide a name for this project");
-					}
-          String mainLanguage = xQueryEvaluator.evaluateAsString(projectRdfStr, NAMESPACE_DECLARATION + "/rdf:Description/dc:language/text()");
-          if (mainLanguage != null) {
-            collection.setMainLanguage(mainLanguage);
-          } else {
-            LOGGER.error("Project: \"" + rdfId + "\" in: \"" + inputNormdataFileUrl + "\" has no language: Please provide a main language for this project");
-          }
-          String coverage = xQueryEvaluator.evaluateAsString(projectRdfStr, NAMESPACE_DECLARATION + "string-join(/rdf:Description/dc:coverage/@rdf:resource, ' ')");
-          if (coverage != null && ! coverage.isEmpty()) {
-            collection.setCoverage(coverage);
-          } 
-					// wsp/collection/metadata fields are only used in edoc-Collection
-          String metadataUrlStr = xQueryEvaluator.evaluateAsStringValueJoined(configFileUrl, "/wsp/collection/metadata/url");
-					if (metadataUrlStr != null) {
-						String[] metadataUrls = metadataUrlStr.split(" ");
-						collection.setMetadataUrls(metadataUrls);
-					}
-					String metadataUrlPrefix = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/metadata/urlPrefix/text()");
-					if (metadataUrlPrefix != null) {
-						collection.setMetadataUrlPrefix(metadataUrlPrefix);
-					}
-          String collectionMetadataRedundantUrlPrefix = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/metadata/redundantUrlPrefix/text()");
-          if (collectionMetadataRedundantUrlPrefix != null) {
-            collection.setMetadataRedundantUrlPrefix(collectionMetadataRedundantUrlPrefix);
-          }
-					XdmValue xmdValueDataUrls = xQueryEvaluator.evaluate(configFileUrl, "/wsp/collection/url/dataUrl");
-					XdmSequenceIterator xmdValueDataUrlsIterator = xmdValueDataUrls.iterator();
-					if (xmdValueDataUrls != null && xmdValueDataUrls.size() > 0) {
-						ArrayList<WspUrl> collectionWspUrls = new ArrayList<WspUrl>();
-						while (xmdValueDataUrlsIterator.hasNext()) {
-							XdmItem xdmItemDataUrl = xmdValueDataUrlsIterator.next();
-							String xdmItemDataUrlStr = xdmItemDataUrl.toString(); // e.g. <dataUrl>http://bla.de/bla.xml</dataUrl>
-							String dataUrlType = xQueryEvaluator.evaluateAsString(xdmItemDataUrlStr, "string(/dataUrl/@type)");
-							String dataUrl = xdmItemDataUrl.getStringValue();
-							if (dataUrl != null && ! dataUrl.isEmpty()) {
-                WspUrl urlKey = wspUrls.get(dataUrl);
-                if (urlKey == null) {
-    							WspUrl newWspUrl = new WspUrl(dataUrl);
-    							newWspUrl.setCollectionId(collectionId);
-    							if (dataUrlType != null && !dataUrlType.isEmpty())
-    							  newWspUrl.setType(dataUrlType);
-    							collectionWspUrls.add(newWspUrl);
-    							wspUrls.put(dataUrl, newWspUrl);
-                } else {
-                  // dataUrl is a doublet
-                  String wspKeyCollectionId = urlKey.getCollectionId();
-                  String errorDoStr = "please remove it either in configuration \"" + wspKeyCollectionId + "\" or \"" + collectionId + "\"";
-                  if (collectionId.equals(wspKeyCollectionId))
-                    errorDoStr = "please remove it in configuration \"" + collectionId + "\"";
-                  LOGGER.error("Doublet: url \"" + dataUrl + "\" is not added: " + errorDoStr);
-                }
-							}
-						}
-						WspUrl[] collectionWspUrlsArray = collectionWspUrls.toArray(new WspUrl[collectionWspUrls.size()]);
-						collection.setDataUrls(collectionWspUrlsArray);
-					}
-          String projectHomepage = xQueryEvaluator.evaluateAsString(projectRdfStr, NAMESPACE_DECLARATION + "string(/rdf:Description/foaf:homepage/@rdf:resource)");
-          if (projectHomepage != null) {
-            collection.setWebBaseUrl(projectHomepage);
-          } else {
-            LOGGER.error("Project: \"" + rdfId + "\" in: \"" + inputNormdataFileUrl + "\" has no homepage: Please provide a homepage for this project");
-          }
-					String fieldsStr = xQueryEvaluator.evaluateAsStringValueJoined(configFileUrl, "/wsp/collection/fields/field", "###");
-					ArrayList<String> fieldsArrayList = new ArrayList<String>();
-					if (fieldsStr != null) {
-						String[] fields = fieldsStr.split("###");
-						for (int i = 0; i < fields.length; i++) {
-							String field = fields[i].trim();
-							if (!field.isEmpty())
-								fieldsArrayList.add(field);
-						}
-					}
-					collection.setFields(fieldsArrayList);
-					Hits xQueries = (Hits) xQueryEvaluator.evaluate(configFileUrl, "/wsp/collection/xqueries/xquery", 0, 9, "hits");
-					if (xQueries != null) {
-						Hashtable<String, XQuery> xqueriesHashtable = new Hashtable<String, XQuery>();
-						for (int i = 0; i < xQueries.getSize(); i++) {
-							Hit xqueryHit = xQueries.getHits().get(i);
-							String xqueryStr = xqueryHit.getContent();
-							String xQueryName = xQueryEvaluator.evaluateAsStringValueJoined(xqueryStr, "xquery/name");
-							String xQueryCode = xQueryEvaluator.evaluateAsStringValueJoined(xqueryStr, "xquery/code");
-              String xQueryPreStr = xQueryEvaluator.evaluateAsStringValueJoined(xqueryStr, "xquery/preStr");
-              String xQueryAfterStr = xQueryEvaluator.evaluateAsStringValueJoined(xqueryStr, "xquery/afterStr");
-							if (xQueryName != null && xQueryCode != null) {
-								XQuery xQuery = new XQuery(xQueryName, xQueryCode);
-								if (xQueryPreStr != null && ! xQueryPreStr.isEmpty())
-								  xQuery.setPreStr(xQueryPreStr);
-                if (xQueryAfterStr != null && ! xQueryAfterStr.isEmpty())
-                  xQuery.setAfterStr(xQueryAfterStr);
-								xqueriesHashtable.put(xQueryName, xQuery);
-							}
-						}
-						collection.setxQueries(xqueriesHashtable);
-					}
-          Hits services = (Hits) xQueryEvaluator.evaluate(configFileUrl, "/wsp/collection/services/*", 0, 9, "hits");
-          if (services != null) {
-            Hashtable<String, Service> servicesHashtable = new Hashtable<String, Service>();
-            for (int i = 0; i < services.getSize(); i++) {
-              Hit serviceHit = services.getHits().get(i);
-              String serviceStr = serviceHit.getContent();
-              String serviceId = xQueryEvaluator.evaluateAsString(serviceStr, "service/id/text()");
-              String serviceHost = xQueryEvaluator.evaluateAsString(serviceStr, "service/host/text()");
-              String serviceName = xQueryEvaluator.evaluateAsString(serviceStr, "service/name/text()");
-              Hits serviceProperties = (Hits) xQueryEvaluator.evaluate(serviceStr, "service/properties/property", 0, 9, "hits");
-              Hashtable<String, String> servicePropertiesHashtable = null;
-              if (serviceProperties != null) {
-                servicePropertiesHashtable = new Hashtable<String, String>();
-                for (int j = 0; j < serviceProperties.getSize(); j++) {
-                  Hit propertyHit = serviceProperties.getHits().get(j);
-                  String propertyStr = propertyHit.getContent();
-                  String paramName = xQueryEvaluator.evaluateAsString(propertyStr, "property/name/text()");
-                  String paramValue = xQueryEvaluator.evaluateAsString(propertyStr, "property/value/text()");
-                  servicePropertiesHashtable.put(paramName, paramValue);
-                }
-              }
-              Hits serviceParameters = (Hits) xQueryEvaluator.evaluate(serviceStr, "service/parameters/param", 0, 9, "hits");
-              Hashtable<String, String> serviceParametersHashtable = null;
-              if (serviceParameters != null) {
-                serviceParametersHashtable = new Hashtable<String, String>();
-                for (int j = 0; j < serviceParameters.getSize(); j++) {
-                  Hit paramHit = serviceParameters.getHits().get(j);
-                  String paramStr = paramHit.getContent();
-                  String paramName = xQueryEvaluator.evaluateAsString(paramStr, "param/name/text()");
-                  String paramValue = xQueryEvaluator.evaluateAsString(paramStr, "param/value/text()");
-                  serviceParametersHashtable.put(paramName, paramValue);
-                }
-              }
-              Service service = new Service();
-              service.setId(serviceId);
-              service.setHostName(serviceHost);
-              service.setName(serviceName);
-              service.setProperties(servicePropertiesHashtable);
-              service.setParameters(serviceParametersHashtable);
-              servicesHashtable.put(serviceId, service);
+        }
+        collection.setxQueries(xqueriesHashtable);
+      }
+      // read services (for dynamically building queries to single project documents, e.g. in dta)
+      Hits services = (Hits) xQueryEvaluator.evaluate(configFileUrl, "/wsp/collection/services/*", 0, 9, "hits");
+      if (services != null) {
+        Hashtable<String, Service> servicesHashtable = new Hashtable<String, Service>();
+        for (int i = 0; i < services.getSize(); i++) {
+          Hit serviceHit = services.getHits().get(i);
+          String serviceStr = serviceHit.getContent();
+          String serviceId = xQueryEvaluator.evaluateAsString(serviceStr, "service/id/text()");
+          String serviceHost = xQueryEvaluator.evaluateAsString(serviceStr, "service/host/text()");
+          String serviceName = xQueryEvaluator.evaluateAsString(serviceStr, "service/name/text()");
+          Hits serviceProperties = (Hits) xQueryEvaluator.evaluate(serviceStr, "service/properties/property", 0, 9, "hits");
+          Hashtable<String, String> servicePropertiesHashtable = null;
+          if (serviceProperties != null) {
+            servicePropertiesHashtable = new Hashtable<String, String>();
+            for (int j = 0; j < serviceProperties.getSize(); j++) {
+              Hit propertyHit = serviceProperties.getHits().get(j);
+              String propertyStr = propertyHit.getContent();
+              String paramName = xQueryEvaluator.evaluateAsString(propertyStr, "property/name/text()");
+              String paramValue = xQueryEvaluator.evaluateAsString(propertyStr, "property/value/text()");
+              servicePropertiesHashtable.put(paramName, paramValue);
             }
-            collection.setServices(servicesHashtable);
           }
-					String excludesStr = xQueryEvaluator.evaluateAsStringValueJoined(configFileUrl, "/wsp/collection/url/exclude");
-					if (excludesStr != null) {
-						collection.setExcludesStr(excludesStr);
-					}
-					Collection coll = collectionContainer.get(collectionId);
-					if (coll != null) {
-            LOGGER.error("Double collectionId \"" + collectionId + "\" (in: \"" + collection.getConfigFileName() + "\" and in \"" + coll.getConfigFileName() + "\"");
-					} else {
-  					collectionContainer.put(collectionId, collection);
-					}
-				} catch (Exception e) {
-          LOGGER.error("Reading of: " + name + " failed");
-          e.printStackTrace();
-				}
-			}
-		} catch (Exception e) {
-			throw new ApplicationException(e);
-		}
+          Hits serviceParameters = (Hits) xQueryEvaluator.evaluate(serviceStr, "service/parameters/param", 0, 9, "hits");
+          Hashtable<String, String> serviceParametersHashtable = null;
+          if (serviceParameters != null) {
+            serviceParametersHashtable = new Hashtable<String, String>();
+            for (int j = 0; j < serviceParameters.getSize(); j++) {
+              Hit paramHit = serviceParameters.getHits().get(j);
+              String paramStr = paramHit.getContent();
+              String paramName = xQueryEvaluator.evaluateAsString(paramStr, "param/name/text()");
+              String paramValue = xQueryEvaluator.evaluateAsString(paramStr, "param/value/text()");
+              serviceParametersHashtable.put(paramName, paramValue);
+            }
+          }
+          Service service = new Service();
+          service.setId(serviceId);
+          service.setHostName(serviceHost);
+          service.setName(serviceName);
+          service.setProperties(servicePropertiesHashtable);
+          service.setParameters(serviceParametersHashtable);
+          servicesHashtable.put(serviceId, service);
+        }
+        collection.setServices(servicesHashtable);
+      }
+	  } catch (Exception e) {
+      LOGGER.error("Reading of: " + collection.getConfigFileName() + " failed");
+      e.printStackTrace();
+    }
 	}
 	
 	public void testDataUrls() throws ApplicationException {
