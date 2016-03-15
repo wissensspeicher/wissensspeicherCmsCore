@@ -1,6 +1,5 @@
 package org.bbaw.wsp.cms.collections;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
