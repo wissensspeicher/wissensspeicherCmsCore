@@ -240,6 +240,7 @@ public class CollectionManager {
       if (collectionDBs != null && withDatabases) {
         for (int i=0; i<collectionDBs.size(); i++) {
           Database collectionDB = collectionDBs.get(i);
+          LOGGER.info("Create database (" + collectionDB.getName() + ", " + collectionDB.getType() + ") ...");
           countDocs = addDocuments(collection, collectionDB);
           counter = counter + countDocs;
         }
@@ -391,6 +392,9 @@ public class CollectionManager {
     mdRecord = createMainFieldsMetadataRecord(mdRecord, collection);
     Date lastModified = new Date();
     mdRecord.setLastModified(lastModified);
+    String language = db.getLanguage();
+    if (language != null)
+      mdRecord.setLanguage(language);
     String eXistUrl = mdRecord.getWebUri();
     if (eXistUrl != null) {
       ArrayList<MetadataRecord> mdRecordsEXist = new ArrayList<MetadataRecord>();

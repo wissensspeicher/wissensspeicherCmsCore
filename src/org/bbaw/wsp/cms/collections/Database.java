@@ -6,6 +6,7 @@ public class Database {
   private String type;
   private String name;
   private String url;  // eXist URL
+  private String language;  // language of db content
   private JdbcConnection jdbcConnection;
   private String sql;
   private String xmlDumpFileName;
@@ -40,6 +41,14 @@ public class Database {
 
   public void setUrl(String url) {
     this.url = url;
+  }
+
+  public String getLanguage() {
+    return language;
+  }
+
+  public void setLanguage(String language) {
+    this.language = language;
   }
 
   public JdbcConnection getJdbcConnection() {

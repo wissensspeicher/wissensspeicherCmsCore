@@ -206,6 +206,8 @@ public class CollectionReader {
           db.setName(dbName);
           String dbUrl = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/url/text()");
           db.setUrl(dbUrl);
+          String language = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/language/text()");
+          db.setLanguage(language);
           String jdbcHost = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/jdbc/host/text()");
           if (jdbcHost != null) {
             JdbcConnection jdbcConn = new JdbcConnection();
