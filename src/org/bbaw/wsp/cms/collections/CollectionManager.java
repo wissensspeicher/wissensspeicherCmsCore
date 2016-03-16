@@ -251,24 +251,31 @@ public class CollectionManager {
 
   private int addDocuments(Collection collection, Database db) throws ApplicationException {
     int counter = 0;
-    String dbResourcesDirName = Constants.getInstance().getExternalDocumentsDir() + "/db-resources";
-    File dbResourcesDir = new File(dbResourcesDirName);
-    String rdfFileFilterName = collection.getId() + "-" + db.getName() + "*.rdf"; 
-    FileFilter rdfFileFilter = new WildcardFileFilter(rdfFileFilterName);
-    File[] rdfDbResourcesFiles = dbResourcesDir.listFiles(rdfFileFilter);
-    if (rdfDbResourcesFiles != null && rdfDbResourcesFiles.length > 0) {
-      Arrays.sort(rdfDbResourcesFiles, new Comparator<File>() {
-        public int compare(File f1, File f2) {
-          return f1.getName().compareToIgnoreCase(f2.getName());
+    String dbType = db.getType();
+    if (dbType.equals("eXist")) {
+      ArrayList<MetadataRecord> dbMdRecords = getMetadataRecordsEXist(collection, db);
+      int countDocs = addDocuments(collection, dbMdRecords, false);
+      counter = counter + countDocs;
+    } else {
+      String dbResourcesDirName = Constants.getInstance().getExternalDocumentsDir() + "/db-resources";
+      File dbResourcesDir = new File(dbResourcesDirName);
+      String rdfFileFilterName = collection.getId() + "-" + db.getName() + "*.rdf"; 
+      FileFilter rdfFileFilter = new WildcardFileFilter(rdfFileFilterName);
+      File[] rdfDbResourcesFiles = dbResourcesDir.listFiles(rdfFileFilter);
+      if (rdfDbResourcesFiles != null && rdfDbResourcesFiles.length > 0) {
+        Arrays.sort(rdfDbResourcesFiles, new Comparator<File>() {
+          public int compare(File f1, File f2) {
+            return f1.getName().compareToIgnoreCase(f2.getName());
+          }
+        }); 
+        // add the database records of each database of each database file
+        for (int i = 0; i < rdfDbResourcesFiles.length; i++) {
+          File rdfDbResourcesFile = rdfDbResourcesFiles[i];
+          LOGGER.info("Create database resources from file: " + rdfDbResourcesFile);
+          ArrayList<MetadataRecord> dbMdRecords = getMetadataRecordsByRdfFile(collection, rdfDbResourcesFile);
+          int countDocs = addDocuments(collection, dbMdRecords, true);
+          counter = counter + countDocs;
         }
-      }); 
-      // add the database records of each database of each database file
-      for (int i = 0; i < rdfDbResourcesFiles.length; i++) {
-        File rdfDbResourcesFile = rdfDbResourcesFiles[i];
-        LOGGER.info("Create database resources from file: " + rdfDbResourcesFile);
-        ArrayList<MetadataRecord> dbMdRecords = getMetadataRecordsByRdfFile(collection, rdfDbResourcesFile);
-        int countDocs = addDocuments(collection, dbMdRecords, true);
-        counter = counter + countDocs;
       }
     }
     return counter;
@@ -372,6 +379,47 @@ public class CollectionManager {
       return mdRecords;
   }
 
+  public ArrayList<MetadataRecord> getMetadataRecordsEXist(Collection collection, Database db) throws ApplicationException {
+    String collectionId = collection.getId();
+    ArrayList<MetadataRecord> mdRecords = new ArrayList<MetadataRecord>();
+    int maxIdcounter = IndexHandler.getInstance().findMaxId();  // find the highest value, so that each following id is a real new id
+    String urlStr = db.getUrl();
+    MetadataRecord mdRecord = getNewMdRecord(urlStr); 
+    mdRecord.setSystem(db.getType());
+    mdRecord.setCollectionNames(collectionId);
+    mdRecord.setId(maxIdcounter); // collections wide id
+    mdRecord = createMainFieldsMetadataRecord(mdRecord, collection);
+    Date lastModified = new Date();
+    mdRecord.setLastModified(lastModified);
+    String eXistUrl = mdRecord.getWebUri();
+    if (eXistUrl != null) {
+      ArrayList<MetadataRecord> mdRecordsEXist = new ArrayList<MetadataRecord>();
+      if (eXistUrl.endsWith("/"))
+        eXistUrl = eXistUrl.substring(0, eXistUrl.length() - 1);
+      String excludes = db.getExcludes();
+      List<String> eXistUrls = extractDocumentUrls(eXistUrl, excludes);
+      for (int i=0; i<eXistUrls.size(); i++) {
+        maxIdcounter++;
+        String eXistSubUrlStr = eXistUrls.get(i);
+        MetadataRecord mdRecordEXist = getNewMdRecord(eXistSubUrlStr); // with docId and webUri
+        mdRecordEXist.setCollectionNames(collectionId);
+        mdRecordEXist.setId(maxIdcounter); // collections wide id
+        mdRecordEXist = createMainFieldsMetadataRecord(mdRecordEXist, collection);
+        mdRecordEXist.setLastModified(lastModified);
+        mdRecordEXist.setCreator(mdRecord.getCreator());
+        mdRecordEXist.setTitle(mdRecord.getTitle());
+        mdRecordEXist.setPublisher(mdRecord.getPublisher());
+        mdRecordEXist.setDate(mdRecord.getDate());
+        mdRecordEXist.setSystem("eXistDir");
+        if (mdRecord.getLanguage() != null)
+          mdRecordEXist.setLanguage(mdRecord.getLanguage());
+        mdRecordsEXist.add(mdRecordEXist);
+      }
+      mdRecords.addAll(mdRecordsEXist);
+    }
+    return mdRecords;
+  }
+  
   public ArrayList<MetadataRecord> getMetadataRecordsByRdfFile(Collection collection, File rdfRessourcesFile) throws ApplicationException {
     String collectionId = collection.getId();
     String xmlDumpFileStr = rdfRessourcesFile.getPath().replaceAll("\\.rdf", ".xml");
@@ -401,35 +449,7 @@ public class CollectionManager {
               lastModified = xmlDumpFileLastModified;
             }
             mdRecord.setLastModified(lastModified);
-            // if it is an eXist directory then fetch all subUrls/mdRecords of that directory
-            if (mdRecord.isEXistDir()) {
-              String eXistUrl = mdRecord.getWebUri();
-              if (eXistUrl != null) {
-                ArrayList<MetadataRecord> mdRecordsEXist = new ArrayList<MetadataRecord>();
-                if (eXistUrl.endsWith("/"))
-                  eXistUrl = eXistUrl.substring(0, eXistUrl.length() - 1);
-                String excludesStr = collection.getExcludesStr();
-                List<String> eXistUrls = extractDocumentUrls(eXistUrl, excludesStr);
-                for (int i=0; i<eXistUrls.size(); i++) {
-                  maxIdcounter++;
-                  String eXistSubUrlStr = eXistUrls.get(i);
-                  MetadataRecord mdRecordEXist = getNewMdRecord(eXistSubUrlStr); // with docId and webUri
-                  mdRecordEXist.setCollectionNames(collectionId);
-                  mdRecordEXist.setId(maxIdcounter); // collections wide id
-                  mdRecordEXist = createMainFieldsMetadataRecord(mdRecordEXist, collection);
-                  mdRecordEXist.setLastModified(lastModified);
-                  mdRecordEXist.setCreator(mdRecord.getCreator());
-                  mdRecordEXist.setTitle(mdRecord.getTitle());
-                  mdRecordEXist.setPublisher(mdRecord.getPublisher());
-                  mdRecordEXist.setDate(mdRecord.getDate());
-                  mdRecordEXist.setSystem("eXistDir");
-                  if (mdRecord.getLanguage() != null)
-                    mdRecordEXist.setLanguage(mdRecord.getLanguage());
-                  mdRecordsEXist.add(mdRecordEXist);
-                }
-                mdRecords.addAll(mdRecordsEXist);
-              }
-            } else if(mdRecord.isDirectory()) {
+            if(mdRecord.isDirectory()) {
               String fileDirUrlStr = mdRecord.getWebUri();
               if (fileDirUrlStr != null) {
                 ArrayList<MetadataRecord> mdRecordsDir = new ArrayList<MetadataRecord>();
@@ -466,7 +486,7 @@ public class CollectionManager {
               }
             }
             // do not add the eXistDir or directory itself as a record (only the normal resource mdRecord) 
-            if (! mdRecord.isEXistDir() && ! mdRecord.isDirectory()) {
+            if (! mdRecord.isDirectory()) {
               mdRecords.add(mdRecord);
             }
           } 

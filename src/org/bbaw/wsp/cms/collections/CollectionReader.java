@@ -204,6 +204,8 @@ public class CollectionReader {
           db.setType(dbType);
           String dbName = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/name/text()");
           db.setName(dbName);
+          String dbUrl = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/url/text()");
+          db.setUrl(dbUrl);
           String jdbcHost = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/jdbc/host/text()");
           if (jdbcHost != null) {
             JdbcConnection jdbcConn = new JdbcConnection();
@@ -254,14 +256,14 @@ public class CollectionReader {
           String webIdAfterStr = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/webId/afterStr/text()");
           if (webIdAfterStr != null)
             db.setWebIdAfterStr(webIdAfterStr);
+          // read exclude directories (used in eXist resources, to eliminate these subdirectories)
+          String excludes = xQueryEvaluator.evaluateAsStringValueJoined(xdmItemDBStr, "/db/excludes/exclude");
+          if (excludes != null) {
+            db.setExcludes(excludes);
+          }
           collectionDBs.add(db);
         }
         collection.setDatabases(collectionDBs);
-      }
-      // read exclude directories (used in eXist resources (defined in RDF-file), to eliminate these subdirectories)
-      String excludesStr = xQueryEvaluator.evaluateAsStringValueJoined(configFileUrl, "/wsp/collection/url/exclude"); // is used for fetching files in an eXist directory
-      if (excludesStr != null) {
-        collection.setExcludesStr(excludesStr);
       }
       // read edoc metadata  TODO auslagern in RDF
       String metadataUrlStr = xQueryEvaluator.evaluateAsStringValueJoined(configFileUrl, "/wsp/collection/metadata/url");

@@ -5,6 +5,7 @@ import java.util.Hashtable;
 public class Database {
   private String type;
   private String name;
+  private String url;  // eXist URL
   private JdbcConnection jdbcConnection;
   private String sql;
   private String xmlDumpFileName;
@@ -14,6 +15,7 @@ public class Database {
   private String mainResourcesTableId;
   private String webIdPreStr;
   private String webIdAfterStr;
+  private String excludes; // excludes urls separated by a blank e.g. for eXist directories
   private Hashtable<String, String> dcField2dbField = new Hashtable<String, String>();
 
   public String getType() {
@@ -32,6 +34,14 @@ public class Database {
     this.name = name;
   }
   
+  public String getUrl() {
+    return url;
+  }
+
+  public void setUrl(String url) {
+    this.url = url;
+  }
+
   public JdbcConnection getJdbcConnection() {
     return jdbcConnection;
   }
@@ -102,6 +112,14 @@ public class Database {
 
   public void setWebIdAfterStr(String webIdAfterStr) {
     this.webIdAfterStr = webIdAfterStr;
+  }
+
+  public String getExcludes() {
+    return excludes;
+  }
+
+  public void setExcludes(String excludes) {
+    this.excludes = excludes;
   }
 
   public void addField(String dcField, String dbField) {

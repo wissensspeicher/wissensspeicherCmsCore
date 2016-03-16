@@ -3,7 +3,6 @@ package org.bbaw.wsp.cms.collections;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Hashtable;
-import java.util.List;
 
 import org.bbaw.wsp.cms.document.XQuery;
 
@@ -16,13 +15,11 @@ public class Collection {
   private String[] metadataUrls;  // metadata urls for fetching records
   private String metadataUrlPrefix;  // prefix of metadataUrl which is not relevant as id
   private String metadataRedundantUrlPrefix;  // prefix of metadataUrl which is not relevant as id 
-  private String excludesStr; // excludes below dataUrl separated by a blank
   private String mainLanguage;
   private String coverage;  // e.g.: http://wsp.normdata.rdf/Gegenwart or http://wsp.normdata.rdf/Neuzeit
   private ArrayList<String> fields;
   private Hashtable<String, Service> services;
   private Hashtable<String, XQuery> xQueries;
-  private List<String> excludeField;
   private String configFileName;  // configuration file name
   private Date lastModified;
   private StringBuilder dbPediaSpotlightRdfStrBuilder;
@@ -30,10 +27,8 @@ public class Collection {
   public Collection() {
     id = "";
     name = "";
-    excludesStr = "";
     mainLanguage = "";
     fields = new ArrayList<String>();
-    excludeField = new ArrayList<String>();
     configFileName = "";
   }
   
@@ -101,22 +96,6 @@ public class Collection {
     this.metadataUrlPrefix = metadataUrlPrefix;
   }
 
-  public String getExcludesStr() {
-    return excludesStr;
-  }
-
-  public void setExcludesStr(String excludesStr) {
-    this.excludesStr = excludesStr;
-  }
-
-  public List<String> getExcludeField() {
-    return excludeField;
-  }
-
-  public void setExcludeField(List<String> excludeField) {
-    this.excludeField = excludeField;
-  }
-  
   public String getMainLanguage() {
     return mainLanguage;
   }
