@@ -17,6 +17,7 @@ import net.sf.saxon.s9api.XdmValue;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
+import org.bbaw.wsp.cms.document.MetadataRecord;
 import org.bbaw.wsp.cms.document.Person;
 import org.bbaw.wsp.cms.document.XQuery;
 import org.bbaw.wsp.cms.general.Constants;
@@ -368,16 +369,16 @@ public class CollectionReader {
 	  Integer counterError = 0;
 	  for (int i=0; i<collections.size(); i++) {
 	    Collection collection = collections.get(i);
-	    WspUrl[] dataUrls = collection.getDataUrls();
-	    if (dataUrls != null) {
+	    ArrayList<MetadataRecord> mdRecords = CollectionManager.getInstance().getMetadataRecords(collection);
+	    if (mdRecords != null) {
 	      String collectionId = collection.getId();
-	      LOGGER.info(i + ". Testing project " + collectionId + " with " + dataUrls.length + " dataUrls");
-	      for (int j=0; j<dataUrls.length; j++) {
-	        WspUrl wspDataUrl = dataUrls[j];
-	        String dataUrlStr = wspDataUrl.getUrl();
-	        if (dataUrlStr != null) {
+	      LOGGER.info(i + ". Testing project " + collectionId + " with " + mdRecords.size() + " urls");
+	      for (int j=0; j<mdRecords.size(); j++) {
+	        MetadataRecord mdRecord = mdRecords.get(j);
+	        String url = mdRecord.getWebUri();
+	        if (url != null) {
 	          counter++;
-  	        copyUrlToFile(collectionId, dataUrlStr, dummyFile, counterError);
+  	        copyUrlToFile(collectionId, url, dummyFile, counterError);
 	        }
 	      }
 	    }

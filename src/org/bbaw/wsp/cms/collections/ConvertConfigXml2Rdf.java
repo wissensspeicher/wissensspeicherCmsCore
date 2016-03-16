@@ -50,14 +50,12 @@ public class ConvertConfigXml2Rdf {
     try {
       ConvertConfigXml2Rdf convertConfigXml2Rdf = new ConvertConfigXml2Rdf();
       convertConfigXml2Rdf.init();
-      // convertConfigXml2Rdf.convertAll();
       convertConfigXml2Rdf.proofRdfProjects();
       // convertConfigXml2Rdf.proofCollectionProjects();
       // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("pdr");
       // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("jdg");
       // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("jpor");
       // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("turfandp");
-      // convertConfigXml2Rdf.convert(c, false);
       // convertConfigXml2Rdf.convertDbXmlFiles(c);
       // convertConfigXml2Rdf.generateDbXmlDumpFiles(c);
     } catch (Exception e) {
@@ -878,53 +876,6 @@ public class ConvertConfigXml2Rdf {
     return gndIds;
   }
   
-  private void convertAll() throws ApplicationException {
-    ArrayList<Collection> collections = collectionReader.getCollections();
-    for (int i=0; i<collections.size(); i++) {
-      Collection collection = collections.get(i);
-      convert(collection, true);
-    }
-  }
-  
-  private void convert(Collection collection, boolean convertDbXmlFiles) throws ApplicationException {
-    String collectionId = collection.getId();
-    String collectionRdfId = collection.getRdfId();
-    try {
-      StringBuilder rdfRecordsStrBuilder = new StringBuilder();
-      URL inputNormdataFileUrl = inputNormdataFile.toURI().toURL();
-      String projectRdfStr = xQueryEvaluator.evaluateAsString(inputNormdataFileUrl, "/*:RDF/*:Description[@*:about='" + collectionRdfId + "']");
-      if (projectRdfStr != null && ! projectRdfStr.trim().isEmpty()) {
-        proofProjectRdfStr(projectRdfStr, collection); // compare rdf project fields with config fields
-        WspUrl[] dataUrls = collection.getDataUrls();
-        if (dataUrls != null) {
-          for (int i=0; i<dataUrls.length; i++) {
-            WspUrl dataUrl = dataUrls[i];
-            String dataUrlStr = dataUrl.getUrl();
-            String dataUrlStrResolved = StringUtils.deresolveXmlEntities(dataUrlStr);
-            rdfRecordsStrBuilder.append("<rdf:Description rdf:about=\"" + dataUrlStrResolved + "\">\n");
-            rdfRecordsStrBuilder.append("  <rdf:type rdf:resource=\"http://purl.org/dc/terms/BibliographicResource\"/>\n");
-            rdfRecordsStrBuilder.append("  <dcterms:isPartOf rdf:resource=\"" + collectionRdfId + "\"/>\n");
-            rdfRecordsStrBuilder.append("  <dc:identifier rdf:resource=\"" + dataUrlStrResolved + "\"/>\n");
-            if (dataUrl.isEXistDir()) {
-              rdfRecordsStrBuilder.append("  <dc:type>eXistDir</dc:type>\n");
-            }
-            rdfRecordsStrBuilder.append("</rdf:Description>\n");
-          }
-        }
-      } else {
-        LOGGER.error("Project: \"" + collectionRdfId + "\" (configId: \"" + collectionId + "\") does not exist");
-      }
-      String rdfFileName = resourcesDirName + "/" + collectionId + ".rdf";
-      File rdfFile = new File(rdfFileName);
-      writeRdfFile(rdfFile, rdfRecordsStrBuilder, collectionRdfId);
-      // if collection is a database: insert also from xml db file
-      if (convertDbXmlFiles)
-        convertDbXmlFiles(collection);
-    } catch (IOException e) {
-      throw new ApplicationException(e);
-    }
-  }
-
   private void convertDbXmlFiles(Collection collection) throws ApplicationException {
     ArrayList<Database> collectionDBs = collection.getDatabases();
     if (collectionDBs != null) {

@@ -356,7 +356,7 @@ public class CollectionManager {
     }
   }
   
-  private ArrayList<MetadataRecord> getMetadataRecords(Collection collection) throws ApplicationException {
+  public ArrayList<MetadataRecord> getMetadataRecords(Collection collection) throws ApplicationException {
     ArrayList<MetadataRecord> mdRecords = new ArrayList<MetadataRecord>();
     String collectionId = collection.getId();
     if (collectionId.equals("edoc")) {

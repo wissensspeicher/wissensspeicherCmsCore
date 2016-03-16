@@ -13,7 +13,6 @@ public class Collection {
   private ArrayList<Database> databases;  // when collection is a database
   private String name;
   private String webBaseUrl;  // web base url 
-  private WspUrl[] dataUrls;  // urls of data (could also be starting url with type "eXist")
   private String[] metadataUrls;  // metadata urls for fetching records
   private String metadataUrlPrefix;  // prefix of metadataUrl which is not relevant as id
   private String metadataRedundantUrlPrefix;  // prefix of metadataUrl which is not relevant as id 
@@ -31,7 +30,6 @@ public class Collection {
   public Collection() {
     id = "";
     name = "";
-    dataUrls = null;
     excludesStr = "";
     mainLanguage = "";
     fields = new ArrayList<String>();
@@ -77,14 +75,6 @@ public class Collection {
 
   public void setName(String name) {
     this.name = name;
-  }
-
-  public WspUrl[] getDataUrls() {
-    return dataUrls;
-  }
-
-  public void setDataUrls(WspUrl[] dataUrls) {
-    this.dataUrls = dataUrls;
   }
 
   public String getMetadataRedundantUrlPrefix() {
