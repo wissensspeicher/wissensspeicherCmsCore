@@ -293,7 +293,7 @@ public class CollectionReader {
         }
       }
       collection.setFields(fieldsArrayList);
-      // read xqueries (used for building dynamically a webId for a record) 
+      // read xqueries (used for building dynamically a webUri of a record; only used in xml records
       Hits xQueries = (Hits) xQueryEvaluator.evaluate(configFileUrl, "/wsp/collection/xqueries/xquery", 0, 9, "hits");
       if (xQueries != null) {
         Hashtable<String, XQuery> xqueriesHashtable = new Hashtable<String, XQuery>();

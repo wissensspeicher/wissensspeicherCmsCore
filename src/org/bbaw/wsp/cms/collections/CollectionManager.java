@@ -574,7 +574,7 @@ public class CollectionManager {
         mdRecord.setLanguage(mainLanguage);
       }
       Hashtable<String, XQuery> xQueries = collection.getxQueries();
-      mdRecord.setxQueries(xQueries);
+      mdRecord.setxQueries(xQueries);  // TODO Feld xQueries von collection nach database verschieben
     } catch (MalformedURLException e) {
       throw new ApplicationException(e);
     }
