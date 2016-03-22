@@ -41,8 +41,7 @@ public class ConvertConfigXml2Rdf {
   private CollectionReader collectionReader;
   private static int SOCKET_TIMEOUT = 10 * 1000;
   private HttpClient httpClient; 
-  private String resourcesDirName;
-  private String dbResourcesDirName;
+  private String dbDumpsDirName;
   private String externalResourcesDirName;
   private File inputNormdataFile;
   private XQueryEvaluator xQueryEvaluator;
@@ -72,9 +71,8 @@ public class ConvertConfigXml2Rdf {
     httpClient.getParams().setParameter("http.connection.timeout", SOCKET_TIMEOUT);
     httpClient.getParams().setParameter("http.connection-manager.timeout", new Long(SOCKET_TIMEOUT));
     httpClient.getParams().setParameter("http.protocol.head-body-timeout", SOCKET_TIMEOUT);
-    resourcesDirName = Constants.getInstance().getMetadataDir() + "/resources";
-    dbResourcesDirName = Constants.getInstance().getExternalDocumentsDir() + "/db-resources";
-    externalResourcesDirName = Constants.getInstance().getExternalDocumentsDir() + "/resources";
+    dbDumpsDirName = Constants.getInstance().getExternalDataDbDumpsDir();
+    externalResourcesDirName = Constants.getInstance().getExternalDataResourcesDir();
     String inputNormdataFileName = Constants.getInstance().getMdsystemNormdataFile();
     inputNormdataFile = new File(inputNormdataFileName);      
   }
@@ -117,10 +115,10 @@ public class ConvertConfigXml2Rdf {
   }
   
   private void generateDbXmlDumpFile(Collection collection, Database db) throws ApplicationException {
-    File dbResourcesDir = new File(dbResourcesDirName);
+    File dbDumpsDir = new File(dbDumpsDirName);
     String xmlDumpFileFilter = collection.getId() + "-" + db.getName() + "*.xml"; 
     FileFilter fileFilter = new WildcardFileFilter(xmlDumpFileFilter);
-    File[] files = dbResourcesDir.listFiles(fileFilter);
+    File[] files = dbDumpsDir.listFiles(fileFilter);
     if (files != null && files.length > 0) {
       for (int i = 0; i < files.length; i++) {
         File dumpFileToDelete = files[i];
@@ -166,7 +164,7 @@ public class ConvertConfigXml2Rdf {
       rs.close();
       conn.close();
       xmlDumpStrBuilder.append("</" + jdbcConn.getDb() + ">\n");
-      String xmlDumpFileName = dbResourcesDirName + "/" + collection.getId() + "-" + db.getName() + "-1" + ".xml";
+      String xmlDumpFileName = dbDumpsDirName + "/" + collection.getId() + "-" + db.getName() + "-1" + ".xml";
       File dumpFile = new File(xmlDumpFileName);
       FileUtils.writeStringToFile(dumpFile, xmlDumpStrBuilder.toString(), "utf-8");
       LOGGER.info("Database dump file \"" + xmlDumpFileName + "\" sucessfully created");
@@ -181,10 +179,10 @@ public class ConvertConfigXml2Rdf {
   }
   
   private void generateCoranicumDbXmlDumpFile(Collection collection, Database db) throws ApplicationException {
-    File dbResourcesDir = new File(dbResourcesDirName);
+    File dbDumpsDir = new File(dbDumpsDirName);
     String xmlDumpFileFilter = collection.getId() + "-" + db.getName() + "*.xml"; 
     FileFilter fileFilter = new WildcardFileFilter(xmlDumpFileFilter);
-    File[] files = dbResourcesDir.listFiles(fileFilter);
+    File[] files = dbDumpsDir.listFiles(fileFilter);
     if (files != null && files.length > 0) {
       for (int i = 0; i < files.length; i++) {
         File dumpFileToDelete = files[i];
@@ -263,7 +261,7 @@ public class ConvertConfigXml2Rdf {
       psKoranVerses.close();
       conn.close();
       xmlDumpStrBuilder.append("</" + jdbcConn.getDb() + ">\n");
-      String xmlDumpFileName = dbResourcesDirName + "/" + collection.getId() + "-" + db.getName() + "-1" + ".xml";
+      String xmlDumpFileName = dbDumpsDirName + "/" + collection.getId() + "-" + db.getName() + "-1" + ".xml";
       File dumpFile = new File(xmlDumpFileName);
       FileUtils.writeStringToFile(dumpFile, xmlDumpStrBuilder.toString(), "utf-8");
       LOGGER.info("Database dump file \"" + xmlDumpFileName + "\" sucessfully created");
@@ -420,10 +418,10 @@ public class ConvertConfigXml2Rdf {
 
   private void generateDtmhFiles(Collection collection, Database db) throws ApplicationException {
     String dbName = db.getName();
-    File dbResourcesDir = new File(dbResourcesDirName);
+    File dbDumpsDir = new File(dbDumpsDirName);
     String xmlDumpFileFilter = collection.getId() + "-" + db.getName() + "*.xml"; 
     FileFilter fileFilter = new WildcardFileFilter(xmlDumpFileFilter);
-    File[] files = dbResourcesDir.listFiles(fileFilter);
+    File[] files = dbDumpsDir.listFiles(fileFilter);
     if (files != null && files.length > 0) {
       for (int i = 0; i < files.length; i++) {
         File dumpFileToDelete = files[i];
@@ -496,7 +494,7 @@ public class ConvertConfigXml2Rdf {
         xmlDumpStrBuilder.append("  </" + db.getMainResourcesTable() + ">\n");
       }
       xmlDumpStrBuilder.append("</" + db.getName() + ">\n");
-      String xmlDumpFileName = dbResourcesDirName + "/" + collection.getId() + "-" + dbName + "-1" + ".xml";
+      String xmlDumpFileName = dbDumpsDirName + "/" + collection.getId() + "-" + dbName + "-1" + ".xml";
       File dumpFile = new File(xmlDumpFileName);
       FileUtils.writeStringToFile(dumpFile, xmlDumpStrBuilder.toString(), "utf-8");
       LOGGER.info("Database dump file \"" + xmlDumpFileName + "\" sucessfully created");
@@ -507,10 +505,10 @@ public class ConvertConfigXml2Rdf {
   
   private void generatePmbzFiles(Collection collection, Database db) throws ApplicationException {
     String dbName = db.getName();
-    File dbResourcesDir = new File(dbResourcesDirName);
+    File dbDumpsDir = new File(dbDumpsDirName);
     String xmlDumpFileFilter = collection.getId() + "-" + db.getName() + "*.xml"; 
     FileFilter fileFilter = new WildcardFileFilter(xmlDumpFileFilter);
-    File[] files = dbResourcesDir.listFiles(fileFilter);
+    File[] files = dbDumpsDir.listFiles(fileFilter);
     if (files != null && files.length > 0) {
       for (int i = 0; i < files.length; i++) {
         File dumpFileToDelete = files[i];
@@ -579,7 +577,7 @@ public class ConvertConfigXml2Rdf {
         }
       }
       xmlDumpStrBuilder.append("</" + db.getName() + ">\n");
-      String xmlDumpFileName = dbResourcesDirName + "/" + collection.getId() + "-" + dbName + "-1" + ".xml";
+      String xmlDumpFileName = dbDumpsDirName + "/" + collection.getId() + "-" + dbName + "-1" + ".xml";
       File dumpFile = new File(xmlDumpFileName);
       FileUtils.writeStringToFile(dumpFile, xmlDumpStrBuilder.toString(), "utf-8");
       LOGGER.info("Database dump file \"" + xmlDumpFileName + "\" sucessfully created");
@@ -590,10 +588,10 @@ public class ConvertConfigXml2Rdf {
   
   private void generateAaewtlaFiles(Collection collection, Database db) throws ApplicationException {
     String dbName = db.getName();
-    File dbResourcesDir = new File(dbResourcesDirName);
+    File dbDumpsDir = new File(dbDumpsDirName);
     String xmlDumpFileFilter = collection.getId() + "-" + db.getName() + "*.xml"; 
     FileFilter fileFilter = new WildcardFileFilter(xmlDumpFileFilter);
-    File[] files = dbResourcesDir.listFiles(fileFilter);
+    File[] files = dbDumpsDir.listFiles(fileFilter);
     if (files != null && files.length > 0) {
       for (int i = 0; i < files.length; i++) {
         File dumpFileToDelete = files[i];
@@ -647,7 +645,7 @@ public class ConvertConfigXml2Rdf {
         }
       }
       xmlDumpStrBuilder.append("</" + db.getName() + ">\n");
-      String xmlDumpFileName = dbResourcesDirName + "/" + collection.getId() + "-" + dbName + "-1" + ".xml";
+      String xmlDumpFileName = dbDumpsDirName + "/" + collection.getId() + "-" + dbName + "-1" + ".xml";
       File dumpFile = new File(xmlDumpFileName);
       FileUtils.writeStringToFile(dumpFile, xmlDumpStrBuilder.toString(), "utf-8");
       LOGGER.info("Database dump file \"" + xmlDumpFileName + "\" sucessfully created");
@@ -657,10 +655,10 @@ public class ConvertConfigXml2Rdf {
   }
   
   private void generateOaiDbXmlDumpFiles(Collection collection, Database db) throws ApplicationException {
-    File dbResourcesDir = new File(dbResourcesDirName);
+    File dbDumpsDir = new File(dbDumpsDirName);
     String xmlDumpFileFilter = collection.getId() + "-" + db.getName() + "*.xml"; 
     FileFilter fileFilter = new WildcardFileFilter(xmlDumpFileFilter);
-    File[] files = dbResourcesDir.listFiles(fileFilter);
+    File[] files = dbDumpsDir.listFiles(fileFilter);
     if (files != null && files.length > 0) {
       for (int i = 0; i < files.length; i++) {
         File dumpFileToDelete = files[i];
@@ -707,7 +705,7 @@ public class ConvertConfigXml2Rdf {
   private void writeOaiDbXmlDumpFile(Collection collection, Database db, StringBuilder recordsStrBuilder, int fileCounter) throws ApplicationException {
     StringBuilder xmlDumpStrBuilder = new StringBuilder();
     String oaiSet = db.getXmlDumpSet();
-    String xmlDumpFileName = dbResourcesDirName + "/" + collection.getId() + "-" + db.getName() + "-" + fileCounter + ".xml";
+    String xmlDumpFileName = dbDumpsDirName + "/" + collection.getId() + "-" + db.getName() + "-" + fileCounter + ".xml";
     xmlDumpStrBuilder.append("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
     if (oaiSet == null)
       xmlDumpStrBuilder.append("<!-- Resources of OAI-PMH-Server: " + db.getName() + " (Url: " + db.getXmlDumpUrl() + ", File: " + xmlDumpFileName + ") -->\n");
@@ -730,10 +728,10 @@ public class ConvertConfigXml2Rdf {
   private void generatePdrDbXmlDumpFile(Collection collection, Database db) throws ApplicationException {
     String dbName = db.getName();
     XslResourceTransformer pdrIdiTransformer = new XslResourceTransformer("pdrIdiGnd.xsl");
-    File dbResourcesDir = new File(dbResourcesDirName);
+    File dbDumpsDir = new File(dbDumpsDirName);
     String xmlDumpFileFilter = collection.getId() + "-" + db.getName() + "*.xml"; 
     FileFilter fileFilter = new WildcardFileFilter(xmlDumpFileFilter);
-    File[] files = dbResourcesDir.listFiles(fileFilter);
+    File[] files = dbDumpsDir.listFiles(fileFilter);
     if (files != null && files.length > 0) {
       for (int i = 0; i < files.length; i++) {
         File dumpFileToDelete = files[i];
@@ -799,7 +797,7 @@ public class ConvertConfigXml2Rdf {
       xmlDumpStrBuilder.append("  </" + db.getMainResourcesTable() + ">\n");
     }
     xmlDumpStrBuilder.append("</" + db.getName() + ">\n");
-    String xmlDumpFileName = dbResourcesDirName + "/" + collection.getId() + "-" + dbName + "-1" + ".xml";
+    String xmlDumpFileName = dbDumpsDirName + "/" + collection.getId() + "-" + dbName + "-1" + ".xml";
     try {
       File dumpFile = new File(xmlDumpFileName);
       FileUtils.writeStringToFile(dumpFile, xmlDumpStrBuilder.toString(), "utf-8");
@@ -887,10 +885,10 @@ public class ConvertConfigXml2Rdf {
   }
   
   private void convertDbXmlFiles(Collection collection, Database db) throws ApplicationException {
-    File dbResourcesDir = new File(dbResourcesDirName);
+    File dbDumpsDir = new File(dbDumpsDirName);
     String xmlDumpFileFilterName = collection.getId() + "-" + db.getName() + "*.xml"; 
     FileFilter xmlDumpFileFilter = new WildcardFileFilter(xmlDumpFileFilterName);
-    File[] xmlDumpFiles = dbResourcesDir.listFiles(xmlDumpFileFilter);
+    File[] xmlDumpFiles = dbDumpsDir.listFiles(xmlDumpFileFilter);
     if (xmlDumpFiles != null && xmlDumpFiles.length > 0) {
       Arrays.sort(xmlDumpFiles, new Comparator<File>() {
         public int compare(File f1, File f2) {
@@ -900,7 +898,7 @@ public class ConvertConfigXml2Rdf {
       // delete the old db rdf files
       String rdfFileFilterName = collection.getId() + "-" + db.getName() + "*.rdf"; 
       FileFilter rdfFileFilter = new WildcardFileFilter(rdfFileFilterName);
-      File[] rdfFiles = dbResourcesDir.listFiles(rdfFileFilter);
+      File[] rdfFiles = dbDumpsDir.listFiles(rdfFileFilter);
       if (rdfFiles != null && rdfFiles.length > 0) {
         for (int i = 0; i < rdfFiles.length; i++) {
           File rdfFile = rdfFiles[i];
@@ -948,7 +946,7 @@ public class ConvertConfigXml2Rdf {
         }
       }
       String rdfFileName = dumpFileName.replaceAll(".xml", ".rdf");
-      String rdfFullFileName = dbResourcesDirName + "/" + rdfFileName; 
+      String rdfFullFileName = dbDumpsDirName + "/" + rdfFileName; 
       File rdfFile = new File(rdfFullFileName);
       writeRdfFile(rdfFile, rdfRecordsStrBuilder, collection.getRdfId());
     } catch (IOException e) {

@@ -98,44 +98,80 @@ public class Constants {
     }
   }
 
-  public String getDocumentsDir() {
+  public String getHarvestDir() {
     if (properties != null) {
-      return properties.getProperty("documentsDir");
+      return properties.getProperty("harvestDir");
     } else {
       return "no properties file";
     }
   }
 
-  public String getExternalDocumentsDir() {
+  public String getExternalDataDir() {
     if (properties != null) {
-      return properties.getProperty("externalDocumentsDir");
+      return properties.getProperty("externalDataDir");
+    } else {
+      return "no properties file";
+    }
+  }
+
+  public String getExternalDataDbPediaDir() {
+    if (properties != null) {
+      return properties.getProperty("externalDataDbPediaDir");
+    } else {
+      return "no properties file";
+    }
+  }
+
+  public String getExternalDataDbPediaSpotlightDir() {
+    if (properties != null) {
+      return properties.getProperty("externalDataDbPediaSpotlightDir");
+    } else {
+      return "no properties file";
+    }
+  }
+
+  public String getExternalDataDbDumpsDir() {
+    if (properties != null) {
+      return properties.getProperty("externalDataDbDumpsDir");
+    } else {
+      return "no properties file";
+    }
+  }
+
+  public String getExternalDataResourcesDir() {
+    if (properties != null) {
+      return properties.getProperty("externalDataResourcesDir");
+    } else {
+      return "no properties file";
+    }
+  }
+
+  public String getIndexDir() {
+    if (properties != null) {
+      return properties.getProperty("indexDir");
+    } else {
+      return "no properties file";
+    }
+  }
+
+  public String getAnnotationsDir() {
+    if (properties != null) {
+      return properties.getProperty("annotationsDir");
     } else {
       return "no properties file";
     }
   }
 
   public String getLuceneDocumentsDir() {
-    if (properties != null) {
-      return properties.getProperty("luceneDocumentsDir");
-    } else {
-      return "no properties file";
-    }
+    return getIndexDir() + "/documents";
   }
 
   public String getLuceneNodesDir() {
-    if (properties != null) {
-      return properties.getProperty("luceneNodesDir");
-    } else {
-      return "no properties file";
-    }
+    return getIndexDir() + "/nodes";
   }
 
   public String getLuceneTaxonomyDir() {
-    if (properties != null) {
-      return properties.getProperty("luceneTaxonomyDir");
-    } else {
-      return "no properties file";
-    }
+    return getIndexDir() + "/taxonomy";
   }
 
   public String getMetadataDir() {
@@ -186,9 +222,9 @@ public class Constants {
     }
   }
 
-  public String getOaiproviderDir() {
+  public String getOaiDir() {
     if (properties != null) {
-      return properties.getProperty("oaiproviderDir");
+      return properties.getProperty("oaiDir");
     } else {
       return "no properties file";
     }

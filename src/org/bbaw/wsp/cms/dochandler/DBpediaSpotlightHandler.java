@@ -129,7 +129,7 @@ public class DBpediaSpotlightHandler {
   }
   
   private void initStopwords() throws ApplicationException {
-    String dbPediaSpotlightDirName = Constants.getInstance().getExternalDocumentsDir() +  "/dbPediaSpotlight";
+    String dbPediaSpotlightDirName = Constants.getInstance().getExternalDataDbPediaSpotlightDir();
     File spotlightStopwordFileGerman = new File(dbPediaSpotlightDirName + "/stopwords-de.txt");
     if (! spotlightStopwordFileGerman.exists()) {
       LOGGER.info("DBpediaSpotlightHandler could not be initialized. File: " + spotlightStopwordFileGerman.getAbsolutePath() + " does not exist");
@@ -155,7 +155,7 @@ public class DBpediaSpotlightHandler {
   private void initDBpediaSupports() throws ApplicationException {
     xQueryEvaluator = new XQueryEvaluator();
     germanSupports = new Hashtable<String, Integer>();
-    String dbPediaSpotlightDirName = Constants.getInstance().getExternalDocumentsDir() +  "/dbPediaSpotlight";
+    String dbPediaSpotlightDirName = Constants.getInstance().getExternalDataDbPediaSpotlightDir();
     File spotlightSupportFileGerman = new File(dbPediaSpotlightDirName + "/supports-de.txt");
     if (! spotlightSupportFileGerman.exists()) {
       LOGGER.info("DBpediaSpotlightHandler could not be initialized. File: " + spotlightSupportFileGerman.getAbsolutePath() + " does not exist");
@@ -180,7 +180,7 @@ public class DBpediaSpotlightHandler {
   
   private void writeDBpediaSupports() throws ApplicationException {
     germanSupports = new Hashtable<String, Integer>();
-    String dbPediaSpotlightDirName = Constants.getInstance().getExternalDocumentsDir() +  "/dbPediaSpotlight";
+    String dbPediaSpotlightDirName = Constants.getInstance().getExternalDataDbPediaSpotlightDir();
     File spotlightSupportFileGerman = new File(dbPediaSpotlightDirName + "/supports-de.txt");
     StringBuilder supportStrBuilder = new StringBuilder();
     try {
@@ -221,7 +221,7 @@ public class DBpediaSpotlightHandler {
   }
   
   private void initDBpediaResourceLabels() throws ApplicationException {
-    String dbPediaResourcesDirName = Constants.getInstance().getExternalDocumentsDir() +  "/dbPedia";
+    String dbPediaResourcesDirName = Constants.getInstance().getExternalDataDbPediaDir();
     File dbPediaResourceLabelsFile = new File(dbPediaResourcesDirName + "/labels.ttl");
     if (! dbPediaResourceLabelsFile.exists()) {
       LOGGER.info("DBpediaSpotlightHandler could not be initialized. File: " + dbPediaResourceLabelsFile.getAbsolutePath() + " does not exist");

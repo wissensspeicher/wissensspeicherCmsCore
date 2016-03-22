@@ -258,11 +258,11 @@ public class CollectionManager {
       int countDocs = addDocuments(collection, dbMdRecords, false);
       counter = counter + countDocs;
     } else {
-      String dbResourcesDirName = Constants.getInstance().getExternalDocumentsDir() + "/db-resources";
-      File dbResourcesDir = new File(dbResourcesDirName);
+      String dbDumpsDirName = Constants.getInstance().getExternalDataDbDumpsDir();
+      File dbDumpsDir = new File(dbDumpsDirName);
       String rdfFileFilterName = collection.getId() + "-" + db.getName() + "*.rdf"; 
       FileFilter rdfFileFilter = new WildcardFileFilter(rdfFileFilterName);
-      File[] rdfDbResourcesFiles = dbResourcesDir.listFiles(rdfFileFilter);
+      File[] rdfDbResourcesFiles = dbDumpsDir.listFiles(rdfFileFilter);
       if (rdfDbResourcesFiles != null && rdfDbResourcesFiles.length > 0) {
         Arrays.sort(rdfDbResourcesFiles, new Comparator<File>() {
           public int compare(File f1, File f2) {
@@ -353,10 +353,10 @@ public class CollectionManager {
     StringBuilder dbPediaSpotlightCollectionRdfStrBuilder = collection.getDbPediaSpotlightRdfStrBuilder();
     if (dbPediaSpotlightCollectionRdfStrBuilder != null) {
       dbPediaSpotlightCollectionRdfStrBuilder.append("</rdf:RDF>\n"); // 
-      String dbPediaSpotlightDirName = Constants.getInstance().getExternalDocumentsDir() +  "/dbPediaSpotlightResources";
+      String dbPediaSpotlightAnnotationsDirName = Constants.getInstance().getAnnotationsDir();
       String spotlightAnnotationRdfStr = dbPediaSpotlightCollectionRdfStrBuilder.toString();
       try {
-        FileUtils.writeStringToFile(new File(dbPediaSpotlightDirName + "/" + collId + ".rdf"), spotlightAnnotationRdfStr, "utf-8");
+        FileUtils.writeStringToFile(new File(dbPediaSpotlightAnnotationsDirName + "/" + collId + ".rdf"), spotlightAnnotationRdfStr, "utf-8");
       } catch (IOException e) {
         throw new ApplicationException(e);
       }
@@ -465,7 +465,7 @@ public class CollectionManager {
                   URL fileDirUrl = new URL(fileDirUrlStr);
                   String fileDirUrlHost = fileDirUrl.getHost();
                   String fileDirUrlPath = fileDirUrl.getFile();
-                  fileDirStr = Constants.getInstance().getExternalDocumentsDir() + "/" + fileDirUrlHost + fileDirUrlPath;
+                  fileDirStr = Constants.getInstance().getExternalDataDir() + "/" + fileDirUrlHost + fileDirUrlPath;
                 } catch (MalformedURLException e) {
                   throw new ApplicationException(e);
                 }
@@ -595,7 +595,7 @@ public class CollectionManager {
       String uri = null;
       String webUri = null;
       mdRecord.setId(maxIdcounter);
-      File edocDir = new File(Constants.getInstance().getExternalDocumentsDir() + "/edoc");
+      File edocDir = new File(Constants.getInstance().getExternalDataResourcesDir() + "/edoc");
       Date lastModified = new Date(edocDir.lastModified());
       mdRecord.setLastModified(lastModified);
       EdocIndexMetadataFetcherTool.fetchHtmlDirectly(metadataUrl, mdRecord);

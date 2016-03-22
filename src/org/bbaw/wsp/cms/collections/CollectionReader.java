@@ -367,8 +367,8 @@ public class CollectionReader {
 	
 	public void testDataUrls() throws ApplicationException {
 	  ArrayList<Collection> collections = getCollections();
-    String documentsDirectory = Constants.getInstance().getDocumentsDir();
-	  File dummyFile = new File(documentsDirectory + "/testDataUrls/test.bla");
+    String harvestDirectory = Constants.getInstance().getHarvestDir();
+	  File dummyFile = new File(harvestDirectory + "/testDataUrls/test.bla");
 	  int counter = 0;
 	  Integer counterError = 0;
 	  for (int i=0; i<collections.size(); i++) {
@@ -387,7 +387,7 @@ public class CollectionReader {
 	      }
 	    }
 	  }
-    File dummyFileDir = new File(documentsDirectory + "/testDataUrls");
+    File dummyFileDir = new File(harvestDirectory + "/testDataUrls");
     FileUtils.deleteQuietly(dummyFileDir);
     int counterOk = counter - counterError;
 	  LOGGER.info("Summary: " + collections.size() + " projects were tested. " + counterError + " dataUrls have errors and " + counterOk + " dataUrls are ok.");

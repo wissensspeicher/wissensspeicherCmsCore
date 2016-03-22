@@ -262,13 +262,13 @@ public class DocumentHandler {
     LOGGER.info(countDeletedDocs + " lucene documents in collection: \"" + collectionId + "\" successfully deleted");
     // perform operation on file system
     try {
-      String collectionDirStr = Constants.getInstance().getDocumentsDir() + "/" + collectionId;
-      docOperation.setStatus("Delete collection directory: " + collectionDirStr + " in CMS");
-      Runtime.getRuntime().exec("rm -rf " + collectionDirStr);  // fast also when the directory contains many files
-      LOGGER.info("Collection directory: " + collectionDirStr + " successfully deleted");
-      String oaiproviderDirStr = Constants.getInstance().getOaiproviderDir() + "/" + collectionId;
-      Runtime.getRuntime().exec("rm -rf " + oaiproviderDirStr);  // fast also when the directory contains many files
-      LOGGER.info("OAI provider directory: " + oaiproviderDirStr + " successfully deleted");
+      String harvestDirStr = Constants.getInstance().getHarvestDir() + "/" + collectionId;
+      docOperation.setStatus("Delete harvest directory: " + harvestDirStr + " in CMS");
+      Runtime.getRuntime().exec("rm -rf " + harvestDirStr);  // fast also when the directory contains many files
+      LOGGER.info("Collection harvest directory: " + harvestDirStr + " successfully deleted");
+      String oaiDirStr = Constants.getInstance().getOaiDir() + "/" + collectionId;
+      Runtime.getRuntime().exec("rm -rf " + oaiDirStr);  // fast also when the directory contains many files
+      LOGGER.info("OAI directory: " + oaiDirStr + " successfully deleted");
     } catch (IOException e) {
       throw new ApplicationException(e);
     }
@@ -366,14 +366,14 @@ public class DocumentHandler {
     dcStrBuilder.append("</oai_dc:dc>\n");
     String dcStr = dcStrBuilder.toString();
     String collectionId = mdRecord.getCollectionNames();
-    String oaiproviderDirStr = Constants.getInstance().getOaiproviderDir();
+    String oaiDirStr = Constants.getInstance().getOaiDir();
     int id = mdRecord.getId();
     String docId = mdRecord.getDocId();
     String fileIdentifier = docId;
     if (id != -1)
       fileIdentifier = "" + id;
     String oaiDcFileName = fileIdentifier + "_oai_dc.xml";
-    File oaiDcFile = new File(oaiproviderDirStr + "/" + collectionId + "/" + oaiDcFileName);
+    File oaiDcFile = new File(oaiDirStr + "/" + collectionId + "/" + oaiDcFileName);
     try {
       FileUtils.writeStringToFile(oaiDcFile, dcStr, "utf-8");
     } catch (IOException e) {
@@ -1169,17 +1169,17 @@ public class DocumentHandler {
   public String getDocDir(String docId) {
     if (docId == null || docId.trim().isEmpty())
       return null;
-    String documentsDirectory = Constants.getInstance().getDocumentsDir();
-    String docDir = documentsDirectory;
+    String harvestDirectory = Constants.getInstance().getHarvestDir();
+    String harvDir = harvestDirectory;
     String docFileName = getDocFileName(docId);
     String docFilePath = getDocFilePath(docId);
     if (docFilePath != null)
-      docDir = docDir + docFilePath;
+      harvDir = harvDir + docFilePath;
     if (docFileName != null)
-      docDir = docDir + "/" + docFileName;
+      harvDir = harvDir + "/" + docFileName;
     else
-      docDir = docDir + "/" + "XXXXX";
-    return docDir;
+      harvDir = harvDir + "/" + "XXXXX";
+    return harvDir;
   }
   
   private String getDocFileName(String docId) {
