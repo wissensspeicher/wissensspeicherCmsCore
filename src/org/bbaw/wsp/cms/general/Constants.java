@@ -200,26 +200,20 @@ public class Constants {
     return getMetadataDir() + "/wsp.normdata.rdf";
   }
 
-  /**
-   * @return the path to the rdfStoreRdfDir
-   */
-  public String getRdfStoreMdDir() {
+  public String getRdfStoreDir() {
     if (properties != null) {
-      return properties.getProperty("rdfStoreRdfDir");
+      return properties.getProperty("rdfStoreDir");
     } else {
       return "no properties file";
     }
   }
 
-  /**
-   * @return the path to the rdfStoreLarqDir
-   */
+  public String getRdfStoreMdDir() {
+    return getRdfStoreDir() + "/rdf";
+  }
+
   public String getRdfStoreLarqDir() {
-    if (properties != null) {
-      return properties.getProperty("rdfStoreLarqDir");
-    } else {
-      return "no properties file";
-    }
+    return getRdfStoreDir() + "/larq";
   }
 
   public String getOaiDir() {
