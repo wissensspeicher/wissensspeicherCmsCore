@@ -273,7 +273,7 @@ public class CollectionManager {
         for (int i = 0; i < rdfDbResourcesFiles.length; i++) {
           File rdfDbResourcesFile = rdfDbResourcesFiles[i];
           LOGGER.info("Create database resources from file: " + rdfDbResourcesFile);
-          ArrayList<MetadataRecord> dbMdRecords = getMetadataRecordsByRdfFile(collection, rdfDbResourcesFile);
+          ArrayList<MetadataRecord> dbMdRecords = getMetadataRecordsByRdfFile(collection, rdfDbResourcesFile, db);
           int countDocs = addDocuments(collection, dbMdRecords, true);
           counter = counter + countDocs;
         }
@@ -372,7 +372,7 @@ public class CollectionManager {
     } else {
       String metadataRdfDir = Constants.getInstance().getMetadataDir() + "/resources";
       File rdfRessourcesFile = new File(metadataRdfDir + "/" + collectionId + ".rdf");
-      mdRecords = getMetadataRecordsByRdfFile(collection, rdfRessourcesFile);
+      mdRecords = getMetadataRecordsByRdfFile(collection, rdfRessourcesFile, null);
     }
     if (mdRecords.size() == 0)
       return null;
@@ -389,7 +389,7 @@ public class CollectionManager {
     mdRecord.setSystem(db.getType());
     mdRecord.setCollectionNames(collectionId);
     mdRecord.setId(maxIdcounter); // collections wide id
-    mdRecord = createMainFieldsMetadataRecord(mdRecord, collection);
+    mdRecord = createMainFieldsMetadataRecord(mdRecord, collection, null);
     Date lastModified = new Date();
     mdRecord.setLastModified(lastModified);
     String language = db.getLanguage();
@@ -408,7 +408,7 @@ public class CollectionManager {
         MetadataRecord mdRecordEXist = getNewMdRecord(eXistSubUrlStr); // with docId and webUri
         mdRecordEXist.setCollectionNames(collectionId);
         mdRecordEXist.setId(maxIdcounter); // collections wide id
-        mdRecordEXist = createMainFieldsMetadataRecord(mdRecordEXist, collection);
+        mdRecordEXist = createMainFieldsMetadataRecord(mdRecordEXist, collection, db);
         mdRecordEXist.setLastModified(lastModified);
         mdRecordEXist.setCreator(mdRecord.getCreator());
         mdRecordEXist.setTitle(mdRecord.getTitle());
@@ -424,7 +424,7 @@ public class CollectionManager {
     return mdRecords;
   }
   
-  public ArrayList<MetadataRecord> getMetadataRecordsByRdfFile(Collection collection, File rdfRessourcesFile) throws ApplicationException {
+  public ArrayList<MetadataRecord> getMetadataRecordsByRdfFile(Collection collection, File rdfRessourcesFile, Database db) throws ApplicationException {
     String collectionId = collection.getId();
     String xmlDumpFileStr = rdfRessourcesFile.getPath().replaceAll("\\.rdf", ".xml");
     File xmlDumpFile = new File(xmlDumpFileStr);
@@ -446,7 +446,7 @@ public class CollectionManager {
           if (mdRecord != null) {
             mdRecord.setCollectionNames(collectionId);
             mdRecord.setId(maxIdcounter); // collections wide id
-            mdRecord = createMainFieldsMetadataRecord(mdRecord, collection);
+            mdRecord = createMainFieldsMetadataRecord(mdRecord, collection, db);
             // if it is a record: set lastModified to the date of the harvested dump file; if it is a normal web record: set it to now (harvested now)
             Date lastModified = new Date();
             if (mdRecord.isRecord()) {
@@ -481,7 +481,7 @@ public class CollectionManager {
                   MetadataRecord mdRecordDirEntry = getNewMdRecord(webUrl);
                   mdRecordDirEntry.setCollectionNames(collectionId);
                   mdRecordDirEntry.setId(maxIdcounter); // collections wide id
-                  mdRecordDirEntry = createMainFieldsMetadataRecord(mdRecordDirEntry, collection);
+                  mdRecordDirEntry = createMainFieldsMetadataRecord(mdRecordDirEntry, collection, null);
                   mdRecordDirEntry.setLastModified(lastModified);
                   mdRecordDirEntry.setUri(uri);
                   mdRecordsDir.add(mdRecordDirEntry);
@@ -502,7 +502,7 @@ public class CollectionManager {
     return mdRecords;
   }
   
-  private MetadataRecord createMainFieldsMetadataRecord(MetadataRecord mdRecord, Collection collection) throws ApplicationException {
+  private MetadataRecord createMainFieldsMetadataRecord(MetadataRecord mdRecord, Collection collection, Database db) throws ApplicationException {
     try {
       Tika tika = new Tika();
       String webUriStr = mdRecord.getWebUri();
@@ -573,8 +573,11 @@ public class CollectionManager {
         String mainLanguage = collection.getMainLanguage();
         mdRecord.setLanguage(mainLanguage);
       }
-      Hashtable<String, XQuery> xQueries = collection.getxQueries();
-      mdRecord.setxQueries(xQueries);  // TODO Feld xQueries von collection nach database verschieben
+      if (db != null) {
+        Hashtable<String, XQuery> xQueries = db.getxQueries();
+        if (xQueries != null)
+          mdRecord.setxQueries(xQueries);
+      }
     } catch (MalformedURLException e) {
       throw new ApplicationException(e);
     }

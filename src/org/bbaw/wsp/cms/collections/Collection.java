@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Hashtable;
 
-import org.bbaw.wsp.cms.document.XQuery;
-
 public class Collection {
   private String id;
   private String rdfId;
@@ -19,7 +17,6 @@ public class Collection {
   private String coverage;  // e.g.: http://wsp.normdata.rdf/Gegenwart or http://wsp.normdata.rdf/Neuzeit
   private ArrayList<String> fields;
   private Hashtable<String, Service> services;
-  private Hashtable<String, XQuery> xQueries;
   private String configFileName;  // configuration file name
   private Date lastModified;
   private StringBuilder dbPediaSpotlightRdfStrBuilder;
@@ -118,14 +115,6 @@ public class Collection {
 
   public void setFields(ArrayList<String> fields) {
     this.fields = fields;
-  }
-
-  public Hashtable<String, XQuery> getxQueries() {
-    return xQueries;
-  }
-
-  public void setxQueries(Hashtable<String, XQuery> xQueries) {
-    this.xQueries = xQueries;
   }
 
   public String getWebBaseUrl() {

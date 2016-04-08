@@ -2,6 +2,8 @@ package org.bbaw.wsp.cms.collections;
 
 import java.util.Hashtable;
 
+import org.bbaw.wsp.cms.document.XQuery;
+
 public class Database {
   private String type;
   private String name;
@@ -17,6 +19,7 @@ public class Database {
   private String webIdPreStr;
   private String webIdAfterStr;
   private String excludes; // excludes urls separated by a blank e.g. for eXist directories
+  private Hashtable<String, XQuery> xQueries;
   private Hashtable<String, String> dcField2dbField = new Hashtable<String, String>();
 
   public String getType() {
@@ -129,6 +132,14 @@ public class Database {
 
   public void setExcludes(String excludes) {
     this.excludes = excludes;
+  }
+
+  public Hashtable<String, XQuery> getxQueries() {
+    return xQueries;
+  }
+
+  public void setxQueries(Hashtable<String, XQuery> xQueries) {
+    this.xQueries = xQueries;
   }
 
   public void addField(String dcField, String dbField) {

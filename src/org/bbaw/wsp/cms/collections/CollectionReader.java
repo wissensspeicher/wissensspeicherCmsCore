@@ -263,6 +263,28 @@ public class CollectionReader {
           if (excludes != null) {
             db.setExcludes(excludes);
           }
+          // read xqueries (used for building dynamically a webUri of a record; only used in xml records
+          Hits xQueries = (Hits) xQueryEvaluator.evaluate(xdmItemDBStr, "/db/xqueries/xquery", 0, 9, "hits");
+          if (xQueries != null) {
+            Hashtable<String, XQuery> xqueriesHashtable = new Hashtable<String, XQuery>();
+            for (int i = 0; i < xQueries.getSize(); i++) {
+              Hit xqueryHit = xQueries.getHits().get(i);
+              String xqueryStr = xqueryHit.getContent();
+              String xQueryName = xQueryEvaluator.evaluateAsStringValueJoined(xqueryStr, "xquery/name");
+              String xQueryCode = xQueryEvaluator.evaluateAsStringValueJoined(xqueryStr, "xquery/code");
+              String xQueryPreStr = xQueryEvaluator.evaluateAsStringValueJoined(xqueryStr, "xquery/preStr");
+              String xQueryAfterStr = xQueryEvaluator.evaluateAsStringValueJoined(xqueryStr, "xquery/afterStr");
+              if (xQueryName != null && xQueryCode != null) {
+                XQuery xQuery = new XQuery(xQueryName, xQueryCode);
+                if (xQueryPreStr != null && ! xQueryPreStr.isEmpty())
+                  xQuery.setPreStr(xQueryPreStr);
+                if (xQueryAfterStr != null && ! xQueryAfterStr.isEmpty())
+                  xQuery.setAfterStr(xQueryAfterStr);
+                xqueriesHashtable.put(xQueryName, xQuery);
+              }
+            }
+            db.setxQueries(xqueriesHashtable);
+          }
           collectionDBs.add(db);
         }
         collection.setDatabases(collectionDBs);
@@ -293,28 +315,6 @@ public class CollectionReader {
         }
       }
       collection.setFields(fieldsArrayList);
-      // read xqueries (used for building dynamically a webUri of a record; only used in xml records
-      Hits xQueries = (Hits) xQueryEvaluator.evaluate(configFileUrl, "/wsp/collection/xqueries/xquery", 0, 9, "hits");
-      if (xQueries != null) {
-        Hashtable<String, XQuery> xqueriesHashtable = new Hashtable<String, XQuery>();
-        for (int i = 0; i < xQueries.getSize(); i++) {
-          Hit xqueryHit = xQueries.getHits().get(i);
-          String xqueryStr = xqueryHit.getContent();
-          String xQueryName = xQueryEvaluator.evaluateAsStringValueJoined(xqueryStr, "xquery/name");
-          String xQueryCode = xQueryEvaluator.evaluateAsStringValueJoined(xqueryStr, "xquery/code");
-          String xQueryPreStr = xQueryEvaluator.evaluateAsStringValueJoined(xqueryStr, "xquery/preStr");
-          String xQueryAfterStr = xQueryEvaluator.evaluateAsStringValueJoined(xqueryStr, "xquery/afterStr");
-          if (xQueryName != null && xQueryCode != null) {
-            XQuery xQuery = new XQuery(xQueryName, xQueryCode);
-            if (xQueryPreStr != null && ! xQueryPreStr.isEmpty())
-              xQuery.setPreStr(xQueryPreStr);
-            if (xQueryAfterStr != null && ! xQueryAfterStr.isEmpty())
-              xQuery.setAfterStr(xQueryAfterStr);
-            xqueriesHashtable.put(xQueryName, xQuery);
-          }
-        }
-        collection.setxQueries(xqueriesHashtable);
-      }
       // read services (for dynamically building queries to single project documents, e.g. in dta)
       Hits services = (Hits) xQueryEvaluator.evaluate(configFileUrl, "/wsp/collection/services/*", 0, 9, "hits");
       if (services != null) {
