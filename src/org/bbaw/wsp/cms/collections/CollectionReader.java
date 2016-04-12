@@ -303,18 +303,6 @@ public class CollectionReader {
       if (collectionMetadataRedundantUrlPrefix != null) {
         collection.setMetadataRedundantUrlPrefix(collectionMetadataRedundantUrlPrefix);
       }
-      // read fields (used for parsing XML fulltext documents)
-      String fieldsStr = xQueryEvaluator.evaluateAsStringValueJoined(configFileUrl, "/wsp/collection/fields/field", "###");
-      ArrayList<String> fieldsArrayList = new ArrayList<String>();
-      if (fieldsStr != null) {
-        String[] fields = fieldsStr.split("###");
-        for (int i = 0; i < fields.length; i++) {
-          String field = fields[i].trim();
-          if (!field.isEmpty())
-            fieldsArrayList.add(field);
-        }
-      }
-      collection.setFields(fieldsArrayList);
       // read services (for dynamically building queries to single project documents, e.g. in dta)
       Hits services = (Hits) xQueryEvaluator.evaluate(configFileUrl, "/wsp/collection/services/*", 0, 9, "hits");
       if (services != null) {

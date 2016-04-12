@@ -55,7 +55,6 @@ import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 import de.mpg.mpiwg.berlin.mpdl.lt.general.Language;
 import de.mpg.mpiwg.berlin.mpdl.lt.text.tokenize.Token;
 import de.mpg.mpiwg.berlin.mpdl.lt.text.tokenize.XmlTokenizer;
-import de.mpg.mpiwg.berlin.mpdl.lt.text.tokenize.XmlTokenizerContentHandler;
 import de.mpg.mpiwg.berlin.mpdl.util.StringUtils;
 import de.mpg.mpiwg.berlin.mpdl.util.Util;
 import de.mpg.mpiwg.berlin.mpdl.xml.xquery.XQueryEvaluator;
@@ -87,12 +86,7 @@ public class DocumentHandler {
       String srcUrlStr = docOperation.getSrcUrl(); 
       String docId = docOperation.getDocIdentifier();
       String mainLanguage = docOperation.getMainLanguage();
-      String[] elementNames = docOperation.getElementNames();
       MetadataRecord mdRecord = docOperation.getMdRecord();
-      if (elementNames == null) {
-        String[] defaultElementNames = {"persName", "placeName", "p", "s", "head"};
-        docOperation.setElementNames(defaultElementNames); // default
-      }
       String docDirName = getDocDir(docId);
       String docDestFileName = getDocFullFileName(docId); 
       boolean docIsXml = isDocXml(docId); 
@@ -434,22 +428,12 @@ public class DocumentHandler {
         // fetch original content of the documents file (without xml tags)
         XslResourceTransformer charsTransformer = new XslResourceTransformer("chars.xsl");
         content = charsTransformer.transform(docFileName);
-        // get elements from xml tokenizer 
-        String[] elementNamesArray = docOperation.getElementNames();
-        String elementNames = "";
-        for (int i = 0; i < elementNamesArray.length; i++) {
-          String elemName = elementNamesArray[i];
-          elementNames = elementNames + elemName + " ";
-        }
-        elementNames = elementNames.substring(0, elementNames.length() - 1);
-        ArrayList<XmlTokenizerContentHandler.Element> xmlElements = docXmlTokenizer.getElements(elementNames);
         // fill mdRecord
         mdRecord.setTokenOrig(docTokensOrig);
         mdRecord.setTokenNorm(docTokensNorm);
         mdRecord.setTokenMorph(docTokensMorph);
         mdRecord.setContentXml(contentXml);
         mdRecord.setContent(content);
-        mdRecord.setXmlElements(xmlElements);
         mdRecord.setPageCount(pageCount);
       } else {
         DocumentParser tikaParser = new DocumentParser();

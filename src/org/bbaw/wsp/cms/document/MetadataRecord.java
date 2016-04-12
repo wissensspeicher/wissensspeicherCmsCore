@@ -54,7 +54,6 @@ public class MetadataRecord implements Cloneable {
   private String tokenMorph; // morphological fulltext tokens of resource
   private String contentXml; // original xml content of the resources file
   private String content; // original text content of the resources file (without xml tags)
-  private ArrayList<XmlTokenizerContentHandler.Element> xmlElements; // xml elements of resource
   private Hashtable<String, XQuery> xQueries; // dynamic xQueries of xml resources (with name, code, result)
   private String realDocUrl; // e.g. the URL to the eDoc (not the index.html)
   private String system; // e.g. eXistDir or httpDir
@@ -410,14 +409,6 @@ public class MetadataRecord implements Cloneable {
     this.content = content;
   }
 
-  public ArrayList<XmlTokenizerContentHandler.Element> getXmlElements() {
-    return xmlElements;
-  }
-
-  public void setXmlElements(final ArrayList<XmlTokenizerContentHandler.Element> xmlElements) {
-    this.xmlElements = xmlElements;
-  }
-
   public String getSchemaName() {
     return schemaName;
   }
@@ -499,7 +490,7 @@ public class MetadataRecord implements Cloneable {
   }
 
   public String toString() {
-    return "MetadataRecord [docId=" + docId + ", identifier=" + identifier + ", uri=" + uri + ", webUri=" + webUri + ", collectionNames=" + collectionNames + ", schemaName=" + schemaName + ", language=" + language + ", creator=" + creator + ", title=" + title + ", publisher=" + publisher + ", date=" + date + ", description=" + description + ", subject=" + subject + ", contributor=" + contributor + ", coverage=" + coverage + ", ddc=" + ddc + ", swd=" + swd + ", persons=" + persons + ", places=" + places + ", type=" + type + ", rights=" + rights + ", license=" + license + ", accessRights=" + accessRights + ", lastModified=" + lastModified + ", encoding=" + encoding + ", pageCount=" + pageCount + ", urn=" + urn + ", documentType=" + documentType + ", isbn=" + isbn + ", creationDate=" + creationDate + ", publishingDate=" + publishingDate + ", inPublication=" + inPublication + ", tokenOrig=" + tokenOrig + ", tokenReg=" + tokenReg + ", tokenNorm=" + tokenNorm + ", tokenMorph=" + tokenMorph + ", contentXml=" + contentXml + ", content=" + content + ", xmlElements=" + xmlElements + ", xQueries=" + xQueries + ", realDocUrl=" + realDocUrl + "]";
+    return "MetadataRecord [docId=" + docId + ", identifier=" + identifier + ", uri=" + uri + ", webUri=" + webUri + ", collectionNames=" + collectionNames + ", schemaName=" + schemaName + ", language=" + language + ", creator=" + creator + ", title=" + title + ", publisher=" + publisher + ", date=" + date + ", description=" + description + ", subject=" + subject + ", contributor=" + contributor + ", coverage=" + coverage + ", ddc=" + ddc + ", swd=" + swd + ", persons=" + persons + ", places=" + places + ", type=" + type + ", rights=" + rights + ", license=" + license + ", accessRights=" + accessRights + ", lastModified=" + lastModified + ", encoding=" + encoding + ", pageCount=" + pageCount + ", urn=" + urn + ", documentType=" + documentType + ", isbn=" + isbn + ", creationDate=" + creationDate + ", publishingDate=" + publishingDate + ", inPublication=" + inPublication + ", tokenOrig=" + tokenOrig + ", tokenReg=" + tokenReg + ", tokenNorm=" + tokenNorm + ", tokenMorph=" + tokenMorph + ", contentXml=" + contentXml + ", content=" + content + ", xQueries=" + xQueries + ", realDocUrl=" + realDocUrl + "]";
   }
   
   public void setAllNull() {
@@ -513,7 +504,6 @@ public class MetadataRecord implements Cloneable {
     tokenMorph = null; 
     contentXml = null; 
     content = null; 
-    xmlElements = null;
   }
   
   public boolean isEdocRecord() {

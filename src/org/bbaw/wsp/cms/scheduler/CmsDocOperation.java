@@ -17,7 +17,6 @@ public class CmsDocOperation implements Comparable<CmsDocOperation> {
   private String srcUrl;   
   private String docIdentifier;
   private String mainLanguage;
-  private String[] elementNames; // element names which should be indexed (e.g. "s head")
   private MetadataRecord mdRecord;
   
   public CmsDocOperation(String name, String srcUrl, String uploadFileName, String docIdentifier) {
@@ -109,14 +108,6 @@ public class CmsDocOperation implements Comparable<CmsDocOperation> {
   
   public void setDocIdentifier(String docIdentifier) {
     this.docIdentifier = docIdentifier;
-  }
-  
-  public String[] getElementNames() {
-    return elementNames;
-  }
-  
-  public void setElementNames(String[] elementNames) {
-    this.elementNames = elementNames;
   }
   
   public String getSrcUrl() {
