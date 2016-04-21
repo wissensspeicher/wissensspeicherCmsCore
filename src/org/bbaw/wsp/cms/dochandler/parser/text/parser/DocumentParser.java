@@ -90,9 +90,7 @@ public class DocumentParser {
 		ResourceParser parser = null;
 
 		String extension = getExtension(url);
-		if (EdocIndexMetadataFetcherTool.isEDocIndex(url)) {
-			parser = EdocParserImpl.getInstance();
-		} else if (extension.equals(EXT_PDF)) {
+		if (extension.equals(EXT_PDF)) {
 			parser = PdfParserImpl.getInstance();
 		} else if (extension.equals(EXT_DOC)) {
 			parser = DocParserImpl.getInstance();
