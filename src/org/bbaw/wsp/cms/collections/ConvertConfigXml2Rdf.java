@@ -1,8 +1,11 @@
 package org.bbaw.wsp.cms.collections;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.sql.Connection;
@@ -28,6 +31,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.apache.log4j.Logger;
 import org.bbaw.wsp.cms.document.MetadataRecord;
+import org.bbaw.wsp.cms.document.SubjectHandler;
 import org.bbaw.wsp.cms.general.Constants;
 import org.bbaw.wsp.cms.transform.XslResourceTransformer;
 
@@ -45,17 +49,19 @@ public class ConvertConfigXml2Rdf {
   private String externalResourcesDirName;
   private File inputNormdataFile;
   private XQueryEvaluator xQueryEvaluator;
+  private Hashtable<String, String> institutes2collectionId;
+  
   public static void main(String[] args) throws ApplicationException {
     try {
       ConvertConfigXml2Rdf convertConfigXml2Rdf = new ConvertConfigXml2Rdf();
       convertConfigXml2Rdf.init();
-      convertConfigXml2Rdf.proofRdfProjects();
+      // convertConfigXml2Rdf.proofRdfProjects();
       // convertConfigXml2Rdf.proofCollectionProjects();
       // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("pdr");
       // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("jdg");
       // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("jpor");
-      // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("turfandp");
-      // convertConfigXml2Rdf.convertDbXmlFiles(c);
+      Collection c = convertConfigXml2Rdf.collectionReader.getCollection("edoc");
+      convertConfigXml2Rdf.convertDbXmlFiles(c);
       // convertConfigXml2Rdf.generateDbXmlDumpFiles(c);
     } catch (Exception e) {
       e.printStackTrace();
@@ -74,7 +80,9 @@ public class ConvertConfigXml2Rdf {
     dbDumpsDirName = Constants.getInstance().getExternalDataDbDumpsDir();
     externalResourcesDirName = Constants.getInstance().getExternalDataResourcesDir();
     String inputNormdataFileName = Constants.getInstance().getMdsystemNormdataFile();
-    inputNormdataFile = new File(inputNormdataFileName);      
+    inputNormdataFile = new File(inputNormdataFileName);
+    institutes2collectionId = new Hashtable<String, String>();
+    fillInstitutes2collectionIds();
   }
   
   private void generateDbXmlDumpFiles(Collection collection) throws ApplicationException {
@@ -1002,7 +1010,7 @@ public class ConvertConfigXml2Rdf {
     return row;  
   }
 
-  private void appendRow2rdf(StringBuilder rdfStrBuilder, Collection collection, Database db, Row row) {
+  private void appendRow2rdf(StringBuilder rdfStrBuilder, Collection collection, Database db, Row row) throws ApplicationException {
     String collectionId = collection.getId();
     String collectionRdfId = collection.getRdfId();
     String mainLanguage = collection.getMainLanguage();
@@ -1010,7 +1018,7 @@ public class ConvertConfigXml2Rdf {
     String webIdPreStr = db.getWebIdPreStr();
     String webIdAfterStr = db.getWebIdAfterStr();
     String dbType = db.getType();
-    String id = row.getFieldValue(mainResourcesTableId);
+    String id = row.getFirstFieldValue(mainResourcesTableId);
     id = StringUtils.deresolveXmlEntities(id);
     String rdfId = "http://" + collectionId + ".bbaw.de/id/" + id;
     if (id.startsWith("http://"))
@@ -1022,6 +1030,32 @@ public class ConvertConfigXml2Rdf {
     if (webIdAfterStr != null) {
       rdfWebId = rdfWebId + webIdAfterStr;
     }
+    // special handling of edoc oai records
+    if (collection.getId().equals("edoc")) {
+      String dbFieldIdentifier = db.getDbField("identifier");
+      if (dbFieldIdentifier != null) {
+        ArrayList<String> identifiers = row.getFieldValues(dbFieldIdentifier);
+        if (identifiers != null) {
+          String edocMetadataUrl = identifiers.get(0); // first one is web page with metadata, e.g. https://edoc.bbaw.de/frontdoor/index/index/docId/1
+          id = edocMetadataUrl; 
+          rdfWebId = identifiers.get(identifiers.size() - 1);  // last one is the fulltext document, e.g. https://edoc.bbaw.de/files/1/vortrag2309_akademieUnion.pdf
+          // no fulltext document given in record
+          if (! rdfWebId.startsWith("http")) {
+            rdfWebId = edocMetadataUrl;
+            id = "";
+          }
+          String edocMetadataHtmlStr = performGetRequest(edocMetadataUrl);
+          edocMetadataHtmlStr = edocMetadataHtmlStr.replaceAll("<!DOCTYPE html .+>", "");
+          String institutesStr = xQueryEvaluator.evaluateAsString(edocMetadataHtmlStr, "//*:th[text() = 'Institutes:']/following-sibling::*:td/*:a/text()");
+          if (institutesStr != null && ! institutesStr.isEmpty()) {
+            institutesStr = institutesStr.trim().replaceAll("BBAW / ", "");
+            String collRdfId = getCollectionRdfId(institutesStr);
+            if (collRdfId != null)
+              collectionRdfId = collRdfId;
+          }
+        }
+      }
+    }
     rdfStrBuilder.append("<rdf:Description rdf:about=\"" + rdfWebId + "\">\n");
     rdfStrBuilder.append("  <rdf:type rdf:resource=\"http://purl.org/dc/terms/BibliographicResource\"/>\n");
     rdfStrBuilder.append("  <dcterms:isPartOf rdf:resource=\"" + collectionRdfId + "\"/>\n");
@@ -1032,48 +1066,65 @@ public class ConvertConfigXml2Rdf {
       rdfStrBuilder.append("  <dc:type>dbRecord</dc:type>\n");
     String dbFieldCreator = db.getDbField("creator");
     if (dbFieldCreator != null) {
-      String creator = row.getFieldValue(dbFieldCreator);
-      if (creator != null && ! creator.isEmpty()) {
-        creator = StringUtils.deresolveXmlEntities(creator);
-        rdfStrBuilder.append("  <dc:creator>" + creator + "</dc:creator>\n");
+      ArrayList<String> fieldValues = row.getFieldValues(dbFieldCreator);
+      if (fieldValues != null && ! fieldValues.isEmpty()) {
+        for (int i=0; i<fieldValues.size(); i++) {
+          String fieldValue = fieldValues.get(i);
+          fieldValue = StringUtils.deresolveXmlEntities(fieldValue);
+          rdfStrBuilder.append("  <dc:creator>" + fieldValue + "</dc:creator>\n");
+        }
       }
     }
     String dbFieldTitle = db.getDbField("title");
     if (dbFieldTitle != null) {
-      String title = row.getFieldValue(dbFieldTitle);
-      if (title != null && ! title.isEmpty()) {
-        title = StringUtils.deresolveXmlEntities(title);
-        rdfStrBuilder.append("  <dc:title>" + title + "</dc:title>\n");
+      ArrayList<String> fieldValues = row.getFieldValues(dbFieldTitle);
+      if (fieldValues != null && ! fieldValues.isEmpty()) {
+        for (int i=0; i<fieldValues.size(); i++) {
+          String fieldValue = fieldValues.get(i);
+          fieldValue = StringUtils.deresolveXmlEntities(fieldValue);
+          rdfStrBuilder.append("  <dc:title>" + fieldValue + "</dc:title>\n");
+        }
       }
     }
     String dbFieldPublisher = db.getDbField("publisher");
     if (dbFieldPublisher != null) {
-      String publisher = row.getFieldValue(dbFieldPublisher);
-      if (publisher != null && ! publisher.isEmpty()) {
-        publisher = StringUtils.deresolveXmlEntities(publisher);
-        rdfStrBuilder.append("  <dc:publisher>" + publisher + "</dc:publisher>\n");
+      ArrayList<String> fieldValues = row.getFieldValues(dbFieldPublisher);
+      if (fieldValues != null && ! fieldValues.isEmpty()) {
+        for (int i=0; i<fieldValues.size(); i++) {
+          String fieldValue = fieldValues.get(i);
+          fieldValue = StringUtils.deresolveXmlEntities(fieldValue);
+          rdfStrBuilder.append("  <dc:publisher>" + fieldValue + "</dc:publisher>\n");
+        }
       }
     }
     String dbFieldDate = db.getDbField("date");
     if (dbFieldDate != null) {
-      String date = row.getFieldValue(dbFieldDate);
-      if (date != null && ! date.isEmpty()) {
-        date = StringUtils.deresolveXmlEntities(date);
-        rdfStrBuilder.append("  <dc:date>" + date + "</dc:date>\n");
+      ArrayList<String> fieldValues = row.getFieldValues(dbFieldDate);
+      if (fieldValues != null && ! fieldValues.isEmpty()) {
+        for (int i=0; i<fieldValues.size(); i++) {
+          String fieldValue = fieldValues.get(i);
+          fieldValue = StringUtils.deresolveXmlEntities(fieldValue);
+          rdfStrBuilder.append("  <dc:date>" + fieldValue + "</dc:date>\n");
+        }
       }
     }
     String dbFieldPages = db.getDbField("extent");
     if (dbFieldPages != null) {
-      String pages = row.getFieldValue(dbFieldPages);
-      if (pages != null && ! pages.isEmpty()) {
-        pages = StringUtils.deresolveXmlEntities(pages);
-        rdfStrBuilder.append("  <dc:extent>" + pages + "</dc:extent>\n");
+      ArrayList<String> fieldValues = row.getFieldValues(dbFieldPages);
+      if (fieldValues != null && ! fieldValues.isEmpty()) {
+        for (int i=0; i<fieldValues.size(); i++) {
+          String fieldValue = fieldValues.get(i);
+          fieldValue = StringUtils.deresolveXmlEntities(fieldValue);
+          rdfStrBuilder.append("  <dc:extent>" + fieldValue + "</dc:extent>\n");
+        }
       }
     }
     String dbFieldLanguage = db.getDbField("language");
     String language = null;
     if (dbFieldLanguage != null) {
-      language = row.getFieldValue(dbFieldLanguage);
+      ArrayList<String> fieldValues = row.getFieldValues(dbFieldLanguage);
+      if (fieldValues != null)
+        language = fieldValues.get(0);
       if (language != null && language.contains(" ")) {
         String[] langs = language.split(" ");
         language = langs[0];
@@ -1086,42 +1137,140 @@ public class ConvertConfigXml2Rdf {
     else if (language == null && mainLanguage == null)
       language = "ger";
     rdfStrBuilder.append("  <dc:language>" + language + "</dc:language>\n");
+    String dbFieldFormat = db.getDbField("format");
+    if (dbFieldFormat != null) {
+      ArrayList<String> fieldValues = row.getFieldValues(dbFieldFormat);
+      if (fieldValues != null && ! fieldValues.isEmpty()) {
+        for (int i=0; i<fieldValues.size(); i++) {
+          String fieldValue = fieldValues.get(i);
+          fieldValue = StringUtils.deresolveXmlEntities(fieldValue);
+          rdfStrBuilder.append("  <dc:format>" + fieldValue + "</dc:format>\n");
+        }
+      }
+    }
     if (dbType != null && ! dbType.equals("oai"))
       rdfStrBuilder.append("  <dc:format>text/html</dc:format>\n");
     String dbFieldSubject = db.getDbField("subject");
     if (dbFieldSubject != null) {
-      String subject = row.getFieldValue(dbFieldSubject);
-      if (subject != null && ! subject.isEmpty()) {
-        String[] subjects = subject.split("###");
-        if (! subject.contains("###") && subject.contains(";"))
-          subjects = subject.split(";");
-        if (subjects != null) {
-          for (int i=0; i<subjects.length; i++) {
-            String s = subjects[i].trim();
-            s = StringUtils.deresolveXmlEntities(s);
-            rdfStrBuilder.append("  <dc:subject>" + s + "</dc:subject>\n");
+      ArrayList<String> fieldValues = row.getFieldValues(dbFieldSubject);
+      if (fieldValues != null && ! fieldValues.isEmpty()) {
+        for (int i=0; i<fieldValues.size(); i++) {
+          String fieldValue = fieldValues.get(i);
+          if (fieldValue != null && ! fieldValue.isEmpty()) {
+            fieldValue = StringUtils.deresolveXmlEntities(fieldValue);
+            if (fieldValue.startsWith("ddc:")) {
+              SubjectHandler subjectHandler = SubjectHandler.getInstance();
+              String ddcCode = fieldValue.substring(4);
+              String ddcSubject = subjectHandler.getDdcSubject(ddcCode);
+              if (ddcSubject != null)
+                rdfStrBuilder.append("  <dc:subject xsi:type=\"dcterms:DDC\">" + ddcSubject + "</dc:subject>\n");
+            } else {
+              String[] subjects = fieldValue.split("###");
+              if (! fieldValue.contains("###") && fieldValue.contains(";"))
+                subjects = fieldValue.split(";");
+              if (subjects != null) {
+                for (int j=0; j<subjects.length; j++) {
+                  String s = subjects[j].trim();
+                  s = StringUtils.deresolveXmlEntities(s);
+                  if (db.getName().equals("edoc"))
+                    rdfStrBuilder.append("  <dc:subject xsi:type=\"SWD\">" + s + "</dc:subject>\n");
+                  else 
+                    rdfStrBuilder.append("  <dc:subject>" + s + "</dc:subject>\n");
+                }
+              }
+            }
           }
         }
       }
     }
     String dbFieldAbstract = db.getDbField("abstract");
     if (dbFieldAbstract != null) {
-      String abstractt = row.getFieldValue(dbFieldAbstract);
-      if (abstractt != null && ! abstractt.isEmpty()) {
-        abstractt = StringUtils.deresolveXmlEntities(abstractt);
-        rdfStrBuilder.append("  <dc:abstract>" + abstractt + "</dc:abstract>\n");
+      ArrayList<String> fieldValues = row.getFieldValues(dbFieldAbstract);
+      if (fieldValues != null && ! fieldValues.isEmpty()) {
+        for (int i=0; i<fieldValues.size(); i++) {
+          String fieldValue = fieldValues.get(i);
+          fieldValue = StringUtils.deresolveXmlEntities(fieldValue);
+          rdfStrBuilder.append("  <dc:abstract>" + fieldValue + "</dc:abstract>\n");
+        }
       }
     }
     // TODO further dc fields
     rdfStrBuilder.append("</rdf:Description>\n");
   }
 
+  private String getCollectionRdfId(String institutesStr) throws ApplicationException {
+    String retStr = null;
+    String collectionId = institutes2collectionId.get(institutesStr);
+    if (collectionId != null) {
+      Collection c = CollectionReader.getInstance().getCollection(collectionId);
+      if (c != null)
+        retStr = c.getRdfId();
+    }
+    return retStr;
+  }
+  
+  private void fillInstitutes2collectionIds() {
+    institutes2collectionId.put("Berlin-Brandenburgische Akademie der Wissenschaften", "akademiepublikationen1");
+    institutes2collectionId.put("Veröffentlichungen von Akademiemitgliedern", "akademiepublikationen2");
+    institutes2collectionId.put("Veröffentlichungen von Akademiemitarbeitern", "akademiepublikationen3");
+    institutes2collectionId.put("Veröffentlichungen der Vorgängerakademien", "akademiepublikationen4");
+    institutes2collectionId.put("Veröffentlichungen externer Institutionen", "akademiepublikationen5");
+    institutes2collectionId.put("Interdisziplinäre Arbeitsgruppe Psychologisches Denken und psychologische Praxis", "pd");
+    institutes2collectionId.put("Akademienvorhaben Strukturen und Transformationen des Wortschatzes der ägyptischen Sprache. Text- und Wissenskultur im alten Ägypten", "aaew");
+    institutes2collectionId.put("Akademienvorhaben Altägyptisches Wörterbuch", "aaew");
+    institutes2collectionId.put("Interdisziplinäre Arbeitsgruppe Berliner Akademiegeschichte im 19. und 20. Jahrhundert", "bag");
+    institutes2collectionId.put("Interdisziplinäre Arbeitsgruppe Wissenschaftliche Politikberatung in der Demokratie", "wpd");
+    institutes2collectionId.put("Interdisziplinäre Arbeitsgruppe Die Herausforderung durch das Fremde", "fremde");
+    institutes2collectionId.put("Initiative Wissen für Entscheidungsprozesse", "wfe");
+    institutes2collectionId.put("Initiative Qualitätsbeurteilung in der Wissenschaft", "quali");
+    institutes2collectionId.put("Interdisziplinäre Arbeitsgruppe Gentechnologiebericht", "gen");
+    institutes2collectionId.put("Interdisziplinäre Arbeitsgruppe Wissenschaften und Wiedervereinigung", "ww");
+    institutes2collectionId.put("Akademienvorhaben Leibniz-Edition Berlin", "leibber");
+    institutes2collectionId.put("Akademienvorhaben Deutsches Wörterbuch von Jacob Grimm und Wilhelm Grimm", "dwb");
+    institutes2collectionId.put("Akademienvorhaben Census of Antique Works of Art and Architecture Known in the Renaissance", "census");
+    institutes2collectionId.put("Akademienvorhaben Protokolle des Preußischen Staatsministeriums Acta Borussica", "ab");
+    institutes2collectionId.put("Akademienvorhaben Berliner Klassik", "bk");
+    institutes2collectionId.put("Akademienvorhaben Alexander-von-Humboldt-Forschung", "avh");
+    institutes2collectionId.put("Akademienvorhaben Leibniz-Edition Potsdam", "leibpots");
+    institutes2collectionId.put("Interdisziplinäre Arbeitsgruppe Globaler Wandel", "globw");
+    institutes2collectionId.put("Akademienvorhaben Jahresberichte für deutsche Geschichte", "jdg");
+    institutes2collectionId.put("Interdisziplinäre Arbeitsgruppe Die Welt als Bild", "wab");
+    institutes2collectionId.put("Interdisziplinäre Arbeitsgruppe Optionen zukünftiger industrieller Produktionssysteme", "ops");
+    institutes2collectionId.put("Interdisziplinäre Arbeitsgruppe Frauen in Akademie und Wissenschaft", "frauen");
+    institutes2collectionId.put("Akademienvorhaben Corpus Coranicum", "coranicum");
+    institutes2collectionId.put("Initiative Telota", "telota");
+    institutes2collectionId.put("Interdisziplinäre Arbeitsgruppe Gemeinwohl und Gemeinsinn", "gg");
+    institutes2collectionId.put("Interdisziplinäre Arbeitsgruppe Bildkulturen", "bild");
+    institutes2collectionId.put("Akademienvorhaben Monumenta Germaniae Historica", "mgh");
+    institutes2collectionId.put("Interdisziplinäre Arbeitsgruppe LandInnovation", "li");
+    institutes2collectionId.put("Akademienvorhaben Marx-Engels-Gesamtausgabe", "mega");
+    institutes2collectionId.put("Interdisziplinäre Arbeitsgruppe Strukturbildung und Innovation", "sui");
+    institutes2collectionId.put("Interdisziplinäre Arbeitsgruppe Sprache des Rechts, Vermitteln, Verstehen, Verwechseln", "srvvv");
+    institutes2collectionId.put("Akademienvorhaben Die Griechischen Christlichen Schriftsteller", "gcs");
+    institutes2collectionId.put("Interdisziplinäre Arbeitsgruppe Gesundheitsstandards", "gs");
+    institutes2collectionId.put("Interdisziplinäre Arbeitsgruppe Humanprojekt", "hum");
+    institutes2collectionId.put("Akademienvorhaben Turfanforschung", "turfan");
+    institutes2collectionId.put("Interdisziplinäre Arbeitsgruppe Gegenworte - Hefte für den Disput über Wissen", "gw");
+    institutes2collectionId.put("Interdisziplinäre Arbeitsgruppe Strategien zur Abfallenergieverwertung", "sza");
+    institutes2collectionId.put("Interdisziplinäre Arbeitsgruppe Exzellenzinitiative", "exzellenz");
+    institutes2collectionId.put("Interdisziplinäre Arbeitsgruppe Funktionen des Bewusstseins", "fb");
+    institutes2collectionId.put("Drittmittelprojekt Ökosystemleistungen", "oeko");
+    institutes2collectionId.put("Interdisziplinäre Arbeitsgruppe Zukunft des wissenschaftlichen Kommunikationssystems", "zwk");
+    institutes2collectionId.put("Akademienvorhaben Preußen als Kulturstaat", "ab");
+    institutes2collectionId.put("Interdisziplinäre Arbeitsgruppe EUTENA - Zur Zukunft technischer und naturwissenschaftlicher Bildung in Europa", "eutena");
+    institutes2collectionId.put("Akademienvorhaben Digitales Wörterbuch der Deutschen Sprache", "dwds");
+    institutes2collectionId.put("Akademienvorhaben Griechisches Münzwerk", "gmw");
+    institutes2collectionId.put("Interdisziplinäre Arbeitsgruppe Klinische Forschung in vulnerablen Populationen", "kf");
+    institutes2collectionId.put("Akademienvorhaben Die alexandrinische und antiochenische Bibelexegese in der Spätantike", "bibel");
+  }
+  
   private void writeRdfFile(File rdfFile, StringBuilder rdfRecordsStrBuilder, String collectionRdfId) throws ApplicationException {
     StringBuilder rdfStrBuilder = new StringBuilder();
     rdfStrBuilder.append("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
     rdfStrBuilder.append("<rdf:RDF \n");
     rdfStrBuilder.append("   xmlns=\"" + collectionRdfId + "\" \n");
     rdfStrBuilder.append("   xml:base=\"" + collectionRdfId + "\" \n");
+    rdfStrBuilder.append("   xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" \n");
     rdfStrBuilder.append("   xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" \n");
     rdfStrBuilder.append("   xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\" \n");
     rdfStrBuilder.append("   xmlns:dc=\"http://purl.org/dc/elements/1.1/\" \n");
@@ -1246,7 +1395,8 @@ public class ConvertConfigXml2Rdf {
       GetMethod method = new GetMethod(urlStr);
       statusCode = httpClient.executeMethod(method);
       if (statusCode < 400) {
-        byte[] resultBytes = method.getResponseBody();
+        InputStream resultIS = method.getResponseBodyAsStream();
+        byte[] resultBytes = getBytes(resultIS);
         resultStr = new String(resultBytes, "utf-8");
       }
       method.releaseConnection();
@@ -1259,5 +1409,22 @@ public class ConvertConfigXml2Rdf {
     }
     return resultStr;
   }
-  
+
+  private byte[] getBytes(InputStream is) throws IOException {
+    int len;
+    int size = 1024;
+    byte[] buf;
+    if (is instanceof ByteArrayInputStream) {
+      size = is.available();
+      buf = new byte[size];
+      len = is.read(buf, 0, size);
+    } else {
+      ByteArrayOutputStream bos = new ByteArrayOutputStream();
+      buf = new byte[size];
+      while ((len = is.read(buf, 0, size)) != -1)
+        bos.write(buf, 0, len);
+      buf = bos.toByteArray();
+    }
+    return buf;
+  }
 }

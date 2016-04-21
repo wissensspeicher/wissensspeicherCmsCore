@@ -215,4 +215,7 @@ public class SubjectHandler {
     return ddcSubject2Code.get(ddcSubjectStr);
   }
   
+  public String getDdcSubject(String ddcCode) {
+    return ddcCode2Subject.get(ddcCode);
+  }
 }

@@ -34,10 +34,12 @@ public class CollectionReader {
   private XQueryEvaluator xQueryEvaluator;
   private URL inputNormdataFileUrl;
 	private HashMap<String, Collection> collectionContainer;  // key is collectionId string and value is collection
+  private HashMap<String, Collection> projectRdfId2collection;  // key is projectRdfId string and value is collection
   private HashMap<String, Person> persons;   
 	
 	private CollectionReader() throws ApplicationException {
 		collectionContainer = new HashMap<String, Collection>();
+		projectRdfId2collection = new HashMap<String, Collection>();
 		init();
 		readConfFiles();
 		readNormdataFile();
@@ -82,6 +84,11 @@ public class CollectionReader {
 		Collection collection = collectionContainer.get(collectionId);
 		return collection;
 	}
+
+  public Collection getCollectionByProjectRdfId(String projectRdfId) {
+    Collection collection = projectRdfId2collection.get(projectRdfId);
+    return collection;
+  }
 
 	public Person getPerson(String aboutId) {
 	  return persons.get(aboutId);
@@ -180,6 +187,7 @@ public class CollectionReader {
           LOGGER.error("Double collectionId \"" + collectionId + "\" (in: \"" + collection.getConfigFileName() + "\" and in \"" + coll.getConfigFileName() + "\"");
         } else {
           collectionContainer.put(collectionId, collection);
+          projectRdfId2collection.put(rdfId, collection);
         }
       }
     } catch (Exception e) {
@@ -288,20 +296,6 @@ public class CollectionReader {
           collectionDBs.add(db);
         }
         collection.setDatabases(collectionDBs);
-      }
-      // read edoc metadata  TODO auslagern in RDF
-      String metadataUrlStr = xQueryEvaluator.evaluateAsStringValueJoined(configFileUrl, "/wsp/collection/metadata/url");
-      if (metadataUrlStr != null) {
-        String[] metadataUrls = metadataUrlStr.split(" ");
-        collection.setMetadataUrls(metadataUrls);
-      }
-      String metadataUrlPrefix = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/metadata/urlPrefix/text()");
-      if (metadataUrlPrefix != null) {
-        collection.setMetadataUrlPrefix(metadataUrlPrefix);
-      }
-      String collectionMetadataRedundantUrlPrefix = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/metadata/redundantUrlPrefix/text()");
-      if (collectionMetadataRedundantUrlPrefix != null) {
-        collection.setMetadataRedundantUrlPrefix(collectionMetadataRedundantUrlPrefix);
       }
       // read services (for dynamically building queries to single project documents, e.g. in dta)
       Hits services = (Hits) xQueryEvaluator.evaluate(configFileUrl, "/wsp/collection/services/*", 0, 9, "hits");

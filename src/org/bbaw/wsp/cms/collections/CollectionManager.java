@@ -30,7 +30,6 @@ import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.apache.log4j.Logger;
 import org.apache.tika.Tika;
 import org.bbaw.wsp.cms.dochandler.DocumentHandler;
-import org.bbaw.wsp.cms.dochandler.parser.text.parser.EdocIndexMetadataFetcherTool;
 import org.bbaw.wsp.cms.document.MetadataRecord;
 import org.bbaw.wsp.cms.document.Person;
 import org.bbaw.wsp.cms.document.XQuery;
@@ -39,7 +38,6 @@ import org.bbaw.wsp.cms.lucene.IndexHandler;
 import org.bbaw.wsp.cms.scheduler.CmsDocOperation;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
-import de.mpg.mpiwg.berlin.mpdl.lt.general.Language;
 import de.mpg.mpiwg.berlin.mpdl.util.StringUtils;
 import de.mpg.mpiwg.berlin.mpdl.util.Util;
 import de.mpg.mpiwg.berlin.mpdl.xml.xquery.XQueryEvaluator;
@@ -235,15 +233,15 @@ public class CollectionManager {
     if (mdRecords != null) {
       int countDocs = addDocuments(collection, mdRecords, false);
       counter = counter + countDocs;
-      ArrayList<Database> collectionDBs = collection.getDatabases();
-      // add the database records 
-      if (collectionDBs != null && withDatabases) {
-        for (int i=0; i<collectionDBs.size(); i++) {
-          Database collectionDB = collectionDBs.get(i);
-          LOGGER.info("Create database (" + collectionDB.getName() + ", " + collectionDB.getType() + ") ...");
-          countDocs = addDocuments(collection, collectionDB);
-          counter = counter + countDocs;
-        }
+    }
+    ArrayList<Database> collectionDBs = collection.getDatabases();
+    // add the database records 
+    if (collectionDBs != null && withDatabases) {
+      for (int i=0; i<collectionDBs.size(); i++) {
+        Database collectionDB = collectionDBs.get(i);
+        LOGGER.info("Create database (" + collectionDB.getName() + ", " + collectionDB.getType() + ") ...");
+        int countDocs = addDocuments(collection, collectionDB);
+        counter = counter + countDocs;
       }
     }
     flushDBpediaSpotlightWriter(collection);
@@ -274,8 +272,13 @@ public class CollectionManager {
           File rdfDbResourcesFile = rdfDbResourcesFiles[i];
           LOGGER.info("Create database resources from file: " + rdfDbResourcesFile);
           ArrayList<MetadataRecord> dbMdRecords = getMetadataRecordsByRdfFile(collection, rdfDbResourcesFile, db);
-          int countDocs = addDocuments(collection, dbMdRecords, true);
-          counter = counter + countDocs;
+          if (dbType.equals("oai")) {
+            int countDocs = addDocuments(collection, dbMdRecords, false);
+            counter = counter + countDocs;
+          } else {
+            int countDocs = addDocuments(collection, dbMdRecords, true);
+            counter = counter + countDocs;
+          }
         }
       }
     }
@@ -356,15 +359,10 @@ public class CollectionManager {
   }
   
   public ArrayList<MetadataRecord> getMetadataRecords(Collection collection) throws ApplicationException {
-    ArrayList<MetadataRecord> mdRecords = new ArrayList<MetadataRecord>();
     String collectionId = collection.getId();
-    if (collectionId.equals("edoc")) {
-      mdRecords = getMetadataRecordsEdoc(collection);
-    } else {
-      String metadataRdfDir = Constants.getInstance().getMetadataDir() + "/resources";
-      File rdfRessourcesFile = new File(metadataRdfDir + "/" + collectionId + ".rdf");
-      mdRecords = getMetadataRecordsByRdfFile(collection, rdfRessourcesFile, null);
-    }
+    String metadataRdfDir = Constants.getInstance().getMetadataDir() + "/resources";
+    File rdfRessourcesFile = new File(metadataRdfDir + "/" + collectionId + ".rdf");
+    ArrayList<MetadataRecord> mdRecords = getMetadataRecordsByRdfFile(collection, rdfRessourcesFile, null);
     if (mdRecords.size() == 0)
       return null;
     else 
@@ -433,9 +431,10 @@ public class CollectionManager {
           maxIdcounter++;
           XdmItem xdmItemResource = xmdValueResourcesIterator.next();
           String xdmItemResourceStr = xdmItemResource.toString();
-          MetadataRecord mdRecord = getMdRecord(xQueryEvaluator, xdmItemResourceStr);  // get the mdRecord out of rdf string
+          MetadataRecord mdRecord = getMdRecord(collection, xQueryEvaluator, xdmItemResourceStr);  // get the mdRecord out of rdf string
           if (mdRecord != null) {
-            mdRecord.setCollectionNames(collectionId);
+            if (mdRecord.getCollectionNames() == null)
+              mdRecord.setCollectionNames(collectionId);
             mdRecord.setId(maxIdcounter); // collections wide id
             mdRecord = createMainFieldsMetadataRecord(mdRecord, collection, db);
             // if it is a record: set lastModified to the date of the harvested dump file; if it is a normal web record: set it to now (harvested now)
@@ -575,61 +574,6 @@ public class CollectionManager {
     return mdRecord;
   }
 
-  private ArrayList<MetadataRecord> getMetadataRecordsEdoc(Collection collection) throws ApplicationException {
-    ArrayList<MetadataRecord> mdRecords = new ArrayList<MetadataRecord>();
-    String metadataRedundantUrlPrefix = collection.getMetadataRedundantUrlPrefix();
-    String metadataUrlPrefix = collection.getMetadataUrlPrefix();
-    String[] metadataUrls = collection.getMetadataUrls();
-    int maxIdcounter = IndexHandler.getInstance().findMaxId();
-    for (int i=0; i<metadataUrls.length; i++) {
-      maxIdcounter++;
-      String metadataUrl = metadataUrls[i];
-      MetadataRecord mdRecord = new MetadataRecord();
-      String docId = null;
-      String uri = null;
-      String webUri = null;
-      mdRecord.setId(maxIdcounter);
-      File edocDir = new File(Constants.getInstance().getExternalDataResourcesDir() + "/edoc");
-      Date lastModified = new Date(edocDir.lastModified());
-      mdRecord.setLastModified(lastModified);
-      EdocIndexMetadataFetcherTool.fetchHtmlDirectly(metadataUrl, mdRecord);
-      if (mdRecord.getLanguage() != null) {
-        String isoLang = Language.getInstance().getISO639Code(mdRecord.getLanguage());
-        mdRecord.setLanguage(isoLang);
-      }
-      String httpEdocUrl = mdRecord.getRealDocUrl();
-      String uriEdoc = mdRecord.getUri();  // e.g.: http://edoc.bbaw.de/volltexte/2009/1070/
-      if (httpEdocUrl != null) {             
-        String docIdTmp = httpEdocUrl.replaceAll(metadataUrlPrefix, "");
-        docId = "/edoc" + docIdTmp;
-        String fileEdocUrl = "file:" + metadataRedundantUrlPrefix + docIdTmp;
-        uri = fileEdocUrl;
-        if (uriEdoc == null) {
-          String edocId = docIdTmp.replaceAll("pdf/.*$", "");
-          webUri = metadataUrlPrefix + edocId;
-        } else { 
-          webUri = uriEdoc;
-        }
-      } else {
-        LOGGER.error("Fetching metadata failed for: " + metadataUrl + " (no url in index.html found)");
-      }
-      if (docId != null && uri != null) {
-        mdRecord.setDocId(docId);
-        mdRecord.setUri(uri);
-        mdRecord.setWebUri(webUri);
-        if (mdRecord.getCollectionNames() == null)
-          mdRecord.setCollectionNames("edoc");
-        if (mdRecord.getLanguage() == null) {
-          String mainLanguage = collection.getMainLanguage();
-          mdRecord.setLanguage(mainLanguage);
-        }
-        mdRecord.setSchemaName(null);
-        mdRecords.add(mdRecord);
-      }
-    }
-    return mdRecords;
-  }
-
   private List<String> extractDocumentUrls(String collectionDataUrl, String excludesStr) {
     List<String> documentUrls = null;
     if (! collectionDataUrl.equals("")){
@@ -658,7 +602,7 @@ public class CollectionManager {
     return mimeType;
   }
 
-  private MetadataRecord getMdRecord(XQueryEvaluator xQueryEvaluator, String xmlRdfStr) throws ApplicationException {
+  private MetadataRecord getMdRecord(Collection collection, XQueryEvaluator xQueryEvaluator, String xmlRdfStr) throws ApplicationException {
     String namespaceDeclaration = "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; declare namespace dc=\"http://purl.org/dc/elements/1.1/\"; declare namespace dcterms=\"http://purl.org/dc/terms/\"; ";
     // download url of resource
     String resourceIdUrlStr = xQueryEvaluator.evaluateAsString(xmlRdfStr, namespaceDeclaration + "string(/rdf:Description/dc:identifier/@rdf:resource)");
@@ -681,9 +625,17 @@ public class CollectionManager {
       }
       mdRecord.setUri(resourceIdUrlStr);
     }
+    if (collection.getId().equals("edoc")) {
+      String projectRdfStr = xQueryEvaluator.evaluateAsString(xmlRdfStr, namespaceDeclaration + "string(/rdf:Description/dcterms:isPartOf/@rdf:resource)");
+      Collection c = CollectionReader.getInstance().getCollectionByProjectRdfId(projectRdfStr);
+      if (c != null) {
+        String collId = c.getId();
+        mdRecord.setCollectionNames(collId);
+      }
+    }
     String type = xQueryEvaluator.evaluateAsString(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dc:type/text()");
     if (type != null)
-      mdRecord.setSystem(type);  // e.g. "eXistDir" or "dbRecord" or "directory" or "oai"
+      mdRecord.setSystem(type);  // e.g. "eXistDir" or "dbRecord" or "oai" or "directory" 
     XdmValue xmdValueAuthors = xQueryEvaluator.evaluate(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dc:creator");
     if (xmdValueAuthors != null && xmdValueAuthors.size() > 0) {
       XdmSequenceIterator xmdValueAuthorsIterator = xmdValueAuthors.iterator();
@@ -743,6 +695,18 @@ public class CollectionManager {
     if (subject != null)
       subject = StringUtils.resolveXmlEntities(subject.trim());
     mdRecord.setSubject(subject);
+    String subjectSwd = xQueryEvaluator.evaluateAsStringValueJoined(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dc:subject[@xsi:type = 'SWD']", ",");
+    if (subjectSwd != null && ! subjectSwd.isEmpty()) {
+      subjectSwd = StringUtils.resolveXmlEntities(subjectSwd.trim());
+      if (subjectSwd.endsWith(","))
+        subjectSwd = subjectSwd.substring(0, subjectSwd.length() - 1); 
+    }
+    mdRecord.setSwd(subjectSwd);
+    String subjectDdc = xQueryEvaluator.evaluateAsStringValueJoined(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dc:subject[@xsi:type = 'dcterms:DDC']", ",");
+    if (subjectDdc != null && ! subjectDdc.isEmpty()) {
+      subjectDdc = StringUtils.resolveXmlEntities(subjectDdc.trim());
+      mdRecord.setDdc(subjectDdc);
+    }
     XdmValue xmdValueDcTerms = xQueryEvaluator.evaluate(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dcterms:subject");
     XdmSequenceIterator xmdValueDcTermsIterator = xmdValueDcTerms.iterator();
     if (xmdValueDcTerms != null && xmdValueDcTerms.size() > 0) {
