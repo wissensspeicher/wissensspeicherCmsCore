@@ -214,10 +214,31 @@ public class CollectionManager {
 
   public void deleteCollection(String collectionId) throws ApplicationException {
     DocumentHandler docHandler = new DocumentHandler();
-    CmsDocOperation docOp = new CmsDocOperation("deleteCollection", null, null, null);
-    docOp.setCollectionId(collectionId);
     try {
-      docHandler.doOperation(docOp);
+      if (collectionId.equals("edoc")) {
+        LOGGER.info("Delete collection: " + "edoc" + " ...");
+        String dbDumpsDirName = Constants.getInstance().getExternalDataDbDumpsDir();
+        File rdfDbResourcesFile = new File(dbDumpsDirName + "/edoc-edoc-1.rdf");
+        Collection collection = collectionReader.getCollection(collectionId);
+        ArrayList<MetadataRecord> mdRecords = getMetadataRecordsByRdfFile(collection, rdfDbResourcesFile, collection.getDatabases().get(0));
+        int counter = 0;
+        for (int i=0; i<mdRecords.size(); i++) {
+          CmsDocOperation docOp = new CmsDocOperation("delete", null, null, null);
+          MetadataRecord mdRecord = mdRecords.get(i);
+          String docIdentifier = mdRecord.getDocId();
+          org.apache.lucene.document.Document luceneDoc = IndexHandler.getInstance().getDocument(docIdentifier);
+          if (luceneDoc != null) {
+            counter++;
+            docOp.setDocIdentifier(docIdentifier);
+            docHandler.doOperation(docOp);
+          }
+        }
+        LOGGER.info("Collection: " + "edoc" + " with " + counter + " resources sucessfully deleted");
+      } else {
+        CmsDocOperation docOp = new CmsDocOperation("deleteCollection", null, null, null);
+        docOp.setCollectionId(collectionId);
+        docHandler.doOperation(docOp);
+      }
     } catch (Exception e) {
       e.printStackTrace();
     }

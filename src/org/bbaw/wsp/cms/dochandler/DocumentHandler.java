@@ -233,14 +233,9 @@ public class DocumentHandler {
       throw new ApplicationException("Your document identifier is empty. Please specify a document identifier for your document.");
     String docDirStr = getDocDir(docIdentifier);
     File docDir = new File(docDirStr);
-    boolean docExists = docDir.exists();
-    if (! docExists) {
-      throw new ApplicationException("Document:" + docIdentifier + " does not exists. Please use a name that exists and perform the operation \"Delete\" again.");
-    }
     // perform operation on file system
     docOperation.setStatus(operationName + " document: " + docIdentifier + " in CMS");
     FileUtils.deleteQuietly(docDir);
-      
     // perform operation on Lucene
     IndexHandler indexHandler = IndexHandler.getInstance();
     indexHandler.deleteDocument(docOperation);

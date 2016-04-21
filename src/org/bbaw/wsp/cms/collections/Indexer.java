@@ -61,7 +61,7 @@ public class Indexer {
   private void deleteProjectResources() throws ApplicationException {
     /** please comment out, what you want to do **/
     /** delete all resources of project "aaew" **/
-    // collectionManager.deleteCollection("aaew");
+    collectionManager.deleteCollection("edoc");
     /** delete all resources of all projects alphabetically named between "aaew" and dta inclusive **/
     // collectionManager.deleteCollections("aaew", "dta");
     /** delete all resources of all projects named in this projectIds array **/
@@ -72,7 +72,7 @@ public class Indexer {
   private void createProjectResources() throws ApplicationException {
     /** please comment out, what you want to do **/
     /** create all resources of project "aaew" **/
-    // collectionManager.updateCollection("aaew");
+    collectionManager.updateCollection("edoc");
     /** create all resources of all projects alphabetically named between "aaew" and "dspin" inclusive **/
     // collectionManager.updateCollections("aaew", "dspin"); // 1 hour
     // collectionManager.updateCollections("jdgzkz", "zwk");  // 2 hours
