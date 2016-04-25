@@ -1052,6 +1052,10 @@ public class ConvertConfigXml2Rdf {
             String collRdfId = getCollectionRdfId(institutesStr);
             if (collRdfId != null)
               collectionRdfId = collRdfId;
+          } else {
+            // if no institutes string is given, then they are mapped to "akademiepublikationen1"
+            Collection c = CollectionReader.getInstance().getCollection("akademiepublikationen1");
+            collectionRdfId = c.getRdfId();
           }
         }
       }
