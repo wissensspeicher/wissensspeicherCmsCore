@@ -67,6 +67,7 @@ import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TermRangeQuery;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.search.TopFieldCollector;
+import org.apache.lucene.search.WildcardQuery;
 import org.apache.lucene.queries.mlt.MoreLikeThis;
 import org.apache.lucene.search.suggest.tst.TSTLookup;
 import org.apache.lucene.search.vectorhighlight.FastVectorHighlighter;
@@ -784,8 +785,14 @@ public class IndexHandler {
           nodesIndexWriter.deleteDocuments(termDocId);
         }
         // delete all documents in collection
-        Term termCollectionName = new Term("collectionNames", collectionName);
-        documentsIndexWriter.deleteDocuments(termCollectionName);
+        if (collectionName.equals("edoc")) {
+          Term term = new Term("webUri", "*edoc.bbaw.de*");
+          Query deleteQuery = new WildcardQuery(term);
+          documentsIndexWriter.deleteDocuments(deleteQuery);
+        } else {
+          Term termCollectionName = new Term("collectionNames", collectionName);
+          documentsIndexWriter.deleteDocuments(termCollectionName);
+        }
       }
     } catch (Exception e) {
       throw new ApplicationException(e);
