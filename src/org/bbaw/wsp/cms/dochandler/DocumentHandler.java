@@ -1129,7 +1129,7 @@ public class DocumentHandler {
 
   public boolean isText(String mimeType) {
     boolean isText = true;
-    if (mimeType != null && mimeType.contains("image"))
+    if (mimeType != null && (mimeType.contains("image") || mimeType.contains("audio") || mimeType.contains("video") || mimeType.contains("gzip")))
       return false;
     return isText;
   }
