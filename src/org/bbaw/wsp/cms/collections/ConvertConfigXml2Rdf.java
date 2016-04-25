@@ -1169,6 +1169,7 @@ public class ConvertConfigXml2Rdf {
               if (ddcSubject != null)
                 rdfStrBuilder.append("  <dc:subject xsi:type=\"dcterms:DDC\">" + ddcSubject + "</dc:subject>\n");
             } else {
+              fieldValue = StringUtils.resolveXmlEntities(fieldValue);
               String[] subjects = fieldValue.split("###");
               if (! fieldValue.contains("###") && fieldValue.contains(";"))
                 subjects = fieldValue.split(";");
