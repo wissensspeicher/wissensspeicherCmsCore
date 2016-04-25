@@ -1040,7 +1040,7 @@ public class ConvertConfigXml2Rdf {
           id = edocMetadataUrl; 
           rdfWebId = identifiers.get(identifiers.size() - 1);  // last one is the fulltext document, e.g. https://edoc.bbaw.de/files/1/vortrag2309_akademieUnion.pdf
           // no fulltext document given in record
-          if (! rdfWebId.startsWith("http") || rdfWebId.endsWith(".gz") || rdfWebId.endsWith(".zip")) {
+          if (! rdfWebId.startsWith("http") || rdfWebId.endsWith(".gz") || rdfWebId.endsWith(".zip") || rdfWebId.endsWith(".mp3")) {
             rdfWebId = edocMetadataUrl;
             id = "";
           }
