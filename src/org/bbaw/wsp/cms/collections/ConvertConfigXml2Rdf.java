@@ -1201,11 +1201,11 @@ public class ConvertConfigXml2Rdf {
   private String getCollectionRdfId(String institutesStr) throws ApplicationException {
     String retStr = null;
     String collectionId = institutes2collectionId.get(institutesStr);
-    if (collectionId != null) {
-      Collection c = CollectionReader.getInstance().getCollection(collectionId);
-      if (c != null)
-        retStr = c.getRdfId();
-    }
+    if (collectionId == null)
+      collectionId = "akademiepublikationen1"; // some institutes (e.g. ALLEA) have no collectionId, they are mapped to "akademiepublikationen1"
+    Collection c = CollectionReader.getInstance().getCollection(collectionId);
+    if (c != null)
+      retStr = c.getRdfId();
     return retStr;
   }
   
