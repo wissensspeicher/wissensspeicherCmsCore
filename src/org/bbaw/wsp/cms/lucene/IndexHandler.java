@@ -769,6 +769,8 @@ public class IndexHandler {
     int countDeletedDocs = -1;
     try {
       String queryDocumentsByCollectionName = "collectionNames:" + collectionName;
+      if (collectionName.equals("edoc"))
+        queryDocumentsByCollectionName = "webUri:*edoc.bbaw.de*";
       Hits collectionDocHits = queryDocuments("lucene", queryDocumentsByCollectionName, null, null, null, 0, 100000, false, false);
       ArrayList<org.bbaw.wsp.cms.document.Document> collectionDocs = collectionDocHits.getHits();
       if (collectionDocs != null) {
@@ -1789,7 +1791,7 @@ public class IndexHandler {
     return terms;
   }
 
-  private Document getDocument(String docId) throws ApplicationException {
+  public Document getDocument(String docId) throws ApplicationException {
     Document doc = null;
     IndexSearcher searcher = null;
     try {
