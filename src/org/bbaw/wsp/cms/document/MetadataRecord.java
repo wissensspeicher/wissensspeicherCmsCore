@@ -1,11 +1,8 @@
 package org.bbaw.wsp.cms.document;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Hashtable;
-
-import de.mpg.mpiwg.berlin.mpdl.lt.text.tokenize.XmlTokenizerContentHandler;
 
 public class MetadataRecord implements Cloneable {
   private int id = -1; // local id: auto incremented integer value (one higher than the last created integer value in lucene field "id", e.g. 1
