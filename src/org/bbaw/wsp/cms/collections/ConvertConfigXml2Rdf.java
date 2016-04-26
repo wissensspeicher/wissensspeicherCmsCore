@@ -1067,7 +1067,7 @@ public class ConvertConfigXml2Rdf {
     if (dbType.equals("oai"))
       rdfStrBuilder.append("  <dc:type>oaiRecord</dc:type>\n");
     else
-      rdfStrBuilder.append("  <dc:type>dbRecord</dc:type>\n");
+      rdfStrBuilder.append("  <dc:type>dbRecord</dc:type>\n");  // for huge oai collections such as jdg (performance gain in inserting them into lucene) 
     String dbFieldCreator = db.getDbField("creator");
     if (dbFieldCreator != null) {
       ArrayList<String> fieldValues = row.getFieldValues(dbFieldCreator);
