@@ -223,6 +223,25 @@ public class CollectionManager {
     }
   }
   
+  public void addDocumentsOfDatabase(String collectionId, String databaseName) throws ApplicationException {
+    Collection collection = collectionReader.getCollection(collectionId);
+    initDBpediaSpotlightWriter(collection);
+    ArrayList<Database> collectionDBs = collection.getDatabases();
+    // add the database records 
+    if (collectionDBs != null) {
+      for (int i=0; i<collectionDBs.size(); i++) {
+        Database db = collectionDBs.get(i);
+        String dbName = db.getName(); 
+        if (dbName.equals(databaseName)) {
+          LOGGER.info("Create database (Collection: " + collectionId + ", Database: " + db.getName() + ", Type: " + db.getType() + ") ...");
+          int countDocs = addDocuments(collection, db);
+          flushDBpediaSpotlightWriter(collection);
+          LOGGER.info("Database: " + db.getName() + " with: " + countDocs + " records created");
+        }
+      }
+    }
+  }
+
   private void addDocuments(Collection collection, boolean withDatabases) throws ApplicationException {
     int counter = 0;
     String collId = collection.getId();
@@ -256,8 +275,8 @@ public class CollectionManager {
       int countDocs = addDocuments(collection, dbMdRecords, false);
       counter = counter + countDocs;
     } else if (dbType.equals("crawl")) {
-      ArrayList<MetadataRecord> dbMdRecords = getMetadataRecordsCrawl(collection, db);
-      int countDocs = addDocuments(collection, dbMdRecords, false);
+      ArrayList<MetadataRecord> mdRecords = getMetadataRecordsCrawl(collection, db);
+      int countDocs = addDocuments(collection, mdRecords, false);
       counter = counter + countDocs;
     } else {
       String dbDumpsDirName = Constants.getInstance().getExternalDataDbDumpsDir();
@@ -420,43 +439,28 @@ public class CollectionManager {
   public ArrayList<MetadataRecord> getMetadataRecordsCrawl(Collection collection, Database db) throws ApplicationException {
     String collectionId = collection.getId();
     int maxIdcounter = IndexHandler.getInstance().findMaxId();  // find the highest value, so that each following id is a real new id
-    String urlStr = db.getUrl();
-    MetadataRecord mdRecord = getNewMdRecord(urlStr);
-    mdRecord.setSystem(db.getType());
-    mdRecord.setCollectionNames(collectionId);
-    mdRecord.setId(maxIdcounter); // collections wide id
-    mdRecord = createMainFieldsMetadataRecord(mdRecord, collection, null);
     Date lastModified = new Date();
-    mdRecord.setLastModified(lastModified);
-    String language = db.getLanguage();
-    if (language != null)
-      mdRecord.setLanguage(language);
-    ArrayList<MetadataRecord> mdRecordsCrawl = new ArrayList<MetadataRecord>();
-    String startUrl = mdRecord.getWebUri();
-    if (startUrl.endsWith("/"))
-      startUrl = startUrl.substring(0, startUrl.length() - 1);
+    String startUrl = db.getUrl();
     ArrayList<String> excludes = db.getExcludes();
     Integer depth = db.getDepth();
-    Crawler crawler = Crawler.getInstance();
-    ArrayList<String> crawlUrls = crawler.crawl(startUrl, depth, excludes);
-    for (int i=0; i<crawlUrls.size(); i++) {
+    Crawler crawler = new Crawler(startUrl, depth, excludes);
+    ArrayList<MetadataRecord> crawledMdRecords = crawler.crawl();
+    ArrayList<MetadataRecord> mdRecords = new ArrayList<MetadataRecord>();
+    for (int i=0; i<crawledMdRecords.size(); i++) {
+      String crawlUrlStr = crawledMdRecords.get(i).getWebUri();
+      MetadataRecord crawledMdRecord = getNewMdRecord(crawlUrlStr); // with docId and webUri
+      crawledMdRecord.setCollectionNames(collectionId);
+      crawledMdRecord.setId(maxIdcounter); // collections wide id
+      crawledMdRecord = createMainFieldsMetadataRecord(crawledMdRecord, collection, db);
+      crawledMdRecord.setLastModified(lastModified);
+      crawledMdRecord.setSystem("crawl");
+      String dbLanguage = db.getLanguage();
+      if (dbLanguage != null)
+        crawledMdRecord.setLanguage(dbLanguage);
       maxIdcounter++;
-      String crawlUrlStr = crawlUrls.get(i);
-      MetadataRecord mdRecordCrawl = getNewMdRecord(crawlUrlStr); // with docId and webUri
-      mdRecordCrawl.setCollectionNames(collectionId);
-      mdRecordCrawl.setId(maxIdcounter); // collections wide id
-      mdRecordCrawl = createMainFieldsMetadataRecord(mdRecordCrawl, collection, db);
-      mdRecordCrawl.setLastModified(lastModified);
-      mdRecordCrawl.setCreator(mdRecord.getCreator());
-      mdRecordCrawl.setTitle(mdRecord.getTitle());
-      mdRecordCrawl.setPublisher(mdRecord.getPublisher());
-      mdRecordCrawl.setDate(mdRecord.getDate());
-      mdRecordCrawl.setSystem("crawl");
-      if (mdRecord.getLanguage() != null)
-        mdRecordCrawl.setLanguage(mdRecord.getLanguage());
-      mdRecordsCrawl.add(mdRecordCrawl);
+      mdRecords.add(crawledMdRecord);
     }
-    return mdRecordsCrawl;
+    return mdRecords;
   }
   
   public ArrayList<MetadataRecord> getMetadataRecordsByRdfFile(Collection collection, File rdfRessourcesFile, Database db) throws ApplicationException {

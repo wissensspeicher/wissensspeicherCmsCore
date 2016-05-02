@@ -3,9 +3,11 @@ package org.bbaw.wsp.cms.collections;
 import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Hashtable;
 
 import org.apache.tika.Tika;
+import org.bbaw.wsp.cms.document.MetadataRecord;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -14,60 +16,65 @@ import org.jsoup.select.Elements;
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 
 public class Crawler {
-  private static Crawler crawler;
   private static int SOCKET_TIMEOUT = 10 * 1000;
+  private String rootUrlStr;
+  private Integer maxDepth;
+  private ArrayList<String> excludes;
+  private Hashtable<String, MetadataRecord> urlsHashtable;
   private Tika tika;
 
-  public static Crawler getInstance() throws ApplicationException {
-    if(crawler == null) {
-      crawler = new Crawler();
-      crawler.init();
+  public Crawler(String rootUrlStr, Integer maxDepth, ArrayList<String> excludes) throws ApplicationException {
+    this.rootUrlStr = rootUrlStr;
+    this.maxDepth = maxDepth;
+    this.excludes = excludes;
+    this.tika = new Tika();
+    this.urlsHashtable = new Hashtable<String, MetadataRecord>();
+  }
+  
+  public ArrayList<MetadataRecord> crawl() throws ApplicationException {
+    ArrayList<MetadataRecord> mdRecords = getMdRecords(rootUrlStr, 1);
+    if (urlsHashtable.get(rootUrlStr) == null) {
+      MetadataRecord mdRecord = new MetadataRecord();
+      mdRecord.setWebUri(rootUrlStr);
+      urlsHashtable.put(rootUrlStr, mdRecord);
+      mdRecords.add(mdRecord);
     }
-    return crawler;
-  }
-  
-  private void init() throws ApplicationException {
-    tika = new Tika();
-  }
-  
-  public ArrayList<String> crawl(String startUrlStr, Integer maxDepth, ArrayList<String> excludes) throws ApplicationException {
-    Hashtable<String, String> urlsHashtable = new Hashtable<String, String>();
-    ArrayList<String> allUrls = getUrls(startUrlStr, 1, maxDepth);
-    allUrls.add(startUrlStr);
-    for (String urlStr : allUrls) {
-      if (urlsHashtable.get(urlStr) == null) {
-        String urlStrRelative = urlStr.replaceFirst(startUrlStr, "");
-        if (isAllowed(urlStrRelative, excludes))
-          urlsHashtable.put(urlStr, urlStr);
+    Comparator<MetadataRecord> mdRecordComparator = new Comparator<MetadataRecord>() {
+      public int compare(MetadataRecord m1, MetadataRecord m2) {
+        return m1.getWebUri().compareTo(m2.getWebUri());
       }
-    }
-    ArrayList<String> urls = new ArrayList<String>(urlsHashtable.values());
-    urls.sort(null);
-    return urls;
+    };
+    mdRecords.sort(mdRecordComparator);
+    return mdRecords;
   }
 
-  private ArrayList<String> getUrls(String startUrlStr, Integer depth, Integer maxDepth) throws ApplicationException {
-    ArrayList<String> retUrls = new ArrayList<String>();
+  private ArrayList<MetadataRecord> getMdRecords(String startUrlStr, Integer depth) throws ApplicationException {
+    ArrayList<MetadataRecord> retMdRecords = new ArrayList<MetadataRecord>();
     try {
       URL startUrl = new URL(startUrlStr);
       Document doc = Jsoup.parse(startUrl, SOCKET_TIMEOUT);
-      Elements links = doc.select("a[href]");
+      Elements links = doc.select("a[href], area[href]");
       if (links != null) {
         for (Element link : links) {
           String urlStr = link.attr("abs:href");
+          if (urlStr.endsWith("index.html"))
+            urlStr = urlStr.substring(0, urlStr.length() - 10);
+          if (urlStr.endsWith("index.htm"))
+            urlStr = urlStr.substring(0, urlStr.length() - 9);
           if (urlStr.endsWith("/"))
             urlStr = urlStr.substring(0, urlStr.length() - 1);
           URL url = new URL(urlStr);
-          URI uri = new URI(urlStr);
-          String fragment = uri.getFragment();  // the "#" part of the uri
-          String urlQuery = url.getQuery();
-          if (url.getProtocol().startsWith("http") && fragment == null && urlQuery == null && urlStr.startsWith(startUrlStr)) {
-            if (depth < maxDepth && isHtml(url)) {
-              retUrls.add(urlStr);
-              ArrayList<String> urls = getUrls(urlStr, depth + 1, maxDepth);
-              retUrls.addAll(urls);
-            } else {
-              retUrls.add(urlStr);
+          boolean isAllowed = isAllowed(urlStr);
+          if (isAllowed) {
+            if (urlsHashtable.get(urlStr) == null) {
+              MetadataRecord mdRecord = new MetadataRecord();
+              mdRecord.setWebUri(urlStr);
+              urlsHashtable.put(urlStr, mdRecord);
+              retMdRecords.add(mdRecord);
+              if (depth < maxDepth && isHtml(url)) {
+                ArrayList<MetadataRecord> mdRecords = getMdRecords(urlStr, depth + 1);
+                retMdRecords.addAll(mdRecords);
+              }
             }
           }
         }
@@ -75,17 +82,32 @@ public class Crawler {
     } catch (Exception e) {
       throw new ApplicationException(e);
     }
-    return retUrls;
+    return retMdRecords;
   }
   
-  private boolean isAllowed(String urlStr, ArrayList<String> excludes) {
+  private boolean isAllowed(String urlStr) throws ApplicationException {
     boolean isAllowed = true;
-    if (excludes == null)
-      return true;
-    for (int i=0;i<excludes.size();i++) {
-      String exclude = excludes.get(i);
-      if (urlStr.matches(exclude))
+    try {
+      if (excludes == null)
+        return true;
+      URL url = new URL(urlStr);
+      String protocol = url.getProtocol();
+      if (protocol == null || (protocol != null && ! protocol.startsWith("http")))
         return false;
+      URI uri = new URI(urlStr);
+      String fragment = uri.getFragment();  // the "#" part of the uri
+      if (fragment != null)
+        return false;
+      if (! urlStr.startsWith(rootUrlStr))
+        return false;
+      String urlStrRelative = urlStr.replaceFirst(rootUrlStr, "");
+      for (int i=0;i<excludes.size();i++) {
+        String exclude = excludes.get(i);
+        if (urlStrRelative.matches(exclude))
+          return false;
+      }
+    } catch (Exception e) {
+      throw new ApplicationException(e);
     }
     return isAllowed;
   }
@@ -101,6 +123,4 @@ public class Crawler {
     }
     return retValue;
   }
-  
-
 }
