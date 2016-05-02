@@ -28,13 +28,13 @@ import org.apache.log4j.Logger;
 public class PathExtractor {
   private static Logger LOGGER = Logger.getLogger(PathExtractor.class);
   private List<String> ressourceLoc;
-  private String excludes;
+  private ArrayList<String> excludes;
 
   public PathExtractor() {
 
   }
 
-  public List<String> initExtractor(String startingUri, String excludes) {
+  public List<String> initExtractor(String startingUri, ArrayList<String> excludes) {
     this.excludes = excludes;
     ressourceLoc = new ArrayList<String>();
     // parameter necessary, because it's recursive, thus changing the uri
@@ -125,9 +125,8 @@ public class PathExtractor {
   private boolean isExcluded(String url) {
     boolean isExcluded = false;
     if (excludes != null && ! excludes.isEmpty() && url != null) {
-      String[] exludeArrayStr = excludes.split(" ");
-      for (int i=0; i<exludeArrayStr.length; i++) {
-        String exclude = exludeArrayStr[i];
+      for (int i=0; i<excludes.size(); i++) {
+        String exclude = excludes.get(i);
         if (url.endsWith(exclude))
           return true;
       }
@@ -138,9 +137,8 @@ public class PathExtractor {
   private boolean isNameExcluded(String name) {
     boolean isExcluded = false;
     if (excludes != null && name != null) {
-      String[] exludeArrayStr = excludes.split(" ");
-      for (int i=0; i<exludeArrayStr.length; i++) {
-        String exclude = exludeArrayStr[i];
+      for (int i=0; i<excludes.size(); i++) {
+        String exclude = excludes.get(i);
         if (name.equals(exclude))
           return true;
       }

@@ -255,6 +255,10 @@ public class CollectionManager {
       ArrayList<MetadataRecord> dbMdRecords = getMetadataRecordsEXist(collection, db);
       int countDocs = addDocuments(collection, dbMdRecords, false);
       counter = counter + countDocs;
+    } else if (dbType.equals("crawl")) {
+      ArrayList<MetadataRecord> dbMdRecords = getMetadataRecordsCrawl(collection, db);
+      int countDocs = addDocuments(collection, dbMdRecords, false);
+      counter = counter + countDocs;
     } else {
       String dbDumpsDirName = Constants.getInstance().getExternalDataDbDumpsDir();
       File dbDumpsDir = new File(dbDumpsDirName);
@@ -389,7 +393,7 @@ public class CollectionManager {
       ArrayList<MetadataRecord> mdRecordsEXist = new ArrayList<MetadataRecord>();
       if (eXistUrl.endsWith("/"))
         eXistUrl = eXistUrl.substring(0, eXistUrl.length() - 1);
-      String excludes = db.getExcludes();
+      ArrayList<String> excludes = db.getExcludes();
       List<String> eXistUrls = extractDocumentUrls(eXistUrl, excludes);
       for (int i=0; i<eXistUrls.size(); i++) {
         maxIdcounter++;
@@ -411,6 +415,48 @@ public class CollectionManager {
       mdRecords.addAll(mdRecordsEXist);
     }
     return mdRecords;
+  }
+  
+  public ArrayList<MetadataRecord> getMetadataRecordsCrawl(Collection collection, Database db) throws ApplicationException {
+    String collectionId = collection.getId();
+    int maxIdcounter = IndexHandler.getInstance().findMaxId();  // find the highest value, so that each following id is a real new id
+    String urlStr = db.getUrl();
+    MetadataRecord mdRecord = getNewMdRecord(urlStr);
+    mdRecord.setSystem(db.getType());
+    mdRecord.setCollectionNames(collectionId);
+    mdRecord.setId(maxIdcounter); // collections wide id
+    mdRecord = createMainFieldsMetadataRecord(mdRecord, collection, null);
+    Date lastModified = new Date();
+    mdRecord.setLastModified(lastModified);
+    String language = db.getLanguage();
+    if (language != null)
+      mdRecord.setLanguage(language);
+    ArrayList<MetadataRecord> mdRecordsCrawl = new ArrayList<MetadataRecord>();
+    String startUrl = mdRecord.getWebUri();
+    if (startUrl.endsWith("/"))
+      startUrl = startUrl.substring(0, startUrl.length() - 1);
+    ArrayList<String> excludes = db.getExcludes();
+    Integer depth = db.getDepth();
+    Crawler crawler = Crawler.getInstance();
+    ArrayList<String> crawlUrls = crawler.crawl(startUrl, depth, excludes);
+    for (int i=0; i<crawlUrls.size(); i++) {
+      maxIdcounter++;
+      String crawlUrlStr = crawlUrls.get(i);
+      MetadataRecord mdRecordCrawl = getNewMdRecord(crawlUrlStr); // with docId and webUri
+      mdRecordCrawl.setCollectionNames(collectionId);
+      mdRecordCrawl.setId(maxIdcounter); // collections wide id
+      mdRecordCrawl = createMainFieldsMetadataRecord(mdRecordCrawl, collection, db);
+      mdRecordCrawl.setLastModified(lastModified);
+      mdRecordCrawl.setCreator(mdRecord.getCreator());
+      mdRecordCrawl.setTitle(mdRecord.getTitle());
+      mdRecordCrawl.setPublisher(mdRecord.getPublisher());
+      mdRecordCrawl.setDate(mdRecord.getDate());
+      mdRecordCrawl.setSystem("crawl");
+      if (mdRecord.getLanguage() != null)
+        mdRecordCrawl.setLanguage(mdRecord.getLanguage());
+      mdRecordsCrawl.add(mdRecordCrawl);
+    }
+    return mdRecordsCrawl;
   }
   
   public ArrayList<MetadataRecord> getMetadataRecordsByRdfFile(Collection collection, File rdfRessourcesFile, Database db) throws ApplicationException {
@@ -574,11 +620,11 @@ public class CollectionManager {
     return mdRecord;
   }
 
-  private List<String> extractDocumentUrls(String collectionDataUrl, String excludesStr) {
+  private List<String> extractDocumentUrls(String collectionDataUrl, ArrayList<String> excludes) {
     List<String> documentUrls = null;
     if (! collectionDataUrl.equals("")){
       PathExtractor extractor = new PathExtractor();
-      documentUrls = extractor.initExtractor(collectionDataUrl, excludesStr);
+      documentUrls = extractor.initExtractor(collectionDataUrl, excludes);
     }
     return documentUrls;
   }

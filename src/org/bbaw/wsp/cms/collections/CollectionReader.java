@@ -266,10 +266,25 @@ public class CollectionReader {
           String webIdAfterStr = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/webId/afterStr/text()");
           if (webIdAfterStr != null)
             db.setWebIdAfterStr(webIdAfterStr);
-          // read exclude directories (used in eXist resources, to eliminate these subdirectories)
-          String excludes = xQueryEvaluator.evaluateAsStringValueJoined(xdmItemDBStr, "/db/excludes/exclude");
-          if (excludes != null) {
+          // read excludes (e.g. used in eXist resources, to eliminate these sub directories)
+          XdmValue xmdValueExcludes = xQueryEvaluator.evaluate(xdmItemDBStr, "/db/excludes/exclude");
+          XdmSequenceIterator xmdValueExcludesIterator = xmdValueExcludes.iterator();
+          if (xmdValueExcludes != null && xmdValueExcludes.size() > 0) {
+            ArrayList<String> excludes = new ArrayList<String>();
+            while (xmdValueExcludesIterator.hasNext()) {
+              XdmItem xdmItemExclude = xmdValueExcludesIterator.next();
+              String xdmItemExcludeStr = xdmItemExclude.getStringValue().trim();
+              if (xdmItemExcludeStr != null && ! xdmItemExcludeStr.isEmpty())
+                excludes.add(xdmItemExcludeStr);
+            }
             db.setExcludes(excludes);
+          }
+          String depthStr = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/depth/text()");
+          if (depthStr != null) {
+            int depth = Integer.parseInt(depthStr);
+            db.setDepth(depth);
+          } else {
+            db.setDepth(2); // default value
           }
           // read xqueries (used for building dynamically a webUri of a record; only used in xml records
           Hits xQueries = (Hits) xQueryEvaluator.evaluate(xdmItemDBStr, "/db/xqueries/xquery", 0, 9, "hits");

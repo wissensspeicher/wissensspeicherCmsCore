@@ -3,10 +3,8 @@ package org.bbaw.wsp.cms.collections;
 import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Hashtable;
 
-import org.apache.log4j.Logger;
 import org.apache.tika.Tika;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -16,7 +14,6 @@ import org.jsoup.select.Elements;
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 
 public class Crawler {
-  private static Logger LOGGER = Logger.getLogger(Crawler.class);
   private static Crawler crawler;
   private static int SOCKET_TIMEOUT = 10 * 1000;
   private Tika tika;
@@ -33,20 +30,23 @@ public class Crawler {
     tika = new Tika();
   }
   
-  public String[] crawl(String startUrlStr, int maxDepth, String[] excludes) throws ApplicationException {
+  public ArrayList<String> crawl(String startUrlStr, Integer maxDepth, ArrayList<String> excludes) throws ApplicationException {
     Hashtable<String, String> urlsHashtable = new Hashtable<String, String>();
     ArrayList<String> allUrls = getUrls(startUrlStr, 1, maxDepth);
     allUrls.add(startUrlStr);
     for (String urlStr : allUrls) {
-      if (urlsHashtable.get(urlStr) == null)
-        urlsHashtable.put(urlStr, urlStr);
+      if (urlsHashtable.get(urlStr) == null) {
+        String urlStrRelative = urlStr.replaceFirst(startUrlStr, "");
+        if (isAllowed(urlStrRelative, excludes))
+          urlsHashtable.put(urlStr, urlStr);
+      }
     }
-    String[] urls = urlsHashtable.values().toArray(new String[0]);
-    Arrays.sort(urls);
+    ArrayList<String> urls = new ArrayList<String>(urlsHashtable.values());
+    urls.sort(null);
     return urls;
   }
 
-  private ArrayList<String> getUrls(String startUrlStr, int depth, int maxDepth) throws ApplicationException {
+  private ArrayList<String> getUrls(String startUrlStr, Integer depth, Integer maxDepth) throws ApplicationException {
     ArrayList<String> retUrls = new ArrayList<String>();
     try {
       URL startUrl = new URL(startUrlStr);
@@ -76,6 +76,18 @@ public class Crawler {
       throw new ApplicationException(e);
     }
     return retUrls;
+  }
+  
+  private boolean isAllowed(String urlStr, ArrayList<String> excludes) {
+    boolean isAllowed = true;
+    if (excludes == null)
+      return true;
+    for (int i=0;i<excludes.size();i++) {
+      String exclude = excludes.get(i);
+      if (urlStr.matches(exclude))
+        return false;
+    }
+    return isAllowed;
   }
   
   private boolean isHtml(URL url) throws ApplicationException {

@@ -1,5 +1,6 @@
 package org.bbaw.wsp.cms.collections;
 
+import java.util.ArrayList;
 import java.util.Hashtable;
 
 import org.bbaw.wsp.cms.document.XQuery;
@@ -7,7 +8,7 @@ import org.bbaw.wsp.cms.document.XQuery;
 public class Database {
   private String type;
   private String name;
-  private String url;  // eXist URL
+  private String url;  // start url (eXist or crawl)
   private String language;  // language of db content
   private JdbcConnection jdbcConnection;
   private String sql;
@@ -18,7 +19,8 @@ public class Database {
   private String mainResourcesTableId;
   private String webIdPreStr;
   private String webIdAfterStr;
-  private String excludes; // excludes urls separated by a blank e.g. for eXist directories
+  private ArrayList<String> excludes; // exclude urls e.g. for eXist directories or crawls
+  private int depth;
   private Hashtable<String, XQuery> xQueries;
   private Hashtable<String, String> dcField2dbField = new Hashtable<String, String>();
 
@@ -126,12 +128,20 @@ public class Database {
     this.webIdAfterStr = webIdAfterStr;
   }
 
-  public String getExcludes() {
+  public ArrayList<String> getExcludes() {
     return excludes;
   }
 
-  public void setExcludes(String excludes) {
+  public void setExcludes(ArrayList<String> excludes) {
     this.excludes = excludes;
+  }
+
+  public int getDepth() {
+    return depth;
+  }
+
+  public void setDepth(int depth) {
+    this.depth = depth;
   }
 
   public Hashtable<String, XQuery> getxQueries() {
