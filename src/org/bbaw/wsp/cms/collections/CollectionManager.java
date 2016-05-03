@@ -1,19 +1,15 @@
 package org.bbaw.wsp.cms.collections;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.apache.log4j.Logger;
 import org.bbaw.wsp.cms.dochandler.DocumentHandler;
 import org.bbaw.wsp.cms.document.MetadataRecord;
@@ -253,26 +249,13 @@ public class CollectionManager {
   private int addDocuments(Collection collection, Database db) throws ApplicationException {
     int counter = 0;
     String dbType = db.getType();
-    if (dbType.equals("eXist")) {
-      ArrayList<MetadataRecord> dbMdRecords = metadataHandler.getMetadataRecordsEXist(collection, db);
+    if (dbType.equals("eXist") || dbType.equals("crawl")) {
+      ArrayList<MetadataRecord> dbMdRecords = metadataHandler.getMetadataRecords(collection, db);
       int countDocs = addDocuments(collection, dbMdRecords, false);
       counter = counter + countDocs;
-    } else if (dbType.equals("crawl")) {
-      ArrayList<MetadataRecord> mdRecords = metadataHandler.getMetadataRecordsCrawl(collection, db);
-      int countDocs = addDocuments(collection, mdRecords, false);
-      counter = counter + countDocs;
     } else {
-      String dbDumpsDirName = Constants.getInstance().getExternalDataDbDumpsDir();
-      File dbDumpsDir = new File(dbDumpsDirName);
-      String rdfFileFilterName = collection.getId() + "-" + db.getName() + "*.rdf"; 
-      FileFilter rdfFileFilter = new WildcardFileFilter(rdfFileFilterName);
-      File[] rdfDbResourcesFiles = dbDumpsDir.listFiles(rdfFileFilter);
+      File[] rdfDbResourcesFiles = metadataHandler.getRdfDbResourcesFiles(collection, db);
       if (rdfDbResourcesFiles != null && rdfDbResourcesFiles.length > 0) {
-        Arrays.sort(rdfDbResourcesFiles, new Comparator<File>() {
-          public int compare(File f1, File f2) {
-            return f1.getName().compareToIgnoreCase(f2.getName());
-          }
-        }); 
         // add the database records of each database of each database file
         for (int i = 0; i < rdfDbResourcesFiles.length; i++) {
           File rdfDbResourcesFile = rdfDbResourcesFiles[i];
