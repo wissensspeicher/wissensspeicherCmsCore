@@ -370,7 +370,7 @@ public class CollectionReader {
 	  Integer counterError = 0;
 	  for (int i=0; i<collections.size(); i++) {
 	    Collection collection = collections.get(i);
-	    ArrayList<MetadataRecord> mdRecords = CollectionManager.getInstance().getMetadataRecords(collection);
+	    ArrayList<MetadataRecord> mdRecords = MetadataHandler.getInstance().getMetadataRecords(collection);
 	    if (mdRecords != null) {
 	      String collectionId = collection.getId();
 	      LOGGER.info(i + ". Testing project " + collectionId + " with " + mdRecords.size() + " urls");
