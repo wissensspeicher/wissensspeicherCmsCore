@@ -1,12 +1,15 @@
 package org.bbaw.wsp.cms.collections;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.IOException;
 import java.net.FileNameMap;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -15,6 +18,7 @@ import java.util.List;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.SuffixFileFilter;
 import org.apache.commons.io.filefilter.TrueFileFilter;
+import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.apache.log4j.Logger;
 import org.apache.tika.Tika;
 import org.bbaw.wsp.cms.document.MetadataRecord;
@@ -63,7 +67,18 @@ public class MetadataHandler {
       return mdRecords;
   }
 
-  public ArrayList<MetadataRecord> getMetadataRecordsEXist(Collection collection, Database db) throws ApplicationException {
+  public ArrayList<MetadataRecord> getMetadataRecords(Collection collection, Database db) throws ApplicationException {
+    ArrayList<MetadataRecord> dbMdRecords = null;
+    String dbType = db.getType();
+    if (dbType.equals("eXist")) {
+      dbMdRecords = getMetadataRecordsEXist(collection, db);
+    } else if (dbType.equals("crawl")) {
+      dbMdRecords = getMetadataRecordsCrawl(collection, db);
+    }
+    return dbMdRecords;
+  }
+  
+  private ArrayList<MetadataRecord> getMetadataRecordsEXist(Collection collection, Database db) throws ApplicationException {
     String collectionId = collection.getId();
     ArrayList<MetadataRecord> mdRecords = new ArrayList<MetadataRecord>();
     int maxIdcounter = IndexHandler.getInstance().findMaxId();  // find the highest value, so that each following id is a real new id
@@ -107,7 +122,7 @@ public class MetadataHandler {
     return mdRecords;
   }
   
-  public ArrayList<MetadataRecord> getMetadataRecordsCrawl(Collection collection, Database db) throws ApplicationException {
+  private ArrayList<MetadataRecord> getMetadataRecordsCrawl(Collection collection, Database db) throws ApplicationException {
     String collectionId = collection.getId();
     int maxIdcounter = IndexHandler.getInstance().findMaxId();  // find the highest value, so that each following id is a real new id
     Date lastModified = new Date();
@@ -211,6 +226,22 @@ public class MetadataHandler {
       throw new ApplicationException(e);
     }
     return mdRecords;
+  }
+
+  public File[] getRdfDbResourcesFiles(Collection collection, Database db) throws ApplicationException {
+    String dbDumpsDirName = Constants.getInstance().getExternalDataDbDumpsDir();
+    File dbDumpsDir = new File(dbDumpsDirName);
+    String rdfFileFilterName = collection.getId() + "-" + db.getName() + "*.rdf"; 
+    FileFilter rdfFileFilter = new WildcardFileFilter(rdfFileFilterName);
+    File[] rdfDbResourcesFiles = dbDumpsDir.listFiles(rdfFileFilter);
+    if (rdfDbResourcesFiles != null && rdfDbResourcesFiles.length > 0) {
+      Arrays.sort(rdfDbResourcesFiles, new Comparator<File>() {
+        public int compare(File f1, File f2) {
+          return f1.getName().compareToIgnoreCase(f2.getName());
+        }
+      }); 
+    }
+    return rdfDbResourcesFiles;
   }
   
   private MetadataRecord createMainFieldsMetadataRecord(MetadataRecord mdRecord, Collection collection, Database db) throws ApplicationException {
