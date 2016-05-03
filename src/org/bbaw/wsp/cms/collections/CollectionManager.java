@@ -4,43 +4,24 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.FileNameMap;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.Date;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import net.sf.saxon.s9api.XdmItem;
-import net.sf.saxon.s9api.XdmSequenceIterator;
-import net.sf.saxon.s9api.XdmValue;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.filefilter.SuffixFileFilter;
-import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.apache.log4j.Logger;
-import org.apache.tika.Tika;
 import org.bbaw.wsp.cms.dochandler.DocumentHandler;
 import org.bbaw.wsp.cms.document.MetadataRecord;
-import org.bbaw.wsp.cms.document.Person;
-import org.bbaw.wsp.cms.document.XQuery;
 import org.bbaw.wsp.cms.general.Constants;
 import org.bbaw.wsp.cms.lucene.IndexHandler;
 import org.bbaw.wsp.cms.scheduler.CmsDocOperation;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
-import de.mpg.mpiwg.berlin.mpdl.util.StringUtils;
-import de.mpg.mpiwg.berlin.mpdl.util.Util;
-import de.mpg.mpiwg.berlin.mpdl.xml.xquery.XQueryEvaluator;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -413,21 +394,4 @@ public class CollectionManager {
     }
   }
   
-  public class FileExtensionsFilter implements FileFilter {
-    private String[] fileExtensions;
-    
-    public FileExtensionsFilter(String[] fileExtensions) {
-      this.fileExtensions = fileExtensions;
-    }
-    
-    public boolean accept(File file) {
-      for (String extension : fileExtensions) {
-        if (file.getName().toLowerCase().endsWith(extension)) {
-          return true;
-        }
-      }
-      return false;
-    }
-  }
-
 }
