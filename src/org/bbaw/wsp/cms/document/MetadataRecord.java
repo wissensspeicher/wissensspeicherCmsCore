@@ -4,6 +4,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Hashtable;
 
+import org.bbaw.wsp.cms.collections.CollectionReader;
+
+import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
+import de.mpg.mpiwg.berlin.mpdl.util.StringUtils;
+
 public class MetadataRecord implements Cloneable {
   private int id = -1; // local id: auto incremented integer value (one higher than the last created integer value in lucene field "id", e.g. 1
   private String docId; // local id: resource identifier in index system, e.g. "/edoc/2011/1591/pdf/08_VI.Dokumente.pdf"
@@ -488,6 +493,46 @@ public class MetadataRecord implements Cloneable {
 
   public String toString() {
     return "MetadataRecord [docId=" + docId + ", identifier=" + identifier + ", uri=" + uri + ", webUri=" + webUri + ", collectionNames=" + collectionNames + ", schemaName=" + schemaName + ", language=" + language + ", creator=" + creator + ", title=" + title + ", publisher=" + publisher + ", date=" + date + ", description=" + description + ", subject=" + subject + ", contributor=" + contributor + ", coverage=" + coverage + ", ddc=" + ddc + ", swd=" + swd + ", persons=" + persons + ", places=" + places + ", type=" + type + ", rights=" + rights + ", license=" + license + ", accessRights=" + accessRights + ", lastModified=" + lastModified + ", encoding=" + encoding + ", pageCount=" + pageCount + ", urn=" + urn + ", documentType=" + documentType + ", isbn=" + isbn + ", creationDate=" + creationDate + ", publishingDate=" + publishingDate + ", inPublication=" + inPublication + ", tokenOrig=" + tokenOrig + ", tokenReg=" + tokenReg + ", tokenNorm=" + tokenNorm + ", tokenMorph=" + tokenMorph + ", contentXml=" + contentXml + ", content=" + content + ", xQueries=" + xQueries + ", realDocUrl=" + realDocUrl + "]";
+  }
+  
+  public String toRdfStr() throws ApplicationException {
+    StringBuilder rdfStrBuilder = new StringBuilder();
+    String uriStrEscaped = StringUtils.deresolveXmlEntities(uri);
+    rdfStrBuilder.append("  <rdf:Description rdf:about=\"" + uriStrEscaped + "\">\n");
+    rdfStrBuilder.append("    <rdf:type rdf:resource=\"http://purl.org/dc/terms/BibliographicResource\"/>\n");
+    String projectRdfId = CollectionReader.getInstance().getCollection(collectionNames).getRdfId();
+    rdfStrBuilder.append("    <dcterms:isPartOf rdf:resource=\"" + projectRdfId + "\"/>\n");
+    String webUrlStrEscaped = "";
+    if (webUri != null)
+      StringUtils.deresolveXmlEntities(webUri);
+    rdfStrBuilder.append("    <dc:identifier rdf:resource=\"" + uriStrEscaped + "\">" + webUrlStrEscaped + "</dc:identifier>\n");
+    if (system != null)
+      rdfStrBuilder.append("    <dc:type>" + system + "</dc:type>\n");
+    if (creator != null) {
+      String creatorStrEscaped = StringUtils.deresolveXmlEntities(creator);
+      rdfStrBuilder.append("    <dc:creator>" + creatorStrEscaped + "</dc:creator>\n");
+    }
+    if (title != null) {
+      String titleStrEscaped = StringUtils.deresolveXmlEntities(title);
+      rdfStrBuilder.append("    <dc:title>" + titleStrEscaped + "</dc:title>\n");
+    }
+    if (date != null) {
+      rdfStrBuilder.append("    <dc:date>" + date + "</dc:date>\n");
+    }
+    rdfStrBuilder.append("    <dc:language>" + language + "</dc:language>\n");
+    if (type != null)
+      rdfStrBuilder.append("    <dc:format>" + type + "</dc:format>\n");
+    if (subject != null) {
+      String subjectStrEscaped = StringUtils.deresolveXmlEntities(subject);
+      rdfStrBuilder.append("    <dc:subject>" + subjectStrEscaped + "</dc:subject>\n");
+    }
+    if (description != null) {
+      String descriptionStrEscaped = StringUtils.deresolveXmlEntities(description);
+      rdfStrBuilder.append("    <dc:abstract>" + descriptionStrEscaped + "</dc:abstract>\n");
+    }
+    // TODO further fields / if more than one creator, title, subject
+    rdfStrBuilder.append("  </rdf:Description>\n");
+    return rdfStrBuilder.toString();
   }
   
   public void setAllNull() {
