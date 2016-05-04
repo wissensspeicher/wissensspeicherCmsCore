@@ -1,5 +1,7 @@
 package org.bbaw.wsp.cms.document;
 
+import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Hashtable;
@@ -9,7 +11,8 @@ import org.bbaw.wsp.cms.collections.CollectionReader;
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 import de.mpg.mpiwg.berlin.mpdl.util.StringUtils;
 
-public class MetadataRecord implements Cloneable {
+public class MetadataRecord implements Cloneable, Serializable {
+  private static final long serialVersionUID = 4711L;
   private int id = -1; // local id: auto incremented integer value (one higher than the last created integer value in lucene field "id", e.g. 1
   private String docId; // local id: resource identifier in index system, e.g. "/edoc/2011/1591/pdf/08_VI.Dokumente.pdf"
   private String identifier; // local id: identifier field in resource metadata: e.g. <meta name="DC.identifier" content="47114711">
@@ -59,6 +62,18 @@ public class MetadataRecord implements Cloneable {
   private Hashtable<String, XQuery> xQueries; // dynamic xQueries of xml resources (with name, code, result)
   private String realDocUrl; // e.g. the URL to the eDoc (not the index.html)
   private String system; // e.g. eXistDir or httpDir
+  
+  private static Hashtable<String, String> notOutputFields = new Hashtable<String, String>();
+  static {
+    notOutputFields.put("tokenOrig", "tokenOrig");
+    notOutputFields.put("tokenReg", "tokenReg");
+    notOutputFields.put("tokenNorm", "tokenNorm");
+    notOutputFields.put("tokenMorph", "tokenMorph");
+    notOutputFields.put("contentXml", "contentXml");
+    notOutputFields.put("content", "content");
+    notOutputFields.put("xQueries", "xQueries");
+    notOutputFields.put("notOutputFields", "notOutputFields");
+  }
 
   public int getId() {
     return id;
@@ -495,6 +510,32 @@ public class MetadataRecord implements Cloneable {
     return "MetadataRecord [docId=" + docId + ", identifier=" + identifier + ", uri=" + uri + ", webUri=" + webUri + ", collectionNames=" + collectionNames + ", schemaName=" + schemaName + ", language=" + language + ", creator=" + creator + ", title=" + title + ", publisher=" + publisher + ", date=" + date + ", description=" + description + ", subject=" + subject + ", contributor=" + contributor + ", coverage=" + coverage + ", ddc=" + ddc + ", swd=" + swd + ", persons=" + persons + ", places=" + places + ", type=" + type + ", rights=" + rights + ", license=" + license + ", accessRights=" + accessRights + ", lastModified=" + lastModified + ", encoding=" + encoding + ", pageCount=" + pageCount + ", urn=" + urn + ", documentType=" + documentType + ", isbn=" + isbn + ", creationDate=" + creationDate + ", publishingDate=" + publishingDate + ", inPublication=" + inPublication + ", tokenOrig=" + tokenOrig + ", tokenReg=" + tokenReg + ", tokenNorm=" + tokenNorm + ", tokenMorph=" + tokenMorph + ", contentXml=" + contentXml + ", content=" + content + ", xQueries=" + xQueries + ", realDocUrl=" + realDocUrl + "]";
   }
   
+  public String toXmlStr() throws ApplicationException {
+    StringBuilder xmlStrBuilder = new StringBuilder();
+    try {
+      xmlStrBuilder.append("<record>\n");
+      Field[] fields = MetadataRecord.class.getDeclaredFields();
+      for (int i=0; i<fields.length; i++) {
+        Field field = fields[i];
+        String fieldName = field.getName();
+        if (notOutputFields.get(fieldName) == null) {
+          Object fieldValue = field.get(this);
+          if (fieldValue != null) {
+            String fieldValueStr = fieldValue.toString();
+            if (! fieldValueStr.isEmpty()) {
+              String fieldValueStrEscaped = StringUtils.deresolveXmlEntities(fieldValueStr);
+              xmlStrBuilder.append("  <" + fieldName + ">" + fieldValueStrEscaped + "</" + fieldName + ">\n");
+            }
+          }
+        }
+      }
+      xmlStrBuilder.append("</record>\n");
+    } catch (Exception e) {
+      throw new ApplicationException(e);
+    }
+    return xmlStrBuilder.toString();
+  }
+  
   public String toRdfStr() throws ApplicationException {
     StringBuilder rdfStrBuilder = new StringBuilder();
     String uriStrEscaped = StringUtils.deresolveXmlEntities(uri);
@@ -504,7 +545,7 @@ public class MetadataRecord implements Cloneable {
     rdfStrBuilder.append("    <dcterms:isPartOf rdf:resource=\"" + projectRdfId + "\"/>\n");
     String webUrlStrEscaped = "";
     if (webUri != null)
-      StringUtils.deresolveXmlEntities(webUri);
+      webUrlStrEscaped = StringUtils.deresolveXmlEntities(webUri);
     rdfStrBuilder.append("    <dc:identifier rdf:resource=\"" + uriStrEscaped + "\">" + webUrlStrEscaped + "</dc:identifier>\n");
     if (system != null)
       rdfStrBuilder.append("    <dc:type>" + system + "</dc:type>\n");
@@ -517,7 +558,10 @@ public class MetadataRecord implements Cloneable {
       rdfStrBuilder.append("    <dc:title>" + titleStrEscaped + "</dc:title>\n");
     }
     if (date != null) {
-      rdfStrBuilder.append("    <dc:date>" + date + "</dc:date>\n");
+      Calendar cal = Calendar.getInstance();
+      cal.setTime(date);
+      int year = cal.get(Calendar.YEAR);
+      rdfStrBuilder.append("    <dc:date>" + year + "</dc:date>\n");
     }
     rdfStrBuilder.append("    <dc:language>" + language + "</dc:language>\n");
     if (type != null)

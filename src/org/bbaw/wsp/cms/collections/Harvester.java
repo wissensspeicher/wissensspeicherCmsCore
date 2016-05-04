@@ -2,8 +2,11 @@ package org.bbaw.wsp.cms.collections;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.FileNameMap;
 import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
@@ -102,9 +105,9 @@ public class Harvester {
     LOGGER.info("Harvest collection: " + collId + " ...");
     ArrayList<MetadataRecord> mdRecords = metadataHandler.getMetadataRecords(collection);
     if (mdRecords != null) {
-      initHarvestRdfStrBuilder(collection);
+      initHarvestXmlStrBuilder(collection);
       int countDocs = harvestRessources(collection, mdRecords); // download resources and save metadata and fulltext fields
-      flushHarvestRdfStrBuilder(collection);
+      flushHarvestXmlStrBuilder(collection);
       counter = counter + countDocs;
     }
     ArrayList<Database> collectionDBs = collection.getDatabases();
@@ -117,6 +120,33 @@ public class Harvester {
       }
     }
     LOGGER.info("Collection: " + collId + " with: " + counter + " records harvested");
+  }
+  
+  private void serialize(Object o) {
+    try {
+      FileOutputStream fileOut = new FileOutputStream("/home/joey/tmp/aaew.ser");
+      ObjectOutputStream out = new ObjectOutputStream(fileOut);
+      out.writeObject(o);
+      out.close();
+      fileOut.close();      
+    } catch (Exception e) {
+      
+    }
+  }
+  
+  private ArrayList<MetadataRecord> deserialize() {
+    ArrayList<MetadataRecord> mdRecords = null;
+    try {
+      FileInputStream fileIn = new FileInputStream("/home/joey/tmp/aaew.ser");
+      ObjectInputStream in = new ObjectInputStream(fileIn);
+      mdRecords = (ArrayList<MetadataRecord>) in.readObject();
+      in.close();
+      fileIn.close();
+      
+    } catch (Exception e) {
+      
+    }
+    return mdRecords;
   }
   
   private int harvestDB(Collection collection, Database db) throws ApplicationException {
@@ -236,10 +266,10 @@ public class Harvester {
         String persons = getPersons(tocResult, xQueryEvaluator); 
         String personsDetails = getPersonsDetails(tocResult, xQueryEvaluator); 
         String places = getPlaces(tocResult, xQueryEvaluator);
-        // Get metadata info out of the xml document
         mdRecord.setPersons(persons);
         mdRecord.setPersonsDetails(personsDetails);
         mdRecord.setPlaces(places);
+        // Get metadata info out of the xml document
         mdRecord = getMetadataRecord(docDestFileUpgrade, docType, mdRecord, xQueryEvaluator);
         String mdRecordLanguage = mdRecord.getLanguage();
         String langId = Language.getInstance().getLanguageId(mdRecordLanguage); // test if language code is supported
@@ -259,8 +289,32 @@ public class Harvester {
       // build the documents fulltext fields
       if (srcUrl != null && docType != null && ! docType.equals("mets") && ! isDbRecord && isText)
         buildFulltextFields(collection, mdRecord, baseDir);
-      harvestRdfStrBuilder.append(mdRecord.toRdfStr());
-      // TODO save fulltext fields in file (persons, places, content xmlContent ...
+      harvestRdfStrBuilder.append(mdRecord.toXmlStr());
+      String content = mdRecord.getContent();
+      if (content != null) {
+        File contentFile = new File(docDirName + "/content.txt");
+        FileUtils.writeStringToFile(contentFile, content, "utf-8");
+      }
+      String contentXml = mdRecord.getContentXml();
+      if (contentXml != null) {
+        File contentXmlFile = new File(docDirName + "/content.xml");
+        FileUtils.writeStringToFile(contentXmlFile, contentXml, "utf-8");
+      }
+      String tokensOrig = mdRecord.getTokenOrig();
+      if (tokensOrig != null) {
+        File tokensOrigFile = new File(docDirName + "/tokensOrig.txt");
+        FileUtils.writeStringToFile(tokensOrigFile, tokensOrig, "utf-8");
+      }
+      String tokensNorm = mdRecord.getTokenNorm();
+      if (tokensNorm != null) {
+        File tokensNormFile = new File(docDirName + "/tokensNorm.txt");
+        FileUtils.writeStringToFile(tokensNormFile, tokensNorm, "utf-8");
+      }
+      String tokensMorph = mdRecord.getTokenMorph();
+      if (tokensMorph != null) {
+        File tokensMorphFile = new File(docDirName + "/tokensMorph.txt");
+        FileUtils.writeStringToFile(tokensMorphFile, tokensMorph, "utf-8");
+      }
     } catch (Exception e) {
       throw new ApplicationException(e);
     }
@@ -830,7 +884,7 @@ public class Harvester {
       XmlTokenizer docXmlTokenizer = null;
       if (docIsXml) {
         docFileName = getDocFullFileName(docId, baseDir) + ".upgrade";
-        // remove the header part of the xml fulltext so that is is not indexed in Lucene
+        // remove the TEI header part
         XslResourceTransformer removeElemTransformer = new XslResourceTransformer("removeElement.xsl");
         QName elemNameQName = new QName("elemName");
         XdmValue elemNameXdmValue = new XdmAtomicValue("teiHeader");  // TODO fetch name from collection configuration
@@ -849,11 +903,11 @@ public class Harvester {
         String[] normFunctionNone = { "none" };
         docXmlTokenizer.setNormFunctions(normFunctionNone);
         docXmlTokenizer.tokenize();
-  
+        // each document at least has one page
         int pageCount = docXmlTokenizer.getPageCount();
         if (pageCount <= 0)
-          pageCount = 1;  // each document at least has one page
-  
+          pageCount = 1;  
+        mdRecord.setPageCount(pageCount);
         String[] outputOptionsEmpty = {};
         docXmlTokenizer.setOutputOptions(outputOptionsEmpty); 
         // must be set to null so that the normalization function works
@@ -869,12 +923,11 @@ public class Harvester {
         XslResourceTransformer charsTransformer = new XslResourceTransformer("chars.xsl");
         content = charsTransformer.transform(docFileName);
         // fill mdRecord
+        mdRecord.setContent(content);
+        mdRecord.setContentXml(contentXml);
         mdRecord.setTokenOrig(docTokensOrig);
         mdRecord.setTokenNorm(docTokensNorm);
         mdRecord.setTokenMorph(docTokensMorph);
-        mdRecord.setContentXml(contentXml);
-        mdRecord.setContent(content);
-        mdRecord.setPageCount(pageCount);
       } else {
         DocumentParser tikaParser = new DocumentParser();
         try {
@@ -967,6 +1020,21 @@ public class Harvester {
     return isProper;
   }
 
+  private void initHarvestXmlStrBuilder(Collection collection) {
+    harvestRdfStrBuilder = new StringBuilder();
+    harvestRdfStrBuilder.append("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
+  }
+  
+  private void flushHarvestXmlStrBuilder(Collection collection) throws ApplicationException {
+    String harvestRdfStr = harvestRdfStrBuilder.toString();
+    String collId = collection.getId();
+    try {
+      FileUtils.writeStringToFile(new File(harvestDir + "/" + collId + "/metadata/" + collId + ".xml"), harvestRdfStr, "utf-8");
+    } catch (IOException e) {
+      throw new ApplicationException(e);
+    }
+  }
+  
   private void initHarvestRdfStrBuilder(Collection collection) {
     String collectionRdfId = collection.getRdfId();
     harvestRdfStrBuilder = new StringBuilder();
