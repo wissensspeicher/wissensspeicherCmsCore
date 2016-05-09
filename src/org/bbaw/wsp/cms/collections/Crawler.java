@@ -3,6 +3,7 @@ package org.bbaw.wsp.cms.collections;
 import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Hashtable;
 
@@ -44,7 +45,7 @@ public class Crawler {
         return m1.getWebUri().compareTo(m2.getWebUri());
       }
     };
-    mdRecords.sort(mdRecordComparator);
+    Collections.sort(mdRecords, mdRecordComparator);
     return mdRecords;
   }
 
