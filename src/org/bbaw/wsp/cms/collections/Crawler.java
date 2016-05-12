@@ -34,12 +34,14 @@ public class Crawler {
   
   public ArrayList<MetadataRecord> crawl() throws ApplicationException {
     ArrayList<MetadataRecord> mdRecords = getMdRecords(rootUrlStr, 1);
+    /*
     if (urlsHashtable.get(rootUrlStr) == null) {
       MetadataRecord mdRecord = new MetadataRecord();
       mdRecord.setWebUri(rootUrlStr);
       urlsHashtable.put(rootUrlStr, mdRecord);
       mdRecords.add(mdRecord);
     }
+    */
     Comparator<MetadataRecord> mdRecordComparator = new Comparator<MetadataRecord>() {
       public int compare(MetadataRecord m1, MetadataRecord m2) {
         return m1.getWebUri().compareTo(m2.getWebUri());
@@ -67,7 +69,7 @@ public class Crawler {
           URL url = new URL(urlStr);
           boolean isAllowed = isAllowed(urlStr);
           if (isAllowed) {
-            if (urlsHashtable.get(urlStr) == null) {
+            if (urlsHashtable.get(urlStr) == null && ! urlStr.equals(rootUrlStr)) {
               MetadataRecord mdRecord = new MetadataRecord();
               mdRecord.setWebUri(urlStr);
               urlsHashtable.put(urlStr, mdRecord);

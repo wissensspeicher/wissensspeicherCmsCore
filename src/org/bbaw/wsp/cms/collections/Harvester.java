@@ -2,11 +2,8 @@ package org.bbaw.wsp.cms.collections;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.FileNameMap;
 import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
@@ -52,7 +49,7 @@ public class Harvester {
   private CollectionReader collectionReader;
   private MetadataHandler metadataHandler;
   private String harvestDir;
-  private StringBuilder harvestRdfStrBuilder;
+  private StringBuilder harvestXmlStrBuilder;
   
   public static void main(String[] args) throws ApplicationException {
     try {
@@ -103,11 +100,10 @@ public class Harvester {
     int counter = 0;
     String collId = collection.getId();
     LOGGER.info("Harvest collection: " + collId + " ...");
+    initHarvestXmlStrBuilder(collection);
     ArrayList<MetadataRecord> mdRecords = metadataHandler.getMetadataRecords(collection);
     if (mdRecords != null) {
-      initHarvestXmlStrBuilder(collection);
       int countResources = harvestResources(collection, mdRecords); // download resources and save metadata and fulltext fields
-      flushHarvestXmlStrBuilder(collection);
       counter = counter + countResources;
     }
     ArrayList<Database> collectionDBs = collection.getDatabases();
@@ -118,13 +114,14 @@ public class Harvester {
         counter = counter + countResources;
       }
     }
+    flushHarvestXmlStrBuilder(collection);
     LOGGER.info("Collection: " + collId + " with " + counter + " records harvested");
   }
   
   private int harvestDB(Collection collection, Database db) throws ApplicationException {
     int countHarvest = 0;
     String dbType = db.getType();
-    if (dbType != null && (dbType.equals("eXist") || dbType.equals("crawl") || dbType.equals("oai"))) {
+    if (dbType != null && (dbType.equals("eXist") || dbType.equals("crawl"))) {
       // download records and save them in RDF-file as records
       LOGGER.info("Harvest metadata records (" + collection.getId() + ", " + db.getName() + ", " + db.getType() + ") ...");
       ArrayList<MetadataRecord> mdRecords = harvestDBResources(collection, db);
@@ -133,6 +130,10 @@ public class Harvester {
         int countResources = harvestResources(collection, mdRecords);
         countHarvest = countHarvest + countResources;
       }
+    } else if (dbType != null && (dbType.equals("oai"))) {
+      LOGGER.info("Harvest metadata records (" + collection.getId() + ", " + db.getName() + ", " + db.getType() + ") ...");
+      int countDbResources = harvestOaiDBResources(collection, db);
+      countHarvest = countHarvest + countDbResources;
     } else if (dbType != null && (dbType.equals("mysql") || dbType.equals("postgres") || dbType.equals("oai-dbrecord"))) {
       // nothing, data remains in /dataExtern/dbDumps/
     } else {
@@ -166,10 +167,22 @@ public class Harvester {
       File rdfDbFile = new File(rdfDbFullFileName);
       metadataHandler.writeMetadataRecords(collection, dbMdRecords, rdfDbFile);
       LOGGER.info("Harvest of metadata records (" + collection.getId() + ", " + db.getName() + ", " + db.getType() + ") finished (/harvest/" + rdfDbFileName  + ")");
-    } else if (dbType.equals("oai")) {
-      // TODO zuerst alle records in einer XML-Datei speichern und dann nach RDF konvertieren
+    } else {
+      // nothing
     }
     return dbMdRecords;
+  }
+  
+  private int harvestOaiDBResources(Collection collection, Database db) throws ApplicationException {
+    int count = -1;
+    String dbType = db.getType();
+    if (dbType.equals("oai") || dbType.equals("oai-dbrecord")) {
+      String dbResourcesDirName = harvestDir + "/" + collection.getId() + "/metadata/dbResources";
+      count = metadataHandler.fetchMetadataRecordsOai(dbResourcesDirName, collection, db);
+      String rdfDbFileName = collection.getId() + "/metadata/dbResources/" + collection.getId() + "-" + db.getName() + "-*.rdf";
+      LOGGER.info("Harvest of metadata records (" + collection.getId() + ", " + db.getName() + ", " + db.getType() + ") finished (/harvest/" + rdfDbFileName  + ")");
+    }
+    return count;
   }
   
   private void harvestResource(int counter, Collection collection, MetadataRecord mdRecord) throws ApplicationException {
@@ -275,7 +288,7 @@ public class Harvester {
       // build the documents fulltext fields
       if (srcUrl != null && docType != null && ! docType.equals("mets") && ! isDbRecord && isText)
         buildFulltextFields(collection, mdRecord, baseDir);
-      harvestRdfStrBuilder.append(mdRecord.toXmlStr());
+      harvestXmlStrBuilder.append(mdRecord.toXmlStr());
       String content = mdRecord.getContent();
       if (content != null) {
         File contentFile = new File(docDirName + "/content.txt");
@@ -1007,46 +1020,24 @@ public class Harvester {
   }
 
   private void initHarvestXmlStrBuilder(Collection collection) {
-    harvestRdfStrBuilder = new StringBuilder();
-    harvestRdfStrBuilder.append("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
+    harvestXmlStrBuilder = new StringBuilder();
+    harvestXmlStrBuilder.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+    harvestXmlStrBuilder.append("<records>\n");
   }
   
   private void flushHarvestXmlStrBuilder(Collection collection) throws ApplicationException {
-    String harvestRdfStr = harvestRdfStrBuilder.toString();
-    String collId = collection.getId();
-    try {
-      FileUtils.writeStringToFile(new File(harvestDir + "/" + collId + "/metadata/" + collId + ".xml"), harvestRdfStr, "utf-8");
-    } catch (IOException e) {
-      throw new ApplicationException(e);
-    }
-  }
-  
-  private void initHarvestRdfStrBuilder(Collection collection) {
-    String collectionRdfId = collection.getRdfId();
-    harvestRdfStrBuilder = new StringBuilder();
-    harvestRdfStrBuilder.append("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
-    harvestRdfStrBuilder.append("<rdf:RDF \n");
-    harvestRdfStrBuilder.append("   xmlns=\"" + collectionRdfId + "\" \n");
-    harvestRdfStrBuilder.append("   xml:base=\"" + collectionRdfId + "\" \n");
-    harvestRdfStrBuilder.append("   xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" \n");
-    harvestRdfStrBuilder.append("   xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" \n");
-    harvestRdfStrBuilder.append("   xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\" \n");
-    harvestRdfStrBuilder.append("   xmlns:dc=\"http://purl.org/dc/elements/1.1/\" \n");
-    harvestRdfStrBuilder.append("   xmlns:dcterms=\"http://purl.org/dc/terms/\" \n");
-    harvestRdfStrBuilder.append("   xmlns:foaf=\"http://xmlns.com/foaf/0.1/\" \n");
-    harvestRdfStrBuilder.append("   xmlns:gnd=\"http://d-nb.info/standards/elementset/gnd#\" \n");
-    harvestRdfStrBuilder.append("   xmlns:ore=\"http://www.openarchives.org/ore/terms/\" \n");
-    harvestRdfStrBuilder.append(">\n");
-  }
-  
-  private void flushHarvestRdfStrBuilder(Collection collection) throws ApplicationException {
-    harvestRdfStrBuilder.append("</rdf:RDF>\n"); // 
-    String harvestRdfStr = harvestRdfStrBuilder.toString();
-    String collId = collection.getId();
-    try {
-      FileUtils.writeStringToFile(new File(harvestDir + "/" + collId + "/metadata/" + collId + ".rdf"), harvestRdfStr, "utf-8");
-    } catch (IOException e) {
-      throw new ApplicationException(e);
+    harvestXmlStrBuilder.append("</records>\n");
+    String harvestXmlStr = harvestXmlStrBuilder.toString();
+    boolean containsHarvestedResources = true;
+    if (harvestXmlStr.endsWith("<records>\n"))
+      containsHarvestedResources = false;
+    if (containsHarvestedResources) {
+      String collId = collection.getId();
+      try {
+        FileUtils.writeStringToFile(new File(harvestDir + "/" + collId + "/metadata/records/" + collId + ".xml"), harvestXmlStr, "utf-8");
+      } catch (IOException e) {
+        throw new ApplicationException(e);
+      }
     }
   }
   
@@ -1091,32 +1082,5 @@ public class Harvester {
     return true;
   }
 
-  
-  private void serialize(Object o) {
-    try {
-      FileOutputStream fileOut = new FileOutputStream("/home/joey/tmp/aaew.ser");
-      ObjectOutputStream out = new ObjectOutputStream(fileOut);
-      out.writeObject(o);
-      out.close();
-      fileOut.close();      
-    } catch (Exception e) {
-      
-    }
-  }
-  
-  private ArrayList<MetadataRecord> deserialize() {
-    ArrayList<MetadataRecord> mdRecords = null;
-    try {
-      FileInputStream fileIn = new FileInputStream("/home/joey/tmp/aaew.ser");
-      ObjectInputStream in = new ObjectInputStream(fileIn);
-      mdRecords = (ArrayList<MetadataRecord>) in.readObject();
-      in.close();
-      fileIn.close();
-      
-    } catch (Exception e) {
-      
-    }
-    return mdRecords;
-  }
   
 }

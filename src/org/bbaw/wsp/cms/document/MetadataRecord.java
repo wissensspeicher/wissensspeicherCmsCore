@@ -73,6 +73,7 @@ public class MetadataRecord implements Cloneable, Serializable {
     notOutputFields.put("content", "content");
     notOutputFields.put("xQueries", "xQueries");
     notOutputFields.put("notOutputFields", "notOutputFields");
+    notOutputFields.put("serialVersionUID", "serialVersionUID");
   }
 
   public int getId() {
@@ -543,25 +544,26 @@ public class MetadataRecord implements Cloneable, Serializable {
     rdfStrBuilder.append("    <rdf:type rdf:resource=\"http://purl.org/dc/terms/BibliographicResource\"/>\n");
     String projectRdfId = CollectionReader.getInstance().getCollection(collectionNames).getRdfId();
     rdfStrBuilder.append("    <dcterms:isPartOf rdf:resource=\"" + projectRdfId + "\"/>\n");
-    String webUrlStrEscaped = "";
-    if (webUri != null)
-      webUrlStrEscaped = StringUtils.deresolveXmlEntities(webUri);
-    rdfStrBuilder.append("    <dc:identifier rdf:resource=\"" + uriStrEscaped + "\">" + webUrlStrEscaped + "</dc:identifier>\n");
+    rdfStrBuilder.append("    <dcterms:identifier>" + uriStrEscaped + "</dcterms:identifier>\n");
+    if (webUri != null) {
+      String webUrlStrEscaped = StringUtils.deresolveXmlEntities(webUri);
+      rdfStrBuilder.append("    <edm:isShownAt rdf:resource=\"" + webUrlStrEscaped + "\"/>\n");
+    }
     if (system != null)
       rdfStrBuilder.append("    <dc:type>" + system + "</dc:type>\n");
     if (creator != null) {
       String creatorStrEscaped = StringUtils.deresolveXmlEntities(creator);
-      rdfStrBuilder.append("    <dc:creator>" + creatorStrEscaped + "</dc:creator>\n");
+      rdfStrBuilder.append("    <dcterms:creator>" + creatorStrEscaped + "</dcterms:creator>\n");
     }
     if (title != null) {
       String titleStrEscaped = StringUtils.deresolveXmlEntities(title);
-      rdfStrBuilder.append("    <dc:title>" + titleStrEscaped + "</dc:title>\n");
+      rdfStrBuilder.append("    <dcterms:title>" + titleStrEscaped + "</dcterms:title>\n");
     }
     if (date != null) {
       Calendar cal = Calendar.getInstance();
       cal.setTime(date);
       int year = cal.get(Calendar.YEAR);
-      rdfStrBuilder.append("    <dc:date>" + year + "</dc:date>\n");
+      rdfStrBuilder.append("    <dcterms:date>" + year + "</dcterms:date>\n");
     }
     rdfStrBuilder.append("    <dc:language>" + language + "</dc:language>\n");
     if (type != null)
@@ -572,7 +574,7 @@ public class MetadataRecord implements Cloneable, Serializable {
     }
     if (description != null) {
       String descriptionStrEscaped = StringUtils.deresolveXmlEntities(description);
-      rdfStrBuilder.append("    <dc:abstract>" + descriptionStrEscaped + "</dc:abstract>\n");
+      rdfStrBuilder.append("    <dcterms:abstract>" + descriptionStrEscaped + "</dcterms:abstract>\n");
     }
     // TODO further fields / if more than one creator, title, subject
     rdfStrBuilder.append("  </rdf:Description>\n");
