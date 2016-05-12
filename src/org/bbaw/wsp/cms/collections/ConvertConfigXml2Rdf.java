@@ -49,7 +49,6 @@ public class ConvertConfigXml2Rdf {
   private String externalResourcesDirName;
   private File inputNormdataFile;
   private XQueryEvaluator xQueryEvaluator;
-  private Hashtable<String, String> institutes2collectionId;
   
   public static void main(String[] args) throws ApplicationException {
     try {
@@ -81,8 +80,6 @@ public class ConvertConfigXml2Rdf {
     externalResourcesDirName = Constants.getInstance().getExternalDataResourcesDir();
     String inputNormdataFileName = Constants.getInstance().getMdsystemNormdataFile();
     inputNormdataFile = new File(inputNormdataFileName);
-    institutes2collectionId = new Hashtable<String, String>();
-    fillInstitutes2collectionIds();
   }
   
   private void generateDbXmlDumpFiles(Collection collection) throws ApplicationException {
@@ -94,9 +91,7 @@ public class ConvertConfigXml2Rdf {
         String dbType = db.getType();
         JdbcConnection jdbcConn = db.getJdbcConnection();
         LOGGER.info("Generate database dump files (Collection: " + collection.getId() + ") of database: \"" + db.getName() + "\"");
-        if (dbType != null && (dbType.equals("oai") || dbType.equals("oai-dbrecord"))) {
-          generateOaiDbXmlDumpFiles(collection, db);
-        } else if (dbType != null && dbType.equals("dwb")) {
+        if (dbType != null && dbType.equals("dwb")) {
           // special case for dwb
           generateDwbFiles(collection, db);
         } else if (collectionId.equals("dtmh")) {
@@ -662,77 +657,6 @@ public class ConvertConfigXml2Rdf {
     }
   }
   
-  private void generateOaiDbXmlDumpFiles(Collection collection, Database db) throws ApplicationException {
-    File dbDumpsDir = new File(dbDumpsDirName);
-    String xmlDumpFileFilter = collection.getId() + "-" + db.getName() + "*.xml"; 
-    FileFilter fileFilter = new WildcardFileFilter(xmlDumpFileFilter);
-    File[] files = dbDumpsDir.listFiles(fileFilter);
-    if (files != null && files.length > 0) {
-      for (int i = 0; i < files.length; i++) {
-        File dumpFileToDelete = files[i];
-        FileUtils.deleteQuietly(dumpFileToDelete);
-      }
-      LOGGER.info("Database dump files of database \"" + db.getName() + "\" sucessfully deleted");
-    }
-    StringBuilder xmlDumpStrBuilder = new StringBuilder();
-    String oaiServerUrl = db.getXmlDumpUrl();
-    String oaiSet = db.getXmlDumpSet();
-    String listRecordsUrl = oaiServerUrl + "?verb=ListRecords&metadataPrefix=oai_dc&set=" + oaiSet;
-    if (oaiSet == null)
-      listRecordsUrl = oaiServerUrl + "?verb=ListRecords&metadataPrefix=oai_dc";
-    String oaiPmhResponseStr = performGetRequest(listRecordsUrl);
-    String oaiRecordsStr = xQueryEvaluator.evaluateAsString(oaiPmhResponseStr, "/*:OAI-PMH/*:ListRecords/*:record");
-    xmlDumpStrBuilder.append(oaiRecordsStr);
-    String resumptionToken = xQueryEvaluator.evaluateAsString(oaiPmhResponseStr, "/*:OAI-PMH/*:ListRecords/*:resumptionToken/text()");
-    // if end is reached before resumptionToken comes
-    if (resumptionToken == null || resumptionToken.isEmpty()) {
-      writeOaiDbXmlDumpFile(collection, db, xmlDumpStrBuilder, 1);
-    } else {
-      int resumptionTokenCounter = 1; 
-      int fileCounter = 1;
-      while (resumptionToken != null && ! resumptionToken.isEmpty()) {
-        String listRecordsResumptionTokenUrl = oaiServerUrl + "?verb=ListRecords&resumptionToken=" + resumptionToken;
-        oaiPmhResponseStr = performGetRequest(listRecordsResumptionTokenUrl);
-        oaiRecordsStr = xQueryEvaluator.evaluateAsString(oaiPmhResponseStr, "/*:OAI-PMH/*:ListRecords/*:record");
-        xmlDumpStrBuilder.append(oaiRecordsStr + "\n");
-        resumptionToken = xQueryEvaluator.evaluateAsString(oaiPmhResponseStr, "/*:OAI-PMH/*:ListRecords/*:resumptionToken/text()");
-        int writeFileInterval = resumptionTokenCounter % 100; // after each 100 resumptionTokens generate a new file
-        if (writeFileInterval == 0) {
-          writeOaiDbXmlDumpFile(collection, db, xmlDumpStrBuilder, fileCounter);
-          xmlDumpStrBuilder = new StringBuilder();
-          fileCounter++;
-        }
-        resumptionTokenCounter++;
-      }
-      // write the last resumptionTokens
-      if (xmlDumpStrBuilder.length() > 0)
-        writeOaiDbXmlDumpFile(collection, db, xmlDumpStrBuilder, fileCounter);
-    }
-  }
-
-  private void writeOaiDbXmlDumpFile(Collection collection, Database db, StringBuilder recordsStrBuilder, int fileCounter) throws ApplicationException {
-    StringBuilder xmlDumpStrBuilder = new StringBuilder();
-    String oaiSet = db.getXmlDumpSet();
-    String xmlDumpFileName = dbDumpsDirName + "/" + collection.getId() + "-" + db.getName() + "-" + fileCounter + ".xml";
-    xmlDumpStrBuilder.append("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
-    if (oaiSet == null)
-      xmlDumpStrBuilder.append("<!-- Resources of OAI-PMH-Server: " + db.getName() + " (Url: " + db.getXmlDumpUrl() + ", File: " + xmlDumpFileName + ") -->\n");
-    else 
-      xmlDumpStrBuilder.append("<!-- Resources of OAI-PMH-Server: " + db.getName() + " (Url: " + db.getXmlDumpUrl() + ", File: " + xmlDumpFileName + ", Set: " + db.getXmlDumpSet() + ") -->\n");
-    xmlDumpStrBuilder.append("<OAI-PMH>\n");
-    xmlDumpStrBuilder.append("<ListRecords>\n");
-    xmlDumpStrBuilder.append(recordsStrBuilder.toString());
-    xmlDumpStrBuilder.append("</ListRecords>\n");
-    xmlDumpStrBuilder.append("</OAI-PMH>");
-    try {
-      File dumpFile = new File(xmlDumpFileName);
-      FileUtils.writeStringToFile(dumpFile, xmlDumpStrBuilder.toString());
-      LOGGER.info("Database dump file \"" + xmlDumpFileName + "\" sucessfully created");
-    } catch (IOException e) {
-      throw new ApplicationException(e);
-    }
-  }
-  
   private void generatePdrDbXmlDumpFile(Collection collection, Database db) throws ApplicationException {
     String dbName = db.getName();
     XslResourceTransformer pdrIdiTransformer = new XslResourceTransformer("pdrIdiGnd.xsl");
@@ -991,21 +915,6 @@ public class ConvertConfigXml2Rdf {
           row.addField(fieldName, fieldValue);
         }
       }
-    } else if (dbType.equals("oai") || dbType.equals("oai-dbrecord")) {
-      String recordId = xQueryEvaluator.evaluateAsString(rowXmlStr, "/*:record/*:header/*:identifier/text()");
-      if (recordId != null && ! recordId.isEmpty())
-        row.addField("identifier", recordId);
-      XdmValue xmdValueFields = xQueryEvaluator.evaluate(rowXmlStr, "/*:record/*:metadata/*:dc/*");
-      XdmSequenceIterator xmdValueFieldsIterator = xmdValueFields.iterator();
-      if (xmdValueFields != null && xmdValueFields.size() > 0) {
-        while (xmdValueFieldsIterator.hasNext()) {
-          XdmItem xdmItemField = xmdValueFieldsIterator.next();
-          String fieldStr = xdmItemField.toString();
-          String fieldName = xQueryEvaluator.evaluateAsString(fieldStr, "*/name()");
-          String fieldValue = xdmItemField.getStringValue();
-          row.addField(fieldName, fieldValue);
-        }
-      }
     }
     return row;  
   }
@@ -1029,36 +938,6 @@ public class ConvertConfigXml2Rdf {
     }
     if (webIdAfterStr != null) {
       rdfWebId = rdfWebId + webIdAfterStr;
-    }
-    // special handling of edoc oai records
-    if (collection.getId().equals("edoc")) {
-      String dbFieldIdentifier = db.getDbField("identifier");
-      if (dbFieldIdentifier != null) {
-        ArrayList<String> identifiers = row.getFieldValues(dbFieldIdentifier);
-        if (identifiers != null) {
-          String edocMetadataUrl = identifiers.get(0); // first one is web page with metadata, e.g. https://edoc.bbaw.de/frontdoor/index/index/docId/1
-          id = edocMetadataUrl; 
-          rdfWebId = identifiers.get(identifiers.size() - 1);  // last one is the fulltext document, e.g. https://edoc.bbaw.de/files/1/vortrag2309_akademieUnion.pdf
-          // no fulltext document given in record
-          if (! rdfWebId.startsWith("http") || rdfWebId.endsWith(".gz") || rdfWebId.endsWith(".zip") || rdfWebId.endsWith(".mp3")) {
-            rdfWebId = edocMetadataUrl;
-            id = "";
-          }
-          String edocMetadataHtmlStr = performGetRequest(edocMetadataUrl);
-          edocMetadataHtmlStr = edocMetadataHtmlStr.replaceAll("<!DOCTYPE html .+>", "");
-          String institutesStr = xQueryEvaluator.evaluateAsString(edocMetadataHtmlStr, "//*:th[text() = 'Institutes:']/following-sibling::*:td/*:a/text()");
-          if (institutesStr != null && ! institutesStr.isEmpty()) {
-            institutesStr = institutesStr.trim().replaceAll("BBAW / ", "");
-            String collRdfId = getCollectionRdfId(institutesStr);
-            if (collRdfId != null)
-              collectionRdfId = collRdfId;
-          } else {
-            // if no institutes string is given, then they are mapped to "akademiepublikationen1"
-            Collection c = CollectionReader.getInstance().getCollection("akademiepublikationen1");
-            collectionRdfId = c.getRdfId();
-          }
-        }
-      }
     }
     rdfStrBuilder.append("<rdf:Description rdf:about=\"" + rdfWebId + "\">\n");
     rdfStrBuilder.append("  <rdf:type rdf:resource=\"http://purl.org/dc/terms/BibliographicResource\"/>\n");
@@ -1203,72 +1082,6 @@ public class ConvertConfigXml2Rdf {
     rdfStrBuilder.append("</rdf:Description>\n");
   }
 
-  private String getCollectionRdfId(String institutesStr) throws ApplicationException {
-    String retStr = null;
-    String collectionId = institutes2collectionId.get(institutesStr);
-    if (collectionId == null)
-      collectionId = "akademiepublikationen1"; // some institutes (e.g. ALLEA) have no collectionId, they are mapped to "akademiepublikationen1"
-    Collection c = CollectionReader.getInstance().getCollection(collectionId);
-    if (c != null)
-      retStr = c.getRdfId();
-    return retStr;
-  }
-  
-  private void fillInstitutes2collectionIds() {
-    institutes2collectionId.put("Berlin-Brandenburgische Akademie der Wissenschaften", "akademiepublikationen1");
-    institutes2collectionId.put("Veröffentlichungen von Akademiemitgliedern", "akademiepublikationen2");
-    institutes2collectionId.put("Veröffentlichungen von Akademiemitarbeitern", "akademiepublikationen3");
-    institutes2collectionId.put("Veröffentlichungen der Vorgängerakademien", "akademiepublikationen4");
-    institutes2collectionId.put("Veröffentlichungen externer Institutionen", "akademiepublikationen5");
-    institutes2collectionId.put("Interdisziplinäre Arbeitsgruppe Psychologisches Denken und psychologische Praxis", "pd");
-    institutes2collectionId.put("Akademienvorhaben Strukturen und Transformationen des Wortschatzes der ägyptischen Sprache. Text- und Wissenskultur im alten Ägypten", "aaew");
-    institutes2collectionId.put("Akademienvorhaben Altägyptisches Wörterbuch", "aaew");
-    institutes2collectionId.put("Interdisziplinäre Arbeitsgruppe Berliner Akademiegeschichte im 19. und 20. Jahrhundert", "bag");
-    institutes2collectionId.put("Interdisziplinäre Arbeitsgruppe Wissenschaftliche Politikberatung in der Demokratie", "wpd");
-    institutes2collectionId.put("Interdisziplinäre Arbeitsgruppe Die Herausforderung durch das Fremde", "fremde");
-    institutes2collectionId.put("Initiative Wissen für Entscheidungsprozesse", "wfe");
-    institutes2collectionId.put("Initiative Qualitätsbeurteilung in der Wissenschaft", "quali");
-    institutes2collectionId.put("Interdisziplinäre Arbeitsgruppe Gentechnologiebericht", "gen");
-    institutes2collectionId.put("Interdisziplinäre Arbeitsgruppe Wissenschaften und Wiedervereinigung", "ww");
-    institutes2collectionId.put("Akademienvorhaben Leibniz-Edition Berlin", "leibber");
-    institutes2collectionId.put("Akademienvorhaben Deutsches Wörterbuch von Jacob Grimm und Wilhelm Grimm", "dwb");
-    institutes2collectionId.put("Akademienvorhaben Census of Antique Works of Art and Architecture Known in the Renaissance", "census");
-    institutes2collectionId.put("Akademienvorhaben Protokolle des Preußischen Staatsministeriums Acta Borussica", "ab");
-    institutes2collectionId.put("Akademienvorhaben Berliner Klassik", "bk");
-    institutes2collectionId.put("Akademienvorhaben Alexander-von-Humboldt-Forschung", "avh");
-    institutes2collectionId.put("Akademienvorhaben Leibniz-Edition Potsdam", "leibpots");
-    institutes2collectionId.put("Interdisziplinäre Arbeitsgruppe Globaler Wandel", "globw");
-    institutes2collectionId.put("Akademienvorhaben Jahresberichte für deutsche Geschichte", "jdg");
-    institutes2collectionId.put("Interdisziplinäre Arbeitsgruppe Die Welt als Bild", "wab");
-    institutes2collectionId.put("Interdisziplinäre Arbeitsgruppe Optionen zukünftiger industrieller Produktionssysteme", "ops");
-    institutes2collectionId.put("Interdisziplinäre Arbeitsgruppe Frauen in Akademie und Wissenschaft", "frauen");
-    institutes2collectionId.put("Akademienvorhaben Corpus Coranicum", "coranicum");
-    institutes2collectionId.put("Initiative Telota", "telota");
-    institutes2collectionId.put("Interdisziplinäre Arbeitsgruppe Gemeinwohl und Gemeinsinn", "gg");
-    institutes2collectionId.put("Interdisziplinäre Arbeitsgruppe Bildkulturen", "bild");
-    institutes2collectionId.put("Akademienvorhaben Monumenta Germaniae Historica", "mgh");
-    institutes2collectionId.put("Interdisziplinäre Arbeitsgruppe LandInnovation", "li");
-    institutes2collectionId.put("Akademienvorhaben Marx-Engels-Gesamtausgabe", "mega");
-    institutes2collectionId.put("Interdisziplinäre Arbeitsgruppe Strukturbildung und Innovation", "sui");
-    institutes2collectionId.put("Interdisziplinäre Arbeitsgruppe Sprache des Rechts, Vermitteln, Verstehen, Verwechseln", "srvvv");
-    institutes2collectionId.put("Akademienvorhaben Die Griechischen Christlichen Schriftsteller", "gcs");
-    institutes2collectionId.put("Interdisziplinäre Arbeitsgruppe Gesundheitsstandards", "gs");
-    institutes2collectionId.put("Interdisziplinäre Arbeitsgruppe Humanprojekt", "hum");
-    institutes2collectionId.put("Akademienvorhaben Turfanforschung", "turfan");
-    institutes2collectionId.put("Interdisziplinäre Arbeitsgruppe Gegenworte - Hefte für den Disput über Wissen", "gw");
-    institutes2collectionId.put("Interdisziplinäre Arbeitsgruppe Strategien zur Abfallenergieverwertung", "sza");
-    institutes2collectionId.put("Interdisziplinäre Arbeitsgruppe Exzellenzinitiative", "exzellenz");
-    institutes2collectionId.put("Interdisziplinäre Arbeitsgruppe Funktionen des Bewusstseins", "fb");
-    institutes2collectionId.put("Drittmittelprojekt Ökosystemleistungen", "oeko");
-    institutes2collectionId.put("Interdisziplinäre Arbeitsgruppe Zukunft des wissenschaftlichen Kommunikationssystems", "zwk");
-    institutes2collectionId.put("Akademienvorhaben Preußen als Kulturstaat", "ab");
-    institutes2collectionId.put("Interdisziplinäre Arbeitsgruppe EUTENA - Zur Zukunft technischer und naturwissenschaftlicher Bildung in Europa", "eutena");
-    institutes2collectionId.put("Akademienvorhaben Digitales Wörterbuch der Deutschen Sprache", "dwds");
-    institutes2collectionId.put("Akademienvorhaben Griechisches Münzwerk", "gmw");
-    institutes2collectionId.put("Interdisziplinäre Arbeitsgruppe Klinische Forschung in vulnerablen Populationen", "kf");
-    institutes2collectionId.put("Akademienvorhaben Die alexandrinische und antiochenische Bibelexegese in der Spätantike", "bibel");
-  }
-  
   private void writeRdfFile(File rdfFile, StringBuilder rdfRecordsStrBuilder, String collectionRdfId) throws ApplicationException {
     StringBuilder rdfStrBuilder = new StringBuilder();
     rdfStrBuilder.append("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
