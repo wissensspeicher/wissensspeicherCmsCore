@@ -280,12 +280,10 @@ public class CollectionReader {
             db.setExcludes(excludes);
           }
           String depthStr = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/depth/text()");
-          if (depthStr != null) {
-            int depth = Integer.parseInt(depthStr);
+          if (depthStr != null && ! depthStr.isEmpty()) {
+            Integer depth = Integer.parseInt(depthStr);
             db.setDepth(depth);
-          } else {
-            db.setDepth(2); // default value
-          }
+          } 
           // read xqueries (used for building dynamically a webUri of a record; only used in xml records
           Hits xQueries = (Hits) xQueryEvaluator.evaluate(xdmItemDBStr, "/db/xqueries/xquery", 0, 9, "hits");
           if (xQueries != null) {
