@@ -54,13 +54,14 @@ public class ConvertConfigXml2Rdf {
     try {
       ConvertConfigXml2Rdf convertConfigXml2Rdf = new ConvertConfigXml2Rdf();
       convertConfigXml2Rdf.init();
+      convertConfigXml2Rdf.generateXmlConfigFilesWithHomepageCrawlDB();
       // convertConfigXml2Rdf.proofRdfProjects();
       // convertConfigXml2Rdf.proofCollectionProjects();
       // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("pdr");
       // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("jdg");
       // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("jpor");
-      Collection c = convertConfigXml2Rdf.collectionReader.getCollection("edoc");
-      convertConfigXml2Rdf.convertDbXmlFiles(c);
+      // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("edoc");
+      // convertConfigXml2Rdf.convertDbXmlFiles(c);
       // convertConfigXml2Rdf.generateDbXmlDumpFiles(c);
     } catch (Exception e) {
       e.printStackTrace();
@@ -1084,7 +1085,7 @@ public class ConvertConfigXml2Rdf {
 
   private void writeRdfFile(File rdfFile, StringBuilder rdfRecordsStrBuilder, String collectionRdfId) throws ApplicationException {
     StringBuilder rdfStrBuilder = new StringBuilder();
-    rdfStrBuilder.append("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
+    rdfStrBuilder.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
     rdfStrBuilder.append("<rdf:RDF \n");
     rdfStrBuilder.append("   xmlns=\"" + collectionRdfId + "\" \n");
     rdfStrBuilder.append("   xml:base=\"" + collectionRdfId + "\" \n");
@@ -1152,6 +1153,33 @@ public class ConvertConfigXml2Rdf {
       LOGGER.error("Project: \"" + collectionRdfId + "\": Change <rdf:type> to <rdf:type rdf:resource=\"http://xmlns.com/foaf/0.1/Project\"/>");
   }
 
+  private void generateXmlConfigFilesWithHomepageCrawlDB() throws ApplicationException {
+    try {
+      String outputDir = "/home/joey/tmp/resources-addinfo";
+      ArrayList<Collection> collections = collectionReader.getCollections();
+      for (int i=0; i<collections.size(); i++) {
+        Collection coll = collections.get(i);
+        String id = coll.getId();
+        String projectHomepage = coll.getWebBaseUrl();
+        StringBuilder xmlStrBuilder = new StringBuilder();
+        xmlStrBuilder.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+        xmlStrBuilder.append("<wsp>\n");
+        xmlStrBuilder.append("  <collection>\n");
+        xmlStrBuilder.append("    <db>\n");
+        xmlStrBuilder.append("      <type>crawl</type>\n");
+        xmlStrBuilder.append("      <name>" + id + "</name>\n");
+        xmlStrBuilder.append("      <url>" + projectHomepage + "</url>\n");
+        xmlStrBuilder.append("    </db>\n");
+        xmlStrBuilder.append("  </collection>\n");
+        xmlStrBuilder.append("</wsp>\n");
+        File xmlConfigFile = new File(outputDir + "/" + id + ".xml");
+        FileUtils.writeStringToFile(xmlConfigFile, xmlStrBuilder.toString());
+      }
+    } catch (IOException e) {
+      throw new ApplicationException(e);
+    }
+  }
+  
   private void proofCollectionProjects() throws ApplicationException {
     try {
       URL inputNormdataFileUrl = inputNormdataFile.toURI().toURL();
