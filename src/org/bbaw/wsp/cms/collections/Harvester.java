@@ -164,7 +164,8 @@ public class Harvester {
     if (dbType.equals("eXist") || dbType.equals("crawl")) { 
       dbMdRecords = metadataHandler.getMetadataRecords(collection, db, false);
       ArrayList<MetadataRecord> collectionMdRecords = metadataHandler.getMetadataRecords(collection);  // performance: records of collection are cached
-      dbMdRecords = removeDoubleRecords(collectionMdRecords, dbMdRecords);
+      if (collectionMdRecords != null && dbMdRecords != null)
+        dbMdRecords = removeDoubleRecords(collectionMdRecords, dbMdRecords);
       String rdfDbFileName = collection.getId() + "/metadata/dbResources/" + collection.getId() + "-" + db.getName() + "-1.rdf";
       String rdfDbFullFileName = harvestDir + "/" + collection.getId() + "/metadata/dbResources/" + collection.getId() + "-" + db.getName() + "-1.rdf";
       File rdfDbFile = new File(rdfDbFullFileName);

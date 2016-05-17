@@ -233,15 +233,9 @@ public class CollectionReader {
             String sql = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/sql/text()");
             db.setSql(sql);
           }
-          String xmlDumpFileName = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/xmlDump/fileName/text()");
-          if (xmlDumpFileName != null)
-            db.setXmlDumpFileName(xmlDumpFileName);
-          String xmlDumpUrl = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/xmlDump/url/text()");
-          if (xmlDumpUrl != null)
-            db.setXmlDumpUrl(xmlDumpUrl);
-          String xmlDumpSet = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/xmlDump/set/text()");
-          if (xmlDumpSet != null)
-            db.setXmlDumpSet(xmlDumpSet);
+          String oaiSet = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/set/text()");
+          if (oaiSet != null)
+            db.setOaiSet(oaiSet);
           String mainResourcesTable = xQueryEvaluator.evaluateAsString(xdmItemDBStr, "/db/mainResourcesTable/name/text()");
           if (mainResourcesTable != null)
             db.setMainResourcesTable(mainResourcesTable);

@@ -8,13 +8,11 @@ import org.bbaw.wsp.cms.document.XQuery;
 public class Database {
   private String type;
   private String name;
-  private String url;  // start url (eXist or crawl)
+  private String url;  // start url (crawl, eXist or oai)
   private String language;  // language of db content
   private JdbcConnection jdbcConnection;
   private String sql;
-  private String xmlDumpFileName;
-  private String xmlDumpUrl;
-  private String xmlDumpSet;
+  private String oaiSet; // if type is oai: a set could be defined 
   private String mainResourcesTable;
   private String mainResourcesTableId;
   private String webIdPreStr;
@@ -72,28 +70,12 @@ public class Database {
     this.sql = sql;
   }
 
-  public String getXmlDumpFileName() {
-    return xmlDumpFileName;
+  public String getOaiSet() {
+    return oaiSet;
   }
 
-  public void setXmlDumpFileName(String xmlDumpFileName) {
-    this.xmlDumpFileName = xmlDumpFileName;
-  }
-
-  public String getXmlDumpUrl() {
-    return xmlDumpUrl;
-  }
-
-  public void setXmlDumpUrl(String xmlDumpUrl) {
-    this.xmlDumpUrl = xmlDumpUrl;
-  }
-
-  public String getXmlDumpSet() {
-    return xmlDumpSet;
-  }
-
-  public void setXmlDumpSet(String xmlDumpSet) {
-    this.xmlDumpSet = xmlDumpSet;
+  public void setOaiSet(String oaiSet) {
+    this.oaiSet = oaiSet;
   }
 
   public String getMainResourcesTable() {

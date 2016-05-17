@@ -184,8 +184,8 @@ public class MetadataHandler {
   public int fetchMetadataRecordsOai(String dirName, Collection collection, Database db) throws ApplicationException {
     // fetch the oai records and write them to xml files
     StringBuilder xmlOaiStrBuilder = new StringBuilder();
-    String oaiServerUrl = db.getXmlDumpUrl();
-    String oaiSet = db.getXmlDumpSet();
+    String oaiServerUrl = db.getUrl();
+    String oaiSet = db.getOaiSet();
     String listRecordsUrl = oaiServerUrl + "?verb=ListRecords&metadataPrefix=oai_dc&set=" + oaiSet;
     if (oaiSet == null)
       listRecordsUrl = oaiServerUrl + "?verb=ListRecords&metadataPrefix=oai_dc";
@@ -224,13 +224,13 @@ public class MetadataHandler {
 
   private void writeOaiDbXmlFile(String dirName, Collection collection, Database db, StringBuilder recordsStrBuilder, int fileCounter) throws ApplicationException {
     StringBuilder xmlOaiStrBuilder = new StringBuilder();
-    String oaiSet = db.getXmlDumpSet();
+    String oaiSet = db.getOaiSet();
     String xmlOaiDbFileName = dirName + "/" + collection.getId() + "-" + db.getName() + "-" + fileCounter + ".xml";
     xmlOaiStrBuilder.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
     if (oaiSet == null)
-      xmlOaiStrBuilder.append("<!-- Resources of OAI-PMH-Server: " + db.getName() + " (Url: " + db.getXmlDumpUrl() + ") -->\n");
+      xmlOaiStrBuilder.append("<!-- Resources of OAI-PMH-Server: " + db.getName() + " (Url: " + db.getUrl() + ") -->\n");
     else 
-      xmlOaiStrBuilder.append("<!-- Resources of OAI-PMH-Server: " + db.getName() + " (Url: " + db.getXmlDumpUrl() + ", Set: " + db.getXmlDumpSet() + ") -->\n");
+      xmlOaiStrBuilder.append("<!-- Resources of OAI-PMH-Server: " + db.getName() + " (Url: " + db.getUrl() + ", Set: " + oaiSet + ") -->\n");
     xmlOaiStrBuilder.append("<OAI-PMH>\n");
     xmlOaiStrBuilder.append("<ListRecords>\n");
     xmlOaiStrBuilder.append(recordsStrBuilder.toString());

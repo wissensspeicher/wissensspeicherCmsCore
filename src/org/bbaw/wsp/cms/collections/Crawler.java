@@ -94,8 +94,6 @@ public class Crawler {
   private boolean isAllowed(String urlStr) throws ApplicationException {
     boolean isAllowed = true;
     try {
-      if (excludes == null)
-        return true;
       URL url = new URL(urlStr);
       String protocol = url.getProtocol();
       if (protocol == null || (protocol != null && ! protocol.startsWith("http")))
@@ -104,9 +102,13 @@ public class Crawler {
       String fragment = uri.getFragment();  // the "#" part of the uri
       if (fragment != null)
         return false;
-      if (! urlStr.startsWith(rootUrlStr))
+      String rootUrlStrWithoutProtocol = rootUrlStr.replaceAll("https*://", "");
+      String urlStrWithoutProtocol = urlStr.replaceAll("https*://", "");
+      if (! urlStrWithoutProtocol.startsWith(rootUrlStrWithoutProtocol))
         return false;
-      String urlStrRelative = urlStr.replaceFirst(rootUrlStr, "");
+      String urlStrRelative = urlStrWithoutProtocol.replaceFirst(rootUrlStrWithoutProtocol, "");
+      if (excludes == null)
+        return true;
       for (int i=0;i<excludes.size();i++) {
         String exclude = excludes.get(i);
         if (urlStrRelative.matches(exclude))
