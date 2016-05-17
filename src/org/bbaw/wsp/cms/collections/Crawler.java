@@ -18,6 +18,7 @@ import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 
 public class Crawler {
   private static int SOCKET_TIMEOUT = 10 * 1000;
+  private static Integer DEFAULT_MAX_DEPTH = 3;
   private String rootUrlStr;
   private Integer maxDepth;
   private ArrayList<String> excludes;
@@ -27,6 +28,8 @@ public class Crawler {
   public Crawler(String rootUrlStr, Integer maxDepth, ArrayList<String> excludes) throws ApplicationException {
     this.rootUrlStr = rootUrlStr;
     this.maxDepth = maxDepth;
+    if (maxDepth == null)
+      this.maxDepth = DEFAULT_MAX_DEPTH;
     this.excludes = excludes;
     this.tika = new Tika();
     this.urlsHashtable = new Hashtable<String, MetadataRecord>();
@@ -69,7 +72,7 @@ public class Crawler {
           URL url = new URL(urlStr);
           boolean isAllowed = isAllowed(urlStr);
           if (isAllowed) {
-            if (urlsHashtable.get(urlStr) == null && ! urlStr.equals(rootUrlStr)) {
+            if (urlsHashtable.get(urlStr) == null) {
               MetadataRecord mdRecord = new MetadataRecord();
               mdRecord.setWebUri(urlStr);
               urlsHashtable.put(urlStr, mdRecord);
