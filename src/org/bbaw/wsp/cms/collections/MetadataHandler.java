@@ -48,6 +48,7 @@ public class MetadataHandler {
   private static Logger LOGGER = Logger.getLogger(MetadataHandler.class);
   private static MetadataHandler mdHandler;
   private static int SOCKET_TIMEOUT = 20 * 1000;
+  private Hashtable<String, ArrayList<MetadataRecord>> collectionMdRecords;
   private XQueryEvaluator xQueryEvaluator;
   private HttpClient httpClient; 
   private Hashtable<String, String> institutes2collectionId;
@@ -61,6 +62,7 @@ public class MetadataHandler {
   }
   
   private void init() throws ApplicationException {
+    collectionMdRecords = new Hashtable<String, ArrayList<MetadataRecord>>();
     xQueryEvaluator = new XQueryEvaluator();
     httpClient = new HttpClient();
     // timeout seems to work
@@ -74,9 +76,12 @@ public class MetadataHandler {
   
   public ArrayList<MetadataRecord> getMetadataRecords(Collection collection) throws ApplicationException {
     String collectionId = collection.getId();
-    String metadataRdfDir = Constants.getInstance().getMetadataDir() + "/resources";
-    File rdfRessourcesFile = new File(metadataRdfDir + "/" + collectionId + ".rdf");
-    ArrayList<MetadataRecord> mdRecords = getMetadataRecordsByRdfFile(collection, rdfRessourcesFile, null, false);
+    ArrayList<MetadataRecord> mdRecords = collectionMdRecords.get(collectionId);
+    if (mdRecords == null) {
+      String metadataRdfDir = Constants.getInstance().getMetadataDir() + "/resources";
+      File rdfRessourcesFile = new File(metadataRdfDir + "/" + collectionId + ".rdf");
+      mdRecords = getMetadataRecordsByRdfFile(collection, rdfRessourcesFile, null, false);
+    } 
     if (mdRecords.size() == 0)
       return null;
     else 
