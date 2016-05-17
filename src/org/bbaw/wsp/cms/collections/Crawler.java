@@ -28,7 +28,7 @@ public class Crawler {
   public Crawler(String rootUrlStr, Integer maxDepth, ArrayList<String> excludes) throws ApplicationException {
     this.rootUrlStr = rootUrlStr;
     this.maxDepth = maxDepth;
-    if (maxDepth == null)
+    if (maxDepth == null || maxDepth == 0)
       this.maxDepth = DEFAULT_MAX_DEPTH;
     this.excludes = excludes;
     this.tika = new Tika();
