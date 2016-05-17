@@ -124,10 +124,12 @@ public class Harvester {
     if (dbType != null && (dbType.equals("eXist") || dbType.equals("crawl"))) {
       // download records and save them in RDF-file as records
       LOGGER.info("Harvest metadata records (" + collection.getId() + ", " + db.getName() + ", " + db.getType() + ") ...");
-      ArrayList<MetadataRecord> mdRecords = harvestDBResources(collection, db);
+      ArrayList<MetadataRecord> dbMdRecords = harvestDBResources(collection, db);
+      ArrayList<MetadataRecord> collectionMdRecords = metadataHandler.getMetadataRecords(collection);
+      ArrayList<MetadataRecord> dbMdRecordsWithoutDoubleEntries = removeDoubleRecords(collectionMdRecords, dbMdRecords);
       // download resources and save metadata and fulltext fields
-      if (mdRecords != null) {
-        int countResources = harvestResources(collection, mdRecords);
+      if (dbMdRecords != null) {
+        int countResources = harvestResources(collection, dbMdRecordsWithoutDoubleEntries);
         countHarvest = countHarvest + countResources;
       }
     } else if (dbType != null && (dbType.equals("oai"))) {
@@ -150,7 +152,8 @@ public class Harvester {
         harvestResource(countHarvest, collection, mdRecord);
         countHarvest++;
       } catch (Exception e) {
-        // TODO Logging
+        LOGGER.error("Harvest of metadata record failed:");
+        e.printStackTrace();
       }
     }
     countHarvest = countHarvest - 1;
@@ -446,6 +449,34 @@ public class Harvester {
     return places;
   }
 
+  private ArrayList<MetadataRecord> removeDoubleRecords(ArrayList<MetadataRecord> collectionMdRecords, ArrayList<MetadataRecord> dbMdRecords) {
+    ArrayList<MetadataRecord> mdRecords = new ArrayList<MetadataRecord>();
+    for (int i=0; i<dbMdRecords.size(); i++) {
+      MetadataRecord dbMdRecord = dbMdRecords.get(i);
+      if (! isContained(collectionMdRecords, dbMdRecord))
+        mdRecords.add(dbMdRecord);
+    }
+    return mdRecords;
+  }
+  
+  private boolean isContained(ArrayList<MetadataRecord> mdRecords, MetadataRecord mdRecord) {
+    boolean isContained = false;
+    String webUri = mdRecord.getWebUri();
+    for (int i=0; i<mdRecords.size(); i++) {
+      MetadataRecord mdRecordTmp = mdRecords.get(i);
+      String webUriTmp = mdRecordTmp.getWebUri();
+      if (webUri != null && webUriTmp != null) {
+        if (webUri.endsWith("/"))
+          webUri = webUri.substring(0, webUri.length() - 1);
+        if (webUriTmp.endsWith("/"))
+          webUriTmp = webUriTmp.substring(0, webUriTmp.length() - 1);
+        if (webUri.equals(webUriTmp))
+          return true;
+      }
+    }
+    return isContained;
+  }
+  
   private MetadataRecord getMetadataRecord(File xmlFile, String schemaName, MetadataRecord mdRecord, XQueryEvaluator xQueryEvaluator) throws ApplicationException {
     if (schemaName == null)
       return mdRecord;
