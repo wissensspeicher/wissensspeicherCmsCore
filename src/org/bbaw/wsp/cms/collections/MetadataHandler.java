@@ -747,6 +747,8 @@ public class MetadataHandler {
           fileExtension = "jpg";
         int recordId = mdRecord.getId();
         String fileName = "indexxx" + recordId + "." + fileExtension;
+        if (recordId == -1)
+          fileName = "indexxx" + "." + fileExtension;
         if (uriPath.endsWith("/"))
           uriPath = uriPath + fileName;
         else
