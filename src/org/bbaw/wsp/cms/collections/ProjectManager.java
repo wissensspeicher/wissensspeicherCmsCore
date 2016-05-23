@@ -20,9 +20,26 @@ public class ProjectManager {
   private static DateFormat US_DATE_FORMAT = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US);
   private static ProjectManager projectManager;
   private CollectionReader collectionReader;
+  private Harvester harvester;
+  private Annotator annotator;
+  private Indexer indexer;
   private File statusFile;
   private Document statusFileDoc;
   
+  public static void main(String[] args) throws ApplicationException {
+    try {
+      if (args != null && args.length != 0) {
+        String operation = args[0];
+        String projectId1 = args[1];
+        String projectId2 = null;
+        if (args.length > 2)
+          projectId2 = args[2];
+      } 
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+
   public static ProjectManager getInstance() throws ApplicationException {
     if(projectManager == null) {
       projectManager = new ProjectManager();
@@ -33,7 +50,10 @@ public class ProjectManager {
   
   private void init() throws ApplicationException {
     try {
-      // collectionReader = CollectionReader.getInstance();
+      collectionReader = CollectionReader.getInstance();
+      harvester = Harvester.getInstance();
+      annotator = Annotator.getInstance();
+      // indexer = Indexer.getInstance();  // TODO
       statusFile = new File(Constants.getInstance().getDataDir() + "/status/status.xml");
       if (! statusFile.exists()) {
         String statusFileContentXmlStr = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
@@ -60,8 +80,9 @@ public class ProjectManager {
     return Integer.valueOf(maxIdStr);
   }
 
-  public void setMaxId(Integer maxId) {
+  public void setMaxId(Integer maxId) throws ApplicationException {
     statusFileDoc.select("status > maxid").first().text(maxId.toString());
+    writeStatusFile();
   }
   
   public Date getModified() throws ApplicationException {
@@ -75,11 +96,34 @@ public class ProjectManager {
     return modified;
   }
 
-  public void setModified(Date modified) {
+  public void setModified(Date modified) throws ApplicationException {
     statusFileDoc.select("status > modified").first().text(modified.toString());
+    writeStatusFile();
   }
   
-  public void writeStatusFile() throws ApplicationException {
+  public void update(String collectionId) throws ApplicationException {
+    Collection collection = collectionReader.getCollection(collectionId);
+    harvest(collection);
+    annotate(collection);
+    Date now = new Date();
+    index(collection);
+    setModified(now);
+  }
+  
+  public void harvest(Collection collection) throws ApplicationException {
+    harvester.harvest(collection);
+  }
+  
+  public void annotate(Collection collection) throws ApplicationException {
+    annotator.annotate(collection);
+  }
+  
+  public void index(Collection collection) throws ApplicationException {
+    // vorher die collection im Index löschen und dann neu erzeugen
+    // indexer.indexCollection(collection); // TODO
+  }
+  
+  private void writeStatusFile() throws ApplicationException {
     try {
       String statusFileContentXmlStr = statusFileDoc.select("body").first().html();
       statusFileContentXmlStr = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + statusFileContentXmlStr;

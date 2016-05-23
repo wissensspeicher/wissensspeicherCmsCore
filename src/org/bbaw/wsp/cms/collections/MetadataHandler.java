@@ -33,7 +33,6 @@ import org.bbaw.wsp.cms.document.Person;
 import org.bbaw.wsp.cms.document.SubjectHandler;
 import org.bbaw.wsp.cms.document.XQuery;
 import org.bbaw.wsp.cms.general.Constants;
-import org.bbaw.wsp.cms.lucene.IndexHandler;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 import de.mpg.mpiwg.berlin.mpdl.lt.general.Language;
@@ -105,7 +104,8 @@ public class MetadataHandler {
     String collectionId = collection.getId();
     ArrayList<MetadataRecord> mdRecords = new ArrayList<MetadataRecord>();
     String urlStr = db.getUrl();
-    Integer maxIdcounter = IndexHandler.getInstance().findMaxId();  // find the highest value, so that each following id is a real new id
+    ProjectManager pm = ProjectManager.getInstance();
+    Integer maxIdcounter = pm.getMaxId();  // find the highest value, so that each following id is a real new id
     MetadataRecord mdRecord = getNewMdRecord(urlStr); 
     mdRecord.setSystem(db.getType());
     mdRecord.setCollectionNames(collectionId);
@@ -142,12 +142,14 @@ public class MetadataHandler {
       }
       mdRecords.addAll(mdRecordsEXist);
     }
+    pm.setMaxId(maxIdcounter);
     return mdRecords;
   }
   
   private ArrayList<MetadataRecord> getMetadataRecordsCrawl(Collection collection, Database db) throws ApplicationException {
     String collectionId = collection.getId();
-    Integer maxIdcounter = IndexHandler.getInstance().findMaxId();  // find the highest value, so that each following id is a real new id
+    ProjectManager pm = ProjectManager.getInstance();
+    Integer maxIdcounter = pm.getMaxId();  // find the highest value, so that each following id is a real new id
     Date lastModified = new Date();
     String startUrl = db.getUrl();
     ArrayList<String> excludes = db.getExcludes();
@@ -169,6 +171,7 @@ public class MetadataHandler {
         crawledMdRecord.setLanguage(dbLanguage);
       mdRecords.add(crawledMdRecord);
     }
+    pm.setMaxId(maxIdcounter);
     return mdRecords;
   }
   
@@ -590,7 +593,8 @@ public class MetadataHandler {
       XQueryEvaluator xQueryEvaluator = new XQueryEvaluator();
       XdmValue xmdValueResources = xQueryEvaluator.evaluate(rdfRessourcesFileUrl, namespaceDeclaration + "/rdf:RDF/rdf:Description[rdf:type/@rdf:resource = 'http://purl.org/dc/terms/BibliographicResource']");
       XdmSequenceIterator xmdValueResourcesIterator = xmdValueResources.iterator();
-      Integer maxIdcounter = IndexHandler.getInstance().findMaxId();  // find the highest value, so that each following id is a real new id
+      ProjectManager pm = ProjectManager.getInstance();
+      Integer maxIdcounter = pm.getMaxId();  // find the highest value, so that each following id is a real new id
       if (xmdValueResources != null && xmdValueResources.size() > 0) {
         while (xmdValueResourcesIterator.hasNext()) {
           maxIdcounter++;
@@ -651,6 +655,7 @@ public class MetadataHandler {
           } 
         }
       }
+      pm.setMaxId(maxIdcounter);
     } catch (MalformedURLException e) {
       throw new ApplicationException(e);
     }

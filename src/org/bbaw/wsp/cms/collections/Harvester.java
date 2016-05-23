@@ -51,26 +51,6 @@ public class Harvester {
   private String harvestDir;
   private StringBuilder harvestXmlStrBuilder;
   
-  public static void main(String[] args) throws ApplicationException {
-    try {
-      LOGGER.info("Start of harvesting project resources");
-      Harvester harvester = Harvester.getInstance();
-      if (args != null && args.length != 0) {
-        String operation = args[0];
-        String projectId1 = args[1];
-        String projectId2 = null;
-        if (args.length > 2)
-          projectId2 = args[2];
-      } else {
-        harvester.harvestCollections();
-      }
-      harvester.end();
-      LOGGER.info("End of harvesting project resources");
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-  }
-
   public static Harvester getInstance() throws ApplicationException {
     if(harvester == null) {
       harvester = new Harvester();
@@ -92,16 +72,16 @@ public class Harvester {
   public void harvestCollections() throws ApplicationException {
     ArrayList<Collection> collections = collectionReader.getCollections();
     for (Collection collection : collections) {
-      harvestCollection(collection);
+      harvest(collection);
     }
   }
 
-  public void harvestCollection(Collection collection) throws ApplicationException {
+  public void harvest(Collection collection) throws ApplicationException {
     int counter = 0;
     String collId = collection.getId();
     LOGGER.info("Harvest collection: " + collId + " ...");
-    File harvestResourcesDataDir = new File(harvestDir + "/" + collection.getId() + "/data");
-    FileUtils.deleteQuietly(harvestResourcesDataDir);
+    File harvestColectionDir = new File(harvestDir + "/" + collection.getId());
+    FileUtils.deleteQuietly(harvestColectionDir);
     ArrayList<MetadataRecord> mdRecords = metadataHandler.getMetadataRecords(collection);
     if (mdRecords != null) {
       ArrayList<MetadataRecord> harvestedResourcesRecords = harvestResources(collection, null, mdRecords); // download resources and save metadata and fulltext fields
@@ -118,6 +98,18 @@ public class Harvester {
     LOGGER.info("Collection: " + collId + " with " + counter + " records harvested");
   }
   
+  public ArrayList<MetadataRecord> getMetadataRecordsByRecordsFile(Collection collection) throws ApplicationException {
+    File recordsFile = new File(harvestDir + "/" + collection.getId() + "/metadata/records/" + collection.getId() + ".xml");
+    ArrayList<MetadataRecord> mdRecords = metadataHandler.getMetadataRecordsByRecordsFile(recordsFile);
+    return mdRecords;
+  }
+
+  public ArrayList<MetadataRecord> getMetadataRecordsByRecordsFile(Collection collection, Database db) throws ApplicationException {
+    File dbRecordsFile = new File(harvestDir + "/" + collection.getId() + "/metadata/records/" + collection.getId() + "-" + db.getName() + "-1.xml");
+    ArrayList<MetadataRecord> mdRecords = metadataHandler.getMetadataRecordsByRecordsFile(dbRecordsFile);
+    return mdRecords;
+  }
+
   private int harvestDB(Collection collection, Database db) throws ApplicationException {
     int countHarvest = 0;
     String dbType = db.getType();
@@ -134,7 +126,7 @@ public class Harvester {
       LOGGER.info("Harvest metadata records (" + collection.getId() + ", " + db.getName() + ", " + db.getType() + ") ...");
       int countDbResources = harvestOaiDBResources(collection, db);
       countHarvest = countHarvest + countDbResources;
-    } else if (dbType != null && (dbType.equals("mysql") || dbType.equals("postgres") || dbType.equals("oai-dbrecord"))) {
+    } else if (dbType != null && (dbType.equals("mysql") || dbType.equals("postgres"))) {
       // nothing, data remains in /dataExtern/dbDumps/
     } else {
       // nothing
@@ -198,6 +190,23 @@ public class Harvester {
       LOGGER.info("Harvest of metadata records (" + collection.getId() + ", " + db.getName() + ", " + db.getType() + ") finished (/harvest/" + rdfDbFileName  + ")");
     }
     return count;
+  }
+
+  public String getContent(MetadataRecord mdRecord) throws ApplicationException {
+    String content = null;
+    String docId = mdRecord.getDocId();
+    String collectionId = mdRecord.getCollectionNames();
+    String baseDir = harvestDir + "/" + collectionId + "/data";
+    String docDirName = getDocDir(docId, baseDir);
+    try {
+      File contentFile = new File(docDirName + "/content.txt");
+      if (contentFile.exists()) {
+        content = FileUtils.readFileToString(contentFile, "utf-8");
+      }
+    } catch (Exception e) {
+      throw new ApplicationException(e);
+    }
+    return content;
   }
   
   private MetadataRecord harvestResource(int counter, Collection collection, MetadataRecord mdRecord) throws ApplicationException {
