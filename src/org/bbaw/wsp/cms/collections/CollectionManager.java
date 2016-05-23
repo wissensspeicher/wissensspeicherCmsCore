@@ -250,7 +250,7 @@ public class CollectionManager {
     int counter = 0;
     String dbType = db.getType();
     if (dbType.equals("eXist") || dbType.equals("crawl")) {
-      ArrayList<MetadataRecord> dbMdRecords = metadataHandler.getMetadataRecords(collection, db, true);
+      ArrayList<MetadataRecord> dbMdRecords = metadataHandler.getMetadataRecords(collection, db);
       int countDocs = addDocuments(collection, dbMdRecords, false);
       counter = counter + countDocs;
     } else {
@@ -260,7 +260,7 @@ public class CollectionManager {
         for (int i = 0; i < rdfDbResourcesFiles.length; i++) {
           File rdfDbResourcesFile = rdfDbResourcesFiles[i];
           LOGGER.info("Create database resources from file: " + rdfDbResourcesFile);
-          ArrayList<MetadataRecord> dbMdRecords = metadataHandler.getMetadataRecordsByRdfFile(collection, rdfDbResourcesFile, db, true);
+          ArrayList<MetadataRecord> dbMdRecords = metadataHandler.getMetadataRecordsByRdfFile(collection, rdfDbResourcesFile, db);
           if (dbType.equals("oai")) {
             int countDocs = addDocuments(collection, dbMdRecords, false);
             counter = counter + countDocs;

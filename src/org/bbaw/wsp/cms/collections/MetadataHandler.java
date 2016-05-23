@@ -80,7 +80,7 @@ public class MetadataHandler {
     if (mdRecords == null) {
       String metadataRdfDir = Constants.getInstance().getMetadataDir() + "/resources";
       File rdfRessourcesFile = new File(metadataRdfDir + "/" + collectionId + ".rdf");
-      mdRecords = getMetadataRecordsByRdfFile(collection, rdfRessourcesFile, null, false);
+      mdRecords = getMetadataRecordsByRdfFile(collection, rdfRessourcesFile, null);
     } 
     if (mdRecords.size() == 0)
       return null;
@@ -88,31 +88,28 @@ public class MetadataHandler {
       return mdRecords;
   }
 
-  public ArrayList<MetadataRecord> getMetadataRecords(Collection collection, Database db, boolean generateId) throws ApplicationException {
+  public ArrayList<MetadataRecord> getMetadataRecords(Collection collection, Database db) throws ApplicationException {
     ArrayList<MetadataRecord> dbMdRecords = null;
     String dbType = db.getType();
     if (dbType.equals("eXist")) {
-      dbMdRecords = getMetadataRecordsEXist(collection, db, generateId);
+      dbMdRecords = getMetadataRecordsEXist(collection, db);
     } else if (dbType.equals("crawl")) {
-      dbMdRecords = getMetadataRecordsCrawl(collection, db, generateId);
+      dbMdRecords = getMetadataRecordsCrawl(collection, db);
     } else { 
       // nothing
     }
     return dbMdRecords;
   }
   
-  private ArrayList<MetadataRecord> getMetadataRecordsEXist(Collection collection, Database db, boolean generateId) throws ApplicationException {
+  private ArrayList<MetadataRecord> getMetadataRecordsEXist(Collection collection, Database db) throws ApplicationException {
     String collectionId = collection.getId();
     ArrayList<MetadataRecord> mdRecords = new ArrayList<MetadataRecord>();
     String urlStr = db.getUrl();
-    Integer maxIdcounter = null;
-    if (generateId)
-      maxIdcounter = IndexHandler.getInstance().findMaxId();  // find the highest value, so that each following id is a real new id
+    Integer maxIdcounter = IndexHandler.getInstance().findMaxId();  // find the highest value, so that each following id is a real new id
     MetadataRecord mdRecord = getNewMdRecord(urlStr); 
     mdRecord.setSystem(db.getType());
     mdRecord.setCollectionNames(collectionId);
-    if (generateId)
-      mdRecord.setId(maxIdcounter); // collections wide id
+    mdRecord.setId(maxIdcounter); // collections wide id
     mdRecord = createMainFieldsMetadataRecord(mdRecord, collection, null);
     Date lastModified = new Date();
     mdRecord.setLastModified(lastModified);
@@ -130,10 +127,8 @@ public class MetadataHandler {
         String eXistSubUrlStr = eXistUrls.get(i);
         MetadataRecord mdRecordEXist = getNewMdRecord(eXistSubUrlStr); // with docId and webUri
         mdRecordEXist.setCollectionNames(collectionId);
-        if (generateId) {
-          maxIdcounter++;
-          mdRecordEXist.setId(maxIdcounter); // collections wide id
-        }
+        maxIdcounter++;
+        mdRecordEXist.setId(maxIdcounter); // collections wide id
         mdRecordEXist = createMainFieldsMetadataRecord(mdRecordEXist, collection, db);
         mdRecordEXist.setLastModified(lastModified);
         mdRecordEXist.setCreator(mdRecord.getCreator());
@@ -150,11 +145,9 @@ public class MetadataHandler {
     return mdRecords;
   }
   
-  private ArrayList<MetadataRecord> getMetadataRecordsCrawl(Collection collection, Database db, boolean generateId) throws ApplicationException {
+  private ArrayList<MetadataRecord> getMetadataRecordsCrawl(Collection collection, Database db) throws ApplicationException {
     String collectionId = collection.getId();
-    Integer maxIdcounter = null;
-    if (generateId)
-      maxIdcounter = IndexHandler.getInstance().findMaxId();  // find the highest value, so that each following id is a real new id
+    Integer maxIdcounter = IndexHandler.getInstance().findMaxId();  // find the highest value, so that each following id is a real new id
     Date lastModified = new Date();
     String startUrl = db.getUrl();
     ArrayList<String> excludes = db.getExcludes();
@@ -166,10 +159,8 @@ public class MetadataHandler {
       String crawlUrlStr = crawledMdRecords.get(i).getWebUri();
       MetadataRecord crawledMdRecord = getNewMdRecord(crawlUrlStr); // with docId and webUri
       crawledMdRecord.setCollectionNames(collectionId);
-      if (generateId) {
-        maxIdcounter++;
-        crawledMdRecord.setId(maxIdcounter); // collections wide id
-      }
+      maxIdcounter++;
+      crawledMdRecord.setId(maxIdcounter); // collections wide id
       crawledMdRecord = createMainFieldsMetadataRecord(crawledMdRecord, collection, db);
       crawledMdRecord.setLastModified(lastModified);
       crawledMdRecord.setSystem("crawl");
@@ -564,10 +555,30 @@ public class MetadataHandler {
     // TODO further dc fields
     rdfStrBuilder.append("</rdf:Description>\n");
   }
-
-
   
-  public ArrayList<MetadataRecord> getMetadataRecordsByRdfFile(Collection collection, File rdfRessourcesFile, Database db, boolean generateId) throws ApplicationException {
+  public ArrayList<MetadataRecord> getMetadataRecordsByRecordsFile(File recordsFile) throws ApplicationException {
+    ArrayList<MetadataRecord> mdRecords = null;
+    try {
+      URL rdfRessourcesFileUrl = recordsFile.toURI().toURL();
+      XQueryEvaluator xQueryEvaluator = new XQueryEvaluator();
+      XdmValue xmdValueResources = xQueryEvaluator.evaluate(rdfRessourcesFileUrl, "/records/record");
+      XdmSequenceIterator xmdValueResourcesIterator = xmdValueResources.iterator();
+      if (xmdValueResources != null && xmdValueResources.size() > 0) {
+        mdRecords = new ArrayList<MetadataRecord>();
+        while (xmdValueResourcesIterator.hasNext()) {
+          XdmItem xdmItemResource = xmdValueResourcesIterator.next();
+          String recordXmlString = xdmItemResource.toString();
+          MetadataRecord mdRecord = MetadataRecord.fromRecordXmlStr(xQueryEvaluator, recordXmlString);
+          mdRecords.add(mdRecord);
+        }
+      }
+    } catch (MalformedURLException e) {
+      throw new ApplicationException(e);
+    }
+    return mdRecords;
+  }
+  
+  public ArrayList<MetadataRecord> getMetadataRecordsByRdfFile(Collection collection, File rdfRessourcesFile, Database db) throws ApplicationException {
     String collectionId = collection.getId();
     String xmlDumpFileStr = rdfRessourcesFile.getPath().replaceAll("\\.rdf", ".xml");
     File xmlDumpFile = new File(xmlDumpFileStr);
@@ -579,21 +590,17 @@ public class MetadataHandler {
       XQueryEvaluator xQueryEvaluator = new XQueryEvaluator();
       XdmValue xmdValueResources = xQueryEvaluator.evaluate(rdfRessourcesFileUrl, namespaceDeclaration + "/rdf:RDF/rdf:Description[rdf:type/@rdf:resource = 'http://purl.org/dc/terms/BibliographicResource']");
       XdmSequenceIterator xmdValueResourcesIterator = xmdValueResources.iterator();
-      Integer maxIdcounter = null;
-      if (generateId)
-        maxIdcounter = IndexHandler.getInstance().findMaxId();  // find the highest value, so that each following id is a real new id
+      Integer maxIdcounter = IndexHandler.getInstance().findMaxId();  // find the highest value, so that each following id is a real new id
       if (xmdValueResources != null && xmdValueResources.size() > 0) {
         while (xmdValueResourcesIterator.hasNext()) {
-          if (generateId)
-            maxIdcounter++;
+          maxIdcounter++;
           XdmItem xdmItemResource = xmdValueResourcesIterator.next();
           String xdmItemResourceStr = xdmItemResource.toString();
           MetadataRecord mdRecord = getMdRecord(collection, xQueryEvaluator, xdmItemResourceStr);  // get the mdRecord out of rdf string
           if (mdRecord != null) {
             if (mdRecord.getCollectionNames() == null)
               mdRecord.setCollectionNames(collectionId);
-            if (generateId)
-              mdRecord.setId(maxIdcounter); // collections wide id
+            mdRecord.setId(maxIdcounter); // collections wide id
             mdRecord = createMainFieldsMetadataRecord(mdRecord, collection, db);
             // if it is a record: set lastModified to the date of the harvested dump file; if it is a normal web record: set it to now (harvested now)
             Date lastModified = new Date();

@@ -100,6 +100,8 @@ public class Harvester {
     int counter = 0;
     String collId = collection.getId();
     LOGGER.info("Harvest collection: " + collId + " ...");
+    File harvestResourcesDataDir = new File(harvestDir + "/" + collection.getId() + "/data");
+    FileUtils.deleteQuietly(harvestResourcesDataDir);
     ArrayList<MetadataRecord> mdRecords = metadataHandler.getMetadataRecords(collection);
     if (mdRecords != null) {
       ArrayList<MetadataRecord> harvestedResourcesRecords = harvestResources(collection, null, mdRecords); // download resources and save metadata and fulltext fields
@@ -163,7 +165,7 @@ public class Harvester {
     ArrayList<MetadataRecord> dbMdRecords = null;
     String dbType = db.getType();
     if (dbType.equals("eXist") || dbType.equals("crawl")) { 
-      dbMdRecords = metadataHandler.getMetadataRecords(collection, db, false);
+      dbMdRecords = metadataHandler.getMetadataRecords(collection, db);
       ArrayList<MetadataRecord> collectionMdRecords = metadataHandler.getMetadataRecords(collection);  // performance: records of collection are cached
       if (collectionMdRecords != null && dbMdRecords != null)
         dbMdRecords = removeDoubleRecords(collectionMdRecords, dbMdRecords);
@@ -179,7 +181,7 @@ public class Harvester {
       LOGGER.info("Harvest of metadata records (" + collection.getId() + ", " + db.getName() + ", " + db.getType() + ") finished (/harvest/" + rdfDbFileName  + ")");
       String rdfDbFullFileName = harvestDir + "/" + collection.getId() + "/metadata/dbResources/" + collection.getId() + "-" + db.getName() + "-1.rdf";
       File rdfDbFile = new File(rdfDbFullFileName);
-      dbMdRecords = metadataHandler.getMetadataRecordsByRdfFile(collection, rdfDbFile, db, false);
+      dbMdRecords = metadataHandler.getMetadataRecordsByRdfFile(collection, rdfDbFile, db);
     } else {
       // nothing
     }

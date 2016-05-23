@@ -35,6 +35,16 @@ public class ProjectManager {
     try {
       // collectionReader = CollectionReader.getInstance();
       statusFile = new File(Constants.getInstance().getDataDir() + "/status/status.xml");
+      if (! statusFile.exists()) {
+        String statusFileContentXmlStr = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+        statusFileContentXmlStr = statusFileContentXmlStr + "<status>\n";
+        Date now = new Date();
+        statusFileContentXmlStr = statusFileContentXmlStr + "<creation>" + now.toString() + "</creation>\n";
+        statusFileContentXmlStr = statusFileContentXmlStr + "<modified>" + now.toString() + "</modified>\n";
+        statusFileContentXmlStr = statusFileContentXmlStr + "<maxid>1</maxid>\n";
+        statusFileContentXmlStr = statusFileContentXmlStr + "</status>";
+        FileUtils.writeStringToFile(statusFile, statusFileContentXmlStr, "utf-8");
+      }
       statusFileDoc = Jsoup.parse(statusFile, "utf-8");
       statusFileDoc.outputSettings().syntax(Document.OutputSettings.Syntax.xml);
       statusFileDoc.outputSettings().escapeMode(EscapeMode.xhtml);

@@ -98,6 +98,14 @@ public class Constants {
     }
   }
 
+  public String getDataDir() {
+    if (properties != null) {
+      return properties.getProperty("dataDir");
+    } else {
+      return "no properties file";
+    }
+  }
+
   public String getHarvestDir() {
     if (properties != null) {
       return properties.getProperty("harvestDir");

@@ -2,17 +2,22 @@ package org.bbaw.wsp.cms.document;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Hashtable;
+import java.util.Locale;
 
 import org.bbaw.wsp.cms.collections.CollectionReader;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 import de.mpg.mpiwg.berlin.mpdl.util.StringUtils;
+import de.mpg.mpiwg.berlin.mpdl.xml.xquery.XQueryEvaluator;
 
 public class MetadataRecord implements Cloneable, Serializable {
   private static final long serialVersionUID = 4711L;
+  private static DateFormat US_DATE_FORMAT = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US);
   private int id = -1; // local id: auto incremented integer value (one higher than the last created integer value in lucene field "id", e.g. 1
   private String docId; // local id: resource identifier in index system, e.g. "/edoc/2011/1591/pdf/08_VI.Dokumente.pdf"
   private String identifier; // local id: identifier field in resource metadata: e.g. <meta name="DC.identifier" content="47114711">
@@ -74,6 +79,7 @@ public class MetadataRecord implements Cloneable, Serializable {
     notOutputFields.put("xQueries", "xQueries");
     notOutputFields.put("notOutputFields", "notOutputFields");
     notOutputFields.put("serialVersionUID", "serialVersionUID");
+    notOutputFields.put("US_DATE_FORMAT", "US_DATE_FORMAT");
   }
 
   public int getId() {
@@ -509,6 +515,32 @@ public class MetadataRecord implements Cloneable, Serializable {
 
   public String toString() {
     return "MetadataRecord [docId=" + docId + ", identifier=" + identifier + ", uri=" + uri + ", webUri=" + webUri + ", collectionNames=" + collectionNames + ", schemaName=" + schemaName + ", language=" + language + ", creator=" + creator + ", title=" + title + ", publisher=" + publisher + ", date=" + date + ", description=" + description + ", subject=" + subject + ", contributor=" + contributor + ", coverage=" + coverage + ", ddc=" + ddc + ", swd=" + swd + ", persons=" + persons + ", places=" + places + ", type=" + type + ", rights=" + rights + ", license=" + license + ", accessRights=" + accessRights + ", lastModified=" + lastModified + ", encoding=" + encoding + ", pageCount=" + pageCount + ", urn=" + urn + ", documentType=" + documentType + ", isbn=" + isbn + ", creationDate=" + creationDate + ", publishingDate=" + publishingDate + ", inPublication=" + inPublication + ", tokenOrig=" + tokenOrig + ", tokenReg=" + tokenReg + ", tokenNorm=" + tokenNorm + ", tokenMorph=" + tokenMorph + ", contentXml=" + contentXml + ", content=" + content + ", xQueries=" + xQueries + ", realDocUrl=" + realDocUrl + "]";
+  }
+  
+  public static MetadataRecord fromRecordXmlStr(XQueryEvaluator xQueryEvaluator, String recordXmlString) throws ApplicationException {
+    MetadataRecord mdRecord = new MetadataRecord();
+    try {
+      Field[] fields = MetadataRecord.class.getDeclaredFields();
+      for (int i=0; i<fields.length; i++) {
+        Field field = fields[i];
+        String fieldName = field.getName();
+        if (notOutputFields.get(fieldName) == null) {
+          Object fieldValue = xQueryEvaluator.evaluateAsString(recordXmlString, "/record/" + fieldName + "/text()");
+          if (fieldValue != null) {
+            Class<? extends Object> typeClass = field.getType();
+            if (typeClass.getName().equals("int")) {
+              fieldValue = Integer.valueOf((String) fieldValue);
+            } else if (typeClass.getName().equals("java.util.Date")) {
+              fieldValue = US_DATE_FORMAT.parse((String) fieldValue);
+            }
+            field.set(mdRecord, fieldValue);
+          }
+        }
+      }
+    } catch (Exception e) {
+      throw new ApplicationException(e);
+    }
+    return mdRecord;
   }
   
   public String toXmlStr() throws ApplicationException {
