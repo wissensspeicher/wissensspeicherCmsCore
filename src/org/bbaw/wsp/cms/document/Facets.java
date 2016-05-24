@@ -209,7 +209,7 @@ public class Facets implements Iterable<Facet> {
   private boolean isProper(FacetValue fv) {
     DBpediaSpotlightHandler dbPediaSpotlightHandler = null;
     try {
-      dbPediaSpotlightHandler = DBpediaSpotlightHandler.getInstance();
+      dbPediaSpotlightHandler = DBpediaSpotlightHandler.getStopwordsInstance();
     } catch (ApplicationException e) {
       // nothing
     }
