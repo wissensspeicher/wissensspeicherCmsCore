@@ -85,7 +85,6 @@ import org.bbaw.wsp.cms.document.Token;
 import org.bbaw.wsp.cms.document.TokenArrayListIterator;
 import org.bbaw.wsp.cms.document.XQuery;
 import org.bbaw.wsp.cms.general.Constants;
-import org.bbaw.wsp.cms.scheduler.CmsDocOperation;
 import org.bbaw.wsp.cms.translator.LanguageHandler;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
@@ -177,11 +176,11 @@ public class IndexHandler {
     }
   }
   
-  public void indexDocument(CmsDocOperation docOperation) throws ApplicationException {
+  public void indexDocument(MetadataRecord mdRecord) throws ApplicationException {
     commitCounter++;
     // first delete document in documentsIndex and nodesIndex
-    deleteDocumentLocal(docOperation);
-    indexDocumentLocal(docOperation);
+    deleteDocumentLocal(mdRecord);
+    indexDocumentLocal(mdRecord);
     // performance gain (each commit needs at least ca. 60 ms extra): a commit is only done if commitInterval (e.g. 500) is reached 
     if (commitCounter >= commitInterval) {
       commit();
@@ -189,9 +188,8 @@ public class IndexHandler {
     }
   }
 
-  private void indexDocumentLocal(CmsDocOperation docOperation) throws ApplicationException {
+  private void indexDocumentLocal(MetadataRecord mdRecord) throws ApplicationException {
     try {
-      MetadataRecord mdRecord = docOperation.getMdRecord();
       Document doc = new Document();
       FieldType ftStoredAnalyzed = new FieldType();
       ftStoredAnalyzed.setStored(true);
@@ -228,8 +226,6 @@ public class IndexHandler {
         doc.add(identifierField);
       }
       String uri = mdRecord.getUri();
-      if (uri == null)
-        uri = docOperation.getSrcUrl();
       if (uri != null) {
         Field uriField = new Field("uri", uri, ftStoredAnalyzed);
         doc.add(uriField);
@@ -507,6 +503,14 @@ public class IndexHandler {
           placesField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
       }
       String language = mdRecord.getLanguage();
+      if (language == null) {
+        Collection coll = CollectionReader.getInstance().getCollection(collectionNames);
+        String mainLanguage = coll.getMainLanguage();
+        if (mainLanguage != null) {
+          language = mainLanguage;
+          mdRecord.setLanguage(mainLanguage);
+        }
+      }
       if (language != null) {
         Field languageField = new Field("language", mdRecord.getLanguage(), ftStoredAnalyzed);
         doc.add(languageField);
@@ -722,14 +726,14 @@ public class IndexHandler {
       }
       */
     } catch (Exception e) {
-      LOGGER.error("indexDocumentLocal: " + docOperation.getDocIdentifier());
+      LOGGER.error("indexDocumentLocal: " + mdRecord.getDocId());
       e.printStackTrace();
       throw new ApplicationException(e);
     }
   }
 
-  public void deleteDocument(CmsDocOperation docOperation) throws ApplicationException {
-    deleteDocumentLocal(docOperation);
+  public void deleteDocument(MetadataRecord mdRecord) throws ApplicationException {
+    deleteDocumentLocal(mdRecord);
     commit();
   }
 
@@ -754,14 +758,14 @@ public class IndexHandler {
     return suggester;  
   }
   
-  private void deleteDocumentLocal(CmsDocOperation docOperation) throws ApplicationException {
-    String docId = docOperation.getDocIdentifier();
+  private void deleteDocumentLocal(MetadataRecord mdRecord) throws ApplicationException {
+    String docId = mdRecord.getDocId();
     try {
       Term termIdentifier = new Term("docId", docId);
       documentsIndexWriter.deleteDocuments(termIdentifier);
       nodesIndexWriter.deleteDocuments(termIdentifier);
     } catch (Exception e) {
-      LOGGER.error("deleteDocumentLocal: " + docOperation.getDocIdentifier());
+      LOGGER.error("deleteDocumentLocal: " + mdRecord.getDocId());
       throw new ApplicationException(e);
     }
   }

@@ -77,25 +77,30 @@ public class Harvester {
   }
 
   public void harvest(Collection collection) throws ApplicationException {
-    int counter = 0;
-    String collId = collection.getId();
-    LOGGER.info("Harvest collection: " + collId + " ...");
-    File harvestColectionDir = new File(harvestDir + "/" + collection.getId());
-    FileUtils.deleteQuietly(harvestColectionDir);
-    ArrayList<MetadataRecord> mdRecords = metadataHandler.getMetadataRecords(collection);
-    if (mdRecords != null) {
-      ArrayList<MetadataRecord> harvestedResourcesRecords = harvestResources(collection, null, mdRecords); // download resources and save metadata and fulltext fields
-      counter = counter + harvestedResourcesRecords.size();
-    }
-    ArrayList<Database> collectionDBs = collection.getDatabases();
-    if (collectionDBs != null) {
-      for (int i=0; i<collectionDBs.size(); i++) {
-        Database collectionDB = collectionDBs.get(i);
-        int countResources = harvestDB(collection, collectionDB);
-        counter = counter + countResources;
+    try {
+      int counter = 0;
+      String collId = collection.getId();
+      LOGGER.info("Harvest collection: " + collId + " ...");
+      String harvestCollectionDirStr = harvestDir + "/" + collection.getId();
+      Runtime.getRuntime().exec("rm -rf " + harvestCollectionDirStr);  // fast also when the directory contains many files
+      LOGGER.info("Project harvest directory: " + harvestCollectionDirStr + " successfully deleted");
+      ArrayList<MetadataRecord> mdRecords = metadataHandler.getMetadataRecords(collection);
+      if (mdRecords != null) {
+        ArrayList<MetadataRecord> harvestedResourcesRecords = harvestResources(collection, null, mdRecords); // download resources and save metadata and fulltext fields
+        counter = counter + harvestedResourcesRecords.size();
       }
+      ArrayList<Database> collectionDBs = collection.getDatabases();
+      if (collectionDBs != null) {
+        for (int i=0; i<collectionDBs.size(); i++) {
+          Database collectionDB = collectionDBs.get(i);
+          int countResources = harvestDB(collection, collectionDB);
+          counter = counter + countResources;
+        }
+      }
+      LOGGER.info("Project: " + collId + " with " + counter + " resources harvested into: " + harvestCollectionDirStr);
+    } catch (Exception e) {
+      throw new ApplicationException(e);
     }
-    LOGGER.info("Collection: " + collId + " with " + counter + " records harvested");
   }
   
   public ArrayList<MetadataRecord> getMetadataRecordsByRecordsFile(Collection collection) throws ApplicationException {

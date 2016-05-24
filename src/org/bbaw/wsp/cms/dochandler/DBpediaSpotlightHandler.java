@@ -45,6 +45,7 @@ public class DBpediaSpotlightHandler {
   private static Logger LOGGER = Logger.getLogger(DBpediaSpotlightHandler.class);
   private static DBpediaSpotlightHandler instance;
   private static DBpediaSpotlightHandler instanceSupport;
+  private static DBpediaSpotlightHandler instanceStopwords;
   private static int SOCKET_TIMEOUT = 200 * 1000;
   private static String SERVICE = "http://wspindex.bbaw.de/spotlight/rest";
   private HttpClient httpClient; 
@@ -78,6 +79,14 @@ public class DBpediaSpotlightHandler {
       instanceSupport.initDBpediaSupports();
     }
     return instanceSupport;
+  }
+  
+  public static DBpediaSpotlightHandler getStopwordsInstance() throws ApplicationException {
+    if (instanceStopwords == null) {
+      instanceStopwords = new DBpediaSpotlightHandler();
+      instanceStopwords.initStopwords();
+    }
+    return instanceStopwords;
   }
   
   private void init() throws ApplicationException {

@@ -528,7 +528,9 @@ public class MetadataRecord implements Cloneable, Serializable {
           Object fieldValue = xQueryEvaluator.evaluateAsString(recordXmlString, "/record/" + fieldName + "/text()");
           if (fieldValue != null) {
             Class<? extends Object> typeClass = field.getType();
-            if (typeClass.getName().equals("int")) {
+            if (typeClass.getName().equals("java.lang.String")) {
+              fieldValue = StringUtils.resolveXmlEntities((String) fieldValue);
+            } else if (typeClass.getName().equals("int")) {
               fieldValue = Integer.valueOf((String) fieldValue);
             } else if (typeClass.getName().equals("java.util.Date")) {
               fieldValue = US_DATE_FORMAT.parse((String) fieldValue);

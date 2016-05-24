@@ -19,7 +19,7 @@ public class Annotator {
   private static Logger LOGGER = Logger.getLogger(Annotator.class);
   private static Annotator annotator;
   private CollectionReader collectionReader;
-  private DBpediaSpotlightHandler dbPediaSpotlightHandler; 
+  private MetadataHandler metadataHandler;
   private Harvester harvester;
   private String annotationDir;
   
@@ -33,9 +33,9 @@ public class Annotator {
   
   private void init() throws ApplicationException {
     collectionReader = CollectionReader.getInstance();
+    metadataHandler = MetadataHandler.getInstance();
     harvester = Harvester.getInstance();
     annotationDir = Constants.getInstance().getAnnotationsDir();
-    dbPediaSpotlightHandler = DBpediaSpotlightHandler.getInstance();
   }
   
   public void annotateCollections() throws ApplicationException {
@@ -66,9 +66,15 @@ public class Annotator {
         }
       }
     }
-    LOGGER.info("Collection: " + collId + " with " + counter + " records annotated");
+    LOGGER.info("Project: " + collId + " with " + counter + " records annotated");
   }
   
+  public ArrayList<MetadataRecord> getMetadataRecordsByRecordsFile(Collection collection, Database db) throws ApplicationException {
+    File dbRecordsFile = new File(annotationDir + "/" + collection.getId() + "/metadata/records/" + collection.getId() + "-" + db.getName() + "-1.xml");
+    ArrayList<MetadataRecord> mdRecords = metadataHandler.getMetadataRecordsByRecordsFile(dbRecordsFile);
+    return mdRecords;
+  }
+
   private void annotate(Collection collection, Database db, ArrayList<MetadataRecord> mdRecords) throws ApplicationException {
     StringBuilder rdfStrBuilder = new StringBuilder(); 
     rdfStrBuilder.append("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
@@ -113,6 +119,7 @@ public class Annotator {
     Annotation docTitleAnnotation = null;
     String docId = mdRecord.getDocId();
     try {
+      DBpediaSpotlightHandler dbPediaSpotlightHandler = DBpediaSpotlightHandler.getInstance();
       String docContent = harvester.getContent(mdRecord);
       if (docContent == null && mdRecord.getDescription() != null && ! mdRecord.getDescription().isEmpty())
         docContent = mdRecord.getDescription();
@@ -161,6 +168,7 @@ public class Annotator {
           else
             resourceNamesStrBuilder.append(resourceName + "###");
         }
+        resourcesXmlStrBuilder.append("</resources>\n");
         collectionRdfStrBuilder.append("</rdf:Description>\n");
         mdRecord.setEntities(resourceNamesStrBuilder.toString());
         mdRecord.setEntitiesDetails(resourcesXmlStrBuilder.toString());

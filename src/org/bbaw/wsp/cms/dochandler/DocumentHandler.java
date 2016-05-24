@@ -218,7 +218,7 @@ public class DocumentHandler {
       // perform operation on Lucene
       docOperation.setStatus(operationName + " document: " + docId + " in CMS");
       IndexHandler indexHandler = IndexHandler.getInstance();
-      indexHandler.indexDocument(docOperation);
+      indexHandler.indexDocument(mdRecord);
       // write oaiprovider file: has to be after indexing because the id field is set in indexing procedure
       writeOaiproviderFile(mdRecord, xQueryEvaluator);
     } catch (IOException e) {
@@ -238,7 +238,7 @@ public class DocumentHandler {
     FileUtils.deleteQuietly(docDir);
     // perform operation on Lucene
     IndexHandler indexHandler = IndexHandler.getInstance();
-    indexHandler.deleteDocument(docOperation);
+    indexHandler.deleteDocument(docOperation.getMdRecord());
   }
   
   private void deleteCollection(CmsDocOperation docOperation) throws ApplicationException {
