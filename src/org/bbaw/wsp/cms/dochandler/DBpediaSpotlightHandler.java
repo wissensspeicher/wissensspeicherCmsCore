@@ -144,6 +144,8 @@ public class DBpediaSpotlightHandler {
       LOGGER.info("DBpediaSpotlightHandler could not be initialized. File: " + spotlightStopwordFileGerman.getAbsolutePath() + " does not exist");
       return;
     }
+    germanStopwords = new Hashtable<String, String>();
+    germanStopwordExpressions = new Hashtable<String, String>();
     try {
       Scanner s = new Scanner(spotlightStopwordFileGerman, "utf-8");
       while (s.hasNextLine()) {

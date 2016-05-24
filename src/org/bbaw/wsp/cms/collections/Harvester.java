@@ -5,15 +5,12 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.FileNameMap;
-import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Enumeration;
-import java.util.Hashtable;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
@@ -21,8 +18,6 @@ import org.bbaw.wsp.cms.dochandler.DocumentTokenizer;
 import org.bbaw.wsp.cms.dochandler.parser.document.IDocument;
 import org.bbaw.wsp.cms.dochandler.parser.text.parser.DocumentParser;
 import org.bbaw.wsp.cms.document.MetadataRecord;
-import org.bbaw.wsp.cms.document.Person;
-import org.bbaw.wsp.cms.document.XQuery;
 import org.bbaw.wsp.cms.general.Constants;
 import org.bbaw.wsp.cms.transform.XslResourceTransformer;
 
@@ -30,8 +25,6 @@ import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 import de.mpg.mpiwg.berlin.mpdl.lt.general.Language;
 import de.mpg.mpiwg.berlin.mpdl.lt.text.tokenize.Token;
 import de.mpg.mpiwg.berlin.mpdl.lt.text.tokenize.XmlTokenizer;
-import de.mpg.mpiwg.berlin.mpdl.util.StringUtils;
-import de.mpg.mpiwg.berlin.mpdl.util.Util;
 import de.mpg.mpiwg.berlin.mpdl.xml.xquery.XQueryEvaluator;
 import net.sf.saxon.s9api.Axis;
 import net.sf.saxon.s9api.QName;
@@ -41,7 +34,6 @@ import net.sf.saxon.s9api.XdmNode;
 import net.sf.saxon.s9api.XdmNodeKind;
 import net.sf.saxon.s9api.XdmSequenceIterator;
 import net.sf.saxon.s9api.XdmValue;
-import net.sf.saxon.trans.XPathException;
 
 public class Harvester {
   private static Logger LOGGER = Logger.getLogger(Harvester.class);
@@ -65,10 +57,6 @@ public class Harvester {
     harvestDir = Constants.getInstance().getHarvestDir();
   }
   
-  private void end() throws ApplicationException {
-
-  }
-
   public void harvestCollections() throws ApplicationException {
     ArrayList<Collection> collections = collectionReader.getCollections();
     for (Collection collection : collections) {
@@ -298,7 +286,7 @@ public class Harvester {
         mdRecord.setPersonsDetails(personsDetails);
         mdRecord.setPlaces(places);
         // Get metadata info out of the xml document
-        mdRecord = getMetadataRecord(docDestFileUpgrade, docType, mdRecord, xQueryEvaluator);
+        mdRecord = metadataHandler.getMetadataRecord(docDestFileUpgrade, docType, mdRecord, xQueryEvaluator);
         String mdRecordLanguage = mdRecord.getLanguage();
         String langId = Language.getInstance().getLanguageId(mdRecordLanguage); // test if language code is supported
         if (langId == null)
@@ -306,7 +294,7 @@ public class Harvester {
         if (mdRecordLanguage == null && mainLanguage != null)
           mdRecord.setLanguage(mainLanguage);
       } else if (docIsXml && docType.equals("mets")) {
-        mdRecord = getMetadataRecord(docDestFile, docType, mdRecord, xQueryEvaluator);
+        mdRecord = metadataHandler.getMetadataRecord(docDestFile, docType, mdRecord, xQueryEvaluator);
         String mdRecordLanguage = mdRecord.getLanguage();
         String langId = Language.getInstance().getLanguageId(mdRecordLanguage); // test if language code is supported
         if (langId == null)
@@ -504,429 +492,6 @@ public class Harvester {
     return isContained;
   }
   
-  private MetadataRecord getMetadataRecord(File xmlFile, String schemaName, MetadataRecord mdRecord, XQueryEvaluator xQueryEvaluator) throws ApplicationException {
-    if (schemaName == null)
-      return mdRecord;
-    try {
-      URL srcUrl = xmlFile.toURI().toURL();
-      if (schemaName.equals("TEI"))
-        mdRecord = getMetadataRecordTei(xQueryEvaluator, srcUrl, mdRecord);
-      else if (schemaName.equals("mets"))
-        mdRecord = getMetadataRecordMets(xQueryEvaluator, srcUrl, mdRecord);
-      else if (schemaName.equals("html"))
-        mdRecord = getMetadataRecordHtml(xQueryEvaluator, srcUrl, mdRecord);
-      else
-        mdRecord.setSchemaName(schemaName); // all other cases: set docType to schemaName
-      evaluateXQueries(xQueryEvaluator, srcUrl, mdRecord);
-    } catch (MalformedURLException e) {
-      throw new ApplicationException(e);
-    }
-    return mdRecord;
-  }
-
-  private MetadataRecord evaluateXQueries(XQueryEvaluator xQueryEvaluator, URL srcUrl, MetadataRecord mdRecord) {
-    Hashtable<String, XQuery> xqueriesHashtable = mdRecord.getxQueries();
-    if (xqueriesHashtable != null) {
-      Enumeration<String> keys = xqueriesHashtable.keys();
-      while (keys != null && keys.hasMoreElements()) {
-        String key = keys.nextElement();
-        XQuery xQuery = xqueriesHashtable.get(key);
-        String xQueryCode = xQuery.getCode();
-        try {
-          String xQueryResult = xQueryEvaluator.evaluateAsString(srcUrl, xQueryCode);
-          if (xQueryResult != null)
-            xQueryResult = xQueryResult.trim();
-          xQuery.setResult(xQueryResult);
-        } catch (Exception e) {
-          // nothing
-        }
-      }
-    }
-    return mdRecord;
-  }
-  
-  private MetadataRecord getMetadataRecordTei(XQueryEvaluator xQueryEvaluator, URL srcUrl, MetadataRecord mdRecord) throws ApplicationException {
-    String metadataXmlStr = xQueryEvaluator.evaluateAsString(srcUrl, "/*:TEI/*:teiHeader");
-    if (metadataXmlStr != null) {
-      String identifier = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:publicationStmt/*:idno");
-      if (identifier != null)
-        identifier = StringUtils.deresolveXmlEntities(identifier.trim());
-      String creator = null;
-      String creatorDetails = null;
-      XdmValue xmdValueAuthors = xQueryEvaluator.evaluate(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:titleStmt/*:author");
-      if (xmdValueAuthors != null && xmdValueAuthors.size() > 0) {
-        XdmSequenceIterator xmdValueAuthorsIterator = xmdValueAuthors.iterator();
-        ArrayList<Person> authors = new ArrayList<Person>();
-        while (xmdValueAuthorsIterator.hasNext()) {
-          Person author = new Person();
-          XdmItem xdmItemAuthor = xmdValueAuthorsIterator.next();
-          String xdmItemAuthorStr = xdmItemAuthor.toString();
-          String name = xdmItemAuthor.getStringValue();
-          boolean isProper = isProper("author", name);
-          if (! isProper)
-            name = "";
-          if (name != null) {
-            name = name.replaceAll("\n|\\s\\s+", " ").trim();
-          }
-          String reference = xQueryEvaluator.evaluateAsString(xdmItemAuthorStr, "string(/*:author/*:persName/@ref)");
-          if (reference != null && ! reference.isEmpty())
-            author.setRef(reference);
-          String forename = xQueryEvaluator.evaluateAsString(xdmItemAuthorStr, "string(/*:author/*:persName/*:forename)");
-          if (forename != null && ! forename.isEmpty())
-            author.setForename(forename.trim());
-          String surname = xQueryEvaluator.evaluateAsString(xdmItemAuthorStr, "string(/*:author/*:persName/*:surname)");
-          if (surname != null && ! surname.isEmpty())
-            author.setSurname(surname.trim());
-          if (surname != null && ! surname.isEmpty() && forename != null && ! forename.isEmpty())
-            name = surname.trim() + ", " + forename.trim();
-          else if (surname != null && ! surname.isEmpty() && (forename == null || forename.isEmpty()))
-            name = surname.trim();
-          if (! name.isEmpty()) {
-            author.setName(name);
-            authors.add(author);
-          }
-        }
-        creator = "";
-        creatorDetails = "<persons>";
-        for (int i=0; i<authors.size(); i++) {
-          Person author = authors.get(i);
-          creator = creator + author.getName();
-          if (authors.size() != 1)
-            creator = creator + ". ";
-          creatorDetails = creatorDetails + "\n" + author.toXmlStr();
-        }
-        creator = StringUtils.deresolveXmlEntities(creator.trim());
-        creatorDetails = creatorDetails + "\n</persons>";
-        if (creator.isEmpty())
-          creator = null;
-        if (authors.isEmpty())
-          creatorDetails = null;
-      }
-      String title = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:titleStmt/*:title");
-      XdmValue xdmValueTitleIdno = xQueryEvaluator.evaluate(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:titleStmt/*:title/*:idno"); // e.g. in http://telotadev.bbaw.de:8078/exist/rest/db/WvH/Briefe/1827-02-20_RosenFriedrichAugust-WvH_481.xml
-      if (xdmValueTitleIdno != null && xdmValueTitleIdno.size() > 0)
-        title = xQueryEvaluator.evaluateAsString(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:titleStmt/*:title/text()");
-      XdmValue xdmValueTitleMain = xQueryEvaluator.evaluate(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:titleStmt/*:title[@type='main']");
-      XdmValue xdmValueTitleShort = xQueryEvaluator.evaluate(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:titleStmt/*:title[@type='short']");
-      if (xdmValueTitleShort != null && xdmValueTitleShort.size() > 0) {
-        try {
-          title = xdmValueTitleShort.getUnderlyingValue().getStringValue();
-        } catch (XPathException e) {
-          // nothing
-        }
-      } else if (xdmValueTitleMain != null && xdmValueTitleMain.size() > 0) {
-        try {
-          title = xdmValueTitleMain.getUnderlyingValue().getStringValue();
-        } catch (XPathException e) {
-          // nothing
-        }
-      }
-      if (title != null) {
-        title = StringUtils.deresolveXmlEntities(title.trim());
-        if (title.isEmpty())
-          title = null;
-      }
-      String language = null;
-      String countLanguages = xQueryEvaluator.evaluateAsString(metadataXmlStr, "string(count(/*:teiHeader/*:profileDesc/*:langUsage/*:language))");
-      if (countLanguages != null && countLanguages.equals("1"))
-        language = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/*:teiHeader/*:profileDesc/*:langUsage/*:language[1]/@ident)");
-      if (language != null && language.isEmpty())
-        language = null;
-      if (language != null) {
-        language = StringUtils.deresolveXmlEntities(language.trim());
-        language = Language.getInstance().getISO639Code(language);
-      }
-      String publisher = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:sourceDesc/*:biblFull/*:publicationStmt/*:publisher/*:name", ", ");
-      if (publisher == null || publisher.isEmpty())
-        publisher = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:sourceDesc/*:biblFull/*:publicationStmt/*:publisher", ", ");
-      if (publisher == null || publisher.isEmpty())
-        publisher = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:publicationStmt/*:publisher", ", ");
-      if (publisher == null || publisher.isEmpty())
-        publisher = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:sourceDesc/*:bibl/*:publisher", ", ");
-      if (publisher != null) {
-        publisher = StringUtils.deresolveXmlEntities(publisher.trim());
-        if (publisher.isEmpty())
-          publisher = null;
-      }
-      String place = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:sourceDesc/*:biblFull/*:publicationStmt/*:pubPlace", ", ");
-      if (place == null || place.isEmpty())
-        place = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:publicationStmt/*:pubPlace");
-      if (place != null) {
-        place = StringUtils.deresolveXmlEntities(place.trim());
-        if (place.isEmpty())
-          place = null;
-      }
-      String publisherStr = null;
-      boolean publisherEndsWithComma = false;
-      if (publisher != null)
-        publisherEndsWithComma = publisher.lastIndexOf(",") == publisher.length() - 1;
-      if (publisher == null && place != null)
-        publisherStr = place;
-      else if (publisher != null && place == null)
-        publisherStr = publisher;
-      else if (publisher != null && place != null && publisherEndsWithComma)
-        publisherStr = publisher + " " + place;
-      else if (publisher != null && place != null && ! publisherEndsWithComma)
-        publisherStr = publisher + ", " + place;
-      String yearStr = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:sourceDesc/*:biblFull/*:publicationStmt/*:date");
-      if (yearStr == null || yearStr.isEmpty())
-        yearStr = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:publicationStmt/*:date");
-      if (yearStr == null || yearStr.isEmpty())
-        yearStr = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:sourceDesc/*:bibl/*:date", ", ");
-      Date date = null; 
-      if (yearStr != null && ! yearStr.equals("")) {
-        yearStr = StringUtils.deresolveXmlEntities(yearStr.trim());
-        yearStr = new Util().toYearStr(yearStr);  // test if possible etc
-        if (yearStr != null) {
-          try {
-            date = new Util().toDate(yearStr + "-01-01T00:00:00.000Z");
-          } catch (Exception e) {
-            // nothing
-          }
-        }
-      }
-      String subject = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:profileDesc/*:textClass/*:keywords/*:term");
-      if (subject != null) {
-        subject = StringUtils.deresolveXmlEntities(subject.trim());
-      }
-      String rights = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "/*:teiHeader/*:fileDesc/*:publicationStmt/*:availability");
-      if (rights == null || rights.trim().isEmpty())
-        rights = "open access";
-      rights = StringUtils.deresolveXmlEntities(rights.trim());
-      String license = "http://echo.mpiwg-berlin.mpg.de/policy/oa_basics/declaration";
-      String accessRights = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/*:teiHeader/*:fileDesc/*:publicationStmt/*:availability/@status)");
-      if (accessRights == null || accessRights.trim().isEmpty()) 
-        accessRights = "free";
-      accessRights = StringUtils.deresolveXmlEntities(accessRights.trim());
-      mdRecord.setIdentifier(identifier);
-      // set language onto mdRecord if it is not null else the mdReord language beware its language 
-      if (language != null)
-        mdRecord.setLanguage(language);
-      if (mdRecord.getCreator() == null)
-        mdRecord.setCreator(creator);
-      if (mdRecord.getCreatorDetails() == null)
-        mdRecord.setCreatorDetails(creatorDetails);
-      if (mdRecord.getTitle() == null)
-        mdRecord.setTitle(title);
-      if (mdRecord.getPublisher() == null)
-        mdRecord.setPublisher(publisherStr);
-      if (mdRecord.getRights() == null)
-        mdRecord.setRights(rights);
-      if (mdRecord.getDate() == null)
-        mdRecord.setDate(date);
-      if (mdRecord.getSubject() == null)
-        mdRecord.setSubject(subject);
-      if (mdRecord.getLicense() == null)
-        mdRecord.setLicense(license);
-      if (mdRecord.getAccessRights() == null)
-        mdRecord.setAccessRights(accessRights);
-    }
-    String pageCountStr = xQueryEvaluator.evaluateAsString(srcUrl, "count(//*:pb)");
-    int pageCount = Integer.valueOf(pageCountStr);
-    mdRecord.setPageCount(pageCount);
-    mdRecord.setSchemaName("TEI");
-    return mdRecord;
-  }
-
-  private MetadataRecord getMetadataRecordMets(XQueryEvaluator xQueryEvaluator, URL srcUrl, MetadataRecord mdRecord) throws ApplicationException {
-    String metadataXmlStrDmd = xQueryEvaluator.evaluateAsString(srcUrl, "/*:mets/*:dmdSec");
-    String metadataXmlStrAmd = xQueryEvaluator.evaluateAsString(srcUrl, "/*:mets/*:amdSec");
-    if (metadataXmlStrDmd != null) {
-      String identifier = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStrDmd, "string(/*:dmdSec/@ID)");
-      if (identifier != null)
-        identifier = StringUtils.deresolveXmlEntities(identifier.trim());
-      String webUri = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStrAmd, "/*:amdSec/*:digiprovMD/*:mdWrap/*:xmlData/*:links/*:presentation");
-      if (webUri != null)
-        webUri = StringUtils.deresolveXmlEntities(webUri.trim());
-      String creator = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStrDmd, "/*:dmdSec/*:mdWrap/*:xmlData/*:mods/*:name");
-      if (creator != null) {
-        creator = StringUtils.deresolveXmlEntities(creator.trim());
-        if (creator.isEmpty())
-          creator = null;
-      }
-      String title = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStrDmd, "/*:dmdSec/*:mdWrap/*:xmlData/*:mods/*:titleInfo");
-      if (title != null)
-        title = StringUtils.deresolveXmlEntities(title.trim());
-      String language = null;  // TODO
-      // String language = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStrDmd, "string(/*:teiHeader/*:profileDesc/*:langUsage/*:language[1]/@ident)");
-      // if (language != null && language.isEmpty())
-      //   language = null;
-      // if (language != null) {
-      //   language = StringUtils.deresolveXmlEntities(language.trim());
-      //   language = Language.getInstance().getISO639Code(language);
-      // }
-      String publisher = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStrAmd, "/*:amdSec/*:rightsMD/*:mdWrap/*:xmlData/*:rights/*:owner", ", ");
-      if (publisher != null)
-        publisher = StringUtils.deresolveXmlEntities(publisher.trim());
-      String place = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStrDmd, "/*:dmdSec/*:mdWrap/*:xmlData/*:mods/*:originInfo/*:place/*:placeTerm", ", ");
-      if (place != null)
-        place = StringUtils.deresolveXmlEntities(place.trim());
-      String publisherStr = null;
-      boolean publisherEndsWithComma = false;
-      if (publisher != null)
-        publisherEndsWithComma = publisher.lastIndexOf(",") == publisher.length() - 1;
-      if (publisher == null && place != null)
-        publisherStr = place;
-      else if (publisher != null && place == null)
-        publisherStr = publisher;
-      else if (publisher != null && place != null && publisherEndsWithComma)
-        publisherStr = publisher + " " + place;
-      else if (publisher != null && place != null && ! publisherEndsWithComma)
-        publisherStr = publisher + ", " + place;
-      String yearStr = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStrDmd, "/*:dmdSec/*:mdWrap/*:xmlData/*:mods/*:originInfo/*:dateIssued");
-      Date date = null; 
-      if (yearStr != null && ! yearStr.equals("")) {
-        yearStr = StringUtils.deresolveXmlEntities(yearStr.trim());
-        yearStr = new Util().toYearStr(yearStr);  // test if possible etc
-        if (yearStr != null) {
-          try {
-            date = new Util().toDate(yearStr + "-01-01T00:00:00.000Z");
-          } catch (Exception e) {
-            // nothing
-          }
-        }
-      }
-      String subject = null;  // TODO
-      // String subject = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStrDmd, "/*:teiHeader/*:profileDesc/*:textClass/*:keywords/*:term");
-      // if (subject != null)
-      //   subject = StringUtils.deresolveXmlEntities(subject.trim());
-      String rightsOwner = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStrAmd, "/*:amdSec/*:rightsMD/*:mdWrap/*:xmlData/*:rights/*:owner");
-      String rightsOwnerUrl = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStrAmd, "/*:amdSec/*:rightsMD/*:mdWrap/*:xmlData/*:rights/*:ownerSiteURL");
-      String rights = null;
-      if (rightsOwner != null)
-        rights = StringUtils.deresolveXmlEntities(rightsOwner.trim());
-      if (rightsOwner != null && rightsOwnerUrl != null)
-        rights = rights + ", " + StringUtils.deresolveXmlEntities(rightsOwnerUrl.trim());
-      else if (rightsOwner == null && rightsOwnerUrl != null)
-        rights = StringUtils.deresolveXmlEntities(rightsOwnerUrl.trim());
-      mdRecord.setIdentifier(identifier);
-      mdRecord.setWebUri(webUri);
-      mdRecord.setLanguage(language);
-      if (mdRecord.getCreator() == null)
-        mdRecord.setCreator(creator);
-      if (mdRecord.getTitle() == null)
-        mdRecord.setTitle(title);
-      if (mdRecord.getPublisher() == null)
-        mdRecord.setPublisher(publisherStr);
-      if (mdRecord.getRights() == null)
-        mdRecord.setRights(rights);
-      if (mdRecord.getDate() == null)
-        mdRecord.setDate(date);
-      if (mdRecord.getSubject() == null)
-        mdRecord.setSubject(subject);
-    }
-    mdRecord.setSchemaName("mets");
-    return mdRecord;
-  }
-
-  private MetadataRecord getMetadataRecordHtml(XQueryEvaluator xQueryEvaluator, URL srcUrl, MetadataRecord mdRecord) throws ApplicationException {
-    String metadataXmlStr = xQueryEvaluator.evaluateAsString(srcUrl, "/html/head");
-    if (metadataXmlStr != null) {
-      String identifier = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/head/meta[@name = 'DC.identifier']/@content)");
-      if (identifier != null && ! identifier.isEmpty())
-        identifier = StringUtils.deresolveXmlEntities(identifier.trim());
-      String creator = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/head/meta[@name = 'DC.creator']/@content)");
-      boolean isProper = isProper("author", creator);
-      if (! isProper)
-        creator = "";
-      if (creator != null) {
-        creator = StringUtils.deresolveXmlEntities(creator.trim());
-        if (creator.isEmpty())
-          creator = null;
-      }      
-      String title = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/head/meta[@name = 'DC.title']/@content)");
-      if (title == null || title.isEmpty()) {
-        title = xQueryEvaluator.evaluateAsString(metadataXmlStr, "string(/head/title)");
-      }
-      if (title != null) {
-        title = StringUtils.deresolveXmlEntities(title.trim());
-        if (title.isEmpty())
-          title = null;
-      }
-      String language = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/head/meta[@name = 'DC.language']/@content)");
-      if (language != null && language.isEmpty())
-        language = null;
-      if (language != null && ! language.isEmpty()) {
-        language = StringUtils.deresolveXmlEntities(language.trim());
-        language = Language.getInstance().getISO639Code(language);
-      }
-      String publisher = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/head/meta[@name = 'DC.publisher']/@content)");
-      if (publisher != null) {
-        publisher = StringUtils.deresolveXmlEntities(publisher.trim());
-        if (publisher.isEmpty())
-          publisher = null;
-      }
-      String yearStr = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/head/meta[@name = 'DC.date']/@content)");
-      Date date = null; 
-      if (yearStr != null) {
-        yearStr = StringUtils.deresolveXmlEntities(yearStr.trim());
-        yearStr = new Util().toYearStr(yearStr);  // test if possible etc
-        if (yearStr != null) {
-          try {
-            date = new Util().toDate(yearStr + "-01-01T00:00:00.000Z");
-          } catch (Exception e) {
-            // nothing
-          }
-        }
-      }
-      String subject = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/head/meta[@name = 'DC.subject']/@content)");
-      if (subject != null) {
-        subject = StringUtils.deresolveXmlEntities(subject.trim());
-        if (subject.isEmpty())
-          subject = null;
-      }
-      String description = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/head/meta[@name = 'DC.description']/@content)");
-      if (description != null) {
-        description = StringUtils.deresolveXmlEntities(description.trim());
-        if (description.isEmpty())
-          description = null;
-      }
-      String rights = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/head/meta[@name = 'DC.rights']/@content)");
-      if (rights != null) {
-        rights = StringUtils.deresolveXmlEntities(rights.trim());
-        if (rights.isEmpty())
-          rights = null;
-      }
-      String license = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/head/meta[@name = 'DC.license']/@content)");
-      if (license != null) {
-        license = StringUtils.deresolveXmlEntities(license.trim());
-        if (license.isEmpty())
-          license = null;
-      }
-      String accessRights = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/head/meta[@name = 'DC.accessRights']/@content)");
-      if (accessRights != null) {
-        accessRights = StringUtils.deresolveXmlEntities(accessRights.trim());
-        if (accessRights.isEmpty())
-          accessRights = null;
-      }
-      mdRecord.setIdentifier(identifier);
-      mdRecord.setLanguage(language);
-      if (mdRecord.getCreator() == null)
-        mdRecord.setCreator(creator);
-      if (mdRecord.getTitle() == null)
-        mdRecord.setTitle(title);
-      if (mdRecord.getPublisher() == null)
-        mdRecord.setPublisher(publisher);
-      if (mdRecord.getRights() == null)
-        mdRecord.setRights(rights);
-      if (mdRecord.getDate() == null)
-        mdRecord.setDate(date);
-      if (mdRecord.getSubject() == null)
-        mdRecord.setSubject(subject);
-      if (mdRecord.getDescription() == null)
-        mdRecord.setDescription(description);
-      if (mdRecord.getLicense() == null)
-        mdRecord.setLicense(license);
-      if (mdRecord.getAccessRights() == null)
-        mdRecord.setAccessRights(accessRights);
-    }
-    String pageCountStr = xQueryEvaluator.evaluateAsString(srcUrl, "count(//pb)");
-    int pageCount = Integer.valueOf(pageCountStr);
-    mdRecord.setPageCount(pageCount);
-    mdRecord.setSchemaName("html");
-    return mdRecord;
-  }
-
   private void buildFulltextFields(Collection collection, MetadataRecord mdRecord, String baseDir) throws ApplicationException {
     try {
       String docId = mdRecord.getDocId();
@@ -1004,7 +569,7 @@ public class Harvester {
                 // nothing: creator is not the creator of the document in mostly all pdf-documents, so is not considered
               } else {
                 String tikaCreator = tikaMDRecord.getCreator();
-                boolean isProper = isProper("author", tikaCreator);
+                boolean isProper = metadataHandler.isProper("author", tikaCreator);
                 if (isProper)
                   mdRecord.setCreator(tikaCreator);
               }
@@ -1068,15 +633,6 @@ public class Harvester {
     }
   }
   
-  private boolean isProper(String fieldName, String fieldValue) {
-    if (fieldValue == null)
-      return true;
-    boolean isProper = true;
-    if (fieldName != null && fieldName.equals("author") && (fieldValue.equals("admin") || fieldValue.equals("user")))
-      return false;
-    return isProper;
-  }
-
   private void initHarvestXmlStrBuilder() {
     harvestXmlStrBuilder = new StringBuilder();
     harvestXmlStrBuilder.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
