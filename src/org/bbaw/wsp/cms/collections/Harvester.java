@@ -185,21 +185,21 @@ public class Harvester {
     return count;
   }
 
-  public String getContent(MetadataRecord mdRecord) throws ApplicationException {
-    String content = null;
+  public String getFulltext(String type, MetadataRecord mdRecord) throws ApplicationException {
+    String fulltext = null;
     String docId = mdRecord.getDocId();
     String collectionId = mdRecord.getCollectionNames();
     String baseDir = harvestDir + "/" + collectionId + "/data";
     String docDirName = getDocDir(docId, baseDir);
     try {
-      File contentFile = new File(docDirName + "/content.txt");
-      if (contentFile.exists()) {
-        content = FileUtils.readFileToString(contentFile, "utf-8");
+      File fulltextFile = new File(docDirName + "/" + type + ".txt");
+      if (fulltextFile.exists()) {
+        fulltext = FileUtils.readFileToString(fulltextFile, "utf-8");
       }
     } catch (Exception e) {
       throw new ApplicationException(e);
     }
-    return content;
+    return fulltext;
   }
   
   private MetadataRecord harvestResource(int counter, Collection collection, MetadataRecord mdRecord) throws ApplicationException {

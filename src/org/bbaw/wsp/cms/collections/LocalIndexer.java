@@ -15,8 +15,9 @@ public class LocalIndexer {
   private static int COMMIT_INTERVAL_DB = 1000;
   private CollectionReader collectionReader;
   private MetadataHandler metadataHandler;
-  private IndexHandler indexHandler;
+  private Harvester harvester;
   private Annotator annotator;
+  private IndexHandler indexHandler;
   
   public static LocalIndexer getInstance() throws ApplicationException {
     if(indexer == null) {
@@ -29,8 +30,9 @@ public class LocalIndexer {
   private void init() throws ApplicationException {
     collectionReader = CollectionReader.getInstance();
     metadataHandler = MetadataHandler.getInstance();
-    indexHandler = IndexHandler.getInstance();
+    harvester = Harvester.getInstance();
     annotator = Annotator.getInstance();
+    indexHandler = IndexHandler.getInstance();
   }
   
   public void indexCollections() throws ApplicationException {
@@ -81,6 +83,11 @@ public class LocalIndexer {
       indexHandler.setCommitInterval(COMMIT_INTERVAL_DB);
     for (int i=0; i<mdRecords.size(); i++) {
       MetadataRecord mdRecord = mdRecords.get(i);
+      // fetch fulltextFields
+      String tokensOrig = harvester.getFulltext("tokensOrig", mdRecord);
+      mdRecord.setTokenOrig(tokensOrig);
+      String tokensMorph = harvester.getFulltext("tokensMorph", mdRecord);
+      mdRecord.setTokenMorph(tokensMorph);
       String docId = mdRecord.getDocId();
       String docUri = mdRecord.getUri();
       int count = i+1;

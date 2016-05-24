@@ -126,7 +126,7 @@ public class Annotator {
     String docId = mdRecord.getDocId();
     try {
       DBpediaSpotlightHandler dbPediaSpotlightHandler = DBpediaSpotlightHandler.getInstance();
-      String docContent = harvester.getContent(mdRecord);
+      String docContent = harvester.getFulltext("content", mdRecord);
       if (docContent == null && mdRecord.getDescription() != null && ! mdRecord.getDescription().isEmpty())
         docContent = mdRecord.getDescription();
       if (docContent != null) {
