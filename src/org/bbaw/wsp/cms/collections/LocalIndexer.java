@@ -44,7 +44,7 @@ public class LocalIndexer {
     int counter = 0;
     String collId = collection.getId();
     LOGGER.info("Index project: " + collId + " ...");
-    ArrayList<MetadataRecord> mdRecords = Harvester.getInstance().getMetadataRecordsByRecordsFile(collection);
+    ArrayList<MetadataRecord> mdRecords = annotator.getMetadataRecordsByRecordsFile(collection);
     counter = counter + mdRecords.size();
     index(collection, null, mdRecords, false); 
     ArrayList<Database> collectionDBs = collection.getDatabases();

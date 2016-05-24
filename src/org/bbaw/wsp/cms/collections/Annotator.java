@@ -69,6 +69,12 @@ public class Annotator {
     LOGGER.info("Project: " + collId + " with " + counter + " records annotated");
   }
   
+  public ArrayList<MetadataRecord> getMetadataRecordsByRecordsFile(Collection collection) throws ApplicationException {
+    File recordsFile = new File(annotationDir + "/" + collection.getId() + "/metadata/records/" + collection.getId() + ".xml");
+    ArrayList<MetadataRecord> mdRecords = metadataHandler.getMetadataRecordsByRecordsFile(recordsFile);
+    return mdRecords;
+  }
+
   public ArrayList<MetadataRecord> getMetadataRecordsByRecordsFile(Collection collection, Database db) throws ApplicationException {
     File dbRecordsFile = new File(annotationDir + "/" + collection.getId() + "/metadata/records/" + collection.getId() + "-" + db.getName() + "-1.xml");
     ArrayList<MetadataRecord> mdRecords = metadataHandler.getMetadataRecordsByRecordsFile(dbRecordsFile);
