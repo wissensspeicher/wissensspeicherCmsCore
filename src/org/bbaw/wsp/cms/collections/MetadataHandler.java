@@ -563,6 +563,8 @@ public class MetadataHandler {
   
   public ArrayList<MetadataRecord> getMetadataRecordsByRecordsFile(File recordsFile) throws ApplicationException {
     ArrayList<MetadataRecord> mdRecords = null;
+    if (! recordsFile.exists())
+      return null;
     try {
       URL rdfRessourcesFileUrl = recordsFile.toURI().toURL();
       XQueryEvaluator xQueryEvaluator = new XQueryEvaluator();
@@ -584,6 +586,8 @@ public class MetadataHandler {
   }
   
   public ArrayList<MetadataRecord> getMetadataRecordsByRdfFile(Collection collection, File rdfRessourcesFile, Database db) throws ApplicationException {
+    if (! rdfRessourcesFile.exists())
+      return null;
     String collectionId = collection.getId();
     String xmlDumpFileStr = rdfRessourcesFile.getPath().replaceAll("\\.rdf", ".xml");
     File xmlDumpFile = new File(xmlDumpFileStr);
