@@ -80,7 +80,32 @@ public class CollectionReader {
 		return collections;
 	}
 
-	public Collection getCollection(String collectionId) {
+	/**
+	 * Delivers collections from that startingCollectionId onwards till endingCollectionId alphabetically
+	 * @param startingCollectionId
+	 * @param endingCollectionId
+	 * @return ArrayList<Collection>
+	 */
+  public ArrayList<Collection> getCollections(String startingCollectionId, String endingCollectionId) {
+    ArrayList<Collection> retCollections = new ArrayList<Collection>();
+    boolean start = false;
+    boolean end = false;
+    ArrayList<Collection> collections = collectionReader.getCollections();
+    for (Collection collection : collections) {
+      String collId = collection.getId();
+      if (startingCollectionId.equals(collId))
+        start = true;
+      if (start && ! end)
+        retCollections.add(collection);
+      if (endingCollectionId.equals(collId)) {
+        end = true;
+        break;
+      }
+    }
+    return retCollections;
+  }
+
+  public Collection getCollection(String collectionId) {
 		Collection collection = collectionContainer.get(collectionId);
 		return collection;
 	}
