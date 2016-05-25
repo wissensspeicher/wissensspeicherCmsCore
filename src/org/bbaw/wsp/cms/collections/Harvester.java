@@ -311,11 +311,6 @@ public class Harvester {
         File contentFile = new File(docDirName + "/content.txt");
         FileUtils.writeStringToFile(contentFile, content, "utf-8");
       }
-      String contentXml = mdRecord.getContentXml();
-      if (contentXml != null) {
-        File contentXmlFile = new File(docDirName + "/content.xml");
-        FileUtils.writeStringToFile(contentXmlFile, contentXml, "utf-8");
-      }
       String tokensOrig = mdRecord.getTokenOrig();
       if (tokensOrig != null) {
         File tokensOrigFile = new File(docDirName + "/tokensOrig.txt");
@@ -500,7 +495,6 @@ public class Harvester {
       String docTokensOrig = null;
       String docTokensNorm = null;
       String docTokensMorph = null;
-      String contentXml = null;
       String content = null;
       String docFileName = getDocFullFileName(docId, baseDir);
       XmlTokenizer docXmlTokenizer = null;
@@ -539,15 +533,12 @@ public class Harvester {
         docTokensNorm = docXmlTokenizer.getStringResult();
         docXmlTokenizer.setOutputOptions(outputOptionsWithLemmas);
         docTokensMorph = docXmlTokenizer.getStringResult();
-        // fetch original xml content of the documents file
-        contentXml = FileUtils.readFileToString(docFile, "utf-8");
         // fetch original content of the documents file (without xml tags)
         XslResourceTransformer charsTransformer = new XslResourceTransformer("chars.xsl");
-        content = charsTransformer.transform(docFileName);
+        content = charsTransformer.transform(docFileName);  // original content with all blanks and case sensitive and punctuation marks 
         // fill mdRecord
         mdRecord.setContent(content);
-        mdRecord.setContentXml(contentXml);
-        mdRecord.setTokenOrig(docTokensOrig);
+        mdRecord.setTokenOrig(docTokensOrig); // original content words (in small letters, without blanks and punctuation marks)
         mdRecord.setTokenNorm(docTokensNorm);
         mdRecord.setTokenMorph(docTokensMorph);
       } else {

@@ -90,6 +90,8 @@ public class LocalIndexer {
     for (int i=0; i<mdRecords.size(); i++) {
       MetadataRecord mdRecord = mdRecords.get(i);
       // fetch fulltextFields
+      String content = harvester.getFulltext("content", mdRecord);
+      mdRecord.setContent(content); // is used in query highlighting function
       String tokensOrig = harvester.getFulltext("tokensOrig", mdRecord);
       mdRecord.setTokenOrig(tokensOrig);
       String tokensMorph = harvester.getFulltext("tokensMorph", mdRecord);
