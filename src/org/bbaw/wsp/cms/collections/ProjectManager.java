@@ -223,7 +223,9 @@ public class ProjectManager {
     LOGGER.info("Generate OaiProviderFiles of project: " + collId + " ...");
     ArrayList<MetadataRecord> mdRecords = harvester.getMetadataRecordsByRecordsFile(collection);
     XQueryEvaluator xQueryEvaluator = new XQueryEvaluator();
-    writeOaiProviderFiles(mdRecords, xQueryEvaluator);
+    if (mdRecords != null) {
+      writeOaiProviderFiles(mdRecords, xQueryEvaluator);
+    }
     ArrayList<Database> collectionDBs = collection.getDatabases();
     if (collectionDBs != null) {
       for (int i=0; i<collectionDBs.size(); i++) {
@@ -231,14 +233,18 @@ public class ProjectManager {
         String dbType = db.getType();
         if (dbType != null && (dbType.equals("crawl") || dbType.equals("eXist") || dbType.equals("oai"))) {
           ArrayList<MetadataRecord> dbMdRecords = harvester.getMetadataRecordsByRecordsFile(collection, db);
-          writeOaiProviderFiles(dbMdRecords, xQueryEvaluator);
+          if (dbMdRecords != null) {
+            writeOaiProviderFiles(dbMdRecords, xQueryEvaluator);
+          }
         } else {
           File[] rdfDbResourcesFiles = metadataHandler.getRdfDbResourcesFiles(collection, db);
           if (rdfDbResourcesFiles != null && rdfDbResourcesFiles.length > 0) {
             for (int j = 0; j < rdfDbResourcesFiles.length; j++) {
               File rdfDbResourcesFile = rdfDbResourcesFiles[j];
               ArrayList<MetadataRecord> dbMdRecords = metadataHandler.getMetadataRecordsByRdfFile(collection, rdfDbResourcesFile, db);
-              writeOaiProviderFiles(dbMdRecords, xQueryEvaluator);
+              if (dbMdRecords != null) {
+                writeOaiProviderFiles(dbMdRecords, xQueryEvaluator);
+              }
             }
           }
         }

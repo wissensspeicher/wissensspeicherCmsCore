@@ -47,8 +47,10 @@ public class LocalIndexer {
     String collId = collection.getId();
     LOGGER.info("Index project: " + collId + " ...");
     ArrayList<MetadataRecord> mdRecords = annotator.getMetadataRecordsByRecordsFile(collection);
-    counter = counter + mdRecords.size();
-    index(collection, null, mdRecords, false); 
+    if (mdRecords != null) {
+      counter = counter + mdRecords.size();
+      index(collection, null, mdRecords, false);
+    }
     ArrayList<Database> collectionDBs = collection.getDatabases();
     if (collectionDBs != null) {
       for (int i=0; i<collectionDBs.size(); i++) {
@@ -56,8 +58,10 @@ public class LocalIndexer {
         String dbType = db.getType();
         if (dbType != null && (dbType.equals("crawl") || dbType.equals("eXist") || dbType.equals("oai"))) {
           ArrayList<MetadataRecord> dbMdRecords = annotator.getMetadataRecordsByRecordsFile(collection, db);
-          counter = counter + dbMdRecords.size();
-          index(collection, db, dbMdRecords, false);
+          if (dbMdRecords != null) {
+            counter = counter + dbMdRecords.size();
+            index(collection, db, dbMdRecords, false);
+          }
         } else {
           File[] rdfDbResourcesFiles = metadataHandler.getRdfDbResourcesFiles(collection, db);
           if (rdfDbResourcesFiles != null && rdfDbResourcesFiles.length > 0) {
@@ -66,8 +70,10 @@ public class LocalIndexer {
               File rdfDbResourcesFile = rdfDbResourcesFiles[j];
               LOGGER.info("Index database records from file: " + rdfDbResourcesFile);
               ArrayList<MetadataRecord> dbMdRecords = metadataHandler.getMetadataRecordsByRdfFile(collection, rdfDbResourcesFile, db);
-              counter = counter + dbMdRecords.size();
-              index(collection, db, dbMdRecords, true);
+              if (dbMdRecords != null) {
+                counter = counter + dbMdRecords.size();
+                index(collection, db, dbMdRecords, true);
+              }
             }
           }
         }

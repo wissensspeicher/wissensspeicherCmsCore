@@ -49,11 +49,13 @@ public class Annotator {
     int counter = 0;
     String collId = collection.getId();
     LOGGER.info("Annotate collection: " + collId + " ...");
-    File harvestCollectionDir = new File(annotationDir + "/" + collection.getId());
-    FileUtils.deleteQuietly(harvestCollectionDir);
+    File annoationCollectionDir = new File(annotationDir + "/" + collection.getId());
+    FileUtils.deleteQuietly(annoationCollectionDir);
     ArrayList<MetadataRecord> mdRecords = harvester.getMetadataRecordsByRecordsFile(collection);
-    counter = counter + mdRecords.size();
-    annotate(collection, null, mdRecords); 
+    if (mdRecords != null) {
+      counter = counter + mdRecords.size();
+      annotate(collection, null, mdRecords);
+    }
     ArrayList<Database> collectionDBs = collection.getDatabases();
     if (collectionDBs != null) {
       for (int i=0; i<collectionDBs.size(); i++) {
@@ -61,8 +63,10 @@ public class Annotator {
         String dbType = collectionDB.getType();
         if (dbType != null && (dbType.equals("crawl") || dbType.equals("eXist") || dbType.equals("oai"))) {
           ArrayList<MetadataRecord> dbMdRecords = harvester.getMetadataRecordsByRecordsFile(collection, collectionDB);
-          counter = counter + dbMdRecords.size();
-          annotate(collection, collectionDB, dbMdRecords);
+          if (dbMdRecords != null) {
+            counter = counter + dbMdRecords.size();
+            annotate(collection, collectionDB, dbMdRecords);
+          }
         }
       }
     }
