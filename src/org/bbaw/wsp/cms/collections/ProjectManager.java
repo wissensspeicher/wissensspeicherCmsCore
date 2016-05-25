@@ -41,6 +41,49 @@ public class ProjectManager {
         String projectId2 = null;
         if (args.length > 2)
           projectId2 = args[2];
+        if (args.length > 2)
+          projectId2 = args[2];
+        if (operation.equals("update") && projectId1 != null && projectId2 == null) {
+          LOGGER.info("Update of project (\"" + projectId1 + "\") into data directory: " + Constants.getInstance().getDataDir());
+          ProjectManager pm = ProjectManager.getInstance();
+          pm.update(projectId1);
+          LOGGER.info("Update finished");
+        } else if (operation.equals("update") && projectId1 != null && projectId2 != null) {
+          LOGGER.info("Update of projects (\"" + projectId1 + "\" - \"" + projectId2 + "\") into data directory: " + Constants.getInstance().getDataDir());
+          ProjectManager pm = ProjectManager.getInstance();
+          pm.update(projectId1, projectId2);
+          LOGGER.info("Update finished");
+        } else if (operation.equals("harvest") && projectId1 != null && projectId2 == null) {
+          LOGGER.info("Harvest of project (\"" + projectId1 + "\") into data directory: " + Constants.getInstance().getHarvestDir());
+          ProjectManager pm = ProjectManager.getInstance();
+          pm.harvest(projectId1);
+          LOGGER.info("Harvest finished");
+        } else if (operation.equals("harvest") && projectId1 != null && projectId2 != null) {
+          LOGGER.info("Harvest of projects (\"" + projectId1 + "\" - \"" + projectId2 + "\") into data directory: " + Constants.getInstance().getHarvestDir());
+          ProjectManager pm = ProjectManager.getInstance();
+          pm.harvest(projectId1, projectId2);
+          LOGGER.info("Harvest finished");
+        } else if (operation.equals("annotate") && projectId1 != null && projectId2 == null) {
+          LOGGER.info("Annotate project (\"" + projectId1 + "\") into data directory: " + Constants.getInstance().getAnnotationsDir());
+          ProjectManager pm = ProjectManager.getInstance();
+          pm.annotate(projectId1);
+          LOGGER.info("Annotate finished");
+        } else if (operation.equals("annotate") && projectId1 != null && projectId2 != null) {
+          LOGGER.info("Annotate projects (\"" + projectId1 + "\" - \"" + projectId2 + "\") into data directory: " + Constants.getInstance().getAnnotationsDir());
+          ProjectManager pm = ProjectManager.getInstance();
+          pm.annotate(projectId1, projectId2);
+          LOGGER.info("Annotate finished");
+        } else if (operation.equals("index") && projectId1 != null && projectId2 == null) {
+          LOGGER.info("Index project (\"" + projectId1 + "\") into data directory: " + Constants.getInstance().getIndexDir());
+          ProjectManager pm = ProjectManager.getInstance();
+          pm.index(projectId1);
+          LOGGER.info("Index finished");
+        } else if (operation.equals("index") && projectId1 != null && projectId2 != null) {
+          LOGGER.info("Index projects (\"" + projectId1 + "\" - \"" + projectId2 + "\") into data directory: " + Constants.getInstance().getIndexDir());
+          ProjectManager pm = ProjectManager.getInstance();
+          pm.index(projectId1, projectId2);
+          LOGGER.info("Index finished");
+        }
       } 
     } catch (Exception e) {
       e.printStackTrace();
@@ -83,40 +126,26 @@ public class ProjectManager {
     }
   }
 
-  public Integer getMaxId() {
-    String maxIdStr = statusFileDoc.select("status > maxid").text();
-    return Integer.valueOf(maxIdStr);
-  }
-
-  public void setMaxId(Integer maxId) throws ApplicationException {
-    statusFileDoc.select("status > maxid").first().text(maxId.toString());
-    writeStatusFile();
-  }
-  
-  public Date getModified() throws ApplicationException {
-    Date modified = null;
-    try {
-      String modifiedStr = statusFileDoc.select("status > modified").text();
-      modified = US_DATE_FORMAT.parse((String) modifiedStr);
-    } catch (Exception e) {
-      throw new ApplicationException(e);
-    }
-    return modified;
-  }
-
-  public void setModified(Collection collection, Date modified) throws ApplicationException {
-    statusFileDoc.select("status > modified").first().text(modified.toString()); // TODO nur das Projekt auf modified setzen
-    writeStatusFile();
+  /**
+   * Update of all collections from that startingCollection onwards till endingCollectionId alphabetically
+   * @throws ApplicationException
+   * 
+   * e.g. update(aaew, dspin)):  update all resources of all projects alphabetically named between 
+   * "aaew" and "dspin" inclusive
+   */
+  public void update(String projectId1, String projectId2) throws ApplicationException {
+    ArrayList<Collection> collections = collectionReader.getCollections(projectId1, projectId2);
+    update(collections);
   }
   
-  public void update(String[] collectionIds) throws ApplicationException {
-    harvest(collectionIds);
-    annotate(collectionIds);
-    index(collectionIds);
+  private void update(ArrayList<Collection> collections) throws ApplicationException {
+    harvest(collections);
+    annotate(collections);
+    index(collections);
   }
   
-  public void update(String collectionId) throws ApplicationException {
-    Collection collection = collectionReader.getCollection(collectionId);
+  public void update(String projectId) throws ApplicationException {
+    Collection collection = collectionReader.getCollection(projectId);
     harvest(collection);
     annotate(collection);
     index(collection);
@@ -124,39 +153,66 @@ public class ProjectManager {
     setModified(collection, now);  
   }
   
-  public void harvest(String[] collectionIds) throws ApplicationException {
-    for (int i=0; i<collectionIds.length; i++) {
-      String collectionId = collectionIds[i];
-      Collection collection = collectionReader.getCollection(collectionId);
+  public void harvest(String projectId1, String projectId2) throws ApplicationException {
+    ArrayList<Collection> collections = collectionReader.getCollections(projectId1, projectId2);
+    harvest(collections);
+  }
+  
+  private void harvest(ArrayList<Collection> collections) throws ApplicationException {
+    for (int i=0; i<collections.size(); i++) {
+      Collection collection = collections.get(i);
       harvest(collection);
     }
   }
 
-  public void harvest(Collection collection) throws ApplicationException {
+  public void harvest(String projectId) throws ApplicationException {
+    Collection collection = collectionReader.getCollection(projectId);
+    harvest(collection);
+  }
+  
+  private void harvest(Collection collection) throws ApplicationException {
     harvester.harvest(collection);
   }
   
-  public void annotate(String[] collectionIds) throws ApplicationException {
-    for (int i=0; i<collectionIds.length; i++) {
-      String collectionId = collectionIds[i];
-      Collection collection = collectionReader.getCollection(collectionId);
+  public void annotate(String projectId1, String projectId2) throws ApplicationException {
+    ArrayList<Collection> collections = collectionReader.getCollections(projectId1, projectId2);
+    annotate(collections);
+  }
+  
+  private void annotate(ArrayList<Collection> collections) throws ApplicationException {
+    for (int i=0; i<collections.size(); i++) {
+      Collection collection = collections.get(i);
       annotate(collection);
     }
   }
 
-  public void annotate(Collection collection) throws ApplicationException {
+  public void annotate(String projectId) throws ApplicationException {
+    Collection collection = collectionReader.getCollection(projectId);
+    annotate(collection);
+  }
+  
+  private void annotate(Collection collection) throws ApplicationException {
     annotator.annotate(collection);
   }
   
-  public void index(String[] collectionIds) throws ApplicationException {
-    for (int i=0; i<collectionIds.length; i++) {
-      String collectionId = collectionIds[i];
-      Collection collection = collectionReader.getCollection(collectionId);
+  public void index(String projectId1, String projectId2) throws ApplicationException {
+    ArrayList<Collection> collections = collectionReader.getCollections(projectId1, projectId2);
+    index(collections);
+  }
+  
+  private void index(ArrayList<Collection> collections) throws ApplicationException {
+    for (int i=0; i<collections.size(); i++) {
+      Collection collection = collections.get(i);
       index(collection);
     }
   }
 
-  public void index(Collection collection) throws ApplicationException {
+  public void index(String projectId) throws ApplicationException {
+    Collection collection = collectionReader.getCollection(projectId);
+    index(collection);
+  }
+  
+  private void index(Collection collection) throws ApplicationException {
     indexer.delete(collection);
     indexer.index(collection);
   }
@@ -189,6 +245,42 @@ public class ProjectManager {
       }
     }
     LOGGER.info("Project: " + collId + " with " + counter + " records indexed");
+  }
+
+  public Integer getMaxId() {
+    String maxIdStr = statusFileDoc.select("status > maxid").text();
+    return Integer.valueOf(maxIdStr);
+  }
+
+  public void setMaxId(Integer maxId) throws ApplicationException {
+    statusFileDoc.select("status > maxid").first().text(maxId.toString());
+    writeStatusFile();
+  }
+  
+  public Date getModified() throws ApplicationException {
+    Date modified = null;
+    try {
+      String modifiedStr = statusFileDoc.select("status > modified").text();
+      modified = US_DATE_FORMAT.parse((String) modifiedStr);
+    } catch (Exception e) {
+      throw new ApplicationException(e);
+    }
+    return modified;
+  }
+
+  public void setModified(Collection collection, Date modified) throws ApplicationException {
+    statusFileDoc.select("status > modified").first().text(modified.toString()); // TODO nur das Projekt auf modified setzen
+    writeStatusFile();
+  }
+  
+  private void writeStatusFile() throws ApplicationException {
+    try {
+      String statusFileContentXmlStr = statusFileDoc.select("body").first().html();
+      statusFileContentXmlStr = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + statusFileContentXmlStr;
+      FileUtils.writeStringToFile(statusFile, statusFileContentXmlStr, "utf-8");
+    } catch (Exception e) {
+      throw new ApplicationException(e);
+    }
   }
 
   private void writeOaiProviderFiles(ArrayList<MetadataRecord> mdRecords, XQueryEvaluator xQueryEvaluator) throws ApplicationException {
@@ -301,16 +393,6 @@ public class ProjectManager {
     try {
       FileUtils.writeStringToFile(oaiDcFile, dcStr, "utf-8");
     } catch (IOException e) {
-      throw new ApplicationException(e);
-    }
-  }
-
-  private void writeStatusFile() throws ApplicationException {
-    try {
-      String statusFileContentXmlStr = statusFileDoc.select("body").first().html();
-      statusFileContentXmlStr = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + statusFileContentXmlStr;
-      FileUtils.writeStringToFile(statusFile, statusFileContentXmlStr, "utf-8");
-    } catch (Exception e) {
       throw new ApplicationException(e);
     }
   }
