@@ -114,7 +114,7 @@ public class ProjectManager {
         statusFileContentXmlStr = statusFileContentXmlStr + "</status>";
         FileUtils.writeStringToFile(statusFile, statusFileContentXmlStr, "utf-8");
       }
-      statusFileDoc = Jsoup.parse(statusFile, "utf-8");
+      readStatusFile();
       statusFileDoc.outputSettings().syntax(Document.OutputSettings.Syntax.xml);
       statusFileDoc.outputSettings().escapeMode(EscapeMode.xhtml);
       statusFileDoc.outputSettings().prettyPrint(true);
@@ -124,6 +124,14 @@ public class ProjectManager {
     }
   }
 
+  private void readStatusFile() throws ApplicationException {
+    try {
+      statusFileDoc = Jsoup.parse(statusFile, "utf-8");
+    } catch (Exception e) {
+      throw new ApplicationException(e);
+    }
+  }
+  
   /**
    * Update of all collections from that startingCollection onwards till endingCollectionId alphabetically
    * @throws ApplicationException
@@ -254,7 +262,8 @@ public class ProjectManager {
     LOGGER.info("Project: " + collId + " with " + counter + " records indexed");
   }
 
-  public Integer getStatusMaxId() {
+  public Integer getStatusMaxId() throws ApplicationException {
+    readStatusFile();
     String maxIdStr = statusFileDoc.select("status > maxid").text();
     return Integer.valueOf(maxIdStr);
   }
@@ -267,6 +276,7 @@ public class ProjectManager {
   public Date getStatusModified() throws ApplicationException {
     Date modified = null;
     try {
+      readStatusFile();
       String modifiedStr = statusFileDoc.select("status > modified").text();
       modified = US_DATE_FORMAT.parse((String) modifiedStr);
     } catch (Exception e) {
@@ -287,8 +297,15 @@ public class ProjectManager {
     writeStatusFile();
   }
   
-  public String getStatusProjectXmlStr(String projectId) {
-    String projectStatusXmlStr = statusFileDoc.select("status > project[id=" + projectId + "]").first().outerHtml();
+  public String getStatusProjectXmlStr(String[] projectIds) throws ApplicationException {
+    readStatusFile();
+    String projectSelector = "";
+    for (int i=0; i<projectIds.length; i++) {
+      String projectId = projectIds[i];
+      projectSelector = projectSelector + "project[id=" + projectId + "], ";
+    }
+    projectSelector = projectSelector.substring(0, projectSelector.length() - 2);
+    String projectStatusXmlStr = statusFileDoc.select(projectSelector).outerHtml();
     return projectStatusXmlStr;
   }
 
