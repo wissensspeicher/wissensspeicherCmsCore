@@ -15,6 +15,7 @@ import org.bbaw.wsp.cms.document.MetadataRecord;
 import org.bbaw.wsp.cms.general.Constants;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Entities.EscapeMode;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
@@ -102,9 +103,6 @@ public class ProjectManager {
     try {
       collectionReader = CollectionReader.getInstance();
       metadataHandler = MetadataHandler.getInstance();
-      harvester = Harvester.getInstance();
-      annotator = Annotator.getInstance();
-      indexer = LocalIndexer.getInstance();
       statusFile = new File(Constants.getInstance().getDataDir() + "/status/status.xml");
       if (! statusFile.exists()) {
         String statusFileContentXmlStr = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
@@ -150,7 +148,7 @@ public class ProjectManager {
     annotate(collection);
     index(collection);
     Date now = new Date();
-    setModified(collection, now);  
+    setStatusModified(collection, now);  
   }
   
   public void harvest(String projectId1, String projectId2) throws ApplicationException {
@@ -171,6 +169,7 @@ public class ProjectManager {
   }
   
   private void harvest(Collection collection) throws ApplicationException {
+    harvester = Harvester.getInstance();
     harvester.harvest(collection);
   }
   
@@ -192,6 +191,7 @@ public class ProjectManager {
   }
   
   private void annotate(Collection collection) throws ApplicationException {
+    annotator = Annotator.getInstance();
     annotator.annotate(collection);
   }
   
@@ -213,6 +213,7 @@ public class ProjectManager {
   }
   
   private void index(Collection collection) throws ApplicationException {
+    indexer = LocalIndexer.getInstance();
     indexer.delete(collection);
     indexer.index(collection);
   }
@@ -253,17 +254,17 @@ public class ProjectManager {
     LOGGER.info("Project: " + collId + " with " + counter + " records indexed");
   }
 
-  public Integer getMaxId() {
+  public Integer getStatusMaxId() {
     String maxIdStr = statusFileDoc.select("status > maxid").text();
     return Integer.valueOf(maxIdStr);
   }
 
-  public void setMaxId(Integer maxId) throws ApplicationException {
+  public void setStatusMaxId(Integer maxId) throws ApplicationException {
     statusFileDoc.select("status > maxid").first().text(maxId.toString());
     writeStatusFile();
   }
   
-  public Date getModified() throws ApplicationException {
+  public Date getStatusModified() throws ApplicationException {
     Date modified = null;
     try {
       String modifiedStr = statusFileDoc.select("status > modified").text();
@@ -274,11 +275,23 @@ public class ProjectManager {
     return modified;
   }
 
-  public void setModified(Collection collection, Date modified) throws ApplicationException {
-    statusFileDoc.select("status > modified").first().text(modified.toString()); // TODO nur das Projekt auf modified setzen
+  public void setStatusModified(Collection collection, Date modified) throws ApplicationException {
+    String projectId = collection.getId();
+    statusFileDoc.select("status > modified").first().text(modified.toString()); 
+    Element modifiedElem = statusFileDoc.select("status > project[id=" + projectId + "] > modified").first();
+    if (modifiedElem != null) {
+      modifiedElem.text(modified.toString());
+    } else {
+      // TODO neues modified elem erzeugen und hinzufügen
+    }
     writeStatusFile();
   }
   
+  public String getStatusProjectXmlStr(String projectId) {
+    String projectStatusXmlStr = statusFileDoc.select("status > project[id=" + projectId + "]").first().outerHtml();
+    return projectStatusXmlStr;
+  }
+
   private void writeStatusFile() throws ApplicationException {
     try {
       String statusFileContentXmlStr = statusFileDoc.select("body").first().html();

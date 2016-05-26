@@ -107,7 +107,7 @@ public class MetadataHandler {
     ArrayList<MetadataRecord> mdRecords = new ArrayList<MetadataRecord>();
     String urlStr = db.getUrl();
     ProjectManager pm = ProjectManager.getInstance();
-    Integer maxIdcounter = pm.getMaxId();  // find the highest value, so that each following id is a real new id
+    Integer maxIdcounter = pm.getStatusMaxId();  // find the highest value, so that each following id is a real new id
     MetadataRecord mdRecord = getNewMdRecord(urlStr); 
     mdRecord.setSystem(db.getType());
     mdRecord.setCollectionNames(collectionId);
@@ -144,14 +144,14 @@ public class MetadataHandler {
       }
       mdRecords.addAll(mdRecordsEXist);
     }
-    pm.setMaxId(maxIdcounter);
+    pm.setStatusMaxId(maxIdcounter);
     return mdRecords;
   }
   
   private ArrayList<MetadataRecord> getMetadataRecordsCrawl(Collection collection, Database db) throws ApplicationException {
     String collectionId = collection.getId();
     ProjectManager pm = ProjectManager.getInstance();
-    Integer maxIdcounter = pm.getMaxId();  // find the highest value, so that each following id is a real new id
+    Integer maxIdcounter = pm.getStatusMaxId();  // find the highest value, so that each following id is a real new id
     Date lastModified = new Date();
     String startUrl = db.getUrl();
     ArrayList<String> excludes = db.getExcludes();
@@ -173,7 +173,7 @@ public class MetadataHandler {
         crawledMdRecord.setLanguage(dbLanguage);
       mdRecords.add(crawledMdRecord);
     }
-    pm.setMaxId(maxIdcounter);
+    pm.setStatusMaxId(maxIdcounter);
     return mdRecords;
   }
   
@@ -600,7 +600,7 @@ public class MetadataHandler {
       XdmValue xmdValueResources = xQueryEvaluator.evaluate(rdfRessourcesFileUrl, namespaceDeclaration + "/rdf:RDF/rdf:Description[rdf:type/@rdf:resource = 'http://purl.org/dc/terms/BibliographicResource']");
       XdmSequenceIterator xmdValueResourcesIterator = xmdValueResources.iterator();
       ProjectManager pm = ProjectManager.getInstance();
-      Integer maxIdcounter = pm.getMaxId();  // find the highest value, so that each following id is a real new id
+      Integer maxIdcounter = pm.getStatusMaxId();  // find the highest value, so that each following id is a real new id
       if (xmdValueResources != null && xmdValueResources.size() > 0) {
         while (xmdValueResourcesIterator.hasNext()) {
           maxIdcounter++;
@@ -661,7 +661,7 @@ public class MetadataHandler {
           } 
         }
       }
-      pm.setMaxId(maxIdcounter);
+      pm.setStatusMaxId(maxIdcounter);
     } catch (MalformedURLException e) {
       throw new ApplicationException(e);
     }
