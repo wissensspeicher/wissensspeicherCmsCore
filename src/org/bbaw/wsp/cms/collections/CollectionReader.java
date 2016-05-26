@@ -105,6 +105,16 @@ public class CollectionReader {
     return retCollections;
   }
 
+  public ArrayList<Collection> getCollections(String[] collectionIds) {
+    ArrayList<Collection> retCollections = new ArrayList<Collection>();
+    for (int i=0; i<collectionIds.length; i++) {
+      String collId = collectionIds[i];
+      Collection c = getCollection(collId);
+      retCollections.add(c);
+    }
+    return retCollections;
+  }
+
   public Collection getCollection(String collectionId) {
 		Collection collection = collectionContainer.get(collectionId);
 		return collection;
