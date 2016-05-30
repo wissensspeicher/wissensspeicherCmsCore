@@ -125,6 +125,11 @@ public class CollectionReader {
     return collection;
   }
 
+  public void remove(Collection collection) {
+    String collId = collection.getId();
+    collectionContainer.remove(collId);
+  }
+  
 	public Person getPerson(String aboutId) {
 	  return persons.get(aboutId);
 	}
