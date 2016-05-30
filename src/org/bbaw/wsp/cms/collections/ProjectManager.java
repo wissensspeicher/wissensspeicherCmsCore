@@ -38,52 +38,71 @@ public class ProjectManager {
     try {
       if (args != null && args.length != 0) {
         String operation = args[0];
-        String projectId1 = args[1];
-        String projectId2 = null;
-        if (args.length > 2)
-          projectId2 = args[2];
-        if (args.length > 2)
-          projectId2 = args[2];
-        if (operation.equals("update") && projectId1 != null && projectId2 == null) {
-          LOGGER.info("Update of project (\"" + projectId1 + "\") into data directory: " + Constants.getInstance().getDataDir());
+        String projectIdsStr = args[1];
+        String[] projectIds = null;
+        String projectFrom = null;
+        String projectTo = null;
+        if (projectIdsStr != null) {
+          if (projectIdsStr.contains("-")) {
+            projectFrom = projectIdsStr.substring(0, projectIdsStr.indexOf("-"));
+            projectTo = projectIdsStr.substring(projectIdsStr.indexOf("-") + 1, projectIdsStr.length());
+          } else if (projectIdsStr.contains(",")) {
+            projectIds = projectIdsStr.split(",");
+          } else {
+            projectIds = new String[1];
+            projectIds[0] = projectIdsStr;
+          }
+        }
+        if (operation.equals("update") && projectIds != null) {
+          LOGGER.info("Update of project (\"" + projectIdsStr + "\") into data directory: " + Constants.getInstance().getDataDir());
           ProjectManager pm = ProjectManager.getInstance();
-          pm.update(projectId1);
+          pm.update(projectIds);
           LOGGER.info("Update finished");
-        } else if (operation.equals("update") && projectId1 != null && projectId2 != null) {
-          LOGGER.info("Update of projects (\"" + projectId1 + "\" - \"" + projectId2 + "\") into data directory: " + Constants.getInstance().getDataDir());
+        } else if (operation.equals("update") && projectFrom != null && projectTo != null) {
+          LOGGER.info("Update of projects (\"" + projectIdsStr + "\") into data directory: " + Constants.getInstance().getDataDir());
           ProjectManager pm = ProjectManager.getInstance();
-          pm.update(projectId1, projectId2);
+          pm.update(projectFrom, projectTo);
           LOGGER.info("Update finished");
-        } else if (operation.equals("harvest") && projectId1 != null && projectId2 == null) {
-          LOGGER.info("Harvest of project (\"" + projectId1 + "\") into data directory: " + Constants.getInstance().getHarvestDir());
+        } else if (operation.equals("harvest") && projectIds != null) {
+          LOGGER.info("Harvest of project (\"" + projectIdsStr + "\") into data directory: " + Constants.getInstance().getHarvestDir());
           ProjectManager pm = ProjectManager.getInstance();
-          pm.harvest(projectId1);
+          pm.harvest(projectIds);
           LOGGER.info("Harvest finished");
-        } else if (operation.equals("harvest") && projectId1 != null && projectId2 != null) {
-          LOGGER.info("Harvest of projects (\"" + projectId1 + "\" - \"" + projectId2 + "\") into data directory: " + Constants.getInstance().getHarvestDir());
+        } else if (operation.equals("harvest") && projectFrom != null && projectTo != null) {
+          LOGGER.info("Harvest of projects (\"" + projectIdsStr + "\") into data directory: " + Constants.getInstance().getHarvestDir());
           ProjectManager pm = ProjectManager.getInstance();
-          pm.harvest(projectId1, projectId2);
+          pm.harvest(projectFrom, projectTo);
           LOGGER.info("Harvest finished");
-        } else if (operation.equals("annotate") && projectId1 != null && projectId2 == null) {
-          LOGGER.info("Annotate project (\"" + projectId1 + "\") into data directory: " + Constants.getInstance().getAnnotationsDir());
+        } else if (operation.equals("annotate") && projectIds != null) {
+          LOGGER.info("Annotate project (\"" + projectIdsStr + "\") into data directory: " + Constants.getInstance().getAnnotationsDir());
           ProjectManager pm = ProjectManager.getInstance();
-          pm.annotate(projectId1);
+          pm.annotate(projectIds);
           LOGGER.info("Annotate finished");
-        } else if (operation.equals("annotate") && projectId1 != null && projectId2 != null) {
-          LOGGER.info("Annotate projects (\"" + projectId1 + "\" - \"" + projectId2 + "\") into data directory: " + Constants.getInstance().getAnnotationsDir());
+        } else if (operation.equals("annotate") && projectFrom != null && projectTo != null) {
+          LOGGER.info("Annotate projects (\"" + projectIdsStr + "\") into data directory: " + Constants.getInstance().getAnnotationsDir());
           ProjectManager pm = ProjectManager.getInstance();
-          pm.annotate(projectId1, projectId2);
+          pm.annotate(projectFrom, projectTo);
           LOGGER.info("Annotate finished");
-        } else if (operation.equals("index") && projectId1 != null && projectId2 == null) {
-          LOGGER.info("Index project (\"" + projectId1 + "\") into data directory: " + Constants.getInstance().getIndexDir());
+        } else if (operation.equals("index") && projectIds != null) {
+          LOGGER.info("Index project (\"" + projectIdsStr + "\") into data directory: " + Constants.getInstance().getIndexDir());
           ProjectManager pm = ProjectManager.getInstance();
-          pm.index(projectId1);
+          pm.index(projectIds);
           LOGGER.info("Index finished");
-        } else if (operation.equals("index") && projectId1 != null && projectId2 != null) {
-          LOGGER.info("Index projects (\"" + projectId1 + "\" - \"" + projectId2 + "\") into data directory: " + Constants.getInstance().getIndexDir());
+        } else if (operation.equals("index") && projectFrom != null && projectTo != null) {
+          LOGGER.info("Index projects (\"" + projectIdsStr + "\") into data directory: " + Constants.getInstance().getIndexDir());
           ProjectManager pm = ProjectManager.getInstance();
-          pm.index(projectId1, projectId2);
+          pm.index(projectFrom, projectTo);
           LOGGER.info("Index finished");
+        } else if (operation.equals("delete") && projectIds != null) {
+          LOGGER.info("Delete project (\"" + projectIdsStr + "\"");
+          ProjectManager pm = ProjectManager.getInstance();
+          pm.delete(projectIds);
+          LOGGER.info("Delete finished");
+        } else if (operation.equals("delete") && projectFrom != null && projectTo != null) {
+          LOGGER.info("Delete projects (\"" + projectIdsStr + "\"");
+          ProjectManager pm = ProjectManager.getInstance();
+          pm.delete(projectFrom, projectTo);
+          LOGGER.info("Delete finished");
         }
       } 
     } catch (Exception e) {
@@ -132,6 +151,11 @@ public class ProjectManager {
     }
   }
   
+  public void update(String[] projectIds) throws ApplicationException {
+    ArrayList<Collection> collections = collectionReader.getCollections(projectIds);
+    update(collections);
+  }
+  
   /**
    * Update of all collections from that startingCollection onwards till endingCollectionId alphabetically
    * @throws ApplicationException
@@ -159,6 +183,11 @@ public class ProjectManager {
     setStatusModified(collection, now);  
   }
   
+  public void harvest(String[] projectIds) throws ApplicationException {
+    ArrayList<Collection> collections = collectionReader.getCollections(projectIds);
+    harvest(collections);
+  }
+  
   public void harvest(String projectId1, String projectId2) throws ApplicationException {
     ArrayList<Collection> collections = collectionReader.getCollections(projectId1, projectId2);
     harvest(collections);
@@ -179,6 +208,11 @@ public class ProjectManager {
   private void harvest(Collection collection) throws ApplicationException {
     harvester = Harvester.getInstance();
     harvester.harvest(collection);
+  }
+  
+  public void annotate(String[] projectIds) throws ApplicationException {
+    ArrayList<Collection> collections = collectionReader.getCollections(projectIds);
+    annotate(collections);
   }
   
   public void annotate(String projectId1, String projectId2) throws ApplicationException {
@@ -203,6 +237,11 @@ public class ProjectManager {
     annotator.annotate(collection);
   }
   
+  public void index(String[] projectIds) throws ApplicationException {
+    ArrayList<Collection> collections = collectionReader.getCollections(projectIds);
+    index(collections);
+  }
+  
   public void index(String projectId1, String projectId2) throws ApplicationException {
     ArrayList<Collection> collections = collectionReader.getCollections(projectId1, projectId2);
     index(collections);
@@ -224,6 +263,43 @@ public class ProjectManager {
     indexer = LocalIndexer.getInstance();
     indexer.delete(collection);
     indexer.index(collection);
+  }
+  
+  public void delete(String[] projectIds) throws ApplicationException {
+    ArrayList<Collection> collections = collectionReader.getCollections(projectIds);
+    delete(collections);
+  }
+  
+  public void delete(String projectId1, String projectId2) throws ApplicationException {
+    ArrayList<Collection> collections = collectionReader.getCollections(projectId1, projectId2);
+    delete(collections);
+  }
+  
+  private void delete(ArrayList<Collection> collections) throws ApplicationException {
+    for (int i=0; i<collections.size(); i++) {
+      Collection collection = collections.get(i);
+      index(collection);
+    }
+  }
+
+  public void delete(String projectId) throws ApplicationException {
+    Collection collection = collectionReader.getCollection(projectId);
+    delete(collection);
+  }
+  
+  private void delete(Collection collection) throws ApplicationException {
+    harvester = Harvester.getInstance();
+    harvester.delete(collection);
+    annotator = Annotator.getInstance();
+    annotator.delete(collection);
+    indexer = LocalIndexer.getInstance();
+    indexer.delete(collection);
+    deleteConfiguration(collection);
+  }
+  
+  private void deleteConfiguration(Collection collection) throws ApplicationException {
+    metadataHandler.deleteConfigurationFiles(collection);
+    collectionReader.remove(collection);
   }
   
   public void writeOaiProviderFiles(Collection collection) throws ApplicationException {
@@ -295,6 +371,15 @@ public class ProjectManager {
       // TODO neues modified elem erzeugen und hinzufügen
     }
     writeStatusFile();
+  }
+  
+  public String getStatusProjectXmlStr(String projectId1, String projectId2) throws ApplicationException {
+    ArrayList<Collection> projects = collectionReader.getCollections(projectId1, projectId2);
+    String[] projectIdsTmp = new String[projects.size()];
+    for (int i=0; i<projects.size(); i++) {
+      projectIdsTmp[i] = projects.get(i).getId();
+    }
+    return getStatusProjectXmlStr(projectIdsTmp);
   }
   
   public String getStatusProjectXmlStr(String[] projectIds) throws ApplicationException {
