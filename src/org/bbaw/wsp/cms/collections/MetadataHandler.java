@@ -75,13 +75,13 @@ public class MetadataHandler {
     fillInstitutes2collectionIds();
   }
   
-  public ArrayList<MetadataRecord> getMetadataRecords(Collection collection) throws ApplicationException {
+  public ArrayList<MetadataRecord> getMetadataRecords(Collection collection, boolean generateId) throws ApplicationException {
     String collectionId = collection.getId();
     ArrayList<MetadataRecord> mdRecords = collectionMdRecords.get(collectionId);
-    if (mdRecords == null) {
+    if (generateId || mdRecords == null) {
       String metadataRdfDir = Constants.getInstance().getMetadataDir() + "/resources";
       File rdfRessourcesFile = new File(metadataRdfDir + "/" + collectionId + ".rdf");
-      mdRecords = getMetadataRecordsByRdfFile(collection, rdfRessourcesFile, null);
+      mdRecords = getMetadataRecordsByRdfFile(collection, rdfRessourcesFile, null, generateId);
     } 
     if (mdRecords.size() == 0)
       return null;
@@ -89,29 +89,32 @@ public class MetadataHandler {
       return mdRecords;
   }
 
-  public ArrayList<MetadataRecord> getMetadataRecords(Collection collection, Database db) throws ApplicationException {
+  public ArrayList<MetadataRecord> getMetadataRecords(Collection collection, Database db, boolean generateId) throws ApplicationException {
     ArrayList<MetadataRecord> dbMdRecords = null;
     String dbType = db.getType();
     if (dbType.equals("eXist")) {
-      dbMdRecords = getMetadataRecordsEXist(collection, db);
+      dbMdRecords = getMetadataRecordsEXist(collection, db, generateId);
     } else if (dbType.equals("crawl")) {
-      dbMdRecords = getMetadataRecordsCrawl(collection, db);
+      dbMdRecords = getMetadataRecordsCrawl(collection, db, generateId);
     } else { 
       // nothing
     }
     return dbMdRecords;
   }
   
-  private ArrayList<MetadataRecord> getMetadataRecordsEXist(Collection collection, Database db) throws ApplicationException {
+  private ArrayList<MetadataRecord> getMetadataRecordsEXist(Collection collection, Database db, boolean generateId) throws ApplicationException {
     String collectionId = collection.getId();
     ArrayList<MetadataRecord> mdRecords = new ArrayList<MetadataRecord>();
+    Integer maxIdcounter = null;
     String urlStr = db.getUrl();
     ProjectManager pm = ProjectManager.getInstance();
-    Integer maxIdcounter = pm.getStatusMaxId();  // find the highest value, so that each following id is a real new id
     MetadataRecord mdRecord = getNewMdRecord(urlStr); 
     mdRecord.setSystem(db.getType());
     mdRecord.setCollectionNames(collectionId);
-    mdRecord.setId(maxIdcounter); // collections wide id
+    if (generateId) {
+      maxIdcounter = pm.getStatusMaxId();  // find the highest value, so that each following id is a real new id
+      mdRecord.setId(maxIdcounter); // collections wide id
+    }
     mdRecord = createMainFieldsMetadataRecord(mdRecord, collection, null);
     Date lastModified = new Date();
     mdRecord.setLastModified(lastModified);
@@ -129,8 +132,10 @@ public class MetadataHandler {
         String eXistSubUrlStr = eXistUrls.get(i);
         MetadataRecord mdRecordEXist = getNewMdRecord(eXistSubUrlStr); // with docId and webUri
         mdRecordEXist.setCollectionNames(collectionId);
-        maxIdcounter++;
-        mdRecordEXist.setId(maxIdcounter); // collections wide id
+        if (generateId) {
+          maxIdcounter++;
+          mdRecordEXist.setId(maxIdcounter); // collections wide id
+        }
         mdRecordEXist = createMainFieldsMetadataRecord(mdRecordEXist, collection, db);
         mdRecordEXist.setLastModified(lastModified);
         mdRecordEXist.setCreator(mdRecord.getCreator());
@@ -144,14 +149,19 @@ public class MetadataHandler {
       }
       mdRecords.addAll(mdRecordsEXist);
     }
-    pm.setStatusMaxId(maxIdcounter);
+    if (generateId) {
+      pm.setStatusMaxId(maxIdcounter);
+    }
     return mdRecords;
   }
   
-  private ArrayList<MetadataRecord> getMetadataRecordsCrawl(Collection collection, Database db) throws ApplicationException {
+  private ArrayList<MetadataRecord> getMetadataRecordsCrawl(Collection collection, Database db, boolean generateId) throws ApplicationException {
     String collectionId = collection.getId();
     ProjectManager pm = ProjectManager.getInstance();
-    Integer maxIdcounter = pm.getStatusMaxId();  // find the highest value, so that each following id is a real new id
+    Integer maxIdcounter = null;
+    if (generateId) {
+      maxIdcounter = pm.getStatusMaxId();  // find the highest value, so that each following id is a real new id
+    }
     Date lastModified = new Date();
     String startUrl = db.getUrl();
     ArrayList<String> excludes = db.getExcludes();
@@ -163,8 +173,10 @@ public class MetadataHandler {
       String crawlUrlStr = crawledMdRecords.get(i).getWebUri();
       MetadataRecord crawledMdRecord = getNewMdRecord(crawlUrlStr); // with docId and webUri
       crawledMdRecord.setCollectionNames(collectionId);
-      maxIdcounter++;
-      crawledMdRecord.setId(maxIdcounter); // collections wide id
+      if (generateId) {
+        maxIdcounter++;
+        crawledMdRecord.setId(maxIdcounter); // collections wide id
+      }
       crawledMdRecord = createMainFieldsMetadataRecord(crawledMdRecord, collection, db);
       crawledMdRecord.setLastModified(lastModified);
       crawledMdRecord.setSystem("crawl");
@@ -173,7 +185,9 @@ public class MetadataHandler {
         crawledMdRecord.setLanguage(dbLanguage);
       mdRecords.add(crawledMdRecord);
     }
-    pm.setStatusMaxId(maxIdcounter);
+    if (generateId) {
+      pm.setStatusMaxId(maxIdcounter);
+    }
     return mdRecords;
   }
   
@@ -585,7 +599,7 @@ public class MetadataHandler {
     return mdRecords;
   }
   
-  public ArrayList<MetadataRecord> getMetadataRecordsByRdfFile(Collection collection, File rdfRessourcesFile, Database db) throws ApplicationException {
+  public ArrayList<MetadataRecord> getMetadataRecordsByRdfFile(Collection collection, File rdfRessourcesFile, Database db, boolean generateId) throws ApplicationException {
     if (! rdfRessourcesFile.exists())
       return null;
     String collectionId = collection.getId();

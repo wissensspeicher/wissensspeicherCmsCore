@@ -69,7 +69,7 @@ public class LocalIndexer {
             for (int j = 0; j < rdfDbResourcesFiles.length; j++) {
               File rdfDbResourcesFile = rdfDbResourcesFiles[j];
               LOGGER.info("Index database records from file: " + rdfDbResourcesFile);
-              ArrayList<MetadataRecord> dbMdRecords = metadataHandler.getMetadataRecordsByRdfFile(collection, rdfDbResourcesFile, db);
+              ArrayList<MetadataRecord> dbMdRecords = metadataHandler.getMetadataRecordsByRdfFile(collection, rdfDbResourcesFile, db, false);
               if (dbMdRecords != null) {
                 counter = counter + dbMdRecords.size();
                 index(collection, db, dbMdRecords, true);

@@ -227,7 +227,7 @@ public class CollectionManager {
     LOGGER.info("Create collection: " + collId + " ...");
     initDBpediaSpotlightWriter(collection);
     // first add the manually maintained mdRecords
-    ArrayList<MetadataRecord> mdRecords = metadataHandler.getMetadataRecords(collection);
+    ArrayList<MetadataRecord> mdRecords = metadataHandler.getMetadataRecords(collection, true);
     if (mdRecords != null) {
       int countDocs = addDocuments(collection, mdRecords, false);
       counter = counter + countDocs;
@@ -250,7 +250,7 @@ public class CollectionManager {
     int counter = 0;
     String dbType = db.getType();
     if (dbType.equals("eXist") || dbType.equals("crawl")) {
-      ArrayList<MetadataRecord> dbMdRecords = metadataHandler.getMetadataRecords(collection, db);
+      ArrayList<MetadataRecord> dbMdRecords = metadataHandler.getMetadataRecords(collection, db, true);
       int countDocs = addDocuments(collection, dbMdRecords, false);
       counter = counter + countDocs;
     } else {
@@ -260,11 +260,12 @@ public class CollectionManager {
         for (int i = 0; i < rdfDbResourcesFiles.length; i++) {
           File rdfDbResourcesFile = rdfDbResourcesFiles[i];
           LOGGER.info("Create database resources from file: " + rdfDbResourcesFile);
-          ArrayList<MetadataRecord> dbMdRecords = metadataHandler.getMetadataRecordsByRdfFile(collection, rdfDbResourcesFile, db);
           if (dbType.equals("oai")) {
+            ArrayList<MetadataRecord> dbMdRecords = metadataHandler.getMetadataRecordsByRdfFile(collection, rdfDbResourcesFile, db, true);
             int countDocs = addDocuments(collection, dbMdRecords, false);
             counter = counter + countDocs;
           } else {
+            ArrayList<MetadataRecord> dbMdRecords = metadataHandler.getMetadataRecordsByRdfFile(collection, rdfDbResourcesFile, db, false);
             int countDocs = addDocuments(collection, dbMdRecords, true);
             counter = counter + countDocs;
           }

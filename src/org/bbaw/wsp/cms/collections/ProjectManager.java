@@ -250,7 +250,7 @@ public class ProjectManager {
           if (rdfDbResourcesFiles != null && rdfDbResourcesFiles.length > 0) {
             for (int j = 0; j < rdfDbResourcesFiles.length; j++) {
               File rdfDbResourcesFile = rdfDbResourcesFiles[j];
-              ArrayList<MetadataRecord> dbMdRecords = metadataHandler.getMetadataRecordsByRdfFile(collection, rdfDbResourcesFile, db);
+              ArrayList<MetadataRecord> dbMdRecords = metadataHandler.getMetadataRecordsByRdfFile(collection, rdfDbResourcesFile, db, false);
               if (dbMdRecords != null) {
                 writeOaiProviderFiles(dbMdRecords, xQueryEvaluator);
               }

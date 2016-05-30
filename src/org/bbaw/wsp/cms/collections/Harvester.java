@@ -72,7 +72,7 @@ public class Harvester {
       String harvestCollectionDirStr = harvestDir + "/" + collection.getId();
       Runtime.getRuntime().exec("rm -rf " + harvestCollectionDirStr);  // fast also when the directory contains many files
       LOGGER.info("Project harvest directory: " + harvestCollectionDirStr + " successfully deleted");
-      ArrayList<MetadataRecord> mdRecords = metadataHandler.getMetadataRecords(collection);
+      ArrayList<MetadataRecord> mdRecords = metadataHandler.getMetadataRecords(collection, true);
       if (mdRecords != null) {
         ArrayList<MetadataRecord> harvestedResourcesRecords = harvestResources(collection, null, mdRecords); // download resources and save metadata and fulltext fields
         counter = counter + harvestedResourcesRecords.size();
@@ -150,8 +150,8 @@ public class Harvester {
     ArrayList<MetadataRecord> dbMdRecords = null;
     String dbType = db.getType();
     if (dbType.equals("eXist") || dbType.equals("crawl")) { 
-      dbMdRecords = metadataHandler.getMetadataRecords(collection, db);
-      ArrayList<MetadataRecord> collectionMdRecords = metadataHandler.getMetadataRecords(collection);  // performance: records of collection are cached
+      dbMdRecords = metadataHandler.getMetadataRecords(collection, db, true);
+      ArrayList<MetadataRecord> collectionMdRecords = metadataHandler.getMetadataRecords(collection, false);  // performance: records of collection are cached
       if (collectionMdRecords != null && dbMdRecords != null)
         dbMdRecords = removeDoubleRecords(collectionMdRecords, dbMdRecords);
       String rdfDbFileName = collection.getId() + "/metadata/dbResources/" + collection.getId() + "-" + db.getName() + "-1.rdf";
@@ -166,7 +166,7 @@ public class Harvester {
       LOGGER.info("Harvest of metadata records (" + collection.getId() + ", " + db.getName() + ", " + db.getType() + ") finished (/harvest/" + rdfDbFileName  + ")");
       String rdfDbFullFileName = harvestDir + "/" + collection.getId() + "/metadata/dbResources/" + collection.getId() + "-" + db.getName() + "-1.rdf";
       File rdfDbFile = new File(rdfDbFullFileName);
-      dbMdRecords = metadataHandler.getMetadataRecordsByRdfFile(collection, rdfDbFile, db);
+      dbMdRecords = metadataHandler.getMetadataRecordsByRdfFile(collection, rdfDbFile, db, true);
     } else {
       // nothing
     }
