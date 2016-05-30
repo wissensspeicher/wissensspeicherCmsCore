@@ -75,6 +75,18 @@ public class MetadataHandler {
     fillInstitutes2collectionIds();
   }
   
+  public void deleteConfigurationFiles(Collection collection) {
+    String collectionId = collection.getId();
+    String rdfRessourcesFileStr = Constants.getInstance().getMetadataDir() + "/resources" + "/" + collectionId + ".rdf";
+    File rdfRessourcesFile = new File(rdfRessourcesFileStr);
+    FileUtils.deleteQuietly(rdfRessourcesFile);
+    LOGGER.info("Project configuration file: " + rdfRessourcesFileStr + " successfully deleted");
+    String xmlConfFileStr = Constants.getInstance().getMetadataDir() + "/resources-addinfo" + "/" + collectionId + ".xml";
+    File xmlConfFile = new File(rdfRessourcesFileStr);
+    FileUtils.deleteQuietly(xmlConfFile);
+    LOGGER.info("Project configuration file: " + xmlConfFileStr + " successfully deleted");
+  }
+  
   public ArrayList<MetadataRecord> getMetadataRecords(Collection collection, boolean generateId) throws ApplicationException {
     String collectionId = collection.getId();
     ArrayList<MetadataRecord> mdRecords = collectionMdRecords.get(collectionId);

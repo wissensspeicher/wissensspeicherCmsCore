@@ -70,8 +70,7 @@ public class Harvester {
       String collId = collection.getId();
       LOGGER.info("Harvest collection: " + collId + " ...");
       String harvestCollectionDirStr = harvestDir + "/" + collection.getId();
-      Runtime.getRuntime().exec("rm -rf " + harvestCollectionDirStr);  // fast also when the directory contains many files
-      LOGGER.info("Project harvest directory: " + harvestCollectionDirStr + " successfully deleted");
+      delete(collection); // removes the harvest directory
       ArrayList<MetadataRecord> mdRecords = metadataHandler.getMetadataRecords(collection, true);
       if (mdRecords != null) {
         ArrayList<MetadataRecord> harvestedResourcesRecords = harvestResources(collection, null, mdRecords); // download resources and save metadata and fulltext fields
@@ -86,6 +85,16 @@ public class Harvester {
         }
       }
       LOGGER.info("Project: " + collId + " with " + counter + " resources harvested into: " + harvestCollectionDirStr);
+    } catch (Exception e) {
+      throw new ApplicationException(e);
+    }
+  }
+  
+  public void delete(Collection collection) throws ApplicationException {
+    try {
+      String harvestCollectionDirStr = harvestDir + "/" + collection.getId();
+      Runtime.getRuntime().exec("rm -rf " + harvestCollectionDirStr);  // fast also when the directory contains many files
+      LOGGER.info("Project harvest directory: " + harvestCollectionDirStr + " successfully deleted");
     } catch (Exception e) {
       throw new ApplicationException(e);
     }

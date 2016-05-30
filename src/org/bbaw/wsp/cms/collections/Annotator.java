@@ -73,6 +73,16 @@ public class Annotator {
     LOGGER.info("Project: " + collId + " with " + counter + " records annotated");
   }
   
+  public void delete(Collection collection) throws ApplicationException {
+    try {
+      String annoationCollectionDirStr = annotationDir + "/" + collection.getId();
+      Runtime.getRuntime().exec("rm -rf " + annoationCollectionDirStr);  // fast also when the directory contains many files
+      LOGGER.info("Project annotation directory: " + annoationCollectionDirStr + " successfully deleted");
+    } catch (Exception e) {
+      throw new ApplicationException(e);
+    }
+  }
+  
   public ArrayList<MetadataRecord> getMetadataRecordsByRecordsFile(Collection collection) throws ApplicationException {
     File recordsFile = new File(annotationDir + "/" + collection.getId() + "/metadata/records/" + collection.getId() + ".xml");
     ArrayList<MetadataRecord> mdRecords = metadataHandler.getMetadataRecordsByRecordsFile(recordsFile);
