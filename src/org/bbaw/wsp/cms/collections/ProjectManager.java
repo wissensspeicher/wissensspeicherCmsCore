@@ -17,6 +17,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Entities.EscapeMode;
+import org.jsoup.parser.Tag;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 import de.mpg.mpiwg.berlin.mpdl.util.StringUtils;
@@ -180,7 +181,7 @@ public class ProjectManager {
     annotate(collection);
     index(collection);
     Date now = new Date();
-    setStatusModified(collection, now);  
+    setStatusModified(projectId, now);  
   }
   
   public void harvest(String[] projectIds) throws ApplicationException {
@@ -361,14 +362,15 @@ public class ProjectManager {
     return modified;
   }
 
-  public void setStatusModified(Collection collection, Date modified) throws ApplicationException {
-    String projectId = collection.getId();
-    statusFileDoc.select("status > modified").first().text(modified.toString()); 
+  public void setStatusModified(String projectId, Date modified) throws ApplicationException {
     Element modifiedElem = statusFileDoc.select("status > project[id=" + projectId + "] > modified").first();
     if (modifiedElem != null) {
       modifiedElem.text(modified.toString());
     } else {
-      // TODO neues modified elem erzeugen und hinzufügen
+      Element projectElem = statusFileDoc.select("status > project[id=" + projectId + "]").first();
+      Element newModifiedElem = new Element(Tag.valueOf("modified"), "");
+      newModifiedElem.text(modified.toString());
+      projectElem.appendChild(newModifiedElem);
     }
     writeStatusFile();
   }
