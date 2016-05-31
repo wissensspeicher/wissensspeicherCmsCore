@@ -195,7 +195,9 @@ public class MetadataHandler {
       String dbLanguage = db.getLanguage();
       if (dbLanguage != null)
         crawledMdRecord.setLanguage(dbLanguage);
-      mdRecords.add(crawledMdRecord);
+      String mimeType = crawledMdRecord.getType();
+      if (mimeType != null)
+        mdRecords.add(crawledMdRecord);
     }
     if (generateId) {
       pm.setStatusMaxId(maxIdcounter);
@@ -694,18 +696,27 @@ public class MetadataHandler {
     return mdRecords;
   }
   
-  public void writeMetadataRecords(Collection collection, ArrayList<MetadataRecord> mdRecords, File rdfFile) throws ApplicationException {
-    String rdfHeaderStr = getRdfHeaderStr(collection);
-    StringBuilder rdfStrBuilder = new StringBuilder();
-    rdfStrBuilder.append(rdfHeaderStr);
-    rdfStrBuilder.append("<!-- Resources of database: " + rdfFile.getName() + " -->\n");
-    for (int i=0; i<mdRecords.size(); i++) {
-      MetadataRecord mdRecord = mdRecords.get(i);
-      rdfStrBuilder.append(mdRecord.toRdfStr());
+  public void writeMetadataRecords(Collection collection, ArrayList<MetadataRecord> mdRecords, File outputFile, String type) throws ApplicationException {
+    StringBuilder strBuilder = new StringBuilder();
+    if (type.equals("rdf")) {
+      String rdfHeaderStr = getRdfHeaderStr(collection);
+      strBuilder.append(rdfHeaderStr);
+      for (int i=0; i<mdRecords.size(); i++) {
+        MetadataRecord mdRecord = mdRecords.get(i);
+        strBuilder.append(mdRecord.toRdfStr());
+      }
+      strBuilder.append("</rdf:RDF>");
+    } else if (type.equals("xml")) {
+      strBuilder.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+      strBuilder.append("<records>\n");
+      for (int i=0; i<mdRecords.size(); i++) {
+        MetadataRecord mdRecord = mdRecords.get(i);
+        strBuilder.append(mdRecord.toXmlStr());
+      }
+      strBuilder.append("</records>");
     }
-    rdfStrBuilder.append("</rdf:RDF>");
     try {
-      FileUtils.writeStringToFile(rdfFile, rdfStrBuilder.toString());
+      FileUtils.writeStringToFile(outputFile, strBuilder.toString());
     } catch (IOException e) {
       throw new ApplicationException(e);
     }
@@ -718,15 +729,11 @@ public class MetadataHandler {
     rdfStrBuilder.append("<rdf:RDF \n");
     rdfStrBuilder.append("   xmlns=\"" + collectionRdfId + "\" \n");
     rdfStrBuilder.append("   xml:base=\"" + collectionRdfId + "\" \n");
-    rdfStrBuilder.append("   xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" \n");
     rdfStrBuilder.append("   xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" \n");
     rdfStrBuilder.append("   xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\" \n");
-    rdfStrBuilder.append("   xmlns:dc=\"http://purl.org/dc/elements/1.1/\" \n");
     rdfStrBuilder.append("   xmlns:dcterms=\"http://purl.org/dc/terms/\" \n");
-    rdfStrBuilder.append("   xmlns:foaf=\"http://xmlns.com/foaf/0.1/\" \n");
     rdfStrBuilder.append("   xmlns:gnd=\"http://d-nb.info/standards/elementset/gnd#\" \n");
     rdfStrBuilder.append("   xmlns:ore=\"http://www.openarchives.org/ore/terms/\" \n"); 
-    rdfStrBuilder.append("   xmlns:edm=\"http://www.europeana.eu/schemas/edm/\" \n");
     rdfStrBuilder.append(">\n");
     return rdfStrBuilder.toString();    
   }
