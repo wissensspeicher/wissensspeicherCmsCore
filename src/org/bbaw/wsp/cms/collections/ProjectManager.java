@@ -367,10 +367,21 @@ public class ProjectManager {
     if (modifiedElem != null) {
       modifiedElem.text(modified.toString());
     } else {
-      Element projectElem = statusFileDoc.select("status > project[id=" + projectId + "]").first();
       Element newModifiedElem = new Element(Tag.valueOf("modified"), "");
       newModifiedElem.text(modified.toString());
-      projectElem.appendChild(newModifiedElem);
+      Element projectElem = statusFileDoc.select("status > project[id=" + projectId + "]").first();
+      if (projectElem == null) {
+        projectElem = new Element(Tag.valueOf("project"), "");
+        projectElem.attr("id", projectId);
+        Element newCreationElem = new Element(Tag.valueOf("creation"), "");
+        newCreationElem.text(modified.toString());
+        projectElem.appendChild(newCreationElem);
+        projectElem.appendChild(newModifiedElem);
+        Element statusElem = statusFileDoc.select("status").first();
+        statusElem.appendChild(projectElem);
+      } else {
+        projectElem.appendChild(newModifiedElem);
+      }
     }
     writeStatusFile();
   }
