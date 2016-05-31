@@ -41,7 +41,6 @@ public class Harvester {
   private CollectionReader collectionReader;
   private MetadataHandler metadataHandler;
   private String harvestDir;
-  private StringBuilder harvestXmlStrBuilder;
   
   public static Harvester getInstance() throws ApplicationException {
     if(harvester == null) {
@@ -138,7 +137,6 @@ public class Harvester {
   
   private ArrayList<MetadataRecord> harvestResources(Collection collection, Database db, ArrayList<MetadataRecord> mdRecords) throws ApplicationException {
     ArrayList<MetadataRecord> retMdRecords = new ArrayList<MetadataRecord>();
-    initHarvestXmlStrBuilder();
     int countHarvest = 0;
     for (int i=0; i<mdRecords.size(); i++) {
       MetadataRecord mdRecord = mdRecords.get(i);
@@ -151,7 +149,21 @@ public class Harvester {
         e.printStackTrace();
       }
     }
-    flushHarvestXmlStrBuilder(collection, db);
+    // write metadata file: xml
+    String collId = collection.getId();
+    File dbRecordsFile = new File(harvestDir + "/" + collId + "/metadata/records/" + collId + ".xml");
+    if (db != null)
+      dbRecordsFile = new File(harvestDir + "/" + collId + "/metadata/records/" + collId + "-" + db.getName() + "-1.xml");
+    metadataHandler.writeMetadataRecords(collection, retMdRecords, dbRecordsFile, "xml");
+    // write metadata file: rdf (only for eXist and crawl: oai is already generated before)
+    if (db != null) {
+      String dbType = db.getType();
+      if (dbType.equals("eXist") || dbType.equals("crawl")) {
+        String rdfDbFullFileName = harvestDir + "/" + collection.getId() + "/metadata/dbResources/" + collection.getId() + "-" + db.getName() + "-1.rdf";
+        File rdfDbFile = new File(rdfDbFullFileName);
+        metadataHandler.writeMetadataRecords(collection, retMdRecords, rdfDbFile, "rdf");
+      }
+    }
     return retMdRecords;
   }
   
@@ -163,16 +175,12 @@ public class Harvester {
       ArrayList<MetadataRecord> collectionMdRecords = metadataHandler.getMetadataRecords(collection, false);  // performance: records of collection are cached
       if (collectionMdRecords != null && dbMdRecords != null)
         dbMdRecords = removeDoubleRecords(collectionMdRecords, dbMdRecords);
-      String rdfDbFileName = collection.getId() + "/metadata/dbResources/" + collection.getId() + "-" + db.getName() + "-1.rdf";
-      String rdfDbFullFileName = harvestDir + "/" + collection.getId() + "/metadata/dbResources/" + collection.getId() + "-" + db.getName() + "-1.rdf";
-      File rdfDbFile = new File(rdfDbFullFileName);
-      metadataHandler.writeMetadataRecords(collection, dbMdRecords, rdfDbFile);
-      LOGGER.info("Harvest of metadata records (" + collection.getId() + ", " + db.getName() + ", " + db.getType() + ") finished (/harvest/" + rdfDbFileName  + ")");
+      LOGGER.info("Harvest of metadata records (" + collection.getId() + ", " + db.getName() + ", " + dbType + ") finished");
     } else if (dbType.equals("oai")) {
       String dbResourcesDirName = harvestDir + "/" + collection.getId() + "/metadata/dbResources";
       metadataHandler.fetchMetadataRecordsOai(dbResourcesDirName, collection, db);
       String rdfDbFileName = collection.getId() + "/metadata/dbResources/" + collection.getId() + "-" + db.getName() + "-1.rdf";
-      LOGGER.info("Harvest of metadata records (" + collection.getId() + ", " + db.getName() + ", " + db.getType() + ") finished (/harvest/" + rdfDbFileName  + ")");
+      LOGGER.info("Harvest of metadata records (" + collection.getId() + ", " + db.getName() + ", " + dbType + ") finished (/harvest/" + rdfDbFileName  + ")");
       String rdfDbFullFileName = harvestDir + "/" + collection.getId() + "/metadata/dbResources/" + collection.getId() + "-" + db.getName() + "-1.rdf";
       File rdfDbFile = new File(rdfDbFullFileName);
       dbMdRecords = metadataHandler.getMetadataRecordsByRdfFile(collection, rdfDbFile, db, true);
@@ -314,7 +322,6 @@ public class Harvester {
       // build the documents fulltext fields
       if (srcUrl != null && docType != null && ! docType.equals("mets") && ! isDbRecord && isText)
         buildFulltextFields(collection, mdRecord, baseDir);
-      harvestXmlStrBuilder.append(mdRecord.toXmlStr());
       String content = mdRecord.getContent();
       if (content != null) {
         File contentFile = new File(docDirName + "/content.txt");
@@ -630,31 +637,6 @@ public class Harvester {
       }
     } catch (Exception e) {
       throw new ApplicationException(e);
-    }
-  }
-  
-  private void initHarvestXmlStrBuilder() {
-    harvestXmlStrBuilder = new StringBuilder();
-    harvestXmlStrBuilder.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-    harvestXmlStrBuilder.append("<records>\n");
-  }
-  
-  private void flushHarvestXmlStrBuilder(Collection collection, Database db) throws ApplicationException {
-    harvestXmlStrBuilder.append("</records>\n");
-    String harvestXmlStr = harvestXmlStrBuilder.toString();
-    boolean containsHarvestedResources = true;
-    if (harvestXmlStr.endsWith("<records>\n"))
-      containsHarvestedResources = false;
-    if (containsHarvestedResources) {
-      String collId = collection.getId();
-      try {
-        File dbRecordsFile = new File(harvestDir + "/" + collId + "/metadata/records/" + collId + ".xml");
-        if (db != null)
-          dbRecordsFile = new File(harvestDir + "/" + collId + "/metadata/records/" + collId + "-" + db.getName() + "-1.xml");
-        FileUtils.writeStringToFile(dbRecordsFile, harvestXmlStr, "utf-8");
-      } catch (IOException e) {
-        throw new ApplicationException(e);
-      }
     }
   }
   
