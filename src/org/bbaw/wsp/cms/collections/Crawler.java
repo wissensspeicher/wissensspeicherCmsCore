@@ -18,7 +18,7 @@ import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 
 public class Crawler {
   private static int SOCKET_TIMEOUT = 10 * 1000;
-  private static Integer DEFAULT_MAX_DEPTH = 3;
+  private static Integer DEFAULT_MAX_DEPTH = 2;
   private String rootUrlStr;
   private Integer maxDepth;
   private ArrayList<String> excludes;
@@ -37,14 +37,6 @@ public class Crawler {
   
   public ArrayList<MetadataRecord> crawl() throws ApplicationException {
     ArrayList<MetadataRecord> mdRecords = getMdRecords(rootUrlStr, 1);
-    /*
-    if (urlsHashtable.get(rootUrlStr) == null) {
-      MetadataRecord mdRecord = new MetadataRecord();
-      mdRecord.setWebUri(rootUrlStr);
-      urlsHashtable.put(rootUrlStr, mdRecord);
-      mdRecords.add(mdRecord);
-    }
-    */
     Comparator<MetadataRecord> mdRecordComparator = new Comparator<MetadataRecord>() {
       public int compare(MetadataRecord m1, MetadataRecord m2) {
         return m1.getWebUri().compareTo(m2.getWebUri());
@@ -72,15 +64,23 @@ public class Crawler {
           URL url = new URL(urlStr);
           boolean isAllowed = isAllowed(urlStr);
           if (isAllowed) {
-            if (urlsHashtable.get(urlStr) == null) {
-              MetadataRecord mdRecord = new MetadataRecord();
-              mdRecord.setWebUri(urlStr);
-              urlsHashtable.put(urlStr, mdRecord);
-              retMdRecords.add(mdRecord);
-              if (depth < maxDepth && isHtml(url)) {
-                ArrayList<MetadataRecord> mdRecords = getMdRecords(urlStr, depth + 1);
-                retMdRecords.addAll(mdRecords);
+            MetadataRecord mdRecord = urlsHashtable.get(urlStr);
+            String mimeType = null;
+            if (mdRecord == null) {
+              MetadataRecord newMdRecord = new MetadataRecord();
+              newMdRecord.setWebUri(urlStr);
+              mimeType = detect(url);
+              if (mimeType != null) {
+                newMdRecord.setType(mimeType);
+                urlsHashtable.put(urlStr, newMdRecord);
+                retMdRecords.add(newMdRecord);
               }
+            } else {
+              mimeType = mdRecord.getType();             
+            }
+            if (depth < maxDepth && isHtml(mimeType)) {
+              ArrayList<MetadataRecord> mdRecords = getMdRecords(urlStr, depth + 1);
+              retMdRecords.addAll(mdRecords);
             }
           }
         }
@@ -106,6 +106,8 @@ public class Crawler {
       String urlStrWithoutProtocol = urlStr.replaceAll("https*://", "");
       if (! urlStrWithoutProtocol.startsWith(rootUrlStrWithoutProtocol))
         return false;
+      if (urlStr.contains(".."))
+        return false;
       String urlStrRelative = urlStrWithoutProtocol.replaceFirst(rootUrlStrWithoutProtocol, "");
       if (excludes == null)
         return true;
@@ -120,15 +122,21 @@ public class Crawler {
     return isAllowed;
   }
   
-  private boolean isHtml(URL url) throws ApplicationException {
-    boolean retValue = false;
-    try {
-      String mimeType = tika.detect(url);
-      if (mimeType.contains("html"))
-        return true;
-    } catch (Exception e) {
-      throw new ApplicationException(e);
-    }
-    return retValue;
+  private boolean isHtml(String mimeType) throws ApplicationException {
+    if (mimeType != null && mimeType.contains("html"))
+      return true;
+    else return
+      false;
   }
+
+  private String detect(URL url) throws ApplicationException {
+    String mimeType = null;
+    try {
+      mimeType = tika.detect(url);
+    } catch (Exception e) {
+      return null; // e.g. if FileNotFoundException etc. is thrown by site
+    }
+    return mimeType;
+  }
+  
 }
