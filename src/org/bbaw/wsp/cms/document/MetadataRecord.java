@@ -574,24 +574,26 @@ public class MetadataRecord implements Cloneable, Serializable {
   public String toRdfStr() throws ApplicationException {
     StringBuilder rdfStrBuilder = new StringBuilder();
     String uriStrEscaped = StringUtils.deresolveXmlEntities(uri);
-    rdfStrBuilder.append("  <rdf:Description rdf:about=\"" + uriStrEscaped + "\">\n");
-    rdfStrBuilder.append("    <rdf:type rdf:resource=\"http://purl.org/dc/terms/BibliographicResource\"/>\n");
+    rdfStrBuilder.append("<rdf:Description rdf:about=\"" + uriStrEscaped + "\">\n");
+    if (system != null)
+      rdfStrBuilder.append("  <dcterms:type>" + system + "</dcterms:type>\n");
+    rdfStrBuilder.append("  <rdf:type rdf:resource=\"http://purl.org/dc/terms/BibliographicResource\"/>\n");
     String projectRdfId = CollectionReader.getInstance().getCollection(collectionNames).getRdfId();
-    rdfStrBuilder.append("    <dcterms:isPartOf rdf:resource=\"" + projectRdfId + "\"/>\n");
-    rdfStrBuilder.append("    <dcterms:identifier>" + uriStrEscaped + "</dcterms:identifier>\n");
+    rdfStrBuilder.append("  <dcterms:isPartOf rdf:resource=\"" + projectRdfId + "\"/>\n");
+    rdfStrBuilder.append("  <dcterms:identifier>" + uriStrEscaped + "</dcterms:identifier>\n");
     if (webUri != null) {
       String webUrlStrEscaped = StringUtils.deresolveXmlEntities(webUri);
-      rdfStrBuilder.append("    <edm:isShownAt rdf:resource=\"" + webUrlStrEscaped + "\"/>\n");
+      rdfStrBuilder.append("  <dcterms:hasFormat rdf:resource=\"" + webUrlStrEscaped + "\"/>\n");
     }
-    if (system != null)
-      rdfStrBuilder.append("    <dc:type>" + system + "</dc:type>\n");
+    if (type != null)
+      rdfStrBuilder.append("  <dcterms:format>" + type + "</dcterms:format>\n");
     if (creator != null) {
       String creatorStrEscaped = StringUtils.deresolveXmlEntities(creator);
-      rdfStrBuilder.append("    <dcterms:creator>" + creatorStrEscaped + "</dcterms:creator>\n");
+      rdfStrBuilder.append("  <dcterms:creator>" + creatorStrEscaped + "</dcterms:creator>\n");
     }
     if (title != null) {
       String titleStrEscaped = StringUtils.deresolveXmlEntities(title);
-      rdfStrBuilder.append("    <dcterms:title>" + titleStrEscaped + "</dcterms:title>\n");
+      rdfStrBuilder.append("  <dcterms:title>" + titleStrEscaped + "</dcterms:title>\n");
     }
     if (date != null) {
       Calendar cal = Calendar.getInstance();
@@ -599,19 +601,17 @@ public class MetadataRecord implements Cloneable, Serializable {
       int year = cal.get(Calendar.YEAR);
       rdfStrBuilder.append("    <dcterms:date>" + year + "</dcterms:date>\n");
     }
-    rdfStrBuilder.append("    <dc:language>" + language + "</dc:language>\n");
-    if (type != null)
-      rdfStrBuilder.append("    <dc:format>" + type + "</dc:format>\n");
+    rdfStrBuilder.append("  <dcterms:language>" + language + "</dcterms:language>\n");
     if (subject != null) {
       String subjectStrEscaped = StringUtils.deresolveXmlEntities(subject);
-      rdfStrBuilder.append("    <dc:subject>" + subjectStrEscaped + "</dc:subject>\n");
+      rdfStrBuilder.append("  <dcterms:subject>" + subjectStrEscaped + "</dcterms:subject>\n");
     }
     if (description != null) {
       String descriptionStrEscaped = StringUtils.deresolveXmlEntities(description);
-      rdfStrBuilder.append("    <dcterms:abstract>" + descriptionStrEscaped + "</dcterms:abstract>\n");
+      rdfStrBuilder.append("  <dcterms:abstract>" + descriptionStrEscaped + "</dcterms:abstract>\n");
     }
     // TODO further fields / if more than one creator, title, subject
-    rdfStrBuilder.append("  </rdf:Description>\n");
+    rdfStrBuilder.append("</rdf:Description>\n");
     return rdfStrBuilder.toString();
   }
   
