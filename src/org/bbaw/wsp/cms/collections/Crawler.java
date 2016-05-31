@@ -30,6 +30,11 @@ public class Crawler {
     this.maxDepth = maxDepth;
     if (maxDepth == null || maxDepth == 0)
       this.maxDepth = DEFAULT_MAX_DEPTH;
+    ArrayList<String> crawlerExcludes = CollectionReader.getInstance().getCrawlerExcludes();
+    if (crawlerExcludes != null && excludes != null)
+      excludes.addAll(crawlerExcludes);
+    else if (crawlerExcludes != null && excludes == null)
+      excludes = crawlerExcludes;
     this.excludes = excludes;
     this.tika = new Tika();
     this.urlsHashtable = new Hashtable<String, MetadataRecord>();

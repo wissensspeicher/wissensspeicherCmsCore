@@ -33,6 +33,8 @@ public class CollectionReader {
   private static String NAMESPACE_DECLARATION = "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; declare namespace dc=\"http://purl.org/dc/elements/1.1/\"; declare namespace dcterms=\"http://purl.org/dc/terms/\"; declare namespace foaf=\"http://xmlns.com/foaf/0.1/\"; ";
   private XQueryEvaluator xQueryEvaluator;
   private URL inputNormdataFileUrl;
+  private URL mdsystemXmlFileUrl;
+  private ArrayList<String> crawlerExcludes;
 	private HashMap<String, Collection> collectionContainer;  // key is collectionId string and value is collection
   private HashMap<String, Collection> projectRdfId2collection;  // key is projectRdfId string and value is collection
   private HashMap<String, Person> persons;   
@@ -43,6 +45,7 @@ public class CollectionReader {
 		init();
 		readConfFiles();
 		readNormdataFile();
+    readMdsystemXmlFile();
 	}
 
 	public static CollectionReader getInstance() throws ApplicationException {
@@ -57,6 +60,9 @@ public class CollectionReader {
       String inputNormdataFileName = Constants.getInstance().getMdsystemNormdataFile();
       File inputNormdataFile = new File(inputNormdataFileName);
       inputNormdataFileUrl = inputNormdataFile.toURI().toURL();
+      String mdsystemXmlFileName = Constants.getInstance().getMdsystemConfFile();
+      File mdsystemXmlFile = new File(mdsystemXmlFileName);
+      mdsystemXmlFileUrl = mdsystemXmlFile.toURI().toURL();
     } catch (MalformedURLException e) {
       throw new ApplicationException(e);
     }
@@ -134,6 +140,10 @@ public class CollectionReader {
 	  return persons.get(aboutId);
 	}
 	
+  public ArrayList<String> getCrawlerExcludes() {
+    return crawlerExcludes;
+  }
+  
 	private void readNormdataFile() {
     try {
       persons = new HashMap<String, Person>();
@@ -162,6 +172,26 @@ public class CollectionReader {
       }
     } catch (Exception e) {
       LOGGER.error("Reading of: " + inputNormdataFileUrl + " failed");
+      e.printStackTrace();
+    }
+	}
+
+	private void readMdsystemXmlFile() {
+    try {
+      XdmValue xmdValueExcludes = xQueryEvaluator.evaluate(mdsystemXmlFileUrl, "/mdsystem/crawler/excludes/exclude");
+      XdmSequenceIterator xmdValueExcludesIterator = xmdValueExcludes.iterator();
+      if (xmdValueExcludes != null && xmdValueExcludes.size() > 0) {
+        ArrayList<String> excludes = new ArrayList<String>();
+        while (xmdValueExcludesIterator.hasNext()) {
+          XdmItem xdmItemExclude = xmdValueExcludesIterator.next();
+          String xdmItemExcludeStr = xdmItemExclude.getStringValue().trim();
+          if (xdmItemExcludeStr != null && ! xdmItemExcludeStr.isEmpty())
+            excludes.add(xdmItemExcludeStr);
+        }
+        crawlerExcludes = excludes;
+      }
+    } catch (Exception e) {
+      LOGGER.error("Reading of: " + mdsystemXmlFileUrl + " failed");
       e.printStackTrace();
     }
 	}
