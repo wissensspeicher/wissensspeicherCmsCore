@@ -1,0 +1,9 @@
+Start des Datenupdates von Projekten (Operationen: update, harvest, annotate, index), Beispiele:
+1. Update des Projekts "aaewtla" (incl. Harvesting, Annotation und Indexierung)
+  sudo -u www-data java -Xmx12000m -classpath "config/log:dist/wspCmsCore.jar:lib/*" org.bbaw.wsp.cms.collections.ProjectManager update aaewtla
+2. Update der Projekte von "aaew" bis "dpspin" (incl. Harvesting, Annotation und Indexierung)
+ sudo -u www-data java -Xmx12000m -classpath "config/log:dist/wspCmsCore.jar:lib/*" org.bbaw.wsp.cms.collections.ProjectManager update aaew-dspin
+3. Harvesting des Projekts "aaewtla" 
+  sudo -u www-data java -Xmx12000m -classpath "config/log:dist/wspCmsCore.jar:lib/*" org.bbaw.wsp.cms.collections.ProjectManager harvest aaewtla
+4. Indexierung der Projekte "aaew", "aaewtla" und "aaewvor"
+ sudo -u www-data java -Xmx12000m -classpath "config/log:dist/wspCmsCore.jar:lib/*" org.bbaw.wsp.cms.collections.ProjectManager index aaew,aaewtla,aaewvor
