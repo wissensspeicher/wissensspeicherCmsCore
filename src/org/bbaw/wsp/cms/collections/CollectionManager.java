@@ -15,7 +15,6 @@ import org.bbaw.wsp.cms.dochandler.DocumentHandler;
 import org.bbaw.wsp.cms.document.MetadataRecord;
 import org.bbaw.wsp.cms.general.Constants;
 import org.bbaw.wsp.cms.lucene.IndexHandler;
-import org.bbaw.wsp.cms.scheduler.CmsDocOperation;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 
@@ -193,13 +192,7 @@ public class CollectionManager {
 
   public void deleteCollection(String collectionId) throws ApplicationException {
     DocumentHandler docHandler = new DocumentHandler();
-    try {
-      CmsDocOperation docOp = new CmsDocOperation("deleteCollection", null, null, null);
-      docOp.setCollectionId(collectionId);
-      docHandler.doOperation(docOp);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
+    docHandler.deleteCollection(collectionId);
   }
   
   public void addDocumentsOfDatabase(String collectionId, String databaseName) throws ApplicationException {
@@ -297,12 +290,9 @@ public class CollectionManager {
         if (counter % COMMIT_INTERVAL_DB == 0)
           LOGGER.info(logCreationStr);
       }
-      CmsDocOperation docOp = new CmsDocOperation("create", docUrl, null, docId);
-      docOp.setMdRecord(mdRecord);
       String mainLanguage = collection.getMainLanguage();
-      docOp.setMainLanguage(mainLanguage);
       try {
-        docHandler.doOperation(docOp);
+        docHandler.create(docUrl, docId, mainLanguage, mdRecord);
       } catch (Exception e) {
         e.printStackTrace();
       }

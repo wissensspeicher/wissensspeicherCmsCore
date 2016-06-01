@@ -42,7 +42,6 @@ import org.bbaw.wsp.cms.document.Person;
 import org.bbaw.wsp.cms.document.XQuery;
 import org.bbaw.wsp.cms.general.Constants;
 import org.bbaw.wsp.cms.lucene.IndexHandler;
-import org.bbaw.wsp.cms.scheduler.CmsDocOperation;
 import org.bbaw.wsp.cms.transform.GetFragmentsContentHandler;
 import org.bbaw.wsp.cms.transform.XslResourceTransformer;
 import org.xml.sax.InputSource;
@@ -65,28 +64,8 @@ import de.mpg.mpiwg.berlin.mpdl.xml.xquery.XQueryEvaluator;
 public class DocumentHandler {
   private static Logger LOGGER = Logger.getLogger(DocumentHandler.class);
   
-  public void doOperation(CmsDocOperation docOperation) throws ApplicationException{
-    String operationName = docOperation.getName();  
-    if (operationName.equals("create")) {
-      create(docOperation);
-    } else if (operationName.equals("delete")) {
-      delete(docOperation);
-    } else if (operationName.equals("updateCollection")) {
-      CollectionManager collectionManager = CollectionManager.getInstance();
-      String collectionId = docOperation.getCollectionId();
-      collectionManager.updateCollection(collectionId);
-    } else if (operationName.equals("deleteCollection")) {
-      deleteCollection(docOperation);
-    }
-  }
-  
-  private void create(CmsDocOperation docOperation) throws ApplicationException {
+  public void create(String srcUrlStr, String docId, String mainLanguage, MetadataRecord mdRecord) throws ApplicationException {
     try {
-      String operationName = docOperation.getName();  
-      String srcUrlStr = docOperation.getSrcUrl(); 
-      String docId = docOperation.getDocIdentifier();
-      String mainLanguage = docOperation.getMainLanguage();
-      MetadataRecord mdRecord = docOperation.getMdRecord();
       String docDirName = getDocDir(docId);
       String docDestFileName = getDocFullFileName(docId); 
       boolean docIsXml = isDocXml(docId); 
@@ -140,7 +119,6 @@ public class DocumentHandler {
       }
       if (srcUrl != null && docType == null) {
         FileUtils.deleteQuietly(docDestFile);
-        docOperation.setErrorMessage(srcUrlStr + " is not created: mime type is not supported");
         LOGGER.info(srcUrlStr + " is not created: mime type is not supported");
         return;
       }
@@ -167,7 +145,6 @@ public class DocumentHandler {
         mdRecord.setPersons(persons);
         mdRecord.setPersonsDetails(personsDetails);
         mdRecord.setPlaces(places);
-        docOperation.setStatus("extract metadata of: " + srcUrlStr + " to CMS");
         mdRecord = getMetadataRecord(docDestFileUpgrade, docType, mdRecord, xQueryEvaluator);
         String mdRecordLanguage = mdRecord.getLanguage();
         String langId = Language.getInstance().getLanguageId(mdRecordLanguage); // test if language code is supported
@@ -177,7 +154,6 @@ public class DocumentHandler {
           mdRecord.setLanguage(mainLanguage);
           
         // save all pages as single xml files (untokenized and tokenized)
-        docOperation.setStatus("extract page fragments of: " + srcUrlStr + " to CMS");
         File docDir = new File(docDirName + "/pages");
         FileUtils.deleteQuietly(docDir);  // first delete pages directory
         Hashtable<Integer, StringBuilder> pageFragments = getFragments(docDestFileNameUpgrade, "pb");
@@ -214,9 +190,8 @@ public class DocumentHandler {
       } 
       // build the documents fulltext fields
       if (srcUrl != null && docType != null && ! docType.equals("mets") && ! isDbRecord && isText)
-        buildFulltextFields(docOperation);
+        buildFulltextFields(mdRecord, mainLanguage);
       // perform operation on Lucene
-      docOperation.setStatus(operationName + " document: " + docId + " in CMS");
       IndexHandler indexHandler = IndexHandler.getInstance();
       indexHandler.indexDocument(mdRecord);
       // write oaiprovider file: has to be after indexing because the id field is set in indexing procedure
@@ -226,23 +201,19 @@ public class DocumentHandler {
     }
   }
   
-  private void delete(CmsDocOperation docOperation) throws ApplicationException {
-    String operationName = docOperation.getName();  
-    String docIdentifier = docOperation.getDocIdentifier();
+  private void delete(String docIdentifier, MetadataRecord mdRecord) throws ApplicationException {
     if (docIdentifier == null || docIdentifier.trim().equals(""))
       throw new ApplicationException("Your document identifier is empty. Please specify a document identifier for your document.");
     String docDirStr = getDocDir(docIdentifier);
     File docDir = new File(docDirStr);
     // perform operation on file system
-    docOperation.setStatus(operationName + " document: " + docIdentifier + " in CMS");
     FileUtils.deleteQuietly(docDir);
     // perform operation on Lucene
     IndexHandler indexHandler = IndexHandler.getInstance();
-    indexHandler.deleteDocument(docOperation.getMdRecord());
+    indexHandler.deleteDocument(mdRecord);
   }
   
-  private void deleteCollection(CmsDocOperation docOperation) throws ApplicationException {
-    String collectionId = docOperation.getCollectionId();
+  public void deleteCollection(String collectionId) throws ApplicationException {
     if (collectionId == null || collectionId.trim().equals(""))
       throw new ApplicationException("Delete collection: Your collection id is empty. Please specify a collection id");
     // perform operation on Lucene
@@ -252,7 +223,6 @@ public class DocumentHandler {
     // perform operation on file system
     try {
       String harvestDirStr = Constants.getInstance().getHarvestDir() + "/" + collectionId;
-      docOperation.setStatus("Delete harvest directory: " + harvestDirStr + " in CMS");
       Runtime.getRuntime().exec("rm -rf " + harvestDirStr);  // fast also when the directory contains many files
       LOGGER.info("Collection harvest directory: " + harvestDirStr + " successfully deleted");
       String oaiDirStr = Constants.getInstance().getOaiDir() + "/" + collectionId;
@@ -370,9 +340,8 @@ public class DocumentHandler {
     }
   }
   
-  private void buildFulltextFields(CmsDocOperation docOperation) throws ApplicationException {
+  private void buildFulltextFields(MetadataRecord mdRecord, String mainLanguage) throws ApplicationException {
     try {
-      MetadataRecord mdRecord = docOperation.getMdRecord();
       String docId = mdRecord.getDocId();
       String language = mdRecord.getLanguage();
       boolean docIsXml = isDocXml(docId);
@@ -492,7 +461,6 @@ public class DocumentHandler {
           LOGGER.error(e.getLocalizedMessage());
         }
         String mdRecordLanguage = mdRecord.getLanguage();
-        String mainLanguage = docOperation.getMainLanguage();
         if (mdRecordLanguage == null && mainLanguage != null)
           mdRecord.setLanguage(mainLanguage);
         String lang = mdRecord.getLanguage();
