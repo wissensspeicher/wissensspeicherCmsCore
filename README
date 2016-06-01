@@ -1,3 +1,7 @@
+Build von dist/wspCmsCore.jar:
+1. cd build
+2. ant
+
 Start des Datenupdates von Projekten (Operationen: update, harvest, annotate, index), Beispiele:
 1. Update des Projekts "aaewtla" (incl. Harvesting, Annotation und Indexierung)
   sudo -u www-data java -Xmx12000m -classpath "config/log:dist/wspCmsCore.jar:lib/*" org.bbaw.wsp.cms.collections.ProjectManager update aaewtla
