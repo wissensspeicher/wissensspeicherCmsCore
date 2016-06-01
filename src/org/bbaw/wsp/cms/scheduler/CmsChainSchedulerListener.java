@@ -12,10 +12,10 @@ import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 
 
 public class CmsChainSchedulerListener implements JobListener {
-  private static Logger LOGGER = Logger.getLogger(CmsDocJob.class.getName());
+  private static Logger LOGGER = Logger.getLogger(CmsJob.class.getName());
   
   public String getName() {
-    return "MpdlJobChainingListener";
+    return "CmsJobChainingListener";
   }
 
   public void jobToBeExecuted(JobExecutionContext inContext) {
@@ -28,28 +28,26 @@ public class CmsChainSchedulerListener implements JobListener {
 
   public void jobWasExecuted(JobExecutionContext inContext, JobExecutionException inException) {
     // after finishing his job it tries to schedule the next operation (if there is one in the queue)
-    CmsDocOperation docOperation = null;
+    CmsOperation operation = null;
     try {
-      CmsChainScheduler mpdlChainScheduler = CmsChainScheduler.getInstance();
-      docOperation = getDocOperation(inContext);
-      mpdlChainScheduler.finishOperation(docOperation);
+      CmsChainScheduler cmsChainScheduler = CmsChainScheduler.getInstance();
+      operation = getOperation(inContext);
+      cmsChainScheduler.finishOperation(operation);
     } catch (ApplicationException e) {
-      if (docOperation != null) {
-        docOperation.setErrorMessage(e.getMessage());
+      if (operation != null) {
+        operation.setErrorMessage(e.getMessage());
       }
       LOGGER.error(e.getMessage());
     }
   }
 
-  private CmsDocOperation getDocOperation(JobExecutionContext context) {
-    CmsDocOperation docOperation = null;
+  private CmsOperation getOperation(JobExecutionContext context) {
+    CmsOperation operation = null;
     if (context != null) {
       JobDetail job = context.getJobDetail();
       JobDataMap parameters = job.getJobDataMap();
-      docOperation = (CmsDocOperation) parameters.get("operation");
+      operation = (CmsOperation) parameters.get("operation");
     }
-    return docOperation;
+    return operation;
   }
-  
-
 }

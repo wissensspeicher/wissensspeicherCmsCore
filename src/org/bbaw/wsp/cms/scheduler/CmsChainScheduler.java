@@ -23,17 +23,16 @@ import org.quartz.impl.StdSchedulerFactory;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 
-
 public class CmsChainScheduler {
   private static CmsChainScheduler instance;
-  private static String CRUD_JOB = "MPDL_CRUD_JOB";
-  private static String CRUD_TRIGGER = "MPDL_CRUD_TRIGGER";
-  private static String CRUD_GROUP = "MPDL_CRUD_GROUP";
-  private static Logger LOGGER = Logger.getLogger(CmsDocJob.class.getName());
+  private static String CMS_JOB = "CMS_JOB";
+  private static String CMS_TRIGGER = "CMS_TRIGGER";
+  private static String CMS_GROUP = "CMS_GROUP";
+  private static Logger LOGGER = Logger.getLogger(CmsJob.class.getName());
   private org.quartz.Scheduler scheduler;
   private JobListener jobListener;
-  private Queue<CmsDocOperation> docOperationQueue = new PriorityQueue<CmsDocOperation>();
-  private HashMap<Integer, CmsDocOperation> finishedDocOperations = new HashMap<Integer, CmsDocOperation>();
+  private Queue<CmsOperation> operationQueue = new PriorityQueue<CmsOperation>();
+  private HashMap<Integer, CmsOperation> finishedOperations = new HashMap<Integer, CmsOperation>();
   private boolean operationInProgress = false;
   private int jobOrderId = 0;
   
@@ -45,34 +44,33 @@ public class CmsChainScheduler {
     return instance;
   }
 
-  public CmsDocOperation doOperation(CmsDocOperation docOperation) throws ApplicationException {
+  public CmsOperation doOperation(CmsOperation cmsOperation) throws ApplicationException {
     jobOrderId++;
-    docOperation.setOrderId(jobOrderId);
-    queueOperation(docOperation);
+    cmsOperation.setOrderId(jobOrderId);
+    queueOperation(cmsOperation);
     scheduleNextOperation();
-    return docOperation;
+    return cmsOperation;
   }
   
-  public void finishOperation(CmsDocOperation docOperation) throws ApplicationException {
+  public void finishOperation(CmsOperation cmsOperation) throws ApplicationException {
     operationInProgress = false;
     Date now = new Date();
-    docOperation.setEnd(now);
-    docOperation.setStatus("finished");
-    int jobId = new Integer(docOperation.getOrderId());
-    finishedDocOperations.put(jobId, docOperation);
-    log(docOperation);
+    cmsOperation.setEnd(now);
+    cmsOperation.setStatus("finished");
+    int jobId = new Integer(cmsOperation.getOrderId());
+    finishedOperations.put(jobId, cmsOperation);
+    log(cmsOperation);
     // schedule next job if there is one
     scheduleNextOperation();
   }
   
-  private void log(CmsDocOperation docOperation) {
-    Date startTime = docOperation.getStart();
-    Date endTime = docOperation.getEnd();
+  private void log(CmsOperation cmsOperation) {
+    Date startTime = cmsOperation.getStart();
+    Date endTime = cmsOperation.getEnd();
     long executionTime = -1;
     if (startTime != null && endTime != null)
       executionTime = (endTime.getTime() - startTime.getTime());
-    String jobInfo = "Document operation " + docOperation.toString() + ": started at: " + startTime + 
-      " and ended at: " + endTime + " (needed time: " + executionTime + " ms)";
+    String jobInfo = "CMS operation " + cmsOperation.toString() + ": started at: " + startTime + " and ended at: " + endTime + " (needed time: " + executionTime + " ms)";
     LOGGER.info(jobInfo);
   }
   
@@ -80,51 +78,51 @@ public class CmsChainScheduler {
     if (isOperationInProgress()) {
       // nothing, operation has to wait
     } else {
-      CmsDocOperation docOperation = docOperationQueue.poll();
-      if (docOperation == null) {
+      CmsOperation cmsOperation = operationQueue.poll();
+      if (cmsOperation == null) {
         // if queue is empty then do nothing (there are no more operations to execute)
       } else {
         Date now = new Date();
         operationInProgress = true;
-        docOperation.setStart(now);
-        scheduleJob(docOperation, now);
+        cmsOperation.setStart(now);
+        scheduleJob(cmsOperation, now);
       }
     }
   }
   
-  public ArrayList<CmsDocOperation> getDocOperations() throws ApplicationException {
-    ArrayList<CmsDocOperation> docOperations = new ArrayList<CmsDocOperation>();
+  public ArrayList<CmsOperation> getOperations() throws ApplicationException {
+    ArrayList<CmsOperation> operations = new ArrayList<CmsOperation>();
     try {
       // first: all finished jobs
-      Collection<CmsDocOperation> finiDocOperations = finishedDocOperations.values();
-      docOperations.addAll(finiDocOperations);
+      Collection<CmsOperation> finishedOperationsValues = finishedOperations.values();
+      operations.addAll(finishedOperationsValues);
       // second: all currently executed jobs
       if (operationInProgress) {
         List<JobExecutionContext> currentJobs = (List<JobExecutionContext>) scheduler.getCurrentlyExecutingJobs();
         Iterator<JobExecutionContext> iter = currentJobs.iterator();
         while (iter.hasNext()) {
           JobExecutionContext jobExecutionContext = iter.next();
-          CmsDocOperation docOperation = getDocOperation(jobExecutionContext);
-          if (docOperation != null) {
-            docOperations.add(docOperation);
+          CmsOperation operation = getOperation(jobExecutionContext);
+          if (operation != null) {
+            operations.add(operation);
           }
         }
       }
       // third: all queued jobs
-      Iterator<CmsDocOperation> iter = docOperationQueue.iterator();
+      Iterator<CmsOperation> iter = operationQueue.iterator();
       while (iter.hasNext()) {
-        CmsDocOperation docOperation = iter.next();
-        docOperations.add(docOperation);
+        CmsOperation operation = iter.next();
+        operations.add(operation);
       }
     } catch (SchedulerException e) {
       LOGGER.error(e.getMessage());
       throw new ApplicationException(e);
     }
-    return docOperations;
+    return operations;
   }
     
-  public CmsDocOperation getDocOperation(int jobId) throws ApplicationException {
-    CmsDocOperation docOperation = null;
+  public CmsOperation getOperation(int jobId) throws ApplicationException {
+    CmsOperation operation = null;
     try {
       // first try: looks into currently executing jobs
       if (operationInProgress) {
@@ -132,25 +130,25 @@ public class CmsChainScheduler {
         Iterator<JobExecutionContext> iter = currentJobs.iterator();
         while (iter.hasNext()) {
           JobExecutionContext jobExecutionContext = iter.next();
-          docOperation = getDocOperation(jobExecutionContext);
-          if (docOperation != null) {
-            int dopOpJobId = docOperation.getOrderId();
-            if (jobId == dopOpJobId)
-              return docOperation;
+          operation = getOperation(jobExecutionContext);
+          if (operation != null) {
+            int operationOrderId = operation.getOrderId();
+            if (jobId == operationOrderId)
+              return operation;
           }
         }
       }
       // second try: look into finished jobs
-      docOperation = finishedDocOperations.get(new Integer(jobId));
-      if (docOperation != null) {
-        return docOperation;
+      operation = finishedOperations.get(new Integer(jobId));
+      if (operation != null) {
+        return operation;
       }
       // third try: look into queued jobs
-      Iterator<CmsDocOperation> iter = docOperationQueue.iterator();
+      Iterator<CmsOperation> iter = operationQueue.iterator();
       while (iter.hasNext()) {
-        docOperation = iter.next();
-        if (docOperation.getOrderId() == jobId)
-          return docOperation;
+        operation = iter.next();
+        if (operation.getOrderId() == jobId)
+          return operation;
       }
     } catch (SchedulerException e) {
       LOGGER.error(e.getMessage());
@@ -160,42 +158,42 @@ public class CmsChainScheduler {
     return null;
   }
   
-  public CmsDocOperation getDocOperation(JobExecutionContext jobExecutionContext) {
-    CmsDocOperation docOperation = null;
+  public CmsOperation getOperation(JobExecutionContext jobExecutionContext) {
+    CmsOperation operation = null;
     if (jobExecutionContext != null) {
       JobDetail job = jobExecutionContext.getJobDetail();
       JobDataMap parameters = job.getJobDataMap();
-      docOperation = (CmsDocOperation) parameters.get("operation");
+      operation = (CmsOperation) parameters.get("operation");
     }
-    return docOperation;
+    return operation;
   }
   
-  private void queueOperation(CmsDocOperation docOperation) {
-    int operationsBefore = docOperationQueue.size();
+  private void queueOperation(CmsOperation operation) {
+    int operationsBefore = operationQueue.size();
     if (operationsBefore == 0)
-     docOperation.setStatus("waiting in operation queue");
+      operation.setStatus("waiting in operation queue");
     else 
-      docOperation.setStatus("waiting in operation queue: " + operationsBefore + " operations heve to be executed before this operation");
-    docOperationQueue.offer(docOperation);
+      operation.setStatus("waiting in operation queue: " + operationsBefore + " operations heve to be executed before this operation");
+    operationQueue.offer(operation);
   }
   
   private synchronized boolean isOperationInProgress() {
     return operationInProgress;  
   }
   
-  private void scheduleJob(CmsDocOperation docOperation, Date fireTime) throws ApplicationException {
+  private void scheduleJob(CmsOperation operation, Date fireTime) throws ApplicationException {
     try {
-      int jobId = docOperation.getOrderId();
-      String jobName = CRUD_JOB + "-id-" + jobId + "-timeId-" + fireTime;
-      JobDetail job = new JobDetail(jobName, CRUD_GROUP, CmsDocJob.class);
+      int jobId = operation.getOrderId();
+      String jobName = CMS_JOB + "-id-" + jobId + "-timeId-" + fireTime;
+      JobDetail job = new JobDetail(jobName, CMS_GROUP, CmsJob.class);
       JobDataMap parameters = new JobDataMap();
-      parameters.put("operation", docOperation);
+      parameters.put("operation", operation);
       job.setJobDataMap(parameters);
       job.addJobListener(jobListener.getName());        
-      String triggerName = CRUD_TRIGGER + "-id-" + jobId + "-timeId-" + fireTime;
-      Trigger trigger = new SimpleTrigger(triggerName, CRUD_GROUP, fireTime);
+      String triggerName = CMS_TRIGGER + "-id-" + jobId + "-timeId-" + fireTime;
+      Trigger trigger = new SimpleTrigger(triggerName, CMS_GROUP, fireTime);
       scheduler.scheduleJob(job, trigger);
-      String jobInfo = "Schedule document operation: " + docOperation.toString() + ": done at: " + fireTime.toString();
+      String jobInfo = "Schedule operation: " + operation.toString() + ": done at: " + fireTime.toString();
       LOGGER.info(jobInfo);
     } catch (SchedulerException e) {
       LOGGER.error(e.getMessage());
