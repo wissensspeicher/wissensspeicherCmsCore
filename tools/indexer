@@ -1,4 +1,0 @@
-#!/bin/bash
-# Execute the indexer class as a background process, logging is done into the log directory 
-cd ..
-java -Xmx12000m -classpath "config/log:dist/wspCmsCore.jar:lib/*" org.bbaw.wsp.cms.collections.Indexer > /dev/null &
