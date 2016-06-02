@@ -119,6 +119,12 @@ public class ProjectManager {
     return projects;
   }
   
+  public void updateCycle() throws ApplicationException {
+    // TODO
+    // ArrayList<Collection> projects = getCycleProjects();
+    // update(projects);
+  }
+  
   public void update(String projectIds) throws ApplicationException {
     ArrayList<Collection> projects = getProjects(projectIds);
     update(projects);

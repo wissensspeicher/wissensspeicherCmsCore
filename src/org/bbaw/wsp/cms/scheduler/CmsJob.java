@@ -28,7 +28,9 @@ public class CmsJob implements Job {
       ArrayList<String> parameters = operation.getParameters();   
       if (operationType.equals("ProjectManager")) {
         ProjectManager pm = ProjectManager.getInstance();
-        String projectIds = parameters.get(0);  // first param are projectIds
+        String projectIds = null;
+        if (parameters != null)
+          projectIds = parameters.get(0);  // first param are projectIds
         if (operationName.equals("update")) {
           pm.update(projectIds);
         } else if (operationName.equals("harvest")) {
@@ -39,6 +41,8 @@ public class CmsJob implements Job {
           pm.index(projectIds);
         } else if (operationName.equals("delete")) {
           pm.delete(projectIds);
+        } else if (operationName.equals("updateCycle")) {
+          pm.updateCycle();
         }
       }
       Date startingTime = operation.getStart();
