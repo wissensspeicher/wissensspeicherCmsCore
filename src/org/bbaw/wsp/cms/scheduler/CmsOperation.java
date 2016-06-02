@@ -104,7 +104,10 @@ public class CmsOperation implements Comparable<CmsOperation> {
   }
 
   public String toString() {
-    return "job: " + id + ": " + name + "(" + parameters.toString() + ")";
+    String retStr = "job: " + id + ": " + name;
+    if (parameters != null)
+      retStr = "job: " + id + ": " + name + "(" + parameters.toString() + ")";
+    return retStr;
   }
   
 }

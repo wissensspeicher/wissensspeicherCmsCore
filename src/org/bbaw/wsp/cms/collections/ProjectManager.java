@@ -52,6 +52,8 @@ public class ProjectManager {
           pm.index(projects);
         } else if (operation.equals("delete") && projects != null) {
           pm.delete(projects);
+        } else if (operation.equals("updateCycle")) {
+          pm.updateCycle();
         }
       } 
     } catch (Exception e) {
@@ -120,9 +122,14 @@ public class ProjectManager {
   }
   
   public void updateCycle() throws ApplicationException {
-    // TODO
-    // ArrayList<Collection> projects = getCycleProjects();
-    // update(projects);
+    ArrayList<Collection> projects = getUpdateCycleProjects();
+    // update(projects);  // TODO
+    index(projects);  // TODO
+  }
+  
+  public ArrayList<Collection> getUpdateCycleProjects() {
+    ArrayList<Collection> updateCycleProjects = getProjects("aaewtla"); // fakeProject TODO
+    return updateCycleProjects;
   }
   
   public void update(String projectIds) throws ApplicationException {
@@ -293,7 +300,7 @@ public class ProjectManager {
   
   private String getIdsStr(ArrayList<Collection> collections) {
     String ids = null;
-    if (collections != null) {
+    if (collections != null && ! collections.isEmpty()) {
       ids = "";
       for (int i=0; i<collections.size(); i++) {
         String projectId = collections.get(i).getId();
