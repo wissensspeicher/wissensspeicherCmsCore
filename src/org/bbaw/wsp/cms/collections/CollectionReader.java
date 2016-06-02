@@ -39,23 +39,18 @@ public class CollectionReader {
   private HashMap<String, Collection> projectRdfId2collection;  // key is projectRdfId string and value is collection
   private HashMap<String, Person> persons;   
 	
-	private CollectionReader() throws ApplicationException {
-		collectionContainer = new HashMap<String, Collection>();
-		projectRdfId2collection = new HashMap<String, Collection>();
-		init();
-		readConfFiles();
-		readNormdataFile();
-    readMdsystemXmlFile();
-	}
-
 	public static CollectionReader getInstance() throws ApplicationException {
-		if (collectionReader == null)
+		if (collectionReader == null) {
 			collectionReader = new CollectionReader();
+			collectionReader.init();
+		}
 		return collectionReader;
 	}
 
 	private void init() throws ApplicationException {
     try {
+      collectionContainer = new HashMap<String, Collection>();
+      projectRdfId2collection = new HashMap<String, Collection>();
   	  xQueryEvaluator = new XQueryEvaluator();
       String inputNormdataFileName = Constants.getInstance().getMdsystemNormdataFile();
       File inputNormdataFile = new File(inputNormdataFileName);
@@ -63,6 +58,10 @@ public class CollectionReader {
       String mdsystemXmlFileName = Constants.getInstance().getMdsystemConfFile();
       File mdsystemXmlFile = new File(mdsystemXmlFileName);
       mdsystemXmlFileUrl = mdsystemXmlFile.toURI().toURL();
+      readConfFiles();
+      readNormdataFile();
+      readMdsystemXmlFile();
+      LOGGER.info("Collection reader initialized with " + collectionContainer.size() + " projects");
     } catch (MalformedURLException e) {
       throw new ApplicationException(e);
     }
