@@ -4,6 +4,7 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -205,58 +206,14 @@ public class CollectionReader {
       Iterator<File> filesIter = metadataRdfFiles.iterator();
       while (filesIter.hasNext()) {
         File metadataRdfFile = filesIter.next();
-        String metadataRdfFileName = metadataRdfFile.getName().toLowerCase();
-        Collection collection = new Collection();
-        String collectionId = metadataRdfFileName.substring(0, metadataRdfFileName.lastIndexOf("."));
-        collection.setId(collectionId);
-        Date metadataRdfFileLastModified = new Date(metadataRdfFile.lastModified());
-        collection.setLastModified(metadataRdfFileLastModified);
-        URL metadataRdfFileUrl = metadataRdfFile.toURI().toURL();
-        String projectRdfStr = xQueryEvaluator.evaluateAsString(metadataRdfFileUrl, NAMESPACE_DECLARATION + "/rdf:RDF/rdf:Description[rdf:type/@rdf:resource = 'http://xmlns.com/foaf/0.1/Project']");
-        if (projectRdfStr == null || projectRdfStr.trim().isEmpty()) {
-          projectRdfStr = xQueryEvaluator.evaluateAsString(inputNormdataFileUrl, NAMESPACE_DECLARATION + "/rdf:RDF/*:Description[foaf:nick/text() ='" + collectionId + "']");  // TODO entfernen, wenn alle RDF-Dateien eine Projektbeschreibung haben
-        } 
-        String rdfId = xQueryEvaluator.evaluateAsString(projectRdfStr, NAMESPACE_DECLARATION + "string(/rdf:Description/@rdf:about)");
-        if (rdfId == null || rdfId.trim().isEmpty())
-          LOGGER.error("No project rdf id found in: " + metadataRdfFileName + " or in: " + inputNormdataFileUrl);
-        else 
-          collection.setRdfId(rdfId);
-        String projectName = xQueryEvaluator.evaluateAsString(projectRdfStr, NAMESPACE_DECLARATION + "/rdf:Description/foaf:name/text()");
-        if (projectName != null) {
-          collection.setName(projectName);
-        } else {
-          LOGGER.error("Project: \"" + rdfId + "\" has no name: Please provide a name for this project");
-        }
-        String mainLanguage = xQueryEvaluator.evaluateAsString(projectRdfStr, NAMESPACE_DECLARATION + "/rdf:Description/dc:language/text()");
-        if (mainLanguage != null) {
-          collection.setMainLanguage(mainLanguage);
-        } else {
-          LOGGER.error("Project: \"" + rdfId + "\" has no language: Please provide a main language for this project");
-        }
-        String coverage = xQueryEvaluator.evaluateAsString(projectRdfStr, NAMESPACE_DECLARATION + "string-join(/rdf:Description/dc:coverage/@rdf:resource, ' ')");
-        if (coverage != null && ! coverage.isEmpty()) {
-          collection.setCoverage(coverage);
-        } 
-        String projectHomepage = xQueryEvaluator.evaluateAsString(projectRdfStr, NAMESPACE_DECLARATION + "string(/rdf:Description/foaf:homepage/@rdf:resource)");
-        if (projectHomepage != null) {
-          collection.setWebBaseUrl(projectHomepage);
-        } else {
-          LOGGER.error("Project: \"" + rdfId + "\" has no homepage: Please provide a homepage for this project");
-        }
+        // read info from project rdf file
+        Collection collection = readConfFileRdf(metadataRdfFile);
+        String collectionId = collection.getId();
         // read additional info from xml config file        
         String configFileName = Constants.getInstance().getMetadataDir() + "/resources-addinfo/" + collectionId + ".xml";
         File configFile = new File(configFileName);
         if (configFile.exists()) {
-          collection.setConfigFileName(configFileName);
-          readConfFile(collection);
-        }
-        // add collection
-        Collection coll = collectionContainer.get(collectionId);
-        if (coll != null) {
-          LOGGER.error("Double collectionId \"" + collectionId + "\" (in: \"" + collection.getConfigFileName() + "\" and in \"" + coll.getConfigFileName() + "\"");
-        } else {
-          collectionContainer.put(collectionId, collection);
-          projectRdfId2collection.put(rdfId, collection);
+          readConfFileXml(configFile);
         }
       }
     } catch (Exception e) {
@@ -264,9 +221,75 @@ public class CollectionReader {
     }
   }
   
-	private void readConfFile(Collection collection) {
+  private Collection readConfFileRdf(File metadataRdfFile) throws ApplicationException {
+    String metadataRdfFileName = metadataRdfFile.getName().toLowerCase();
+    String collectionId = metadataRdfFileName.substring(0, metadataRdfFileName.lastIndexOf("."));
+    Collection collection = collectionContainer.get(collectionId);
+    if (collection == null)
+      collection = new Collection();
+    collection.setId(collectionId);
+    try {
+      Date metadataRdfFileLastModified = new Date(metadataRdfFile.lastModified());
+      collection.setLastModified(metadataRdfFileLastModified);
+      URL metadataRdfFileUrl = metadataRdfFile.toURI().toURL();
+      String projectRdfStr = xQueryEvaluator.evaluateAsString(metadataRdfFileUrl, NAMESPACE_DECLARATION + "/rdf:RDF/rdf:Description[rdf:type/@rdf:resource = 'http://xmlns.com/foaf/0.1/Project']");
+      if (projectRdfStr == null || projectRdfStr.trim().isEmpty()) {
+        projectRdfStr = xQueryEvaluator.evaluateAsString(inputNormdataFileUrl, NAMESPACE_DECLARATION + "/rdf:RDF/*:Description[foaf:nick/text() ='" + collectionId + "']");  // TODO entfernen, wenn alle RDF-Dateien eine Projektbeschreibung haben
+      } 
+      String rdfId = xQueryEvaluator.evaluateAsString(projectRdfStr, NAMESPACE_DECLARATION + "string(/rdf:Description/@rdf:about)");
+      if (rdfId == null || rdfId.trim().isEmpty())
+        LOGGER.error("No project rdf id found in: " + metadataRdfFileName + " or in: " + inputNormdataFileUrl);
+      else 
+        collection.setRdfId(rdfId);
+      String projectName = xQueryEvaluator.evaluateAsString(projectRdfStr, NAMESPACE_DECLARATION + "/rdf:Description/foaf:name/text()");
+      if (projectName != null) {
+        collection.setName(projectName);
+      } else {
+        LOGGER.error("Project: \"" + rdfId + "\" has no name: Please provide a name for this project");
+      }
+      String mainLanguage = xQueryEvaluator.evaluateAsString(projectRdfStr, NAMESPACE_DECLARATION + "/rdf:Description/dc:language/text()");
+      if (mainLanguage != null) {
+        collection.setMainLanguage(mainLanguage);
+      } else {
+        LOGGER.error("Project: \"" + rdfId + "\" has no language: Please provide a main language for this project");
+      }
+      String coverage = xQueryEvaluator.evaluateAsString(projectRdfStr, NAMESPACE_DECLARATION + "string-join(/rdf:Description/dc:coverage/@rdf:resource, ' ')");
+      if (coverage != null && ! coverage.isEmpty()) {
+        collection.setCoverage(coverage);
+      } 
+      String projectHomepage = xQueryEvaluator.evaluateAsString(projectRdfStr, NAMESPACE_DECLARATION + "string(/rdf:Description/foaf:homepage/@rdf:resource)");
+      if (projectHomepage != null) {
+        collection.setWebBaseUrl(projectHomepage);
+      } else {
+        LOGGER.error("Project: \"" + rdfId + "\" has no homepage: Please provide a homepage for this project");
+      }
+      String projectStatus = xQueryEvaluator.evaluateAsString(projectRdfStr, NAMESPACE_DECLARATION + "/rdf:Description/foaf:status/text()");
+      if (projectStatus != null) {
+        collection.setStatus(projectStatus);
+      }
+      collectionContainer.put(collectionId, collection);
+      projectRdfId2collection.put(rdfId, collection);
+    } catch (Exception e) {
+      throw new ApplicationException(e);
+    }
+    return collection;
+  }
+  
+	private void readConfFileXml(File configFile) {
+    String configFileName = configFile.getName();
+    String collectionId = configFileName.substring(0, configFileName.lastIndexOf("."));
+    Collection collection = collectionContainer.get(collectionId);
+    if (collection == null) {
+      LOGGER.error("CollectionReader: readConfFileXml: \"" + collectionId + "\" has no rdf file");
+      return;
+    }
+    String fullConfigFileName = configFile.getAbsolutePath();
+    collection.setConfigFileName(fullConfigFileName);
+    Date configFileLastModified = new Date(configFile.lastModified());
+    Date collectionLastModified = collection.getLastModified();
+    if (configFileLastModified.after(collectionLastModified))
+      collection.setLastModified(configFileLastModified);
 	  try {
-      File configFile = new File(collection.getConfigFileName());
       URL configFileUrl = configFile.toURI().toURL();
       // read db infos
       XdmValue xmdValueDBs = xQueryEvaluator.evaluate(configFileUrl, "/wsp/collection/db");
@@ -373,6 +396,20 @@ public class CollectionReader {
         }
         collection.setDatabases(collectionDBs);
       }
+      String updateCycle = xQueryEvaluator.evaluateAsString(configFileUrl, "/wsp/collection/updateCycle/text()");
+      if (updateCycle != null) {
+        collection.setUpdateCycle(updateCycle);
+      } else {
+        String status = collection.getStatus();
+        if (status != null) {
+          if (status.equals("aktiv"))
+            collection.setUpdateCycle("monthly");
+          else if (status.equals("abgeschlossen"))
+            collection.setUpdateCycle("halfyearly");
+        } else {
+          collection.setUpdateCycle("halfyearly");  // default value
+        }
+      }
       // read services (for dynamically building queries to single project documents, e.g. in dta)
       Hits services = (Hits) xQueryEvaluator.evaluate(configFileUrl, "/wsp/collection/services/*", 0, 9, "hits");
       if (services != null) {
@@ -423,6 +460,96 @@ public class CollectionReader {
     }
 	}
 	
+  public void setConfigFilesLastModified(ArrayList<Collection> collections, Date lastModified) throws ApplicationException {
+    for (int i=0; i<collections.size(); i++) {
+      Collection collection = collections.get(i);
+      String projectId = collection.getId();
+      File metadataProjectFileRdf = new File(Constants.getInstance().getMetadataDir() + "/resources/" + projectId + ".rdf");
+      long now = lastModified.getTime();
+      metadataProjectFileRdf.setLastModified(now);
+      File metadataProjectFileXml = new File(Constants.getInstance().getMetadataDir() + "/resources-addinfo/" + projectId + ".xml");
+      metadataProjectFileXml.setLastModified(now);
+    }
+  }
+  
+	public ArrayList<Collection> updateCycleProjects() throws ApplicationException {
+    ArrayList<Collection> updateCycleProjects = new ArrayList<Collection>();
+    ArrayList<Collection> collections = getCollections();
+    for (int i=0; i<collections.size(); i++) {
+      Collection collection = collections.get(i);
+      if (refreshUserMetadata(collection)) {  // side effect: userMetadata is copied to metadataDir if it is newer
+        updateCycleProjects.add(collection);
+      } else if (updateCycleReached(collection)) { // no side effect
+        updateCycleProjects.add(collection);
+      }
+    }
+    if (updateCycleProjects.isEmpty())
+      return null;
+    else
+      return updateCycleProjects;
+	}
+	
+  public boolean refreshUserMetadata(Collection collection) throws ApplicationException {
+    boolean changed = false;
+    if (refreshUserMetadata(collection, "rdf") || refreshUserMetadata(collection, "xml"))
+      changed = true;
+    return changed;
+  }
+  
+	private boolean refreshUserMetadata(Collection collection, String type) throws ApplicationException {
+    boolean changed = false;
+    try {
+  	  String projectId = collection.getId();
+  	  String fileName = projectId + "." + type;
+      String path = null;
+      if (type.equals("rdf"))
+        path = "/resources/";
+      else if (type.equals("xml"))
+        path = "/resources-addinfo/";
+      File metadataDir = new File(Constants.getInstance().getMetadataDir() + path);
+      File metadataProjectFile = new File(Constants.getInstance().getMetadataDir() + path  + fileName);
+      Date lastModfiedMetadataProjectFile = new Date(metadataProjectFile.lastModified());
+      File userMetadataProjectFile = new File(Constants.getInstance().getUserMetadataDir() + path  + fileName);
+      Date lastModfiedUserMetadataProjectFile = new Date(userMetadataProjectFile.lastModified());
+      if (lastModfiedUserMetadataProjectFile.after(lastModfiedMetadataProjectFile)) {
+        FileUtils.copyFileToDirectory(userMetadataProjectFile, metadataDir, true);
+        if (type.equals("rdf")) {
+          readConfFileRdf(metadataProjectFile);
+        } else if (type.equals("xml")) {
+          readConfFileXml(metadataProjectFile);
+        }
+  	    changed = true;
+      }
+    } catch (Exception e) {
+      throw new ApplicationException(e);
+    }
+    return changed;
+	}
+	
+  public boolean updateCycleReached(Collection collection) {
+    Date lastModified = collection.getLastModified();
+    String updateCycle = collection.getUpdateCycle();
+    if (updateCycle == null)
+      return false;
+    return cycleReached(lastModified, updateCycle);
+  }
+  
+  private boolean cycleReached(Date date, String cycle) {
+    boolean updateCycleReached = false;
+    Date now = new Date();
+    Calendar cal = Calendar.getInstance();
+    cal.setTime(date);
+    if (cycle.equals("monthly")) {
+      cal.add(Calendar.MONTH, 1);
+    } else if (cycle.equals("halfyearly")) {
+      cal.add(Calendar.MONTH, 6);
+    }
+    Date datePlusCycle = cal.getTime();
+    if (datePlusCycle.before(now))
+      updateCycleReached = true;
+    return updateCycleReached;
+  }
+  
 	public void testDataUrls() throws ApplicationException {
 	  ArrayList<Collection> collections = getCollections();
     String harvestDirectory = Constants.getInstance().getHarvestDir();

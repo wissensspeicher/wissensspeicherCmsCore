@@ -190,6 +190,14 @@ public class Constants {
     }
   }
 
+  public String getUserMetadataDir() {
+    if (properties != null) {
+      return properties.getProperty("userMetadataDir");
+    } else {
+      return "no properties file";
+    }
+  }
+
   public String getCollectionConfDir() {
     return getMetadataDir() + "/resources-addinfo";
   }

@@ -15,6 +15,8 @@ public class Collection {
   private String metadataRedundantUrlPrefix;  // prefix of metadataUrl which is not relevant as id 
   private String mainLanguage;
   private String coverage;  // e.g.: http://wsp.normdata.rdf/Gegenwart or http://wsp.normdata.rdf/Neuzeit
+  private String status; // e.g. "aktiv" or "abgeschlossen" 
+  private String updateCycle; // e.g. "monthly" or "halfyearly" 
   private Hashtable<String, Service> services;
   private String configFileName;  // configuration file name
   private Date lastModified;
@@ -105,6 +107,22 @@ public class Collection {
 
   public void setCoverage(String coverage) {
     this.coverage = coverage;
+  }
+
+  public String getStatus() {
+    return status;
+  }
+
+  public void setStatus(String status) {
+    this.status = status;
+  }
+
+  public String getUpdateCycle() {
+    return updateCycle;
+  }
+
+  public void setUpdateCycle(String updateCycle) {
+    this.updateCycle = updateCycle;
   }
 
   public String getWebBaseUrl() {

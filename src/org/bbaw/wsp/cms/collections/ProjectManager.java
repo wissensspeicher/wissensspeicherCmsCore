@@ -122,14 +122,8 @@ public class ProjectManager {
   }
   
   public void updateCycle() throws ApplicationException {
-    ArrayList<Collection> projects = getUpdateCycleProjects();
-    // update(projects);  // TODO
-    index(projects);  // TODO
-  }
-  
-  public ArrayList<Collection> getUpdateCycleProjects() {
-    ArrayList<Collection> updateCycleProjects = getProjects("aaewtla"); // fakeProject TODO
-    return updateCycleProjects;
+    ArrayList<Collection> projects = collectionReader.updateCycleProjects();
+    update(projects);
   }
   
   public void update(String projectIds) throws ApplicationException {
@@ -154,6 +148,7 @@ public class ProjectManager {
     annotate(collections);
     index(collections);
     Date now = new Date();
+    collectionReader.setConfigFilesLastModified(collections, now);
     setStatusModified(now);  
     LOGGER.info("Update finished");
   }
