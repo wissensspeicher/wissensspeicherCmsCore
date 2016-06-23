@@ -35,6 +35,10 @@ public class LocalIndexer {
     indexHandler = IndexHandler.getInstance();
   }
   
+  public void reopenTaxonomyReader() throws ApplicationException {
+    indexHandler.reopenTaxonomyReader();
+  }
+  
   public void indexCollections() throws ApplicationException {
     ArrayList<Collection> collections = collectionReader.getCollections();
     for (Collection collection : collections) {

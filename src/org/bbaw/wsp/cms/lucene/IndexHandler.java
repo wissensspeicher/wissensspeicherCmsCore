@@ -155,6 +155,16 @@ public class IndexHandler {
     LOGGER.info("Reading of all tokens in Lucene index successfully with: " + tokens.size() + " tokens (" + "elapsed time: " + (after.getTime() - before.getTime()) + " ms)");
   }
 
+  public void reopenTaxonomyReader() throws ApplicationException {
+    try {
+      if (taxonomyReader != null)
+        taxonomyReader.close();
+      taxonomyReader = getTaxonomyReader();
+    } catch (Exception e) {
+      throw new ApplicationException(e);
+    }
+  }
+  
   public void setCommitInterval(int commitInterval) {
     this.commitInterval = commitInterval;
   }
@@ -2197,8 +2207,7 @@ public class IndexHandler {
       if (! isCurrent) {
         documentsIndexReader = DirectoryReader.openIfChanged(documentsIndexReader);
       }
-      if (taxonomyReader != null)
-        taxonomyReader = TaxonomyReader.openIfChanged(taxonomyReader); 
+      TaxonomyReader.openIfChanged(taxonomyReader); 
     } catch (Exception e) {
       throw new ApplicationException(e);
     }
@@ -2210,8 +2219,7 @@ public class IndexHandler {
       if (! isCurrent) {
         documentsSearcherManager.maybeRefresh();
       }
-      if (taxonomyReader != null)
-        taxonomyReader = TaxonomyReader.openIfChanged(taxonomyReader); 
+      TaxonomyReader.openIfChanged(taxonomyReader); 
     } catch (Exception e) {
       throw new ApplicationException(e);
     }

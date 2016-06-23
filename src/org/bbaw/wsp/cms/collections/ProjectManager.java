@@ -241,6 +241,7 @@ public class ProjectManager {
       Collection collection = collections.get(i);
       index(collection);
     }
+    indexer.reopenTaxonomyReader();
     LOGGER.info("Index finished");
   }
 
