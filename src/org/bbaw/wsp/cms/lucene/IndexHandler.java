@@ -126,7 +126,7 @@ public class IndexHandler {
     return instance;
   }
 
-  private void init() throws ApplicationException {
+  public void init() throws ApplicationException {
     documentsIndexWriter = getDocumentsWriter();
     nodesIndexWriter = getNodesWriter();
     documentsSearcherManager = getNewSearcherManager(documentsIndexWriter);

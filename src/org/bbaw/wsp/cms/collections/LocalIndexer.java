@@ -37,7 +37,7 @@ public class LocalIndexer {
   
   public void reopenIndexHandler() throws ApplicationException {
     indexHandler.end();
-    indexHandler = IndexHandler.getInstance();
+    indexHandler.init();
   }
   
   public void indexCollections() throws ApplicationException {
