@@ -241,7 +241,7 @@ public class ProjectManager {
       Collection collection = collections.get(i);
       index(collection);
     }
-    indexer.reopenTaxonomyReader();
+    indexer.reopenIndexHandler();  // TODO done only because taxonomxReader does not work if something is changed in lucene
     LOGGER.info("Index finished");
   }
 
