@@ -388,9 +388,6 @@ public class ProjectManager {
       if (projectElem == null) {
         projectElem = new Element(Tag.valueOf("project"), "");
         projectElem.attr("id", projectId);
-        Element newCreationElem = new Element(Tag.valueOf("creation"), "");
-        newCreationElem.text(modified.toString());
-        projectElem.appendChild(newCreationElem);
         projectElem.appendChild(newOperationModifiedElem);
         Element statusElem = statusFileDoc.select("status").first();
         statusElem.appendChild(projectElem);
