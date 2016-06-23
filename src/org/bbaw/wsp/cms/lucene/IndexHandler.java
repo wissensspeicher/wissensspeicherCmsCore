@@ -2197,7 +2197,8 @@ public class IndexHandler {
       if (! isCurrent) {
         documentsIndexReader = DirectoryReader.openIfChanged(documentsIndexReader);
       }
-      taxonomyReader = TaxonomyReader.openIfChanged(taxonomyReader); 
+      if (taxonomyReader != null)
+        taxonomyReader = TaxonomyReader.openIfChanged(taxonomyReader); 
     } catch (Exception e) {
       throw new ApplicationException(e);
     }
@@ -2209,7 +2210,8 @@ public class IndexHandler {
       if (! isCurrent) {
         documentsSearcherManager.maybeRefresh();
       }
-      taxonomyReader = TaxonomyReader.openIfChanged(taxonomyReader); 
+      if (taxonomyReader != null)
+        taxonomyReader = TaxonomyReader.openIfChanged(taxonomyReader); 
     } catch (Exception e) {
       throw new ApplicationException(e);
     }
