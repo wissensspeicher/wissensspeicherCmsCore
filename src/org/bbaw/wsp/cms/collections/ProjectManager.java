@@ -430,7 +430,7 @@ public class ProjectManager {
       String projectId = projectIds[i];
       regExprProjects = regExprProjects + "^" + projectId + "$|";
     }
-    regExprProjects = regExprProjects.substring(0, regExprProjects.length() - 2);
+    regExprProjects = regExprProjects.substring(0, regExprProjects.length() - 1);
     Elements projects = statusFileDoc.select("project[id~=" + regExprProjects + "]");
     Collections.sort(projects, new Comparator<Element>() {
       @Override
