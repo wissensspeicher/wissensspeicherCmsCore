@@ -15,8 +15,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import com.sun.org.apache.xerces.internal.util.URI.MalformedURIException;
-
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 
 public class Crawler {
