@@ -226,6 +226,7 @@ public class MetadataHandler {
       while (resumptionToken != null && ! resumptionToken.isEmpty()) {
         String listRecordsResumptionTokenUrl = oaiServerUrl + "?verb=ListRecords&resumptionToken=" + resumptionToken;
         oaiPmhResponseStr = performGetRequest(listRecordsResumptionTokenUrl);
+        LOGGER.info("Fetch OAI records: " + listRecordsResumptionTokenUrl);
         oaiRecordsStr = xQueryEvaluator.evaluateAsString(oaiPmhResponseStr, "/*:OAI-PMH/*:ListRecords/*:record");
         xmlOaiStrBuilder.append(oaiRecordsStr + "\n");
         resumptionToken = xQueryEvaluator.evaluateAsString(oaiPmhResponseStr, "/*:OAI-PMH/*:ListRecords/*:resumptionToken/text()");
