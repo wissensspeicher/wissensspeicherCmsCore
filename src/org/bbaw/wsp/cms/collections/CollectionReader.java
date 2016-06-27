@@ -472,14 +472,37 @@ public class CollectionReader {
     }
   }
   
+  public ArrayList<Collection> getUpdateCycleProjects() throws ApplicationException {
+    ArrayList<Collection> updateCycleProjects = new ArrayList<Collection>();
+    ArrayList<Collection> collections = getCollections();
+    for (int i=0; i<collections.size(); i++) {
+      Collection collection = collections.get(i);
+      if (projectFileChanged(collection, "rdf") || projectFileChanged(collection, "xml")) {  
+        updateCycleProjects.add(collection);
+      } else if (updateCycleReached(collection)) { 
+        updateCycleProjects.add(collection);
+      }
+    }
+    if (updateCycleProjects.isEmpty())
+      return null;
+    else
+      return updateCycleProjects;
+  }
+  
 	public ArrayList<Collection> updateCycleProjects() throws ApplicationException {
     ArrayList<Collection> updateCycleProjects = new ArrayList<Collection>();
     ArrayList<Collection> collections = getCollections();
     for (int i=0; i<collections.size(); i++) {
       Collection collection = collections.get(i);
-      if (refreshUserMetadata(collection)) {  // side effect: userMetadata is copied to metadataDir if it is newer
+      boolean projectFileRdfChanged = projectFileChanged(collection, "rdf");
+      boolean projectFileXmlChanged = projectFileChanged(collection, "xml");
+      if (projectFileRdfChanged || projectFileXmlChanged) {
+        if (projectFileRdfChanged)
+          updateUserMetadata(collection, "rdf");
+        if (projectFileXmlChanged)
+          updateUserMetadata(collection, "xml");
         updateCycleProjects.add(collection);
-      } else if (updateCycleReached(collection)) { // no side effect
+      } else if (updateCycleReached(collection)) {
         updateCycleProjects.add(collection);
       }
     }
@@ -489,43 +512,33 @@ public class CollectionReader {
       return updateCycleProjects;
 	}
 	
-  public boolean refreshUserMetadata(Collection collection) throws ApplicationException {
-    boolean changed = false;
-    if (refreshUserMetadata(collection, "rdf") || refreshUserMetadata(collection, "xml"))
-      changed = true;
-    return changed;
-  }
-  
-	private boolean refreshUserMetadata(Collection collection, String type) throws ApplicationException {
-    boolean changed = false;
+	private void updateUserMetadata(Collection collection, String type) throws ApplicationException {
+    String projectFilePath = getProjectFilePath(collection, type);
+    File metadataProjectFile = new File(Constants.getInstance().getMetadataDir() + projectFilePath);
+    if (type.equals("rdf")) {
+      readConfFileRdf(metadataProjectFile);
+    } else if (type.equals("xml")) {
+      readConfFileXml(metadataProjectFile);
+    }
+	}
+	
+  private boolean projectFileChanged(Collection collection, String type) throws ApplicationException {
+    boolean projectFileChanged = false;
     try {
-  	  String projectId = collection.getId();
-  	  String fileName = projectId + "." + type;
-      String path = null;
-      if (type.equals("rdf"))
-        path = "/resources/";
-      else if (type.equals("xml"))
-        path = "/resources-addinfo/";
-      File metadataDir = new File(Constants.getInstance().getMetadataDir() + path);
-      File metadataProjectFile = new File(Constants.getInstance().getMetadataDir() + path  + fileName);
+      String projectFilePath = getProjectFilePath(collection, type);
+      File metadataProjectFile = new File(Constants.getInstance().getMetadataDir() + projectFilePath);
       Date lastModfiedMetadataProjectFile = new Date(metadataProjectFile.lastModified());
-      File userMetadataProjectFile = new File(Constants.getInstance().getUserMetadataDir() + path  + fileName);
-      Date lastModfiedUserMetadataProjectFile = new Date(userMetadataProjectFile.lastModified());
-      if (lastModfiedUserMetadataProjectFile.after(lastModfiedMetadataProjectFile)) {
-        FileUtils.copyFileToDirectory(userMetadataProjectFile, metadataDir, true);
-        if (type.equals("rdf")) {
-          readConfFileRdf(metadataProjectFile);
-        } else if (type.equals("xml")) {
-          readConfFileXml(metadataProjectFile);
-        }
-  	    changed = true;
+      File userMetadataProjectFile = new File(Constants.getInstance().getUserMetadataDir() + projectFilePath);
+      Date lastModifiedUserMetadataProjectFile = new Date(userMetadataProjectFile.lastModified());
+      if (lastModifiedUserMetadataProjectFile.after(lastModfiedMetadataProjectFile)) {
+        projectFileChanged = true;
       }
     } catch (Exception e) {
       throw new ApplicationException(e);
     }
-    return changed;
-	}
-	
+    return projectFileChanged;
+  }
+  
   public boolean updateCycleReached(Collection collection) {
     Date lastModified = collection.getLastModified();
     String updateCycle = collection.getUpdateCycle();
@@ -548,6 +561,18 @@ public class CollectionReader {
     if (datePlusCycle.before(now))
       updateCycleReached = true;
     return updateCycleReached;
+  }
+  
+  private String getProjectFilePath(Collection collection, String type) throws ApplicationException {
+    String projectId = collection.getId();
+    String fileName = projectId + "." + type;
+    String path = null;
+    if (type.equals("rdf"))
+      path = "/resources/";
+    else if (type.equals("xml"))
+      path = "/resources-addinfo/";
+    String projectFilePath = path + fileName;
+    return projectFilePath;
   }
   
 	public void testDataUrls() throws ApplicationException {
