@@ -1,5 +1,6 @@
 package org.bbaw.wsp.cms.collections;
 
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
@@ -13,6 +14,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
+import com.sun.org.apache.xerces.internal.util.URI.MalformedURIException;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 
@@ -66,7 +69,6 @@ public class Crawler {
             urlStr = urlStr.substring(0, urlStr.length() - 9);
           if (urlStr.endsWith("/"))
             urlStr = urlStr.substring(0, urlStr.length() - 1);
-          URL url = new URL(urlStr);
           boolean isAllowed = isAllowed(urlStr);
           if (isAllowed) {
             MetadataRecord mdRecord = urlsHashtable.get(urlStr);
@@ -74,6 +76,7 @@ public class Crawler {
             if (mdRecord == null) {
               MetadataRecord newMdRecord = new MetadataRecord();
               newMdRecord.setWebUri(urlStr);
+              URL url = new URL(urlStr);
               mimeType = detect(url);
               if (mimeType != null) {
                 newMdRecord.setType(mimeType);
@@ -99,7 +102,12 @@ public class Crawler {
   private boolean isAllowed(String urlStr) throws ApplicationException {
     boolean isAllowed = true;
     try {
-      URL url = new URL(urlStr);
+      URL url = null;
+      try {
+        url = new URL(urlStr);
+      } catch (MalformedURLException e) {
+        return false;
+      }
       String protocol = url.getProtocol();
       if (protocol == null || (protocol != null && ! protocol.startsWith("http")))
         return false;
