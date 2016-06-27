@@ -6,6 +6,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Locale;
 
@@ -18,6 +20,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Entities.EscapeMode;
 import org.jsoup.parser.Tag;
+import org.jsoup.select.Elements;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 import de.mpg.mpiwg.berlin.mpdl.util.StringUtils;
@@ -408,18 +411,36 @@ public class ProjectManager {
     return getStatusProjectXmlStr(projectIdsTmp);
   }
   
+  public String getStatusProjectXmlStr() throws ApplicationException {
+    readStatusFile();
+    Elements projects = statusFileDoc.select("project");
+    Collections.sort(projects, new Comparator<Element>() {
+      @Override
+      public int compare(Element e1, Element e2) {
+        return e1.id().compareTo(e2.id());
+      }
+    });
+    return projects.toString();
+  }
+  
   private String getStatusProjectXmlStr(String[] projectIds) throws ApplicationException {
     readStatusFile();
-    String projectSelector = "";
+    String regExprProjects = "";
     for (int i=0; i<projectIds.length; i++) {
       String projectId = projectIds[i];
-      projectSelector = projectSelector + "project[id=" + projectId + "], ";
+      regExprProjects = regExprProjects + projectId + "|";
     }
-    projectSelector = projectSelector.substring(0, projectSelector.length() - 2);
-    String projectStatusXmlStr = statusFileDoc.select(projectSelector).outerHtml();
-    return projectStatusXmlStr;
+    regExprProjects = regExprProjects.substring(0, regExprProjects.length() - 1);
+    Elements projects = statusFileDoc.select("project[id~=" + regExprProjects + "]");
+    Collections.sort(projects, new Comparator<Element>() {
+      @Override
+      public int compare(Element e1, Element e2) {
+        return e1.id().compareTo(e2.id());
+      }
+    });
+    return projects.toString();
   }
-
+  
   private void writeStatusFile() throws ApplicationException {
     try {
       String statusFileContentXmlStr = statusFileDoc.select("body").first().html();
