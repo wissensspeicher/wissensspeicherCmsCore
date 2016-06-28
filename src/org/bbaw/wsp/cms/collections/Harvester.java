@@ -144,6 +144,9 @@ public class Harvester {
         countHarvest++;
         MetadataRecord newMdRecord = harvestResource(countHarvest, collection, mdRecord);
         retMdRecords.add(newMdRecord);
+        // without that, there would be a memory leak (with many big documents in one collection)
+        // with that the main big fields (content etc.) could be garbaged
+        newMdRecord.setAllNull();
       } catch (Exception e) {
         LOGGER.error("Harvest of metadata record failed:");
         e.printStackTrace();
