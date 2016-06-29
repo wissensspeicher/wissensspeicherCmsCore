@@ -404,6 +404,12 @@ public class Harvester {
     return docFileName;
   }
   
+  public String getDocFullFileName(String docId) {
+    String collName = docId.substring(1, docId.indexOf("/", 1));
+    String baseDir = harvestDir + "/" + collName + "/data";
+    return getDocFullFileName(docId, baseDir);
+  }
+  
   private String getDocFullFileName(String docId, String baseDir) {
     if (docId == null || docId.trim().isEmpty())
       return null;
