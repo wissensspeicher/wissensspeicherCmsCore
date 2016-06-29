@@ -1819,10 +1819,7 @@ public class IndexHandler {
       makeDocumentsSearcherManagerUpToDate();
       searcher = documentsSearcherManager.acquire();
       String fieldNameDocId = "docId";
-      String docIdQuery = docId;
-      if (docId.contains(" ") || docId.contains(":"))
-        docIdQuery = "\"" + docId + "\"";
-      docIdQuery = QueryParser.escape(docIdQuery);
+      String docIdQuery = QueryParser.escape(docId);
       Query queryDocId = new QueryParser(fieldNameDocId, documentsPerFieldAnalyzer).parse(docIdQuery);
       TopDocs topDocs = searcher.search(queryDocId, 100000);
       topDocs.setMaxScore(1);
