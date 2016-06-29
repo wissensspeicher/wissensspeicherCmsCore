@@ -1078,12 +1078,49 @@ public class MetadataHandler {
           if (xQueryResult != null)
             xQueryResult = xQueryResult.trim();
           xQuery.setResult(xQueryResult);
+          if (key.equals("webId")) {
+            handleXQueryWebId(xQuery, mdRecord);
+          }
         } catch (Exception e) {
           // nothing
         }
       }
     }
     return mdRecord;
+  }
+  
+  private void handleXQueryWebId(XQuery xQueryWebId, MetadataRecord mdRecord) {
+    String mimeType = mdRecord.getType();
+    if (mimeType == null || ! mimeType.contains("xml"))
+      return;  // do nothing if it is not an xml document
+    String webId = xQueryWebId.getResult();
+    if (webId != null)
+      webId = StringUtils.resolveXmlEntities(webId);
+    // Hack: if xQuery code is "fileName"
+    boolean codeIsFileName = false;
+    if (xQueryWebId.getCode() != null && xQueryWebId.getCode().equals("xxxFileName"))
+      codeIsFileName = true;
+    if (codeIsFileName) {
+      String docId = mdRecord.getDocId();
+      int from = docId.lastIndexOf("/");
+      String fileName = docId.substring(from + 1);
+      webId = fileName;
+    }
+    if (webId != null) {
+      webId = webId.trim();
+      if (! webId.isEmpty()) {
+        String webUri = null;
+        String xQueryPreStr = xQueryWebId.getPreStr();
+        if (xQueryPreStr != null)
+          webUri = xQueryPreStr + webId;
+        String xQueryAfterStr = xQueryWebId.getAfterStr();
+        if (xQueryAfterStr != null)
+          webUri = webUri + xQueryAfterStr;
+        if (xQueryPreStr == null && xQueryAfterStr == null)
+          webUri = webId;
+        mdRecord.setWebUri(webUri);
+      }
+    }
   }
   
   private MetadataRecord getMetadataRecordTei(XQueryEvaluator xQueryEvaluator, URL srcUrl, MetadataRecord mdRecord) throws ApplicationException {
