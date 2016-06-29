@@ -121,7 +121,7 @@ public class MetadataHandler {
     String urlStr = db.getUrl();
     ProjectManager pm = ProjectManager.getInstance();
     MetadataRecord mdRecord = getNewMdRecord(urlStr); 
-    mdRecord.setSystem(db.getType());
+    mdRecord.setSystem("eXist");
     mdRecord.setCollectionNames(collectionId);
     if (generateId) {
       maxIdcounter = pm.getStatusMaxId();  // find the highest value, so that each following id is a real new id
@@ -154,7 +154,7 @@ public class MetadataHandler {
         mdRecordEXist.setTitle(mdRecord.getTitle());
         mdRecordEXist.setPublisher(mdRecord.getPublisher());
         mdRecordEXist.setDate(mdRecord.getDate());
-        mdRecordEXist.setSystem("eXistDir");
+        mdRecordEXist.setSystem("eXist");
         if (mdRecord.getLanguage() != null)
           mdRecordEXist.setLanguage(mdRecord.getLanguage());
         mdRecordsEXist.add(mdRecordEXist);
@@ -901,7 +901,7 @@ public class MetadataHandler {
     }
     String type = xQueryEvaluator.evaluateAsString(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dc:type/text()");
     if (type != null)
-      mdRecord.setSystem(type);  // e.g. "eXistDir" or "dbRecord" or "oai" or "directory" 
+      mdRecord.setSystem(type);  // e.g. "eXistDir" or "dbRecord" or "oaiRecord" or "crawl" 
     XdmValue xmdValueAuthors = xQueryEvaluator.evaluate(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dc:creator");
     if (xmdValueAuthors != null && xmdValueAuthors.size() > 0) {
       XdmSequenceIterator xmdValueAuthorsIterator = xmdValueAuthors.iterator();
