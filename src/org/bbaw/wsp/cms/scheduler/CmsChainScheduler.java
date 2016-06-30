@@ -121,6 +121,23 @@ public class CmsChainScheduler {
     return operations;
   }
     
+  public boolean killOperation(int jobId) throws ApplicationException {
+    JobDetail jobDetail = getJobDetail(jobId);
+    if (jobDetail != null) {
+      String jobName = jobDetail.getName();
+      String groupName = jobDetail.getGroup();
+      try {
+        boolean success = scheduler.interrupt(jobName, groupName);
+        return success;
+      } catch (SchedulerException e) {
+        LOGGER.error(e.getMessage());
+        throw new ApplicationException(e);
+      }
+    } else {
+      return false;
+    }
+  }
+  
   public CmsOperation getOperation(int jobId) throws ApplicationException {
     CmsOperation operation = null;
     try {
@@ -149,6 +166,30 @@ public class CmsChainScheduler {
         operation = iter.next();
         if (operation.getOrderId() == jobId)
           return operation;
+      }
+    } catch (SchedulerException e) {
+      LOGGER.error(e.getMessage());
+      throw new ApplicationException(e);
+    }
+    // if not found return null
+    return null;
+  }
+  
+  public JobDetail getJobDetail(int jobId) throws ApplicationException {
+    try {
+      // looks into currently executing jobs
+      if (operationInProgress) {
+        List<JobExecutionContext> currentJobs = (List<JobExecutionContext>) scheduler.getCurrentlyExecutingJobs();
+        Iterator<JobExecutionContext> iter = currentJobs.iterator();
+        while (iter.hasNext()) {
+          JobExecutionContext jobExecutionContext = iter.next();
+          CmsOperation operation = getOperation(jobExecutionContext);
+          if (operation != null) {
+            int operationOrderId = operation.getOrderId();
+            if (jobId == operationOrderId)
+              return jobExecutionContext.getJobDetail();
+          }
+        }
       }
     } catch (SchedulerException e) {
       LOGGER.error(e.getMessage());
