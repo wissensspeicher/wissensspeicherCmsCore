@@ -57,6 +57,8 @@ public class ProjectManager {
           pm.delete(projects);
         } else if (operation.equals("updateCycle")) {
           pm.updateCycle();
+        } else if (operation.equals("createBaseProjects")) {
+          pm.createBaseProjects();
         }
       } 
     } catch (Exception e) {
