@@ -2,6 +2,7 @@ package org.bbaw.wsp.cms.collections;
 
 import java.net.MalformedURLException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -109,7 +110,12 @@ public class Crawler {
       String protocol = url.getProtocol();
       if (protocol == null || (protocol != null && ! protocol.startsWith("http")))
         return false;
-      URI uri = new URI(urlStr);
+      URI uri = null;
+      try {
+        uri = new URI(urlStr);
+      } catch (URISyntaxException e) {
+        return false;
+      }
       String fragment = uri.getFragment();  // the "#" part of the uri
       if (fragment != null)
         return false;
