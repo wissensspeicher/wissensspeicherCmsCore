@@ -124,6 +124,11 @@ public class ProjectManager {
     return projects;
   }
   
+  public void createBaseProjects() throws ApplicationException {
+    ArrayList<Collection> projects = collectionReader.getBaseProjects();
+    update(projects);
+  }
+  
   public void updateCycle() throws ApplicationException {
     ArrayList<Collection> projects = collectionReader.updateCycleProjects();
     update(projects);
