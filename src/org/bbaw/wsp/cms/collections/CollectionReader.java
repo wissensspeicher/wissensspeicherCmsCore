@@ -86,6 +86,24 @@ public class CollectionReader {
 		return collections;
 	}
 
+  public ArrayList<Collection> getBaseProjects() {
+    ArrayList<Collection> retCollections = new ArrayList<Collection>();
+    java.util.Collection<Collection> values = collectionContainer.values();
+    for (Collection collection : values) {
+      if (isBaseProject(collection))
+        retCollections.add(collection);
+    }
+    return retCollections;
+  }
+
+  public boolean isBaseProject(Collection collection) {
+    boolean isBaseProject = false;
+    String updateCycle = collection.getUpdateCycle();
+    if (updateCycle != null && updateCycle.equals("never"))
+      isBaseProject = true;
+    return isBaseProject;
+  }
+  
 	/**
 	 * Delivers collections from that startingCollectionId onwards till endingCollectionId alphabetically
 	 * @param startingCollectionId
@@ -477,10 +495,13 @@ public class CollectionReader {
     ArrayList<Collection> collections = getCollections();
     for (int i=0; i<collections.size(); i++) {
       Collection collection = collections.get(i);
-      if (projectFileChanged(collection, "rdf") || projectFileChanged(collection, "xml")) {  
-        updateCycleProjects.add(collection);
-      } else if (updateCycleReached(collection)) { 
-        updateCycleProjects.add(collection);
+      boolean isBaseProject = isBaseProject(collection);
+      if (! isBaseProject) {
+        if (projectFileChanged(collection, "rdf") || projectFileChanged(collection, "xml")) {  
+          updateCycleProjects.add(collection);
+        } else if (updateCycleReached(collection)) { 
+          updateCycleProjects.add(collection);
+        }
       }
     }
     if (updateCycleProjects.isEmpty())
@@ -496,14 +517,17 @@ public class CollectionReader {
       Collection collection = collections.get(i);
       boolean projectFileRdfChanged = projectFileChanged(collection, "rdf");
       boolean projectFileXmlChanged = projectFileChanged(collection, "xml");
-      if (projectFileRdfChanged || projectFileXmlChanged) {
-        if (projectFileRdfChanged)
-          updateUserMetadata(collection, "rdf");
-        if (projectFileXmlChanged)
-          updateUserMetadata(collection, "xml");
-        updateCycleProjects.add(collection);
-      } else if (updateCycleReached(collection)) {
-        updateCycleProjects.add(collection);
+      boolean isBaseProject = isBaseProject(collection);
+      if (! isBaseProject) {
+        if (projectFileRdfChanged || projectFileXmlChanged) {
+          if (projectFileRdfChanged)
+            updateUserMetadata(collection, "rdf");
+          if (projectFileXmlChanged)
+            updateUserMetadata(collection, "xml");
+          updateCycleProjects.add(collection);
+        } else if (updateCycleReached(collection)) {
+          updateCycleProjects.add(collection);
+        }
       }
     }
     if (updateCycleProjects.isEmpty())
