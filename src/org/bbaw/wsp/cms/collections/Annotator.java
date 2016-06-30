@@ -113,9 +113,11 @@ public class Annotator {
       MetadataRecord mdRecord = mdRecords.get(i);
       annotate(collection, mdRecord, rdfStrBuilder);
       recordsXmlStrBuilder.append(mdRecord.toXmlStr());
-      int annotateInterval = i % 100; // after each 100 annotations do Logging
+      int iplus1 = i + 1;
+      int annotateInterval = iplus1 % 100; // after each 100 annotations do Logging
       if (annotateInterval == 0) {
-        LOGGER.info("Annotate " + i + "#th record: " + mdRecord.getWebUri());
+        int iplus1mal100 = iplus1 + 100; 
+        LOGGER.info("Annotate " + iplus1mal100 + "'th record: " + mdRecord.getWebUri());
       }
       // without that, there would be a memory leak (with many big documents in one collection)
       // with that the main big fields (content etc.) could be garbaged
