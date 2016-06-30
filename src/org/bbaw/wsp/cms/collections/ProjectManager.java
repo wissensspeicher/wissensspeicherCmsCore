@@ -42,9 +42,13 @@ public class ProjectManager {
     try {
       if (args != null && args.length != 0) {
         String operation = args[0];
-        String projectIds = args[1];
+        String projectIds = null;
+        ArrayList<Collection> projects = null;
         ProjectManager pm = ProjectManager.getInstance();
-        ArrayList<Collection> projects = pm.getProjects(projectIds);
+        if (args.length > 1) {
+          projectIds = args[1];
+          projects = pm.getProjects(projectIds);
+        }
         if (operation.equals("update") && projects != null) {
           pm.update(projects);
         } else if (operation.equals("harvest") && projects != null) {
