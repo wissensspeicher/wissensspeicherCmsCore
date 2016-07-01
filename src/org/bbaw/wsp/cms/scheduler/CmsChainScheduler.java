@@ -11,7 +11,6 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 
 import org.apache.log4j.Logger;
-
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
@@ -122,14 +121,18 @@ public class CmsChainScheduler {
   }
     
   public boolean killOperation(int jobId) throws ApplicationException {
+    // TODO this method does not work
     JobDetail jobDetail = getJobDetail(jobId);
     if (jobDetail != null) {
       String jobName = jobDetail.getName();
       String groupName = jobDetail.getGroup();
       try {
         boolean success = scheduler.interrupt(jobName, groupName);
+        CmsOperation cmsOperation = getOperation(jobId);
+        cmsOperation.setStatus("job was killed");
+        finishOperation(cmsOperation);
         return success;
-      } catch (SchedulerException e) {
+      } catch (Exception e) {
         LOGGER.error(e.getMessage());
         throw new ApplicationException(e);
       }
@@ -175,7 +178,7 @@ public class CmsChainScheduler {
     return null;
   }
   
-  public JobDetail getJobDetail(int jobId) throws ApplicationException {
+  private JobDetail getJobDetail(int jobId) throws ApplicationException {
     try {
       // looks into currently executing jobs
       if (operationInProgress) {

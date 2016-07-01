@@ -5,21 +5,25 @@ import java.util.Date;
 
 import org.apache.log4j.Logger;
 import org.bbaw.wsp.cms.collections.ProjectManager;
+import org.quartz.InterruptableJob;
 import org.quartz.Job;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+import org.quartz.UnableToInterruptJobException;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 
-public class CmsJob implements Job {
+public class CmsJob implements Job, InterruptableJob {
   public static String STATUS_BEGIN = "started";
   private static Logger LOGGER = Logger.getLogger(CmsJob.class.getName());
   private JobExecutionContext currentExecutedContext;
+  private volatile Thread thisThread;
   
   public void execute(JobExecutionContext context) throws JobExecutionException {
     this.currentExecutedContext = context;
+    this.thisThread = Thread.currentThread();
     CmsOperation operation = getOperation();
     try {
       operation.setStatus(STATUS_BEGIN);
@@ -74,6 +78,15 @@ public class CmsJob implements Job {
     }
   } 
 
+  public void interrupt() throws UnableToInterruptJobException {
+    CmsOperation op = getOperation();
+    if (thisThread != null) {
+      thisThread.interrupt();
+      int jobId = op.getOrderId();
+      LOGGER.info("Job: " + jobId + " was interrupted");
+    }
+  }
+  
   private CmsOperation getOperation() {
     CmsOperation operation = null;
     if (currentExecutedContext != null) {
