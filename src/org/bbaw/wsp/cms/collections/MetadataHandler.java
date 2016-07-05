@@ -207,6 +207,7 @@ public class MetadataHandler {
   
   public int fetchMetadataRecordsOai(String dirName, Collection collection, Database db) throws ApplicationException {
     // fetch the oai records and write them to xml files
+    /*
     StringBuilder xmlOaiStrBuilder = new StringBuilder();
     String oaiServerUrl = db.getUrl();
     String oaiSet = db.getOaiSet();
@@ -242,6 +243,7 @@ public class MetadataHandler {
       if (xmlOaiStrBuilder.length() > 0)
         writeOaiDbXmlFile(dirName, collection, db, xmlOaiStrBuilder, fileCounter);
     }
+    */   // TODO
     // convert the xml files to rdf files
     int recordsCount = convertDbXmlFiles(dirName, collection, db);
     return recordsCount;
