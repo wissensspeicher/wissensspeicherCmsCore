@@ -207,6 +207,7 @@ public class MetadataHandler {
   
   public int fetchMetadataRecordsOai(String dirName, Collection collection, Database db) throws ApplicationException {
     // fetch the oai records and write them to xml files
+    /*
     StringBuilder xmlOaiStrBuilder = new StringBuilder();
     String oaiServerUrl = db.getUrl();
     String oaiSet = db.getOaiSet();
@@ -242,6 +243,7 @@ public class MetadataHandler {
       if (xmlOaiStrBuilder.length() > 0)
         writeOaiDbXmlFile(dirName, collection, db, xmlOaiStrBuilder, fileCounter);
     }
+    */   // TODO
     // convert the xml files to rdf files
     int recordsCount = convertDbXmlFiles(dirName, collection, db);
     return recordsCount;
@@ -418,7 +420,7 @@ public class MetadataHandler {
       rdfWebId = rdfWebId + webIdAfterStr;
     }
     // special handling of edoc oai records
-    if (collection.getId().equals("edoc")) {
+    if (collectionId.equals("edoc")) {
       String dbFieldIdentifier = db.getDbField("identifier");
       if (dbFieldIdentifier != null) {
         ArrayList<String> identifiers = row.getFieldValues(dbFieldIdentifier);
@@ -461,6 +463,11 @@ public class MetadataHandler {
       if (fieldValues != null && ! fieldValues.isEmpty()) {
         for (int i=0; i<fieldValues.size(); i++) {
           String fieldValue = fieldValues.get(i);
+          if (collectionId.equals("jdg")) {
+            int indexEqualSign = fieldValue.lastIndexOf("=");
+            if (indexEqualSign != -1)
+              fieldValue = fieldValue.substring(indexEqualSign + 1).trim();
+          }
           fieldValue = StringUtils.deresolveXmlEntities(fieldValue);
           rdfStrBuilder.append("  <dc:creator>" + fieldValue + "</dc:creator>\n");
         }
@@ -563,6 +570,11 @@ public class MetadataHandler {
               if (subjects != null) {
                 for (int j=0; j<subjects.length; j++) {
                   String s = subjects[j].trim();
+                  if (collectionId.equals("jdg")) {
+                    int indexLs = s.lastIndexOf("▴Ls");
+                    if (indexLs != -1)
+                      s = s.substring(indexLs + 3).trim();
+                  }
                   s = StringUtils.deresolveXmlEntities(s);
                   if (db.getName().equals("edoc"))
                     rdfStrBuilder.append("  <dc:subject xsi:type=\"SWD\">" + s + "</dc:subject>\n");
