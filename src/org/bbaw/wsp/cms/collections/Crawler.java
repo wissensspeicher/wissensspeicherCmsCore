@@ -57,37 +57,48 @@ public class Crawler {
     ArrayList<MetadataRecord> retMdRecords = new ArrayList<MetadataRecord>();
     try {
       URL startUrl = new URL(startUrlStr);
-      Document doc = Jsoup.parse(startUrl, SOCKET_TIMEOUT);
-      Elements links = doc.select("a[href], area[href]");
-      if (links != null) {
-        for (Element link : links) {
-          String urlStr = link.attr("abs:href");
-          if (urlStr.endsWith("index.html"))
-            urlStr = urlStr.substring(0, urlStr.length() - 10);
-          if (urlStr.endsWith("index.htm"))
-            urlStr = urlStr.substring(0, urlStr.length() - 9);
-          if (urlStr.endsWith("/"))
-            urlStr = urlStr.substring(0, urlStr.length() - 1);
-          boolean isAllowed = isAllowed(urlStr);
-          if (isAllowed) {
-            MetadataRecord mdRecord = urlsHashtable.get(urlStr);
-            String mimeType = null;
-            if (mdRecord == null) {
-              MetadataRecord newMdRecord = new MetadataRecord();
-              newMdRecord.setWebUri(urlStr);
-              URL url = new URL(urlStr);
-              mimeType = detect(url);
-              if (mimeType != null) {
-                newMdRecord.setType(mimeType);
-                urlsHashtable.put(urlStr, newMdRecord);
-                retMdRecords.add(newMdRecord);
+      Document doc = null;
+      try {
+        doc = Jsoup.parse(startUrl, SOCKET_TIMEOUT);
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+      if (doc != null) {
+        Elements links = doc.select("a[href], area[href]");
+        if (links != null) {
+          for (Element link : links) {
+            String urlStr = link.attr("abs:href");
+            if (urlStr.endsWith("index.html"))
+              urlStr = urlStr.substring(0, urlStr.length() - 10);
+            if (urlStr.endsWith("index.htm"))
+              urlStr = urlStr.substring(0, urlStr.length() - 9);
+            if (urlStr.endsWith("/"))
+              urlStr = urlStr.substring(0, urlStr.length() - 1);
+            boolean isAllowed = isAllowed(urlStr);
+            if (isAllowed) {
+              MetadataRecord mdRecord = urlsHashtable.get(urlStr);
+              String mimeType = null;
+              if (mdRecord == null) {
+                MetadataRecord newMdRecord = new MetadataRecord();
+                newMdRecord.setWebUri(urlStr);
+                URL url = new URL(urlStr);
+                try {
+                  mimeType = detect(url);
+                } catch (Exception e) {
+                  e.printStackTrace();
+                }
+                if (mimeType != null) {
+                  newMdRecord.setType(mimeType);
+                  urlsHashtable.put(urlStr, newMdRecord);
+                  retMdRecords.add(newMdRecord);
+                }
+              } else {
+                mimeType = mdRecord.getType();             
               }
-            } else {
-              mimeType = mdRecord.getType();             
-            }
-            if (depth < maxDepth && isHtml(mimeType)) {
-              ArrayList<MetadataRecord> mdRecords = getMdRecords(urlStr, depth + 1);
-              retMdRecords.addAll(mdRecords);
+              if (depth < maxDepth && isHtml(mimeType)) {
+                ArrayList<MetadataRecord> mdRecords = getMdRecords(urlStr, depth + 1);
+                retMdRecords.addAll(mdRecords);
+              }
             }
           }
         }
