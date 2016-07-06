@@ -20,7 +20,7 @@ import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 
 public class Crawler {
   private static int SOCKET_TIMEOUT = 10 * 1000;
-  private static Integer DEFAULT_MAX_DEPTH = 2;
+  private static Integer DEFAULT_MAX_DEPTH = 3;
   private String rootUrlStr;
   private Integer maxDepth;
   private ArrayList<String> excludes;
