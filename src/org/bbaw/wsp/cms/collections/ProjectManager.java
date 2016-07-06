@@ -145,11 +145,6 @@ public class ProjectManager {
     update(projects);
   }
   
-  public void update(String[] projectIds) throws ApplicationException {
-    ArrayList<Collection> collections = collectionReader.getCollections(projectIds);
-    update(collections);
-  }
-  
   public void update(String projectId1, String projectId2) throws ApplicationException {
     ArrayList<Collection> collections = collectionReader.getCollections(projectId1, projectId2);
     update(collections);
@@ -170,11 +165,6 @@ public class ProjectManager {
   public void harvest(String projectIds) throws ApplicationException {
     ArrayList<Collection> projects = getProjects(projectIds);
     harvest(projects);
-  }
-  
-  public void harvest(String[] projectIds) throws ApplicationException {
-    ArrayList<Collection> collections = collectionReader.getCollections(projectIds);
-    harvest(collections);
   }
   
   public void harvest(String projectId1, String projectId2) throws ApplicationException {
@@ -203,11 +193,6 @@ public class ProjectManager {
   public void annotate(String projectIds) throws ApplicationException {
     ArrayList<Collection> projects = getProjects(projectIds);
     annotate(projects);
-  }
-  
-  public void annotate(String[] projectIds) throws ApplicationException {
-    ArrayList<Collection> collections = collectionReader.getCollections(projectIds);
-    annotate(collections);
   }
   
   public void annotate(String projectId1, String projectId2) throws ApplicationException {

@@ -13,7 +13,6 @@ public class LocalIndexer {
   private static Logger LOGGER = Logger.getLogger(LocalIndexer.class);
   private static LocalIndexer indexer;
   private static int COMMIT_INTERVAL_DB = 1000;
-  private CollectionReader collectionReader;
   private MetadataHandler metadataHandler;
   private Harvester harvester;
   private Annotator annotator;
@@ -28,7 +27,6 @@ public class LocalIndexer {
   }
   
   private void init() throws ApplicationException {
-    collectionReader = CollectionReader.getInstance();
     metadataHandler = MetadataHandler.getInstance();
     harvester = Harvester.getInstance();
     annotator = Annotator.getInstance();
@@ -40,13 +38,6 @@ public class LocalIndexer {
     indexHandler.init();
   }
   
-  public void indexCollections() throws ApplicationException {
-    ArrayList<Collection> collections = collectionReader.getCollections();
-    for (Collection collection : collections) {
-      index(collection);
-    }
-  }
-
   public void index(Collection collection) throws ApplicationException {
     int counter = 0;
     String collId = collection.getId();

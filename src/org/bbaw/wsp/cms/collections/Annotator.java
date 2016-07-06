@@ -18,7 +18,6 @@ import de.mpg.mpiwg.berlin.mpdl.util.StringUtils;
 public class Annotator {
   private static Logger LOGGER = Logger.getLogger(Annotator.class);
   private static Annotator annotator;
-  private CollectionReader collectionReader;
   private MetadataHandler metadataHandler;
   private Harvester harvester;
   private String annotationDir;
@@ -32,19 +31,11 @@ public class Annotator {
   }
   
   private void init() throws ApplicationException {
-    collectionReader = CollectionReader.getInstance();
     metadataHandler = MetadataHandler.getInstance();
     harvester = Harvester.getInstance();
     annotationDir = Constants.getInstance().getAnnotationsDir();
   }
   
-  public void annotateCollections() throws ApplicationException {
-    ArrayList<Collection> collections = collectionReader.getCollections();
-    for (Collection collection : collections) {
-      annotate(collection);
-    }
-  }
-
   public void annotate(Collection collection) throws ApplicationException {
     int counter = 0;
     String collId = collection.getId();

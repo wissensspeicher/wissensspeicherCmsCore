@@ -38,7 +38,6 @@ import net.sf.saxon.s9api.XdmValue;
 public class Harvester {
   private static Logger LOGGER = Logger.getLogger(Harvester.class);
   private static Harvester harvester;
-  private CollectionReader collectionReader;
   private MetadataHandler metadataHandler;
   private String harvestDir;
   
@@ -51,18 +50,10 @@ public class Harvester {
   }
   
   private void init() throws ApplicationException {
-    collectionReader = CollectionReader.getInstance();
     metadataHandler = MetadataHandler.getInstance();
     harvestDir = Constants.getInstance().getHarvestDir();
   }
   
-  public void harvestCollections() throws ApplicationException {
-    ArrayList<Collection> collections = collectionReader.getCollections();
-    for (Collection collection : collections) {
-      harvest(collection);
-    }
-  }
-
   public void harvest(Collection collection) throws ApplicationException {
     try {
       int counter = 0;

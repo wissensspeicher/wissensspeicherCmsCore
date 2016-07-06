@@ -117,10 +117,15 @@ public class CollectionReader {
     ArrayList<Collection> collections = collectionReader.getCollections();
     for (Collection collection : collections) {
       String collId = collection.getId();
-      if (startingCollectionId.equals(collId))
+      if (startingCollectionId.equals(collId)) {
         start = true;
-      if (start && ! end)
-        retCollections.add(collection);
+      }
+      if (start && ! end) {
+        boolean isBaseProject = isBaseProject(collection);
+        if (! isBaseProject) {
+          retCollections.add(collection);
+        }
+      }
       if (endingCollectionId.equals(collId)) {
         end = true;
         break;
