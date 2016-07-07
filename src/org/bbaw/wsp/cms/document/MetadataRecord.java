@@ -599,7 +599,7 @@ public class MetadataRecord implements Cloneable, Serializable {
       Calendar cal = Calendar.getInstance();
       cal.setTime(date);
       int year = cal.get(Calendar.YEAR);
-      rdfStrBuilder.append("    <dcterms:date>" + year + "</dcterms:date>\n");
+      rdfStrBuilder.append("  <dcterms:date>" + year + "</dcterms:date>\n");
     }
     rdfStrBuilder.append("  <dcterms:language>" + language + "</dcterms:language>\n");
     if (subject != null) {
