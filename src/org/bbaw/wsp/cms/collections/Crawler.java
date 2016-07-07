@@ -111,6 +111,8 @@ public class Crawler {
   
   private boolean isAllowed(String urlStr) throws ApplicationException {
     boolean isAllowed = true;
+    if (urlStr == null || urlStr.isEmpty())
+      return false;
     try {
       URL url = null;
       try {
