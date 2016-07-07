@@ -21,7 +21,7 @@ public class Util {
 
   public Date toDate(String xsDateStr) throws ApplicationException {
     Date retDate = null;
-    if (xsDateStr == null || xsDateStr.equals("0") || xsDateStr.equals("00") || xsDateStr.equals("000") || xsDateStr.equals("0000"))
+    if (xsDateStr == null || xsDateStr.startsWith("0000-"))
       return null;
     try {
       DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
