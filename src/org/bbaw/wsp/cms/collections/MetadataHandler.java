@@ -746,6 +746,7 @@ public class MetadataHandler {
     rdfStrBuilder.append("   xmlns:dcterms=\"http://purl.org/dc/terms/\" \n");
     rdfStrBuilder.append("   xmlns:gnd=\"http://d-nb.info/standards/elementset/gnd#\" \n");
     rdfStrBuilder.append("   xmlns:ore=\"http://www.openarchives.org/ore/terms/\" \n"); 
+    rdfStrBuilder.append("   xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" \n"); 
     rdfStrBuilder.append(">\n");
     return rdfStrBuilder.toString();    
   }
