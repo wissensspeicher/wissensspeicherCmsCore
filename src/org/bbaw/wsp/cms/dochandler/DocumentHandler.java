@@ -31,7 +31,6 @@ import net.sf.saxon.trans.XPathException;
 import org.apache.log4j.Logger;
 import org.apache.commons.io.FileUtils;
 import org.bbaw.wsp.cms.collections.Collection;
-import org.bbaw.wsp.cms.collections.CollectionManager;
 import org.bbaw.wsp.cms.collections.CollectionReader;
 import org.bbaw.wsp.cms.dochandler.parser.document.IDocument;
 import org.bbaw.wsp.cms.dochandler.parser.text.parser.DocumentParser;
@@ -199,18 +198,6 @@ public class DocumentHandler {
     } catch (IOException e) {
       throw new ApplicationException(e);
     }
-  }
-  
-  private void delete(String docIdentifier, MetadataRecord mdRecord) throws ApplicationException {
-    if (docIdentifier == null || docIdentifier.trim().equals(""))
-      throw new ApplicationException("Your document identifier is empty. Please specify a document identifier for your document.");
-    String docDirStr = getDocDir(docIdentifier);
-    File docDir = new File(docDirStr);
-    // perform operation on file system
-    FileUtils.deleteQuietly(docDir);
-    // perform operation on Lucene
-    IndexHandler indexHandler = IndexHandler.getInstance();
-    indexHandler.deleteDocument(mdRecord);
   }
   
   public void deleteCollection(String collectionId) throws ApplicationException {
