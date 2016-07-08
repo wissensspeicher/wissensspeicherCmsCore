@@ -50,13 +50,13 @@ public class ProjectManager {
           projects = pm.getProjects(projectIds);
         }
         if (operation.equals("update") && projects != null) {
-          pm.update(projects);
+          pm.update(projects, null);
         } else if (operation.equals("harvest") && projects != null) {
-          pm.harvest(projects);
+          pm.harvest(projects, null);
         } else if (operation.equals("annotate") && projects != null) {
-          pm.annotate(projects);
+          pm.annotate(projects, null);
         } else if (operation.equals("index") && projects != null) {
-          pm.index(projects);
+          pm.index(projects, null);
         } else if (operation.equals("delete") && projects != null) {
           pm.delete(projects);
         } else if (operation.equals("updateCycle")) {
@@ -132,30 +132,31 @@ public class ProjectManager {
   
   public void createBaseProjects() throws ApplicationException {
     ArrayList<Collection> projects = collectionReader.getBaseProjects();
-    update(projects);
+    update(projects, null);
   }
   
   public void updateCycle() throws ApplicationException {
     ArrayList<Collection> projects = collectionReader.updateCycleProjects();
-    update(projects);
+    String[] options = {"dbType:crawl"};
+    update(projects, options);
   }
   
   public void update(String projectIds) throws ApplicationException {
     ArrayList<Collection> projects = getProjects(projectIds);
-    update(projects);
+    update(projects, null);
   }
   
   public void update(String projectId1, String projectId2) throws ApplicationException {
     ArrayList<Collection> collections = collectionReader.getCollections(projectId1, projectId2);
-    update(collections);
+    update(collections, null);
   }
   
-  private void update(ArrayList<Collection> collections) throws ApplicationException {
+  public void update(ArrayList<Collection> collections, String[] options) throws ApplicationException {
     String projectIds = getIdsStr(collections);
     LOGGER.info("Update of project(s) (\"" + projectIds + "\") into data directory: " + Constants.getInstance().getDataDir());
-    harvest(collections);
-    annotate(collections);
-    index(collections);
+    harvest(collections, options);
+    annotate(collections, options);
+    index(collections, options);
     Date now = new Date();
     collectionReader.setConfigFilesLastModified(collections, now);
     setStatusModified(now);  
@@ -164,26 +165,27 @@ public class ProjectManager {
   
   public void harvest(String projectIds) throws ApplicationException {
     ArrayList<Collection> projects = getProjects(projectIds);
-    harvest(projects);
+    harvest(projects, null);
   }
   
   public void harvest(String projectId1, String projectId2) throws ApplicationException {
     ArrayList<Collection> collections = collectionReader.getCollections(projectId1, projectId2);
-    harvest(collections);
+    harvest(collections, null);
   }
   
-  private void harvest(ArrayList<Collection> collections) throws ApplicationException {
+  private void harvest(ArrayList<Collection> collections, String[] options) throws ApplicationException {
     String projectIds = getIdsStr(collections);
     LOGGER.info("Harvest of project(s) (\"" + projectIds + "\") into data directory: " + Constants.getInstance().getHarvestDir());
     for (int i=0; i<collections.size(); i++) {
       Collection collection = collections.get(i);
-      harvest(collection);
+      harvest(collection, options);
     }
     LOGGER.info("Harvest finished");
   }
 
-  private void harvest(Collection collection) throws ApplicationException {
+  private void harvest(Collection collection, String[] options) throws ApplicationException {
     harvester = Harvester.getInstance();
+    harvester.setOptions(options);
     harvester.harvest(collection);
     Date now = new Date();
     String projectId = collection.getId();
@@ -192,26 +194,27 @@ public class ProjectManager {
   
   public void annotate(String projectIds) throws ApplicationException {
     ArrayList<Collection> projects = getProjects(projectIds);
-    annotate(projects);
+    annotate(projects, null);
   }
   
   public void annotate(String projectId1, String projectId2) throws ApplicationException {
     ArrayList<Collection> collections = collectionReader.getCollections(projectId1, projectId2);
-    annotate(collections);
+    annotate(collections, null);
   }
   
-  private void annotate(ArrayList<Collection> collections) throws ApplicationException {
+  private void annotate(ArrayList<Collection> collections, String[] options) throws ApplicationException {
     String projectIds = getIdsStr(collections);
     LOGGER.info("Annotate project(s) (\"" + projectIds + "\") into data directory: " + Constants.getInstance().getAnnotationsDir());
     for (int i=0; i<collections.size(); i++) {
       Collection collection = collections.get(i);
-      annotate(collection);
+      annotate(collection, options);
     }
     LOGGER.info("Annotate finished");
   }
 
-  private void annotate(Collection collection) throws ApplicationException {
+  private void annotate(Collection collection, String[] options) throws ApplicationException {
     annotator = Annotator.getInstance();
+    annotator.setOptions(options);
     annotator.annotate(collection);
     Date now = new Date();
     String projectId = collection.getId();
@@ -220,33 +223,33 @@ public class ProjectManager {
   
   public void index(String projectIds) throws ApplicationException {
     ArrayList<Collection> projects = getProjects(projectIds);
-    index(projects);
+    index(projects, null);
   }
   
   public void index(String[] projectIds) throws ApplicationException {
     ArrayList<Collection> collections = collectionReader.getCollections(projectIds);
-    index(collections);
+    index(collections, null);
   }
   
   public void index(String projectId1, String projectId2) throws ApplicationException {
     ArrayList<Collection> collections = collectionReader.getCollections(projectId1, projectId2);
-    index(collections);
+    index(collections, null);
   }
   
-  private void index(ArrayList<Collection> collections) throws ApplicationException {
+  private void index(ArrayList<Collection> collections, String[] options) throws ApplicationException {
     String projectIds = getIdsStr(collections);
     LOGGER.info("Index project(s) (\"" + projectIds + "\") into data directory: " + Constants.getInstance().getIndexDir());
     for (int i=0; i<collections.size(); i++) {
       Collection collection = collections.get(i);
-      index(collection);
+      index(collection, options);
     }
     indexer.reopenIndexHandler();  // TODO done only because taxonomxReader does not work if something is changed in lucene
     LOGGER.info("Index finished");
   }
 
-  private void index(Collection collection) throws ApplicationException {
+  private void index(Collection collection, String[] options) throws ApplicationException {
     indexer = LocalIndexer.getInstance();
-    indexer.delete(collection);
+    indexer.setOptions(options);
     indexer.index(collection);
     Date now = new Date();
     String projectId = collection.getId();
@@ -305,6 +308,7 @@ public class ProjectManager {
     }
     return ids;
   }
+  
   public void writeOaiProviderFiles(Collection collection) throws ApplicationException {
     int counter = 0;
     String projectId = collection.getId();

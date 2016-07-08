@@ -37,15 +37,13 @@ import net.sf.saxon.s9api.XdmValue;
 
 public class Harvester {
   private static Logger LOGGER = Logger.getLogger(Harvester.class);
-  private static Harvester harvester;
+  private String[] options;
   private MetadataHandler metadataHandler;
   private String harvestDir;
   
   public static Harvester getInstance() throws ApplicationException {
-    if(harvester == null) {
-      harvester = new Harvester();
-      harvester.init();
-    }
+    Harvester harvester = new Harvester();
+    harvester.init();
     return harvester;
   }
   
@@ -54,13 +52,28 @@ public class Harvester {
     harvestDir = Constants.getInstance().getHarvestDir();
   }
   
+  public void setOptions(String[] options) {
+    this.options = options;
+  }
+  
+  private boolean dbMatchesOptions(String dbType) {
+    boolean dbMatchesOptions = true;
+    if (options != null && dbType != null && options.length == 1 && options[0].equals("dbType:crawl") && ! dbType.equals("crawl"))
+      dbMatchesOptions = false;
+    return dbMatchesOptions;
+  }
+  
   public void harvest(Collection collection) throws ApplicationException {
     try {
       int counter = 0;
       String collId = collection.getId();
       LOGGER.info("Harvest collection: " + collId + " ...");
       String harvestCollectionDirStr = harvestDir + "/" + collection.getId();
-      delete(collection); // removes the harvest directory
+      if (options != null && options.length == 1 && options[0].equals("dbType:crawl")) {
+        // nothing when only the crawl db should be updated
+      } else {
+        delete(collection); // remove the harvest directory
+      }
       ArrayList<MetadataRecord> mdRecords = metadataHandler.getMetadataRecords(collection, true);
       if (mdRecords != null) {
         ArrayList<MetadataRecord> harvestedResourcesRecords = harvestResources(collection, null, mdRecords); // download resources and save metadata and fulltext fields
@@ -105,6 +118,8 @@ public class Harvester {
   private int harvestDB(Collection collection, Database db) throws ApplicationException {
     int countHarvest = 0;
     String dbType = db.getType();
+    if (! dbMatchesOptions(dbType))
+      return countHarvest; // nothing when dbType != "crawl"
     if (dbType != null && (dbType.equals("eXist") || dbType.equals("crawl") || dbType.equals("oai"))) {
       // download records and save them in RDF-file as records
       LOGGER.info("Harvest metadata records (" + collection.getId() + ", " + db.getName() + ", " + db.getType() + ") ...");

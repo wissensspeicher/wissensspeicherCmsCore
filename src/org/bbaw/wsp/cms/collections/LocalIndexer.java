@@ -11,18 +11,16 @@ import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 
 public class LocalIndexer {
   private static Logger LOGGER = Logger.getLogger(LocalIndexer.class);
-  private static LocalIndexer indexer;
   private static int COMMIT_INTERVAL_DB = 1000;
+  private String[] options;
   private MetadataHandler metadataHandler;
   private Harvester harvester;
   private Annotator annotator;
   private IndexHandler indexHandler;
   
   public static LocalIndexer getInstance() throws ApplicationException {
-    if(indexer == null) {
-      indexer = new LocalIndexer();
-      indexer.init();
-    }
+    LocalIndexer  indexer = new LocalIndexer();
+    indexer.init();
     return indexer;
   }
   
@@ -31,6 +29,17 @@ public class LocalIndexer {
     harvester = Harvester.getInstance();
     annotator = Annotator.getInstance();
     indexHandler = IndexHandler.getInstance();
+  }
+  
+  public void setOptions(String[] options) {
+    this.options = options;
+  }
+  
+  private boolean dbMatchesOptions(String dbType) {
+    boolean dbMatchesOptions = true;
+    if (options != null && dbType != null && options.length == 1 && options[0].equals("dbType:crawl") && ! dbType.equals("crawl"))
+      dbMatchesOptions = false;
+    return dbMatchesOptions;
   }
   
   public void reopenIndexHandler() throws ApplicationException {
@@ -42,6 +51,15 @@ public class LocalIndexer {
     int counter = 0;
     String collId = collection.getId();
     LOGGER.info("Index project: " + collId + " ...");
+    if (options != null && options.length == 1 && options[0].equals("dbType:crawl")) {
+      ArrayList<Database> crawlDBs = collection.getCrawlDatabases();
+      for (int i=0; i<crawlDBs.size(); i++) {
+        Database crawlDB = crawlDBs.get(i);
+        delete(collection, crawlDB); // delete the crawl db from index
+      }
+    } else {
+      delete(collection); // delete the whole collection from index
+    }
     ArrayList<MetadataRecord> mdRecords = annotator.getMetadataRecordsByRecordsFile(collection);
     if (mdRecords != null) {
       counter = counter + mdRecords.size();
@@ -52,23 +70,28 @@ public class LocalIndexer {
       for (int i=0; i<collectionDBs.size(); i++) {
         Database db = collectionDBs.get(i);
         String dbType = db.getType();
-        if (dbType != null && (dbType.equals("crawl") || dbType.equals("eXist") || dbType.equals("oai"))) {
-          ArrayList<MetadataRecord> dbMdRecords = annotator.getMetadataRecordsByRecordsFile(collection, db);
-          if (dbMdRecords != null) {
-            counter = counter + dbMdRecords.size();
-            index(collection, db, dbMdRecords, false);
-          }
-        } else {
-          File[] rdfDbResourcesFiles = metadataHandler.getRdfDbResourcesFiles(collection, db);
-          if (rdfDbResourcesFiles != null && rdfDbResourcesFiles.length > 0) {
-            // add the database records of each database of each database file
-            for (int j = 0; j < rdfDbResourcesFiles.length; j++) {
-              File rdfDbResourcesFile = rdfDbResourcesFiles[j];
-              LOGGER.info("Index database records from file: " + rdfDbResourcesFile);
-              ArrayList<MetadataRecord> dbMdRecords = metadataHandler.getMetadataRecordsByRdfFile(collection, rdfDbResourcesFile, db, false);
-              if (dbMdRecords != null) {
-                counter = counter + dbMdRecords.size();
-                index(collection, db, dbMdRecords, true);
+        boolean indexDB = true;
+        if (! dbMatchesOptions(dbType))
+          indexDB = false; // nothing when dbType != "crawl"
+        if (indexDB) {
+          if (dbType != null && (dbType.equals("crawl") || dbType.equals("eXist") || dbType.equals("oai"))) {
+            ArrayList<MetadataRecord> dbMdRecords = annotator.getMetadataRecordsByRecordsFile(collection, db);
+            if (dbMdRecords != null) {
+              counter = counter + dbMdRecords.size();
+              index(collection, db, dbMdRecords, false);
+            }
+          } else {
+            File[] rdfDbResourcesFiles = metadataHandler.getRdfDbResourcesFiles(collection, db);
+            if (rdfDbResourcesFiles != null && rdfDbResourcesFiles.length > 0) {
+              // add the database records of each database of each database file
+              for (int j = 0; j < rdfDbResourcesFiles.length; j++) {
+                File rdfDbResourcesFile = rdfDbResourcesFiles[j];
+                LOGGER.info("Index database records from file: " + rdfDbResourcesFile);
+                ArrayList<MetadataRecord> dbMdRecords = metadataHandler.getMetadataRecordsByRdfFile(collection, rdfDbResourcesFile, db, false);
+                if (dbMdRecords != null) {
+                  counter = counter + dbMdRecords.size();
+                  index(collection, db, dbMdRecords, true);
+                }
               }
             }
           }
@@ -117,5 +140,10 @@ public class LocalIndexer {
     String collectionId = collection.getId();
     int countDeletedDocs = indexHandler.deleteCollection(collectionId);
     LOGGER.info(countDeletedDocs + " records in project: \"" + collectionId + "\" successfully deleted from index");
+  }
+
+  public void delete(Collection collection, Database db) throws ApplicationException {
+    int countDeletedDocs = indexHandler.deleteCollectionDBByType(collection.getName(), db.getType());
+    LOGGER.info(countDeletedDocs + " records in project database: \"" + collection.getId() + ", " + db.getName() + "\" successfully deleted from index");
   }
 }

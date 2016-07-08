@@ -17,16 +17,14 @@ import de.mpg.mpiwg.berlin.mpdl.util.StringUtils;
 
 public class Annotator {
   private static Logger LOGGER = Logger.getLogger(Annotator.class);
-  private static Annotator annotator;
+  private String[] options;
   private MetadataHandler metadataHandler;
   private Harvester harvester;
   private String annotationDir;
   
   public static Annotator getInstance() throws ApplicationException {
-    if(annotator == null) {
-      annotator = new Annotator();
-      annotator.init();
-    }
+    Annotator  annotator = new Annotator();
+    annotator.init();
     return annotator;
   }
   
@@ -36,12 +34,27 @@ public class Annotator {
     annotationDir = Constants.getInstance().getAnnotationsDir();
   }
   
+  public void setOptions(String[] options) {
+    this.options = options;
+  }
+  
+  private boolean dbMatchesOptions(String dbType) {
+    boolean dbMatchesOptions = true;
+    if (options != null && dbType != null && options.length == 1 && options[0].equals("dbType:crawl") && ! dbType.equals("crawl"))
+      dbMatchesOptions = false;
+    return dbMatchesOptions;
+  }
+  
   public void annotate(Collection collection) throws ApplicationException {
     int counter = 0;
     String collId = collection.getId();
     LOGGER.info("Annotate collection: " + collId + " ...");
-    File annoationCollectionDir = new File(annotationDir + "/" + collection.getId());
-    FileUtils.deleteQuietly(annoationCollectionDir);
+    if (options != null && options.length == 1 && options[0].equals("dbType:crawl")) {
+      // nothing when only the crawl db should be updated
+    } else {
+      File annoationCollectionDir = new File(annotationDir + "/" + collection.getId());
+      FileUtils.deleteQuietly(annoationCollectionDir);
+    }
     ArrayList<MetadataRecord> mdRecords = harvester.getMetadataRecordsByRecordsFile(collection);
     if (mdRecords != null) {
       counter = counter + mdRecords.size();
@@ -52,7 +65,10 @@ public class Annotator {
       for (int i=0; i<collectionDBs.size(); i++) {
         Database collectionDB = collectionDBs.get(i);
         String dbType = collectionDB.getType();
-        if (dbType != null && (dbType.equals("crawl") || dbType.equals("eXist") || dbType.equals("oai"))) {
+        boolean annotateDB = dbType != null && (dbType.equals("crawl") || dbType.equals("eXist") || dbType.equals("oai"));
+        if (! dbMatchesOptions(dbType))
+          annotateDB = false; // nothing when dbType != "crawl"
+        if (annotateDB) {
           ArrayList<MetadataRecord> dbMdRecords = harvester.getMetadataRecordsByRecordsFile(collection, collectionDB);
           if (dbMdRecords != null) {
             counter = counter + dbMdRecords.size();
