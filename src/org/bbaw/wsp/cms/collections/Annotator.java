@@ -92,12 +92,20 @@ public class Annotator {
   
   public ArrayList<MetadataRecord> getMetadataRecordsByRecordsFile(Collection collection) throws ApplicationException {
     File recordsFile = new File(annotationDir + "/" + collection.getId() + "/metadata/records/" + collection.getId() + ".xml");
+    if (! recordsFile.exists()) {
+      String harvestDir = Constants.getInstance().getHarvestDir();
+      recordsFile = new File(harvestDir + "/" + collection.getId() + "/metadata/records/" + collection.getId() + ".xml");
+    }
     ArrayList<MetadataRecord> mdRecords = metadataHandler.getMetadataRecordsByRecordsFile(recordsFile);
     return mdRecords;
   }
 
   public ArrayList<MetadataRecord> getMetadataRecordsByRecordsFile(Collection collection, Database db) throws ApplicationException {
     File dbRecordsFile = new File(annotationDir + "/" + collection.getId() + "/metadata/records/" + collection.getId() + "-" + db.getName() + "-1.xml");
+    if (! dbRecordsFile.exists()) {
+      String harvestDir = Constants.getInstance().getHarvestDir();
+      dbRecordsFile = new File(harvestDir + "/" + collection.getId() + "/metadata/records/" + collection.getId() + ".xml");
+    }
     ArrayList<MetadataRecord> mdRecords = metadataHandler.getMetadataRecordsByRecordsFile(dbRecordsFile);
     return mdRecords;
   }
