@@ -66,7 +66,7 @@ public class MetadataRecord implements Cloneable, Serializable {
   private String content; // original text content of the resources file (without xml tags)
   private Hashtable<String, XQuery> xQueries; // dynamic xQueries of xml resources (with name, code, result)
   private String realDocUrl; // e.g. the URL to the eDoc (not the index.html)
-  private String system; // e.g. "eXist" or "dbRecord" or "oai" or "oai-dbrecord" or "crawl" 
+  private String system; // "crawl", "eXist" or "dbRecord" (for dbType: mysql, postgres and for dbName jdg) or "oaiRecord" (for oai databases: dta, edoc) 
   
   private static Hashtable<String, String> notOutputFields = new Hashtable<String, String>();
   static {

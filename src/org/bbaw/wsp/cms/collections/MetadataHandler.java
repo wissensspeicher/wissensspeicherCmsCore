@@ -912,7 +912,7 @@ public class MetadataHandler {
     }
     String type = xQueryEvaluator.evaluateAsString(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dc:type/text()");
     if (type != null)
-      mdRecord.setSystem(type);  // e.g. "eXist" or "dbRecord" or "oai" or "oai-dbrecord" or "crawl" 
+      mdRecord.setSystem(type);  // e.g. "crawl", "eXist" or "dbRecord" (for dbType: mysql, postgres and for dbName jdg) or "oaiRecord" (for oai databases: dta, edoc)  
     XdmValue xmdValueAuthors = xQueryEvaluator.evaluate(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dc:creator");
     if (xmdValueAuthors != null && xmdValueAuthors.size() > 0) {
       XdmSequenceIterator xmdValueAuthorsIterator = xmdValueAuthors.iterator();
