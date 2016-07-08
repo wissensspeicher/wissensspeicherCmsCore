@@ -65,6 +65,19 @@ public class Collection {
     this.databases = databases;
   }
 
+  public ArrayList<Database> getCrawlDatabases() {
+    ArrayList<Database> crawlDBs = new ArrayList<Database>();
+    if (databases != null) {
+      for (int i=0; i<databases.size(); i++) {
+        Database db = databases.get(i);
+        String dbType = db.getType();
+        if (dbType != null && dbType.equals("crawl"))
+          crawlDBs.add(db);
+      }
+    }
+    return crawlDBs;
+  }
+  
   public void setName(String name) {
     this.name = name;
   }
