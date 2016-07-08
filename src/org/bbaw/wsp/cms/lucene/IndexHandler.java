@@ -742,18 +742,6 @@ public class IndexHandler {
     }
   }
 
-  public void deleteDocument(MetadataRecord mdRecord) throws ApplicationException {
-    deleteDocumentLocal(mdRecord);
-    commit();
-  }
-
-  public int deleteCollection(String collectionName) throws ApplicationException {
-    int countDeletedDocs = -1;
-    countDeletedDocs = deleteCollectionLocal(collectionName);
-    commit();
-    return countDeletedDocs;
-  }
-
   public TSTLookup getSuggester() throws ApplicationException {
     // one time init of the suggester, if it is null (needs ca. 2 sec. for 3 Mio. token)
     if (suggester == null) {
@@ -780,7 +768,7 @@ public class IndexHandler {
     }
   }
 
-  private int deleteCollectionLocal(String collectionName) throws ApplicationException {
+  public int deleteCollection(String collectionName) throws ApplicationException {
     int countDeletedDocs = -1;
     try {
       String queryDocumentsByCollectionName = "collectionNames:" + collectionName;
@@ -808,6 +796,24 @@ public class IndexHandler {
           documentsIndexWriter.deleteDocuments(termCollectionName);
         }
       }
+      commit();
+    } catch (Exception e) {
+      throw new ApplicationException(e);
+    }
+    return countDeletedDocs;
+  }
+
+  public int deleteCollectionDBByType(String collectionName, String dbType) throws ApplicationException {
+    int countDeletedDocs = 0;
+    try {
+      TermQuery termQueryCollectionName = new TermQuery(new Term("collectionNames", collectionName));
+      TermQuery termQuerySystemType = new TermQuery(new Term("systemType", dbType));
+      ArrayList<TermQuery> deleteQueryTerms = new ArrayList<TermQuery>();
+      deleteQueryTerms.add(termQueryCollectionName);
+      deleteQueryTerms.add(termQuerySystemType);      
+      Query deleteQuery = buildBooleanShouldQuery(deleteQueryTerms);
+      documentsIndexWriter.deleteDocuments(deleteQuery);
+      commit();
     } catch (Exception e) {
       throw new ApplicationException(e);
     }
