@@ -136,9 +136,10 @@ public class ProjectManager {
   }
   
   public void updateCycle() throws ApplicationException {
-    ArrayList<Collection> projects = collectionReader.updateCycleProjects();
+    ArrayList<Collection> projects = collectionReader.getUpdateCycleProjects();
     String[] options = {"dbType:crawl"};
     update(projects, options);
+    collectionReader.updateCycleProjects();
   }
   
   public void update(String projectIds) throws ApplicationException {
@@ -158,7 +159,6 @@ public class ProjectManager {
     annotate(collections, options);
     index(collections, options);
     Date now = new Date();
-    collectionReader.setConfigFilesLastModified(collections, now);
     setStatusModified(now);  
     LOGGER.info("Update finished");
   }
