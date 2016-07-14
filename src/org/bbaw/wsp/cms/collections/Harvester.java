@@ -157,7 +157,6 @@ public class Harvester {
         LOGGER.error("Harvest of metadata record failed:");
         e.printStackTrace();
       }
-      break;  // TODO
     }
     // write metadata file: xml
     String collId = collection.getId();
