@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Hashtable;
 
+import org.apache.log4j.Logger;
 import org.apache.tika.Tika;
 import org.bbaw.wsp.cms.document.MetadataRecord;
 import org.jsoup.Jsoup;
@@ -21,6 +22,7 @@ import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 public class Crawler {
   private static int SOCKET_TIMEOUT = 10 * 1000;
   private static Integer DEFAULT_MAX_DEPTH = 3;
+  private static Logger LOGGER = Logger.getLogger(Crawler.class);
   private String rootUrlStr;
   private Integer maxDepth;
   private ArrayList<String> excludes;
@@ -85,6 +87,7 @@ public class Crawler {
                 try {
                   mimeType = detect(url);
                 } catch (Exception e) {
+                  LOGGER.error("Crawler: " + url);
                   e.printStackTrace();
                 }
                 if (mimeType != null) {
@@ -129,6 +132,9 @@ public class Crawler {
       } catch (URISyntaxException e) {
         return false;
       }
+      boolean isMultimedia = isMultimedia(urlStr);
+      if (isMultimedia)
+        return false;
       String fragment = uri.getFragment();  // the "#" part of the uri
       if (fragment != null)
         return false;
@@ -150,6 +156,13 @@ public class Crawler {
       throw new ApplicationException(e);
     }
     return isAllowed;
+  }
+  
+  private boolean isMultimedia(String urlStr) throws ApplicationException {
+    if (urlStr.endsWith(".jpg") || urlStr.endsWith(".jpeg") || urlStr.endsWith(".png") || urlStr.endsWith(".gif") || urlStr.endsWith(".mp3") || urlStr.endsWith(".mov") || urlStr.endsWith(".mp4") || urlStr.endsWith(".mp4"))
+      return true;
+    else 
+      return false;
   }
   
   private boolean isHtml(String mimeType) throws ApplicationException {
