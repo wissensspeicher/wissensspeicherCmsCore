@@ -49,14 +49,19 @@ public class ProjectManager {
           projectIds = args[1];
           projects = pm.getProjects(projectIds);
         }
+        String[] options = null;
+        if (args.length > 2) {
+          options = new String[1];
+          options[0] = args[2];
+        }
         if (operation.equals("update") && projects != null) {
-          pm.update(projects, null);
+          pm.update(projects, options);
         } else if (operation.equals("harvest") && projects != null) {
-          pm.harvest(projects, null);
+          pm.harvest(projects, options);
         } else if (operation.equals("annotate") && projects != null) {
-          pm.annotate(projects, null);
+          pm.annotate(projects, options);
         } else if (operation.equals("index") && projects != null) {
-          pm.index(projects, null);
+          pm.index(projects, options);
         } else if (operation.equals("delete") && projects != null) {
           pm.delete(projects);
         } else if (operation.equals("updateCycle")) {

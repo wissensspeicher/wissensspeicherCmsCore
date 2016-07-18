@@ -38,36 +38,39 @@ public class Annotator {
     this.options = options;
   }
   
-  private boolean dbMatchesOptions(String dbType) {
-    boolean dbMatchesOptions = true;
-    if (options != null && dbType != null && options.length == 1 && options[0].equals("dbType:crawl") && ! dbType.equals("crawl"))
-      dbMatchesOptions = false;
-    return dbMatchesOptions;
-  }
-  
   public void annotate(Collection collection) throws ApplicationException {
     int counter = 0;
     String collId = collection.getId();
     LOGGER.info("Annotate collection: " + collId + " ...");
     if (options != null && options.length == 1 && options[0].equals("dbType:crawl")) {
       // nothing when only the crawl db should be updated
+    } else if (options != null && options.length == 1 && options[0].startsWith("dbName:")) {
+      // nothing when only one db should be updated
     } else {
       File annoationCollectionDir = new File(annotationDir + "/" + collection.getId());
       FileUtils.deleteQuietly(annoationCollectionDir);
     }
-    ArrayList<MetadataRecord> mdRecords = harvester.getMetadataRecordsByRecordsFile(collection);
-    if (mdRecords != null) {
-      counter = counter + mdRecords.size();
-      annotate(collection, null, mdRecords);
+    if (options != null && options.length == 1 && options[0].startsWith("dbName:")) {
+      // if db is specified: do not index the collection rdf records
+    } else {
+      ArrayList<MetadataRecord> mdRecords = harvester.getMetadataRecordsByRecordsFile(collection);
+      if (mdRecords != null) {
+        counter = counter + mdRecords.size();
+        annotate(collection, null, mdRecords);
+      }
     }
     ArrayList<Database> collectionDBs = collection.getDatabases();
+    if (options != null && options.length == 1 && options[0].equals("dbType:crawl")) {
+      collectionDBs = collection.getDatabasesByType("crawl");
+    } else if (options != null && options.length == 1 && options[0].startsWith("dbName:")) {
+      String dbName = options[0].replaceAll("dbName:", "");
+      collectionDBs = collection.getDatabasesByName(dbName);
+    }
     if (collectionDBs != null) {
       for (int i=0; i<collectionDBs.size(); i++) {
         Database collectionDB = collectionDBs.get(i);
         String dbType = collectionDB.getType();
         boolean annotateDB = dbType != null && (dbType.equals("crawl") || dbType.equals("eXist") || dbType.equals("oai"));
-        if (! dbMatchesOptions(dbType))
-          annotateDB = false; // nothing when dbType != "crawl"
         if (annotateDB) {
           ArrayList<MetadataRecord> dbMdRecords = harvester.getMetadataRecordsByRecordsFile(collection, collectionDB);
           if (dbMdRecords != null) {

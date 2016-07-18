@@ -35,13 +35,6 @@ public class LocalIndexer {
     this.options = options;
   }
   
-  private boolean dbMatchesOptions(String dbType) {
-    boolean dbMatchesOptions = true;
-    if (options != null && dbType != null && options.length == 1 && options[0].equals("dbType:crawl") && ! dbType.equals("crawl"))
-      dbMatchesOptions = false;
-    return dbMatchesOptions;
-  }
-  
   public void reopenIndexHandler() throws ApplicationException {
     indexHandler.end();
     indexHandler.init();
@@ -51,47 +44,51 @@ public class LocalIndexer {
     int counter = 0;
     String collId = collection.getId();
     LOGGER.info("Index project: " + collId + " ...");
+    ArrayList<Database> collectionDBs = collection.getDatabases();
     if (options != null && options.length == 1 && options[0].equals("dbType:crawl")) {
-      ArrayList<Database> crawlDBs = collection.getCrawlDatabases();
-      for (int i=0; i<crawlDBs.size(); i++) {
-        Database crawlDB = crawlDBs.get(i);
-        delete(collection, crawlDB); // delete the crawl db from index
+      collectionDBs = collection.getDatabasesByType("crawl");
+    } else if (options != null && options.length == 1 && options[0].startsWith("dbName:")) {
+      String dbName = options[0].replaceAll("dbName:", "");
+      collectionDBs = collection.getDatabasesByName(dbName);
+    }
+    if (options != null && options.length == 1 && (options[0].equals("dbType:crawl") || options[0].startsWith("dbName:"))) {
+      for (int i=0; i<collectionDBs.size(); i++) {
+        Database db = collectionDBs.get(i);
+        delete(collection, db); // delete the specified db from index
       }
     } else {
       delete(collection); // delete the whole collection from index
     }
-    ArrayList<MetadataRecord> mdRecords = annotator.getMetadataRecordsByRecordsFile(collection);
-    if (mdRecords != null) {
-      counter = counter + mdRecords.size();
-      index(collection, null, mdRecords, false);
+    if (options != null && options.length == 1 && options[0].startsWith("dbName:")) {
+      // if db is specified: do not index the collection rdf records
+    } else {
+      ArrayList<MetadataRecord> mdRecords = annotator.getMetadataRecordsByRecordsFile(collection);
+      if (mdRecords != null) {
+        counter = counter + mdRecords.size();
+        index(collection, null, mdRecords, false);
+      }
     }
-    ArrayList<Database> collectionDBs = collection.getDatabases();
     if (collectionDBs != null) {
       for (int i=0; i<collectionDBs.size(); i++) {
         Database db = collectionDBs.get(i);
         String dbType = db.getType();
-        boolean indexDB = true;
-        if (! dbMatchesOptions(dbType))
-          indexDB = false; // nothing when dbType != "crawl"
-        if (indexDB) {
-          if (dbType != null && (dbType.equals("crawl") || dbType.equals("eXist") || dbType.equals("oai"))) {
-            ArrayList<MetadataRecord> dbMdRecords = annotator.getMetadataRecordsByRecordsFile(collection, db);
-            if (dbMdRecords != null) {
-              counter = counter + dbMdRecords.size();
-              index(collection, db, dbMdRecords, false);
-            }
-          } else {
-            File[] rdfDbResourcesFiles = metadataHandler.getRdfDbResourcesFiles(collection, db);
-            if (rdfDbResourcesFiles != null && rdfDbResourcesFiles.length > 0) {
-              // add the database records of each database of each database file
-              for (int j = 0; j < rdfDbResourcesFiles.length; j++) {
-                File rdfDbResourcesFile = rdfDbResourcesFiles[j];
-                LOGGER.info("Index database records from file: " + rdfDbResourcesFile);
-                ArrayList<MetadataRecord> dbMdRecords = metadataHandler.getMetadataRecordsByRdfFile(collection, rdfDbResourcesFile, db, false);
-                if (dbMdRecords != null) {
-                  counter = counter + dbMdRecords.size();
-                  index(collection, db, dbMdRecords, true);
-                }
+        if (dbType != null && (dbType.equals("crawl") || dbType.equals("eXist") || dbType.equals("oai"))) {
+          ArrayList<MetadataRecord> dbMdRecords = annotator.getMetadataRecordsByRecordsFile(collection, db);
+          if (dbMdRecords != null) {
+            counter = counter + dbMdRecords.size();
+            index(collection, db, dbMdRecords, false);
+          }
+        } else {
+          File[] rdfDbResourcesFiles = metadataHandler.getRdfDbResourcesFiles(collection, db);
+          if (rdfDbResourcesFiles != null && rdfDbResourcesFiles.length > 0) {
+            // add the database records of each database of each database file
+            for (int j = 0; j < rdfDbResourcesFiles.length; j++) {
+              File rdfDbResourcesFile = rdfDbResourcesFiles[j];
+              LOGGER.info("Index database records from file: " + rdfDbResourcesFile);
+              ArrayList<MetadataRecord> dbMdRecords = metadataHandler.getMetadataRecordsByRdfFile(collection, rdfDbResourcesFile, db, false);
+              if (dbMdRecords != null) {
+                counter = counter + dbMdRecords.size();
+                index(collection, db, dbMdRecords, true);
               }
             }
           }
@@ -108,6 +105,11 @@ public class LocalIndexer {
       indexHandler.setCommitInterval(COMMIT_INTERVAL_DB);
     for (int i=0; i<mdRecords.size(); i++) {
       MetadataRecord mdRecord = mdRecords.get(i);
+      // set db name of mdRecord
+      String dbName = collId + "Records";
+      if (db != null)
+        dbName = db.getName();
+      mdRecord.setDatabaseName(dbName);
       // fetch fulltextFields
       String content = harvester.getFulltext("content", mdRecord);
       mdRecord.setContent(content); // is used in query highlighting function
@@ -143,7 +145,7 @@ public class LocalIndexer {
   }
 
   public void delete(Collection collection, Database db) throws ApplicationException {
-    int countDeletedDocs = indexHandler.deleteCollectionDBByType(collection.getName(), db.getType());
+    int countDeletedDocs = indexHandler.deleteCollectionDBByName(db.getName());
     LOGGER.info(countDeletedDocs + " records in project database: \"" + collection.getId() + ", " + db.getName() + "\" successfully deleted from index");
   }
 }

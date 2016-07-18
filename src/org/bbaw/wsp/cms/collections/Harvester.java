@@ -56,13 +56,6 @@ public class Harvester {
     this.options = options;
   }
   
-  private boolean dbMatchesOptions(String dbType) {
-    boolean dbMatchesOptions = true;
-    if (options != null && dbType != null && options.length == 1 && options[0].equals("dbType:crawl") && ! dbType.equals("crawl"))
-      dbMatchesOptions = false;
-    return dbMatchesOptions;
-  }
-  
   public void harvest(Collection collection) throws ApplicationException {
     try {
       int counter = 0;
@@ -71,15 +64,27 @@ public class Harvester {
       String harvestCollectionDirStr = harvestDir + "/" + collection.getId();
       if (options != null && options.length == 1 && options[0].equals("dbType:crawl")) {
         // nothing when only the crawl db should be updated
+      } else if (options != null && options.length == 1 && options[0].startsWith("dbName:")) {
+        // nothing when only one db should be updated
       } else {
         delete(collection); // remove the harvest directory
       }
-      ArrayList<MetadataRecord> mdRecords = metadataHandler.getMetadataRecords(collection, true);
-      if (mdRecords != null) {
-        ArrayList<MetadataRecord> harvestedResourcesRecords = harvestResources(collection, null, mdRecords); // download resources and save metadata and fulltext fields
-        counter = counter + harvestedResourcesRecords.size();
+      if (options != null && options.length == 1 && options[0].startsWith("dbName:")) {
+        // if db is specified: do not index the collection rdf records
+      } else {
+        ArrayList<MetadataRecord> mdRecords = metadataHandler.getMetadataRecords(collection, true);
+        if (mdRecords != null) {
+          ArrayList<MetadataRecord> harvestedResourcesRecords = harvestResources(collection, null, mdRecords); // download resources and save metadata and fulltext fields
+          counter = counter + harvestedResourcesRecords.size();
+        }
       }
       ArrayList<Database> collectionDBs = collection.getDatabases();
+      if (options != null && options.length == 1 && options[0].equals("dbType:crawl")) {
+        collectionDBs = collection.getDatabasesByType("crawl");
+      } else if (options != null && options.length == 1 && options[0].startsWith("dbName:")) {
+        String dbName = options[0].replaceAll("dbName:", "");
+        collectionDBs = collection.getDatabasesByName(dbName);
+      }
       if (collectionDBs != null) {
         for (int i=0; i<collectionDBs.size(); i++) {
           Database collectionDB = collectionDBs.get(i);
@@ -118,8 +123,6 @@ public class Harvester {
   private int harvestDB(Collection collection, Database db) throws ApplicationException {
     int countHarvest = 0;
     String dbType = db.getType();
-    if (! dbMatchesOptions(dbType))
-      return countHarvest; // nothing when dbType != "crawl"
     if (dbType != null && (dbType.equals("eXist") || dbType.equals("crawl") || dbType.equals("oai"))) {
       // download records and save them in RDF-file as records
       LOGGER.info("Harvest metadata records (" + collection.getId() + ", " + db.getName() + ", " + db.getType() + ") ...");
