@@ -24,6 +24,7 @@ public class MetadataRecord implements Cloneable, Serializable {
   private String uri; // global id: resource URI (uniform resource identifier), download URL: e.g. http://www.deutschestextarchiv.de/book/download_xml/albertinus_landtstoertzer01_1615
   private String webUri; // global web url, e.g. "http://telota.bbaw.de/ig/IG I3 501" or "http://edoc.bbaw.de/volltexte/2011/1769/" or "http://www.deutschestextarchiv.de/albertinus_landtstoertzer01_1615"
   private String collectionNames; // project name(s), e.g. "edoc" or "ig", at this time only exactly one collection name is supported
+  private String databaseName; // database name, e.g. dta, dtaOai
   private String schemaName; // schema name of resource, e.g. TEI, html, quran etc.
   private String language; // language: ISO 639-3 with 3 characters, e.g. "ger" or "eng"
   private String creator; // author(s) of resource
@@ -104,6 +105,14 @@ public class MetadataRecord implements Cloneable, Serializable {
 
   public void setSystem(String system) {
     this.system = system;
+  }
+
+  public String getDatabaseName() {
+    return databaseName;
+  }
+
+  public void setDatabaseName(String databaseName) {
+    this.databaseName = databaseName;
   }
 
   public boolean isDirectory() {
