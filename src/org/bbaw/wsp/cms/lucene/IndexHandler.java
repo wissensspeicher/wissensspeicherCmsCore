@@ -249,6 +249,15 @@ public class IndexHandler {
         FacetField facetField = new FacetField("collectionNames", collectionNames);
         doc.add(facetField);
       }
+      String dbName = mdRecord.getDatabaseName();
+      if (dbName != null) {
+        Field databaseNameField = new Field("databaseName", dbName, ftStoredAnalyzed);
+        if (collectionNames.equals("jdg"))
+          databaseNameField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
+        doc.add(databaseNameField);
+        FacetField facetField = new FacetField("databaseName", dbName);
+        doc.add(facetField);
+      }
       String author = mdRecord.getCreator();
       if (author != null) {
         String[] authors = author.split(";");
@@ -774,7 +783,7 @@ public class IndexHandler {
       String queryDocumentsByCollectionName = "collectionNames:" + collectionName;
       if (collectionName.equals("edoc"))
         queryDocumentsByCollectionName = "webUri:*edoc.bbaw.de*";
-      Hits collectionDocHits = queryDocuments("lucene", queryDocumentsByCollectionName, null, null, null, 0, 100000, false, false);
+      Hits collectionDocHits = queryDocuments("lucene", queryDocumentsByCollectionName, null, null, null, 0, 9, false, false);
       ArrayList<org.bbaw.wsp.cms.document.Document> collectionDocs = collectionDocHits.getHits();
       if (collectionDocs != null) {
         countDeletedDocs = collectionDocHits.getSize();
@@ -803,6 +812,20 @@ public class IndexHandler {
     return countDeletedDocs;
   }
 
+  public int deleteCollectionDBByName(String databaseName) throws ApplicationException {
+    String queryDatabaseName = "databaseName:" + databaseName;
+    Hits databaseDocHits = queryDocuments("lucene", queryDatabaseName, null, null, null, 0, 9, false, false);
+    int countDeletedDocs = databaseDocHits.getSize();
+    try {
+      Term termDatabaseName = new Term("databaseName", databaseName);
+      documentsIndexWriter.deleteDocuments(termDatabaseName);
+      commit();
+    } catch (Exception e) {
+      throw new ApplicationException(e);
+    }
+    return countDeletedDocs;
+  }
+
   public int deleteCollectionDBByType(String collectionName, String dbType) throws ApplicationException {
     int countDeletedDocs = 0;
     try {
@@ -812,6 +835,8 @@ public class IndexHandler {
       deleteQueryTerms.add(termQueryCollectionName);
       deleteQueryTerms.add(termQuerySystemType);      
       Query deleteQuery = buildBooleanShouldQuery(deleteQueryTerms);
+      Hits docHits = queryDocuments("lucene", deleteQuery.toString(), null, null, null, 0, 9, false, false);
+      countDeletedDocs = docHits.getSize();
       documentsIndexWriter.deleteDocuments(deleteQuery);
       commit();
     } catch (Exception e) {
