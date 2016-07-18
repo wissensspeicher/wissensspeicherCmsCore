@@ -46,6 +46,9 @@ public class Crawler {
   
   public ArrayList<MetadataRecord> crawl() throws ApplicationException {
     ArrayList<MetadataRecord> mdRecords = getMdRecords(rootUrlStr, 1);
+    MetadataRecord rootMdRecord = getNewMdRecord(rootUrlStr);
+    if (rootMdRecord != null)
+      mdRecords.add(0, rootMdRecord);
     Comparator<MetadataRecord> mdRecordComparator = new Comparator<MetadataRecord>() {
       public int compare(MetadataRecord m1, MetadataRecord m2) {
         return m1.getWebUri().compareTo(m2.getWebUri());
@@ -81,17 +84,8 @@ public class Crawler {
               MetadataRecord mdRecord = urlsHashtable.get(urlStr);
               String mimeType = null;
               if (mdRecord == null) {
-                MetadataRecord newMdRecord = new MetadataRecord();
-                newMdRecord.setWebUri(urlStr);
-                URL url = new URL(urlStr);
-                try {
-                  mimeType = detect(url);
-                } catch (Exception e) {
-                  LOGGER.error("Crawler: " + url);
-                  e.printStackTrace();
-                }
-                if (mimeType != null) {
-                  newMdRecord.setType(mimeType);
+                MetadataRecord newMdRecord = getNewMdRecord(urlStr);
+                if (newMdRecord != null) {
                   urlsHashtable.put(urlStr, newMdRecord);
                   retMdRecords.add(newMdRecord);
                 }
@@ -110,6 +104,22 @@ public class Crawler {
       throw new ApplicationException(e);
     }
     return retMdRecords;
+  }
+
+  private MetadataRecord getNewMdRecord(String urlStr) {
+    MetadataRecord newMdRecord = null;
+    URL url = null;
+    try {
+      url = new URL(urlStr);
+      String mimeType = detect(url);
+      newMdRecord = new MetadataRecord();
+      newMdRecord.setWebUri(urlStr);
+      newMdRecord.setType(mimeType);
+    } catch (Exception e) {
+      LOGGER.error("Crawler: " + url);
+      e.printStackTrace();
+    }
+    return newMdRecord;
   }
   
   private boolean isAllowed(String urlStr) throws ApplicationException {
