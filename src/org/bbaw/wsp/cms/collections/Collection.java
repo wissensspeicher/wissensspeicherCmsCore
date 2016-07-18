@@ -65,17 +65,30 @@ public class Collection {
     this.databases = databases;
   }
 
-  public ArrayList<Database> getCrawlDatabases() {
-    ArrayList<Database> crawlDBs = new ArrayList<Database>();
+  public ArrayList<Database> getDatabasesByType(String dbType) {
+    ArrayList<Database> retDBs = new ArrayList<Database>();
     if (databases != null) {
       for (int i=0; i<databases.size(); i++) {
         Database db = databases.get(i);
-        String dbType = db.getType();
-        if (dbType != null && dbType.equals("crawl"))
-          crawlDBs.add(db);
+        String type = db.getType();
+        if (type != null && type.equals(dbType))
+          retDBs.add(db);
       }
     }
-    return crawlDBs;
+    return retDBs;
+  }
+  
+  public ArrayList<Database> getDatabasesByName(String dbName) {
+    ArrayList<Database> retDBs = new ArrayList<Database>();
+    if (databases != null) {
+      for (int i=0; i<databases.size(); i++) {
+        Database db = databases.get(i);
+        String name = db.getName();
+        if (name != null && name.equals(dbName))
+          retDBs.add(db);
+      }
+    }
+    return retDBs;
   }
   
   public void setName(String name) {
