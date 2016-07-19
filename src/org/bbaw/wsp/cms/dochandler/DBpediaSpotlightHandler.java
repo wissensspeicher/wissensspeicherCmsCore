@@ -406,7 +406,7 @@ public class DBpediaSpotlightHandler {
         }
       }
     } catch (Exception e) {
-      System.out.println("Error in DBpedia spotlight resource: " + docId + ": " + testStr);
+      LOGGER.error("Error in DBpedia spotlight resource: " + docId + ": " + testStr + " (" + e.toString() + ")");
     }
     Annotation annotation = null;
     if (resources != null && ! resources.isEmpty()) {
