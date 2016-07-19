@@ -144,7 +144,6 @@ public class ProjectManager {
     ArrayList<Collection> projects = collectionReader.getUpdateCycleProjects();
     String[] options = {"dbType:crawl"};
     update(projects, options);
-    collectionReader.updateCycleProjects();
   }
   
   public void update(String projectIds) throws ApplicationException {
@@ -192,6 +191,7 @@ public class ProjectManager {
     harvester = Harvester.getInstance();
     harvester.setOptions(options);
     harvester.harvest(collection);
+    collectionReader.updateProject(collection);  // make config files up to date 
     Date now = new Date();
     String projectId = collection.getId();
     setStatusModified(projectId, "harvest", now);  

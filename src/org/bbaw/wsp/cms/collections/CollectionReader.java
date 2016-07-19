@@ -492,16 +492,13 @@ public class CollectionReader {
     }
 	}
 	
-  public void setConfigFilesLastModified(ArrayList<Collection> collections, Date lastModified) throws ApplicationException {
-    for (int i=0; i<collections.size(); i++) {
-      Collection collection = collections.get(i);
-      String projectId = collection.getId();
-      File metadataProjectFileRdf = new File(Constants.getInstance().getMetadataDir() + "/resources/" + projectId + ".rdf");
-      long now = lastModified.getTime();
-      metadataProjectFileRdf.setLastModified(now);
-      File metadataProjectFileXml = new File(Constants.getInstance().getMetadataDir() + "/resources-addinfo/" + projectId + ".xml");
-      metadataProjectFileXml.setLastModified(now);
-    }
+  private void setConfigFilesLastModified(Collection project, Date lastModified) throws ApplicationException {
+    String projectId = project.getId();
+    File metadataProjectFileRdf = new File(Constants.getInstance().getMetadataDir() + "/resources/" + projectId + ".rdf");
+    long now = lastModified.getTime();
+    metadataProjectFileRdf.setLastModified(now);
+    File metadataProjectFileXml = new File(Constants.getInstance().getMetadataDir() + "/resources-addinfo/" + projectId + ".xml");
+    metadataProjectFileXml.setLastModified(now);
   }
   
   public ArrayList<Collection> getUpdateCycleProjects() throws ApplicationException {
@@ -525,33 +522,25 @@ public class CollectionReader {
       return updateCycleProjects;
   }
   
-	public void updateCycleProjects() throws ApplicationException {
-    ArrayList<Collection> updateCycleProjects = new ArrayList<Collection>();
-    ArrayList<Collection> collections = getCollections();
-    for (int i=0; i<collections.size(); i++) {
-      Collection collection = collections.get(i);
-      boolean isBaseProject = isBaseProject(collection);
-      boolean isAkademiepublikationsProject = isAkademiepublikationsProject(collection);
-      if (! isBaseProject && ! isAkademiepublikationsProject) {
-        boolean projectFileRdfChanged = projectFileChangedByChecksum(collection, "rdf");
-        boolean projectFileXmlChanged = projectFileChangedByChecksum(collection, "xml");
-        if (projectFileRdfChanged || projectFileXmlChanged) {
-          if (projectFileRdfChanged) {
-            updateUserMetadata(collection, "rdf");
-          }
-          if (projectFileXmlChanged) {
-            updateUserMetadata(collection, "xml");
-          }
-          updateCycleProjects.add(collection);
-        } else if (updateCycleReached(collection)) {
-          updateCycleProjects.add(collection);
+  public void updateProject(Collection project) throws ApplicationException {
+    boolean isBaseProject = isBaseProject(project);
+    boolean isAkademiepublikationsProject = isAkademiepublikationsProject(project);
+    if (! isBaseProject && ! isAkademiepublikationsProject) {
+      boolean projectFileRdfChanged = projectFileChangedByChecksum(project, "rdf");
+      boolean projectFileXmlChanged = projectFileChangedByChecksum(project, "xml");
+      if (projectFileRdfChanged || projectFileXmlChanged) {
+        if (projectFileRdfChanged) {
+          updateUserMetadata(project, "rdf");
+        }
+        if (projectFileXmlChanged) {
+          updateUserMetadata(project, "xml");
         }
       }
+      Date now = new Date();
+      collectionReader.setConfigFilesLastModified(project, now);
     }
-    Date now = new Date();
-    collectionReader.setConfigFilesLastModified(updateCycleProjects, now);
-	}
-	
+  }
+  
 	private void updateUserMetadata(Collection collection, String type) throws ApplicationException {
 	  try {
       String projectFilePath = getProjectFilePath(collection, type);
