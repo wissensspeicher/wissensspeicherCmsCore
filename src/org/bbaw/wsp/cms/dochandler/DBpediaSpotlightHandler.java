@@ -325,6 +325,8 @@ public class DBpediaSpotlightHandler {
     String spotlightAnnotationXmlStr = performPostRequest("annotate", params, "text/xml");
     spotlightAnnotationXmlStr = spotlightAnnotationXmlStr.replaceAll("&#[0-9];", "XXXX"); // ersetze Steuerzeichen durch X (dann bleibt die Länge erhalten)
     spotlightAnnotationXmlStr = spotlightAnnotationXmlStr.replaceAll("&#1[0-9];|&#2[0-9];|&#30;|&#31;|&#32;", "XXXXX"); // ersetze Steuerzeichen durch X (dann bleibt die Länge erhalten)
+    spotlightAnnotationXmlStr = spotlightAnnotationXmlStr.replaceAll("&#[0-9][0-9][0-9][0-9][0-9];", "XXXXXXXX"); // ersetze Steuerzeichen durch X (dann bleibt die Länge erhalten)
+    spotlightAnnotationXmlStr = spotlightAnnotationXmlStr.replaceAll("&#[0-9][0-9][0-9][0-9][0-9][0-9];", "XXXXXXXXX"); // ersetze Steuerzeichen durch X (dann bleibt die Länge erhalten)
     List<DBpediaResource> resources = null; 
     try {
       XdmValue xmdValueResources = xQueryEvaluator.evaluate(spotlightAnnotationXmlStr, "//Resource[not(@URI = preceding::Resource/@URI)]");  // no double resources
