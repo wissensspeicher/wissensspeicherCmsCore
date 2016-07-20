@@ -618,9 +618,6 @@ public class MetadataRecord implements Cloneable, Serializable {
   }
   
   public void setAllNull() {
-    persons = null;
-    places = null;
-    entities = null;
     entitiesDetails = null;
     tokenOrig = null; 
     tokenReg = null; 
