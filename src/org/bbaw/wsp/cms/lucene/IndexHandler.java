@@ -783,7 +783,7 @@ public class IndexHandler {
       String queryDocumentsByCollectionName = "collectionNames:" + collectionName;
       if (collectionName.equals("edoc"))
         queryDocumentsByCollectionName = "webUri:*edoc.bbaw.de*";
-      Hits collectionDocHits = queryDocuments("lucene", queryDocumentsByCollectionName, null, null, null, 0, 9, false, false);
+      Hits collectionDocHits = queryDocuments("lucene", queryDocumentsByCollectionName, null, null, null, 0, 9, false, false); // TODO FastTaxonomyFacetCounts verursacht bei vielen deletes ArrayIndexOutOfBoundsException: 600000
       ArrayList<org.bbaw.wsp.cms.document.Document> collectionDocs = collectionDocHits.getHits();
       if (collectionDocs != null) {
         countDeletedDocs = collectionDocHits.getSize();
@@ -807,6 +807,8 @@ public class IndexHandler {
       }
       commit();
     } catch (Exception e) {
+      LOGGER.error("Lucene IndexHandler: deleteCollection: " + e.getMessage());
+      e.printStackTrace();
       throw new ApplicationException(e);
     }
     return countDeletedDocs;
@@ -821,6 +823,8 @@ public class IndexHandler {
       documentsIndexWriter.deleteDocuments(termDatabaseName);
       commit();
     } catch (Exception e) {
+      LOGGER.error("Lucene IndexHandler: deleteCollectionDBByName: " + e.getMessage());
+      e.printStackTrace();
       throw new ApplicationException(e);
     }
     return countDeletedDocs;
@@ -840,6 +844,8 @@ public class IndexHandler {
       documentsIndexWriter.deleteDocuments(deleteQuery);
       commit();
     } catch (Exception e) {
+      LOGGER.error("Lucene IndexHandler: deleteCollectionDBByType: " + e.getMessage());
+      e.printStackTrace();
       throw new ApplicationException(e);
     }
     return countDeletedDocs;
@@ -1015,6 +1021,8 @@ public class IndexHandler {
         }
       }
     } catch (Exception e) {
+      LOGGER.error("Lucene IndexHandler: queryDocuments: " + e.getMessage());
+      e.printStackTrace();
       throw new ApplicationException(e);
     } finally {
       try {
