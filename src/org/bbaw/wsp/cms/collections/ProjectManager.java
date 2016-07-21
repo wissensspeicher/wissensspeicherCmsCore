@@ -34,7 +34,7 @@ public class ProjectManager {
   private MetadataHandler metadataHandler;
   private Harvester harvester;
   private Annotator annotator;
-  private LocalIndexer indexer;
+  private Indexer indexer;
   private File statusFile;
   private Document statusFileDoc;
   
@@ -253,7 +253,7 @@ public class ProjectManager {
   }
 
   private void index(Collection collection, String[] options) throws ApplicationException {
-    indexer = LocalIndexer.getInstance();
+    indexer = Indexer.getInstance();
     indexer.setOptions(options);
     indexer.index(collection);
     Date now = new Date();
@@ -291,7 +291,7 @@ public class ProjectManager {
     harvester.delete(collection);
     annotator = Annotator.getInstance();
     annotator.delete(collection);
-    indexer = LocalIndexer.getInstance();
+    indexer = Indexer.getInstance();
     indexer.delete(collection);
     deleteConfiguration(collection);
   }
