@@ -14,7 +14,7 @@ import java.util.Date;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
-import org.bbaw.wsp.cms.dochandler.DocumentTokenizer;
+import org.bbaw.wsp.cms.collections.DocumentTokenizer;
 import org.bbaw.wsp.cms.dochandler.parser.document.IDocument;
 import org.bbaw.wsp.cms.dochandler.parser.text.parser.DocumentParser;
 import org.bbaw.wsp.cms.document.MetadataRecord;
