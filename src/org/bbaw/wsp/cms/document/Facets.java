@@ -11,7 +11,7 @@ import org.apache.lucene.facet.FacetResult;
 import org.apache.lucene.facet.LabelAndValue;
 import org.bbaw.wsp.cms.collections.Collection;
 import org.bbaw.wsp.cms.collections.CollectionReader;
-import org.bbaw.wsp.cms.dochandler.DBpediaSpotlightHandler;
+import org.bbaw.wsp.cms.collections.DBpediaSpotlightHandler;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
