@@ -1155,6 +1155,10 @@ public class IndexHandler {
       IndexableField collectionNamesField = doc.getField("collectionNames");
       if (collectionNamesField != null)
         collectionNames = collectionNamesField.stringValue();
+      String databaseName = null;
+      IndexableField databaseNameField = doc.getField("databaseName");
+      if (databaseNameField != null)
+        databaseName = databaseNameField.stringValue();
       String author = null;
       IndexableField authorField = doc.getField("author");
       if (authorField != null)
@@ -1271,6 +1275,7 @@ public class IndexHandler {
       mdRecord.setWebUri(webUri);
       mdRecord.setIdentifier(identifier);
       mdRecord.setCollectionNames(collectionNames);
+      mdRecord.setDatabaseName(databaseName);
       mdRecord.setCreator(author);
       mdRecord.setCreatorDetails(authorDetails);
       mdRecord.setTitle(title);
@@ -2135,6 +2140,7 @@ public class IndexHandler {
     fields.add("uri");
     fields.add("webUri");
     fields.add("collectionNames");
+    fields.add("databaseName");
     fields.add("author");
     fields.add("authorDetails");
     fields.add("title");
