@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
-import org.bbaw.wsp.cms.dochandler.DBpediaSpotlightHandler;
+import org.bbaw.wsp.cms.collections.DBpediaSpotlightHandler;
 import org.bbaw.wsp.cms.document.Annotation;
 import org.bbaw.wsp.cms.document.DBpediaResource;
 import org.bbaw.wsp.cms.document.MetadataRecord;
