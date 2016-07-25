@@ -362,6 +362,7 @@ public class DBpediaSpotlightHandler {
         ArrayList<DBpediaResource> mainResources = new ArrayList<DBpediaResource>();
         int counter = 0;
         int counterNotDouble = 0;
+        // TODO if more than 50 resources have similarityScore = 1.0 then they are not sorted correctly (cause of the SimilarityComparatorDESC): add all resources with similarityScore of 1.0 (not only the 50 first)
         while (counterNotDouble < count && counter < spotlightResourcesElems.size()) {
           Element spotlightResourceElem = spotlightResourcesElems.get(counter);
           counter++;
@@ -449,7 +450,92 @@ public class DBpediaSpotlightHandler {
     return annotation;
   }
   
-  public Annotation annotateOld(Collection collection, String docId, String textInput, String confidence, int count) throws ApplicationException {
+  public boolean isProper(String surfaceForm) {
+    boolean isProper = true;
+    if (surfaceForm.length() <= 2)
+      isProper = false;
+    else if (surfaceForm.contains("-") || surfaceForm.contains(".."))
+      isProper = false;
+    else if (germanStopwords.get(surfaceForm) != null)
+      isProper = false;
+    return isProper;
+  }
+  
+  public boolean isProperUri(String dbPediaUri) {
+    if (germanStopwords.get(dbPediaUri) != null)
+      return false;
+    boolean isProper = true;
+    Enumeration<String> stopwordExpressions = germanStopwordExpressions.keys();
+    String stopwordExpressionOR = "";
+    while (stopwordExpressions.hasMoreElements()) {
+      String stopwordExpression = stopwordExpressions.nextElement();
+      stopwordExpressionOR = stopwordExpressionOR + stopwordExpression + "|";
+    }
+    if (! stopwordExpressionOR.isEmpty() && dbPediaUri.matches(stopwordExpressionOR)) {
+      isProper = false;
+    }
+    return isProper;
+  }
+
+  private String performPostRequest(String serviceName, NameValuePair[] params, String outputFormat) throws ApplicationException {
+    String resultStr = null;
+    String urlStr = SERVICE + "/" + serviceName;
+    try {
+      PostMethod method = new PostMethod(urlStr);
+      method.getParams().setContentCharset("utf-8");
+      for (int i=0; i<params.length; i++) {
+        NameValuePair param = params[i];
+        method.addParameter(param);
+      }
+      method.addRequestHeader("Accept", outputFormat);  // values are: text/xml, application/json, text/html, application/xhtml+xml (RDFa: see http://www.w3.org/2007/08/pyRdfa/)
+      httpClient.executeMethod(method);
+      InputStream is = method.getResponseBodyAsStream();
+      BufferedInputStream in = new BufferedInputStream(is);
+      resultStr = IOUtils.toString(in, "utf-8");
+      in.close();
+      method.releaseConnection();
+    } catch (HttpException e) {
+      LOGGER.info("DBpediaSpotlightHandler: Service annotate: " + urlStr + " not reachable");
+      throw new ApplicationException(e);
+    } catch (IOException e) {
+      LOGGER.info("DBpediaSpotlightHandler: Service annotate: " + urlStr + " not reachable");
+      throw new ApplicationException(e);
+    } catch (Exception e) {
+      LOGGER.info("DBpediaSpotlightHandler: Service annotate: " + urlStr + " not reachable");
+      throw new ApplicationException(e);
+    }
+    return resultStr;
+  }
+
+  private String performPostRequest(HttpClient httpClient, String serviceName, NameValuePair[] params, String outputFormat) throws ApplicationException {
+    String resultStr = null;
+    String urlStr = SERVICE + "/" + serviceName;
+    try {
+      PostMethod method = new PostMethod(urlStr);
+      method.getParams().setContentCharset("utf-8");
+      for (int i=0; i<params.length; i++) {
+        NameValuePair param = params[i];
+        method.addParameter(param);
+      }
+      method.addRequestHeader("Accept", outputFormat);  // values are: text/xml, application/json, text/html, application/xhtml+xml (RDFa: see http://www.w3.org/2007/08/pyRdfa/)
+      httpClient.executeMethod(method);
+      InputStream is = method.getResponseBodyAsStream();
+      BufferedInputStream in = new BufferedInputStream(is);
+      resultStr = IOUtils.toString(in, "utf-8");
+      in.close();
+      method.releaseConnection();
+    } catch (HttpException e) {
+      throw new ApplicationException(e);
+    } catch (IOException e) {
+      throw new ApplicationException(e);
+    } catch (Exception e) {
+      throw new ApplicationException(e);
+    }
+    return resultStr;
+  }
+
+
+  private Annotation annotateOld(Collection collection, String docId, String textInput, String confidence, int count) throws ApplicationException {
     if (! serviceAnnotateReachable) {
       String urlStr = SERVICE + "/" + "annotate";
       LOGGER.info("DBpediaSpotlightHandler: Service: " + urlStr + " not reachable");
@@ -569,87 +655,6 @@ public class DBpediaSpotlightHandler {
     return annotation;
   }
 
-  public boolean isProper(String surfaceForm) {
-    boolean isProper = true;
-    if (surfaceForm.length() <= 2)
-      isProper = false;
-    else if (surfaceForm.contains("-") || surfaceForm.contains(".."))
-      isProper = false;
-    else if (germanStopwords.get(surfaceForm) != null)
-      isProper = false;
-    return isProper;
-  }
-  
-  public boolean isProperUri(String dbPediaUri) {
-    if (germanStopwords.get(dbPediaUri) != null)
-      return false;
-    boolean isProper = true;
-    Enumeration<String> stopwordExpressions = germanStopwordExpressions.keys();
-    String stopwordExpressionOR = "";
-    while (stopwordExpressions.hasMoreElements()) {
-      String stopwordExpression = stopwordExpressions.nextElement();
-      stopwordExpressionOR = stopwordExpressionOR + stopwordExpression + "|";
-    }
-    if (! stopwordExpressionOR.isEmpty() && dbPediaUri.matches(stopwordExpressionOR)) {
-      isProper = false;
-    }
-    return isProper;
-  }
 
-  private String performPostRequest(String serviceName, NameValuePair[] params, String outputFormat) throws ApplicationException {
-    String resultStr = null;
-    String urlStr = SERVICE + "/" + serviceName;
-    try {
-      PostMethod method = new PostMethod(urlStr);
-      method.getParams().setContentCharset("utf-8");
-      for (int i=0; i<params.length; i++) {
-        NameValuePair param = params[i];
-        method.addParameter(param);
-      }
-      method.addRequestHeader("Accept", outputFormat);  // values are: text/xml, application/json, text/html, application/xhtml+xml (RDFa: see http://www.w3.org/2007/08/pyRdfa/)
-      httpClient.executeMethod(method);
-      InputStream is = method.getResponseBodyAsStream();
-      BufferedInputStream in = new BufferedInputStream(is);
-      resultStr = IOUtils.toString(in, "utf-8");
-      in.close();
-      method.releaseConnection();
-    } catch (HttpException e) {
-      LOGGER.info("DBpediaSpotlightHandler: Service annotate: " + urlStr + " not reachable");
-      throw new ApplicationException(e);
-    } catch (IOException e) {
-      LOGGER.info("DBpediaSpotlightHandler: Service annotate: " + urlStr + " not reachable");
-      throw new ApplicationException(e);
-    } catch (Exception e) {
-      LOGGER.info("DBpediaSpotlightHandler: Service annotate: " + urlStr + " not reachable");
-      throw new ApplicationException(e);
-    }
-    return resultStr;
-  }
 
-  private String performPostRequest(HttpClient httpClient, String serviceName, NameValuePair[] params, String outputFormat) throws ApplicationException {
-    String resultStr = null;
-    String urlStr = SERVICE + "/" + serviceName;
-    try {
-      PostMethod method = new PostMethod(urlStr);
-      method.getParams().setContentCharset("utf-8");
-      for (int i=0; i<params.length; i++) {
-        NameValuePair param = params[i];
-        method.addParameter(param);
-      }
-      method.addRequestHeader("Accept", outputFormat);  // values are: text/xml, application/json, text/html, application/xhtml+xml (RDFa: see http://www.w3.org/2007/08/pyRdfa/)
-      httpClient.executeMethod(method);
-      InputStream is = method.getResponseBodyAsStream();
-      BufferedInputStream in = new BufferedInputStream(is);
-      resultStr = IOUtils.toString(in, "utf-8");
-      in.close();
-      method.releaseConnection();
-    } catch (HttpException e) {
-      throw new ApplicationException(e);
-    } catch (IOException e) {
-      throw new ApplicationException(e);
-    } catch (Exception e) {
-      throw new ApplicationException(e);
-    }
-    return resultStr;
-  }
 }

@@ -2,7 +2,6 @@ package org.bbaw.wsp.cms.collections;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
@@ -172,9 +171,7 @@ public class Annotator {
       if (docContent == null && mdRecord.getDescription() != null && ! mdRecord.getDescription().isEmpty())
         docContent = mdRecord.getDescription();
       if (docContent != null) {
-        System.out.println("Annotate: Start: " + (new Date()));
         docContentAnnotation = dbPediaSpotlightHandler.annotate(collection, docId, docContent, "0.99", 50);
-        System.out.println("Annotate: End: " + (new Date()));
       }
       String docTitle = mdRecord.getTitle();
       if (docTitle != null)
