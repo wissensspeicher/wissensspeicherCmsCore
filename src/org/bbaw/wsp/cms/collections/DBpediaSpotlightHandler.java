@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
@@ -29,6 +30,10 @@ import org.bbaw.wsp.cms.collections.Collection;
 import org.bbaw.wsp.cms.document.Annotation;
 import org.bbaw.wsp.cms.document.DBpediaResource;
 import org.bbaw.wsp.cms.general.Constants;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 import de.mpg.mpiwg.berlin.mpdl.util.StringUtils;
@@ -56,6 +61,22 @@ public class DBpediaSpotlightHandler {
   private Hashtable<String, String> germanStopwordExpressions;
   private Hashtable<String, Integer> germanSupports;
 
+  public static Comparator<Element> SimilarityComparatorDESC = new Comparator<Element>() {
+    public int compare(Element e1, Element e2) {
+      String e1SimilarityScoreStr = e1.attr("similarityScore");
+      String e2SimilarityScoreStr = e2.attr("similarityScore");
+      if (e1SimilarityScoreStr == null && e2SimilarityScoreStr == null)
+        return 0;
+      if (e1SimilarityScoreStr == null)
+        return 1;
+      if (e2SimilarityScoreStr == null)
+        return -1;
+      Double e1SimilarityScore = Double.valueOf(e1SimilarityScoreStr);
+      Double e2SimilarityScore = Double.valueOf(e2SimilarityScoreStr);
+      return e2SimilarityScore.compareTo(e1SimilarityScore);
+    }
+  };
+  
   public static void main(String[] args) throws ApplicationException {
     try {
       DBpediaSpotlightHandler dbPediaSpotlightHandler = DBpediaSpotlightHandler.getSupportInstance();
@@ -307,6 +328,128 @@ public class DBpediaSpotlightHandler {
   }
 
   public Annotation annotate(Collection collection, String docId, String textInput, String confidence, int count) throws ApplicationException {
+    Annotation annotation = null;
+    if (! serviceAnnotateReachable) {
+      String urlStr = SERVICE + "/" + "annotate";
+      LOGGER.info("DBpediaSpotlightHandler: Service: " + urlStr + " not reachable");
+      return null;
+    }
+    String testStr = "";
+    String text = textInput.replaceAll("-[ \n]+|&#[0-9];|&#1[0-9];|&#2[0-9];|&#30;|&#31;|&#32;|\uffff", ""); // entferne Bindestriche vor Blank/Zeilenende und Steuerzeichen wie "&#0;"
+    text = text.replaceAll("\n", " "); // new lines durch blank ersetzen (da sonst das Steuerzeichen &#10; erzeugt wird)
+    NameValuePair textParam = new NameValuePair("text", text);
+    NameValuePair confidenceParam = new NameValuePair("confidence", confidence);
+    // NameValuePair spotterParam = new NameValuePair("spotter", "Default"); // other values: NESpotter, ...
+    // NameValuePair typesParam = new NameValuePair("types", "Person"); // Person, Organisation, Place (Category ??) Einschränkung liefert evtl. zu wenige Entitäten
+    // NameValuePair supportParam = new NameValuePair("support", "20"); // how many incoming links are on the DBpedia-Resource 
+    // NameValuePair whitelistSparqlParam = new NameValuePair("sparql", "select ...");
+    NameValuePair[] params = {textParam, confidenceParam};
+    String spotlightAnnotationXmlStr = performPostRequest("annotate", params, "text/xml");
+    spotlightAnnotationXmlStr = spotlightAnnotationXmlStr.replaceAll("&#[0-9];", "XXXX"); // ersetze Steuerzeichen durch X (dann bleibt die Länge erhalten)
+    spotlightAnnotationXmlStr = spotlightAnnotationXmlStr.replaceAll("&#1[0-9];|&#2[0-9];|&#30;|&#31;|&#32;", "XXXXX"); // ersetze Steuerzeichen durch X (dann bleibt die Länge erhalten)
+    spotlightAnnotationXmlStr = spotlightAnnotationXmlStr.replaceAll("&#[0-9][0-9][0-9][0-9][0-9];", "XXXXXXXX"); // ersetze Steuerzeichen durch X (dann bleibt die Länge erhalten)
+    spotlightAnnotationXmlStr = spotlightAnnotationXmlStr.replaceAll("&#[0-9][0-9][0-9][0-9][0-9][0-9];", "XXXXXXXXX"); // ersetze Steuerzeichen durch X (dann bleibt die Länge erhalten)
+    try {
+      Document spotlightAnnotationXmlDoc = Jsoup.parse(spotlightAnnotationXmlStr, "utf-8");
+      Elements spotlightResourcesElems = spotlightAnnotationXmlDoc.select("Resource");  // "//Resource[not(@URI = preceding::Resource/@URI)]"  // no double resources
+      if (spotlightResourcesElems != null) {
+        Element annotationTextElem = spotlightAnnotationXmlDoc.select("Annotation").first();
+        String annotationText = "";
+        if (annotationTextElem != null)
+          annotationText = annotationTextElem.attr("text");
+        Collections.sort(spotlightResourcesElems, SimilarityComparatorDESC);
+        Hashtable<String, DBpediaResource> mainResourcesHashtable = new Hashtable<String, DBpediaResource>();
+        ArrayList<DBpediaResource> mainResources = new ArrayList<DBpediaResource>();
+        int counter = 0;
+        int counterNotDouble = 0;
+        while (counterNotDouble < count && counter < spotlightResourcesElems.size()) {
+          Element spotlightResourceElem = spotlightResourcesElems.get(counter);
+          counter++;
+          testStr = spotlightResourceElem.outerHtml();
+          String uriStr = spotlightResourceElem.attr("URI"); 
+          String supportStr = spotlightResourceElem.attr("support"); 
+          String similarityStr = spotlightResourceElem.attr("similarityScore"); 
+          String typesStr = spotlightResourceElem.attr("types"); 
+          String surfaceFormStr = spotlightResourceElem.attr("surfaceForm"); 
+          int frequency = spotlightAnnotationXmlDoc.select("Resource[URI=" + uriStr).size();
+          int offset = Integer.valueOf(spotlightResourceElem.attr("offset"));
+          String surfaceFormContextStr = null;
+          if (offset < annotationText.length()) {
+            int leftContextBegin = offset - 20;
+            if (leftContextBegin < 0)
+              leftContextBegin = 0;
+            int rightContextEnd = offset + surfaceFormStr.length() + 20;
+            if (rightContextEnd > annotationText.length())
+              rightContextEnd = annotationText.length();
+            String surfaceFormLeftContextStr = annotationText.substring(leftContextBegin, offset); 
+            String surfaceFormRightContextStr = annotationText.substring(offset + surfaceFormStr.length(), rightContextEnd); 
+            surfaceFormContextStr = "(...) " + surfaceFormLeftContextStr + "||" + surfaceFormStr + "||" + surfaceFormRightContextStr + " (...)"; 
+          } 
+          DBpediaResource r = mainResourcesHashtable.get(uriStr);
+          if (r == null) {
+            r = new DBpediaResource();
+            r.setUri(uriStr);
+            DBpediaResource dbPediaResource = dbPediaResources.get(uriStr);
+            if (dbPediaResource != null) {
+              r.setName(dbPediaResource.getName());
+              r.setType(dbPediaResource.getType());
+              r.setGnd(dbPediaResource.getGnd());
+            } else {
+              int begin = uriStr.lastIndexOf("resource/") + 9;
+              if (begin != -1) {
+                String name = uriStr.substring(begin);
+                name = name.replaceAll("_", " ");
+                r.setName(name);
+              }
+            }
+            boolean isProper = isProper(surfaceFormStr) && isProperUri(uriStr);
+            if (supportStr != null && ! supportStr.isEmpty())
+              r.setSupport(new Integer(supportStr));
+            if (similarityStr != null && ! similarityStr.isEmpty())
+              r.setSimilarity(new Double(similarityStr));
+            String coverage = collection.getCoverage();
+            if (r.getType() == null) {
+              boolean isPresentOrganisationType = 
+                  typesStr.contains("DBpedia:Band") || typesStr.contains("Schema:MusicGroup") || 
+                  typesStr.contains("DBpedia:Broadcaster") || typesStr.contains("DBpedia:Company") ||
+                  typesStr.contains("DBpedia:SoccerClub") || typesStr.contains("DBpedia:PoliticalParty");
+              if (typesStr == null || typesStr.trim().isEmpty()) {
+                r.setType("concept");
+              } else if (typesStr.contains("Person") && ! isPresentOrganisationType && ! typesStr.contains("SocialPerson") && ! typesStr.contains("Organization")) {
+                r.setType("person");
+              } else if (isPresentOrganisationType) {
+                r.setType("organisation");
+                if (coverage != null && ! coverage.contains("Gegenwart")) // only add music bands and companies, if project is in "Gegenwart"
+                  isProper = false;
+              } else if (typesStr.contains("Organization") || typesStr.contains("Organisation")) {
+                r.setType("organisation");
+              } else if (typesStr.contains("Place")) {
+                r.setType("place");
+              } else {
+                r.setType("concept");
+              }
+            }
+            r.setFrequency(frequency);
+            r.setContext(surfaceFormContextStr);
+            if (isProper) {
+              mainResourcesHashtable.put(uriStr, r);
+              mainResources.add(r);
+              counterNotDouble++;
+            }
+          }
+        }
+        Collections.sort(mainResources, DBpediaResource.SimilarityComparatorDESC);
+        annotation = new Annotation();
+        annotation.setId(docId);
+        annotation.setResources(mainResources);
+      }      
+    } catch (Exception e) {
+      LOGGER.error("Error in DBpedia spotlight resource: " + docId + ": " + testStr + " (" + e.toString() + ")");
+    }
+    return annotation;
+  }
+  
+  public Annotation annotateOld(Collection collection, String docId, String textInput, String confidence, int count) throws ApplicationException {
     if (! serviceAnnotateReachable) {
       String urlStr = SERVICE + "/" + "annotate";
       LOGGER.info("DBpediaSpotlightHandler: Service: " + urlStr + " not reachable");
@@ -425,7 +568,7 @@ public class DBpediaSpotlightHandler {
     }
     return annotation;
   }
-  
+
   public boolean isProper(String surfaceForm) {
     boolean isProper = true;
     if (surfaceForm.length() <= 2)
