@@ -35,6 +35,10 @@ import org.bbaw.wsp.cms.document.SubjectHandler;
 import org.bbaw.wsp.cms.document.XQuery;
 import org.bbaw.wsp.cms.general.Constants;
 import org.bbaw.wsp.cms.util.Util;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 import de.mpg.mpiwg.berlin.mpdl.lt.general.Language;
@@ -182,22 +186,24 @@ public class MetadataHandler {
     ArrayList<MetadataRecord> crawledMdRecords = crawler.crawl();
     ArrayList<MetadataRecord> mdRecords = new ArrayList<MetadataRecord>();
     for (int i=0; i<crawledMdRecords.size(); i++) {
-      String crawlUrlStr = crawledMdRecords.get(i).getWebUri();
-      MetadataRecord crawledMdRecord = getNewMdRecord(crawlUrlStr); // with docId and webUri
-      crawledMdRecord.setCollectionNames(collectionId);
+      MetadataRecord crawledMdRecord = crawledMdRecords.get(i);
+      String crawlUrlStr = crawledMdRecord.getWebUri();
+      MetadataRecord newCrawledMdRecord = getNewMdRecord(crawlUrlStr); // with docId and webUri
+      newCrawledMdRecord.setCollectionNames(collectionId);
+      newCrawledMdRecord.setType(crawledMdRecord.getType());
       if (generateId) {
         maxIdcounter++;
-        crawledMdRecord.setId(maxIdcounter); // collections wide id
+        newCrawledMdRecord.setId(maxIdcounter); // collections wide id
       }
-      crawledMdRecord = createMainFieldsMetadataRecord(crawledMdRecord, collection, db);
-      crawledMdRecord.setLastModified(lastModified);
-      crawledMdRecord.setSystem("crawl");
+      newCrawledMdRecord = createMainFieldsMetadataRecord(newCrawledMdRecord, collection, db);
+      newCrawledMdRecord.setLastModified(lastModified);
+      newCrawledMdRecord.setSystem("crawl");
       String dbLanguage = db.getLanguage();
       if (dbLanguage != null)
-        crawledMdRecord.setLanguage(dbLanguage);
-      String mimeType = crawledMdRecord.getType();
+        newCrawledMdRecord.setLanguage(dbLanguage);
+      String mimeType = newCrawledMdRecord.getType();
       if (mimeType != null)
-        mdRecords.add(crawledMdRecord);
+        mdRecords.add(newCrawledMdRecord);
     }
     if (generateId) {
       pm.setStatusMaxId(maxIdcounter);
@@ -605,20 +611,17 @@ public class MetadataHandler {
     if (! recordsFile.exists())
       return null;
     try {
-      URL rdfRessourcesFileUrl = recordsFile.toURI().toURL();
-      XQueryEvaluator xQueryEvaluator = new XQueryEvaluator();
-      XdmValue xmdValueResources = xQueryEvaluator.evaluate(rdfRessourcesFileUrl, "/records/record");
-      XdmSequenceIterator xmdValueResourcesIterator = xmdValueResources.iterator();
-      if (xmdValueResources != null && xmdValueResources.size() > 0) {
+      Document recordsDoc = Jsoup.parse(recordsFile, "utf-8");
+      Elements records = recordsDoc.select("records > record");
+      if (records != null && !records.isEmpty()) {
         mdRecords = new ArrayList<MetadataRecord>();
-        while (xmdValueResourcesIterator.hasNext()) {
-          XdmItem xdmItemResource = xmdValueResourcesIterator.next();
-          String recordXmlString = xdmItemResource.toString();
-          MetadataRecord mdRecord = MetadataRecord.fromRecordXmlStr(xQueryEvaluator, recordXmlString);
+        for (int i=0; i<records.size(); i++) {
+          Element record = records.get(i);
+          MetadataRecord mdRecord = MetadataRecord.fromRecordElement(record);
           mdRecords.add(mdRecord);
         }
       }
-    } catch (MalformedURLException e) {
+    } catch (Exception e) {
       throw new ApplicationException(e);
     }
     return mdRecords;
@@ -769,6 +772,9 @@ public class MetadataHandler {
   
   private MetadataRecord createMainFieldsMetadataRecord(MetadataRecord mdRecord, Collection collection, Database db) throws ApplicationException {
     try {
+      boolean mimeTypeDetection = true;
+      if (db != null && db.getType() != null && db.getType().equals("crawl"))
+        mimeTypeDetection = false; // crawl db's have mimeTypeDetection already done
       Tika tika = new Tika();
       String webUriStr = mdRecord.getWebUri();
       String uriStr = mdRecord.getUri();
@@ -785,7 +791,9 @@ public class MetadataHandler {
         String mimeType = null;
         try {
           boolean isDbRecord = mdRecord.isDbRecord();
-          if (! isDbRecord) {
+          if (! mimeTypeDetection)
+            mimeType = mdRecord.getType();
+          if (! isDbRecord && mimeTypeDetection) {
             mimeType = tika.detect(uri); // much faster with tika
           }
           /* old code which is slow, when the files behind the url's are large 
@@ -821,13 +829,16 @@ public class MetadataHandler {
       String collectionId = collection.getId();
       String normalizedUriPath = normalize(uriPath);
       String docId = "/" + collectionId + normalizedUriPath;
-      String mimeType = getMimeType(docId);
-      if (mimeType == null) {  // last chance: try it with tika
-        try {
-          mimeType = tika.detect(uri);
-        } catch (IOException e) {
-          LOGGER.error("get mime type failed for: " + webUriStr);
-          e.printStackTrace();
+      String mimeType = null;
+      if (mimeTypeDetection) {
+        mimeType = getMimeType(docId);
+        if (mimeType == null) {  // last chance: try it with tika
+          try {
+            mimeType = tika.detect(uri);
+          } catch (IOException e) {
+            LOGGER.error("get mime type failed for: " + webUriStr);
+            e.printStackTrace();
+          }
         }
       }
       mdRecord.setDocId(docId);

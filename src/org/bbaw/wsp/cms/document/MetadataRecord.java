@@ -10,10 +10,10 @@ import java.util.Hashtable;
 import java.util.Locale;
 
 import org.bbaw.wsp.cms.collections.CollectionReader;
+import org.jsoup.nodes.Element;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 import de.mpg.mpiwg.berlin.mpdl.util.StringUtils;
-import de.mpg.mpiwg.berlin.mpdl.xml.xquery.XQueryEvaluator;
 
 public class MetadataRecord implements Cloneable, Serializable {
   private static final long serialVersionUID = 4711L;
@@ -519,7 +519,7 @@ public class MetadataRecord implements Cloneable, Serializable {
     return "MetadataRecord [docId=" + docId + ", identifier=" + identifier + ", uri=" + uri + ", webUri=" + webUri + ", collectionNames=" + collectionNames + ", schemaName=" + schemaName + ", language=" + language + ", creator=" + creator + ", title=" + title + ", publisher=" + publisher + ", date=" + date + ", description=" + description + ", subject=" + subject + ", contributor=" + contributor + ", coverage=" + coverage + ", ddc=" + ddc + ", swd=" + swd + ", persons=" + persons + ", places=" + places + ", type=" + type + ", rights=" + rights + ", license=" + license + ", accessRights=" + accessRights + ", lastModified=" + lastModified + ", encoding=" + encoding + ", pageCount=" + pageCount + ", urn=" + urn + ", documentType=" + documentType + ", isbn=" + isbn + ", creationDate=" + creationDate + ", publishingDate=" + publishingDate + ", inPublication=" + inPublication + ", tokenOrig=" + tokenOrig + ", tokenReg=" + tokenReg + ", tokenNorm=" + tokenNorm + ", tokenMorph=" + tokenMorph + ", contentXml=" + contentXml + ", content=" + content + ", xQueries=" + xQueries + ", realDocUrl=" + realDocUrl + "]";
   }
   
-  public static MetadataRecord fromRecordXmlStr(XQueryEvaluator xQueryEvaluator, String recordXmlString) throws ApplicationException {
+  public static MetadataRecord fromRecordElement(Element record) throws ApplicationException {
     MetadataRecord mdRecord = new MetadataRecord();
     try {
       Field[] fields = MetadataRecord.class.getDeclaredFields();
@@ -527,8 +527,9 @@ public class MetadataRecord implements Cloneable, Serializable {
         Field field = fields[i];
         String fieldName = field.getName();
         if (notOutputFields.get(fieldName) == null) {
-          Object fieldValue = xQueryEvaluator.evaluateAsString(recordXmlString, "/record/" + fieldName + "/text()");
-          if (fieldValue != null) {
+          Element fieldElem = record.select(fieldName).first();
+          if (fieldElem != null) {
+            Object fieldValue = fieldElem.text();
             Class<? extends Object> typeClass = field.getType();
             if (typeClass.getName().equals("java.lang.String")) {
               fieldValue = StringUtils.resolveXmlEntities((String) fieldValue);
