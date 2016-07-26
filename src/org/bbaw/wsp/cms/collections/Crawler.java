@@ -12,6 +12,7 @@ import java.util.Hashtable;
 import org.apache.log4j.Logger;
 import org.apache.tika.Tika;
 import org.bbaw.wsp.cms.document.MetadataRecord;
+import org.jsoup.Connection.Response;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -45,8 +46,9 @@ public class Crawler {
   }
   
   public ArrayList<MetadataRecord> crawl() throws ApplicationException {
-    ArrayList<MetadataRecord> mdRecords = getMdRecords(rootUrlStr, 1);
-    MetadataRecord rootMdRecord = getNewMdRecord(rootUrlStr);
+    getMdRecords(rootUrlStr, 1);
+    ArrayList<MetadataRecord> mdRecords = new ArrayList<MetadataRecord>(urlsHashtable.values());
+    MetadataRecord rootMdRecord = getNewMdRecord(null, rootUrlStr);
     if (rootMdRecord != null)
       mdRecords.add(0, rootMdRecord);
     Comparator<MetadataRecord> mdRecordComparator = new Comparator<MetadataRecord>() {
@@ -58,8 +60,7 @@ public class Crawler {
     return mdRecords;
   }
 
-  private ArrayList<MetadataRecord> getMdRecords(String startUrlStr, Integer depth) throws ApplicationException {
-    ArrayList<MetadataRecord> retMdRecords = new ArrayList<MetadataRecord>();
+  private void getMdRecords(String startUrlStr, Integer depth) throws ApplicationException {
     try {
       URL startUrl = new URL(startUrlStr);
       Document doc = null;
@@ -71,6 +72,7 @@ public class Crawler {
       if (doc != null) {
         Elements links = doc.select("a[href], area[href]");
         if (links != null) {
+          ArrayList<MetadataRecord> allowedResourceMdRecords = new ArrayList<MetadataRecord>();
           for (Element link : links) {
             String urlStr = link.attr("abs:href");
             if (urlStr.endsWith("index.html"))
@@ -79,23 +81,23 @@ public class Crawler {
               urlStr = urlStr.substring(0, urlStr.length() - 9);
             if (urlStr.endsWith("/"))
               urlStr = urlStr.substring(0, urlStr.length() - 1);
-            boolean isAllowed = isAllowed(urlStr);
-            if (isAllowed) {
-              MetadataRecord mdRecord = urlsHashtable.get(urlStr);
-              String mimeType = null;
-              if (mdRecord == null) {
-                MetadataRecord newMdRecord = getNewMdRecord(urlStr);
+            MetadataRecord mdRecord = urlsHashtable.get(urlStr);
+            if (mdRecord == null) {
+              boolean isAllowed = isAllowed(urlStr);
+              if (isAllowed) {
+                MetadataRecord newMdRecord = getNewMdRecord(startUrlStr, urlStr);
                 if (newMdRecord != null) {
                   urlsHashtable.put(urlStr, newMdRecord);
-                  retMdRecords.add(newMdRecord);
+                  allowedResourceMdRecords.add(newMdRecord);
                 }
-              } else {
-                mimeType = mdRecord.getType();             
               }
-              if (depth < maxDepth && isHtml(mimeType)) {
-                ArrayList<MetadataRecord> mdRecords = getMdRecords(urlStr, depth + 1);
-                retMdRecords.addAll(mdRecords);
-              }
+            }
+          }
+          if (depth < maxDepth) {
+            for (int i=0; i<allowedResourceMdRecords.size(); i++) {
+              MetadataRecord mdRecord = allowedResourceMdRecords.get(i);
+              String urlStr = mdRecord.getWebUri();
+              getMdRecords(urlStr, depth + 1);
             }
           }
         }
@@ -103,20 +105,21 @@ public class Crawler {
     } catch (Exception e) {
       throw new ApplicationException(e);
     }
-    return retMdRecords;
   }
 
-  private MetadataRecord getNewMdRecord(String urlStr) {
+  private MetadataRecord getNewMdRecord(String startUrlStr, String urlStr) {
     MetadataRecord newMdRecord = null;
     URL url = null;
     try {
       url = new URL(urlStr);
-      String mimeType = detect(url);
+      String mimeType = detect(startUrlStr, url);
+      if (mimeType == null || ! isHtml(mimeType))
+        return null;
       newMdRecord = new MetadataRecord();
       newMdRecord.setWebUri(urlStr);
       newMdRecord.setType(mimeType);
     } catch (Exception e) {
-      LOGGER.error("Crawler: " + url);
+      LOGGER.error("Crawler: detection of link: " + urlStr + " on page: " + startUrlStr + " is not possible");
       e.printStackTrace();
     }
     return newMdRecord;
@@ -154,6 +157,8 @@ public class Crawler {
         return false;
       if (urlStr.contains(".."))
         return false;
+      if (rootUrlStrWithoutProtocol.endsWith("/"))
+        rootUrlStrWithoutProtocol = rootUrlStrWithoutProtocol.substring(0, rootUrlStrWithoutProtocol.length() - 1);
       String urlStrRelative = urlStrWithoutProtocol.replaceFirst(rootUrlStrWithoutProtocol, "");
       if (excludes == null)
         return true;
@@ -182,12 +187,34 @@ public class Crawler {
       false;
   }
 
-  private String detect(URL url) throws ApplicationException {
+  private String detect(String startUrlStr, URL url) throws ApplicationException {
     String mimeType = null;
     try {
       mimeType = tika.detect(url);
     } catch (Exception e) {
+      LOGGER.error("Crawler: detection of link: " + url + " on page: " + startUrlStr + " is not possible");
       return null; // e.g. if FileNotFoundException etc. is thrown by site
+    }
+    return mimeType;
+  }
+  
+  /**
+   * is a little bit slower than tika: so tika is used instead
+   * @param startUrlStr
+   * @param urlStr
+   * @return mime type
+   * @throws ApplicationException
+   */
+  private String detectByJsoup(String startUrlStr, String urlStr) throws ApplicationException {
+    String mimeType = null;
+    try {
+      Response resp = Jsoup.connect(urlStr).timeout(SOCKET_TIMEOUT).execute();
+      mimeType = resp.contentType(); 
+      if (mimeType != null && mimeType.contains(";"))
+        mimeType = mimeType.substring(0, mimeType.indexOf(";"));
+    } catch (Exception e) {
+      LOGGER.error("Crawler: detection of link: " + urlStr + " on page: " + startUrlStr + " is not possible");
+      return null; 
     }
     return mimeType;
   }

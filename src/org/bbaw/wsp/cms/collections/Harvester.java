@@ -268,9 +268,9 @@ public class Harvester {
         // parse validation on file
         try {
           XdmNode docNode = xQueryEvaluator.parse(srcUrl); // if it is not parseable an exception with a detail message is thrown 
-          docType = getNodeType(docNode);
+          docType = getNodeType(docNode); // e.g. "TEI" or "mets" is returned
           docType = docType.trim();
-        } catch (ApplicationException e) {
+        } catch (Exception e) {
           // second try with encoded blanks url
           String srcUrlFileEncodedStr = srcUrl.getFile().replaceAll(" ", "%20");
           String srcUrlEncodedStr = srcUrl.getProtocol() + "://" + srcUrl.getHost() + ":" + srcUrl.getPort() + srcUrlFileEncodedStr;
@@ -591,7 +591,7 @@ public class Harvester {
             if (mdRecord.getCreator() == null) {
               String mimeType = mdRecord.getType();
               if (mimeType != null && mimeType.equals("application/pdf")) {
-                // nothing: creator is not the creator of the document in mostly all pdf-documents, so is not considered
+                // nothing: creator is not the creator of the document in mostly all pdf-documents, so it is not considered
               } else {
                 String tikaCreator = tikaMDRecord.getCreator();
                 boolean isProper = metadataHandler.isProper("author", tikaCreator);
@@ -602,7 +602,7 @@ public class Harvester {
             if (mdRecord.getTitle() == null) {
               String mimeType = mdRecord.getType();
               if (mimeType != null && mimeType.equals("application/pdf")) {
-                // nothing: title is not the title of the document in mostly all pdf-documents, so is not considered
+                // nothing: title is not the title of the document in mostly all pdf-documents, so it is not considered
               } else {
                 mdRecord.setTitle(tikaMDRecord.getTitle());
               }
