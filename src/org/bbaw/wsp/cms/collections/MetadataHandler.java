@@ -17,15 +17,12 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.filefilter.SuffixFileFilter;
-import org.apache.commons.io.filefilter.TrueFileFilter;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.apache.log4j.Logger;
 import org.apache.tika.Tika;
@@ -668,89 +665,6 @@ public class MetadataHandler {
     return mdRecords;
   }
   
-  private ArrayList<MetadataRecord> getMetadataRecordsByRdfFileOld(Collection collection, File rdfRessourcesFile, Database db, boolean generateId) throws ApplicationException {
-    if (! rdfRessourcesFile.exists())
-      return null;
-    String collectionId = collection.getId();
-    String xmlDumpFileStr = rdfRessourcesFile.getPath().replaceAll("\\.rdf", ".xml");
-    File xmlDumpFile = new File(xmlDumpFileStr);
-    Date xmlDumpFileLastModified = new Date(xmlDumpFile.lastModified());
-    ArrayList<MetadataRecord> mdRecords = new ArrayList<MetadataRecord>();
-    try {
-      URL rdfRessourcesFileUrl = rdfRessourcesFile.toURI().toURL();
-      String namespaceDeclaration = "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; declare namespace dc=\"http://purl.org/dc/elements/1.1/\"; declare namespace dcterms=\"http://purl.org/dc/terms/\"; ";
-      XQueryEvaluator xQueryEvaluator = new XQueryEvaluator();
-      XdmValue xmdValueResources = xQueryEvaluator.evaluate(rdfRessourcesFileUrl, namespaceDeclaration + "/rdf:RDF/rdf:Description[rdf:type/@rdf:resource = 'http://purl.org/dc/terms/BibliographicResource']");
-      XdmSequenceIterator xmdValueResourcesIterator = xmdValueResources.iterator();
-      ProjectManager pm = ProjectManager.getInstance();
-      Integer maxIdcounter = pm.getStatusMaxId();  // find the highest value, so that each following id is a real new id
-      if (xmdValueResources != null && xmdValueResources.size() > 0) {
-        while (xmdValueResourcesIterator.hasNext()) {
-          maxIdcounter++;
-          XdmItem xdmItemResource = xmdValueResourcesIterator.next();
-          String xdmItemResourceStr = xdmItemResource.toString();
-          MetadataRecord mdRecord = getMdRecord(collection, xQueryEvaluator, xdmItemResourceStr);  // get the mdRecord out of rdf string
-          if (mdRecord != null) {
-            if (mdRecord.getCollectionNames() == null)
-              mdRecord.setCollectionNames(collectionId);
-            mdRecord.setId(maxIdcounter); // collections wide id
-            mdRecord = createMainFieldsMetadataRecord(mdRecord, collection, db);
-            // if it is a record: set lastModified to the date of the harvested dump file; if it is a normal web record: set it to now (harvested now)
-            Date lastModified = new Date();
-            if (mdRecord.isRecord()) {
-              lastModified = xmlDumpFileLastModified;
-            }
-            mdRecord.setLastModified(lastModified);
-            if(mdRecord.isDirectory()) {
-              String fileDirUrlStr = mdRecord.getWebUri();
-              if (fileDirUrlStr != null) {
-                ArrayList<MetadataRecord> mdRecordsDir = new ArrayList<MetadataRecord>();
-                String fileExtensions = "html;htm;pdf;doc";
-                if (mdRecord.getType() != null)
-                  fileExtensions = mdRecord.getType();
-                String fileDirStr = null;
-                try {
-                  URL fileDirUrl = new URL(fileDirUrlStr);
-                  String fileDirUrlHost = fileDirUrl.getHost();
-                  String fileDirUrlPath = fileDirUrl.getFile();
-                  fileDirStr = Constants.getInstance().getExternalDataDir() + "/" + fileDirUrlHost + fileDirUrlPath;
-                } catch (MalformedURLException e) {
-                  throw new ApplicationException(e);
-                }
-                java.util.Collection<File> files = getFiles(fileDirStr, fileExtensions);
-                Iterator<File> filesIter = files.iterator();
-                while (filesIter.hasNext()) {
-                  maxIdcounter++;
-                  File file = filesIter.next();
-                  String fileAbsolutePath = file.getAbsolutePath();
-                  String fileRelativePath = fileAbsolutePath.replaceFirst(fileDirStr, "");
-                  String webUrl = fileDirUrlStr + fileRelativePath;
-                  String uri = "file:" + fileAbsolutePath;
-                  MetadataRecord mdRecordDirEntry = getNewMdRecord(webUrl);
-                  mdRecordDirEntry.setCollectionNames(collectionId);
-                  mdRecordDirEntry.setId(maxIdcounter); // collections wide id
-                  mdRecordDirEntry = createMainFieldsMetadataRecord(mdRecordDirEntry, collection, null);
-                  mdRecordDirEntry.setLastModified(lastModified);
-                  mdRecordDirEntry.setUri(uri);
-                  mdRecordsDir.add(mdRecordDirEntry);
-                }
-                mdRecords.addAll(mdRecordsDir);
-              }
-            }
-            // do not add the eXistDir or directory itself as a record (only the normal resource mdRecord) 
-            if (! mdRecord.isDirectory()) {
-              mdRecords.add(mdRecord);
-            }
-          } 
-        }
-      }
-      pm.setStatusMaxId(maxIdcounter);
-    } catch (MalformedURLException e) {
-      throw new ApplicationException(e);
-    }
-    return mdRecords;
-  }
-
   public void writeMetadataRecords(Collection collection, ArrayList<MetadataRecord> mdRecords, File outputFile, String type) throws ApplicationException {
     StringBuilder strBuilder = new StringBuilder();
     if (type.equals("rdf")) {
@@ -912,18 +826,6 @@ public class MetadataHandler {
     return documentUrls;
   }
 
-  private java.util.Collection<File> getFiles(String fileDirStr, String fileExtensions) throws ApplicationException {
-    String[] fileExts = fileExtensions.split(";");
-    for (int i=0; i<fileExts.length; i++) {
-      String fileExt = fileExts[i];
-      fileExts[i] = "." + fileExt;
-    }
-    SuffixFileFilter suffixFileFilter = new SuffixFileFilter(fileExts);
-    File fileDir = new File(fileDirStr);
-    java.util.Collection<File> files = FileUtils.listFiles(fileDir, suffixFileFilter, TrueFileFilter.INSTANCE);
-    return files;
-  }
-  
   private String getMimeType(String docId) {
     String mimeType = null;
     FileNameMap fileNameMap = URLConnection.getFileNameMap();  // map with 53 entries such as "application/xml"
@@ -1117,165 +1019,6 @@ public class MetadataHandler {
       return retValue;
   }
   
-  private MetadataRecord getMdRecord(Collection collection, XQueryEvaluator xQueryEvaluator, String xmlRdfStr) throws ApplicationException {
-    String namespaceDeclaration = "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; declare namespace dc=\"http://purl.org/dc/elements/1.1/\"; declare namespace dcterms=\"http://purl.org/dc/terms/\"; ";
-    // download url of resource
-    String resourceIdUrlStr = xQueryEvaluator.evaluateAsString(xmlRdfStr, namespaceDeclaration + "string(/rdf:Description/dc:identifier/@rdf:resource)");
-    resourceIdUrlStr = StringUtils.resolveXmlEntities(resourceIdUrlStr);
-    if (resourceIdUrlStr == null || resourceIdUrlStr.trim().isEmpty()) {
-      resourceIdUrlStr = xQueryEvaluator.evaluateAsString(xmlRdfStr, namespaceDeclaration + "string(/rdf:Description/@rdf:about)");
-      if (resourceIdUrlStr == null || resourceIdUrlStr.trim().isEmpty())
-        LOGGER.error("No identifier given in resource: \"" + xmlRdfStr + "\"");
-    }
-    MetadataRecord mdRecord = getNewMdRecord(resourceIdUrlStr);
-    // web url of resource
-    String resourceIdentifierStr = xQueryEvaluator.evaluateAsString(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dc:identifier/text()");
-    if (resourceIdentifierStr != null && ! resourceIdentifierStr.isEmpty()) {
-      resourceIdentifierStr = StringUtils.resolveXmlEntities(resourceIdentifierStr);
-      try {
-        new URL(resourceIdentifierStr); // test if identifier is a url, if so then set it as the webUri
-        mdRecord.setWebUri(resourceIdentifierStr);
-      } catch (MalformedURLException e) {
-        // nothing
-      }
-      mdRecord.setUri(resourceIdUrlStr);
-    }
-    if (collection.getId().equals("edoc")) {
-      String projectRdfStr = xQueryEvaluator.evaluateAsString(xmlRdfStr, namespaceDeclaration + "string(/rdf:Description/dcterms:isPartOf/@rdf:resource)");
-      Collection c = CollectionReader.getInstance().getCollectionByProjectRdfId(projectRdfStr);
-      if (c != null) {
-        String collId = c.getId();
-        mdRecord.setCollectionNames(collId);
-      }
-    }
-    String type = xQueryEvaluator.evaluateAsString(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dc:type/text()");
-    if (type != null)
-      mdRecord.setSystem(type);  // e.g. "crawl", "eXist" or "dbRecord" (for dbType: mysql, postgres and for dbName jdg) or "oaiRecord" (for oai databases: dta, edoc)  
-    XdmValue xmdValueAuthors = xQueryEvaluator.evaluate(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dc:creator");
-    if (xmdValueAuthors != null && xmdValueAuthors.size() > 0) {
-      XdmSequenceIterator xmdValueAuthorsIterator = xmdValueAuthors.iterator();
-      ArrayList<Person> authors = new ArrayList<Person>();
-      while (xmdValueAuthorsIterator.hasNext()) {
-        XdmItem xdmItemAuthor = xmdValueAuthorsIterator.next();
-        String name = xdmItemAuthor.getStringValue();
-        if (name != null && ! name.isEmpty()) {
-          name = name.replaceAll("\n|\\s\\s+", " ").trim();
-          Person author = new Person(name);
-          authors.add(author);
-        } 
-        String xdmItemAuthorStr = xdmItemAuthor.toString();
-        String resourceId = xQueryEvaluator.evaluateAsString(xdmItemAuthorStr, "string(/*:creator/@*:resource)");
-        if (resourceId != null && ! resourceId.isEmpty()) {
-          Person creator = CollectionReader.getInstance().getPerson(resourceId.trim());
-          if (creator != null)
-            authors.add(creator);
-        }
-      }
-      String creator = "";
-      String creatorDetails = "<persons>";
-      for (int i=0; i<authors.size(); i++) {
-        Person author = authors.get(i);
-        creator = creator + author.getName();
-        if (authors.size() != 1)
-          creator = creator + ". ";
-        creatorDetails = creatorDetails + "\n" + author.toXmlStr();
-      }
-      creator = StringUtils.deresolveXmlEntities(creator.trim());
-      creatorDetails = creatorDetails + "\n</persons>";
-      if (creator != null && ! creator.isEmpty())
-        mdRecord.setCreator(creator);
-      if (authors != null && ! authors.isEmpty())
-        mdRecord.setCreatorDetails(creatorDetails);
-    }
-    XdmValue xmdValueTitle = xQueryEvaluator.evaluate(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dc:title|/rdf:Description/dcterms:alternative");
-    XdmSequenceIterator xmdValueTitleIterator = xmdValueTitle.iterator();
-    if (xmdValueTitle != null && xmdValueTitle.size() > 0) {
-      String title = "";
-      while (xmdValueTitleIterator.hasNext()) {
-        XdmItem xdmItemTitle = xmdValueTitleIterator.next();
-        String xdmItemTitleStr = xdmItemTitle.getStringValue().trim();
-        if (xmdValueTitle.size() == 1)
-          title = xdmItemTitleStr;
-        else
-          title = title + xdmItemTitleStr + ". ";
-      }
-      title = StringUtils.resolveXmlEntities(title);
-      mdRecord.setTitle(title);
-    }
-    String publisher = xQueryEvaluator.evaluateAsString(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dc:publisher/text()");
-    if (publisher != null)
-      publisher = StringUtils.resolveXmlEntities(publisher.trim());
-    mdRecord.setPublisher(publisher);
-    String subject = xQueryEvaluator.evaluateAsStringValueJoined(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dc:subject", "###");
-    if (subject != null)
-      subject = StringUtils.resolveXmlEntities(subject.trim());
-    mdRecord.setSubject(subject);
-    String subjectSwd = xQueryEvaluator.evaluateAsStringValueJoined(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dc:subject[@xsi:type = 'SWD']", ",");
-    if (subjectSwd != null && ! subjectSwd.isEmpty()) {
-      subjectSwd = StringUtils.resolveXmlEntities(subjectSwd.trim());
-      if (subjectSwd.endsWith(","))
-        subjectSwd = subjectSwd.substring(0, subjectSwd.length() - 1); 
-    }
-    mdRecord.setSwd(subjectSwd);
-    String subjectDdc = xQueryEvaluator.evaluateAsStringValueJoined(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dc:subject[@xsi:type = 'dcterms:DDC']", ",");
-    if (subjectDdc != null && ! subjectDdc.isEmpty()) {
-      subjectDdc = StringUtils.resolveXmlEntities(subjectDdc.trim());
-      mdRecord.setDdc(subjectDdc);
-    }
-    XdmValue xmdValueDcTerms = xQueryEvaluator.evaluate(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dcterms:subject");
-    XdmSequenceIterator xmdValueDcTermsIterator = xmdValueDcTerms.iterator();
-    if (xmdValueDcTerms != null && xmdValueDcTerms.size() > 0) {
-      String subjectControlledDetails = "<subjects>";
-      while (xmdValueDcTermsIterator.hasNext()) {
-        XdmItem xdmItemDcTerm = xmdValueDcTermsIterator.next();
-        /* e.g.:
-         * <dcterms:subject>
-             <rdf:Description rdf:about="http://de.dbpedia.org/resource/Kategorie:Karl_Marx">
-               <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
-               <rdfs:label>Karl Marx</rdfs:label>
-             </rdf:description>
-           </dcterms:subject>
-         */
-        String xdmItemDcTermStr = xdmItemDcTerm.toString();
-        subjectControlledDetails = subjectControlledDetails + "\n" + xdmItemDcTermStr;
-      }
-      subjectControlledDetails = subjectControlledDetails + "\n</subjects>";
-      mdRecord.setSubjectControlledDetails(subjectControlledDetails);
-    }
-    String dateStr = xQueryEvaluator.evaluateAsString(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dc:date/text()");
-    Date date = null;
-    if (dateStr != null && ! dateStr.equals("")) {
-      dateStr = StringUtils.resolveXmlEntities(dateStr.trim());
-      dateStr = new Util().toYearStr(dateStr);  // test if possible etc
-      if (dateStr != null) {
-        try {
-          date = new Util().toDate(dateStr + "-01-01T00:00:00.000Z");
-        } catch (Exception e) {
-          // nothing
-        }
-      }
-    }
-    mdRecord.setDate(date);
-    String language = xQueryEvaluator.evaluateAsString(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dc:language/text()");
-    mdRecord.setLanguage(language);
-    String mimeType = xQueryEvaluator.evaluateAsString(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dc:format/text()");
-    mdRecord.setType(mimeType);
-    String abstractt = xQueryEvaluator.evaluateAsString(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dc:abstract/text()");
-    if (abstractt != null)
-      abstractt = StringUtils.resolveXmlEntities(abstractt.trim());
-    mdRecord.setDescription(abstractt);
-    String pagesStr = xQueryEvaluator.evaluateAsString(xmlRdfStr, namespaceDeclaration + "/rdf:Description/dc:extent/text()");
-    if (pagesStr != null && ! pagesStr.isEmpty()) {
-      try {
-        int pages = Integer.parseInt(pagesStr);
-        mdRecord.setPageCount(pages);
-      } catch (NumberFormatException e) {
-        // nothing
-      }
-    }
-    return mdRecord;    
-  }
-
   private MetadataRecord getNewMdRecord(String urlStr) {
     MetadataRecord mdRecord = new MetadataRecord();
     try {
