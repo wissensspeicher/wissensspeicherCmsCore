@@ -114,6 +114,10 @@ public class Annotator {
   }
 
   private void annotate(Collection collection, Database db, ArrayList<MetadataRecord> mdRecords) throws ApplicationException {
+    String logStr = "Annotate metadata records (" + collection.getId() + ") ...";
+    if (db != null)
+      logStr = "Annotate metadata records (" + collection.getId() + ", " + db.getName() + ", " + db.getType() + ") ...";
+    LOGGER.info(logStr);
     StringBuilder rdfStrBuilder = new StringBuilder(); 
     rdfStrBuilder.append("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
     rdfStrBuilder.append("<rdf:RDF \n");
@@ -134,8 +138,7 @@ public class Annotator {
       int iplus1 = i + 1;
       int annotateInterval = iplus1 % 100; // after each 100 annotations do Logging
       if (annotateInterval == 0) {
-        int iplus1mal100 = iplus1 + 100; 
-        LOGGER.info("Annotate " + iplus1mal100 + "'th record: " + mdRecord.getWebUri());
+        LOGGER.info("Annotate " + iplus1 + "'th record: " + mdRecord.getWebUri());
       }
       // without that, there would be a memory leak (with many big documents in one collection)
       // with that the main big fields (content etc.) could be garbaged
