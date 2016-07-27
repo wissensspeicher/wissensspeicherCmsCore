@@ -636,6 +636,47 @@ public class MetadataHandler {
     Date xmlDumpFileLastModified = new Date(xmlDumpFile.lastModified());
     ArrayList<MetadataRecord> mdRecords = new ArrayList<MetadataRecord>();
     try {
+      Document resourcesDoc = Jsoup.parse(rdfRessourcesFile, "utf-8");
+      Elements resources = resourcesDoc.select("rdf|RDF > rdf|Description");
+      ProjectManager pm = ProjectManager.getInstance();
+      Integer maxIdcounter = pm.getStatusMaxId();  // find the highest value, so that each following id is a real new id
+      if (resources != null && !resources.isEmpty()) {
+        mdRecords = new ArrayList<MetadataRecord>();
+        for (int i=0; i<resources.size(); i++) {
+          maxIdcounter++;
+          Element resource = resources.get(i);
+          MetadataRecord mdRecord = getMdRecord(collection, resource);
+          if (mdRecord != null) {
+            if (mdRecord.getCollectionNames() == null)
+              mdRecord.setCollectionNames(collectionId);
+            mdRecord.setId(maxIdcounter); // collections wide id
+            mdRecord = createMainFieldsMetadataRecord(mdRecord, collection, db);
+            // if it is a record: set lastModified to the date of the harvested dump file; if it is a normal web record: set it to now (harvested now)
+            Date lastModified = new Date();
+            if (mdRecord.isRecord()) {
+              lastModified = xmlDumpFileLastModified;
+            }
+            mdRecord.setLastModified(lastModified);
+            mdRecords.add(mdRecord);
+          }
+        }
+      }
+      pm.setStatusMaxId(maxIdcounter);
+    } catch (Exception e) {
+      throw new ApplicationException(e);
+    }
+    return mdRecords;
+  }
+  
+  private ArrayList<MetadataRecord> getMetadataRecordsByRdfFileOld(Collection collection, File rdfRessourcesFile, Database db, boolean generateId) throws ApplicationException {
+    if (! rdfRessourcesFile.exists())
+      return null;
+    String collectionId = collection.getId();
+    String xmlDumpFileStr = rdfRessourcesFile.getPath().replaceAll("\\.rdf", ".xml");
+    File xmlDumpFile = new File(xmlDumpFileStr);
+    Date xmlDumpFileLastModified = new Date(xmlDumpFile.lastModified());
+    ArrayList<MetadataRecord> mdRecords = new ArrayList<MetadataRecord>();
+    try {
       URL rdfRessourcesFileUrl = rdfRessourcesFile.toURI().toURL();
       String namespaceDeclaration = "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; declare namespace dc=\"http://purl.org/dc/elements/1.1/\"; declare namespace dcterms=\"http://purl.org/dc/terms/\"; ";
       XQueryEvaluator xQueryEvaluator = new XQueryEvaluator();
@@ -709,7 +750,7 @@ public class MetadataHandler {
     }
     return mdRecords;
   }
-  
+
   public void writeMetadataRecords(Collection collection, ArrayList<MetadataRecord> mdRecords, File outputFile, String type) throws ApplicationException {
     StringBuilder strBuilder = new StringBuilder();
     if (type.equals("rdf")) {
@@ -890,6 +931,192 @@ public class MetadataHandler {
     return mimeType;
   }
 
+  private MetadataRecord getMdRecord(Collection collection, Element resourceElem) throws ApplicationException {
+    // download url of resource
+    Element identifierElem = resourceElem.select("dc|identifier").first();
+    String resourceIdUrlStr = null;
+    if (identifierElem != null) {
+      resourceIdUrlStr = identifierElem.attr("rdf:resource"); 
+      if (resourceIdUrlStr == null || resourceIdUrlStr.trim().isEmpty()) {
+        resourceIdUrlStr = resourceElem.attr("rdf:about");
+        if (resourceIdUrlStr == null || resourceIdUrlStr.trim().isEmpty())
+          LOGGER.error("No identifier given in resource: \"" + resourceElem + "\"");
+      }
+    }
+    MetadataRecord mdRecord = getNewMdRecord(resourceIdUrlStr);
+    // web url of resource
+    String resourceIdentifierStr = null;
+    if (identifierElem != null) {
+      resourceIdentifierStr = identifierElem.text();
+      if (resourceIdentifierStr != null && ! resourceIdentifierStr.isEmpty()) {
+        try {
+          new URL(resourceIdentifierStr); // test if identifier is a url, if so then set it as the webUri
+          mdRecord.setWebUri(resourceIdentifierStr);
+        } catch (MalformedURLException e) {
+          // nothing
+        }
+        mdRecord.setUri(resourceIdUrlStr);
+      }
+    }
+    // edoc
+    if (collection.getId().equals("edoc")) {
+      String projectRdfStr = resourceElem.select("dcterms|isPartOf").attr("rdf:resource");
+      if (projectRdfStr != null) {
+        Collection c = CollectionReader.getInstance().getCollectionByProjectRdfId(projectRdfStr);
+        if (c != null) {
+          String collId = c.getId();
+          mdRecord.setCollectionNames(collId);
+        }
+      }
+    }
+    // systemType
+    String type = resourceElem.select("dc|type").text();
+    if (type != null && ! type.isEmpty())
+      mdRecord.setSystem(type);  // e.g. "crawl", "eXist" or "dbRecord" (for dbType: mysql, postgres and for dbName jdg) or "oaiRecord" (for oai databases: dta, edoc)  
+    // creators
+    Elements authorElems = resourceElem.select("dc|creator");
+    if (! authorElems.isEmpty()) {
+      ArrayList<Person> authors = new ArrayList<Person>();
+      for (int i=0; i<authorElems.size(); i++) {
+        Element authorElem = authorElems.get(i);
+        String name = authorElem.text();
+        if (name != null && ! name.isEmpty()) {
+          name = name.replaceAll("\n|\\s\\s+", " ").trim();
+          Person author = new Person(name);
+          authors.add(author);
+        } 
+        String resourceId = authorElem.attr("rdf:resource");
+        if (resourceId != null && ! resourceId.isEmpty()) {
+          Person creator = CollectionReader.getInstance().getPerson(resourceId.trim());
+          if (creator != null)
+            authors.add(creator);
+        }
+      }
+      String creator = "";
+      String creatorDetails = "<persons>";
+      for (int i=0; i<authors.size(); i++) {
+        Person author = authors.get(i);
+        creator = creator + author.getName();
+        if (authors.size() != 1)
+          creator = creator + ". ";
+        creatorDetails = creatorDetails + "\n" + author.toXmlStr();
+      }
+      creator = StringUtils.deresolveXmlEntities(creator.trim());
+      creatorDetails = creatorDetails + "\n</persons>";
+      if (creator != null && ! creator.isEmpty())
+        mdRecord.setCreator(creator);
+      if (authors != null && ! authors.isEmpty())
+        mdRecord.setCreatorDetails(creatorDetails);
+    }
+    // title
+    Elements titleElems = resourceElem.select("dc|title, dcterms|alternative");
+    if (! titleElems.isEmpty()) {
+      String title = "";
+      for (int i=0; i<titleElems.size(); i++) {
+        String titleElemStr = titleElems.get(i).text();
+        if (titleElems.size() == 1)
+          title = titleElemStr;
+        else
+          title = title + titleElemStr + ". ";
+      }
+      mdRecord.setTitle(title);
+    }
+    // publisher
+    String publisher = resourceElem.select("dc|publisher").text();
+    if (publisher != null && ! publisher.isEmpty())
+      mdRecord.setPublisher(publisher);
+    // dc:subject
+    Elements subjectElems = resourceElem.select("dc|subject");
+    String subject = textValueJoined(subjectElems, "###");
+    if (subject != null)
+      mdRecord.setSubject(subject);
+    // swd
+    Elements swdElems = resourceElem.select("dc|subject[xsi:type=\"SWD\"]");
+    String subjectSwd = textValueJoined(swdElems, ",");
+    if (subjectSwd != null) {
+      mdRecord.setSwd(subjectSwd);
+    }
+    // ddc
+    Elements ddcElems = resourceElem.select("dc|subject[xsi:type=\"dcterms:DDC\"]");
+    String subjectDdc = textValueJoined(ddcElems, ",");
+    if (subjectDdc != null) {
+      mdRecord.setDdc(subjectDdc);
+    }
+    // dcterms:subject
+    Elements dctermSubjectElems = resourceElem.select("dcterms|subject");
+    if (! dctermSubjectElems.isEmpty()) {
+      String subjectControlledDetails = "<subjects>";
+      for (int i=0; i<dctermSubjectElems.size(); i++) {
+        /* e.g.:
+         * <dcterms:subject>
+             <rdf:Description rdf:about="http://de.dbpedia.org/resource/Kategorie:Karl_Marx">
+               <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+               <rdfs:label>Karl Marx</rdfs:label>
+             </rdf:description>
+           </dcterms:subject>
+         */
+        Element dctermSubjectElem = dctermSubjectElems.get(i);
+        String dctermSubjectElemStr = dctermSubjectElem.outerHtml();
+        subjectControlledDetails = subjectControlledDetails + "\n" + dctermSubjectElemStr;
+      }
+      subjectControlledDetails = subjectControlledDetails + "\n</subjects>";
+      mdRecord.setSubjectControlledDetails(subjectControlledDetails);
+    }
+    // date
+    String dateStr = resourceElem.select("dc|date").text();
+    if (dateStr != null && ! dateStr.isEmpty()) {
+      dateStr = new Util().toYearStr(dateStr);  // test if possible etc
+      if (dateStr != null) {
+        try {
+          Date date = new Util().toDate(dateStr + "-01-01T00:00:00.000Z");
+          mdRecord.setDate(date);
+        } catch (Exception e) {
+          // nothing
+        }
+      }
+    }
+    // language
+    String language = resourceElem.select("dc|language").text();
+    if (language != null && ! language.isEmpty())
+      mdRecord.setLanguage(language);
+    // mime type
+    String mimeType = resourceElem.select("dc|format").text();
+    if (mimeType != null && ! mimeType.isEmpty())
+      mdRecord.setType(mimeType);
+    // abstract
+    String abstractt = resourceElem.select("dc|abstract").text();
+    if (abstractt != null && ! abstractt.isEmpty()) {
+      abstractt = StringUtils.resolveXmlEntities(abstractt.trim());
+      mdRecord.setDescription(abstractt);
+    }
+    // page count
+    String pagesStr = resourceElem.select("dc|extent").text();
+    if (pagesStr != null && ! pagesStr.isEmpty()) {
+      try {
+        int pages = Integer.parseInt(pagesStr);
+        mdRecord.setPageCount(pages);
+      } catch (NumberFormatException e) {
+        // nothing
+      }
+    }
+    return mdRecord;
+  }
+  
+  private String textValueJoined(Elements elems, String splitStr) {
+    String retValue = "";
+    for (int i=0; i<elems.size(); i++) {
+      String elemText = elems.get(i).text().trim();
+      if (! elemText.isEmpty())
+        retValue = retValue + elemText + splitStr;
+    }
+    if (retValue.length() >= splitStr.length())
+      retValue = retValue.substring(0, retValue.length() - splitStr.length());
+    if (retValue.isEmpty())
+      return null;
+    else 
+      return retValue;
+  }
+  
   private MetadataRecord getMdRecord(Collection collection, XQueryEvaluator xQueryEvaluator, String xmlRdfStr) throws ApplicationException {
     String namespaceDeclaration = "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; declare namespace dc=\"http://purl.org/dc/elements/1.1/\"; declare namespace dcterms=\"http://purl.org/dc/terms/\"; ";
     // download url of resource
