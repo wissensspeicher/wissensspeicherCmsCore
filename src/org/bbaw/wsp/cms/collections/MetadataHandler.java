@@ -640,21 +640,24 @@ public class MetadataHandler {
       if (resources != null && !resources.isEmpty()) {
         mdRecords = new ArrayList<MetadataRecord>();
         for (int i=0; i<resources.size(); i++) {
-          maxIdcounter++;
           Element resource = resources.get(i);
-          MetadataRecord mdRecord = getMdRecord(collection, resource);
-          if (mdRecord != null) {
-            if (mdRecord.getCollectionNames() == null)
-              mdRecord.setCollectionNames(collectionId);
-            mdRecord.setId(maxIdcounter); // collections wide id
-            mdRecord = createMainFieldsMetadataRecord(mdRecord, collection, db);
-            // if it is a record: set lastModified to the date of the harvested dump file; if it is a normal web record: set it to now (harvested now)
-            Date lastModified = new Date();
-            if (mdRecord.isRecord()) {
-              lastModified = xmlDumpFileLastModified;
+          String resourceType = resource.select("rdf|type").attr("rdf:resource");
+          if (resourceType.equals("http://purl.org/dc/terms/BibliographicResource")) {
+            MetadataRecord mdRecord = getMdRecord(collection, resource);
+            if (mdRecord != null) {
+              if (mdRecord.getCollectionNames() == null)
+                mdRecord.setCollectionNames(collectionId);
+              maxIdcounter++;
+              mdRecord.setId(maxIdcounter); // collections wide id
+              mdRecord = createMainFieldsMetadataRecord(mdRecord, collection, db);
+              // if it is a record: set lastModified to the date of the harvested dump file; if it is a normal web record: set it to now (harvested now)
+              Date lastModified = new Date();
+              if (mdRecord.isRecord()) {
+                lastModified = xmlDumpFileLastModified;
+              }
+              mdRecord.setLastModified(lastModified);
+              mdRecords.add(mdRecord);
             }
-            mdRecord.setLastModified(lastModified);
-            mdRecords.add(mdRecord);
           }
         }
       }
