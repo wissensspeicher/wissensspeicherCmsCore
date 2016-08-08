@@ -454,7 +454,7 @@ public class DBpediaSpotlightHandler {
     boolean isProper = true;
     if (surfaceForm.length() <= 2)
       isProper = false;
-    else if (surfaceForm.contains("-") || surfaceForm.contains(".."))
+    else if (surfaceForm.contains(".."))
       isProper = false;
     else if (germanStopwords.get(surfaceForm) != null)
       isProper = false;
