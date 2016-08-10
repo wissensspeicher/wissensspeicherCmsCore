@@ -174,7 +174,7 @@ public class Crawler {
   }
   
   private boolean isMultimedia(String urlStr) throws ApplicationException {
-    if (urlStr.endsWith(".jpg") || urlStr.endsWith(".jpeg") || urlStr.endsWith(".png") || urlStr.endsWith(".gif") || urlStr.endsWith(".mp3") || urlStr.endsWith(".mov") || urlStr.endsWith(".mp4") || urlStr.endsWith(".mp4"))
+    if (urlStr.endsWith(".zip") || urlStr.endsWith(".gz") || urlStr.endsWith(".jpg") || urlStr.endsWith(".jpeg") || urlStr.endsWith(".png") || urlStr.endsWith(".gif") || urlStr.endsWith(".mp3") || urlStr.endsWith(".mov") || urlStr.endsWith(".mp4") || urlStr.endsWith(".mp4"))
       return true;
     else 
       return false;
