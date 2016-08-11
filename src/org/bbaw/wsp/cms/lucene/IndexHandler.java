@@ -877,7 +877,8 @@ public class IndexHandler {
         languageHandler.translate(queryTerms, language);
       }
       Query morphQuery = buildMorphQuery(query, language, false, translate, languageHandler);
-      Query highlighterQuery = buildMorphQuery(query, language, true, translate, languageHandler);
+      Query highlighterQuery = buildHighlighterQuery(query, language, translate, languageHandler);
+      // Query highlighterQuery = buildMorphQuery(query, language, true, translate, languageHandler);
       if (query instanceof PhraseQuery || query instanceof PrefixQuery || query instanceof FuzzyQuery || query instanceof TermRangeQuery) {
         highlighterQuery = query;  // TODO wenn sie rekursiv enthalten sind 
       }
@@ -1559,14 +1560,71 @@ public class IndexHandler {
   
   private Query buildHighlighterQuery(Query query, String language, boolean translate, LanguageHandler languageHandler) throws ApplicationException {
     Query retQuery = null;
-    // TODO 
-    // Query fulltextQuery = removeNonFulltextFields(query); // fulltextQuery enthält die Volltextanfrage als tokenOrig oder tokenMorph
-    // retQuery = buildMorphQuery(fulltextQuery, language, true, translate, languageHandler);
+    try {
+      Query fulltextQuery = removeNonFulltextFields(query);
+      retQuery = buildMorphQuery(fulltextQuery, language, true, translate, languageHandler);
+    } catch (Exception e) {
+      throw new ApplicationException(e);
+    }
     return retQuery;
   }
   
   private Query buildMorphQuery(Query query, String language, LanguageHandler languageHandler) throws ApplicationException {
     return buildMorphQuery(query, language, false, false, languageHandler);
+  }
+
+  private Query removeNonFulltextFields(Query query) throws ApplicationException {
+    Query retQuery = null;
+    if (query instanceof TermQuery) {
+      TermQuery termQuery = (TermQuery) query;
+      String fieldName = termQuery.getTerm().field();
+      if (fieldName != null && (fieldName.equals("tokenOrig") || fieldName.equals("tokenMorph")))
+        retQuery = termQuery;
+    } else if (query instanceof BooleanQuery) {
+      BooleanQuery.Builder boolQueryBuilder = new BooleanQuery.Builder();
+      Hashtable<String, TermQuery> termQueries = new Hashtable<String, TermQuery>();
+      BooleanQuery booleanQuery = (BooleanQuery) query;
+      List<BooleanClause> clauses = booleanQuery.clauses();
+      for (int i=0; i<clauses.size(); i++) {
+        BooleanClause clause = clauses.get(i);
+        Query clauseQuery = clause.getQuery();
+        if (clauseQuery instanceof TermQuery) {
+          TermQuery termQuery = (TermQuery) clauseQuery;
+          String fieldName = termQuery.getTerm().field();
+          if (fieldName != null && (fieldName.equals("tokenOrig") || fieldName.equals("tokenMorph"))) {
+            TermQuery tq = termQueries.get(termQuery.toString());
+            if (tq == null) {
+              termQueries.put(termQuery.toString(), termQuery);
+              boolQueryBuilder.add(clause);
+            }
+          }
+        } else if (clauseQuery instanceof BooleanQuery) {
+          BooleanQuery bQuery = (BooleanQuery) clauseQuery;
+          List<BooleanClause> cls = bQuery.clauses();
+          for (int j=0; j<cls.size(); j++) {
+            BooleanClause c = cls.get(j);
+            Query cQuery = c.getQuery();
+            if (cQuery instanceof TermQuery) {
+              TermQuery tQuery = (TermQuery) cQuery;
+              String fName = tQuery.getTerm().field();
+              if (fName != null && (fName.equals("tokenOrig") || fName.equals("tokenMorph"))) {
+                TermQuery tq = termQueries.get(tQuery.toString());
+                if (tq == null) {
+                  termQueries.put(tQuery.toString(), tQuery);
+                  boolQueryBuilder.add(c);
+                }
+              }
+            }
+          }
+        } else {
+          // TODO other cases
+        }
+      }
+      retQuery = boolQueryBuilder.build();
+    } else {
+      retQuery = query; // all other cases: PrefixQuery, PhraseQuery, FuzzyQuery, TermRangeQuery, ...
+    }
+    return retQuery;
   }
 
   private Query buildMorphQuery(Query query, String language, boolean withAllForms, boolean translate, LanguageHandler languageHandler) throws ApplicationException {
