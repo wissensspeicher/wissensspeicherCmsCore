@@ -315,8 +315,6 @@ public class CollectionReader {
       LOGGER.error("CollectionReader: readConfFileXml: \"" + collectionId + "\" has no rdf file");
       return;
     }
-    String fullConfigFileName = configFile.getAbsolutePath();
-    collection.setConfigFileName(fullConfigFileName);
     Date configFileLastModified = new Date(configFile.lastModified());
     Date collectionLastModified = collection.getLastModified();
     if (configFileLastModified.after(collectionLastModified))
@@ -487,7 +485,8 @@ public class CollectionReader {
         collection.setServices(servicesHashtable);
       }
 	  } catch (Exception e) {
-      LOGGER.error("Reading of: " + collection.getConfigFileName() + " failed");
+	    String fullConfigFileName = configFile.getAbsolutePath();
+      LOGGER.error("Reading of: " + fullConfigFileName + " failed");
       e.printStackTrace();
     }
 	}

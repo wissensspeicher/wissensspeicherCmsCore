@@ -10,24 +10,12 @@ public class Collection {
   private ArrayList<Database> databases;  // when collection is a database
   private String name;
   private String webBaseUrl;  // web base url 
-  private String[] metadataUrls;  // metadata urls for fetching records
-  private String metadataUrlPrefix;  // prefix of metadataUrl which is not relevant as id
-  private String metadataRedundantUrlPrefix;  // prefix of metadataUrl which is not relevant as id 
   private String mainLanguage;
   private String coverage;  // e.g.: http://wsp.normdata.rdf/Gegenwart or http://wsp.normdata.rdf/Neuzeit
   private String status; // e.g. "aktiv" or "abgeschlossen" 
   private String updateCycle; // e.g. "monthly" or "halfyearly" 
   private Hashtable<String, Service> services;
-  private String configFileName;  // configuration file name
   private Date lastModified;
-  private StringBuilder dbPediaSpotlightRdfStrBuilder;
-  
-  public Collection() {
-    id = "";
-    name = "";
-    mainLanguage = "";
-    configFileName = "";
-  }
   
   public String getId() {
     return id;
@@ -95,30 +83,6 @@ public class Collection {
     this.name = name;
   }
 
-  public String getMetadataRedundantUrlPrefix() {
-    return metadataRedundantUrlPrefix;
-  }
-
-  public void setMetadataRedundantUrlPrefix(String metadataRedundantUrlPrefix) {
-    this.metadataRedundantUrlPrefix = metadataRedundantUrlPrefix;
-  }
-
-  public String[] getMetadataUrls() {
-    return metadataUrls;
-  }
-
-  public void setMetadataUrls(String[] metadataUrls) {
-    this.metadataUrls = metadataUrls;
-  }
-
-  public String getMetadataUrlPrefix() {
-    return metadataUrlPrefix;
-  }
-
-  public void setMetadataUrlPrefix(String metadataUrlPrefix) {
-    this.metadataUrlPrefix = metadataUrlPrefix;
-  }
-
   public String getMainLanguage() {
     return mainLanguage;
   }
@@ -159,14 +123,6 @@ public class Collection {
     this.webBaseUrl = webBaseUrl;
   }
 
-  public String getConfigFileName() {
-    return configFileName;
-  }
-
-  public void setConfigFileName(String configFileName) {
-    this.configFileName = configFileName;
-  }
-
   public Hashtable<String, Service> getServices() {
     return services;
   }
@@ -181,14 +137,6 @@ public class Collection {
       service = services.get(serviceName);
     }
     return service;
-  }
-
-  public StringBuilder getDbPediaSpotlightRdfStrBuilder() {
-    return dbPediaSpotlightRdfStrBuilder;
-  }
-
-  public void setDbPediaSpotlightRdfStrBuilder(StringBuilder dbPediaSpotlightRdfStrBuilder) {
-    this.dbPediaSpotlightRdfStrBuilder = dbPediaSpotlightRdfStrBuilder;
   }
 
 }
