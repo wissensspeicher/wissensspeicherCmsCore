@@ -878,7 +878,6 @@ public class IndexHandler {
       }
       Query morphQuery = buildMorphQuery(query, language, false, translate, languageHandler);
       Query highlighterQuery = buildHighlighterQuery(query, language, translate, languageHandler);
-      // Query highlighterQuery = buildMorphQuery(query, language, true, translate, languageHandler);
       if (query instanceof PhraseQuery || query instanceof PrefixQuery || query instanceof FuzzyQuery || query instanceof TermRangeQuery) {
         highlighterQuery = query;  // TODO wenn sie rekursiv enthalten sind 
       }
@@ -924,7 +923,7 @@ public class IndexHandler {
           if (withHitFragments) {
             ArrayList<String> hitFragments = new ArrayList<String>();
             IndexableField docContentField = luceneDoc.getField("content");
-            if (docContentField != null) {
+            if (docContentField != null && highlighterQuery != null) {
               FieldQuery highlighterFieldQuery = highlighter.getFieldQuery(highlighterQuery);
               String[] textfragments = highlighter.getBestFragments(highlighterFieldQuery, documentsIndexReader, docID, docContentField.name(), 100, 2);
               if (textfragments.length > 0) {
@@ -1562,7 +1561,8 @@ public class IndexHandler {
     Query retQuery = null;
     try {
       Query fulltextQuery = removeNonFulltextFields(query);
-      retQuery = buildMorphQuery(fulltextQuery, language, true, translate, languageHandler);
+      if (fulltextQuery != null)
+        retQuery = buildMorphQuery(fulltextQuery, language, true, translate, languageHandler);
     } catch (Exception e) {
       throw new ApplicationException(e);
     }
@@ -1577,56 +1577,58 @@ public class IndexHandler {
     Query retQuery = null;
     if (query instanceof TermQuery) {
       TermQuery termQuery = (TermQuery) query;
-      String fieldName = termQuery.getTerm().field();
-      if (fieldName != null && (fieldName.equals("tokenOrig") || fieldName.equals("tokenMorph")))
+      if (isFulltextQuery(termQuery))
         retQuery = termQuery;
+      else 
+        retQuery = null;
     } else if (query instanceof BooleanQuery) {
-      BooleanQuery.Builder boolQueryBuilder = new BooleanQuery.Builder();
-      Hashtable<String, TermQuery> termQueries = new Hashtable<String, TermQuery>();
       BooleanQuery booleanQuery = (BooleanQuery) query;
-      List<BooleanClause> clauses = booleanQuery.clauses();
-      for (int i=0; i<clauses.size(); i++) {
-        BooleanClause clause = clauses.get(i);
-        Query clauseQuery = clause.getQuery();
-        if (clauseQuery instanceof TermQuery) {
-          TermQuery termQuery = (TermQuery) clauseQuery;
-          String fieldName = termQuery.getTerm().field();
-          if (fieldName != null && (fieldName.equals("tokenOrig") || fieldName.equals("tokenMorph"))) {
-            TermQuery tq = termQueries.get(termQuery.toString());
-            if (tq == null) {
-              termQueries.put(termQuery.toString(), termQuery);
-              boolQueryBuilder.add(clause);
-            }
-          }
-        } else if (clauseQuery instanceof BooleanQuery) {
-          BooleanQuery bQuery = (BooleanQuery) clauseQuery;
-          List<BooleanClause> cls = bQuery.clauses();
-          for (int j=0; j<cls.size(); j++) {
-            BooleanClause c = cls.get(j);
-            Query cQuery = c.getQuery();
-            if (cQuery instanceof TermQuery) {
-              TermQuery tQuery = (TermQuery) cQuery;
-              String fName = tQuery.getTerm().field();
-              if (fName != null && (fName.equals("tokenOrig") || fName.equals("tokenMorph"))) {
-                TermQuery tq = termQueries.get(tQuery.toString());
-                if (tq == null) {
-                  termQueries.put(tQuery.toString(), tQuery);
-                  boolQueryBuilder.add(c);
-                }
-              }
-            }
-          }
-        } else {
-          // TODO other cases
-        }
-      }
-      retQuery = boolQueryBuilder.build();
+      retQuery = removeNonFulltextFields(booleanQuery);
     } else {
       retQuery = query; // all other cases: PrefixQuery, PhraseQuery, FuzzyQuery, TermRangeQuery, ...
     }
     return retQuery;
   }
 
+  private boolean isFulltextQuery(TermQuery termQuery) throws ApplicationException {
+    String fieldName = termQuery.getTerm().field();
+    if (fieldName != null && (fieldName.equals("tokenOrig") || fieldName.equals("tokenMorph")))
+      return true;
+    else
+      return false;
+  }
+  
+  private BooleanQuery removeNonFulltextFields(BooleanQuery booleanQuery) throws ApplicationException {
+    if (booleanQuery == null)
+      return null;
+    BooleanQuery retQuery = null;
+    List<BooleanClause> clauses = booleanQuery.clauses();
+    ArrayList<BooleanClause> fulltextClauses = new ArrayList<BooleanClause>();
+    for (int i=0; i<clauses.size(); i++) {
+      BooleanClause clause = clauses.get(i);
+      Query clauseQuery = clause.getQuery();
+      if (clauseQuery instanceof TermQuery) {
+        TermQuery termQuery = (TermQuery) clauseQuery;
+        if (isFulltextQuery(termQuery))
+          fulltextClauses.add(clause);
+      } else if (clauseQuery instanceof BooleanQuery) {
+        BooleanQuery bQuery = (BooleanQuery) clauseQuery;
+        retQuery = removeNonFulltextFields(bQuery);
+      } else {
+        fulltextClauses.add(clause); // all other cases: PrefixQuery, PhraseQuery, FuzzyQuery, TermRangeQuery, ...
+      }
+    }
+    if (! fulltextClauses.isEmpty()) {
+      BooleanQuery.Builder boolQueryBuilder = new BooleanQuery.Builder();
+      for (int i=0; i<fulltextClauses.size(); i++) {
+        BooleanClause clause = clauses.get(i);
+          boolQueryBuilder.add(clause);
+      }
+      retQuery = boolQueryBuilder.build();
+    }
+    return retQuery;
+  }
+  
   private Query buildMorphQuery(Query query, String language, boolean withAllForms, boolean translate, LanguageHandler languageHandler) throws ApplicationException {
     Query morphQuery = null;
     if (query instanceof TermQuery) {
