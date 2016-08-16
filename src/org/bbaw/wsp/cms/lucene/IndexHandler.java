@@ -55,6 +55,7 @@ import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.FuzzyQuery;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.MatchAllDocsQuery;
+import org.apache.lucene.search.MultiTermQuery;
 import org.apache.lucene.search.NumericRangeQuery;
 import org.apache.lucene.search.PhraseQuery;
 import org.apache.lucene.search.PrefixQuery;
@@ -72,6 +73,7 @@ import org.apache.lucene.queries.mlt.MoreLikeThis;
 import org.apache.lucene.search.suggest.tst.TSTLookup;
 import org.apache.lucene.search.vectorhighlight.FastVectorHighlighter;
 import org.apache.lucene.search.vectorhighlight.FieldQuery;
+import org.apache.lucene.search.vectorhighlight.FieldQuery.QueryPhraseMap;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.BytesRef;
@@ -878,9 +880,6 @@ public class IndexHandler {
       }
       Query morphQuery = buildMorphQuery(query, language, false, translate, languageHandler);
       Query highlighterQuery = buildHighlighterQuery(query, language, translate, languageHandler);
-      if (query instanceof PhraseQuery || query instanceof PrefixQuery || query instanceof FuzzyQuery || query instanceof TermRangeQuery) {
-        highlighterQuery = query;  // TODO wenn sie rekursiv enthalten sind 
-      }
       Sort sort = new Sort();
       SortField scoreSortField = new SortField(null, Type.SCORE); // default sort
       sort.setSort(scoreSortField);
@@ -914,7 +913,7 @@ public class IndexHandler {
       if (resultDocs != null) {
         ArrayList<org.bbaw.wsp.cms.document.Document> docs = new ArrayList<org.bbaw.wsp.cms.document.Document>();
         ArrayList<Float> scores = new ArrayList<Float>();
-        FastVectorHighlighter highlighter = new FastVectorHighlighter(true, false);
+        FastVectorHighlighter highlighter = new FastVectorHighlighter(true, false); // fieldMatch: false: cause any field to be highlighted regardless of whether the query matched specifically on them. The default behaviour is true, meaning that only fields that hold a query match will be highlighted.
         for (int i=from; i<=toTmp; i++) { 
           int docID = resultDocs.scoreDocs[i].doc;
           float score = resultDocs.scoreDocs[i].score;
@@ -924,7 +923,7 @@ public class IndexHandler {
             ArrayList<String> hitFragments = new ArrayList<String>();
             IndexableField docContentField = luceneDoc.getField("content");
             if (docContentField != null && highlighterQuery != null) {
-              FieldQuery highlighterFieldQuery = highlighter.getFieldQuery(highlighterQuery);
+              FieldQuery highlighterFieldQuery = highlighter.getFieldQuery(highlighterQuery, documentsIndexReader);  // indexReader muss angegeben werden, damit die WildcardQuery etc. Ergebnisse liefert
               String[] textfragments = highlighter.getBestFragments(highlighterFieldQuery, documentsIndexReader, docID, docContentField.name(), 100, 2);
               if (textfragments.length > 0) {
                 for (int j=0; j<textfragments.length; j++) {
@@ -1575,27 +1574,57 @@ public class IndexHandler {
 
   private Query removeNonFulltextFields(Query query) throws ApplicationException {
     Query retQuery = null;
-    if (query instanceof TermQuery) {
-      TermQuery termQuery = (TermQuery) query;
-      if (isFulltextQuery(termQuery))
-        retQuery = termQuery;
+    if (query instanceof TermQuery || query instanceof PhraseQuery || query instanceof WildcardQuery || query instanceof FuzzyQuery || query instanceof PrefixQuery) {
+      if (isFulltextQuery(query))
+        retQuery = query;
       else 
         retQuery = null;
     } else if (query instanceof BooleanQuery) {
       BooleanQuery booleanQuery = (BooleanQuery) query;
       retQuery = removeNonFulltextFields(booleanQuery);
     } else {
-      retQuery = query; // all other cases: PrefixQuery, PhraseQuery, FuzzyQuery, TermRangeQuery, ...
+      retQuery = query; // TODO: all other cases
     }
     return retQuery;
   }
 
-  private boolean isFulltextQuery(TermQuery termQuery) throws ApplicationException {
-    String fieldName = termQuery.getTerm().field();
+  private boolean isFulltextQuery(Query query) throws ApplicationException {
+    boolean isFulltextQuery = false;
+    if (query instanceof TermQuery) {
+      TermQuery termQuery = (TermQuery) query;
+      Term term = termQuery.getTerm();
+      isFulltextQuery = isFulltextTerm(term);
+    } else if (query instanceof WildcardQuery) {
+      WildcardQuery wildcardTermQuery = (WildcardQuery) query;
+      Term term = wildcardTermQuery.getTerm();
+      isFulltextQuery = isFulltextTerm(term);
+    } else if (query instanceof FuzzyQuery) {
+      FuzzyQuery fuzzyTermQuery = (FuzzyQuery) query;
+      Term term = fuzzyTermQuery.getTerm();
+      isFulltextQuery = isFulltextTerm(term);
+    } else if (query instanceof PrefixQuery) {
+      PrefixQuery prefixQuery = (PrefixQuery) query;
+      Term term = prefixQuery.getPrefix();
+      isFulltextQuery = isFulltextTerm(term);
+    } else if (query instanceof PhraseQuery) {
+      PhraseQuery phraseQuery = (PhraseQuery) query;
+      Term[] terms = phraseQuery.getTerms();
+      Term firstTerm = null;
+      if (terms != null && terms.length > 0)
+        firstTerm = terms[0];
+      if (firstTerm != null) {
+        isFulltextQuery = isFulltextTerm(firstTerm);
+      } 
+    }
+    return isFulltextQuery;
+  }
+
+  private boolean isFulltextTerm(Term term) {
+    boolean isFulltext = false;
+    String fieldName = term.field();
     if (fieldName != null && (fieldName.equals("tokenOrig") || fieldName.equals("tokenMorph")))
-      return true;
-    else
-      return false;
+      isFulltext = true;
+    return isFulltext;
   }
   
   private BooleanQuery removeNonFulltextFields(BooleanQuery booleanQuery) throws ApplicationException {
@@ -1607,15 +1636,14 @@ public class IndexHandler {
     for (int i=0; i<clauses.size(); i++) {
       BooleanClause clause = clauses.get(i);
       Query clauseQuery = clause.getQuery();
-      if (clauseQuery instanceof TermQuery) {
-        TermQuery termQuery = (TermQuery) clauseQuery;
-        if (isFulltextQuery(termQuery))
+      if (clauseQuery instanceof TermQuery || clauseQuery instanceof PhraseQuery || clauseQuery instanceof WildcardQuery || clauseQuery instanceof FuzzyQuery || clauseQuery instanceof PrefixQuery) {
+        if (isFulltextQuery(clauseQuery))
           fulltextClauses.add(clause);
       } else if (clauseQuery instanceof BooleanQuery) {
         BooleanQuery bQuery = (BooleanQuery) clauseQuery;
         retQuery = removeNonFulltextFields(bQuery);
       } else {
-        fulltextClauses.add(clause); // all other cases: PrefixQuery, PhraseQuery, FuzzyQuery, TermRangeQuery, ...
+        fulltextClauses.add(clause); // all other cases: PrefixQuery, FuzzyQuery, TermRangeQuery, ...
       }
     }
     if (! fulltextClauses.isEmpty()) {
