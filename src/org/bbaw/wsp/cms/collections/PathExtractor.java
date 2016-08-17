@@ -81,7 +81,8 @@ public class PathExtractor {
             break;
           }
           if (event == XMLStreamConstants.START_ELEMENT) {
-            String nameAttributeValue = reader.getAttributeValue(null, "name"); // e.g. from <exist:collection name="/db/apps/SadeRegistres/data/protokolle" created="2015-03-26T11:49:00.69+01:00" owner="admin" group="dba" permissions="rwxrwxr-x">
+            String nameAttributeValue = reader.getAttributeValue(null, "name"); 
+            // e.g. attr name in <exist:collection name="/db/apps/SadeRegistres/data/protokolle" created="2015-03-26T11:49:00.69+01:00" owner="admin" group="dba" permissions="rwxrwxr-x"> or
             if ((nameAttributeValue) != null) {
               if (reader.getLocalName().equals("collection") && !(startUrl.endsWith(nameAttributeValue))) {
                 if (! isNameExcluded(nameAttributeValue.toLowerCase())) {
@@ -100,9 +101,10 @@ public class PathExtractor {
               }
               if (reader.getLocalName().equals("resource")) {
                 String url = startUrl + "/" + nameAttributeValue;
+                // e.g. attr name in <exist:resource name="0723-1763_06_16.xml" created="2015-03-26T11:49:00.694+01:00" last-modified="2015-03-26T11:49:00.694+01:00" owner="admin" group="dba" permissions="rw-rw-r--"/>
                 if (startUrl.endsWith("/"))
                   url = startUrl + nameAttributeValue;
-                boolean startUrlIsExcluded = isExcluded(url); // if exclude contains a full file name e.g. verzeichnisse/personenkorrektur.xml
+                boolean startUrlIsExcluded = isExcluded(url);
                 if (! startUrlIsExcluded) {
                   try {
                     url = URLDecoder.decode(url, "utf-8"); // decodes the "%HexHex" chars into unicode chars e.g. "%20" to " "
