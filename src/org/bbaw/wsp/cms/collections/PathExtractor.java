@@ -2,6 +2,8 @@ package org.bbaw.wsp.cms.collections;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
@@ -79,7 +81,7 @@ public class PathExtractor {
             break;
           }
           if (event == XMLStreamConstants.START_ELEMENT) {
-            String nameAttributeValue = reader.getAttributeValue(null, "name");
+            String nameAttributeValue = reader.getAttributeValue(null, "name"); // e.g. from <exist:collection name="/db/apps/SadeRegistres/data/protokolle" created="2015-03-26T11:49:00.69+01:00" owner="admin" group="dba" permissions="rwxrwxr-x">
             if ((nameAttributeValue) != null) {
               if (reader.getLocalName().equals("collection") && !(startUrl.endsWith(nameAttributeValue))) {
                 if (! isNameExcluded(nameAttributeValue.toLowerCase())) {
@@ -122,24 +124,30 @@ public class PathExtractor {
     }
   }
 
-  private boolean isExcluded(String url) {
+  private boolean isExcluded(String urlStr) {
     boolean isExcluded = false;
-    if (excludes != null && ! excludes.isEmpty() && url != null) {
-      for (int i=0; i<excludes.size(); i++) {
-        String exclude = excludes.get(i);
-        if (url.endsWith(exclude))
-          return true;
+    try {
+      URL url = new URL(urlStr);
+      String urlStrRelative  = url.getPath();
+      if (excludes != null && ! excludes.isEmpty() && url != null) {
+        for (int i=0; i<excludes.size(); i++) {
+          String exclude = excludes.get(i);
+          if (urlStrRelative.matches(exclude))
+            return true;
+        }
       }
+    } catch (MalformedURLException e) {
+      LOGGER.error("eXist PathExtractor: Malformed URL: " + urlStr);
     }
     return isExcluded;
   }
   
-  private boolean isNameExcluded(String name) {
+  private boolean isNameExcluded(String urlStrRelative) {
     boolean isExcluded = false;
-    if (excludes != null && name != null) {
+    if (excludes != null && urlStrRelative != null) {
       for (int i=0; i<excludes.size(); i++) {
         String exclude = excludes.get(i);
-        if (name.equals(exclude))
+        if (urlStrRelative.matches(exclude))
           return true;
       }
     }
