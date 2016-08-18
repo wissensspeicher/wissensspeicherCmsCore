@@ -88,7 +88,9 @@ public class Crawler {
                 MetadataRecord newMdRecord = getNewMdRecord(startUrlStr, urlStr);
                 if (newMdRecord != null) {
                   urlsHashtable.put(urlStr, newMdRecord);
-                  allowedResourceMdRecords.add(newMdRecord);
+                  String mimeType = newMdRecord.getType();
+                  if (mimeType != null && isHtml(mimeType))
+                    allowedResourceMdRecords.add(newMdRecord);
                 }
               }
             }
@@ -113,7 +115,7 @@ public class Crawler {
     try {
       url = new URL(urlStr);
       String mimeType = detect(startUrlStr, url);
-      if (mimeType == null || ! isHtml(mimeType))
+      if (mimeType == null)
         return null;
       newMdRecord = new MetadataRecord();
       newMdRecord.setWebUri(urlStr);
