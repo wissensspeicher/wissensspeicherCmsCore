@@ -823,8 +823,8 @@ public class MetadataHandler {
   private List<String> extractDocumentUrls(String collectionDataUrl, ArrayList<String> excludes) {
     List<String> documentUrls = null;
     if (! collectionDataUrl.equals("")){
-      PathExtractor extractor = new PathExtractor();
-      documentUrls = extractor.initExtractor(collectionDataUrl, excludes);
+      PathExtractor extractor = new PathExtractor(collectionDataUrl, excludes);
+      documentUrls = extractor.extract();
     }
     return documentUrls;
   }

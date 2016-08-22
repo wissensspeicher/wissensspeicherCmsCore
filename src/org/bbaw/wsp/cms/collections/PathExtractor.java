@@ -2,8 +2,6 @@ package org.bbaw.wsp.cms.collections;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,18 +27,18 @@ import org.apache.log4j.Logger;
  */
 public class PathExtractor {
   private static Logger LOGGER = Logger.getLogger(PathExtractor.class);
-  private List<String> ressourceLoc;
+  private String rootUrlStr;
   private ArrayList<String> excludes;
+  private List<String> ressourceLoc = new ArrayList<String>();;
 
-  public PathExtractor() {
-
+  public PathExtractor(String rootUrlStr, ArrayList<String> excludes) {
+    this.rootUrlStr = rootUrlStr;
+    this.excludes = excludes;
   }
 
-  public List<String> initExtractor(String startingUri, ArrayList<String> excludes) {
-    this.excludes = excludes;
-    ressourceLoc = new ArrayList<String>();
+  public List<String> extract() {
     // parameter necessary, because it's recursive, thus changing the uri
-    extractDocLocations(startingUri);
+    extractDocLocations(rootUrlStr);
     return this.ressourceLoc;
   }
 
@@ -83,20 +81,23 @@ public class PathExtractor {
           if (event == XMLStreamConstants.START_ELEMENT) {
             String nameAttributeValue = reader.getAttributeValue(null, "name"); 
             // e.g. attr name in <exist:collection name="/db/apps/SadeRegistres/data/protokolle" created="2015-03-26T11:49:00.69+01:00" owner="admin" group="dba" permissions="rwxrwxr-x"> or
+            // e.g. attr name in <exist:collection name="protokolle" created="2015-03-26T11:49:00.69+01:00" owner="admin" group="dba" permissions="rwxrwxr-x"> or
             if ((nameAttributeValue) != null) {
-              if (reader.getLocalName().equals("collection") && !(startUrl.endsWith(nameAttributeValue))) {
-                if (! isNameExcluded(nameAttributeValue.toLowerCase())) {
-                  if (nameAttributeValue.startsWith("/")) {
-                    client.getConnectionManager().closeExpiredConnections();
-                      extractDocLocations(startUrl + nameAttributeValue);
+              if (reader.getLocalName().equals("collection") && ! (startUrl.endsWith(nameAttributeValue))) {
+                String extractUrlStr = "";
+                if (nameAttributeValue.startsWith("/")) {
+                  extractUrlStr = startUrl + nameAttributeValue;
+                } else {
+                  if (! startUrl.endsWith("/")) {
+                    extractUrlStr = startUrl + "/" + nameAttributeValue;
                   } else {
-                    client.getConnectionManager().closeExpiredConnections();
-                    if (! startUrl.endsWith("/")) {
-                      extractDocLocations(startUrl + "/" + nameAttributeValue);
-                    } else {
-                      extractDocLocations(startUrl + nameAttributeValue);
-                    }
+                    extractUrlStr = startUrl + nameAttributeValue;
                   }
+                }
+                boolean urlIsExcluded = isExcluded(extractUrlStr);
+                if (! urlIsExcluded) {
+                  client.getConnectionManager().closeExpiredConnections();
+                  extractDocLocations(extractUrlStr);
                 }
               }
               if (reader.getLocalName().equals("resource")) {
@@ -104,8 +105,8 @@ public class PathExtractor {
                 // e.g. attr name in <exist:resource name="0723-1763_06_16.xml" created="2015-03-26T11:49:00.694+01:00" last-modified="2015-03-26T11:49:00.694+01:00" owner="admin" group="dba" permissions="rw-rw-r--"/>
                 if (startUrl.endsWith("/"))
                   url = startUrl + nameAttributeValue;
-                boolean startUrlIsExcluded = isExcluded(url);
-                if (! startUrlIsExcluded) {
+                boolean urlIsExcluded = isExcluded(url);
+                if (! urlIsExcluded) {
                   try {
                     url = URLDecoder.decode(url, "utf-8"); // decodes the "%HexHex" chars into unicode chars e.g. "%20" to " "
                   } catch (UnsupportedEncodingException e) {
@@ -128,25 +129,8 @@ public class PathExtractor {
 
   private boolean isExcluded(String urlStr) {
     boolean isExcluded = false;
-    try {
-      URL url = new URL(urlStr);
-      String urlStrRelative  = url.getPath();
-      if (excludes != null && ! excludes.isEmpty() && url != null) {
-        for (int i=0; i<excludes.size(); i++) {
-          String exclude = excludes.get(i);
-          if (urlStrRelative.matches(exclude))
-            return true;
-        }
-      }
-    } catch (MalformedURLException e) {
-      LOGGER.error("eXist PathExtractor: Malformed URL: " + urlStr);
-    }
-    return isExcluded;
-  }
-  
-  private boolean isNameExcluded(String urlStrRelative) {
-    boolean isExcluded = false;
-    if (excludes != null && urlStrRelative != null) {
+    String urlStrRelative  = urlStr.replaceAll(rootUrlStr, "");
+    if (excludes != null && ! excludes.isEmpty()) {
       for (int i=0; i<excludes.size(); i++) {
         String exclude = excludes.get(i);
         if (urlStrRelative.matches(exclude))
