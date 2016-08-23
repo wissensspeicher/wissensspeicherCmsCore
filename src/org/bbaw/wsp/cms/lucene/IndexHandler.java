@@ -1646,7 +1646,7 @@ public class IndexHandler {
     if (! fulltextClauses.isEmpty()) {
       BooleanQuery.Builder boolQueryBuilder = new BooleanQuery.Builder();
       for (int i=0; i<fulltextClauses.size(); i++) {
-        BooleanClause clause = clauses.get(i);
+        BooleanClause clause = fulltextClauses.get(i);
           boolQueryBuilder.add(clause);
       }
       retQuery = boolQueryBuilder.build();
