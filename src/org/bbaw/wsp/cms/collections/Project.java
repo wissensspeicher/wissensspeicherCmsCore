@@ -1,5 +1,6 @@
 package org.bbaw.wsp.cms.collections;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -17,10 +18,56 @@ public class Project {
   private String updateCycle; // e.g. "monthly" or "halfyearly" 
   private String homepageUrl; // homepage url
   private String mainLanguage;
-  private HashMap<String, ProjectCollection> collections = new HashMap<String, ProjectCollection>();  // project collections: key is projectRdfId and value is collection
+  private HashMap<String, ProjectCollection> collections = new HashMap<String, ProjectCollection>();  // project collections: key is collectionRdfId and value is collection
+  private HashMap<String, Database> databases = new HashMap<String, Database>();  // project databases (redundant to collection databases): key is databaseRdfId and value is database
 
   public ProjectCollection getCollection(String collRdfId) {
     return collections.get(collRdfId);
+  }
+  
+  public void addCollection(String collRdfId, ProjectCollection collection) {
+    collections.put(collRdfId, collection);
+  }
+  
+  public void addDatabase(String databaseRdfId, Database database) {
+    databases.put(databaseRdfId, database);
+  }
+  
+  public ArrayList<Database> getDatabases() {
+    ArrayList<Database> retDBs = new ArrayList<Database>();
+    if (databases != null) {
+      java.util.Collection<Database> databaseValues = this.databases.values();
+      for (Database db : databaseValues) {
+        retDBs.add(db);
+      }
+    }
+    return retDBs;
+  }
+  
+  public ArrayList<Database> getDatabasesByType(String dbType) {
+    ArrayList<Database> retDBs = new ArrayList<Database>();
+    if (databases != null) {
+      java.util.Collection<Database> databaseValues = this.databases.values();
+      for (Database db : databaseValues) {
+        String type = db.getType();
+        if (type != null && type.equals(dbType))
+          retDBs.add(db);
+      }
+    }
+    return retDBs;
+  }
+  
+  public ArrayList<Database> getDatabasesByName(String dbName) {
+    ArrayList<Database> retDBs = new ArrayList<Database>();
+    if (databases != null) {
+      java.util.Collection<Database> databaseValues = this.databases.values();
+      for (Database db : databaseValues) {
+        String name = db.getName();
+        if (name != null && name.equals(dbName))
+          retDBs.add(db);
+      }
+    }
+    return retDBs;
   }
   
   public void buildRdfPathes() throws ApplicationException {
@@ -39,10 +86,6 @@ public class Project {
       return rdfId;
     String projectRdfPath = parentProject.calcRdfPath() + "###" + rdfId;
     return projectRdfPath;
-  }
-  
-  public void addCollection(String collRdfId, ProjectCollection collection) {
-    collections.put(collRdfId, collection);
   }
   
   public String getId() {

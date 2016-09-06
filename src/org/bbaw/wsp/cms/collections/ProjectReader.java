@@ -342,6 +342,7 @@ public class ProjectReader {
           Database database = Database.fromDatabaseElement(databaseElem);
           String databaseRdfId = database.getRdfId();
           collection.addDatabase(databaseRdfId, database);
+          project.addDatabase(databaseRdfId, database);  // redundant also in project
         }
       }
       String updateCycle = projectXmlDoc.select("wsp > updateCycle").text();

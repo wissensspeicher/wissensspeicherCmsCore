@@ -88,8 +88,8 @@ public class ProjectCollection {
   public ArrayList<Database> getDatabasesByType(String dbType) {
     ArrayList<Database> retDBs = new ArrayList<Database>();
     if (databases != null) {
-      for (int i=0; i<databases.size(); i++) {
-        Database db = databases.get(i);
+      java.util.Collection<Database> databaseValues = this.databases.values();
+      for (Database db : databaseValues) {
         String type = db.getType();
         if (type != null && type.equals(dbType))
           retDBs.add(db);
@@ -101,8 +101,8 @@ public class ProjectCollection {
   public ArrayList<Database> getDatabasesByName(String dbName) {
     ArrayList<Database> retDBs = new ArrayList<Database>();
     if (databases != null) {
-      for (int i=0; i<databases.size(); i++) {
-        Database db = databases.get(i);
+      java.util.Collection<Database> databaseValues = this.databases.values();
+      for (Database db : databaseValues) {
         String name = db.getName();
         if (name != null && name.equals(dbName))
           retDBs.add(db);
