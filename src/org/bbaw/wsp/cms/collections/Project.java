@@ -3,10 +3,13 @@ package org.bbaw.wsp.cms.collections;
 import java.util.Date;
 import java.util.HashMap;
 
+import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
+
 public class Project {
   private String id;  // nick name
   private String rdfId;  // rdfId of this project
   private String parentRdfId;  // rdf id of which this project is part of 
+  private String rdfPath; // path from this project to root (project or organization)
   private String type; // project or organization
   private String title;  // title of project
   private Date lastModified; // last modified
@@ -19,9 +22,29 @@ public class Project {
   public ProjectCollection getCollection(String collRdfId) {
     return collections.get(collRdfId);
   }
+  
+  public void buildRdfPathes() throws ApplicationException {
+    this.rdfPath = calcRdfPath();
+    java.util.Collection<ProjectCollection> collectionValues = this.collections.values();
+    for (ProjectCollection collection : collectionValues) {
+      collection.buildRdfPath();
+    }
+  }
+  
+  private String calcRdfPath() throws ApplicationException {
+    if (parentRdfId == null)
+      return rdfId;
+    Project parentProject = ProjectReader.getInstance().getProjectByRdfId(parentRdfId);
+    if (parentProject == null)
+      return rdfId;
+    String projectRdfPath = parentProject.calcRdfPath() + "###" + rdfId;
+    return projectRdfPath;
+  }
+  
   public void addCollection(String collRdfId, ProjectCollection collection) {
     collections.put(collRdfId, collection);
   }
+  
   public String getId() {
     return id;
   }
@@ -39,6 +62,9 @@ public class Project {
   }
   public void setParentRdfId(String parentRdfId) {
     this.parentRdfId = parentRdfId;
+  }
+  public String getRdfPath() {
+    return rdfPath;
   }
   public String getType() {
     return type;

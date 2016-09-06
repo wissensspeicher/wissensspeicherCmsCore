@@ -3,10 +3,17 @@ package org.bbaw.wsp.cms.collections;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.apache.log4j.Logger;
+
+import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
+
 public class ProjectCollection {
+  private static Logger LOGGER = Logger.getLogger(ProjectReader.class);
   private String id;
   private String rdfId;
-  private String projectRdfId; // rdfId of parent project
+  private String projectRdfId; // rdfId of project
+  private String parentRdfId; // rdfId of parent collection
+  private String rdfPath; // path from this collection to root (project or organization)
   private HashMap<String, Database> databases = new HashMap<String, Database>();  // // collection databases: key is databaseRdfId and value is database
   
   public ProjectCollection(String projectRdfId) {
@@ -19,6 +26,27 @@ public class ProjectCollection {
   
   public void addDatabase(String databaseRdfId, Database database) {
     databases.put(databaseRdfId, database);
+  }
+  
+  public void buildRdfPath() throws ApplicationException {
+    this.rdfPath = calcRdfPath();
+  }
+  
+  private String calcRdfPath() throws ApplicationException {
+    Project project = ProjectReader.getInstance().getProjectByRdfId(projectRdfId);
+    if (parentRdfId == null)
+      return project.getRdfPath() + "###" + rdfId;
+    ProjectCollection parentCollection = project.getCollection(parentRdfId);
+    if (parentCollection == null) {
+      Project parentProject = ProjectReader.getInstance().getProjectByRdfId(projectRdfId);
+      if (parentProject == null) {
+        LOGGER.error("Collection: " + rdfId + " calcRdfPath: parent rdfId: " + parentRdfId + " not found");
+        return "null";
+      }
+      return parentProject.getRdfPath() + "###" + rdfId;
+    }
+    String collectionRdfPath = parentCollection.calcRdfPath() + "###" + rdfId;
+    return collectionRdfPath;
   }
   
   public String getId() {
@@ -43,6 +71,18 @@ public class ProjectCollection {
 
   public void setProjectRdfId(String projectRdfId) {
     this.projectRdfId = projectRdfId;
+  }
+
+  public String getParentRdfId() {
+    return parentRdfId;
+  }
+  
+  public void setParentRdfId(String parentRdfId) {
+    this.parentRdfId = parentRdfId;
+  }
+  
+  public String getRdfPath() {
+    return rdfPath;
   }
 
   public ArrayList<Database> getDatabasesByType(String dbType) {
