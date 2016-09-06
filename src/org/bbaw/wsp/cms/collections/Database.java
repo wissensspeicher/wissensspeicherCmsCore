@@ -25,6 +25,15 @@ public class Database {
   private Hashtable<String, XQuery> xQueries;
   private Hashtable<String, String> dcField2dbField = new Hashtable<String, String>();
 
+  public String getFileNameId() {
+    if (rdfId == null)
+      return null;
+    // e.g. "http://telota.bbaw.de:8085/exist/rest/db/AvHBriefedition" is converted to "telota.bbaw.de:8085##exist##rest##db##AvHBriefedition"
+    String fileNameId = rdfId.replaceFirst("https*://", "");
+    fileNameId = fileNameId.replaceAll("/", "##");
+    return fileNameId;
+  }
+  
   public String getRdfId() {
     return rdfId;
   }
