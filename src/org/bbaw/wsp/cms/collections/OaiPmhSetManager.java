@@ -15,11 +15,11 @@ import de.mpg.mpiwg.berlin.mpdl.xml.xquery.XQueryEvaluator;
 
 public class OaiPmhSetManager {
 
-  CollectionReader cReader;
+  ProjectReader projectReader;
   String source = "/opt/apache-tomcat-7.0.29/webapps/oai/WEB-INF/repository_settings_and_data/ListSets-config.xml";
   String outputDir = "/home/juergens/wspEtc/ressourcen";
   private XQueryEvaluator xQueryEvaluator;
-  private ArrayList<Collection> collections;
+  private ArrayList<Project> projects;
 
   private static final Logger logger = Logger.getLogger(OaiPmhSetManager.class);
   
@@ -38,9 +38,9 @@ public class OaiPmhSetManager {
 
   public void init(){
 		try {
-			this.cReader = CollectionReader.getInstance();
+			this.projectReader = ProjectReader.getInstance();
 			this.xQueryEvaluator = new XQueryEvaluator();
-			this.collections = cReader.getCollections();
+			this.projects = projectReader.getProjects();
 		} catch (ApplicationException e) {
 			e.printStackTrace();
 		}
@@ -59,14 +59,14 @@ public class OaiPmhSetManager {
       builder.append(System.getProperty("line.separator"));
       builder.append("<ListSets>");
       builder.append(System.getProperty("line.separator"));
-      for (Collection c : collections) {
+      for (Project p : projects) {
 //      System.out.println(c.getId()); 
       
         builder.append("<set>");
         builder.append(System.getProperty("line.separator"));
-        builder.append("<setSpec>"+c.getId()+"</setSpec>");
+        builder.append("<setSpec>"+p.getId()+"</setSpec>");
         builder.append(System.getProperty("line.separator"));
-        builder.append("<setName>"+c.getId()+"</setName>");
+        builder.append("<setName>"+p.getId()+"</setName>");
         builder.append(System.getProperty("line.separator"));
         builder.append("<setDescription>");
         builder.append(System.getProperty("line.separator"));
@@ -76,7 +76,7 @@ public class OaiPmhSetManager {
         builder.append(System.getProperty("line.separator"));
         builder.append("<virtualSearchField field=\"setSpec\">");
         builder.append(System.getProperty("line.separator"));
-        builder.append("<virtualSearchTermDefinition term=\""+c.getId()+"\">");
+        builder.append("<virtualSearchTermDefinition term=\""+p.getId()+"\">");
         builder.append(System.getProperty("line.separator"));
         builder.append("<Query>");
         builder.append(System.getProperty("line.separator"));
@@ -84,7 +84,7 @@ public class OaiPmhSetManager {
         builder.append(System.getProperty("line.separator"));
         builder.append("<booleanQuery type=\"OR\" excludeOrRequire=\"require\">");
         builder.append(System.getProperty("line.separator"));
-        builder.append("<textQuery field=\"docdir\" type=\"matchKeyword\">/opt/wsp/data/oaiprovider/"+c.getId()+"</textQuery>");
+        builder.append("<textQuery field=\"docdir\" type=\"matchKeyword\">/opt/wsp/data/oaiprovider/"+p.getId()+"</textQuery>");
         builder.append(System.getProperty("line.separator"));
         builder.append("</booleanQuery>");
         builder.append(System.getProperty("line.separator"));
@@ -120,12 +120,12 @@ public class OaiPmhSetManager {
    */
   public void connectSetAndData() {
     try {
-      CollectionReader collectionReader = CollectionReader.getInstance();
-      ArrayList<Collection> collList = collectionReader.getCollections();
+      ProjectReader projectReader = ProjectReader.getInstance();
+      ArrayList<Project> projectList = projectReader.getProjects();
       
-      for (Collection collection : collList) {
+      for (Project project : projectList) {
         String resultStr = null; 
-        String currentSet = collection.getId();
+        String currentSet = project.getId();
         HttpClient client = new HttpClient();
         String params = "command=addMetadataDir&dirNickname="+currentSet+"&dirMetadataFormat=oai_dc&dirPath=/opt/wsp/data/oaiprovider/"+currentSet+"&metadataNamespace=http://www.openarchives.org/OAI/2.0/oai_dc/&metadataSchema=http://www.openarchives.org/OAI/2.0/oai_dc.xsd";
         PostMethod postmethod = new PostMethod("http://wspdev.bbaw.de/oai/admin/metadata_dir-validate.do?"+params);

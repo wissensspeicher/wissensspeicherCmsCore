@@ -8,9 +8,10 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class Database {
-  private String rdfId;
+  private String rdfId; // e.g. http://telota.bbaw.de:8085/exist/rest/db/AvHBriefedition
+  private String collectionRdfId; // rdfId of collection which this database is part of
   private String type;
-  private String name; // TODO remove this field
+  private String name; // unique database name (converted from rdfId); e.g. telota.bbaw.de:8085##exist##rest##db##AvHBriefedition
   private String url;  // start url (crawl, eXist or oai)
   private String language;  // language of db content
   private JdbcConnection jdbcConnection;
@@ -25,21 +26,21 @@ public class Database {
   private Hashtable<String, XQuery> xQueries;
   private Hashtable<String, String> dcField2dbField = new Hashtable<String, String>();
 
-  public String getFileNameId() {
-    if (rdfId == null)
-      return null;
-    // e.g. "http://telota.bbaw.de:8085/exist/rest/db/AvHBriefedition" is converted to "telota.bbaw.de:8085##exist##rest##db##AvHBriefedition"
-    String fileNameId = rdfId.replaceFirst("https*://", "");
-    fileNameId = fileNameId.replaceAll("/", "##");
-    return fileNameId;
-  }
-  
   public String getRdfId() {
     return rdfId;
   }
 
   public void setRdfId(String rdfId) {
     this.rdfId = rdfId;
+    this.name = buildUniqueName(rdfId);
+  }
+
+  public String getCollectionRdfId() {
+    return collectionRdfId;
+  }
+
+  public void setCollectionRdfId(String collectionRdfId) {
+    this.collectionRdfId = collectionRdfId;
   }
 
   public String getType() {
@@ -230,4 +231,14 @@ public class Database {
     }
     return database;
   }
+
+  private String buildUniqueName(String rdfId) {
+    if (rdfId == null)
+      return null;
+    // e.g. "http://telota.bbaw.de:8085/exist/rest/db/AvHBriefedition" is converted to "telota.bbaw.de:8085##exist##rest##db##AvHBriefedition"
+    String fileNameId = rdfId.replaceFirst("https*://", "");
+    fileNameId = fileNameId.replaceAll("/", "##");
+    return fileNameId;
+  }
+  
 }

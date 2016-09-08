@@ -17,7 +17,6 @@ import java.util.List;
 import java.util.Properties;
 
 import org.apache.log4j.Logger;
-import org.bbaw.wsp.cms.collections.CollectionReader;
 import org.bbaw.wsp.cms.general.Constants;
 
 import com.hp.hpl.jena.query.Dataset;

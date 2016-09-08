@@ -35,7 +35,7 @@ public class Crawler {
     this.maxDepth = maxDepth;
     if (maxDepth == null || maxDepth == 0)
       this.maxDepth = DEFAULT_MAX_DEPTH;
-    ArrayList<String> crawlerExcludes = CollectionReader.getInstance().getCrawlerExcludes();
+    ArrayList<String> crawlerExcludes = ProjectReader.getInstance().getGlobalExcludes();
     if (crawlerExcludes != null && excludes != null)
       excludes.addAll(crawlerExcludes);
     else if (crawlerExcludes != null && excludes == null)

@@ -13,10 +13,11 @@ public class Project {
   private String rdfPath; // path from this project to root (project or organization)
   private String type; // project or organization
   private String title;  // title of project
+  private String homepageUrl; // homepage url
+  private String temporal; // temporal, e.g. "http://wissensspeicher.bbaw.de/rdf/normdata/Neuzeit"
   private Date lastModified; // last modified
   private String status; // e.g. "aktiv" or "abgeschlossen" 
   private String updateCycle; // e.g. "monthly" or "halfyearly" 
-  private String homepageUrl; // homepage url
   private String mainLanguage;
   private HashMap<String, ProjectCollection> collections = new HashMap<String, ProjectCollection>();  // project collections: key is collectionRdfId and value is collection
   private HashMap<String, Database> databases = new HashMap<String, Database>();  // project databases (redundant to collection databases): key is databaseRdfId and value is database
@@ -120,6 +121,12 @@ public class Project {
   }
   public void setTitle(String title) {
     this.title = title;
+  }
+  public String getTemporal() {
+    return temporal;
+  }
+  public void setTemporal(String temporal) {
+    this.temporal = temporal;
   }
   public Date getLastModified() {
     return lastModified;

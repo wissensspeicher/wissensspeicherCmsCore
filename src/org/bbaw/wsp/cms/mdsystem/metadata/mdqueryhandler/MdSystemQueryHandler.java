@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
-import org.bbaw.wsp.cms.collections.Collection;
-import org.bbaw.wsp.cms.collections.CollectionReader;
+import org.bbaw.wsp.cms.collections.Project;
+import org.bbaw.wsp.cms.collections.ProjectReader;
 import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.conceptsearch.ConceptIdentfierSearchMode;
 import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.conceptsearch.ConceptIdentifier;
 import org.bbaw.wsp.cms.mdsystem.metadata.mdqueryhandler.conceptsearch.ConceptQueryResult;
@@ -85,18 +85,18 @@ public class MdSystemQueryHandler {
     return mdSystemQueryHandler;
   }
 
-  private ArrayList<Collection> getCollectionIds(){
-    ArrayList<Collection> collectionList = null;
+  private ArrayList<Project> getProjectIds(){
+    ArrayList<Project> projectList = null;
     try {
-      collectionList = CollectionReader.getInstance().getCollections();
+      projectList = ProjectReader.getInstance().getProjects();
     } catch (ApplicationException e) {
       e.printStackTrace();
     }
-    return collectionList;
+    return projectList;
   }
   
   public HitGraphContainer preloadAllProjectInf(){
-    ArrayList<Collection> collectionIds = getCollectionIds();
+    ArrayList<Project> projectIds = getProjectIds();
     StringBuilder sb = new StringBuilder();
     sb.append(
       "SELECT *\n"+ 

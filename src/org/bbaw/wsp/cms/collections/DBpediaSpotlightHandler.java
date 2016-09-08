@@ -11,7 +11,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.List;
 import java.util.Scanner;
 
 import net.sf.saxon.s9api.XdmItem;
@@ -26,7 +25,6 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.apache.log4j.Logger;
-import org.bbaw.wsp.cms.collections.Collection;
 import org.bbaw.wsp.cms.document.Annotation;
 import org.bbaw.wsp.cms.document.DBpediaResource;
 import org.bbaw.wsp.cms.general.Constants;
@@ -36,7 +34,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
-import de.mpg.mpiwg.berlin.mpdl.util.StringUtils;
 import de.mpg.mpiwg.berlin.mpdl.xml.xquery.XQueryEvaluator;
 
 /*
@@ -327,7 +324,7 @@ public class DBpediaSpotlightHandler {
     }
   }
 
-  public Annotation annotate(Collection collection, String docId, String textInput, String confidence, int count) throws ApplicationException {
+  public Annotation annotate(Project project, String docId, String textInput, String confidence, int count) throws ApplicationException {
     Annotation annotation = null;
     if (! serviceAnnotateReachable) {
       String urlStr = SERVICE + "/" + "annotate";
@@ -408,7 +405,7 @@ public class DBpediaSpotlightHandler {
               r.setSupport(new Integer(supportStr));
             if (similarityStr != null && ! similarityStr.isEmpty())
               r.setSimilarity(new Double(similarityStr));
-            String coverage = collection.getCoverage();
+            String temporal = project.getTemporal();
             if (r.getType() == null) {
               boolean isPresentOrganisationType = 
                   typesStr.contains("DBpedia:Band") || typesStr.contains("Schema:MusicGroup") || 
@@ -420,7 +417,7 @@ public class DBpediaSpotlightHandler {
                 r.setType("person");
               } else if (isPresentOrganisationType) {
                 r.setType("organisation");
-                if (coverage != null && ! coverage.contains("Gegenwart")) // only add music bands and companies, if project is in "Gegenwart"
+                if (temporal != null && ! temporal.contains("Gegenwart")) // only add music bands and companies, if project is in "Gegenwart"
                   isProper = false;
               } else if (typesStr.contains("Organization") || typesStr.contains("Organisation")) {
                 r.setType("organisation");
@@ -533,128 +530,4 @@ public class DBpediaSpotlightHandler {
     }
     return resultStr;
   }
-
-
-  private Annotation annotateOld(Collection collection, String docId, String textInput, String confidence, int count) throws ApplicationException {
-    if (! serviceAnnotateReachable) {
-      String urlStr = SERVICE + "/" + "annotate";
-      LOGGER.info("DBpediaSpotlightHandler: Service: " + urlStr + " not reachable");
-      return null;
-    }
-    String testStr = "";
-    String text = textInput.replaceAll("-[ \n]+|&#[0-9];|&#1[0-9];|&#2[0-9];|&#30;|&#31;|&#32;|\uffff", ""); // entferne Bindestriche vor Blank/Zeilenende und Steuerzeichen wie "&#0;"
-    text = text.replaceAll("\n", " "); // new lines durch blank ersetzen (da sonst das Steuerzeichen &#10; erzeugt wird)
-    NameValuePair textParam = new NameValuePair("text", text);
-    NameValuePair confidenceParam = new NameValuePair("confidence", confidence);
-    // NameValuePair spotterParam = new NameValuePair("spotter", "Default"); // other values: NESpotter, ...
-    // NameValuePair typesParam = new NameValuePair("types", "Person"); // Person, Organisation, Place (Category ??) Einschränkung liefert evtl. zu wenige Entitäten
-    // NameValuePair supportParam = new NameValuePair("support", "20"); // how many incoming links are on the DBpedia-Resource 
-    // NameValuePair whitelistSparqlParam = new NameValuePair("sparql", "select ...");
-    NameValuePair[] params = {textParam, confidenceParam};
-    String spotlightAnnotationXmlStr = performPostRequest("annotate", params, "text/xml");
-    spotlightAnnotationXmlStr = spotlightAnnotationXmlStr.replaceAll("&#[0-9];", "XXXX"); // ersetze Steuerzeichen durch X (dann bleibt die Länge erhalten)
-    spotlightAnnotationXmlStr = spotlightAnnotationXmlStr.replaceAll("&#1[0-9];|&#2[0-9];|&#30;|&#31;|&#32;", "XXXXX"); // ersetze Steuerzeichen durch X (dann bleibt die Länge erhalten)
-    spotlightAnnotationXmlStr = spotlightAnnotationXmlStr.replaceAll("&#[0-9][0-9][0-9][0-9][0-9];", "XXXXXXXX"); // ersetze Steuerzeichen durch X (dann bleibt die Länge erhalten)
-    spotlightAnnotationXmlStr = spotlightAnnotationXmlStr.replaceAll("&#[0-9][0-9][0-9][0-9][0-9][0-9];", "XXXXXXXXX"); // ersetze Steuerzeichen durch X (dann bleibt die Länge erhalten)
-    List<DBpediaResource> resources = null; 
-    try {
-      XdmValue xmdValueResources = xQueryEvaluator.evaluate(spotlightAnnotationXmlStr, "//Resource[not(@URI = preceding::Resource/@URI)]");  // no double resources
-      String annotationText = xQueryEvaluator.evaluateAsString(spotlightAnnotationXmlStr, "string(/Annotation/@text)"); 
-      if (xmdValueResources != null && xmdValueResources.size() > 0) {
-        resources = new ArrayList<DBpediaResource>();
-        XdmSequenceIterator xmdValueResourcesIterator = xmdValueResources.iterator();
-        while (xmdValueResourcesIterator.hasNext()) {
-          XdmItem xdmItemResource = xmdValueResourcesIterator.next();
-          String resourceStr = xdmItemResource.toString();
-          testStr = resourceStr;
-          String uriStr = xQueryEvaluator.evaluateAsString(resourceStr, "string(/Resource/@URI)"); 
-          String supportStr = xQueryEvaluator.evaluateAsString(resourceStr, "string(/Resource/@support)"); 
-          String similarityStr = xQueryEvaluator.evaluateAsString(resourceStr, "string(/Resource/@similarityScore)"); 
-          String typesStr = xQueryEvaluator.evaluateAsString(resourceStr, "string(/Resource/@types)"); 
-          String surfaceFormStr = xQueryEvaluator.evaluateAsString(resourceStr, "string(/Resource/@surfaceForm)"); 
-          int offset = Integer.valueOf(xQueryEvaluator.evaluateAsString(resourceStr, "string(/Resource/@offset)"));
-          String surfaceFormContextStr = null;
-          if (offset < annotationText.length()) {
-            int leftContextBegin = offset - 20;
-            if (leftContextBegin < 0)
-              leftContextBegin = 0;
-            int rightContextEnd = offset + surfaceFormStr.length() + 20;
-            if (rightContextEnd > annotationText.length())
-              rightContextEnd = annotationText.length();
-            String surfaceFormLeftContextStr = annotationText.substring(leftContextBegin, offset); 
-            String surfaceFormRightContextStr = annotationText.substring(offset + surfaceFormStr.length(), rightContextEnd); 
-            surfaceFormContextStr = "(...) " + surfaceFormLeftContextStr + "||" + surfaceFormStr + "||" + surfaceFormRightContextStr + " (...)"; 
-          } 
-          String uriStrEscaped = StringUtils.deresolveXmlEntities(uriStr);
-          uriStrEscaped = uriStrEscaped.replaceAll("'", "&apos;");
-          String frequencyStr = xQueryEvaluator.evaluateAsString(spotlightAnnotationXmlStr, "count(//Resource[@URI = '" + uriStrEscaped + "'])");
-          DBpediaResource r = new DBpediaResource();
-          r.setUri(uriStr);
-          DBpediaResource dbPediaResource = dbPediaResources.get(uriStr);
-          if (dbPediaResource != null) {
-            r.setName(dbPediaResource.getName());
-            r.setType(dbPediaResource.getType());
-            r.setGnd(dbPediaResource.getGnd());
-          } else {
-            int begin = uriStr.lastIndexOf("resource/") + 9;
-            if (begin != -1) {
-              String name = uriStr.substring(begin);
-              name = name.replaceAll("_", " ");
-              r.setName(name);
-            }
-          }
-          boolean isProper = isProper(surfaceFormStr) && isProperUri(uriStr);
-          if (supportStr != null && ! supportStr.isEmpty())
-            r.setSupport(new Integer(supportStr));
-          if (similarityStr != null && ! similarityStr.isEmpty())
-            r.setSimilarity(new Double(similarityStr));
-          String coverage = collection.getCoverage();
-          if (r.getType() == null) {
-            boolean isPresentOrganisationType = 
-                typesStr.contains("DBpedia:Band") || typesStr.contains("Schema:MusicGroup") || 
-                typesStr.contains("DBpedia:Broadcaster") || typesStr.contains("DBpedia:Company") ||
-                typesStr.contains("DBpedia:SoccerClub") || typesStr.contains("DBpedia:PoliticalParty");
-            if (typesStr == null || typesStr.trim().isEmpty()) {
-              r.setType("concept");
-            } else if (typesStr.contains("Person") && ! isPresentOrganisationType && ! typesStr.contains("SocialPerson") && ! typesStr.contains("Organization")) {
-              r.setType("person");
-            } else if (isPresentOrganisationType) {
-              r.setType("organisation");
-              if (coverage != null && ! coverage.contains("Gegenwart")) // only add music bands and companies, if project is in "Gegenwart"
-                isProper = false;
-            } else if (typesStr.contains("Organization") || typesStr.contains("Organisation")) {
-              r.setType("organisation");
-            } else if (typesStr.contains("Place")) {
-              r.setType("place");
-            } else {
-              r.setType("concept");
-            }
-          }
-          r.setFrequency(new Integer(frequencyStr));
-          r.setContext(surfaceFormContextStr);
-          if (isProper)
-            resources.add(r);
-        }
-      }
-    } catch (Exception e) {
-      LOGGER.error("Error in DBpedia spotlight resource: " + docId + ": " + testStr + " (" + e.toString() + ")");
-    }
-    Annotation annotation = null;
-    if (resources != null && ! resources.isEmpty()) {
-      annotation = new Annotation();
-      annotation.setId(docId);
-      Collections.sort(resources, DBpediaResource.SimilarityComparatorDESC);
-      ArrayList<DBpediaResource> mainResources = new ArrayList<DBpediaResource>();
-      if (resources.size() <= count)
-        count = resources.size();
-      for (int i=0; i<count; i++) {
-        mainResources.add(resources.get(i));
-      }
-      annotation.setResources(mainResources);
-    }
-    return annotation;
-  }
-
-
-
 }

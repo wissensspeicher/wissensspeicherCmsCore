@@ -9,9 +9,9 @@ import java.util.List;
 
 import org.apache.lucene.facet.FacetResult;
 import org.apache.lucene.facet.LabelAndValue;
-import org.bbaw.wsp.cms.collections.Collection;
-import org.bbaw.wsp.cms.collections.CollectionReader;
 import org.bbaw.wsp.cms.collections.DBpediaSpotlightHandler;
+import org.bbaw.wsp.cms.collections.Project;
+import org.bbaw.wsp.cms.collections.ProjectReader;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -377,14 +377,14 @@ public class Facets implements Iterable<Facet> {
           facetValueValue = StringUtils.resolveXmlEntities(facetValueValue);
           float facetValueScore = facetValue.getScore();
           JSONObject jsonFacetValue = new JSONObject();
-          if (facetId != null && facetId.equals("collectionNames")) {
+          if (facetId != null && facetId.equals("projectId")) {
             try {
-              Collection coll = CollectionReader.getInstance().getCollection(facetValueName);
-              String rdfId = coll.getRdfId();
+              Project project = ProjectReader.getInstance().getProject(facetValueName);
+              String rdfId = project.getRdfId();
               if (rdfId == null)
                 rdfId = "none";
               jsonFacetValue.put("rdfUri", rdfId); 
-              Date lastModified = coll.getLastModified();
+              Date lastModified = project.getLastModified();
               if (lastModified != null) {
                 String xsDateStrLastModified = new Util().toXsDate(lastModified);
                 jsonFacetValue.put("lastModified", xsDateStrLastModified);

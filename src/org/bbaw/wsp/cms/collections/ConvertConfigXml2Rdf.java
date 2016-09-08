@@ -42,7 +42,7 @@ import de.mpg.mpiwg.berlin.mpdl.xml.xquery.XQueryEvaluator;
 
 public class ConvertConfigXml2Rdf {
   private static Logger LOGGER = Logger.getLogger(ConvertConfigXml2Rdf.class);
-  private CollectionReader collectionReader;
+  private ProjectReader projectReader;
   private static int SOCKET_TIMEOUT = 20 * 1000;
   private HttpClient httpClient; 
   private String dbDumpsDirName;
@@ -54,22 +54,21 @@ public class ConvertConfigXml2Rdf {
     try {
       ConvertConfigXml2Rdf convertConfigXml2Rdf = new ConvertConfigXml2Rdf();
       convertConfigXml2Rdf.init();
-      convertConfigXml2Rdf.generateXmlConfigFilesWithHomepageCrawlDB();
       // convertConfigXml2Rdf.proofRdfProjects();
-      // convertConfigXml2Rdf.proofCollectionProjects();
-      // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("pdr");
-      // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("jdg");
-      // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("jpor");
-      // Collection c = convertConfigXml2Rdf.collectionReader.getCollection("edoc");
-      // convertConfigXml2Rdf.convertDbXmlFiles(c);
-      // convertConfigXml2Rdf.generateDbXmlDumpFiles(c);
+      // convertConfigXml2Rdf.proofProjects();
+      // Project p = convertConfigXml2Rdf.projectReader.getProject("pdr");
+      // Project p = convertConfigXml2Rdf.projectReader.getProject("jdg");
+      // Project p = convertConfigXml2Rdf.projectReader.getProject("jpor");
+      // Project p = convertConfigXml2Rdf.projectReader.getProject("edoc");
+      // convertConfigXml2Rdf.convertDbXmlFiles(p);
+      // convertConfigXml2Rdf.generateDbXmlDumpFiles(p);
     } catch (Exception e) {
       e.printStackTrace();
     }
   }
   
   private void init() throws ApplicationException {
-    collectionReader = CollectionReader.getInstance();
+    projectReader = ProjectReader.getInstance();
     xQueryEvaluator = new XQueryEvaluator();
     httpClient = new HttpClient();
     // timeout seems to work
@@ -83,44 +82,44 @@ public class ConvertConfigXml2Rdf {
     inputNormdataFile = new File(inputNormdataFileName);
   }
   
-  private void generateDbXmlDumpFiles(Collection collection) throws ApplicationException {
-    ArrayList<Database> collectionDBs = collection.getDatabases();
-    String collectionId = collection.getId();
-    if (collectionDBs != null) {
-      for (int i=0; i<collectionDBs.size(); i++) {
-        Database db = collectionDBs.get(i);
+  private void generateDbXmlDumpFiles(Project project) throws ApplicationException {
+    ArrayList<Database> projectDBs = project.getDatabases();
+    String projectId = project.getId();
+    if (projectDBs != null) {
+      for (int i=0; i<projectDBs.size(); i++) {
+        Database db = projectDBs.get(i);
         String dbType = db.getType();
         JdbcConnection jdbcConn = db.getJdbcConnection();
-        LOGGER.info("Generate database dump files (Collection: " + collection.getId() + ") of database: \"" + db.getName() + "\"");
+        LOGGER.info("Generate database dump files (Project: " + project.getId() + ") of database: \"" + db.getName() + "\"");
         if (dbType != null && dbType.equals("dwb")) {
           // special case for dwb
-          generateDwbFiles(collection, db);
-        } else if (collectionId.equals("dtmh")) {
+          generateDwbFiles(project, db);
+        } else if (projectId.equals("dtmh")) {
           // special case for dtmh
-          generateDtmhFiles(collection, db);
-        } else if (collectionId.equals("pmbz")) {
+          generateDtmhFiles(project, db);
+        } else if (projectId.equals("pmbz")) {
           // special case for dtmh
-          generatePmbzFiles(collection, db);
-        } else if (collectionId.equals("aaewtla")) {
+          generatePmbzFiles(project, db);
+        } else if (projectId.equals("aaewtla")) {
           // special case for aaewtla
-          generateAaewtlaFiles(collection, db);
-        } else if (collectionId.equals("coranicum")) {
+          generateAaewtlaFiles(project, db);
+        } else if (projectId.equals("coranicum")) {
           // special case for coranicum: by jdbc
-          generateCoranicumDbXmlDumpFile(collection, db);
-        } else if (collectionId.equals("pdr")) {
+          generateCoranicumDbXmlDumpFile(project, db);
+        } else if (projectId.equals("pdr")) {
           // special case for pdr: by special pdr services
-          generatePdrDbXmlDumpFile(collection, db);
+          generatePdrDbXmlDumpFile(project, db);
         } else if (dbType != null && jdbcConn != null) {
           // generate db file by jdbc
-          generateDbXmlDumpFile(collection, db);
+          generateDbXmlDumpFile(project, db);
         }
       }
     }
   }
   
-  private void generateDbXmlDumpFile(Collection collection, Database db) throws ApplicationException {
+  private void generateDbXmlDumpFile(Project project, Database db) throws ApplicationException {
     File dbDumpsDir = new File(dbDumpsDirName);
-    String xmlDumpFileFilter = collection.getId() + "-" + db.getName() + "*.xml"; 
+    String xmlDumpFileFilter = project.getId() + "-" + db.getName() + "*.xml"; 
     FileFilter fileFilter = new WildcardFileFilter(xmlDumpFileFilter);
     File[] files = dbDumpsDir.listFiles(fileFilter);
     if (files != null && files.length > 0) {
@@ -132,7 +131,7 @@ public class ConvertConfigXml2Rdf {
     }
     StringBuilder xmlDumpStrBuilder = new StringBuilder();
     xmlDumpStrBuilder.append("<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n");
-    xmlDumpStrBuilder.append("<!-- Resources of database: " + db.getName() + " (Collection: " + collection.getId() + ") -->\n");
+    xmlDumpStrBuilder.append("<!-- Resources of database: " + db.getName() + " (Project: " + project.getId() + ") -->\n");
     JdbcConnection jdbcConn = db.getJdbcConnection();
     xmlDumpStrBuilder.append("<" + jdbcConn.getDb() + ">\n");
     Properties connectionProps = new Properties();
@@ -168,7 +167,7 @@ public class ConvertConfigXml2Rdf {
       rs.close();
       conn.close();
       xmlDumpStrBuilder.append("</" + jdbcConn.getDb() + ">\n");
-      String xmlDumpFileName = dbDumpsDirName + "/" + collection.getId() + "-" + db.getName() + "-1" + ".xml";
+      String xmlDumpFileName = dbDumpsDirName + "/" + project.getId() + "-" + db.getName() + "-1" + ".xml";
       File dumpFile = new File(xmlDumpFileName);
       FileUtils.writeStringToFile(dumpFile, xmlDumpStrBuilder.toString(), "utf-8");
       LOGGER.info("Database dump file \"" + xmlDumpFileName + "\" sucessfully created");
@@ -182,9 +181,9 @@ public class ConvertConfigXml2Rdf {
     }
   }
   
-  private void generateCoranicumDbXmlDumpFile(Collection collection, Database db) throws ApplicationException {
+  private void generateCoranicumDbXmlDumpFile(Project project, Database db) throws ApplicationException {
     File dbDumpsDir = new File(dbDumpsDirName);
-    String xmlDumpFileFilter = collection.getId() + "-" + db.getName() + "*.xml"; 
+    String xmlDumpFileFilter = project.getId() + "-" + db.getName() + "*.xml"; 
     FileFilter fileFilter = new WildcardFileFilter(xmlDumpFileFilter);
     File[] files = dbDumpsDir.listFiles(fileFilter);
     if (files != null && files.length > 0) {
@@ -196,7 +195,7 @@ public class ConvertConfigXml2Rdf {
     }
     StringBuilder xmlDumpStrBuilder = new StringBuilder();
     xmlDumpStrBuilder.append("<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n");
-    xmlDumpStrBuilder.append("<!-- Resources of database: " + db.getName() + " (Collection: " + collection.getId() + ") -->\n");
+    xmlDumpStrBuilder.append("<!-- Resources of database: " + db.getName() + " (Project: " + project.getId() + ") -->\n");
     JdbcConnection jdbcConn = db.getJdbcConnection();
     xmlDumpStrBuilder.append("<" + jdbcConn.getDb() + ">\n");
     Properties connectionProps = new Properties();
@@ -265,7 +264,7 @@ public class ConvertConfigXml2Rdf {
       psKoranVerses.close();
       conn.close();
       xmlDumpStrBuilder.append("</" + jdbcConn.getDb() + ">\n");
-      String xmlDumpFileName = dbDumpsDirName + "/" + collection.getId() + "-" + db.getName() + "-1" + ".xml";
+      String xmlDumpFileName = dbDumpsDirName + "/" + project.getId() + "-" + db.getName() + "-1" + ".xml";
       File dumpFile = new File(xmlDumpFileName);
       FileUtils.writeStringToFile(dumpFile, xmlDumpStrBuilder.toString(), "utf-8");
       LOGGER.info("Database dump file \"" + xmlDumpFileName + "\" sucessfully created");
@@ -327,9 +326,9 @@ public class ConvertConfigXml2Rdf {
     return koranVersesGerman;
   }
   
-  private void generateDwbFiles(Collection collection, Database db) throws ApplicationException {
+  private void generateDwbFiles(Project project, Database db) throws ApplicationException {
     // generates both dump files + rdf file
-    String collectionRdfId = collection.getRdfId();
+    String projectRdfId = project.getRdfId();
     try {
       String xmlDumpFileFilter = db.getName() + "-" + "*.xml"; 
       FileFilter fileFilter = new WildcardFileFilter(xmlDumpFileFilter);
@@ -404,7 +403,7 @@ public class ConvertConfigXml2Rdf {
           String rdfFileId = "file:" + entryTeiFileName;
           rdfRecordsStrBuilder.append("<rdf:Description rdf:about=\"" + rdfFileId + "\">\n");
           rdfRecordsStrBuilder.append("  <rdf:type rdf:resource=\"http://purl.org/dc/terms/BibliographicResource\"/>\n");
-          rdfRecordsStrBuilder.append("  <dcterms:isPartOf rdf:resource=\"" + collectionRdfId + "\"/>\n");
+          rdfRecordsStrBuilder.append("  <dcterms:isPartOf rdf:resource=\"" + projectRdfId + "\"/>\n");
           rdfRecordsStrBuilder.append("  <dc:identifier rdf:resource=\"" + rdfFileId + "\"/>\n");
           rdfRecordsStrBuilder.append("</rdf:Description>\n");
           File entryTeiFile = new File(entryTeiFileName);
@@ -413,17 +412,17 @@ public class ConvertConfigXml2Rdf {
       }
       String rdfFileName = externalResourcesDirName + "/dwb/dwb" + ".rdf";
       File rdfFile = new File(rdfFileName);
-      writeRdfFile(rdfFile, rdfRecordsStrBuilder, collectionRdfId);
+      writeRdfFile(rdfFile, rdfRecordsStrBuilder, projectRdfId);
       LOGGER.info("Database dump files in directory \"" + dwbExternalResourcesDir + "\" and RDF file: " + rdfFileName + " sucessfully created");
     } catch (Exception e) {
       throw new ApplicationException(e);
     }
   }
 
-  private void generateDtmhFiles(Collection collection, Database db) throws ApplicationException {
+  private void generateDtmhFiles(Project project, Database db) throws ApplicationException {
     String dbName = db.getName();
     File dbDumpsDir = new File(dbDumpsDirName);
-    String xmlDumpFileFilter = collection.getId() + "-" + db.getName() + "*.xml"; 
+    String xmlDumpFileFilter = project.getId() + "-" + db.getName() + "*.xml"; 
     FileFilter fileFilter = new WildcardFileFilter(xmlDumpFileFilter);
     File[] files = dbDumpsDir.listFiles(fileFilter);
     if (files != null && files.length > 0) {
@@ -435,11 +434,11 @@ public class ConvertConfigXml2Rdf {
     }
     StringBuilder xmlDumpStrBuilder = new StringBuilder();
     xmlDumpStrBuilder.append("<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n");
-    xmlDumpStrBuilder.append("<!-- Resources of database: " + db.getName() + " (Collection: " + collection.getId() + ") -->\n");
+    xmlDumpStrBuilder.append("<!-- Resources of database: " + db.getName() + " (Project: " + project.getId() + ") -->\n");
     xmlDumpStrBuilder.append("<" + dbName + ">\n");
-    String collectionId = collection.getId();
-    String collExternalResourcesDirName = externalResourcesDirName + "/" + collectionId;
-    File dbMainFile = new File(collExternalResourcesDirName + "/" + collection.getId() + "-" + db.getName() + "-1.xml");
+    String projectId = project.getId();
+    String projectExternalResourcesDirName = externalResourcesDirName + "/" + projectId;
+    File dbMainFile = new File(projectExternalResourcesDirName + "/" + project.getId() + "-" + db.getName() + "-1.xml");
     try {
       URL dbMainFileUrl = dbMainFile.toURI().toURL();
       XdmValue xmdValueMainResources = xQueryEvaluator.evaluate(dbMainFileUrl, "//*:Document");
@@ -498,7 +497,7 @@ public class ConvertConfigXml2Rdf {
         xmlDumpStrBuilder.append("  </" + db.getMainResourcesTable() + ">\n");
       }
       xmlDumpStrBuilder.append("</" + db.getName() + ">\n");
-      String xmlDumpFileName = dbDumpsDirName + "/" + collection.getId() + "-" + dbName + "-1" + ".xml";
+      String xmlDumpFileName = dbDumpsDirName + "/" + project.getId() + "-" + dbName + "-1" + ".xml";
       File dumpFile = new File(xmlDumpFileName);
       FileUtils.writeStringToFile(dumpFile, xmlDumpStrBuilder.toString(), "utf-8");
       LOGGER.info("Database dump file \"" + xmlDumpFileName + "\" sucessfully created");
@@ -507,10 +506,10 @@ public class ConvertConfigXml2Rdf {
     }
   }
   
-  private void generatePmbzFiles(Collection collection, Database db) throws ApplicationException {
+  private void generatePmbzFiles(Project project, Database db) throws ApplicationException {
     String dbName = db.getName();
     File dbDumpsDir = new File(dbDumpsDirName);
-    String xmlDumpFileFilter = collection.getId() + "-" + db.getName() + "*.xml"; 
+    String xmlDumpFileFilter = project.getId() + "-" + db.getName() + "*.xml"; 
     FileFilter fileFilter = new WildcardFileFilter(xmlDumpFileFilter);
     File[] files = dbDumpsDir.listFiles(fileFilter);
     if (files != null && files.length > 0) {
@@ -522,11 +521,11 @@ public class ConvertConfigXml2Rdf {
     }
     StringBuilder xmlDumpStrBuilder = new StringBuilder();
     xmlDumpStrBuilder.append("<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n");
-    xmlDumpStrBuilder.append("<!-- Resources of database: " + db.getName() + " (Collection: " + collection.getId() + ") -->\n");
+    xmlDumpStrBuilder.append("<!-- Resources of database: " + db.getName() + " (Project: " + project.getId() + ") -->\n");
     xmlDumpStrBuilder.append("<" + dbName + ">\n");
-    String collectionId = collection.getId();
-    String collExternalResourcesDirName = externalResourcesDirName + "/" + collectionId;
-    File dbMainFile = new File(collExternalResourcesDirName + "/" + collection.getId() + "-" + db.getName() + "-1.xml");
+    String projectId = project.getId();
+    String projectExternalResourcesDirName = externalResourcesDirName + "/" + projectId;
+    File dbMainFile = new File(projectExternalResourcesDirName + "/" + project.getId() + "-" + db.getName() + "-1.xml");
     try {
       URL dbMainFileUrl = dbMainFile.toURI().toURL();
       XdmValue xmdValueMainResources = xQueryEvaluator.evaluate(dbMainFileUrl, "//*:entry");
@@ -581,7 +580,7 @@ public class ConvertConfigXml2Rdf {
         }
       }
       xmlDumpStrBuilder.append("</" + db.getName() + ">\n");
-      String xmlDumpFileName = dbDumpsDirName + "/" + collection.getId() + "-" + dbName + "-1" + ".xml";
+      String xmlDumpFileName = dbDumpsDirName + "/" + project.getId() + "-" + dbName + "-1" + ".xml";
       File dumpFile = new File(xmlDumpFileName);
       FileUtils.writeStringToFile(dumpFile, xmlDumpStrBuilder.toString(), "utf-8");
       LOGGER.info("Database dump file \"" + xmlDumpFileName + "\" sucessfully created");
@@ -590,10 +589,10 @@ public class ConvertConfigXml2Rdf {
     }
   }
   
-  private void generateAaewtlaFiles(Collection collection, Database db) throws ApplicationException {
+  private void generateAaewtlaFiles(Project project, Database db) throws ApplicationException {
     String dbName = db.getName();
     File dbDumpsDir = new File(dbDumpsDirName);
-    String xmlDumpFileFilter = collection.getId() + "-" + db.getName() + "*.xml"; 
+    String xmlDumpFileFilter = project.getId() + "-" + db.getName() + "*.xml"; 
     FileFilter fileFilter = new WildcardFileFilter(xmlDumpFileFilter);
     File[] files = dbDumpsDir.listFiles(fileFilter);
     if (files != null && files.length > 0) {
@@ -605,11 +604,11 @@ public class ConvertConfigXml2Rdf {
     }
     StringBuilder xmlDumpStrBuilder = new StringBuilder();
     xmlDumpStrBuilder.append("<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n");
-    xmlDumpStrBuilder.append("<!-- Resources of database: " + db.getName() + " (Collection: " + collection.getId() + ") -->\n");
+    xmlDumpStrBuilder.append("<!-- Resources of database: " + db.getName() + " (Project: " + project.getId() + ") -->\n");
     xmlDumpStrBuilder.append("<" + dbName + ">\n");
-    String collectionId = collection.getId();
-    String collExternalResourcesDirName = externalResourcesDirName + "/" + collectionId;
-    File dbMainFile = new File(collExternalResourcesDirName + "/" + collection.getId() + "-" + db.getName() + "-1.xml");
+    String projectId = project.getId();
+    String projectExternalResourcesDirName = externalResourcesDirName + "/" + projectId;
+    File dbMainFile = new File(projectExternalResourcesDirName + "/" + project.getId() + "-" + db.getName() + "-1.xml");
     try {
       URL dbMainFileUrl = dbMainFile.toURI().toURL();
       Hashtable<String, String> resourcesEngl = new Hashtable<String, String>();
@@ -649,7 +648,7 @@ public class ConvertConfigXml2Rdf {
         }
       }
       xmlDumpStrBuilder.append("</" + db.getName() + ">\n");
-      String xmlDumpFileName = dbDumpsDirName + "/" + collection.getId() + "-" + dbName + "-1" + ".xml";
+      String xmlDumpFileName = dbDumpsDirName + "/" + project.getId() + "-" + dbName + "-1" + ".xml";
       File dumpFile = new File(xmlDumpFileName);
       FileUtils.writeStringToFile(dumpFile, xmlDumpStrBuilder.toString(), "utf-8");
       LOGGER.info("Database dump file \"" + xmlDumpFileName + "\" sucessfully created");
@@ -658,11 +657,11 @@ public class ConvertConfigXml2Rdf {
     }
   }
   
-  private void generatePdrDbXmlDumpFile(Collection collection, Database db) throws ApplicationException {
+  private void generatePdrDbXmlDumpFile(Project project, Database db) throws ApplicationException {
     String dbName = db.getName();
     XslResourceTransformer pdrIdiTransformer = new XslResourceTransformer("pdrIdiGnd.xsl");
     File dbDumpsDir = new File(dbDumpsDirName);
-    String xmlDumpFileFilter = collection.getId() + "-" + db.getName() + "*.xml"; 
+    String xmlDumpFileFilter = project.getId() + "-" + db.getName() + "*.xml"; 
     FileFilter fileFilter = new WildcardFileFilter(xmlDumpFileFilter);
     File[] files = dbDumpsDir.listFiles(fileFilter);
     if (files != null && files.length > 0) {
@@ -674,7 +673,7 @@ public class ConvertConfigXml2Rdf {
     }
     StringBuilder xmlDumpStrBuilder = new StringBuilder();
     xmlDumpStrBuilder.append("<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n");
-    xmlDumpStrBuilder.append("<!-- Resources of database: " + db.getName() + " (Collection: " + collection.getId() + ") -->\n");
+    xmlDumpStrBuilder.append("<!-- Resources of database: " + db.getName() + " (Project: " + project.getId() + ") -->\n");
     xmlDumpStrBuilder.append("<" + dbName + ">\n");
     ArrayList<String> personIds = null; 
     if (dbName.equals("persons"))
@@ -730,7 +729,7 @@ public class ConvertConfigXml2Rdf {
       xmlDumpStrBuilder.append("  </" + db.getMainResourcesTable() + ">\n");
     }
     xmlDumpStrBuilder.append("</" + db.getName() + ">\n");
-    String xmlDumpFileName = dbDumpsDirName + "/" + collection.getId() + "-" + dbName + "-1" + ".xml";
+    String xmlDumpFileName = dbDumpsDirName + "/" + project.getId() + "-" + dbName + "-1" + ".xml";
     try {
       File dumpFile = new File(xmlDumpFileName);
       FileUtils.writeStringToFile(dumpFile, xmlDumpStrBuilder.toString(), "utf-8");
@@ -807,19 +806,19 @@ public class ConvertConfigXml2Rdf {
     return gndIds;
   }
   
-  private void convertDbXmlFiles(Collection collection) throws ApplicationException {
-    ArrayList<Database> collectionDBs = collection.getDatabases();
-    if (collectionDBs != null) {
-      for (int i=0; i<collectionDBs.size(); i++) {
-        Database collectionDB = collectionDBs.get(i);
-        convertDbXmlFiles(collection, collectionDB);
+  private void convertDbXmlFiles(Project project) throws ApplicationException {
+    ArrayList<Database> projectDBs = project.getDatabases();
+    if (projectDBs != null) {
+      for (int i=0; i<projectDBs.size(); i++) {
+        Database projectDB = projectDBs.get(i);
+        convertDbXmlFiles(project, projectDB);
       }
     }
   }
   
-  private void convertDbXmlFiles(Collection collection, Database db) throws ApplicationException {
+  private void convertDbXmlFiles(Project project, Database db) throws ApplicationException {
     File dbDumpsDir = new File(dbDumpsDirName);
-    String xmlDumpFileFilterName = collection.getId() + "-" + db.getName() + "*.xml"; 
+    String xmlDumpFileFilterName = project.getId() + "-" + db.getName() + "*.xml"; 
     FileFilter xmlDumpFileFilter = new WildcardFileFilter(xmlDumpFileFilterName);
     File[] xmlDumpFiles = dbDumpsDir.listFiles(xmlDumpFileFilter);
     if (xmlDumpFiles != null && xmlDumpFiles.length > 0) {
@@ -829,7 +828,7 @@ public class ConvertConfigXml2Rdf {
         }
       }); 
       // delete the old db rdf files
-      String rdfFileFilterName = collection.getId() + "-" + db.getName() + "*.rdf"; 
+      String rdfFileFilterName = project.getId() + "-" + db.getName() + "*.rdf"; 
       FileFilter rdfFileFilter = new WildcardFileFilter(rdfFileFilterName);
       File[] rdfFiles = dbDumpsDir.listFiles(rdfFileFilter);
       if (rdfFiles != null && rdfFiles.length > 0) {
@@ -841,12 +840,12 @@ public class ConvertConfigXml2Rdf {
       // generate the new db rdf files
       for (int i = 0; i < xmlDumpFiles.length; i++) {
         File dumpFile = xmlDumpFiles[i];
-        convertDbXmlFile(collection, db, dumpFile);
+        convertDbXmlFile(project, db, dumpFile);
       }
     }
   }
   
-  private void convertDbXmlFile(Collection collection, Database db, File dumpFile) throws ApplicationException {
+  private void convertDbXmlFile(Project project, Database db, File dumpFile) throws ApplicationException {
     try {
       StringBuilder rdfRecordsStrBuilder = new StringBuilder();
       String dumpFileName = dumpFile.getName();
@@ -875,13 +874,13 @@ public class ConvertConfigXml2Rdf {
           if (idCounter != null)
             idCounter++;
           Row row = xml2row(xdmItemMainResourceStr, db, idCounter);
-          appendRow2rdf(rdfRecordsStrBuilder, collection, db, row);
+          appendRow2rdf(rdfRecordsStrBuilder, project, db, row);
         }
       }
       String rdfFileName = dumpFileName.replaceAll(".xml", ".rdf");
       String rdfFullFileName = dbDumpsDirName + "/" + rdfFileName; 
       File rdfFile = new File(rdfFullFileName);
-      writeRdfFile(rdfFile, rdfRecordsStrBuilder, collection.getRdfId());
+      writeRdfFile(rdfFile, rdfRecordsStrBuilder, project.getRdfId());
     } catch (IOException e) {
       throw new ApplicationException(e);
     }
@@ -920,17 +919,17 @@ public class ConvertConfigXml2Rdf {
     return row;  
   }
 
-  private void appendRow2rdf(StringBuilder rdfStrBuilder, Collection collection, Database db, Row row) throws ApplicationException {
-    String collectionId = collection.getId();
-    String collectionRdfId = collection.getRdfId();
-    String mainLanguage = collection.getMainLanguage();
+  private void appendRow2rdf(StringBuilder rdfStrBuilder, Project project, Database db, Row row) throws ApplicationException {
+    String projectId = project.getId();
+    String projectRdfId = project.getRdfId();
+    String mainLanguage = project.getMainLanguage();
     String mainResourcesTableId = db.getMainResourcesTableId();
     String webIdPreStr = db.getWebIdPreStr();
     String webIdAfterStr = db.getWebIdAfterStr();
     String dbType = db.getType();
     String id = row.getFirstFieldValue(mainResourcesTableId);
     id = StringUtils.deresolveXmlEntities(id);
-    String rdfId = "http://" + collectionId + ".bbaw.de/id/" + id;
+    String rdfId = "http://" + projectId + ".bbaw.de/id/" + id;
     if (id.startsWith("http://"))
       rdfId = id;  // id is already a url
     String rdfWebId = rdfId;
@@ -942,12 +941,12 @@ public class ConvertConfigXml2Rdf {
     }
     rdfStrBuilder.append("<rdf:Description rdf:about=\"" + rdfWebId + "\">\n");
     rdfStrBuilder.append("  <rdf:type rdf:resource=\"http://purl.org/dc/terms/BibliographicResource\"/>\n");
-    rdfStrBuilder.append("  <dcterms:isPartOf rdf:resource=\"" + collectionRdfId + "\"/>\n");
+    rdfStrBuilder.append("  <dcterms:isPartOf rdf:resource=\"" + projectRdfId + "\"/>\n");
     rdfStrBuilder.append("  <dc:identifier rdf:resource=\"" + rdfWebId + "\">" + id + "</dc:identifier>\n");
     if (dbType.equals("oai"))
       rdfStrBuilder.append("  <dc:type>oaiRecord</dc:type>\n");
     else
-      rdfStrBuilder.append("  <dc:type>dbRecord</dc:type>\n");  // for huge oai collections such as jdg (performance gain in inserting them into lucene) 
+      rdfStrBuilder.append("  <dc:type>dbRecord</dc:type>\n");  // for huge oai projects such as jdg (performance gain in inserting them into lucene) 
     String dbFieldCreator = db.getDbField("creator");
     if (dbFieldCreator != null) {
       ArrayList<String> fieldValues = row.getFieldValues(dbFieldCreator);
@@ -1083,12 +1082,12 @@ public class ConvertConfigXml2Rdf {
     rdfStrBuilder.append("</rdf:Description>\n");
   }
 
-  private void writeRdfFile(File rdfFile, StringBuilder rdfRecordsStrBuilder, String collectionRdfId) throws ApplicationException {
+  private void writeRdfFile(File rdfFile, StringBuilder rdfRecordsStrBuilder, String projectRdfId) throws ApplicationException {
     StringBuilder rdfStrBuilder = new StringBuilder();
     rdfStrBuilder.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
     rdfStrBuilder.append("<rdf:RDF \n");
-    rdfStrBuilder.append("   xmlns=\"" + collectionRdfId + "\" \n");
-    rdfStrBuilder.append("   xml:base=\"" + collectionRdfId + "\" \n");
+    rdfStrBuilder.append("   xmlns=\"" + projectRdfId + "\" \n");
+    rdfStrBuilder.append("   xml:base=\"" + projectRdfId + "\" \n");
     rdfStrBuilder.append("   xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" \n");
     rdfStrBuilder.append("   xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" \n");
     rdfStrBuilder.append("   xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\" \n");
@@ -1108,90 +1107,63 @@ public class ConvertConfigXml2Rdf {
     }
   }
   
-  private void proofProjectRdfStr(String projectRdfStr, Collection collection) throws ApplicationException {
-    String collectionId = collection.getId();
-    String collectionRdfId = collection.getRdfId();
-    String collectionName = collection.getName();
-    String mainLanguage = collection.getMainLanguage();
-    String webBaseUrl = collection.getWebBaseUrl();
+  private void proofProjectRdfStr(String projectRdfStr, Project project) throws ApplicationException {
+    String projectId = project.getId();
+    String projectRdfId = project.getRdfId();
+    String projectName = project.getTitle();
+    String mainLanguage = project.getMainLanguage();
+    String webBaseUrl = project.getHomepageUrl();
     String countFoafNickName = xQueryEvaluator.evaluateAsString(projectRdfStr, "count(/*:Description/*:nick)");
     String countFoafName = xQueryEvaluator.evaluateAsString(projectRdfStr, "count(/*:Description/*:name)");
     String countDcLanguage = xQueryEvaluator.evaluateAsString(projectRdfStr, "count(/*:Description/*:language)");
     String countFoafHomepage = xQueryEvaluator.evaluateAsString(projectRdfStr, "count(/*:Description/*:homepage/@*:resource)");
     if (countFoafNickName != null && ! countFoafNickName.contains("0") && ! countFoafNickName.contains("1"))
-      LOGGER.error("Project: \"" + collectionRdfId + "\": Field <foaf:nick> exists " + countFoafNickName + " times");
+      LOGGER.error("Project: \"" + projectRdfId + "\": Field <foaf:nick> exists " + countFoafNickName + " times");
     if (countFoafName != null && ! countFoafName.contains("0") && ! countFoafName.contains("1"))
-      LOGGER.error("Project: \"" + collectionRdfId + "\": Field <foaf:name> exists " + countFoafName + " times");
+      LOGGER.error("Project: \"" + projectRdfId + "\": Field <foaf:name> exists " + countFoafName + " times");
     if (countDcLanguage != null && ! countDcLanguage.contains("0") && ! countDcLanguage.contains("1"))
-      LOGGER.error("Project: \"" + collectionRdfId + "\": Field <dc:language> exists " + countDcLanguage + " times");
+      LOGGER.error("Project: \"" + projectRdfId + "\": Field <dc:language> exists " + countDcLanguage + " times");
     if (countFoafHomepage != null && ! countFoafHomepage.contains("0") && ! countFoafHomepage.contains("1"))
-      LOGGER.error("Project: \"" + collectionRdfId + "\": Field <foaf:homepage> exists " + countFoafHomepage + " times");
+      LOGGER.error("Project: \"" + projectRdfId + "\": Field <foaf:homepage> exists " + countFoafHomepage + " times");
     String foafNickName = xQueryEvaluator.evaluateAsString(projectRdfStr, "/*:Description/*:nick[1]/text()");
     String foafName = xQueryEvaluator.evaluateAsString(projectRdfStr, "/*:Description/*:name[1]/text()");
     String dcLanguage = xQueryEvaluator.evaluateAsString(projectRdfStr, "/*:Description/*:language[1]/text()");
     String foafHomepage = xQueryEvaluator.evaluateAsString(projectRdfStr, "string(/*:Description/*:homepage[1]/@*:resource)");
     String rdfType = xQueryEvaluator.evaluateAsString(projectRdfStr, "string(/*:Description/*:type[1]/@*:resource)");
     if (foafNickName == null || foafNickName.isEmpty())
-      LOGGER.error("Project: \"" + collectionRdfId + "\": Insert mandatory field <foaf:nick rdf:datatype=\"http://www.w3.org/2001/XMLSchema#string\">" + collectionId + "</foaf:nick>");
-    else if (! foafNickName.equals(collectionId))
-      LOGGER.error("Project: \"" + collectionRdfId + "\": Change \"<foaf:nick>" + foafNickName + "</foaf:nick>\" to <foaf:nick rdf:datatype=\"http://www.w3.org/2001/XMLSchema#string\">" + collectionId + "</foaf:nick>");
+      LOGGER.error("Project: \"" + projectRdfId + "\": Insert mandatory field <foaf:nick rdf:datatype=\"http://www.w3.org/2001/XMLSchema#string\">" + projectId + "</foaf:nick>");
+    else if (! foafNickName.equals(projectId))
+      LOGGER.error("Project: \"" + projectRdfId + "\": Change \"<foaf:nick>" + foafNickName + "</foaf:nick>\" to <foaf:nick rdf:datatype=\"http://www.w3.org/2001/XMLSchema#string\">" + projectId + "</foaf:nick>");
     if (foafName == null || foafName.isEmpty())
-      LOGGER.error("Project: \"" + collectionRdfId + "\": Insert mandatory field <foaf:name rdf:datatype=\"http://www.w3.org/2001/XMLSchema#string\">" + collectionName + "</foaf:name>");
-    else if (! foafName.equals(collectionName))
-      LOGGER.error("Project: \"" + collectionRdfId + "\": Change \"<foaf:name>" + foafName + "</foaf:name>\" to <foaf:name rdf:datatype=\"http://www.w3.org/2001/XMLSchema#string\">" + collectionName + "</foaf:name>");
+      LOGGER.error("Project: \"" + projectRdfId + "\": Insert mandatory field <foaf:name rdf:datatype=\"http://www.w3.org/2001/XMLSchema#string\">" + projectName + "</foaf:name>");
+    else if (! foafName.equals(projectName))
+      LOGGER.error("Project: \"" + projectRdfId + "\": Change \"<foaf:name>" + foafName + "</foaf:name>\" to <foaf:name rdf:datatype=\"http://www.w3.org/2001/XMLSchema#string\">" + projectName + "</foaf:name>");
     if (dcLanguage == null || dcLanguage.isEmpty())
-      LOGGER.error("Project: \"" + collectionRdfId + "\": Insert mandatory field <dc:language>" + mainLanguage + "</dc:language>");
+      LOGGER.error("Project: \"" + projectRdfId + "\": Insert mandatory field <dc:language>" + mainLanguage + "</dc:language>");
     else if (! dcLanguage.equals(mainLanguage))
-      LOGGER.error("Project: \"" + collectionRdfId + "\": Change \"<dc:language>" + dcLanguage + "</dc:language>\" to <dc:language>" + mainLanguage + "</dc:language>");
+      LOGGER.error("Project: \"" + projectRdfId + "\": Change \"<dc:language>" + dcLanguage + "</dc:language>\" to <dc:language>" + mainLanguage + "</dc:language>");
     if (foafHomepage == null || foafHomepage.isEmpty())
-      LOGGER.error("Project: \"" + collectionRdfId + "\": Insert mandatory field <foaf:homepage rdf:resource=\"" + webBaseUrl + "\"/>");
+      LOGGER.error("Project: \"" + projectRdfId + "\": Insert mandatory field <foaf:homepage rdf:resource=\"" + webBaseUrl + "\"/>");
     else if (! foafHomepage.equals(webBaseUrl))
-      LOGGER.error("Project: \"" + collectionRdfId + "\": Change \"<foaf:homepage rdf:resource=\"" + foafHomepage + "\"/>\" to <foaf:homepage rdf:resource=\"" + webBaseUrl + "\"/>");
+      LOGGER.error("Project: \"" + projectRdfId + "\": Change \"<foaf:homepage rdf:resource=\"" + foafHomepage + "\"/>\" to <foaf:homepage rdf:resource=\"" + webBaseUrl + "\"/>");
     if (rdfType == null || rdfType.isEmpty())
-      LOGGER.error("Project: \"" + collectionRdfId + "\": Insert mandatory field <rdf:type rdf:resource=\"http://xmlns.com/foaf/0.1/Project\"/>");
+      LOGGER.error("Project: \"" + projectRdfId + "\": Insert mandatory field <rdf:type rdf:resource=\"http://xmlns.com/foaf/0.1/Project\"/>");
     else if (! rdfType.equals("http://xmlns.com/foaf/0.1/Project"))
-      LOGGER.error("Project: \"" + collectionRdfId + "\": Change <rdf:type> to <rdf:type rdf:resource=\"http://xmlns.com/foaf/0.1/Project\"/>");
+      LOGGER.error("Project: \"" + projectRdfId + "\": Change <rdf:type> to <rdf:type rdf:resource=\"http://xmlns.com/foaf/0.1/Project\"/>");
   }
 
-  private void generateXmlConfigFilesWithHomepageCrawlDB() throws ApplicationException {
-    try {
-      String outputDir = "/home/joey/tmp/resources-addinfo";
-      ArrayList<Collection> collections = collectionReader.getCollections();
-      for (int i=0; i<collections.size(); i++) {
-        Collection coll = collections.get(i);
-        String id = coll.getId();
-        String projectHomepage = coll.getWebBaseUrl();
-        StringBuilder xmlStrBuilder = new StringBuilder();
-        xmlStrBuilder.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-        xmlStrBuilder.append("<wsp>\n");
-        xmlStrBuilder.append("  <collection>\n");
-        xmlStrBuilder.append("    <db>\n");
-        xmlStrBuilder.append("      <type>crawl</type>\n");
-        xmlStrBuilder.append("      <name>" + id + "</name>\n");
-        xmlStrBuilder.append("      <url>" + projectHomepage + "</url>\n");
-        xmlStrBuilder.append("    </db>\n");
-        xmlStrBuilder.append("  </collection>\n");
-        xmlStrBuilder.append("</wsp>\n");
-        File xmlConfigFile = new File(outputDir + "/" + id + ".xml");
-        FileUtils.writeStringToFile(xmlConfigFile, xmlStrBuilder.toString());
-      }
-    } catch (IOException e) {
-      throw new ApplicationException(e);
-    }
-  }
-  
-  private void proofCollectionProjects() throws ApplicationException {
+  private void proofProjects() throws ApplicationException {
     try {
       URL inputNormdataFileUrl = inputNormdataFile.toURI().toURL();
-      ArrayList<Collection> collections = collectionReader.getCollections();
-      LOGGER.info("Proof ConfigFiles" + " (with " + collections.size() + " projects) against" + inputNormdataFileUrl);
-      for (int i=0; i<collections.size(); i++) {
-        Collection coll = collections.get(i);
-        String id = coll.getId();
-        String rdfId = coll.getRdfId();
+      ArrayList<Project> projects = projectReader.getProjects();
+      LOGGER.info("Proof ConfigFiles" + " (with " + projects.size() + " projects) against" + inputNormdataFileUrl);
+      for (int i=0; i<projects.size(); i++) {
+        Project project = projects.get(i);
+        String id = project.getId();
+        String rdfId = project.getRdfId();
         String projectRdfStr = xQueryEvaluator.evaluateAsString(inputNormdataFileUrl, "/*:RDF/*:Description[@*:about='" + rdfId + "']/*:nick");
         if (projectRdfStr == null || projectRdfStr.isEmpty())
-          LOGGER.error("Collection with id:" + id + " has no nickName");
+          LOGGER.error("Project with id:" + id + " has no nickName");
       }
     } catch (IOException e) {
       throw new ApplicationException(e);
@@ -1203,7 +1175,7 @@ public class ConvertConfigXml2Rdf {
       URL inputNormdataFileUrl = inputNormdataFile.toURI().toURL();
       String rdfTypeProject = "http://xmlns.com/foaf/0.1/Project"; 
       XdmValue xmdValueProjects = xQueryEvaluator.evaluate(inputNormdataFileUrl, "/*:RDF/*:Description[*:type[@*:resource='" + rdfTypeProject + "']]");
-      LOGGER.info("Proof " + inputNormdataFileUrl + " (with " + xmdValueProjects.size() + " projects) against ConfigFiles (with " + collectionReader.getCollections().size() + " projects)");
+      LOGGER.info("Proof " + inputNormdataFileUrl + " (with " + xmdValueProjects.size() + " projects) against ConfigFiles (with " + projectReader.getProjects().size() + " projects)");
       XdmSequenceIterator xmdValueProjectsIterator = xmdValueProjects.iterator();
       if (xmdValueProjects != null && xmdValueProjects.size() > 0) {
         while (xmdValueProjectsIterator.hasNext()) {
@@ -1214,8 +1186,8 @@ public class ConvertConfigXml2Rdf {
           if (foafNickName == null || foafNickName.trim().isEmpty()) {
             LOGGER.error("Project: \"" + projectRdfId + "\" has no \"<foaf:nick> entry");
           } else {
-            Collection coll = collectionReader.getCollection(foafNickName);
-            if (coll == null)
+            Project project = projectReader.getProject(foafNickName);
+            if (project == null)
               LOGGER.error("Project: \"" + projectRdfId + "\" with \"<foaf:nick>" + foafNickName + "</foaf:nick>\"" + " has no config file");
           }
           String status = xQueryEvaluator.evaluateAsString(xdmItemProjectStr, "/*:Description/*:status[1]/text()");

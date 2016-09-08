@@ -14,6 +14,8 @@ public class ProjectCollection {
   private String projectRdfId; // rdfId of project
   private String parentRdfId; // rdfId of parent collection
   private String rdfPath; // path from this collection to root (project or organization)
+  private String homepageUrl;
+  private String title;
   private HashMap<String, Database> databases = new HashMap<String, Database>();  // // collection databases: key is databaseRdfId and value is database
   
   public ProjectCollection(String projectRdfId) {
@@ -81,6 +83,22 @@ public class ProjectCollection {
     this.parentRdfId = parentRdfId;
   }
   
+  public String getHomepageUrl() {
+    return homepageUrl;
+  }
+
+  public void setHomepageUrl(String homepageUrl) {
+    this.homepageUrl = homepageUrl;
+  }
+
+  public String getTitle() {
+    return title;
+  }
+
+  public void setTitle(String title) {
+    this.title = title;
+  }
+
   public String getRdfPath() {
     return rdfPath;
   }

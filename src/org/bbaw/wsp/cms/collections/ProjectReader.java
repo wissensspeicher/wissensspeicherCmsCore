@@ -118,11 +118,20 @@ public class ProjectReader {
 		return p;
 	}
 
+  public void remove(Project project) {
+    String projectId = project.getId();
+    projects.remove(projectId);
+  }
+  
   public Project getProjectByRdfId(String projectRdfId) {
     Project p = projectsByRdfId.get(projectRdfId);
     return p;
   }
 
+  public Person getPerson(String aboutId) {
+    return normdataPersons.get(aboutId);
+  }
+  
   public ArrayList<String> getGlobalExcludes() {
     return globalExcludes;
   }
@@ -291,6 +300,9 @@ public class ProjectReader {
       String homepageUrl = projectElem.select("foaf|homepage").attr("rdf:resource");
       if (homepageUrl != null && ! homepageUrl.isEmpty())
         project.setHomepageUrl(homepageUrl);
+      String temporal = projectElem.select("dcterms|temporal").attr("rdf:resource");
+      if (temporal != null && ! temporal.isEmpty())
+        project.setTemporal(temporal);
       String parentRdfId = projectElem.select("dcterms|isPartOf").attr("rdf:resource");
       if (parentRdfId != null && ! parentRdfId.isEmpty())
         project.setParentRdfId(parentRdfId);
@@ -313,6 +325,14 @@ public class ProjectReader {
           collection.setParentRdfId(collParentRdfId);
         } else {
           collParentRdfId = projectElem.select("dcterms|isPartOf").attr("rdf:resource");
+        }
+        String collectionHomepageUrl = collectionElem.select("foaf|homepage").attr("rdf:resource");
+        if (collectionHomepageUrl != null && ! collectionHomepageUrl.isEmpty()) {
+          collection.setHomepageUrl(collectionHomepageUrl);
+        }
+        String collectionTitle = collectionElem.select("dcterms|title").text();
+        if (collectionTitle != null && ! collectionTitle.isEmpty()) {
+          collection.setTitle(collectionTitle);
         }
         project.addCollection(collRdfId, collection);
       }
@@ -340,6 +360,7 @@ public class ProjectReader {
         for (int j=0; j< databaseElems.size(); j++) {
           Element databaseElem = databaseElems.get(j);
           Database database = Database.fromDatabaseElement(databaseElem);
+          database.setCollectionRdfId(collectionRdfId);
           String databaseRdfId = database.getRdfId();
           collection.addDatabase(databaseRdfId, database);
           project.addDatabase(databaseRdfId, database);  // redundant also in project

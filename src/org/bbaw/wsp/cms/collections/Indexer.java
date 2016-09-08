@@ -40,76 +40,80 @@ public class Indexer {
     indexHandler.init();
   }
   
-  public void index(Collection collection) throws ApplicationException {
+  public void index(Project project) throws ApplicationException {
     int counter = 0;
-    String collId = collection.getId();
-    LOGGER.info("Index project: " + collId + " ...");
-    ArrayList<Database> collectionDBs = collection.getDatabases();
+    String projectId = project.getId();
+    LOGGER.info("Index project: " + projectId + " ...");
+    ArrayList<Database> projectDBs = project.getDatabases();
     if (options != null && options.length == 1 && options[0].equals("dbType:crawl")) {
-      collectionDBs = collection.getDatabasesByType("crawl");
+      projectDBs = project.getDatabasesByType("crawl");
     } else if (options != null && options.length == 1 && options[0].startsWith("dbName:")) {
       String dbName = options[0].replaceAll("dbName:", "");
-      collectionDBs = collection.getDatabasesByName(dbName);
+      projectDBs = project.getDatabasesByName(dbName);
     }
     if (options != null && options.length == 1 && (options[0].equals("dbType:crawl") || options[0].startsWith("dbName:"))) {
-      for (int i=0; i<collectionDBs.size(); i++) {
-        Database db = collectionDBs.get(i);
-        delete(collection, db); // delete the specified db from index
+      for (int i=0; i<projectDBs.size(); i++) {
+        Database db = projectDBs.get(i);
+        delete(project, db); // delete the specified db from index
       }
     } else {
-      delete(collection); // delete the whole collection from index
+      delete(project); // delete the whole project from index
     }
     if (options != null && options.length == 1 && options[0].startsWith("dbName:")) {
-      // if db is specified: do not index the collection rdf records
+      // if db is specified: do not index the project rdf records
     } else {
-      ArrayList<MetadataRecord> mdRecords = annotator.getMetadataRecordsByRecordsFile(collection);
+      ArrayList<MetadataRecord> mdRecords = annotator.getMetadataRecordsByRecordsFile(project);
       if (mdRecords != null) {
         counter = counter + mdRecords.size();
-        index(collection, null, mdRecords, false);
+        index(project, null, mdRecords, false);
       }
     }
-    if (collectionDBs != null) {
-      for (int i=0; i<collectionDBs.size(); i++) {
-        Database db = collectionDBs.get(i);
+    if (projectDBs != null) {
+      for (int i=0; i<projectDBs.size(); i++) {
+        Database db = projectDBs.get(i);
         String dbType = db.getType();
         if (dbType != null && (dbType.equals("crawl") || dbType.equals("eXist") || dbType.equals("oai"))) {
-          ArrayList<MetadataRecord> dbMdRecords = annotator.getMetadataRecordsByRecordsFile(collection, db);
+          ArrayList<MetadataRecord> dbMdRecords = annotator.getMetadataRecordsByRecordsFile(project, db);
           if (dbMdRecords != null) {
             counter = counter + dbMdRecords.size();
-            index(collection, db, dbMdRecords, false);
+            index(project, db, dbMdRecords, false);
           }
         } else {
-          File[] rdfDbResourcesFiles = metadataHandler.getRdfDbResourcesFiles(collection, db);
+          File[] rdfDbResourcesFiles = metadataHandler.getRdfDbResourcesFiles(project, db);
           if (rdfDbResourcesFiles != null && rdfDbResourcesFiles.length > 0) {
             // add the database records of each database of each database file
             for (int j = 0; j < rdfDbResourcesFiles.length; j++) {
               File rdfDbResourcesFile = rdfDbResourcesFiles[j];
               LOGGER.info("Index database records from file: " + rdfDbResourcesFile);
-              ArrayList<MetadataRecord> dbMdRecords = metadataHandler.getMetadataRecordsByRdfFile(collection, rdfDbResourcesFile, db, false);
+              ArrayList<MetadataRecord> dbMdRecords = metadataHandler.getMetadataRecordsByRdfFile(project, rdfDbResourcesFile, db, false);
               if (dbMdRecords != null) {
                 counter = counter + dbMdRecords.size();
-                index(collection, db, dbMdRecords, true);
+                index(project, db, dbMdRecords, true);
               }
             }
           }
         }
       }
     }
-    LOGGER.info("Project: " + collId + " with " + counter + " records indexed");
+    LOGGER.info("Project: " + projectId + " with " + counter + " records indexed");
   }
   
-  private void index(Collection collection, Database db, ArrayList<MetadataRecord> mdRecords, boolean dbRecords) throws ApplicationException {
-    String collId = collection.getId();
+  private void index(Project project, Database db, ArrayList<MetadataRecord> mdRecords, boolean dbRecords) throws ApplicationException {
+    String projectId = project.getId();
     // performance gain for database records: a commit is only done if commitInterval (e.g. 1000) is reached 
     if (dbRecords)
       indexHandler.setCommitInterval(COMMIT_INTERVAL_DB);
     for (int i=0; i<mdRecords.size(); i++) {
       MetadataRecord mdRecord = mdRecords.get(i);
-      // set db name of mdRecord
-      String dbName = collId + "Records";
-      if (db != null)
-        dbName = db.getName();
-      mdRecord.setDatabaseName(dbName);
+      String projectRdfId = project.getRdfId();
+      mdRecord.setProjectRdfId(projectRdfId);
+      // set db rdf id of mdRecord
+      if (db != null) {
+        String collectionRdfId = db.getCollectionRdfId();
+        mdRecord.setCollectionRdfId(collectionRdfId);
+        String databaseRdfId = db.getRdfId();
+        mdRecord.setDatabaseRdfId(databaseRdfId);
+      }
       // fetch fulltextFields
       String content = harvester.getFulltext("content", mdRecord);
       mdRecord.setContent(content); // is used in query highlighting function
@@ -120,10 +124,10 @@ public class Indexer {
       String docId = mdRecord.getDocId();
       String docUri = mdRecord.getUri();
       int count = i+1;
-      String logCreationStr = count + ". " + "Project: " + collId + ": Index resource: " + docUri + " (" + docId + ")";
+      String logCreationStr = count + ". " + "Project: " + projectId + ": Index resource: " + docUri + " (" + docId + ")";
       if (dbRecords)
-        logCreationStr = count + ". " + "Project: " + collId + ": Index database record: " + docId;
-      // if isDbColl then log only after each commit interval 
+        logCreationStr = count + ". " + "Project: " + projectId + ": Index database record: " + docId;
+      // if isDbRecord then log only after each commit interval 
       if (! dbRecords) {
         LOGGER.info(logCreationStr);
       } else {
@@ -131,21 +135,21 @@ public class Indexer {
           LOGGER.info(logCreationStr);
       }
       indexHandler.indexDocument(mdRecord);
-      // without that, there would be a memory leak (with many big documents in one collection)
+      // without that, there would be a memory leak (with many big documents in one project)
       // with that the main big fields (content etc.) could be garbaged
       mdRecord.setAllNull();
     }
     indexHandler.commit();  // so that the last pending mdRecords before commitInterval were also committed
   }
   
-  public void delete(Collection collection) throws ApplicationException {
-    String collectionId = collection.getId();
-    int countDeletedDocs = indexHandler.deleteCollection(collectionId);
-    LOGGER.info(countDeletedDocs + " records in project: \"" + collectionId + "\" successfully deleted from index");
+  public void delete(Project project) throws ApplicationException {
+    String projectId = project.getId();
+    int countDeletedDocs = indexHandler.deleteProject(projectId);
+    LOGGER.info(countDeletedDocs + " records in project: \"" + projectId + "\" successfully deleted from index");
   }
 
-  public void delete(Collection collection, Database db) throws ApplicationException {
-    int countDeletedDocs = indexHandler.deleteCollectionDBByName(db.getName());
-    LOGGER.info(countDeletedDocs + " records in project database: \"" + collection.getId() + ", " + db.getName() + "\" successfully deleted from index");
+  public void delete(Project project, Database db) throws ApplicationException {
+    int countDeletedDocs = indexHandler.deleteProjectDBByRdfId(db.getRdfId());
+    LOGGER.info(countDeletedDocs + " records in project database: \"" + project.getId() + ", " + db.getName() + "\" successfully deleted from index");
   }
 }

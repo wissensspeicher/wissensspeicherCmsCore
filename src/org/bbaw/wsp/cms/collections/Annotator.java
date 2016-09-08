@@ -38,85 +38,85 @@ public class Annotator {
     this.options = options;
   }
   
-  public void annotate(Collection collection) throws ApplicationException {
+  public void annotate(Project project) throws ApplicationException {
     int counter = 0;
-    String collId = collection.getId();
-    LOGGER.info("Annotate collection: " + collId + " ...");
+    String projectId = project.getId();
+    LOGGER.info("Annotate project: " + projectId + " ...");
     if (options != null && options.length == 1 && options[0].equals("dbType:crawl")) {
       // nothing when only the crawl db should be updated
     } else if (options != null && options.length == 1 && options[0].startsWith("dbName:")) {
       // nothing when only one db should be updated
     } else {
-      File annoationCollectionDir = new File(annotationDir + "/" + collection.getId());
-      FileUtils.deleteQuietly(annoationCollectionDir);
+      File annoationProjectDir = new File(annotationDir + "/" + project.getId());
+      FileUtils.deleteQuietly(annoationProjectDir);
     }
     if (options != null && options.length == 1 && options[0].startsWith("dbName:")) {
-      // if db is specified: do not index the collection rdf records
+      // if db is specified: do not index the project rdf records
     } else {
-      ArrayList<MetadataRecord> mdRecords = harvester.getMetadataRecordsByRecordsFile(collection);
+      ArrayList<MetadataRecord> mdRecords = harvester.getMetadataRecordsByRecordsFile(project);
       if (mdRecords != null) {
         counter = counter + mdRecords.size();
-        annotate(collection, null, mdRecords);
+        annotate(project, null, mdRecords);
       }
     }
-    ArrayList<Database> collectionDBs = collection.getDatabases();
+    ArrayList<Database> projectDBs = project.getDatabases();
     if (options != null && options.length == 1 && options[0].equals("dbType:crawl")) {
-      collectionDBs = collection.getDatabasesByType("crawl");
+      projectDBs = project.getDatabasesByType("crawl");
     } else if (options != null && options.length == 1 && options[0].startsWith("dbName:")) {
       String dbName = options[0].replaceAll("dbName:", "");
-      collectionDBs = collection.getDatabasesByName(dbName);
+      projectDBs = project.getDatabasesByName(dbName);
     }
-    if (collectionDBs != null) {
-      for (int i=0; i<collectionDBs.size(); i++) {
-        Database collectionDB = collectionDBs.get(i);
-        String dbType = collectionDB.getType();
+    if (projectDBs != null) {
+      for (int i=0; i<projectDBs.size(); i++) {
+        Database projectDB = projectDBs.get(i);
+        String dbType = projectDB.getType();
         boolean annotateDB = dbType != null && (dbType.equals("crawl") || dbType.equals("eXist") || dbType.equals("oai"));
         if (annotateDB) {
-          ArrayList<MetadataRecord> dbMdRecords = harvester.getMetadataRecordsByRecordsFile(collection, collectionDB);
+          ArrayList<MetadataRecord> dbMdRecords = harvester.getMetadataRecordsByRecordsFile(project, projectDB);
           if (dbMdRecords != null) {
             counter = counter + dbMdRecords.size();
-            annotate(collection, collectionDB, dbMdRecords);
+            annotate(project, projectDB, dbMdRecords);
           }
         }
       }
     }
-    LOGGER.info("Project: " + collId + " with " + counter + " records annotated");
+    LOGGER.info("Project: " + projectId + " with " + counter + " records annotated");
   }
   
-  public void delete(Collection collection) throws ApplicationException {
+  public void delete(Project project) throws ApplicationException {
     try {
-      String annoationCollectionDirStr = annotationDir + "/" + collection.getId();
-      Runtime.getRuntime().exec("rm -rf " + annoationCollectionDirStr);  // fast also when the directory contains many files
-      LOGGER.info("Project annotation directory: " + annoationCollectionDirStr + " successfully deleted");
+      String annoationProjectDirStr = annotationDir + "/" + project.getId();
+      Runtime.getRuntime().exec("rm -rf " + annoationProjectDirStr);  // fast also when the directory contains many files
+      LOGGER.info("Project annotation directory: " + annoationProjectDirStr + " successfully deleted");
     } catch (Exception e) {
       throw new ApplicationException(e);
     }
   }
   
-  public ArrayList<MetadataRecord> getMetadataRecordsByRecordsFile(Collection collection) throws ApplicationException {
-    File recordsFile = new File(annotationDir + "/" + collection.getId() + "/metadata/records/" + collection.getId() + ".xml");
+  public ArrayList<MetadataRecord> getMetadataRecordsByRecordsFile(Project project) throws ApplicationException {
+    File recordsFile = new File(annotationDir + "/" + project.getId() + "/metadata/records/" + project.getId() + ".xml");
     if (! recordsFile.exists()) {
       String harvestDir = Constants.getInstance().getHarvestDir();
-      recordsFile = new File(harvestDir + "/" + collection.getId() + "/metadata/records/" + collection.getId() + ".xml");
+      recordsFile = new File(harvestDir + "/" + project.getId() + "/metadata/records/" + project.getId() + ".xml");
     }
     ArrayList<MetadataRecord> mdRecords = metadataHandler.getMetadataRecordsByRecordsFile(recordsFile);
     return mdRecords;
   }
 
-  public ArrayList<MetadataRecord> getMetadataRecordsByRecordsFile(Collection collection, Database db) throws ApplicationException {
-    File dbRecordsFile = new File(annotationDir + "/" + collection.getId() + "/metadata/records/" + collection.getId() + "-" + db.getName() + "-1.xml");
+  public ArrayList<MetadataRecord> getMetadataRecordsByRecordsFile(Project project, Database db) throws ApplicationException {
+    File dbRecordsFile = new File(annotationDir + "/" + project.getId() + "/metadata/records/" + project.getId() + "-" + db.getName() + "-1.xml");
     if (! dbRecordsFile.exists()) {
       String harvestDir = Constants.getInstance().getHarvestDir();
-      dbRecordsFile = new File(harvestDir + "/" + collection.getId() + "/metadata/records/" + collection.getId() + "-" + db.getName() + "-1.xml");
+      dbRecordsFile = new File(harvestDir + "/" + project.getId() + "/metadata/records/" + project.getId() + "-" + db.getName() + "-1.xml");
     }
     ArrayList<MetadataRecord> mdRecords = metadataHandler.getMetadataRecordsByRecordsFile(dbRecordsFile);
     return mdRecords;
   }
 
-  private void annotate(Collection collection, Database db, ArrayList<MetadataRecord> mdRecords) throws ApplicationException {
-    String logStr = "Annotate metadata records (" + collection.getId() + ") ...";
+  private void annotate(Project project, Database db, ArrayList<MetadataRecord> mdRecords) throws ApplicationException {
+    String logStr = "Annotate metadata records (" + project.getId() + ") ...";
     if (db != null)
-      logStr = "Annotate metadata records (" + collection.getId() + ", " + db.getName() + ", " + db.getType() + ") ...";
+      logStr = "Annotate metadata records (" + project.getId() + ", " + db.getName() + ", " + db.getType() + ") ...";
     LOGGER.info(logStr);
     StringBuilder rdfStrBuilder = new StringBuilder(); 
     rdfStrBuilder.append("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
@@ -133,25 +133,25 @@ public class Annotator {
     recordsXmlStrBuilder.append("<records>\n");
     for (int i=0; i<mdRecords.size(); i++) {
       MetadataRecord mdRecord = mdRecords.get(i);
-      annotate(collection, mdRecord, rdfStrBuilder);
+      annotate(project, mdRecord, rdfStrBuilder);
       recordsXmlStrBuilder.append(mdRecord.toXmlStr());
       int iplus1 = i + 1;
       int annotateInterval = iplus1 % 100; // after each 100 annotations do Logging
       if (annotateInterval == 0) {
         LOGGER.info("Annotate " + iplus1 + "'th record: " + mdRecord.getWebUri());
       }
-      // without that, there would be a memory leak (with many big documents in one collection)
+      // without that, there would be a memory leak (with many big documents in one project)
       // with that the main big fields (content etc.) could be garbaged
       mdRecord.setAllNull();
     }
     recordsXmlStrBuilder.append("</records>\n");
     rdfStrBuilder.append("</rdf:RDF>\n"); 
-    String collId = collection.getId();
-    File rdfFile = new File(annotationDir + "/" + collId + "/metadata/annotations/" + collId + ".rdf");
-    File recordsFile = new File(annotationDir + "/" + collId + "/metadata/records/" + collId + ".xml");
+    String projectId = project.getId();
+    File rdfFile = new File(annotationDir + "/" + projectId + "/metadata/annotations/" + projectId + ".rdf");
+    File recordsFile = new File(annotationDir + "/" + projectId + "/metadata/records/" + projectId + ".xml");
     if (db != null) {
-      rdfFile = new File(annotationDir + "/" + collId + "/metadata/annotations/" + collId + "-" + db.getName() + "-1.rdf");
-      recordsFile = new File(annotationDir + "/" + collId + "/metadata/records/" + collId + "-" + db.getName() + "-1.xml");
+      rdfFile = new File(annotationDir + "/" + projectId + "/metadata/annotations/" + projectId + "-" + db.getName() + "-1.rdf");
+      recordsFile = new File(annotationDir + "/" + projectId + "/metadata/records/" + projectId + "-" + db.getName() + "-1.xml");
     }
     String rdfStr = rdfStrBuilder.toString();
     String recordsXmlStr = recordsXmlStrBuilder.toString();
@@ -164,7 +164,7 @@ public class Annotator {
     }
   }
   
-  private void annotate(Collection collection, MetadataRecord mdRecord, StringBuilder collectionRdfStrBuilder) throws ApplicationException {
+  private void annotate(Project project, MetadataRecord mdRecord, StringBuilder projectRdfStrBuilder) throws ApplicationException {
     Annotation docContentAnnotation = null;
     Annotation docTitleAnnotation = null;
     String docId = mdRecord.getDocId();
@@ -174,11 +174,11 @@ public class Annotator {
       if (docContent == null && mdRecord.getDescription() != null && ! mdRecord.getDescription().isEmpty())
         docContent = mdRecord.getDescription();
       if (docContent != null) {
-        docContentAnnotation = dbPediaSpotlightHandler.annotate(collection, docId, docContent, "0.99", 50);
+        docContentAnnotation = dbPediaSpotlightHandler.annotate(project, docId, docContent, "0.99", 50);
       }
       String docTitle = mdRecord.getTitle();
       if (docTitle != null)
-        docTitleAnnotation = dbPediaSpotlightHandler.annotate(collection, docId, docTitle, "0.5", 50);
+        docTitleAnnotation = dbPediaSpotlightHandler.annotate(project, docId, docTitle, "0.5", 50);
     } catch (ApplicationException e) {
       LOGGER.error(e);
     }
@@ -194,7 +194,7 @@ public class Annotator {
           }
         }
       }
-      String collRdfId = collection.getRdfId();
+      String projectRdfId = project.getRdfId();
       if (resources != null) {
         StringBuilder resourceNamesStrBuilder = new StringBuilder();
         StringBuilder resourcesXmlStrBuilder = new StringBuilder();
@@ -204,14 +204,14 @@ public class Annotator {
         if (webUri != null)
           uri = webUri;
         uri = StringUtils.deresolveXmlEntities(uri);
-        collectionRdfStrBuilder.append("<rdf:Description rdf:about=\"" + uri + "\">\n");
-        collectionRdfStrBuilder.append("  <rdf:type rdf:resource=\"http://purl.org/dc/terms/BibliographicResource\"/>\n");
-        collectionRdfStrBuilder.append("  <dcterms:isPartOf rdf:resource=\"" + collRdfId + "\"/>\n");
-        collectionRdfStrBuilder.append("  <dc:identifier rdf:resource=\"" + uri + "\"/>\n");
+        projectRdfStrBuilder.append("<rdf:Description rdf:about=\"" + uri + "\">\n");
+        projectRdfStrBuilder.append("  <rdf:type rdf:resource=\"http://purl.org/dc/terms/BibliographicResource\"/>\n");
+        projectRdfStrBuilder.append("  <dcterms:isPartOf rdf:resource=\"" + projectRdfId + "\"/>\n");
+        projectRdfStrBuilder.append("  <dc:identifier rdf:resource=\"" + uri + "\"/>\n");
         for (int i=0; i<resources.size(); i++) {
           DBpediaResource r = resources.get(i);
           resourcesXmlStrBuilder.append(r.toXmlStr());
-          collectionRdfStrBuilder.append(r.toRdfStr());
+          projectRdfStrBuilder.append(r.toRdfStr());
           String resourceName = r.getName();
           if (i == resources.size() - 1)
             resourceNamesStrBuilder.append(resourceName);
@@ -219,7 +219,7 @@ public class Annotator {
             resourceNamesStrBuilder.append(resourceName + "###");
         }
         resourcesXmlStrBuilder.append("</resources>\n");
-        collectionRdfStrBuilder.append("</rdf:Description>\n");
+        projectRdfStrBuilder.append("</rdf:Description>\n");
         mdRecord.setEntities(resourceNamesStrBuilder.toString());
         mdRecord.setEntitiesDetails(resourcesXmlStrBuilder.toString());
       }

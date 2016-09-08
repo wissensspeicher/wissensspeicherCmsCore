@@ -25,7 +25,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import org.apache.log4j.Logger;
-import org.bbaw.wsp.cms.collections.CollectionReader;
 import org.bbaw.wsp.cms.mdsystem.metadata.rdfmanager.JenaMainForAI;
 
 import com.hp.hpl.jena.reasoner.IllegalParameterException;
@@ -69,7 +68,7 @@ public class AdminInterface extends JFrame {
     private final JComboBox combobox = new JComboBox();
     private String namedGraph = "";
     private final JenaMainForAI jenaMain = new JenaMainForAI();
-    private static Logger LOGGER = Logger.getLogger(CollectionReader.class);
+    private static Logger LOGGER = Logger.getLogger(AdminInterface.class);
     private String larqD = jenaMain.readLarq();
 
     // ButtonsNames for distinction
