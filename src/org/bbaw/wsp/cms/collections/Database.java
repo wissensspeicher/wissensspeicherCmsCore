@@ -12,7 +12,7 @@ public class Database {
   private String collectionRdfId; // rdfId of collection which this database is part of
   private String type;
   private String name; // unique database name (converted from rdfId); e.g. telota.bbaw.de:8085##exist##rest##db##AvHBriefedition
-  private String url;  // start url (crawl, eXist or oai)
+  private String url;  // start url (crawl, eXist or oai)  // TODO evtl. entfernen (doppelt zum Feld rdfId) 
   private String language;  // language of db content
   private JdbcConnection jdbcConnection;
   private String sql;
@@ -22,7 +22,7 @@ public class Database {
   private String webIdPreStr;
   private String webIdAfterStr;
   private ArrayList<String> excludes; // exclude urls e.g. for eXist directories or crawls
-  private int depth;
+  private int depth; // if crawl db: crawl depth
   private Hashtable<String, XQuery> xQueries;
   private Hashtable<String, String> dcField2dbField = new Hashtable<String, String>();
 

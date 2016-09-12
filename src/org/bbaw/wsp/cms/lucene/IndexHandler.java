@@ -906,7 +906,7 @@ public class IndexHandler {
       FacetsConfig facetsConfig = new FacetsConfig();
       FastTaxonomyFacetCounts facetCounts = new FastTaxonomyFacetCounts(taxonomyReader, facetsConfig, facetsCollector);
       List<FacetResult> tmpFacetResult = new ArrayList<FacetResult>();
-      String[] facetsStr = {"projectId", "projectRdfId", "collectionRdfId", "language", "author", "publisher", "date", "subject", "subjectControlled", "swd", "ddc", "entityPerson", "entityOrganisation", "entityPlace", "entityConcept", "type"};
+      String[] facetsStr = {"projectId", "projectRdfId", "collectionRdfId", "databaseRdfId", "language", "author", "publisher", "date", "subject", "subjectControlled", "swd", "ddc", "entityPerson", "entityOrganisation", "entityPlace", "entityConcept", "type"};
       for (int f=0; f<facetsStr.length; f++) {
         String facetStr = facetsStr[f];
         Integer facetFieldCount = 1000;
