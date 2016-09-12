@@ -80,6 +80,7 @@ import org.bbaw.wsp.cms.document.DBpediaResource;
 import org.bbaw.wsp.cms.document.Facets;
 import org.bbaw.wsp.cms.document.Hits;
 import org.bbaw.wsp.cms.document.MetadataRecord;
+import org.bbaw.wsp.cms.document.Person;
 import org.bbaw.wsp.cms.document.Token;
 import org.bbaw.wsp.cms.document.TokenArrayListIterator;
 import org.bbaw.wsp.cms.document.XQuery;
@@ -275,31 +276,33 @@ public class IndexHandler {
         FacetField facetField = new FacetField("databaseRdfId", dbRdfId);
         doc.add(facetField);
       }
-      String author = mdRecord.getCreator();
-      if (author != null) {
-        String[] authors = author.split(";");
-        for (int i=0; i<authors.length; i++) {
-          String a = authors[i].trim();
-          if (! a.isEmpty()) {
-            FacetField facetField = new FacetField("author", a);
-            doc.add(facetField);
-          }
-        }
-        Field authorField = new Field("author", author, ftStoredAnalyzed);
+      String creator = mdRecord.getCreator();
+      if (creator != null) {
+        Field authorField = new Field("author", creator, ftStoredAnalyzed);
         doc.add(authorField);
         if (project.equals("jdg"))
           authorField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
-        if (author != null)
-          author = author.toLowerCase();  // so that sorting is lower case
-        Field authorFieldSorted = new SortedDocValuesField("authorSorted", new BytesRef(author));
+        if (creator != null)
+          creator = creator.toLowerCase();  // so that sorting is lower case
+        Field authorFieldSorted = new SortedDocValuesField("authorSorted", new BytesRef(creator));
         doc.add(authorFieldSorted);
       } else {
         FacetField facetField = new FacetField("author", "unbekannt");
         doc.add(facetField);
       }
-      if (mdRecord.getCreatorDetails() != null) {
-        Field authorDetailsField = new StoredField("authorDetails", mdRecord.getCreatorDetails());
+      String creatorDetails = mdRecord.getCreatorDetails();
+      if (creatorDetails != null) {
+        Field authorDetailsField = new StoredField("authorDetails", creatorDetails);
         doc.add(authorDetailsField);
+        ArrayList<Person> authors = Person.fromXmlStr(xQueryEvaluator, creatorDetails);
+        for (int i=0; i<authors.size(); i++) {
+          Person person = authors.get(i);
+          String authorName = person.getName();
+          if (! authorName.isEmpty()) {
+            FacetField facetField = new FacetField("author", authorName);
+            doc.add(facetField);
+          }
+        }
       }
       if (mdRecord.getTitle() != null) {
         Field titleField = new Field("title", mdRecord.getTitle(), ftStoredAnalyzed);
