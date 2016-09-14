@@ -304,20 +304,26 @@ public class IndexHandler {
           }
         }
       }
-      if (mdRecord.getTitle() != null) {
-        Field titleField = new Field("title", mdRecord.getTitle(), ftStoredAnalyzed);
+      String titleStr = mdRecord.getTitle();
+      if (titleStr != null) {
+        Field titleField = new Field("title", titleStr, ftStoredAnalyzed);
         doc.add(titleField);
         if (project.equals("jdg"))
           titleField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
-        String titleStr = mdRecord.getTitle();
-        if (titleStr != null)
-          titleStr = titleStr.toLowerCase();  // so that sorting is lower case
+        titleStr = titleStr.toLowerCase();  // so that sorting is lower case
         Field titleFieldSorted = new SortedDocValuesField("titleSorted", new BytesRef(titleStr));
         doc.add(titleFieldSorted);
       }
+      String alternativeTitleStr = mdRecord.getAlternativeTitle();
+      if (alternativeTitleStr != null) {
+        Field alternativeTitleField = new Field("alternativeTitle", alternativeTitleStr, ftStoredAnalyzed);
+        doc.add(alternativeTitleField);
+        if (project.equals("jdg"))
+          alternativeTitleField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
+      }
       String publisher = mdRecord.getPublisher();
       if (publisher != null) {
-        String[] publishers = publisher.split(";");
+        String[] publishers = publisher.split(".");
         for (int i=0; i<publishers.length; i++) {
           String p = publishers[i].trim();
           if (! p.isEmpty()) {
@@ -571,6 +577,13 @@ public class IndexHandler {
         String pageCountStr = String.valueOf(pageCount);
         Field pageCountField = new Field("pageCount", pageCountStr, ftStoredAnalyzed);
         doc.add(pageCountField);
+      }
+      String extent = mdRecord.getExtent();
+      if (extent != null) {
+        Field extentField = new Field("extent", extent, ftStoredAnalyzed);
+        doc.add(extentField);
+        if (project.equals("jdg"))
+          extentField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
       }
       String docTokensOrig = mdRecord.getTokenOrig();
       if (docTokensOrig != null) {
@@ -1196,6 +1209,10 @@ public class IndexHandler {
       IndexableField titleField = doc.getField("title");
       if (titleField != null)
         title = titleField.stringValue();
+      String alternativeTitle = null;
+      IndexableField alternativeTitleField = doc.getField("alternativeTitle");
+      if (alternativeTitleField != null)
+        alternativeTitle = alternativeTitleField.stringValue();
       String language = null;
       IndexableField languageField = doc.getField("language");
       if (languageField != null)
@@ -1255,6 +1272,10 @@ public class IndexHandler {
         String pageCountStr = pageCountField.stringValue();
         pageCount = Integer.valueOf(pageCountStr);
       }
+      String extent = null;
+      IndexableField extentField = doc.getField("extent");
+      if (extentField != null)
+        extent = extentField.stringValue();
       String type = null;
       IndexableField typeField = doc.getField("type");
       if (typeField != null)
@@ -1306,6 +1327,7 @@ public class IndexHandler {
       mdRecord.setCreator(author);
       mdRecord.setCreatorDetails(authorDetails);
       mdRecord.setTitle(title);
+      mdRecord.setAlternativeTitle(alternativeTitle);
       mdRecord.setDate(yearDate);
       mdRecord.setLanguage(language);
       mdRecord.setDescription(description);
@@ -1316,6 +1338,7 @@ public class IndexHandler {
       mdRecord.setRights(rights);
       mdRecord.setAccessRights(accessRights);
       mdRecord.setPageCount(pageCount);
+      mdRecord.setExtent(extent);
       mdRecord.setType(type);
       mdRecord.setSystem(systemType);
       mdRecord.setEntitiesDetails(entitiesDetailsStr);
@@ -2129,6 +2152,7 @@ public class IndexHandler {
       documentsFieldAnalyzers.put("collectionRdfId", new KeywordAnalyzer());
       documentsFieldAnalyzers.put("author", new StandardAnalyzer());
       documentsFieldAnalyzers.put("title", new StandardAnalyzer());
+      documentsFieldAnalyzers.put("alternativeTitle", new StandardAnalyzer());
       documentsFieldAnalyzers.put("language", new StandardAnalyzer());
       documentsFieldAnalyzers.put("publisher", new StandardAnalyzer());
       documentsFieldAnalyzers.put("date", new StandardAnalyzer());
@@ -2145,6 +2169,7 @@ public class IndexHandler {
       documentsFieldAnalyzers.put("type", new KeywordAnalyzer()); // e.g. mime type "text/xml"
       documentsFieldAnalyzers.put("systemType", new KeywordAnalyzer()); // e.g. "dbRecord"
       documentsFieldAnalyzers.put("pageCount", new KeywordAnalyzer()); 
+      documentsFieldAnalyzers.put("extent", new StandardAnalyzer());
       documentsFieldAnalyzers.put("schemaName", new StandardAnalyzer());
       documentsFieldAnalyzers.put("lastModified", new KeywordAnalyzer());
       documentsFieldAnalyzers.put("tokenOrig", new StandardAnalyzer());
@@ -2264,6 +2289,7 @@ public class IndexHandler {
     fields.add("author");
     fields.add("authorDetails");
     fields.add("title");
+    fields.add("alternativeTitle");
     fields.add("language");
     fields.add("publisher");
     fields.add("date");
@@ -2278,6 +2304,7 @@ public class IndexHandler {
     fields.add("type");
     fields.add("systemType");
     fields.add("pageCount");
+    fields.add("extent");
     fields.add("schemaName");
     fields.add("lastModified");
     fields.add("entities");

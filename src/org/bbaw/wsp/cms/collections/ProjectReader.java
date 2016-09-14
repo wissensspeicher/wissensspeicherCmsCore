@@ -27,6 +27,7 @@ public class ProjectReader {
   private static ProjectReader projectReader; 
   private ArrayList<String> globalExcludes;
   private HashMap<String, Person> normdataPersons;
+  private HashMap<String, Organization> normdataOrganizations;
   private HashMap<String, Project> projects;  // key is id string and value is project
   private HashMap<String, Project> projectsByRdfId;  // key is projectRdfId string and value is project
 	
@@ -132,6 +133,10 @@ public class ProjectReader {
     return normdataPersons.get(aboutId);
   }
   
+  public Organization getOrganization(String aboutId) {
+    return normdataOrganizations.get(aboutId);
+  }
+  
   public ArrayList<String> getGlobalExcludes() {
     return globalExcludes;
   }
@@ -204,6 +209,31 @@ public class ProjectReader {
       }
     } catch (Exception e) {
       LOGGER.error("Reading of: " + personNormdataFile + " failed");
+      e.printStackTrace();
+    }
+    normdataOrganizations = new HashMap<String, Organization>();
+    String orgNormdataFileName = Constants.getInstance().getMetadataDir() + "/normdata/wsp.normdata.organizations.rdf";
+    File orgNormdataFile = new File(orgNormdataFileName);
+    try {
+      Document normdataFileDoc = Jsoup.parse(orgNormdataFile, "utf-8");
+      Elements orgElems = normdataFileDoc.select("rdf|RDF > rdf|Description > rdf|type[rdf:resource*=Organization]");
+      if (! orgElems.isEmpty()) {
+        for (int i=0; i< orgElems.size(); i++) {
+          Organization organization = new Organization();
+          Element orgElem = orgElems.get(i).parent();
+          String name = orgElem.select("rdf|Description > foaf|name").text();
+          if (name != null && ! name.isEmpty()) {
+            organization.setName(name);
+          }
+          String homepageUrl = orgElem.select("rdf|Description > foaf|homepage").attr("rdf:resource");
+          if (homepageUrl != null && ! homepageUrl.isEmpty())
+            organization.setHomepageUrl(homepageUrl);
+          String aboutId = orgElem.select("rdf|Description").attr("rdf:about");
+          normdataOrganizations.put(aboutId, organization);
+        }
+      }
+    } catch (Exception e) {
+      LOGGER.error("Reading of: " + orgNormdataFile + " failed");
       e.printStackTrace();
     }
   }

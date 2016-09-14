@@ -922,23 +922,55 @@ public class MetadataHandler {
       }
       mdRecord.setTitle(title);
     }
-    // publisher TODO
-    String publisher = resourceElem.select("dc|publisher").text();
-    if (publisher != null && ! publisher.isEmpty())
-      mdRecord.setPublisher(publisher);
-    // dc:subject TODO
-    Elements subjectElems = resourceElem.select("dcterms|subject");
+    // alternative title
+    Elements alternativeElems = resourceElem.select("dcterms|alternative");
+    if (! alternativeElems.isEmpty()) {
+      String alternativeTitle = "";
+      for (int i=0; i<alternativeElems.size(); i++) {
+        String alternativeTitleElemStr = alternativeElems.get(i).text();
+        if (titleElems.size() == 1)
+          alternativeTitle = alternativeTitleElemStr;
+        else
+          alternativeTitle = alternativeTitle + alternativeTitleElemStr + ". ";
+      }
+      mdRecord.setAlternativeTitle(alternativeTitle);
+    }
+    // publisher
+    Elements publisherElems = resourceElem.select("dcterms|publisher");
+    if (! publisherElems.isEmpty()) {
+      ArrayList<Organization> organizations = new ArrayList<Organization>();
+      for (int i=0; i<publisherElems.size(); i++) {
+        Element publisherElem = publisherElems.get(i);
+        String rdfIdOrganization = publisherElem.attr("rdf:resource");
+        if (rdfIdOrganization != null && ! rdfIdOrganization.isEmpty()) {
+          Organization organization = ProjectReader.getInstance().getOrganization(rdfIdOrganization.trim());
+          if (organization != null)
+            organizations.add(organization);
+        }
+      }
+      String publisherStr = "";
+      for (int i=0; i<organizations.size(); i++) {
+        Organization organization = organizations.get(i);
+        publisherStr = publisherStr + organization.getName();
+        if (organizations.size() != 1)
+          publisherStr = publisherStr + ". ";
+      }
+      if (publisherStr != null && ! publisherStr.isEmpty())
+        mdRecord.setPublisher(publisherStr);
+    }
+    // dc:subject TODO types: gnd, dbPedia, ddc, ... no free subjects
+    Elements subjectElems = resourceElem.select("dc|subject");
     String subject = textValueJoined(subjectElems, "###");
     if (subject != null)
       mdRecord.setSubject(subject);
     // swd TODO
-    Elements swdElems = resourceElem.select("dc|subject[xsi:type=\"SWD\"]");
+    Elements swdElems = resourceElem.select("dcterms|subject[xsi:type=\"SWD\"]");
     String subjectSwd = textValueJoined(swdElems, ",");
     if (subjectSwd != null) {
       mdRecord.setSwd(subjectSwd);
     }
     // ddc TODO
-    Elements ddcElems = resourceElem.select("dc|subject[xsi:type=\"dcterms:DDC\"]");
+    Elements ddcElems = resourceElem.select("dcterms|subject[xsi:type=\"dcterms:DDC\"]");
     String subjectDdc = textValueJoined(ddcElems, ",");
     if (subjectDdc != null) {
       mdRecord.setDdc(subjectDdc);
@@ -990,15 +1022,10 @@ public class MetadataHandler {
       abstractt = StringUtils.resolveXmlEntities(abstractt.trim());
       mdRecord.setDescription(abstractt);
     }
-    // page count
-    String pagesStr = resourceElem.select("dcterms|extent").text();
-    if (pagesStr != null && ! pagesStr.isEmpty()) {
-      try {
-        int pages = Integer.parseInt(pagesStr);
-        mdRecord.setPageCount(pages);
-      } catch (NumberFormatException e) {
-        // nothing
-      }
+    // extent
+    String extent = resourceElem.select("dcterms|extent").text();
+    if (extent != null && ! extent.isEmpty()) {
+      mdRecord.setExtent(extent);
     }
     return mdRecord;
   }

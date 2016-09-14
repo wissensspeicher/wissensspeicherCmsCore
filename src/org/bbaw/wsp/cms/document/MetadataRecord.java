@@ -18,8 +18,8 @@ import de.mpg.mpiwg.berlin.mpdl.util.StringUtils;
 public class MetadataRecord implements Cloneable, Serializable {
   private static final long serialVersionUID = 4711L;
   private static DateFormat US_DATE_FORMAT = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US);
-  private int id = -1; // local id: auto incremented integer value (one higher than the last created integer value in lucene field "id", e.g. 1
-  private String docId; // local id: resource identifier in index system, e.g. "/edoc/2011/1591/pdf/08_VI.Dokumente.pdf"
+  private int id = -1; // local id: auto incremented integer value
+  private String docId; // local id: resource identifier in index system, e.g. "/edoc/files/1155/08_assmann.pdf"
   private String identifier; // local id: identifier field in resource metadata: e.g. <meta name="DC.identifier" content="47114711">
   private String uri; // global id: resource URI (uniform resource identifier), download URL: e.g. http://www.deutschestextarchiv.de/book/download_xml/albertinus_landtstoertzer01_1615
   private String webUri; // global web url, e.g. "http://telota.bbaw.de/ig/IG I3 501" or "http://edoc.bbaw.de/volltexte/2011/1769/" or "http://www.deutschestextarchiv.de/albertinus_landtstoertzer01_1615"
@@ -31,7 +31,8 @@ public class MetadataRecord implements Cloneable, Serializable {
   private String language; // language: ISO 639-3 with 3 characters, e.g. "ger" or "eng"
   private String creator; // author(s) of resource
   private String creatorDetails; // author(s) details (xml format) 
-  private String title; // title(s) of resource
+  private String title; // main title of resource
+  private String alternativeTitle; // alternative title(s) of resource
   private String publisher; // publisher with place: e.g. Springer, New York
   private Date date; // publication date, e.g. 1958
   private String description; // description, abstract etc.
@@ -54,6 +55,7 @@ public class MetadataRecord implements Cloneable, Serializable {
   private Date lastModified; // last modification date in index system
   private String encoding; // charset such as "utf-8" or "iso-8859-1"
   private int pageCount; // number of pages
+  private String extent; // extent string
   private String urn; // uniform resource name, e.g. the KOBV urn, e.g. urn:nbn:de:kobv:b4360-10020
   private String edocCollection;  // edoc collection. e.g. "BBAW / Schriftenreihen / Berichte und Abhandlungen / Berichte und Abhandlungen - Band 10", in case of multi values: separated by semicolon
   private String documentType; // e.g. the KOBV "Dokumentenart"
@@ -234,6 +236,14 @@ public class MetadataRecord implements Cloneable, Serializable {
     this.pageCount = pageCount;
   }
 
+  public String getExtent() {
+    return extent;
+  }
+
+  public void setExtent(String extent) {
+    this.extent = extent;
+  }
+
   public String getContributor() {
     return contributor;
   }
@@ -296,6 +306,14 @@ public class MetadataRecord implements Cloneable, Serializable {
 
   public void setTitle(String title) {
     this.title = title;
+  }
+
+  public String getAlternativeTitle() {
+    return alternativeTitle;
+  }
+
+  public void setAlternativeTitle(String alternativeTitle) {
+    this.alternativeTitle = alternativeTitle;
   }
 
   public Date getDate() {
