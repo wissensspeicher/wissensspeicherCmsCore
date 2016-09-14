@@ -8,11 +8,10 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 public class Database {
-  private String rdfId; // e.g. http://telota.bbaw.de:8085/exist/rest/db/AvHBriefedition
+  private String rdfId; // start url (crawl, eXist or oai), e.g. http://telota.bbaw.de:8085/exist/rest/db/AvHBriefedition
   private String collectionRdfId; // rdfId of collection which this database is part of
   private String type;
   private String name; // unique database name (converted from rdfId); e.g. telota.bbaw.de:8085##exist##rest##db##AvHBriefedition
-  private String url;  // start url (crawl, eXist or oai)  // TODO evtl. entfernen (doppelt zum Feld rdfId) 
   private String language;  // language of db content
   private JdbcConnection jdbcConnection;
   private String sql;
@@ -59,14 +58,6 @@ public class Database {
     this.name = name;
   }
   
-  public String getUrl() {
-    return url;
-  }
-
-  public void setUrl(String url) {
-    this.url = url;
-  }
-
   public String getLanguage() {
     return language;
   }
@@ -169,8 +160,9 @@ public class Database {
     database.setRdfId(databaseRdfId);
     String type = databaseElem.select("db > type").text();  // e.g. "crawl", "eXist", "oai", "mysql" or "postgres"
     database.setType(type);
-    String url = databaseElem.select("db > url").text();
-    database.setUrl(url);
+    String url = databaseElem.select("db > url").text(); // redundant field to id attribute
+    if (databaseRdfId == null || databaseRdfId.isEmpty())
+      database.setRdfId(url);
     String language = databaseElem.select("db > language").text();
     if (language != null && ! language.isEmpty())
       database.setLanguage(language);

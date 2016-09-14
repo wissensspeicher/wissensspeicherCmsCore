@@ -119,7 +119,7 @@ public class MetadataHandler {
     String projectId = project.getId();
     ArrayList<MetadataRecord> mdRecords = new ArrayList<MetadataRecord>();
     Integer maxIdcounter = null;
-    String urlStr = db.getUrl();
+    String urlStr = db.getRdfId();
     ProjectManager pm = ProjectManager.getInstance();
     MetadataRecord mdRecord = getNewMdRecord(urlStr); 
     mdRecord.setSystem("eXist");
@@ -182,7 +182,7 @@ public class MetadataHandler {
       maxIdcounter = pm.getStatusMaxId();  // find the highest value, so that each following id is a real new id
     }
     Date lastModified = new Date();
-    String startUrl = db.getUrl();
+    String startUrl = db.getRdfId();
     ArrayList<String> excludes = db.getExcludes();
     Integer depth = db.getDepth();
     Crawler crawler = new Crawler(startUrl, depth, excludes);
@@ -223,7 +223,7 @@ public class MetadataHandler {
   public int fetchMetadataRecordsOai(String dirName, Project project, Database db) throws ApplicationException {
     // fetch the oai records and write them to xml files
     StringBuilder xmlOaiStrBuilder = new StringBuilder();
-    String oaiServerUrl = db.getUrl();
+    String oaiServerUrl = db.getRdfId();
     String oaiSet = db.getOaiSet();
     String listRecordsUrl = oaiServerUrl + "?verb=ListRecords&metadataPrefix=oai_dc&set=" + oaiSet;
     if (oaiSet == null)
@@ -268,9 +268,9 @@ public class MetadataHandler {
     String xmlOaiDbFileName = dirName + "/" + project.getId() + "-" + db.getName() + "-" + fileCounter + ".xml";
     xmlOaiStrBuilder.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
     if (oaiSet == null)
-      xmlOaiStrBuilder.append("<!-- Resources of OAI-PMH-Server: " + db.getName() + " (Url: " + db.getUrl() + ") -->\n");
+      xmlOaiStrBuilder.append("<!-- Resources of OAI-PMH-Server: " + db.getName() + " (Url: " + db.getRdfId() + ") -->\n");
     else 
-      xmlOaiStrBuilder.append("<!-- Resources of OAI-PMH-Server: " + db.getName() + " (Url: " + db.getUrl() + ", Set: " + oaiSet + ") -->\n");
+      xmlOaiStrBuilder.append("<!-- Resources of OAI-PMH-Server: " + db.getName() + " (Url: " + db.getRdfId() + ", Set: " + oaiSet + ") -->\n");
     xmlOaiStrBuilder.append("<OAI-PMH>\n");
     xmlOaiStrBuilder.append("<ListRecords>\n");
     xmlOaiStrBuilder.append(recordsStrBuilder.toString());
