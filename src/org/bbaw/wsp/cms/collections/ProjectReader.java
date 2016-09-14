@@ -28,6 +28,7 @@ public class ProjectReader {
   private ArrayList<String> globalExcludes;
   private HashMap<String, Person> normdataPersons;
   private HashMap<String, Organization> normdataOrganizations;
+  private HashMap<String, Subject> normdataSubjects;
   private HashMap<String, Project> projects;  // key is id string and value is project
   private HashMap<String, Project> projectsByRdfId;  // key is projectRdfId string and value is project
 	
@@ -137,6 +138,10 @@ public class ProjectReader {
     return normdataOrganizations.get(aboutId);
   }
   
+  public Subject getSubject(String aboutId) {
+    return normdataSubjects.get(aboutId);
+  }
+  
   public ArrayList<String> getGlobalExcludes() {
     return globalExcludes;
   }
@@ -221,7 +226,7 @@ public class ProjectReader {
         for (int i=0; i< orgElems.size(); i++) {
           Organization organization = new Organization();
           Element orgElem = orgElems.get(i).parent();
-          String name = orgElem.select("rdf|Description > foaf|name").text();
+          String name = orgElem.select("rdf|Description > foaf|name[xml:lang=\"de\"]").text();
           if (name != null && ! name.isEmpty()) {
             organization.setName(name);
           }
@@ -229,11 +234,42 @@ public class ProjectReader {
           if (homepageUrl != null && ! homepageUrl.isEmpty())
             organization.setHomepageUrl(homepageUrl);
           String aboutId = orgElem.select("rdf|Description").attr("rdf:about");
+          organization.setRdfId(aboutId);
           normdataOrganizations.put(aboutId, organization);
         }
       }
     } catch (Exception e) {
       LOGGER.error("Reading of: " + orgNormdataFile + " failed");
+      e.printStackTrace();
+    }
+    normdataSubjects = new HashMap<String, Subject>();
+    String subjectNormdataFileName = Constants.getInstance().getMetadataDir() + "/normdata/wsp.normdata.subjects.rdf";
+    File subjectNormdataFile = new File(subjectNormdataFileName);
+    try {
+      Document normdataFileDoc = Jsoup.parse(subjectNormdataFile, "utf-8");
+      Elements subjectElems = normdataFileDoc.select("rdf|RDF > rdf|Description");
+      if (! subjectElems.isEmpty()) {
+        for (int i=0; i< subjectElems.size(); i++) {
+          Subject subject = new Subject();
+          Element subjectElem = subjectElems.get(i);
+          String type = subjectElem.select("rdf|Description > rdf|type").attr("rdf:resource");
+          if (type != null && ! type.isEmpty()) {
+            subject.setType(type);
+          }
+          String name = subjectElem.select("rdf|Description > rdfs|label[xml:lang=\"de\"]").text();
+          if (name != null && ! name.isEmpty()) {
+            subject.setName(name);
+          }
+          String gndId = subjectElem.select("rdf|Description > gnd|gndIdentifier").text();
+          if (gndId != null && ! gndId.isEmpty())
+            subject.setGndIdentifier(gndId);
+          String aboutId = subjectElem.select("rdf|Description").attr("rdf:about");
+          subject.setRdfId(aboutId);
+          normdataSubjects.put(aboutId, subject);
+        }
+      }
+    } catch (Exception e) {
+      LOGGER.error("Reading of: " + subjectNormdataFile + " failed");
       e.printStackTrace();
     }
   }

@@ -958,42 +958,29 @@ public class MetadataHandler {
       if (publisherStr != null && ! publisherStr.isEmpty())
         mdRecord.setPublisher(publisherStr);
     }
-    // dc:subject TODO types: gnd, dbPedia, ddc, ... no free subjects
-    Elements subjectElems = resourceElem.select("dc|subject");
-    String subject = textValueJoined(subjectElems, "###");
-    if (subject != null)
-      mdRecord.setSubject(subject);
-    // swd TODO
-    Elements swdElems = resourceElem.select("dcterms|subject[xsi:type=\"SWD\"]");
-    String subjectSwd = textValueJoined(swdElems, ",");
-    if (subjectSwd != null) {
-      mdRecord.setSwd(subjectSwd);
-    }
-    // ddc TODO
-    Elements ddcElems = resourceElem.select("dcterms|subject[xsi:type=\"dcterms:DDC\"]");
-    String subjectDdc = textValueJoined(ddcElems, ",");
-    if (subjectDdc != null) {
-      mdRecord.setDdc(subjectDdc);
-    }
-    // dcterms:subject TODO
+    // dcterms:subject
     Elements dctermSubjectElems = resourceElem.select("dcterms|subject");
     if (! dctermSubjectElems.isEmpty()) {
+      String subjectStr = "";
       String subjectControlledDetails = "<subjects>";
       for (int i=0; i<dctermSubjectElems.size(); i++) {
-        /* e.g.:
-         * <dcterms:subject>
-             <rdf:Description rdf:about="http://de.dbpedia.org/resource/Kategorie:Karl_Marx">
-               <rdf:type rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
-               <rdfs:label>Karl Marx</rdfs:label>
-             </rdf:description>
-           </dcterms:subject>
-         */
+        // e.g.: <dcterms:subject rdf:resource="http://d-nb.info/gnd/4037764-7"/>
         Element dctermSubjectElem = dctermSubjectElems.get(i);
+        String rdfIdSubject = dctermSubjectElem.attr("rdf:resource");
+        if (rdfIdSubject != null && ! rdfIdSubject.isEmpty()) {
+          Subject subject = ProjectReader.getInstance().getSubject(rdfIdSubject.trim());
+          if (subject != null) {
+            subjectStr = subjectStr + subject.getName() + "###";
+          }
+        }
         String dctermSubjectElemStr = dctermSubjectElem.outerHtml();
         subjectControlledDetails = subjectControlledDetails + "\n" + dctermSubjectElemStr;
       }
+      if (subjectStr.endsWith("###"))
+        subjectStr = subjectStr.substring(0, subjectStr.length() - 3);
       subjectControlledDetails = subjectControlledDetails + "\n</subjects>";
       mdRecord.setSubjectControlledDetails(subjectControlledDetails);
+      mdRecord.setSubjectControlled(subjectStr);
     }
     // date
     String dateStr = resourceElem.select("dcterms|date").text();

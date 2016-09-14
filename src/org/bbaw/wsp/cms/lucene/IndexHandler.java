@@ -400,18 +400,19 @@ public class IndexHandler {
       }
       String subjectControlledDetails = mdRecord.getSubjectControlledDetails();
       if (subjectControlledDetails != null) {
-        String namespaceDeclaration = "declare namespace rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"; declare namespace rdfs=\"http://www.w3.org/2000/01/rdf-schema#\"; declare namespace dc=\"http://purl.org/dc/elements/1.1/\"; declare namespace dcterms=\"http://purl.org/dc/terms/\"; ";
-        String dcTermsSubjectsStr = xQueryEvaluator.evaluateAsStringValueJoined(subjectControlledDetails, namespaceDeclaration + "/subjects/dcterms:subject/rdf:Description/rdfs:label", "###");
-        Field subjectControlledField = new Field("subjectControlled", dcTermsSubjectsStr, ftStoredAnalyzed);
-        doc.add(subjectControlledField);
         Field subjectControlledDetailsField = new Field("subjectControlledDetails", subjectControlledDetails, ftStoredNotAnalyzed);
         doc.add(subjectControlledDetailsField);
-        String[] dcTermsSubjects = dcTermsSubjectsStr.split("###");
-        for (int i=0; i<dcTermsSubjects.length; i++) {
-          String s = dcTermsSubjects[i].trim();
-          if (! s.isEmpty()) {
-            FacetField facetField = new FacetField("subjectControlled", s);
-            doc.add(facetField);
+        String subjectControlled = mdRecord.getSubjectControlled();
+        if (subjectControlled != null && ! subjectControlled.isEmpty()) {
+          Field subjectControlledField = new Field("subjectControlled", subjectControlled, ftStoredAnalyzed);
+          doc.add(subjectControlledField);
+          String[] dcTermsSubjects = subjectControlled.split("###");
+          for (int i=0; i<dcTermsSubjects.length; i++) {
+            String s = dcTermsSubjects[i].trim();
+            if (! s.isEmpty()) {
+              FacetField facetField = new FacetField("subjectControlled", s);
+              doc.add(facetField);
+            }
           }
         }
       }

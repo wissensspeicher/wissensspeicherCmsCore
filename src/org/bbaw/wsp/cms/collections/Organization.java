@@ -1,10 +1,16 @@
 package org.bbaw.wsp.cms.collections;
 
 public class Organization {
+  private String rdfId;
   private String name;
   private String homepageUrl;
 
-  public Organization() {
+  public String getRdfId() {
+    return rdfId;
+  }
+
+  public void setRdfId(String rdfId) {
+    this.rdfId = rdfId;
   }
 
   public String getName() {
