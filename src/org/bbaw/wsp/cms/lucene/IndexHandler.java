@@ -322,8 +322,12 @@ public class IndexHandler {
           alternativeTitleField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
       }
       String publisher = mdRecord.getPublisher();
-      if (publisher != null) {
+      if (publisher != null && ! publisher.isEmpty()) {
         String[] publishers = publisher.split(".");
+        if (publishers.length == 0) {
+          publishers = new String[1];
+          publishers[0] = publisher;
+        }
         for (int i=0; i<publishers.length; i++) {
           String p = publishers[i].trim();
           if (! p.isEmpty()) {
@@ -1213,6 +1217,10 @@ public class IndexHandler {
       IndexableField alternativeTitleField = doc.getField("alternativeTitle");
       if (alternativeTitleField != null)
         alternativeTitle = alternativeTitleField.stringValue();
+      String publisher = null;
+      IndexableField publisherField = doc.getField("publisher");
+      if (publisherField != null)
+        publisher = publisherField.stringValue();
       String language = null;
       IndexableField languageField = doc.getField("language");
       if (languageField != null)
@@ -1328,6 +1336,7 @@ public class IndexHandler {
       mdRecord.setCreatorDetails(authorDetails);
       mdRecord.setTitle(title);
       mdRecord.setAlternativeTitle(alternativeTitle);
+      mdRecord.setPublisher(publisher);
       mdRecord.setDate(yearDate);
       mdRecord.setLanguage(language);
       mdRecord.setDescription(description);
