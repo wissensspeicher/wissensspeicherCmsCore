@@ -357,7 +357,9 @@ public class ProjectReader {
         return null;
       }
       project.setId(projectId);
-      String title = projectElem.select("foaf|name").text();
+      String title = projectElem.select("foaf|name[xml:lang=\"de\"]").text();
+      if (title == null || title.isEmpty())
+        title = projectElem.select("foaf|name").text();
       if (title != null && ! title.isEmpty())
         project.setTitle(title);
       String status = projectElem.select("foaf|status").text();
