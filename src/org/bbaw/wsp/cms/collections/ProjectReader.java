@@ -375,12 +375,13 @@ public class ProjectReader {
       if (parentRdfId != null && ! parentRdfId.isEmpty())
         project.setParentRdfId(parentRdfId);
       String mainLanguage = projectElem.select("dcterms|language").attr("rdf:resource");
-      if (mainLanguage != null) {
+      if (mainLanguage != null && ! mainLanguage.isEmpty()) {
         if (mainLanguage.contains("/"))
           mainLanguage = mainLanguage.substring(mainLanguage.lastIndexOf("/") + 1);
         project.setMainLanguage(mainLanguage);
       } else {
-        LOGGER.error("ProjectReader: " + projectRdfFile + ": no project \"<dcterms:language>\" defined");
+        project.setMainLanguage("deu");
+        LOGGER.error("ProjectReader: " + projectRdfFile + ": no project \"<dcterms:language>\" defined. Project: \"" + projectId + "\" set to default language: deu");
       }
       Elements collectionElems = projectRdfDoc.select("rdf|RDF > rdf|Description > rdf|type[rdf:resource*=Aggregation]");
       for (int i=0; i< collectionElems.size(); i++) {
