@@ -21,6 +21,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
+import de.mpg.mpiwg.berlin.mpdl.lt.general.Language;
 
 public class ProjectReader {
   private static Logger LOGGER = Logger.getLogger(ProjectReader.class);
@@ -378,10 +379,13 @@ public class ProjectReader {
       if (mainLanguage != null && ! mainLanguage.isEmpty()) {
         if (mainLanguage.contains("/"))
           mainLanguage = mainLanguage.substring(mainLanguage.lastIndexOf("/") + 1);
+        String mainLangIso639 = Language.getInstance().getISO639Code(mainLanguage);
+        if (mainLangIso639 != null)
+          mainLanguage = mainLangIso639; // international 3 character id (e.g. "ger")
         project.setMainLanguage(mainLanguage);
       } else {
-        project.setMainLanguage("deu");
-        LOGGER.error("ProjectReader: " + projectRdfFile + ": no project \"<dcterms:language>\" defined. Project: \"" + projectId + "\" set to default language: deu");
+        project.setMainLanguage("ger");
+        LOGGER.error("ProjectReader: " + projectRdfFile + ": no project \"<dcterms:language>\" defined. Project: \"" + projectId + "\" set to default language: ger");
       }
       Elements collectionElems = projectRdfDoc.select("rdf|RDF > rdf|Description > rdf|type[rdf:resource*=Aggregation]");
       for (int i=0; i< collectionElems.size(); i++) {
