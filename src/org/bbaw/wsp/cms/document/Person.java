@@ -25,12 +25,12 @@ public class Person implements Comparable<Person> {
   public static int MENTIONED = 4;  // person which is marked in a document (e.g. persName without parent editor) 
   private int role = AUTHOR;  // default
   private String rdfId;
-  private String name;  // whole name: built from: surname, forename if they exists
+  private String name;  // whole name: built from: surname, forename if they exists e.g. "Biermann, Klaus"
   private String surname;
   private String forename;
   private String title; // e.g. Prof., Dr.
   private String mbox; // e.g. mailto:boehme@bbaw.de
-  private String homepage; // e.g. http://aaew.bbaw.de/projekt/mitarbeiter/mitarbeite
+  private String homepage; // e.g. http://aaew.bbaw.de/projekt/mitarbeiter/mitarbeiter
   private String gndId; // e.g. http://d-nb.info/gnd/119493381
   private String functionOrRoleRdfId; // e.g. http://wissensspeicher.bbaw.de/rdf/normdata/HeadOfDepartment
   private String ref;

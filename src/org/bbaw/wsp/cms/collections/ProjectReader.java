@@ -25,7 +25,27 @@ import de.mpg.mpiwg.berlin.mpdl.lt.general.Language;
 
 public class ProjectReader {
   private static Logger LOGGER = Logger.getLogger(ProjectReader.class);
-  private static ProjectReader projectReader; 
+  private static ProjectReader projectReader;
+  public static Comparator<Project> projectIdComparator = new Comparator<Project>() {
+    public int compare(Project p1, Project p2) {
+      return p1.getId().compareTo(p2.getId());
+    }
+  };
+  public static Comparator<Project> projectNameComparator = new Comparator<Project>() {
+    public int compare(Project p1, Project p2) {
+      return p1.getTitle().compareTo(p2.getTitle());
+    }
+  };
+  public static Comparator<Subject> subjectNameComparator = new Comparator<Subject>() {
+    public int compare(Subject s1, Subject s2) {
+      return s1.getName().compareTo(s2.getName());
+    }
+  };
+  public static Comparator<Person> personNameComparator = new Comparator<Person>() {
+    public int compare(Person p1, Person p2) {
+      return p1.getName().compareTo(p2.getName());
+    }
+  };
   private ArrayList<String> globalExcludes;
   private HashMap<String, Person> normdataPersons;
   private HashMap<String, Organization> normdataOrganizations;
@@ -57,15 +77,118 @@ public class ProjectReader {
 		for (Project project : projectValues) {
 			projects.add(project);
 		}
-    Comparator<Project> projectComparator = new Comparator<Project>() {
-      public int compare(Project p1, Project p2) {
-        return p1.getId().compareTo(p2.getId());
-      }
-    };
-    Collections.sort(projects, projectComparator);
+    Collections.sort(projects, projectIdComparator);
 		return projects;
 	}
 
+  public ArrayList<Project> getProjects(Comparator<Project> projectComparator) {
+    ArrayList<Project> projects = new ArrayList<Project>();
+    java.util.Collection<Project> projectValues = this.projects.values();
+    for (Project project : projectValues) {
+      projects.add(project);
+    }
+    Collections.sort(projects, projectComparator);
+    return projects;
+  }
+
+  public ArrayList<Project> getOrganizations(Comparator<Project> projectComparator) {
+    ArrayList<Project> projects = new ArrayList<Project>();
+    java.util.Collection<Project> projectValues = this.projects.values();
+    for (Project project : projectValues) {
+      String type = project.getType();
+      if (type != null && type.equals("organization"))
+        projects.add(project);
+    }
+    Collections.sort(projects, projectComparator);
+    return projects;
+  }
+
+  public ArrayList<Project> getProjectsByProjectType(String projectType) {
+    ArrayList<Project> projects = new ArrayList<Project>();
+    java.util.Collection<Project> projectValues = this.projects.values();
+    for (Project project : projectValues) {
+      String projType = project.getProjectType();
+      if (projType != null && projType.equals(projectType))
+        projects.add(project);
+    }
+    Collections.sort(projects, projectIdComparator);
+    return projects;
+  }
+  
+  public ArrayList<Project> getProjectsByStatus(String status) {
+    ArrayList<Project> projects = new ArrayList<Project>();
+    java.util.Collection<Project> projectValues = this.projects.values();
+    for (Project project : projectValues) {
+      String projectStatus = project.getStatus();
+      if (projectStatus != null && projectStatus.equals(status))
+        projects.add(project);
+    }
+    Collections.sort(projects, projectIdComparator);
+    return projects;
+  }
+
+  public ArrayList<Project> getProjectsByYear(String year) {
+    ArrayList<Project> projects = new ArrayList<Project>();
+    java.util.Collection<Project> projectValues = this.projects.values();
+    for (Project project : projectValues) {
+      String validStr = project.getValid();
+      if (validStr != null && validStr.contains(year))  // TODO ausprogrammieren: isBetween
+        projects.add(project);
+    }
+    Collections.sort(projects, projectIdComparator);
+    return projects;
+  }
+
+  public ArrayList<ProjectCollection> getCollections(String projectRdfId) {
+    Project project = getProjectByRdfId(projectRdfId);
+    if (project != null) {
+      ArrayList<ProjectCollection> collections = project.getCollections();
+      return collections;
+    } else {
+      return null;
+    }
+  }
+  
+  public ArrayList<Subject> getSubjects() {
+    ArrayList<Subject> subjects = new ArrayList<Subject>();
+    java.util.Collection<Subject> values = this.normdataSubjects.values();
+    for (Subject subject : values) {
+      subjects.add(subject);
+    }
+    Collections.sort(subjects, subjectNameComparator);
+    return subjects;
+  }
+
+  public ArrayList<Subject> getSubjects(String projectRdfId) {
+    Project project = getProjectByRdfId(projectRdfId);
+    if (project != null) {
+      ArrayList<Subject> projectSubjects = project.getSubjects();
+      return projectSubjects;
+    } else {
+      return null;
+    }
+  }
+  
+  public ArrayList<Person> getStaff() {
+    ArrayList<Person> persons = new ArrayList<Person>();
+    java.util.Collection<Person> values = this.normdataPersons.values();
+    for (Person person : values) {
+      persons.add(person);
+    }
+    Collections.sort(persons, personNameComparator);
+    return persons;
+  }
+
+  public ArrayList<Person> getStaff(String projectRdfId) {
+    Project project = getProjectByRdfId(projectRdfId);
+    if (project != null) {
+      ArrayList<Person> projectStaff = project.getStaff();
+      return projectStaff;
+    } else {
+      return null;
+    }
+  }
+  
   public ArrayList<Project> getBaseProjects() {
     ArrayList<Project> retProjects = new ArrayList<Project>();
     java.util.Collection<Project> values = projects.values();

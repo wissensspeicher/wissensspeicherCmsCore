@@ -1,6 +1,8 @@
 package org.bbaw.wsp.cms.collections;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -9,6 +11,21 @@ import org.bbaw.wsp.cms.document.Person;
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 
 public class Project {
+  public static Comparator<ProjectCollection> projectCollectionIdComparator = new Comparator<ProjectCollection>() {
+    public int compare(ProjectCollection p1, ProjectCollection p2) {
+      return p1.getId().compareTo(p2.getId());
+    }
+  };
+  public static Comparator<Person> personNameComparator = new Comparator<Person>() {
+    public int compare(Person p1, Person p2) {
+      return p1.getName().compareTo(p2.getName());
+    }
+  };
+  public static Comparator<Subject> subjectNameComparator = new Comparator<Subject>() {
+    public int compare(Subject s1, Subject s2) {
+      return s1.getName().compareTo(s2.getName());
+    }
+  };
   private String id;  // nick name
   private String rdfId;  // rdfId of this project
   private String parentRdfId;  // rdf id of which this project is part of 
@@ -55,6 +72,42 @@ public class Project {
   
   public Subject getSubject(String subjectRdfId) {
     return subjects.get(subjectRdfId);
+  }
+  
+  public ArrayList<ProjectCollection> getCollections() {
+    ArrayList<ProjectCollection> retCollections = new ArrayList<ProjectCollection>();
+    if (collections != null) {
+      java.util.Collection<ProjectCollection> values = this.collections.values();
+      for (ProjectCollection coll : values) {
+        retCollections.add(coll);
+      }
+    }
+    Collections.sort(retCollections, projectCollectionIdComparator);
+    return retCollections;
+  }
+  
+  public ArrayList<Person> getStaff() {
+    ArrayList<Person> staffPersons = new ArrayList<Person>();
+    if (staff != null) {
+      java.util.Collection<Person> values = this.staff.values();
+      for (Person person : values) {
+        staffPersons.add(person);
+      }
+    }
+    Collections.sort(staffPersons, personNameComparator);
+    return staffPersons;
+  }
+  
+  public ArrayList<Subject> getSubjects() {
+    ArrayList<Subject> subjects = new ArrayList<Subject>();
+    if (staff != null) {
+      java.util.Collection<Subject> values = this.subjects.values();
+      for (Subject subject : values) {
+        subjects.add(subject);
+      }
+    }
+    Collections.sort(subjects, subjectNameComparator);
+    return subjects;
   }
   
   public ArrayList<Database> getDatabases() {
