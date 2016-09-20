@@ -405,7 +405,7 @@ public class DBpediaSpotlightHandler {
               r.setSupport(new Integer(supportStr));
             if (similarityStr != null && ! similarityStr.isEmpty())
               r.setSimilarity(new Double(similarityStr));
-            String temporal = project.getTemporal();
+            String temporal = project.getTemporalRdfId();
             if (r.getType() == null) {
               boolean isPresentOrganisationType = 
                   typesStr.contains("DBpedia:Band") || typesStr.contains("Schema:MusicGroup") || 

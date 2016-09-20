@@ -4,7 +4,7 @@ public class Subject {
   private String rdfId;
   private String type; // e.g.: &gnd;SubjectHeading, http://www.w3.org/2004/02/skos/core#Concept, http://purl.org/dc/terms/DDC 
   private String name;
-  private String gndIdentifier; // e.g.: http://d-nb.info/gnd/4099309-7
+  private String gndId; // e.g.: http://d-nb.info/gnd/4099309-7
 
   public String getRdfId() {
     return rdfId;
@@ -30,12 +30,12 @@ public class Subject {
     this.type = type;
   }
 
-  public String getGndIdentifier() {
-    return gndIdentifier;
+  public String getGndId() {
+    return gndId;
   }
 
-  public void setGndIdentifier(String gndIdentifier) {
-    this.gndIdentifier = gndIdentifier;
+  public void setGndId(String gndId) {
+    this.gndId = gndId;
   }
 
 

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+import org.bbaw.wsp.cms.document.Person;
+
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 
 public class Project {
@@ -12,15 +14,20 @@ public class Project {
   private String parentRdfId;  // rdf id of which this project is part of 
   private String rdfPath; // path from this project to root (project or organization)
   private String type; // project or organization
+  private String projectType; // e.g. "Vorhaben", "Initiative"
   private String title;  // title of project
+  private String absstract; // abstract of project
   private String homepageUrl; // homepage url
-  private String temporal; // temporal, e.g. "http://wissensspeicher.bbaw.de/rdf/normdata/Neuzeit"
+  private String temporalRdfId; // temporal, e.g. "http://wissensspeicher.bbaw.de/rdf/normdata/Neuzeit"
   private Date lastModified; // last modified
   private String status; // e.g. "aktiv" or "abgeschlossen" 
+  private String valid; // e.g. "start=1970; end=2014-12-31; name=Laufzeit"
   private String updateCycle; // e.g. "monthly" or "halfyearly" 
   private String mainLanguage;
   private HashMap<String, ProjectCollection> collections = new HashMap<String, ProjectCollection>();  // project collections: key is collectionRdfId and value is collection
   private HashMap<String, Database> databases = new HashMap<String, Database>();  // project databases (redundant to collection databases): key is databaseRdfId and value is database
+  private HashMap<String, Person> staff = new HashMap<String, Person>();  // project staff: key is personRdfId and value is person
+  private HashMap<String, Subject> subjects = new HashMap<String, Subject>();  // project subjects: key is subjectRdfId and value is subject
 
   public ProjectCollection getCollection(String collRdfId) {
     return collections.get(collRdfId);
@@ -32,6 +39,22 @@ public class Project {
   
   public void addDatabase(String databaseRdfId, Database database) {
     databases.put(databaseRdfId, database);
+  }
+  
+  public void addStaffPerson(String personRdfId, Person person) {
+    staff.put(personRdfId, person);
+  }
+  
+  public Person getStaffPerson(String personRdfId) {
+    return staff.get(personRdfId);
+  }
+  
+  public void addSubject(String subjectRdfId, Subject subject) {
+    subjects.put(subjectRdfId, subject);
+  }
+  
+  public Subject getSubject(String subjectRdfId) {
+    return subjects.get(subjectRdfId);
   }
   
   public ArrayList<Database> getDatabases() {
@@ -116,17 +139,29 @@ public class Project {
   public void setType(String type) {
     this.type = type;
   }
+  public String getProjectType() {
+    return projectType;
+  }
+  public void setProjectType(String projectType) {
+    this.projectType = projectType;
+  }
   public String getTitle() {
     return title;
   }
   public void setTitle(String title) {
     this.title = title;
   }
-  public String getTemporal() {
-    return temporal;
+  public String getAbsstract() {
+    return absstract;
   }
-  public void setTemporal(String temporal) {
-    this.temporal = temporal;
+  public void setAbsstract(String absstract) {
+    this.absstract = absstract;
+  }
+  public String getTemporalRdfId() {
+    return temporalRdfId;
+  }
+  public void setTemporalRdfId(String temporalRdfId) {
+    this.temporalRdfId = temporalRdfId;
   }
   public Date getLastModified() {
     return lastModified;
@@ -139,6 +174,12 @@ public class Project {
   }
   public void setStatus(String status) {
     this.status = status;
+  }
+  public String getValid() {
+    return valid;
+  }
+  public void setValid(String valid) {
+    this.valid = valid;
   }
   public String getHomepageUrl() {
     return homepageUrl;

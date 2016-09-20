@@ -45,9 +45,9 @@ public class ProjectReader {
     projects = new HashMap<String, Project>();
     projectsByRdfId = new HashMap<String, Project>();
     globalExcludes = new ArrayList<String>();
-    readConfFiles();
     readNormdataFiles();
     readMdsystemXmlFile();
+    readConfFiles();
     LOGGER.info("Project reader initialized with " + projects.size() + " projects");
 	}
 	
@@ -188,6 +188,12 @@ public class ProjectReader {
   }
   
   private void readNormdataFiles() {
+    readNormdataPersons();
+    readNormdataOrganizations();
+    readNormdataSubjects();
+  }
+  
+  private void readNormdataPersons() {
     normdataPersons = new HashMap<String, Person>();
     String personNormdataFileName = Constants.getInstance().getMetadataDir() + "/normdata/wsp.normdata.persons.rdf";
     File personNormdataFile = new File(personNormdataFileName);
@@ -209,14 +215,42 @@ public class ProjectReader {
             if (person.getSurname() != null) 
               person.setName(person.getSurname() + ", " + forename);
           }
-          String aboutId = personElem.select("rdf|Description").attr("rdf:about");
-          normdataPersons.put(aboutId, person);
+          String name = personElem.select("rdf|Description > foaf|name").text();
+          if (name != null && ! name.isEmpty()) {
+            person.setName(name);
+          }
+          String title = personElem.select("rdf|Description > foaf|title").text();
+          if (title != null && ! title.isEmpty()) {
+            person.setTitle(title);
+          }
+          String mbox = personElem.select("rdf|Description > foaf|mbox").text();
+          if (mbox != null && ! mbox.isEmpty()) {
+            person.setMbox(mbox);
+          }
+          String homepage = personElem.select("rdf|Description > foaf|homepage").text();
+          if (homepage != null && ! homepage.isEmpty()) {
+            person.setHomepage(homepage);
+          }
+          String gndId = personElem.select("rdf|Description > gnd|gndIdentifier").text();
+          if (gndId != null && ! gndId.isEmpty()) {
+            person.setGndId(gndId);
+          }
+          String functionOrRoleRdfId = personElem.select("rdf|Description > gnd|functionOrRole").text();
+          if (functionOrRoleRdfId != null && ! functionOrRoleRdfId.isEmpty()) {
+            person.setFunctionOrRoleRdfId(functionOrRoleRdfId);
+          }
+          String rdfId = personElem.select("rdf|Description").attr("rdf:about");
+          person.setRdfId(rdfId);          
+          normdataPersons.put(rdfId, person);
         }
       }
     } catch (Exception e) {
       LOGGER.error("Reading of: " + personNormdataFile + " failed");
       e.printStackTrace();
     }
+  }
+  
+  private void readNormdataOrganizations() {
     normdataOrganizations = new HashMap<String, Organization>();
     String orgNormdataFileName = Constants.getInstance().getMetadataDir() + "/normdata/wsp.normdata.organizations.rdf";
     File orgNormdataFile = new File(orgNormdataFileName);
@@ -243,6 +277,9 @@ public class ProjectReader {
       LOGGER.error("Reading of: " + orgNormdataFile + " failed");
       e.printStackTrace();
     }
+  }
+  
+  private void readNormdataSubjects() {
     normdataSubjects = new HashMap<String, Subject>();
     String subjectNormdataFileName = Constants.getInstance().getMetadataDir() + "/normdata/wsp.normdata.subjects.rdf";
     File subjectNormdataFile = new File(subjectNormdataFileName);
@@ -263,7 +300,7 @@ public class ProjectReader {
           }
           String gndId = subjectElem.select("rdf|Description > gnd|gndIdentifier").text();
           if (gndId != null && ! gndId.isEmpty())
-            subject.setGndIdentifier(gndId);
+            subject.setGndId(gndId);
           String aboutId = subjectElem.select("rdf|Description").attr("rdf:about");
           subject.setRdfId(aboutId);
           normdataSubjects.put(aboutId, subject);
@@ -358,20 +395,36 @@ public class ProjectReader {
         return null;
       }
       project.setId(projectId);
+      Elements projectTypeElems = projectElem.select("dcterms|type");
+      for (int i=0; i< projectTypeElems.size(); i++) {
+        Element projectTypeElem = projectTypeElems.get(i);
+        String projectTypeRdfId = projectTypeElem.attr("rdf:resource");
+        if (projectTypeRdfId != null && projectTypeRdfId.contains("projectType")) {
+          int index = projectTypeRdfId.lastIndexOf("#");
+          String projectType = projectTypeRdfId.substring(index + 1);
+          project.setProjectType(projectType);
+        }
+      }
       String title = projectElem.select("foaf|name[xml:lang=\"de\"]").text();
       if (title == null || title.isEmpty())
         title = projectElem.select("foaf|name").text();
       if (title != null && ! title.isEmpty())
         project.setTitle(title);
+      String absstract = projectElem.select("dcterms|abstract[xml:lang=\"de\"]").text();
+      if (absstract != null && ! absstract.isEmpty())
+        project.setAbsstract(absstract);
       String status = projectElem.select("foaf|status").text();
       if (status != null && ! status.isEmpty())
         project.setStatus(status);
+      String valid = projectElem.select("dcterms|valid").text();
+      if (valid != null && ! valid.isEmpty())
+        project.setValid(valid);
       String homepageUrl = projectElem.select("foaf|homepage").attr("rdf:resource");
       if (homepageUrl != null && ! homepageUrl.isEmpty())
         project.setHomepageUrl(homepageUrl);
-      String temporal = projectElem.select("dcterms|temporal").attr("rdf:resource");
-      if (temporal != null && ! temporal.isEmpty())
-        project.setTemporal(temporal);
+      String temporalRdfId = projectElem.select("dcterms|temporal").attr("rdf:resource");
+      if (temporalRdfId != null && ! temporalRdfId.isEmpty())
+        project.setTemporalRdfId(temporalRdfId);
       String parentRdfId = projectElem.select("dcterms|isPartOf").attr("rdf:resource");
       if (parentRdfId != null && ! parentRdfId.isEmpty())
         project.setParentRdfId(parentRdfId);
@@ -386,6 +439,23 @@ public class ProjectReader {
       } else {
         project.setMainLanguage("ger");
         LOGGER.error("ProjectReader: " + projectRdfFile + ": no project \"<dcterms:language>\" defined. Project: \"" + projectId + "\" set to default language: ger");
+      }
+      Elements staffElems = projectElem.select("dcterms|contributor");
+      for (int i=0; i< staffElems.size(); i++) {
+        Element staffPersonElem = staffElems.get(i);
+        String personRdfId = staffPersonElem.attr("rdf:resource");
+        Person person = getPerson(personRdfId);
+        if (person != null)
+          project.addStaffPerson(personRdfId, person);
+      }
+      Elements subjectElems = projectElem.select("dcterms|subject");
+      for (int i=0; i< subjectElems.size(); i++) {
+        Element subjectElem = subjectElems.get(i);
+        String subjectRdfId = subjectElem.attr("rdf:resource");
+        Subject subject = new Subject();
+        subject.setRdfId(subjectRdfId);
+        subject.setGndId(subjectRdfId);
+        project.addSubject(subjectRdfId, subject);
       }
       Elements collectionElems = projectRdfDoc.select("rdf|RDF > rdf|Description > rdf|type[rdf:resource*=Aggregation]");
       for (int i=0; i< collectionElems.size(); i++) {

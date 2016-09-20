@@ -24,9 +24,15 @@ public class Person implements Comparable<Person> {
   public static int ACTOR = 3; 
   public static int MENTIONED = 4;  // person which is marked in a document (e.g. persName without parent editor) 
   private int role = AUTHOR;  // default
+  private String rdfId;
   private String name;  // whole name: built from: surname, forename if they exists
   private String surname;
   private String forename;
+  private String title; // e.g. Prof., Dr.
+  private String mbox; // e.g. mailto:boehme@bbaw.de
+  private String homepage; // e.g. http://aaew.bbaw.de/projekt/mitarbeiter/mitarbeite
+  private String gndId; // e.g. http://d-nb.info/gnd/119493381
+  private String functionOrRoleRdfId; // e.g. http://wissensspeicher.bbaw.de/rdf/normdata/HeadOfDepartment
   private String ref;
   private String aboutLink;
   private String language;
@@ -94,6 +100,22 @@ public class Person implements Comparable<Person> {
     return retPersons;
   }
   
+  public String getRdfId() {
+    return rdfId;
+  }
+
+  public void setRdfId(String rdfId) {
+    this.rdfId = rdfId;
+  }
+
+  public String getTitle() {
+    return title;
+  }
+
+  public void setTitle(String title) {
+    this.title = title;
+  }
+
   public int getRole() {
     return role;
   }
@@ -124,6 +146,38 @@ public class Person implements Comparable<Person> {
   
   public void setForename(String forename) {
     this.forename = forename;
+  }
+
+  public String getMbox() {
+    return mbox;
+  }
+
+  public void setMbox(String mbox) {
+    this.mbox = mbox;
+  }
+
+  public String getHomepage() {
+    return homepage;
+  }
+
+  public void setHomepage(String homepage) {
+    this.homepage = homepage;
+  }
+
+  public String getGndId() {
+    return gndId;
+  }
+
+  public void setGndId(String gndId) {
+    this.gndId = gndId;
+  }
+
+  public String getFunctionOrRoleRdfId() {
+    return functionOrRoleRdfId;
+  }
+
+  public void setFunctionOrRoleRdfId(String functionOrRoleRdfId) {
+    this.functionOrRoleRdfId = functionOrRoleRdfId;
   }
 
   public String getRef() {
