@@ -2,9 +2,14 @@ package org.bbaw.wsp.cms.collections;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
+import org.apache.commons.httpclient.URIException;
+import org.apache.commons.httpclient.util.URIUtil;
 import org.apache.log4j.Logger;
 import org.bbaw.wsp.cms.document.Person;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 
@@ -174,4 +179,40 @@ public class ProjectCollection {
     return retDBs;
   }
   
+  public JSONObject toJsonObject() throws ApplicationException {
+    JSONObject retJsonObject = new JSONObject();
+    if (id != null)
+      retJsonObject.put("id", id);
+    if (rdfId != null)
+      retJsonObject.put("rdfId", rdfId);
+    if (projectRdfId != null)
+      retJsonObject.put("projectRdfId", projectRdfId);
+    if (parentRdfId != null)
+      retJsonObject.put("parentRdfId", parentRdfId);
+    if (rdfPath != null)
+      retJsonObject.put("rdfPath", rdfPath);
+    if (homepageUrl != null)
+      retJsonObject.put("homepageUrl", homepageUrl);
+    if (title != null)
+      retJsonObject.put("title", title);
+    if (absstract != null)
+      retJsonObject.put("abstract", absstract);
+    if (languages != null && ! languages.isEmpty()) {
+      JSONArray jsonLanguages = new JSONArray();
+      for (int i=0; i<languages.size(); i++) {
+        String lang = languages.get(i);
+        jsonLanguages.add(lang);
+      }
+      retJsonObject.put("languages", jsonLanguages);
+    }
+    if (staff != null && ! staff.isEmpty()) {
+      JSONArray jsonStaff = new JSONArray();
+      for (Iterator<Person> iterator = staff.values().iterator(); iterator.hasNext();) {
+        Person person = iterator.next();
+        jsonStaff.add(person.toJsonObject());
+      }
+      retJsonObject.put("staff", jsonStaff);
+    }
+    return retJsonObject;
+  }
 }

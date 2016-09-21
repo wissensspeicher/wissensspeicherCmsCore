@@ -5,8 +5,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import org.bbaw.wsp.cms.document.Person;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 
@@ -251,5 +254,56 @@ public class Project {
   }
   public void setMainLanguage(String mainLanguage) {
     this.mainLanguage = mainLanguage;
+  }
+
+  public JSONObject toJsonObject() throws ApplicationException {
+    JSONObject retJsonObject = new JSONObject();
+    if (id != null)
+      retJsonObject.put("id", id);
+    if (rdfId != null)
+      retJsonObject.put("rdfId", rdfId);
+    if (parentRdfId != null)
+      retJsonObject.put("parentRdfId", parentRdfId);
+    if (rdfPath != null)
+      retJsonObject.put("rdfPath", rdfPath);
+    if (projectType != null)
+      retJsonObject.put("type", projectType);
+    if (homepageUrl != null)
+      retJsonObject.put("homepageUrl", homepageUrl);
+    if (title != null)
+      retJsonObject.put("title", title);
+    if (absstract != null)
+      retJsonObject.put("abstract", absstract);
+    if (temporalRdfId != null)
+      retJsonObject.put("temporalRdfId", temporalRdfId);
+    if (status != null)
+      retJsonObject.put("status", status);
+    if (mainLanguage != null)
+      retJsonObject.put("language", mainLanguage);
+    if (collections != null && ! collections.isEmpty()) {
+      JSONArray jsonCollections = new JSONArray();
+      for (Iterator<ProjectCollection> iterator = collections.values().iterator(); iterator.hasNext();) {
+        ProjectCollection collection = iterator.next();
+        jsonCollections.add(collection.toJsonObject());
+      }
+      retJsonObject.put("collections", jsonCollections);
+    }
+    if (staff != null && ! staff.isEmpty()) {
+      JSONArray jsonStaff = new JSONArray();
+      for (Iterator<Person> iterator = staff.values().iterator(); iterator.hasNext();) {
+        Person person = iterator.next();
+        jsonStaff.add(person.toJsonObject());
+      }
+      retJsonObject.put("staff", jsonStaff);
+    }
+    if (subjects != null && ! subjects.isEmpty()) {
+      JSONArray jsonSubjects = new JSONArray();
+      for (Iterator<Subject> iterator = subjects.values().iterator(); iterator.hasNext();) {
+        Subject subject = iterator.next();
+        jsonSubjects.add(subject.toJsonObject());
+      }
+      retJsonObject.put("subjects", jsonSubjects);
+    }
+    return retJsonObject;
   }
 }

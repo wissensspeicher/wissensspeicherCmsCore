@@ -7,6 +7,7 @@ import java.util.HashSet;
 import org.apache.commons.httpclient.URIException;
 import org.apache.commons.httpclient.util.URIUtil;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import net.sf.saxon.s9api.XdmItem;
@@ -289,6 +290,8 @@ public class Person implements Comparable<Person> {
       roleStr = "mentioned";
     if (roleStr != null)
       retJsonObject.put("role", roleStr);
+    if (rdfId != null)
+      retJsonObject.put("rdfId", rdfId);
     if (forename != null)
       retJsonObject.put("forename", forename);
     if (surname != null)
@@ -307,6 +310,16 @@ public class Person implements Comparable<Person> {
         retJsonObject.put("referenceAbout", aboutLinkEnc);
       } catch (URIException e) {}
     }
+    if (title != null)
+      retJsonObject.put("title", title);
+    if (mbox != null)
+      retJsonObject.put("mbox", mbox);
+    if (homepage != null)
+      retJsonObject.put("homepage", homepage);
+    if (gndId != null)
+      retJsonObject.put("gndId", gndId);
+    if (functionOrRoleRdfId != null)
+      retJsonObject.put("functionOrRoleRdfId", functionOrRoleRdfId);
     return retJsonObject;
   }
 

@@ -1,5 +1,11 @@
 package org.bbaw.wsp.cms.collections;
 
+import org.bbaw.wsp.cms.document.Person;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
+import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
+
 public class Subject {
   private String rdfId;
   private String type; // e.g.: &gnd;SubjectHeading, http://www.w3.org/2004/02/skos/core#Concept, http://purl.org/dc/terms/DDC 
@@ -38,5 +44,17 @@ public class Subject {
     this.gndId = gndId;
   }
 
+  public JSONObject toJsonObject() throws ApplicationException {
+    JSONObject retJsonObject = new JSONObject();
+    if (rdfId != null)
+      retJsonObject.put("rdfId", rdfId);
+    if (type != null)
+      retJsonObject.put("type", type);
+    if (name != null)
+      retJsonObject.put("name", name);
+    if (gndId != null)
+      retJsonObject.put("gndId", gndId);
+    return retJsonObject;
+  }
 
 }
