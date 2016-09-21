@@ -922,7 +922,7 @@ public class ConvertConfigXml2Rdf {
   private void appendRow2rdf(StringBuilder rdfStrBuilder, Project project, Database db, Row row) throws ApplicationException {
     String projectId = project.getId();
     String projectRdfId = project.getRdfId();
-    String mainLanguage = project.getMainLanguage();
+    String mainLanguage = db.getLanguage();
     String mainResourcesTableId = db.getMainResourcesTableId();
     String webIdPreStr = db.getWebIdPreStr();
     String webIdAfterStr = db.getWebIdAfterStr();

@@ -415,7 +415,7 @@ public class MetadataHandler {
   private void appendRow2rdf(StringBuilder rdfStrBuilder, Project project, Database db, Row row) throws ApplicationException {
     String projectId = project.getId();
     String projectRdfId = project.getRdfId();
-    String mainLanguage = project.getMainLanguage();
+    String mainLanguage = db.getLanguage();
     String mainResourcesTableId = db.getMainResourcesTableId();
     String webIdPreStr = db.getWebIdPreStr();
     String webIdAfterStr = db.getWebIdAfterStr();
@@ -825,9 +825,11 @@ public class MetadataHandler {
         mdRecord.setUri(webUriStr);
       if (mdRecord.getType() == null)
         mdRecord.setType(mimeType); 
-      // if no language is set then take the mainLanguage of the project
+      // if no language is set then take the mainLanguage of the database or project
       if (mdRecord.getLanguage() == null) {
         String mainLanguage = project.getMainLanguage();
+        if (db != null)
+          mainLanguage = db.getLanguage();
         mdRecord.setLanguage(mainLanguage);
       }
       if (db != null) {

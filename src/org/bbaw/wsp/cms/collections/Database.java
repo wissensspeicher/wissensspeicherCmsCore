@@ -7,6 +7,8 @@ import org.bbaw.wsp.cms.document.XQuery;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
+
 public class Database {
   private String rdfId; // start url (crawl, eXist or oai), e.g. http://telota.bbaw.de:8085/exist/rest/db/AvHBriefedition
   private String collectionRdfId; // rdfId of collection which this database is part of
@@ -58,8 +60,12 @@ public class Database {
     this.name = name;
   }
   
-  public String getLanguage() {
-    return language;
+  public String getLanguage() throws ApplicationException {
+    String retLang = language;
+    String collMainLang = ProjectReader.getInstance().getCollectionMainLanguage(collectionRdfId);
+    if (collMainLang != null)
+      retLang = collMainLang;
+    return retLang;
   }
 
   public void setLanguage(String language) {

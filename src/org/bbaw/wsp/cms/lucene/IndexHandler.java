@@ -75,6 +75,7 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.BytesRef;
 import org.bbaw.wsp.cms.collections.Project;
+import org.bbaw.wsp.cms.collections.ProjectCollection;
 import org.bbaw.wsp.cms.collections.ProjectReader;
 import org.bbaw.wsp.cms.document.DBpediaResource;
 import org.bbaw.wsp.cms.document.Facets;
@@ -554,11 +555,12 @@ public class IndexHandler {
       }
       String language = mdRecord.getLanguage();
       if (language == null) {
-        Project p = ProjectReader.getInstance().getProject(project);
-        String mainLanguage = p.getMainLanguage();
-        if (mainLanguage != null) {
-          language = mainLanguage;
-          mdRecord.setLanguage(mainLanguage);
+        if (collectionRdfId != null) {
+          String mainLanguage = ProjectReader.getInstance().getCollectionMainLanguage(collectionRdfId);
+          if (mainLanguage != null) {
+            language = mainLanguage;
+            mdRecord.setLanguage(mainLanguage);
+          }
         }
       }
       if (language != null) {
@@ -1108,13 +1110,10 @@ public class IndexHandler {
       Query query = queryParser2.parse(queryStr);
       String language = docMetadataRecord.getLanguage();
       if (language == null || language.equals("")) {
-        String projectId = docMetadataRecord.getProjectId();
-        Project project = ProjectReader.getInstance().getProject(projectId);
-        if (project != null) {
-          String mainLang = project.getMainLanguage();
-          if (mainLang != null)
-            language = mainLang;
-        } 
+        String collectionRdfId = docMetadataRecord.getCollectionRdfId();
+        String collMainLang = ProjectReader.getInstance().getCollectionMainLanguage(collectionRdfId);
+        if (collMainLang != null)
+          language = collMainLang;
       }
       LanguageHandler languageHandler = new LanguageHandler();
       Query morphQuery = buildMorphQuery(query, language, languageHandler);
@@ -1227,12 +1226,9 @@ public class IndexHandler {
       if (languageField != null)
         language = languageField.stringValue();
       else {
-        Project project = ProjectReader.getInstance().getProject(projectId);
-        if (project != null) {
-          String mainLang = project.getMainLanguage();
-          if (mainLang != null)
-            language = mainLang;
-        } 
+        String mainLang = ProjectReader.getInstance().getCollectionMainLanguage(collectionRdfId);
+        if (mainLang != null)
+          language = mainLang;
       }
       Date yearDate = null;
       IndexableField dateField = doc.getField("date");

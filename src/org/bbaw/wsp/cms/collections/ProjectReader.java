@@ -52,6 +52,7 @@ public class ProjectReader {
   private HashMap<String, Subject> normdataSubjects;
   private HashMap<String, Project> projects;  // key is id string and value is project
   private HashMap<String, Project> projectsByRdfId;  // key is projectRdfId string and value is project
+  private HashMap<String, ProjectCollection> collections = new HashMap<String, ProjectCollection>();  // all project collections: key is collectionRdfId and value is collection
 	
 	public static ProjectReader getInstance() throws ApplicationException {
 		if (projectReader == null) {
@@ -139,6 +140,21 @@ public class ProjectReader {
     return projects;
   }
 
+  public ProjectCollection getCollection(String collectionRdfId) {
+    return collections.get(collectionRdfId);
+  }
+  
+  public String getCollectionMainLanguage(String collectionRdfId) throws ApplicationException {
+    String mainLanguage = null;
+    if (collectionRdfId == null)
+      return null;
+    ProjectCollection collection = getCollection(collectionRdfId);
+    if (collection != null) {
+      mainLanguage = collection.getMainLanguage();
+    }
+    return mainLanguage;
+  }
+  
   public ArrayList<ProjectCollection> getCollections(String projectRdfId) {
     Project project = getProjectByRdfId(projectRdfId);
     if (project != null) {
@@ -551,13 +567,9 @@ public class ProjectReader {
       String parentRdfId = projectElem.select("dcterms|isPartOf").attr("rdf:resource");
       if (parentRdfId != null && ! parentRdfId.isEmpty())
         project.setParentRdfId(parentRdfId);
-      String mainLanguage = projectElem.select("dcterms|language").attr("rdf:resource");
-      if (mainLanguage != null && ! mainLanguage.isEmpty()) {
-        if (mainLanguage.contains("/"))
-          mainLanguage = mainLanguage.substring(mainLanguage.lastIndexOf("/") + 1);
-        String mainLangIso639 = Language.getInstance().getISO639Code(mainLanguage);
-        if (mainLangIso639 != null)
-          mainLanguage = mainLangIso639; // international 3 character id (e.g. "ger")
+      String languageRdfId = projectElem.select("dcterms|language").attr("rdf:resource");
+      if (languageRdfId != null && ! languageRdfId.isEmpty()) {
+        String mainLanguage = getIso639Language(languageRdfId); // international 3 character id (e.g. "ger")
         project.setMainLanguage(mainLanguage);
       } else {
         project.setMainLanguage("ger");
@@ -592,6 +604,26 @@ public class ProjectReader {
         } else {
           collParentRdfId = projectElem.select("dcterms|isPartOf").attr("rdf:resource");
         }
+        String collAbstract = collectionElem.select("dcterms|abstract[xml:lang=\"de\"]").text();
+        if (collAbstract != null && ! collAbstract.isEmpty())
+          collection.setAbsstract(collAbstract);
+        Elements collectionStaffElems = collectionElem.select("dcterms|contributor");
+        for (int j=0; j< collectionStaffElems.size(); j++) {
+          Element staffPersonElem = collectionStaffElems.get(j);
+          String personRdfId = staffPersonElem.attr("rdf:resource");
+          Person person = getPerson(personRdfId);
+          if (person != null)
+            collection.addStaffPerson(personRdfId, person);
+        }
+        Elements collectionLanguageElems = collectionElem.select("dcterms|language");
+        for (int j=0; j< collectionLanguageElems.size(); j++) {
+          Element collectionLanguageElem = collectionLanguageElems.get(j);
+          String collLanguageRdfId = collectionLanguageElem.attr("rdf:resource");
+          if (collLanguageRdfId != null && ! collLanguageRdfId.isEmpty()) {
+            String language = getIso639Language(collLanguageRdfId); // international 3 character id (e.g. "ger")
+            collection.addLanguage(language);
+          }
+        }
         String collectionHomepageUrl = collectionElem.select("foaf|homepage").attr("rdf:resource");
         if (collectionHomepageUrl != null && ! collectionHomepageUrl.isEmpty()) {
           collection.setHomepageUrl(collectionHomepageUrl);
@@ -601,6 +633,7 @@ public class ProjectReader {
           collection.setTitle(collectionTitle);
         }
         project.addCollection(collRdfId, collection);
+        collections.put(collRdfId, collection);
       }
       projectsByRdfId.put(projectRdfId, project);
       projects.put(projectId, project);
@@ -608,6 +641,14 @@ public class ProjectReader {
       throw new ApplicationException(e);
     }
     return project;
+  }
+  
+  private String getIso639Language(String languageRdfId) {
+    String isoLanguage = languageRdfId;
+    if (languageRdfId.contains("/"))
+      isoLanguage = languageRdfId.substring(languageRdfId.lastIndexOf("/") + 1);
+    isoLanguage = Language.getInstance().getISO639Code(isoLanguage);
+    return isoLanguage;
   }
   
 	private void readProjectXmlFile(Project project, File xmlConfigFile) throws ApplicationException {

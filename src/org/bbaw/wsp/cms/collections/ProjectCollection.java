@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.apache.log4j.Logger;
+import org.bbaw.wsp.cms.document.Person;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 
@@ -15,11 +16,47 @@ public class ProjectCollection {
   private String parentRdfId; // rdfId of parent collection
   private String rdfPath; // path from this collection to root (project or organization)
   private String homepageUrl;
+  private String absstract; // abstract of project
   private String title;
+  private ArrayList<String> languages = new ArrayList<String>(); // collection languages; first language is the main language
+  private HashMap<String, Person> staff = new HashMap<String, Person>();  // collection staff: key is personRdfId and value is person
   private HashMap<String, Database> databases = new HashMap<String, Database>();  // // collection databases: key is databaseRdfId and value is database
   
   public ProjectCollection(String projectRdfId) {
     this.projectRdfId = projectRdfId;
+  }
+  
+  public void addLanguage(String language) {
+    languages.add(language);
+  }
+  
+  public String getMainLanguage() throws ApplicationException {
+    String mainLang = null;
+    if (languages.size() > 0) {
+      mainLang = languages.get(0);
+    } else {
+      if (projectRdfId != null) {
+        Project project = ProjectReader.getInstance().getProjectByRdfId(projectRdfId);
+        if (project != null) {
+          String projMainLang = project.getMainLanguage();
+          if (projMainLang != null)
+            mainLang = projMainLang;
+        }
+      }
+    }
+    return mainLang;
+  }
+  
+  public ArrayList<String> getLanguages() {
+    return languages;  
+  }
+  
+  public void addStaffPerson(String personRdfId, Person person) {
+    staff.put(personRdfId, person);
+  }
+  
+  public Person getStaffPerson(String personRdfId) {
+    return staff.get(personRdfId);
   }
   
   public Database getDatabase(String databaseRdfId) {
@@ -89,6 +126,14 @@ public class ProjectCollection {
 
   public void setHomepageUrl(String homepageUrl) {
     this.homepageUrl = homepageUrl;
+  }
+
+  public String getAbsstract() {
+    return absstract;
+  }
+
+  public void setAbsstract(String absstract) {
+    this.absstract = absstract;
   }
 
   public String getTitle() {

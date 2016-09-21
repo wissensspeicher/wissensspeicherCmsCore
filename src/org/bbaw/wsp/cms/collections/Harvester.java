@@ -295,6 +295,9 @@ public class Harvester {
       }
       // document is xml fulltext document: is of type XML and not mets
       String mainLanguage = project.getMainLanguage();
+      String collectionRdfId = mdRecord.getCollectionRdfId();
+      if (collectionRdfId != null)
+        mainLanguage = ProjectReader.getInstance().getCollectionMainLanguage(collectionRdfId);
       if (docIsXml && ! docType.equals("mets")) {
         // replace anchor in echo documents and also add the number attribute to figures
         String docDestFileNameUpgrade = docDestFileName + ".upgrade";
@@ -638,6 +641,10 @@ public class Harvester {
         }
         String mdRecordLanguage = mdRecord.getLanguage();
         String mainLanguage = project.getMainLanguage();
+        String collectionRdfId = mdRecord.getCollectionRdfId();
+        if (collectionRdfId != null) {
+          mainLanguage = ProjectReader.getInstance().getCollectionMainLanguage(collectionRdfId);
+        }
         if (mdRecordLanguage == null && mainLanguage != null)
           mdRecord.setLanguage(mainLanguage);
         String lang = mdRecord.getLanguage();
