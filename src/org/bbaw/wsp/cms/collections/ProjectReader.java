@@ -92,18 +92,6 @@ public class ProjectReader {
     return projects;
   }
 
-  public ArrayList<Project> getOrganizations(Comparator<Project> projectComparator) {
-    ArrayList<Project> projects = new ArrayList<Project>();
-    java.util.Collection<Project> projectValues = this.projects.values();
-    for (Project project : projectValues) {
-      String type = project.getType();
-      if (type != null && type.equals("organization"))
-        projects.add(project);
-    }
-    Collections.sort(projects, projectComparator);
-    return projects;
-  }
-
   public ArrayList<Project> getProjectsByProjectType(String projectType) {
     ArrayList<Project> projects = new ArrayList<Project>();
     java.util.Collection<Project> projectValues = this.projects.values();
