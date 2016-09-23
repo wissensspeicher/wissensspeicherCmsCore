@@ -31,7 +31,7 @@ public class ProjectReader {
       return p1.getId().compareTo(p2.getId());
     }
   };
-  public static Comparator<Project> projectNameComparator = new Comparator<Project>() {
+  public static Comparator<Project> projectTitleComparator = new Comparator<Project>() {
     public int compare(Project p1, Project p2) {
       return p1.getTitle().compareTo(p2.getTitle());
     }
@@ -89,8 +89,8 @@ public class ProjectReader {
       projects.add(project);
     }
     Comparator<Project> projectComparator = projectIdComparator;
-    if (sortBy.equals("name"))
-      projectComparator = projectNameComparator;
+    if (sortBy.equals("title"))
+      projectComparator = projectTitleComparator;
     Collections.sort(projects, projectComparator);
     return projects;
   }
