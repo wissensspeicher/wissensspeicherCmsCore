@@ -82,12 +82,15 @@ public class ProjectReader {
 		return projects;
 	}
 
-  public ArrayList<Project> getProjects(Comparator<Project> projectComparator) {
+  public ArrayList<Project> getProjectsSorted(String sortBy) {
     ArrayList<Project> projects = new ArrayList<Project>();
     java.util.Collection<Project> projectValues = this.projects.values();
     for (Project project : projectValues) {
       projects.add(project);
     }
+    Comparator<Project> projectComparator = projectIdComparator;
+    if (sortBy.equals("name"))
+      projectComparator = projectNameComparator;
     Collections.sort(projects, projectComparator);
     return projects;
   }
