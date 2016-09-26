@@ -2,6 +2,7 @@ package org.bbaw.wsp.cms.collections;
 
 import java.io.File;
 import java.net.URL;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -9,12 +10,20 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
+import org.apache.lucene.index.Term;
+import org.apache.lucene.search.BooleanClause;
+import org.apache.lucene.search.BooleanClause.Occur;
+import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.Query;
+import org.apache.lucene.search.TermQuery;
 import org.bbaw.wsp.cms.document.Person;
 import org.bbaw.wsp.cms.general.Constants;
+import org.bbaw.wsp.cms.util.Util;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -119,12 +128,72 @@ public class ProjectReader {
     return projects;
   }
 
-  public ArrayList<Project> getProjectsByYear(String year) {
+  public ArrayList<Project> getProjectsByYear(String yearStr) throws ApplicationException {
     ArrayList<Project> projects = new ArrayList<Project>();
     java.util.Collection<Project> projectValues = this.projects.values();
     for (Project project : projectValues) {
       String validStr = project.getValid();
-      if (validStr != null && validStr.contains(year))  // TODO ausprogrammieren: isBetween
+      if (validStr != null) {
+        String startStr = validStr.replaceAll(".*start=(.*?);.*", "$1"); 
+        String endStr = validStr.replaceAll(".*end=(.*?);.*", "$1");
+        Util util = new Util();
+        Date from = util.toDate(startStr);
+        Date to = util.toDate(endStr);
+        Date year = util.toDate(yearStr);
+        if (from.getTime() <= year.getTime() && year.getTime() <= to.getTime())
+          projects.add(project);
+      }
+    }
+    Collections.sort(projects, projectIdComparator);
+    return projects;
+  }
+
+  public ArrayList<Project> findProjects(String query) {
+    String[] queryTerms = query.split(" ");
+    BooleanQuery.Builder boolQueryBuilder = new BooleanQuery.Builder();
+    for (int i = 0; i < queryTerms.length; i++) {
+      String[] fieldQuery = queryTerms[i].split(":");
+      String fieldName = fieldQuery[0];
+      String fieldValue = fieldQuery[1];
+      TermQuery termQuery = new TermQuery(new Term(fieldName, fieldValue));
+      boolQueryBuilder.add(termQuery, BooleanClause.Occur.MUST);
+    }
+    BooleanQuery booleanQuery = boolQueryBuilder.build();
+    return findProjects(booleanQuery);
+  }
+  
+  private ArrayList<Project> findProjects(BooleanQuery booleanQuery) {
+    ArrayList<Project> projects = new ArrayList<Project>();
+    java.util.Collection<Project> projectValues = this.projects.values();
+    for (Project project : projectValues) {
+      List<BooleanClause> clauses = booleanQuery.clauses();
+      boolean matchProject = false;
+      for (int i=0; i<clauses.size(); i++) {
+        BooleanClause clause = clauses.get(i);
+        Query clauseQuery = clause.getQuery();
+        Occur occurence = clause.getOccur(); // "should" or "must"
+        if (clauseQuery instanceof TermQuery) {
+          TermQuery termQuery = (TermQuery) clauseQuery;
+          String fieldName = termQuery.getTerm().field();
+          String projectFieldValue = "";
+          if (fieldName.equals("title")) 
+            projectFieldValue = project.getTitle();
+          else if (fieldName.equals("abstract"))
+            projectFieldValue = project.getAbstract();
+          String termQueryStr = termQuery.getTerm().text();
+          termQueryStr = termQueryStr.replaceAll("\\*", ".*");
+          termQueryStr = termQueryStr.replaceAll("\\?", ".");
+          String regExpr = ".*" + termQueryStr + ".*";
+          boolean match = projectFieldValue.matches(regExpr); 
+          if (! match && occurence == BooleanClause.Occur.MUST) {
+            matchProject = false;
+            break;
+          }
+          if (match && occurence == BooleanClause.Occur.MUST)
+            matchProject = true;
+        }
+      }
+      if (matchProject)
         projects.add(project);
     }
     Collections.sort(projects, projectIdComparator);
@@ -542,7 +611,7 @@ public class ProjectReader {
         project.setTitle(title);
       String absstract = projectElem.select("dcterms|abstract[xml:lang=\"de\"]").text();
       if (absstract != null && ! absstract.isEmpty())
-        project.setAbsstract(absstract);
+        project.setAbstract(absstract);
       String status = projectElem.select("foaf|status").text();
       if (status != null && ! status.isEmpty())
         project.setStatus(status);

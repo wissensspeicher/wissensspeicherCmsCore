@@ -207,10 +207,10 @@ public class Project {
   public void setTitle(String title) {
     this.title = title;
   }
-  public String getAbsstract() {
+  public String getAbstract() {
     return absstract;
   }
-  public void setAbsstract(String absstract) {
+  public void setAbstract(String absstract) {
     this.absstract = absstract;
   }
   public String getTemporalRdfId() {

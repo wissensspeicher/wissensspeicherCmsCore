@@ -24,6 +24,10 @@ public class Util {
     if (xsDateStr == null || xsDateStr.startsWith("0000-"))
       return null;
     try {
+      if (xsDateStr.matches("[0-9][0-9][0-9][0-9]"))
+        xsDateStr = xsDateStr + "-01-01T00:00:00.000Z";
+      else if (xsDateStr.matches("[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]"))
+        xsDateStr = xsDateStr + "T00:00:00.000Z";
       DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
       retDate = dateFormat.parse(xsDateStr);
     } catch (ParseException e) {
