@@ -11,6 +11,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FileUtils;
@@ -149,14 +151,36 @@ public class ProjectReader {
   }
 
   public ArrayList<Project> findProjects(String query) {
-    String[] queryTerms = query.split(" ");
+    Occur occur = BooleanClause.Occur.MUST;
+    String[] queryTerms = {};
+    if (query.contains("\" ")) {
+      ArrayList<String> queryTermsArrayList = new ArrayList<String>();
+      occur = BooleanClause.Occur.MUST;
+      Matcher matchFields = Pattern.compile("(\\S*:\".+?\"|\\S*:\\S*)\\s*").matcher(query); // matches fields (e.g. "title:Humboldt" or "title:"Alexander von Humboldt"") 
+      while (matchFields.find())
+        queryTermsArrayList.add(matchFields.group(1));
+      queryTerms = queryTermsArrayList.toArray(new String[queryTermsArrayList.size()]);
+    } else if (query.contains("\"|")) {
+      ArrayList<String> queryTermsArrayList = new ArrayList<String>();
+      occur = BooleanClause.Occur.SHOULD;
+      Matcher matchFields = Pattern.compile("(\\S*:\".+?\"|\\S*:\\S*)\\|*").matcher(query); // matches fields (e.g. "title:Humboldt" or "title:"Alexander von Humboldt"") 
+      while (matchFields.find())
+        queryTermsArrayList.add(matchFields.group(1));
+      queryTerms = queryTermsArrayList.toArray(new String[queryTermsArrayList.size()]);
+    } else if (query.contains(" ")) {
+      occur = BooleanClause.Occur.MUST;
+      queryTerms = query.split(" ");
+    } else if (query.contains("|")) {
+      occur = BooleanClause.Occur.SHOULD;
+      queryTerms = query.split("\\|");
+    }
     BooleanQuery.Builder boolQueryBuilder = new BooleanQuery.Builder();
     for (int i = 0; i < queryTerms.length; i++) {
       String[] fieldQuery = queryTerms[i].split(":");
       String fieldName = fieldQuery[0];
       String fieldValue = fieldQuery[1];
       TermQuery termQuery = new TermQuery(new Term(fieldName, fieldValue));
-      boolQueryBuilder.add(termQuery, BooleanClause.Occur.MUST);
+      boolQueryBuilder.add(termQuery, occur);
     }
     BooleanQuery booleanQuery = boolQueryBuilder.build();
     return findProjects(booleanQuery);
@@ -183,10 +207,15 @@ public class ProjectReader {
           String termQueryStr = termQuery.getTerm().text();
           termQueryStr = termQueryStr.replaceAll("\\*", ".*");
           termQueryStr = termQueryStr.replaceAll("\\?", ".");
+          termQueryStr = termQueryStr.replaceAll("\"", "");
           String regExpr = ".*" + termQueryStr + ".*";
           boolean match = projectFieldValue.matches(regExpr); 
           if (! match && occurence == BooleanClause.Occur.MUST) {
             matchProject = false;
+            break;
+          }
+          if (match && occurence == BooleanClause.Occur.SHOULD) {
+            matchProject = true;
             break;
           }
           if (match && occurence == BooleanClause.Occur.MUST)
