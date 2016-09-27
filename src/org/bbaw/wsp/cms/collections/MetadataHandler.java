@@ -1168,9 +1168,12 @@ public class MetadataHandler {
     if (language != null && ! language.isEmpty())
       mdRecord.setLanguage(language);
     // mime type
-    String mimeType = resourceElem.select("dc|format").text();
-    if (mimeType != null && ! mimeType.isEmpty())
-      mdRecord.setType(mimeType);
+    Elements mimeTypeElems = resourceElem.select("dc|format");
+    if (mimeTypeElems != null && mimeTypeElems.size() > 0) {
+      String mimeType = mimeTypeElems.first().text();
+      if (mimeType != null && ! mimeType.isEmpty())
+        mdRecord.setType(mimeType);
+    }
     // abstract
     String abstractt = resourceElem.select("dc|abstract").text();
     if (abstractt != null && ! abstractt.isEmpty()) {

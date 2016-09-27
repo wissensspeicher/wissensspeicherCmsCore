@@ -193,6 +193,8 @@ public class Crawler {
     String mimeType = null;
     try {
       mimeType = tika.detect(url);
+      if (mimeType != null && mimeType.contains(";"))
+        mimeType = mimeType.replaceAll(";.*", "");
     } catch (Exception e) {
       LOGGER.error("Crawler: detection of link: " + url + " on page: " + startUrlStr + " is not possible");
       return null; // e.g. if FileNotFoundException etc. is thrown by site
