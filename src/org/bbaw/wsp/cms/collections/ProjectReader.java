@@ -683,7 +683,7 @@ public class ProjectReader {
       String spatialRdfId = projectElem.select("dcterms|spatial").attr("rdf:resource");
       if (spatialRdfId != null && ! spatialRdfId.isEmpty())
         project.setSpatialRdfId(spatialRdfId);
-      Elements relatedElems = projectElem.select("dcterms|related");
+      Elements relatedElems = projectElem.select("dcterms|relation");
       for (int i=0; i< relatedElems.size(); i++) {
         Element relatedElem = relatedElems.get(i);
         String relatedRdfId = relatedElem.attr("rdf:resource");

@@ -331,7 +331,7 @@ public class Project {
         String relatedProjectRdfId = iterator.next();
         jsonProjectRelations.add(relatedProjectRdfId);
       }
-      retJsonObject.put("projectRelations", projectRelations);
+      retJsonObject.put("projectRelations", jsonProjectRelations);
     }
     if (gndRelatedPersons != null && ! gndRelatedPersons.isEmpty()) {
       JSONArray jsonGndRelatedPersons = new JSONArray();
