@@ -1,7 +1,5 @@
 package org.bbaw.wsp.cms.collections;
 
-import org.bbaw.wsp.cms.document.Person;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;

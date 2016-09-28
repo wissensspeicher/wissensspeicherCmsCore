@@ -7,7 +7,6 @@ import java.util.HashSet;
 import org.apache.commons.httpclient.URIException;
 import org.apache.commons.httpclient.util.URIUtil;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import net.sf.saxon.s9api.XdmItem;

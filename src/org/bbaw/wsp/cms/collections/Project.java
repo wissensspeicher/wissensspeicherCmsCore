@@ -39,6 +39,7 @@ public class Project {
   private String absstract; // abstract of project
   private String homepageUrl; // homepage url
   private String temporalRdfId; // temporal, e.g. "http://wissensspeicher.bbaw.de/rdf/normdata/Neuzeit"
+  private String spatialRdfId; // spatial, e.g. "http://sws.geonames.org/2950157/"
   private Date lastModified; // last modified
   private String status; // e.g. "aktiv" or "abgeschlossen" 
   private String valid; // e.g. "start=1970; end=2014-12-31; name=Laufzeit"
@@ -48,6 +49,8 @@ public class Project {
   private HashMap<String, Database> databases = new HashMap<String, Database>();  // project databases (redundant to collection databases): key is databaseRdfId and value is database
   private HashMap<String, Person> staff = new HashMap<String, Person>();  // project staff: key is personRdfId and value is person
   private HashMap<String, Subject> subjects = new HashMap<String, Subject>();  // project subjects: key is subjectRdfId and value is subject
+  private HashMap<String, String> projectRelations = new HashMap<String, String>();  // project relations: key is projectRdfId and value is the same projectRdfId
+  private HashMap<String, Person> gndRelatedPersons = new HashMap<String, Person>();  // project gnd related persons: key is personRdfId and value is person
 
   public ProjectCollection getCollection(String collRdfId) {
     return collections.get(collRdfId);
@@ -75,6 +78,14 @@ public class Project {
   
   public Subject getSubject(String subjectRdfId) {
     return subjects.get(subjectRdfId);
+  }
+  
+  public void addGndRelatedPerson(String personRdfId, Person person) {
+    gndRelatedPersons.put(personRdfId, person);
+  }
+  
+  public void addProjectRelation(String projectRdfId) {
+    projectRelations.put(projectRdfId, projectRdfId);
   }
   
   public ArrayList<ProjectCollection> getCollections() {
@@ -219,6 +230,12 @@ public class Project {
   public void setTemporalRdfId(String temporalRdfId) {
     this.temporalRdfId = temporalRdfId;
   }
+  public String getSpatialRdfId() {
+    return spatialRdfId;
+  }
+  public void setSpatialRdfId(String spatialRdfId) {
+    this.spatialRdfId = spatialRdfId;
+  }
   public Date getLastModified() {
     return lastModified;
   }
@@ -278,6 +295,8 @@ public class Project {
       retJsonObject.put("abstract", absstract);
     if (temporalRdfId != null)
       retJsonObject.put("temporalRdfId", temporalRdfId);
+    if (spatialRdfId != null)
+      retJsonObject.put("spatialRdfId", spatialRdfId);
     if (status != null)
       retJsonObject.put("status", status);
     if (mainLanguage != null)
@@ -305,6 +324,22 @@ public class Project {
         jsonSubjects.add(subject.toJsonObject());
       }
       retJsonObject.put("subjects", jsonSubjects);
+    }
+    if (projectRelations != null && ! projectRelations.isEmpty()) {
+      JSONArray jsonProjectRelations = new JSONArray();
+      for (Iterator<String> iterator = projectRelations.values().iterator(); iterator.hasNext();) {
+        String relatedProjectRdfId = iterator.next();
+        jsonProjectRelations.add(relatedProjectRdfId);
+      }
+      retJsonObject.put("projectRelations", projectRelations);
+    }
+    if (gndRelatedPersons != null && ! gndRelatedPersons.isEmpty()) {
+      JSONArray jsonGndRelatedPersons = new JSONArray();
+      for (Iterator<Person> iterator = gndRelatedPersons.values().iterator(); iterator.hasNext();) {
+        Person person = iterator.next();
+        jsonGndRelatedPersons.add(person.toJsonObject());
+      }
+      retJsonObject.put("gndRelatedPersons", jsonGndRelatedPersons);
     }
     return retJsonObject;
   }

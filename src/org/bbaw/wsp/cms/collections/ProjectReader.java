@@ -2,7 +2,6 @@ package org.bbaw.wsp.cms.collections;
 
 import java.io.File;
 import java.net.URL;
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -455,7 +454,7 @@ public class ProjectReader {
           if (mbox != null && ! mbox.isEmpty()) {
             person.setMbox(mbox);
           }
-          String homepage = personElem.select("rdf|Description > foaf|homepage").text();
+          String homepage = personElem.select("rdf|Description > foaf|ho mepage").text();
           if (homepage != null && ! homepage.isEmpty()) {
             person.setHomepage(homepage);
           }
@@ -680,6 +679,23 @@ public class ProjectReader {
         subject.setRdfId(subjectRdfId);
         subject.setGndId(subjectRdfId);
         project.addSubject(subjectRdfId, subject);
+      }
+      String spatialRdfId = projectElem.select("dcterms|spatial").attr("rdf:resource");
+      if (spatialRdfId != null && ! spatialRdfId.isEmpty())
+        project.setSpatialRdfId(spatialRdfId);
+      Elements relatedElems = projectElem.select("dcterms|related");
+      for (int i=0; i< relatedElems.size(); i++) {
+        Element relatedElem = relatedElems.get(i);
+        String relatedRdfId = relatedElem.attr("rdf:resource");
+        project.addProjectRelation(relatedRdfId);
+      }
+      Elements gndRelatedPersonsElems = projectElem.select("gnd|relatedPerson");
+      for (int i=0; i< gndRelatedPersonsElems.size(); i++) {
+        Element gndRelatedPersonsElem = gndRelatedPersonsElems.get(i);
+        String personRdfId = gndRelatedPersonsElem.attr("rdf:resource");
+        Person person = getPerson(personRdfId);
+        if (person != null)
+          project.addGndRelatedPerson(personRdfId, person);
       }
       Elements collectionElems = projectRdfDoc.select("rdf|RDF > rdf|Description > rdf|type[rdf:resource*=Aggregation]");
       for (int i=0; i< collectionElems.size(); i++) {
