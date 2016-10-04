@@ -74,8 +74,6 @@ import org.apache.lucene.search.vectorhighlight.FieldQuery;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.BytesRef;
-import org.bbaw.wsp.cms.collections.Project;
-import org.bbaw.wsp.cms.collections.ProjectCollection;
 import org.bbaw.wsp.cms.collections.ProjectReader;
 import org.bbaw.wsp.cms.document.DBpediaResource;
 import org.bbaw.wsp.cms.document.Facets;
@@ -241,28 +239,35 @@ public class IndexHandler {
         Field uriField = new Field("uri", uri, ftStoredAnalyzed);
         doc.add(uriField);
       }
-      String project = mdRecord.getProjectId();
-      if (project != null) {
-        Field projectField = new Field("projectId", project, ftStoredAnalyzed);
-        if (project.equals("jdg"))
+      String projectId = mdRecord.getProjectId();
+      if (projectId != null) {
+        Field projectField = new Field("projectId", projectId, ftStoredAnalyzed);
+        if (projectId.equals("jdg"))
           projectField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
         doc.add(projectField);
-        FacetField facetField = new FacetField("projectId", project);
+        FacetField facetField = new FacetField("projectId", projectId);
         doc.add(facetField);
       }
       String projectRdfId = mdRecord.getProjectRdfId();
       if (projectRdfId != null) {
         Field projectRdfIdField = new Field("projectRdfId", projectRdfId, ftStoredAnalyzed);
-        if (project.equals("jdg"))
+        if (projectId.equals("jdg"))
           projectRdfIdField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
         doc.add(projectRdfIdField);
         FacetField facetField = new FacetField("projectRdfId", projectRdfId);
         doc.add(facetField);
       }
+      String organizationRdfId = mdRecord.getOrganizationRdfId();
+      if (organizationRdfId != null) {
+        Field organizationRdfIdField = new Field("organizationRdfId", organizationRdfId, ftStoredAnalyzed);
+        if (projectId.equals("jdg"))
+          organizationRdfIdField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
+        doc.add(organizationRdfIdField);
+      }
       String collectionRdfId = mdRecord.getCollectionRdfId();
       if (collectionRdfId != null) {
         Field collectionRdfIdField = new Field("collectionRdfId", collectionRdfId, ftStoredAnalyzed);
-        if (project.equals("jdg"))
+        if (projectId.equals("jdg"))
           collectionRdfIdField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
         doc.add(collectionRdfIdField);
         FacetField facetField = new FacetField("collectionRdfId", collectionRdfId);
@@ -271,7 +276,7 @@ public class IndexHandler {
       String dbRdfId = mdRecord.getDatabaseRdfId();
       if (dbRdfId != null) {
         Field databaseRdfIdField = new Field("databaseRdfId", dbRdfId, ftStoredAnalyzed);
-        if (project.equals("jdg"))
+        if (projectId.equals("jdg"))
           databaseRdfIdField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
         doc.add(databaseRdfIdField);
         FacetField facetField = new FacetField("databaseRdfId", dbRdfId);
@@ -281,7 +286,7 @@ public class IndexHandler {
       if (creator != null) {
         Field authorField = new Field("author", creator, ftStoredAnalyzed);
         doc.add(authorField);
-        if (project.equals("jdg"))
+        if (projectId.equals("jdg"))
           authorField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
         if (creator != null)
           creator = creator.toLowerCase();  // so that sorting is lower case
@@ -309,7 +314,7 @@ public class IndexHandler {
       if (titleStr != null) {
         Field titleField = new Field("title", titleStr, ftStoredAnalyzed);
         doc.add(titleField);
-        if (project.equals("jdg"))
+        if (projectId.equals("jdg"))
           titleField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
         titleStr = titleStr.toLowerCase();  // so that sorting is lower case
         Field titleFieldSorted = new SortedDocValuesField("titleSorted", new BytesRef(titleStr));
@@ -319,7 +324,7 @@ public class IndexHandler {
       if (alternativeTitleStr != null) {
         Field alternativeTitleField = new Field("alternativeTitle", alternativeTitleStr, ftStoredAnalyzed);
         doc.add(alternativeTitleField);
-        if (project.equals("jdg"))
+        if (projectId.equals("jdg"))
           alternativeTitleField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
       }
       String publisher = mdRecord.getPublisher();
@@ -338,7 +343,7 @@ public class IndexHandler {
         }
         Field publisherField = new Field("publisher", publisher, ftStoredAnalyzed);
         doc.add(publisherField);
-        if (project.equals("jdg"))
+        if (projectId.equals("jdg"))
           publisherField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
         if (publisher != null)
           publisher = publisher.toLowerCase();  // so that sorting is lower case
@@ -361,7 +366,7 @@ public class IndexHandler {
       if (yearStr != null) {
         Field dateField = new Field("date", yearStr, ftStoredAnalyzed);
         doc.add(dateField);
-        if (project.equals("jdg"))
+        if (projectId.equals("jdg"))
           dateField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
         Field dateFieldSorted = new SortedDocValuesField("dateSorted", new BytesRef(yearStr));
         doc.add(dateFieldSorted);
@@ -374,14 +379,14 @@ public class IndexHandler {
       if (mdRecord.getDescription() != null) {
         Field descriptionField = new Field("description", mdRecord.getDescription(), ftStoredAnalyzed);
         doc.add(descriptionField);
-        if (project.equals("jdg"))
+        if (projectId.equals("jdg"))
           descriptionField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
       }
       String subject = mdRecord.getSubject();
       if (subject != null) {
         Field subjectField = new Field("subject", subject, ftStoredAnalyzed);
         doc.add(subjectField);
-        if (project.equals("jdg"))
+        if (projectId.equals("jdg"))
           subjectField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
         String[] subjects = subject.split(",");
         if (subject.contains(";"))
@@ -421,7 +426,7 @@ public class IndexHandler {
       if (swd != null) {
         Field swdField = new Field("swd", swd, ftStoredAnalyzed);
         doc.add(swdField);
-        if (project.equals("jdg"))
+        if (projectId.equals("jdg"))
           swdField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
         String[] swds = swd.split(",");
         if (swd.contains(";"))
@@ -440,7 +445,7 @@ public class IndexHandler {
       if (mdRecord.getDdc() != null) {
         Field ddcField = new Field("ddc", mdRecord.getDdc(), ftStoredAnalyzed);
         doc.add(ddcField);
-        if (project.equals("jdg"))
+        if (projectId.equals("jdg"))
           ddcField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
         FacetField facetField = new FacetField("ddc", mdRecord.getDdc());
         doc.add(facetField);
@@ -482,7 +487,7 @@ public class IndexHandler {
       if (mdRecord.getType() != null) {
         Field typeField = new Field("type", mdRecord.getType(), ftStoredAnalyzed);
         doc.add(typeField);
-        if (project.equals("jdg"))
+        if (projectId.equals("jdg"))
           typeField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
         FacetField facetField = new FacetField("type", mdRecord.getType());
         doc.add(facetField);
@@ -497,7 +502,7 @@ public class IndexHandler {
       if (mdRecord.getEntities() != null) {
         Field entitiesField = new Field("entities", mdRecord.getEntities(), ftStoredAnalyzed);
         doc.add(entitiesField);
-        if (project.equals("jdg"))
+        if (projectId.equals("jdg"))
           entitiesField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
       }
       if (mdRecord.getEntitiesDetails() != null) {
@@ -540,7 +545,7 @@ public class IndexHandler {
       if (mdRecord.getPersons() != null) {
         Field personsField = new Field("persons", mdRecord.getPersons(), ftStoredAnalyzed);
         doc.add(personsField);
-        if (project.equals("jdg"))
+        if (projectId.equals("jdg"))
           personsField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
       }
       if (mdRecord.getPersonsDetails() != null) {
@@ -550,7 +555,7 @@ public class IndexHandler {
       if (mdRecord.getPlaces() != null) {
         Field placesField = new Field("places", mdRecord.getPlaces(), ftStoredAnalyzed);
         doc.add(placesField);
-        if (project.equals("jdg"))
+        if (projectId.equals("jdg"))
           placesField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
       }
       String language = mdRecord.getLanguage();
@@ -566,7 +571,7 @@ public class IndexHandler {
       if (language != null) {
         Field languageField = new Field("language", mdRecord.getLanguage(), ftStoredAnalyzed);
         doc.add(languageField);
-        if (project.equals("jdg"))
+        if (projectId.equals("jdg"))
           languageField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
         String langStr = mdRecord.getLanguage();
         if (langStr != null)
@@ -589,49 +594,49 @@ public class IndexHandler {
       if (extent != null) {
         Field extentField = new Field("extent", extent, ftStoredAnalyzed);
         doc.add(extentField);
-        if (project.equals("jdg"))
+        if (projectId.equals("jdg"))
           extentField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
       }
       String docTokensOrig = mdRecord.getTokenOrig();
       if (docTokensOrig != null) {
         Field tokenOrigField = new Field("tokenOrig", docTokensOrig, ftStoredAnalyzed);
         doc.add(tokenOrigField);
-        if (project.equals("jdg"))
+        if (projectId.equals("jdg"))
           tokenOrigField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
       }
       String docTokensReg = mdRecord.getTokenReg();
       if (docTokensReg != null) {
         Field tokenRegField = new Field("tokenReg", docTokensReg, ftStoredAnalyzed);
         doc.add(tokenRegField);
-        if (project.equals("jdg"))
+        if (projectId.equals("jdg"))
           tokenRegField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
       }
       String docTokensNorm = mdRecord.getTokenNorm();
       if (docTokensNorm != null) {
         Field tokenNormField = new Field("tokenNorm", docTokensNorm, ftStoredAnalyzed);
         doc.add(tokenNormField);
-        if (project.equals("jdg"))
+        if (projectId.equals("jdg"))
           tokenNormField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
       }
       String docTokensMorph = mdRecord.getTokenMorph();
       if (docTokensMorph != null) {
         Field tokenMorphField = new Field("tokenMorph", docTokensMorph, ftStoredAnalyzed);
         doc.add(tokenMorphField);
-        if (project.equals("jdg"))
+        if (projectId.equals("jdg"))
           tokenMorphField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
       }
       String contentXml = mdRecord.getContentXml();
       if (contentXml != null) {
         Field contentXmlField = new Field("xmlContent", contentXml, ftStoredAnalyzed);
         doc.add(contentXmlField);
-        if (project.equals("jdg"))
+        if (projectId.equals("jdg"))
           contentXmlField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
       }
       String content = mdRecord.getContent();
       if (content != null) {
         Field contentField = new Field("content", content, ftStoredAnalyzed);
         doc.add(contentField);
-        if (project.equals("jdg"))
+        if (projectId.equals("jdg"))
           contentField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
       }
       // save the webUrl field  
@@ -1193,6 +1198,10 @@ public class IndexHandler {
       IndexableField projectRdfIdField = doc.getField("projectRdfId");
       if (projectRdfIdField != null)
         projectRdfId = projectRdfIdField.stringValue();
+      String organizationRdfId = null;
+      IndexableField organizationRdfIdField = doc.getField("organizationRdfId");
+      if (organizationRdfIdField != null)
+        organizationRdfId = organizationRdfIdField.stringValue();
       String collectionRdfId = null;
       IndexableField collectionRdfIdField = doc.getField("collectionRdfId");
       if (collectionRdfIdField != null)
@@ -1327,6 +1336,7 @@ public class IndexHandler {
       mdRecord.setIdentifier(identifier);
       mdRecord.setProjectId(projectId);
       mdRecord.setProjectRdfId(projectRdfId);
+      mdRecord.setOrganizationRdfId(organizationRdfId);
       mdRecord.setCollectionRdfId(collectionRdfId);
       mdRecord.setDatabaseRdfId(databaseRdfId);
       mdRecord.setCreator(author);
@@ -2155,6 +2165,7 @@ public class IndexHandler {
       documentsFieldAnalyzers.put("webUri", new KeywordAnalyzer());
       documentsFieldAnalyzers.put("projectId", new StandardAnalyzer());
       documentsFieldAnalyzers.put("projectRdfId", new KeywordAnalyzer());
+      documentsFieldAnalyzers.put("organizationRdfId", new KeywordAnalyzer());
       documentsFieldAnalyzers.put("collectionRdfId", new KeywordAnalyzer());
       documentsFieldAnalyzers.put("author", new StandardAnalyzer());
       documentsFieldAnalyzers.put("title", new StandardAnalyzer());
@@ -2290,6 +2301,7 @@ public class IndexHandler {
     fields.add("webUri");
     fields.add("projectId");
     fields.add("projectRdfId");
+    fields.add("organizationRdfId");
     fields.add("collectionRdfId");
     fields.add("databaseRdfId");
     fields.add("author");

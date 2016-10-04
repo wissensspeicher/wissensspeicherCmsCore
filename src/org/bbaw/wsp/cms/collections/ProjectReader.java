@@ -655,6 +655,9 @@ public class ProjectReader {
       String parentRdfId = projectElem.select("dcterms|isPartOf").attr("rdf:resource");
       if (parentRdfId != null && ! parentRdfId.isEmpty())
         project.setParentRdfId(parentRdfId);
+      String organizationRdfId = projectElem.select("gnd|hierarchicalSuperior").attr("rdf:resource");
+      if (organizationRdfId != null && ! organizationRdfId.isEmpty())
+        project.setOrganizationRdfId(organizationRdfId);
       String languageRdfId = projectElem.select("dcterms|language").attr("rdf:resource");
       if (languageRdfId != null && ! languageRdfId.isEmpty()) {
         String mainLanguage = getIso639Language(languageRdfId); // international 3 character id (e.g. "ger")

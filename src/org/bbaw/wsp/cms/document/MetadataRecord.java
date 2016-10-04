@@ -23,6 +23,7 @@ public class MetadataRecord implements Cloneable, Serializable {
   private String identifier; // local id: identifier field in resource metadata: e.g. <meta name="DC.identifier" content="47114711">
   private String uri; // global id: resource URI (uniform resource identifier), download URL: e.g. http://www.deutschestextarchiv.de/book/download_xml/albertinus_landtstoertzer01_1615
   private String webUri; // global web url, e.g. "http://telota.bbaw.de/ig/IG I3 501" or "http://edoc.bbaw.de/volltexte/2011/1769/" or "http://www.deutschestextarchiv.de/albertinus_landtstoertzer01_1615"
+  private String organizationRdfId; // rdf id of organization (e.g.: http://wissensspeicher.bbaw.de/rdf/normdata/BBAW)
   private String projectId; // project id, e.g. "edoc" or "ig"
   private String projectRdfId; // project rdf id
   private String collectionRdfId; // collection rdf id
@@ -365,6 +366,14 @@ public class MetadataRecord implements Cloneable, Serializable {
 
   public void setSubjectControlledDetails(String subjectControlledDetails) {
     this.subjectControlledDetails = subjectControlledDetails;
+  }
+
+  public String getOrganizationRdfId() {
+    return organizationRdfId;
+  }
+
+  public void setOrganizationRdfId(String organizationRdfId) {
+    this.organizationRdfId = organizationRdfId;
   }
 
   public String getProjectId() {

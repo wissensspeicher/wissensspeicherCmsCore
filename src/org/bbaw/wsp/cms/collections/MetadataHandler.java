@@ -123,6 +123,9 @@ public class MetadataHandler {
     ProjectManager pm = ProjectManager.getInstance();
     MetadataRecord mdRecord = getNewMdRecord(urlStr); 
     mdRecord.setSystem("eXist");
+    String organizationRdfId = project.getOrganizationRdfId();
+    if (organizationRdfId != null)
+      mdRecord.setOrganizationRdfId(organizationRdfId);
     mdRecord.setProjectId(projectId);
     String projectRdfId = project.getRdfId();
     mdRecord.setProjectRdfId(projectRdfId);
@@ -192,6 +195,9 @@ public class MetadataHandler {
       MetadataRecord crawledMdRecord = crawledMdRecords.get(i);
       String crawlUrlStr = crawledMdRecord.getWebUri();
       MetadataRecord newCrawledMdRecord = getNewMdRecord(crawlUrlStr); // with docId and webUri
+      String organizationRdfId = project.getOrganizationRdfId();
+      if (organizationRdfId != null)
+        newCrawledMdRecord.setOrganizationRdfId(organizationRdfId);
       newCrawledMdRecord.setProjectId(projectId);
       String projectRdfId = project.getRdfId();
       newCrawledMdRecord.setProjectRdfId(projectRdfId);
@@ -664,6 +670,9 @@ public class MetadataHandler {
             else
               mdRecord = getMdRecordFromDigitalResource(project, resource);
             if (mdRecord != null) {
+              String organizationRdfId = project.getOrganizationRdfId();
+              if (organizationRdfId != null)
+                mdRecord.setOrganizationRdfId(organizationRdfId);
               if (mdRecord.getProjectId() == null)
                 mdRecord.setProjectId(projectId);
               String projectRdfId = project.getRdfId();

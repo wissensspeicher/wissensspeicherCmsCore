@@ -105,6 +105,9 @@ public class Indexer {
       indexHandler.setCommitInterval(COMMIT_INTERVAL_DB);
     for (int i=0; i<mdRecords.size(); i++) {
       MetadataRecord mdRecord = mdRecords.get(i);
+      String organizationRdfId = project.getOrganizationRdfId();
+      if (organizationRdfId != null)
+        mdRecord.setOrganizationRdfId(organizationRdfId);
       String projectRdfId = project.getRdfId();
       mdRecord.setProjectRdfId(projectRdfId);
       // set db rdf id of mdRecord

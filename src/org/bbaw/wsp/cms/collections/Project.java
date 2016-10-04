@@ -33,6 +33,7 @@ public class Project {
   private String rdfId;  // rdfId of this project
   private String parentRdfId;  // rdf id of which this project is part of 
   private String rdfPath; // path from this project to root (project or organization)
+  private String organizationRdfId; // rdf id of organization (e.g.: http://wissensspeicher.bbaw.de/rdf/normdata/BBAW)
   private String type; // project or organization
   private String projectType; // e.g. "Vorhaben", "Initiative"
   private String title;  // title of project
@@ -199,6 +200,12 @@ public class Project {
   }
   public String getRdfPath() {
     return rdfPath;
+  }
+  public String getOrganizationRdfId() {
+    return organizationRdfId;
+  }
+  public void setOrganizationRdfId(String organizationRdfId) {
+    this.organizationRdfId = organizationRdfId;
   }
   public String getType() {
     return type;
