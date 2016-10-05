@@ -272,6 +272,8 @@ public class IndexHandler {
         if (projectId.equals("jdg"))
           collectionRdfIdField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
         doc.add(collectionRdfIdField);
+        Field collectionRdfIdFieldSorted = new SortedDocValuesField("collectionRdfIdSorted", new BytesRef(collectionRdfId));
+        doc.add(collectionRdfIdFieldSorted);
         FacetField facetField = new FacetField("collectionRdfId", collectionRdfId);
         doc.add(facetField);
       }
