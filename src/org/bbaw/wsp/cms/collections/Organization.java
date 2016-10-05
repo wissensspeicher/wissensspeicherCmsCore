@@ -1,5 +1,9 @@
 package org.bbaw.wsp.cms.collections;
 
+import org.json.simple.JSONObject;
+
+import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
+
 public class Organization {
   private String rdfId;
   private String name;
@@ -29,4 +33,14 @@ public class Organization {
     this.homepageUrl = homepageUrl;
   }
 
+  public JSONObject toJsonObject() throws ApplicationException {
+    JSONObject retJsonObject = new JSONObject();
+    if (rdfId != null)
+      retJsonObject.put("rdfId", rdfId);
+    if (name != null)
+      retJsonObject.put("name", name);
+    if (homepageUrl != null)
+      retJsonObject.put("homepageUrl", homepageUrl);
+    return retJsonObject;
+  }
 }

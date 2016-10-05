@@ -56,6 +56,11 @@ public class ProjectReader {
       return p1.getName().compareTo(p2.getName());
     }
   };
+  public static Comparator<Organization> organizationNameComparator = new Comparator<Organization>() {
+    public int compare(Organization o1, Organization o2) {
+      return o1.getName().compareTo(o2.getName());
+    }
+  };
   private ArrayList<String> globalExcludes;
   private HashMap<String, Person> normdataPersons;
   private HashMap<String, Organization> normdataOrganizations;
@@ -228,6 +233,16 @@ public class ProjectReader {
     return projects;
   }
 
+  public ArrayList<Organization> getOrganizations() {
+    ArrayList<Organization> organizations = new ArrayList<Organization>();
+    java.util.Collection<Organization> organizationValues = this.normdataOrganizations.values();
+    for (Organization organization : organizationValues) {
+      organizations.add(organization);
+    }
+    Collections.sort(organizations, organizationNameComparator);
+    return organizations;
+  }
+
   public ProjectCollection getCollection(String collectionRdfId) {
     return collections.get(collectionRdfId);
   }
@@ -362,8 +377,8 @@ public class ProjectReader {
     return normdataPersons.get(aboutId);
   }
   
-  public Organization getOrganization(String aboutId) {
-    return normdataOrganizations.get(aboutId);
+  public Organization getOrganization(String organizationRdfId) {
+    return normdataOrganizations.get(organizationRdfId);
   }
   
   public Subject getSubject(String aboutId) {

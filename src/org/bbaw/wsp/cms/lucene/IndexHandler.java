@@ -2274,7 +2274,9 @@ public class IndexHandler {
   }
 
   private String getDocSortFieldName(String fieldName) {
-    String sortFieldName = fieldName + "Sorted";
+    String sortFieldName = fieldName;
+    if (fieldName.equals("author") || fieldName.equals("title") || fieldName.equals("publisher") || fieldName.equals("date") || fieldName.equals("lastModified") || fieldName.equals("docId") || fieldName.equals("language") || fieldName.equals("schemaName"))
+      sortFieldName = fieldName + "Sorted";
     return sortFieldName;
   }
 

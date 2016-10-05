@@ -290,6 +290,8 @@ public class Project {
       retJsonObject.put("parentRdfId", parentRdfId);
     if (rdfPath != null)
       retJsonObject.put("rdfPath", rdfPath);
+    if (organizationRdfId != null)
+      retJsonObject.put("organizationRdfId", organizationRdfId);
     if (type != null)
       retJsonObject.put("type", type);
     if (projectType != null)
