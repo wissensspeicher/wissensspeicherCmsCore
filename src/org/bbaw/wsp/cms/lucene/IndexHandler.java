@@ -245,6 +245,8 @@ public class IndexHandler {
         if (projectId.equals("jdg"))
           projectField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
         doc.add(projectField);
+        Field projectFieldSorted = new SortedDocValuesField("projectIdSorted", new BytesRef(projectId));
+        doc.add(projectFieldSorted);
         FacetField facetField = new FacetField("projectId", projectId);
         doc.add(facetField);
       }
@@ -2274,9 +2276,7 @@ public class IndexHandler {
   }
 
   private String getDocSortFieldName(String fieldName) {
-    String sortFieldName = fieldName;
-    if (fieldName.equals("author") || fieldName.equals("title") || fieldName.equals("publisher") || fieldName.equals("date") || fieldName.equals("lastModified") || fieldName.equals("docId") || fieldName.equals("language") || fieldName.equals("schemaName"))
-      sortFieldName = fieldName + "Sorted";
+    String sortFieldName = fieldName + "Sorted";
     return sortFieldName;
   }
 
