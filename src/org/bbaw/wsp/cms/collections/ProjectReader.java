@@ -727,6 +727,9 @@ public class ProjectReader {
         } else {
           collParentRdfId = projectElem.select("dcterms|isPartOf").attr("rdf:resource");
         }
+        String collTypeRdfId = collectionElem.select("dcterms|type").attr("rdf:resource");
+        if (collTypeRdfId != null && ! collTypeRdfId.isEmpty())
+          collection.setTypeRdfId(collTypeRdfId);
         String collAbstract = collectionElem.select("dcterms|abstract[xml:lang=\"de\"]").text();
         if (collAbstract != null && ! collAbstract.isEmpty())
           collection.setAbsstract(collAbstract);

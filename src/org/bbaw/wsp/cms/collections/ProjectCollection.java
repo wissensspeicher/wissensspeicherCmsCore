@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import org.apache.commons.httpclient.URIException;
-import org.apache.commons.httpclient.util.URIUtil;
 import org.apache.log4j.Logger;
 import org.bbaw.wsp.cms.document.Person;
 import org.json.simple.JSONArray;
@@ -20,6 +18,7 @@ public class ProjectCollection {
   private String projectRdfId; // rdfId of project
   private String parentRdfId; // rdfId of parent collection
   private String rdfPath; // path from this collection to root (project or organization)
+  private String typeRdfId;  // e.g. http://wissensspeicher.bbaw.de/rdf/outputType#BibliographischeDatenbank
   private String homepageUrl;
   private String absstract; // abstract of project
   private String title;
@@ -54,6 +53,13 @@ public class ProjectCollection {
   
   public ArrayList<String> getLanguages() {
     return languages;  
+  }
+  
+  public boolean isResourceContainer() {
+    boolean isResourceContainer = false;
+    if (typeRdfId != null && (typeRdfId.endsWith("Edition") || typeRdfId.endsWith("Forschungsbericht") || typeRdfId.endsWith("Tagungsbericht")))
+      isResourceContainer = true;
+    return isResourceContainer;
   }
   
   public void addStaffPerson(String personRdfId, Person person) {
@@ -125,6 +131,14 @@ public class ProjectCollection {
     this.parentRdfId = parentRdfId;
   }
   
+  public String getTypeRdfId() {
+    return typeRdfId;
+  }
+
+  public void setTypeRdfId(String typeRdfId) {
+    this.typeRdfId = typeRdfId;
+  }
+
   public String getHomepageUrl() {
     return homepageUrl;
   }
