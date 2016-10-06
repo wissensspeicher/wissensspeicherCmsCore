@@ -57,7 +57,7 @@ public class ProjectCollection {
   
   public boolean isResourceContainer() {
     boolean isResourceContainer = false;
-    if (typeRdfId != null && (typeRdfId.endsWith("Edition") || typeRdfId.endsWith("Forschungsbericht") || typeRdfId.endsWith("Tagungsbericht")))
+    if (typeRdfId != null && (typeRdfId.endsWith("Edition") || typeRdfId.endsWith("Forschungsbericht") || typeRdfId.endsWith("Tagungsbericht")))   // TODO
       isResourceContainer = true;
     return isResourceContainer;
   }
