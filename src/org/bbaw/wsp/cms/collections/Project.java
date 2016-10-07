@@ -46,6 +46,7 @@ public class Project {
   private String valid; // e.g. "start=1970; end=2014-12-31; name=Laufzeit"
   private String updateCycle; // e.g. "monthly" or "halfyearly" 
   private String mainLanguage;
+  private ArrayList<String> languages = new ArrayList<String>(); // all languages
   private HashMap<String, ProjectCollection> collections = new HashMap<String, ProjectCollection>();  // project collections: key is collectionRdfId and value is collection
   private HashMap<String, Database> databases = new HashMap<String, Database>();  // project databases (redundant to collection databases): key is databaseRdfId and value is database
   private HashMap<String, Person> staff = new HashMap<String, Person>();  // project staff: key is personRdfId and value is person
@@ -83,6 +84,10 @@ public class Project {
   
   public void addGndRelatedPerson(String personRdfId, Person person) {
     gndRelatedPersons.put(personRdfId, person);
+  }
+  
+  public void addLanguage(String language) {
+    languages.add(language);
   }
   
   public void addProjectRelation(String projectRdfId) {
@@ -299,7 +304,7 @@ public class Project {
     if (homepageUrl != null)
       retJsonObject.put("homepageUrl", homepageUrl);
     if (title != null)
-      retJsonObject.put("title", title);
+      retJsonObject.put("label", title);
     if (absstract != null)
       retJsonObject.put("abstract", absstract);
     if (temporalRdfId != null)
@@ -309,7 +314,15 @@ public class Project {
     if (status != null)
       retJsonObject.put("status", status);
     if (mainLanguage != null)
-      retJsonObject.put("language", mainLanguage);
+      retJsonObject.put("mainLanguage", mainLanguage);
+    if (languages != null && ! languages.isEmpty()) {
+      JSONArray jsonLanguages = new JSONArray();
+      for (int i=0; i<languages.size(); i++) {
+        String lang = languages.get(i);
+        jsonLanguages.add(lang);
+      }
+      retJsonObject.put("languages", jsonLanguages);
+    }
     if (collections != null && ! collections.isEmpty()) {
       JSONArray jsonCollections = new JSONArray();
       for (Iterator<ProjectCollection> iterator = collections.values().iterator(); iterator.hasNext();) {

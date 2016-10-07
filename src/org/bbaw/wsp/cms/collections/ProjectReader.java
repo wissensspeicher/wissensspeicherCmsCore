@@ -664,7 +664,7 @@ public class ProjectReader {
       String homepageUrl = projectElem.select("foaf|homepage").attr("rdf:resource");
       if (homepageUrl != null && ! homepageUrl.isEmpty())
         project.setHomepageUrl(homepageUrl);
-      String temporalRdfId = projectElem.select("dcterms|temporal").attr("rdf:resource");
+      String temporalRdfId = projectElem.select("dcterms|temporal").attr("rdf:resource"); // TODO label aus normdata holen
       if (temporalRdfId != null && ! temporalRdfId.isEmpty())
         project.setTemporalRdfId(temporalRdfId);
       String parentRdfId = projectElem.select("dcterms|isPartOf").attr("rdf:resource");
@@ -673,10 +673,18 @@ public class ProjectReader {
       String organizationRdfId = projectElem.select("gnd|hierarchicalSuperior").attr("rdf:resource");
       if (organizationRdfId != null && ! organizationRdfId.isEmpty())
         project.setOrganizationRdfId(organizationRdfId);
-      String languageRdfId = projectElem.select("dcterms|language").attr("rdf:resource");
-      if (languageRdfId != null && ! languageRdfId.isEmpty()) {
-        String mainLanguage = getIso639Language(languageRdfId); // international 3 character id (e.g. "ger")
-        project.setMainLanguage(mainLanguage);
+      Elements languageElems = projectElem.select("dcterms|language");
+      if (languageElems != null) {
+        for (int i=0; i< languageElems.size(); i++) {
+          Element languageElem = languageElems.get(i);
+          String languageRdfId = languageElem.attr("rdf:resource");
+          if (languageRdfId != null && ! languageRdfId.isEmpty()) {
+            String language = getIso639Language(languageRdfId); // international 3 character id (e.g. "ger")
+            project.addLanguage(language);
+            if (i == 0)
+              project.setMainLanguage(language);
+          }
+        }
       } else {
         project.setMainLanguage("ger");
         LOGGER.error("ProjectReader: " + projectRdfFile + ": no project \"<dcterms:language>\" defined. Project: \"" + projectId + "\" set to default language: ger");
@@ -693,12 +701,11 @@ public class ProjectReader {
       for (int i=0; i< subjectElems.size(); i++) {
         Element subjectElem = subjectElems.get(i);
         String subjectRdfId = subjectElem.attr("rdf:resource");
-        Subject subject = new Subject();
-        subject.setRdfId(subjectRdfId);
-        subject.setGndId(subjectRdfId);
-        project.addSubject(subjectRdfId, subject);
+        Subject subject = getSubject(subjectRdfId);
+        if (subject != null)
+          project.addSubject(subjectRdfId, subject);
       }
-      String spatialRdfId = projectElem.select("dcterms|spatial").attr("rdf:resource");
+      String spatialRdfId = projectElem.select("dcterms|spatial").attr("rdf:resource");  // TODO label aus normdata holen
       if (spatialRdfId != null && ! spatialRdfId.isEmpty())
         project.setSpatialRdfId(spatialRdfId);
       Elements relatedElems = projectElem.select("dcterms|relation");

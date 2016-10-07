@@ -38,7 +38,7 @@ public class Organization {
     if (rdfId != null)
       retJsonObject.put("rdfId", rdfId);
     if (name != null)
-      retJsonObject.put("name", name);
+      retJsonObject.put("label", name);
     if (homepageUrl != null)
       retJsonObject.put("homepageUrl", homepageUrl);
     return retJsonObject;

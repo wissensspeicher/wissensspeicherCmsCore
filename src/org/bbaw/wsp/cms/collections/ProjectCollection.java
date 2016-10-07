@@ -208,7 +208,7 @@ public class ProjectCollection {
     if (homepageUrl != null)
       retJsonObject.put("homepageUrl", homepageUrl);
     if (title != null)
-      retJsonObject.put("title", title);
+      retJsonObject.put("label", title);
     if (absstract != null)
       retJsonObject.put("abstract", absstract);
     if (languages != null && ! languages.isEmpty()) {

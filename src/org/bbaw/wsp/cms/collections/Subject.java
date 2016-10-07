@@ -49,7 +49,7 @@ public class Subject {
     if (type != null)
       retJsonObject.put("type", type);
     if (name != null)
-      retJsonObject.put("name", name);
+      retJsonObject.put("label", name);
     if (gndId != null)
       retJsonObject.put("gndId", gndId);
     return retJsonObject;
