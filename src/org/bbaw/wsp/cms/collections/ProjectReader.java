@@ -674,7 +674,7 @@ public class ProjectReader {
       if (organizationRdfId != null && ! organizationRdfId.isEmpty())
         project.setOrganizationRdfId(organizationRdfId);
       Elements languageElems = projectElem.select("dcterms|language");
-      if (languageElems != null) {
+      if (languageElems != null && ! languageElems.isEmpty()) {
         for (int i=0; i< languageElems.size(); i++) {
           Element languageElem = languageElems.get(i);
           String languageRdfId = languageElem.attr("rdf:resource");
