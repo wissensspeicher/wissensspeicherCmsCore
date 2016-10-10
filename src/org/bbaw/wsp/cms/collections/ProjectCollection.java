@@ -22,6 +22,7 @@ public class ProjectCollection {
   private String homepageUrl;
   private String absstract; // abstract of project
   private String title;
+  private ArrayList<ProjectCollection> collections = new ArrayList<ProjectCollection>(); // sub collections
   private ArrayList<String> languages = new ArrayList<String>(); // collection languages; first language is the main language
   private HashMap<String, Person> staff = new HashMap<String, Person>();  // collection staff: key is personRdfId and value is person
   private HashMap<String, Database> databases = new HashMap<String, Database>();  // // collection databases: key is databaseRdfId and value is database
@@ -32,6 +33,10 @@ public class ProjectCollection {
   
   public void addLanguage(String language) {
     languages.add(language);
+  }
+  
+  public void addSubCollection(ProjectCollection collection) {
+    collections.add(collection);
   }
   
   public String getMainLanguage() throws ApplicationException {
@@ -199,18 +204,20 @@ public class ProjectCollection {
       retJsonObject.put("id", id);
     if (rdfId != null)
       retJsonObject.put("rdfId", rdfId);
-    if (projectRdfId != null)
-      retJsonObject.put("projectRdfId", projectRdfId);
-    if (parentRdfId != null)
-      retJsonObject.put("parentRdfId", parentRdfId);
-    if (rdfPath != null)
-      retJsonObject.put("rdfPath", rdfPath);
     if (homepageUrl != null)
       retJsonObject.put("homepageUrl", homepageUrl);
     if (title != null)
       retJsonObject.put("label", title);
     if (absstract != null)
       retJsonObject.put("abstract", absstract);
+    if (collections != null && ! collections.isEmpty()) {
+      JSONArray jsonCollections = new JSONArray();
+      for (Iterator<ProjectCollection> iterator = collections.iterator(); iterator.hasNext();) {
+        ProjectCollection collection = iterator.next();
+        jsonCollections.add(collection.toJsonObject());
+      }
+      retJsonObject.put("collections", jsonCollections);
+    }
     if (languages != null && ! languages.isEmpty()) {
       JSONArray jsonLanguages = new JSONArray();
       for (int i=0; i<languages.size(); i++) {

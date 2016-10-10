@@ -47,7 +47,8 @@ public class Project {
   private String updateCycle; // e.g. "monthly" or "halfyearly" 
   private String mainLanguage;
   private ArrayList<String> languages = new ArrayList<String>(); // all languages
-  private HashMap<String, ProjectCollection> collections = new HashMap<String, ProjectCollection>();  // project collections: key is collectionRdfId and value is collection
+  private HashMap<String, ProjectCollection> allProjectCollections = new HashMap<String, ProjectCollection>();  // all project collections: key is collectionRdfId and value is collection
+  private ArrayList<ProjectCollection> collections = new ArrayList<ProjectCollection>();  // sub collections
   private HashMap<String, Database> databases = new HashMap<String, Database>();  // project databases (redundant to collection databases): key is databaseRdfId and value is database
   private HashMap<String, Person> staff = new HashMap<String, Person>();  // project staff: key is personRdfId and value is person
   private HashMap<String, Subject> subjects = new HashMap<String, Subject>();  // project subjects: key is subjectRdfId and value is subject
@@ -55,11 +56,15 @@ public class Project {
   private HashMap<String, Person> gndRelatedPersons = new HashMap<String, Person>();  // project gnd related persons: key is personRdfId and value is person
 
   public ProjectCollection getCollection(String collRdfId) {
-    return collections.get(collRdfId);
+    return allProjectCollections.get(collRdfId);
   }
   
   public void addCollection(String collRdfId, ProjectCollection collection) {
-    collections.put(collRdfId, collection);
+    allProjectCollections.put(collRdfId, collection);
+  }
+  
+  public void addSubCollection(ProjectCollection collection) {
+    collections.add(collection);
   }
   
   public void addDatabase(String databaseRdfId, Database database) {
@@ -96,8 +101,8 @@ public class Project {
   
   public ArrayList<ProjectCollection> getCollections() {
     ArrayList<ProjectCollection> retCollections = new ArrayList<ProjectCollection>();
-    if (collections != null) {
-      java.util.Collection<ProjectCollection> values = this.collections.values();
+    if (allProjectCollections != null) {
+      java.util.Collection<ProjectCollection> values = this.allProjectCollections.values();
       for (ProjectCollection coll : values) {
         retCollections.add(coll);
       }
@@ -167,9 +172,23 @@ public class Project {
     return retDBs;
   }
   
+  public void buildSubCollections() throws ApplicationException {
+    java.util.Collection<ProjectCollection> collectionValues = this.allProjectCollections.values();
+    for (ProjectCollection collection : collectionValues) {
+      String collParentRdfId = collection.getParentRdfId();
+      if (collParentRdfId == null) { // parent is project
+      // if (collParentRdfId.equals(rdfId)) {  
+        addSubCollection(collection);
+      } else {  // parent is collection
+        ProjectCollection parentCollection = getCollection(collParentRdfId);
+        parentCollection.addSubCollection(collection);
+      }
+    }
+  }
+  
   public void buildRdfPathes() throws ApplicationException {
     this.rdfPath = calcRdfPath();
-    java.util.Collection<ProjectCollection> collectionValues = this.collections.values();
+    java.util.Collection<ProjectCollection> collectionValues = this.allProjectCollections.values();
     for (ProjectCollection collection : collectionValues) {
       collection.buildRdfPath();
     }
@@ -291,10 +310,6 @@ public class Project {
       retJsonObject.put("id", id);
     if (rdfId != null)
       retJsonObject.put("rdfId", rdfId);
-    if (parentRdfId != null)
-      retJsonObject.put("parentRdfId", parentRdfId);
-    if (rdfPath != null)
-      retJsonObject.put("rdfPath", rdfPath);
     if (organizationRdfId != null)
       retJsonObject.put("organizationRdfId", organizationRdfId);
     if (type != null)
@@ -331,7 +346,7 @@ public class Project {
     }
     if (collections != null && ! collections.isEmpty()) {
       JSONArray jsonCollections = new JSONArray();
-      for (Iterator<ProjectCollection> iterator = collections.values().iterator(); iterator.hasNext();) {
+      for (Iterator<ProjectCollection> iterator = collections.iterator(); iterator.hasNext();) {
         ProjectCollection collection = iterator.next();
         jsonCollections.add(collection.toJsonObject());
       }

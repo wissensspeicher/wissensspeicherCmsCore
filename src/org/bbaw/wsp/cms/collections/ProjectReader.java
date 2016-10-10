@@ -672,6 +672,7 @@ public class ProjectReader {
       ArrayList<Project> projects = getProjects();
       for (int i=0; i<projects.size(); i++) {
         Project p = projects.get(i);
+        p.buildSubCollections();
         p.buildRdfPathes();
       }
     } catch (Exception e) {
@@ -738,7 +739,7 @@ public class ProjectReader {
       String homepageUrl = projectElem.select("foaf|homepage").attr("rdf:resource");
       if (homepageUrl != null && ! homepageUrl.isEmpty())
         project.setHomepageUrl(homepageUrl);
-      String temporalRdfId = projectElem.select("dcterms|temporal").attr("rdf:resource"); // TODO label aus normdata holen
+      String temporalRdfId = projectElem.select("dcterms|temporal").attr("rdf:resource"); 
       if (temporalRdfId != null && ! temporalRdfId.isEmpty())
         project.setTemporalRdfId(temporalRdfId);
       String parentRdfId = projectElem.select("dcterms|isPartOf").attr("rdf:resource");
@@ -779,7 +780,7 @@ public class ProjectReader {
         if (subject != null)
           project.addSubject(subjectRdfId, subject);
       }
-      String spatialRdfId = projectElem.select("dcterms|spatial").attr("rdf:resource");  // TODO label aus normdata holen
+      String spatialRdfId = projectElem.select("dcterms|spatial").attr("rdf:resource");
       if (spatialRdfId != null && ! spatialRdfId.isEmpty())
         project.setSpatialRdfId(spatialRdfId);
       Elements relatedElems = projectElem.select("dcterms|relation");
@@ -802,12 +803,10 @@ public class ProjectReader {
         String collRdfId = collectionElem.select("rdf|Description").attr("rdf:about");
         ProjectCollection collection = new ProjectCollection(projectRdfId);
         collection.setRdfId(collRdfId);
-        String collParentRdfId = collectionElem.select("ore|isAggregatedBy").attr("rdf:resource");
+        String collParentRdfId = collectionElem.select("ore|isAggregatedBy").attr("rdf:resource"); // collection parent
         if (collParentRdfId != null && ! collParentRdfId.isEmpty()) {
           collection.setParentRdfId(collParentRdfId);
-        } else {
-          collParentRdfId = projectElem.select("dcterms|isPartOf").attr("rdf:resource");
-        }
+        } 
         String collTypeRdfId = collectionElem.select("dcterms|type").attr("rdf:resource");
         if (collTypeRdfId != null && ! collTypeRdfId.isEmpty())
           collection.setTypeRdfId(collTypeRdfId);
@@ -935,6 +934,7 @@ public class ProjectReader {
       } else if (type.equals("xml")) {
         readProjectXmlFile(project, metadataProjectFile);
       }
+      project.buildSubCollections();
       project.buildRdfPathes();
     } catch (Exception e) {
       throw new ApplicationException(e);
