@@ -307,10 +307,16 @@ public class Project {
       retJsonObject.put("label", title);
     if (absstract != null)
       retJsonObject.put("abstract", absstract);
-    if (temporalRdfId != null)
-      retJsonObject.put("temporalRdfId", temporalRdfId);
-    if (spatialRdfId != null)
-      retJsonObject.put("spatialRdfId", spatialRdfId);
+    if (temporalRdfId != null) {
+      PeriodOfTime pot = ProjectReader.getInstance().getPeriodOfTime(temporalRdfId);
+      if (pot != null)
+        retJsonObject.put("periodOfTime", pot.toJsonObject());
+    }
+    if (spatialRdfId != null) {
+      Location location = ProjectReader.getInstance().getLocation(spatialRdfId);
+      if (location != null)
+        retJsonObject.put("location", location.toJsonObject());
+    }
     if (status != null)
       retJsonObject.put("status", status);
     if (mainLanguage != null)

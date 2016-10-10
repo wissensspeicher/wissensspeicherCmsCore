@@ -65,6 +65,8 @@ public class ProjectReader {
   private HashMap<String, Person> normdataPersons;
   private HashMap<String, Organization> normdataOrganizations;
   private HashMap<String, Subject> normdataSubjects;
+  private HashMap<String, Location> normdataLocations;
+  private HashMap<String, PeriodOfTime> normdataPeriodOfTime;
   private HashMap<String, Project> projects;  // key is id string and value is project
   private HashMap<String, Project> projectsByRdfId;  // key is projectRdfId string and value is project
   private HashMap<String, ProjectCollection> collections = new HashMap<String, ProjectCollection>();  // all project collections: key is collectionRdfId and value is collection
@@ -385,6 +387,14 @@ public class ProjectReader {
     return normdataSubjects.get(aboutId);
   }
   
+  public PeriodOfTime getPeriodOfTime(String aboutId) {
+    return normdataPeriodOfTime.get(aboutId);
+  }
+  
+  public Location getLocation(String aboutId) {
+    return normdataLocations.get(aboutId);
+  }
+  
   public ArrayList<String> getGlobalExcludes() {
     return globalExcludes;
   }
@@ -433,6 +443,8 @@ public class ProjectReader {
     readNormdataPersons();
     readNormdataOrganizations();
     readNormdataSubjects();
+    readNormdataLocations();
+    readNormdataPeriodOfTime();
   }
   
   private void readNormdataPersons() {
@@ -554,7 +566,69 @@ public class ProjectReader {
     }
   }
 
-	private void readMdsystemXmlFile() {
+  private void readNormdataLocations() {
+    normdataLocations = new HashMap<String, Location>();
+    String normdataFileName = Constants.getInstance().getMetadataDir() + "/normdata/wsp.normdata.locations.rdf";
+    File normdataFile = new File(normdataFileName);
+    try {
+      Document normdataFileDoc = Jsoup.parse(normdataFile, "utf-8");
+      Elements locationElems = normdataFileDoc.select("rdf|RDF > rdf|Description");
+      if (! locationElems.isEmpty()) {
+        for (int i=0; i< locationElems.size(); i++) {
+          Location location = new Location();
+          Element locationElem = locationElems.get(i);
+          String aboutId = locationElem.select("rdf|Description").attr("rdf:about");
+          location.setRdfId(aboutId);
+          String type = locationElem.select("rdf|Description > rdf|type").attr("rdf:resource");
+          if (type != null && ! type.isEmpty()) {
+            location.setType(type);
+          }
+          String label = locationElem.select("rdf|Description > rdfs|label[xml:lang=\"de\"]").text();
+          if (label != null && ! label.isEmpty()) {
+            location.setLabel(label);
+          }
+          String country = locationElem.select("rdf|Description > gn|countryCode").text();
+          if (country != null && ! country.isEmpty())
+            location.setCountry(country.toLowerCase());
+          normdataLocations.put(aboutId, location);
+        }
+      }
+    } catch (Exception e) {
+      LOGGER.error("Reading of: " + normdataFile + " failed");
+      e.printStackTrace();
+    }
+  }
+
+  private void readNormdataPeriodOfTime() {
+    normdataPeriodOfTime = new HashMap<String, PeriodOfTime>();
+    String normdataFileName = Constants.getInstance().getMetadataDir() + "/normdata/wsp.normdata.periodOfTime.rdf";
+    File normdataFile = new File(normdataFileName);
+    try {
+      Document normdataFileDoc = Jsoup.parse(normdataFile, "utf-8");
+      Elements potElems = normdataFileDoc.select("rdf|RDF > rdf|Description");
+      if (! potElems.isEmpty()) {
+        for (int i=0; i< potElems.size(); i++) {
+          PeriodOfTime pot = new PeriodOfTime();
+          Element potElem = potElems.get(i);
+          String aboutId = potElem.select("rdf|Description").attr("rdf:about");
+          pot.setRdfId(aboutId);
+          String label = potElem.select("rdf|Description > rdfs|label[xml:lang=\"de\"]").text();
+          if (label != null && ! label.isEmpty()) {
+            pot.setLabel(label);
+          }
+          String period = potElem.select("rdf|Description > dcterms|temporal").text();
+          if (period != null && ! period.isEmpty())
+            pot.setPeriod(period);
+          normdataPeriodOfTime.put(aboutId, pot);
+        }
+      }
+    } catch (Exception e) {
+      LOGGER.error("Reading of: " + normdataFile + " failed");
+      e.printStackTrace();
+    }
+  }
+
+  private void readMdsystemXmlFile() {
 	  URL mdsystemXmlFileUrl = null;
 	  try {
       String mdsystemXmlFileName = Constants.getInstance().getMdsystemConfFile();
