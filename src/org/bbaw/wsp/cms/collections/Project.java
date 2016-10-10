@@ -100,15 +100,7 @@ public class Project {
   }
   
   public ArrayList<ProjectCollection> getCollections() {
-    ArrayList<ProjectCollection> retCollections = new ArrayList<ProjectCollection>();
-    if (allProjectCollections != null) {
-      java.util.Collection<ProjectCollection> values = this.allProjectCollections.values();
-      for (ProjectCollection coll : values) {
-        retCollections.add(coll);
-      }
-    }
-    Collections.sort(retCollections, projectCollectionIdComparator);
-    return retCollections;
+    return collections;
   }
   
   public ArrayList<Person> getStaff() {
