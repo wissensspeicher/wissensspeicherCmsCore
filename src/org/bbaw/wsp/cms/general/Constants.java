@@ -174,8 +174,8 @@ public class Constants {
     return getIndexDir() + "/documents";
   }
 
-  public String getLuceneNodesDir() {
-    return getIndexDir() + "/nodes";
+  public String getLuceneProjectsDir() {
+    return getIndexDir() + "/projects";
   }
 
   public String getLuceneTaxonomyDir() {

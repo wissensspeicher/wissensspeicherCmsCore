@@ -103,9 +103,9 @@ public class IndexHandler {
   private static final String[] QUERY_EXPANSION_FIELDS_ALL_MORPH = {"author", "title", "description", "subject", "subjectControlled", "swd", "ddc", "entities", "persons", "places", "tokenMorph"};
   private HashMap<String, Integer> facetFieldCounts = new HashMap<String, Integer>();
   private IndexWriter documentsIndexWriter;
-  private IndexWriter nodesIndexWriter;
+  private IndexWriter projectsIndexWriter;
   private SearcherManager documentsSearcherManager;
-  private SearcherManager nodesSearcherManager;
+  private SearcherManager projectsSearcherManager;
   private DirectoryReader documentsIndexReader;
   private PerFieldAnalyzerWrapper documentsPerFieldAnalyzer;
   private PerFieldAnalyzerWrapper nodesPerFieldAnalyzer;
@@ -127,9 +127,9 @@ public class IndexHandler {
 
   public void init() throws ApplicationException {
     documentsIndexWriter = getDocumentsWriter();
-    nodesIndexWriter = getNodesWriter();
+    projectsIndexWriter = getProjectsWriter();
     documentsSearcherManager = getNewSearcherManager(documentsIndexWriter);
-    nodesSearcherManager = getNewSearcherManager(nodesIndexWriter);
+    projectsSearcherManager = getNewSearcherManager(projectsIndexWriter);
     documentsIndexReader = getDocumentsReader();
     taxonomyWriter = getTaxonomyWriter();
     taxonomyReader = getTaxonomyReader();
@@ -172,12 +172,12 @@ public class IndexHandler {
     try {
       taxonomyWriter.commit();
       documentsIndexWriter.commit();
-      nodesIndexWriter.commit();
+      projectsIndexWriter.commit();
     } catch (Exception e) {
       try {
         taxonomyWriter.rollback();
         documentsIndexWriter.rollback();
-        nodesIndexWriter.rollback();
+        projectsIndexWriter.rollback();
       } catch (Exception ex) {
         // nothing
       }
@@ -819,7 +819,6 @@ public class IndexHandler {
     try {
       Term termIdentifier = new Term("docId", docId);
       documentsIndexWriter.deleteDocuments(termIdentifier);
-      nodesIndexWriter.deleteDocuments(termIdentifier);
     } catch (Exception e) {
       LOGGER.error("deleteDocumentLocal: " + mdRecord.getDocId());
       throw new ApplicationException(e);
@@ -836,14 +835,6 @@ public class IndexHandler {
       ArrayList<org.bbaw.wsp.cms.document.Document> projectDocs = projectDocHits.getHits();
       if (projectDocs != null) {
         countDeletedDocs = projectDocHits.getSize();
-        // delete all nodes of each document in project
-        for (int i=0; i<projectDocs.size(); i++) {
-          org.bbaw.wsp.cms.document.Document doc = projectDocs.get(i);
-          IndexableField docIdField = doc.getField("docId");
-          String docId = docIdField.stringValue();
-          Term termDocId = new Term("docId", docId);
-          nodesIndexWriter.deleteDocuments(termDocId);
-        }
         // delete all documents in project
         if (projectId.equals("edoc")) {
           Term term = new Term("webUri", "*edoc.bbaw.de*");
@@ -1100,78 +1091,6 @@ public class IndexHandler {
     return facetConstraints;
   }
   
-  public Hits queryDocument(String docId, String queryStr, int from, int to) throws ApplicationException {
-    Hits hits = null;
-    IndexSearcher searcher = null;
-    MetadataRecord docMetadataRecord = getDocMetadata(docId);
-    if (docMetadataRecord == null)
-      return null;  // no document with that docId is in index
-    try {
-      makeNodesSearcherManagerUpToDate();
-      searcher = nodesSearcherManager.acquire();
-      String fieldNameDocId = "docId";
-      QueryParser queryParser1 = new QueryParser(fieldNameDocId, nodesPerFieldAnalyzer);
-      queryParser1.setAllowLeadingWildcard(true);
-      Query queryDocId = queryParser1.parse(docId);
-      String defaultQueryFieldName = "tokenOrig";
-      QueryParser queryParser2 = new QueryParser(defaultQueryFieldName, nodesPerFieldAnalyzer);
-      queryParser2.setAllowLeadingWildcard(true);
-      Query query = queryParser2.parse(queryStr);
-      String language = docMetadataRecord.getLanguage();
-      if (language == null || language.equals("")) {
-        String collectionRdfId = docMetadataRecord.getCollectionRdfId();
-        String collMainLang = ProjectReader.getInstance().getCollectionMainLanguage(collectionRdfId);
-        if (collMainLang != null)
-          language = collMainLang;
-      }
-      LanguageHandler languageHandler = new LanguageHandler();
-      Query morphQuery = buildMorphQuery(query, language, languageHandler);
-      BooleanQuery.Builder queryDocBuilder = new BooleanQuery.Builder();
-      queryDocBuilder.add(queryDocId, BooleanClause.Occur.MUST);
-      queryDocBuilder.add(morphQuery, BooleanClause.Occur.MUST);
-      BooleanQuery queryDoc = queryDocBuilder.build();
-      Sort sortByPosition = new Sort(new SortField("position", Type.INT));
-      TopDocs topDocs = searcher.search(queryDoc, 100000, sortByPosition);
-      topDocs.setMaxScore(1);
-      int toTmp = to;
-      if (topDocs.scoreDocs.length <= to)
-        toTmp = topDocs.scoreDocs.length - 1;
-      if (topDocs != null) {
-        ArrayList<org.bbaw.wsp.cms.document.Document>  docs = new ArrayList<org.bbaw.wsp.cms.document.Document>();
-        for (int i=from; i<=toTmp; i++) {
-          int docID = topDocs.scoreDocs[i].doc;
-          HashSet<String> nodeFields = getNodeFields();
-          Document luceneDoc = searcher.doc(docID, nodeFields);
-          org.bbaw.wsp.cms.document.Document doc = new org.bbaw.wsp.cms.document.Document(luceneDoc);
-          String pageNumber = "-1";
-          IndexableField fPageNumber = doc.getField("pageNumber");
-          if (fPageNumber != null) {
-            pageNumber = fPageNumber.stringValue();
-          }
-          if (! pageNumber.equals("0")) {
-            docs.add(doc);
-          }
-        }
-        if (docs != null) {
-          hits = new Hits(docs, from, to);
-          hits.setSize(topDocs.scoreDocs.length);
-        }
-      }
-    } catch (Exception e) {
-      throw new ApplicationException(e);
-    } finally {
-      try {
-        if (searcher != null)
-          documentsSearcherManager.release(searcher);
-      } catch (IOException e) {
-        // nothing
-      }
-    }
-    // Do not use searcher after this!
-    searcher = null;
-    return hits;
-  }
-
   public MetadataRecord getDocMetadata(String docId) throws ApplicationException {
     MetadataRecord mdRecord = null;
     Document doc = getDocument(docId);
@@ -1533,12 +1452,12 @@ public class IndexHandler {
         taxonomyWriter.close();
       if (documentsIndexWriter != null)
         documentsIndexWriter.close();
-      if (nodesIndexWriter != null)
-        nodesIndexWriter.close();
+      if (projectsIndexWriter != null)
+        projectsIndexWriter.close();
       if (documentsSearcherManager != null)
         documentsSearcherManager.close();
-      if (nodesSearcherManager != null)
-        nodesSearcherManager.close();
+      if (projectsSearcherManager != null)
+        projectsSearcherManager.close();
       if (documentsIndexReader != null)
         documentsIndexReader.close();
     } catch (IOException e) {
@@ -1550,8 +1469,8 @@ public class IndexHandler {
     try {
       if (documentsIndexWriter != null)
         documentsIndexWriter.forceMerge(1);
-      if (nodesIndexWriter != null)
-        nodesIndexWriter.forceMerge(1);
+      if (projectsIndexWriter != null)
+        projectsIndexWriter.forceMerge(1);
     } catch (IOException e) {
       throw new ApplicationException(e);
     }
@@ -2214,9 +2133,9 @@ public class IndexHandler {
     return writer;
   }
 
-  private IndexWriter getNodesWriter() throws ApplicationException {
+  private IndexWriter getProjectsWriter() throws ApplicationException {
     IndexWriter writer = null;
-    String luceneNodesDirectoryStr = Constants.getInstance().getLuceneNodesDir();
+    String luceneProjectsDirectoryStr = Constants.getInstance().getLuceneProjectsDir();
     try {
       Map<String, Analyzer> nodesFieldAnalyzers = new HashMap<String, Analyzer>();
       nodesFieldAnalyzers.put("docId", new KeywordAnalyzer());
@@ -2239,7 +2158,7 @@ public class IndexHandler {
       IndexWriterConfig conf = new IndexWriterConfig(nodesPerFieldAnalyzer);
       conf.setOpenMode(OpenMode.CREATE_OR_APPEND);
       conf.setRAMBufferSizeMB(300);  // 300 MB because some documents are big; 16 MB is default 
-      Path luceneNodesDirectory = Paths.get(luceneNodesDirectoryStr);
+      Path luceneNodesDirectory = Paths.get(luceneProjectsDirectoryStr);
       FSDirectory fsDirectory = FSDirectory.open(luceneNodesDirectory);
       writer = new IndexWriter(fsDirectory, conf);
       writer.commit();
@@ -2436,11 +2355,11 @@ public class IndexHandler {
     }
   }
 
-  private void makeNodesSearcherManagerUpToDate() throws ApplicationException {
+  private void makeProjectsSearcherManagerUpToDate() throws ApplicationException {
     try {
-      boolean isCurrent = nodesSearcherManager.isSearcherCurrent();
+      boolean isCurrent = projectsSearcherManager.isSearcherCurrent();
       if (!isCurrent) {
-        nodesSearcherManager.maybeRefresh();
+        projectsSearcherManager.maybeRefresh();
       }
     } catch (IOException e) {
       throw new ApplicationException(e);
