@@ -156,85 +156,6 @@ public class ProjectReader {
     return projects;
   }
 
-  public ArrayList<Project> findProjects(String query) {
-    Occur occur = BooleanClause.Occur.MUST;
-    String[] queryTerms = {};
-    if (query.contains("\" ")) {
-      ArrayList<String> queryTermsArrayList = new ArrayList<String>();
-      occur = BooleanClause.Occur.MUST;
-      Matcher matchFields = Pattern.compile("(\\S*:\".+?\"|\\S*:\\S*)\\s*").matcher(query); // matches fields (e.g. "title:Humboldt" or "title:"Alexander von Humboldt"") 
-      while (matchFields.find())
-        queryTermsArrayList.add(matchFields.group(1));
-      queryTerms = queryTermsArrayList.toArray(new String[queryTermsArrayList.size()]);
-    } else if (query.contains("\"|")) {
-      ArrayList<String> queryTermsArrayList = new ArrayList<String>();
-      occur = BooleanClause.Occur.SHOULD;
-      Matcher matchFields = Pattern.compile("(\\S*:\".+?\"|\\S*:\\S*)\\|*").matcher(query); // matches fields (e.g. "title:Humboldt" or "title:"Alexander von Humboldt"") 
-      while (matchFields.find())
-        queryTermsArrayList.add(matchFields.group(1));
-      queryTerms = queryTermsArrayList.toArray(new String[queryTermsArrayList.size()]);
-    } else if (query.contains(" ")) {
-      occur = BooleanClause.Occur.MUST;
-      queryTerms = query.split(" ");
-    } else if (query.contains("|")) {
-      occur = BooleanClause.Occur.SHOULD;
-      queryTerms = query.split("\\|");
-    }
-    BooleanQuery.Builder boolQueryBuilder = new BooleanQuery.Builder();
-    for (int i = 0; i < queryTerms.length; i++) {
-      String[] fieldQuery = queryTerms[i].split(":");
-      String fieldName = fieldQuery[0];
-      String fieldValue = fieldQuery[1];
-      TermQuery termQuery = new TermQuery(new Term(fieldName, fieldValue));
-      boolQueryBuilder.add(termQuery, occur);
-    }
-    BooleanQuery booleanQuery = boolQueryBuilder.build();
-    return findProjects(booleanQuery);
-  }
-  
-  private ArrayList<Project> findProjects(BooleanQuery booleanQuery) {
-    ArrayList<Project> projects = new ArrayList<Project>();
-    java.util.Collection<Project> projectValues = this.projects.values();
-    for (Project project : projectValues) {
-      List<BooleanClause> clauses = booleanQuery.clauses();
-      boolean matchProject = false;
-      for (int i=0; i<clauses.size(); i++) {
-        BooleanClause clause = clauses.get(i);
-        Query clauseQuery = clause.getQuery();
-        Occur occurence = clause.getOccur(); // "should" or "must"
-        if (clauseQuery instanceof TermQuery) {
-          TermQuery termQuery = (TermQuery) clauseQuery;
-          String fieldName = termQuery.getTerm().field();
-          String projectFieldValue = "";
-          if (fieldName.equals("title")) 
-            projectFieldValue = project.getTitle();
-          else if (fieldName.equals("abstract"))
-            projectFieldValue = project.getAbstract();
-          String termQueryStr = termQuery.getTerm().text();
-          termQueryStr = termQueryStr.replaceAll("\\*", ".*");
-          termQueryStr = termQueryStr.replaceAll("\\?", ".");
-          termQueryStr = termQueryStr.replaceAll("\"", "");
-          String regExpr = ".*" + termQueryStr + ".*";
-          boolean match = projectFieldValue.matches(regExpr); 
-          if (! match && occurence == BooleanClause.Occur.MUST) {
-            matchProject = false;
-            break;
-          }
-          if (match && occurence == BooleanClause.Occur.SHOULD) {
-            matchProject = true;
-            break;
-          }
-          if (match && occurence == BooleanClause.Occur.MUST)
-            matchProject = true;
-        }
-      }
-      if (matchProject)
-        projects.add(project);
-    }
-    Collections.sort(projects, projectIdComparator);
-    return projects;
-  }
-
   public ArrayList<Organization> getOrganizations() {
     ArrayList<Organization> organizations = new ArrayList<Organization>();
     java.util.Collection<Organization> organizationValues = this.normdataOrganizations.values();
@@ -1004,5 +925,86 @@ public class ProjectReader {
     String projectFilePath = path + fileName;
     return projectFilePath;
   }
+
+  // TODO old hack code: delete if queryProjects in Servlet ProjectReader works
+  private ArrayList<Project> findProjects(String query) {
+    Occur occur = BooleanClause.Occur.MUST;
+    String[] queryTerms = {};
+    if (query.contains("\" ")) {
+      ArrayList<String> queryTermsArrayList = new ArrayList<String>();
+      occur = BooleanClause.Occur.MUST;
+      Matcher matchFields = Pattern.compile("(\\S*:\".+?\"|\\S*:\\S*)\\s*").matcher(query); // matches fields (e.g. "title:Humboldt" or "title:"Alexander von Humboldt"") 
+      while (matchFields.find())
+        queryTermsArrayList.add(matchFields.group(1));
+      queryTerms = queryTermsArrayList.toArray(new String[queryTermsArrayList.size()]);
+    } else if (query.contains("\"|")) {
+      ArrayList<String> queryTermsArrayList = new ArrayList<String>();
+      occur = BooleanClause.Occur.SHOULD;
+      Matcher matchFields = Pattern.compile("(\\S*:\".+?\"|\\S*:\\S*)\\|*").matcher(query); // matches fields (e.g. "title:Humboldt" or "title:"Alexander von Humboldt"") 
+      while (matchFields.find())
+        queryTermsArrayList.add(matchFields.group(1));
+      queryTerms = queryTermsArrayList.toArray(new String[queryTermsArrayList.size()]);
+    } else if (query.contains(" ")) {
+      occur = BooleanClause.Occur.MUST;
+      queryTerms = query.split(" ");
+    } else if (query.contains("|")) {
+      occur = BooleanClause.Occur.SHOULD;
+      queryTerms = query.split("\\|");
+    }
+    BooleanQuery.Builder boolQueryBuilder = new BooleanQuery.Builder();
+    for (int i = 0; i < queryTerms.length; i++) {
+      String[] fieldQuery = queryTerms[i].split(":");
+      String fieldName = fieldQuery[0];
+      String fieldValue = fieldQuery[1];
+      TermQuery termQuery = new TermQuery(new Term(fieldName, fieldValue));
+      boolQueryBuilder.add(termQuery, occur);
+    }
+    BooleanQuery booleanQuery = boolQueryBuilder.build();
+    return findProjects(booleanQuery);
+  }
   
+  // TODO old hack code: delete if queryProjects in Servlet ProjectReader works
+  private ArrayList<Project> findProjects(BooleanQuery booleanQuery) {
+    ArrayList<Project> projects = new ArrayList<Project>();
+    java.util.Collection<Project> projectValues = this.projects.values();
+    for (Project project : projectValues) {
+      List<BooleanClause> clauses = booleanQuery.clauses();
+      boolean matchProject = false;
+      for (int i=0; i<clauses.size(); i++) {
+        BooleanClause clause = clauses.get(i);
+        Query clauseQuery = clause.getQuery();
+        Occur occurence = clause.getOccur(); // "should" or "must"
+        if (clauseQuery instanceof TermQuery) {
+          TermQuery termQuery = (TermQuery) clauseQuery;
+          String fieldName = termQuery.getTerm().field();
+          String projectFieldValue = "";
+          if (fieldName.equals("title")) 
+            projectFieldValue = project.getTitle();
+          else if (fieldName.equals("abstract"))
+            projectFieldValue = project.getAbstract();
+          String termQueryStr = termQuery.getTerm().text();
+          termQueryStr = termQueryStr.replaceAll("\\*", ".*");
+          termQueryStr = termQueryStr.replaceAll("\\?", ".");
+          termQueryStr = termQueryStr.replaceAll("\"", "");
+          String regExpr = ".*" + termQueryStr + ".*";
+          boolean match = projectFieldValue.matches(regExpr); 
+          if (! match && occurence == BooleanClause.Occur.MUST) {
+            matchProject = false;
+            break;
+          }
+          if (match && occurence == BooleanClause.Occur.SHOULD) {
+            matchProject = true;
+            break;
+          }
+          if (match && occurence == BooleanClause.Occur.MUST)
+            matchProject = true;
+        }
+      }
+      if (matchProject)
+        projects.add(project);
+    }
+    Collections.sort(projects, projectIdComparator);
+    return projects;
+  }
+
 }
