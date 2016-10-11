@@ -15,6 +15,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.bbaw.wsp.cms.document.MetadataRecord;
 import org.bbaw.wsp.cms.general.Constants;
+import org.bbaw.wsp.cms.lucene.IndexHandler;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -64,6 +65,8 @@ public class ProjectManager {
           pm.index(projects, options);
         } else if (operation.equals("delete") && projects != null) {
           pm.delete(projects);
+        } else if (operation.equals("indexProjects")) {
+          pm.indexProjects();
         } else if (operation.equals("updateCycle")) {
           pm.updateCycle();
         } else if (operation.equals("createBaseProjects")) {
@@ -116,6 +119,12 @@ public class ProjectManager {
     }
   }
 
+  public void indexProjects() throws ApplicationException {
+    ArrayList<Project> projects = projectReader.getProjects();
+    IndexHandler.getInstance().indexProjects(projects);  
+    LOGGER.info("Index " + projects.size() + " projects successfully into data directory " + Constants.getInstance().getLuceneProjectsDir());
+  }
+  
   public ArrayList<Project> getProjects(String projectIdsStr) {
     ArrayList<Project> projects = null;
     if (projectIdsStr != null) {

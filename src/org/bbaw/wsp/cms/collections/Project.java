@@ -14,11 +14,6 @@ import org.json.simple.JSONObject;
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 
 public class Project {
-  public static Comparator<ProjectCollection> projectCollectionIdComparator = new Comparator<ProjectCollection>() {
-    public int compare(ProjectCollection p1, ProjectCollection p2) {
-      return p1.getId().compareTo(p2.getId());
-    }
-  };
   public static Comparator<Person> personNameComparator = new Comparator<Person>() {
     public int compare(Person p1, Person p2) {
       return p1.getName().compareTo(p2.getName());
@@ -101,6 +96,18 @@ public class Project {
   
   public ArrayList<ProjectCollection> getCollections() {
     return collections;
+  }
+  
+  public ArrayList<ProjectCollection> getAllCollections() {
+    ArrayList<ProjectCollection> retCollections = null;
+    if (allProjectCollections != null && ! allProjectCollections.isEmpty()) {
+      retCollections = new ArrayList<ProjectCollection>();
+      java.util.Collection<ProjectCollection> values = this.allProjectCollections.values();
+      for (ProjectCollection collection : values) {
+        retCollections.add(collection);
+      }
+    }
+    return retCollections;
   }
   
   public ArrayList<Person> getStaff() {

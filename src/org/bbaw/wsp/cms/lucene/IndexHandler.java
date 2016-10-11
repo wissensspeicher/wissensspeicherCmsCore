@@ -74,7 +74,10 @@ import org.apache.lucene.search.vectorhighlight.FieldQuery;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.BytesRef;
+import org.bbaw.wsp.cms.collections.Project;
+import org.bbaw.wsp.cms.collections.ProjectCollection;
 import org.bbaw.wsp.cms.collections.ProjectReader;
+import org.bbaw.wsp.cms.collections.Subject;
 import org.bbaw.wsp.cms.document.DBpediaResource;
 import org.bbaw.wsp.cms.document.Facets;
 import org.bbaw.wsp.cms.document.Hits;
@@ -101,12 +104,15 @@ public class IndexHandler {
   private static Logger LOGGER = Logger.getLogger(IndexHandler.class);
   private static final String[] QUERY_EXPANSION_FIELDS_ALL = {"author", "title", "description", "subject", "subjectControlled", "swd", "ddc", "entities", "persons", "places", "tokenOrig"};
   private static final String[] QUERY_EXPANSION_FIELDS_ALL_MORPH = {"author", "title", "description", "subject", "subjectControlled", "swd", "ddc", "entities", "persons", "places", "tokenMorph"};
+  private static final String[] QUERY_EXPANSION_FIELDS_PROJECTS_ALL = {"label", "abstract", "subjects", "staffNames", "collectionLabels", "collectionAbstracts"};
+  private static final String[] QUERY_EXPANSION_FIELDS_PROJECTS_ALL_MORPH = {"label", "abstract", "subjects", "staffNames", "collectionLabels", "collectionAbstracts"};
   private HashMap<String, Integer> facetFieldCounts = new HashMap<String, Integer>();
   private IndexWriter documentsIndexWriter;
   private IndexWriter projectsIndexWriter;
   private SearcherManager documentsSearcherManager;
   private SearcherManager projectsSearcherManager;
   private DirectoryReader documentsIndexReader;
+  private DirectoryReader projectsIndexReader;
   private PerFieldAnalyzerWrapper documentsPerFieldAnalyzer;
   private PerFieldAnalyzerWrapper projectsPerFieldAnalyzer;
   private ArrayList<Token> tokens; // all tokens in tokenOrig
@@ -131,6 +137,7 @@ public class IndexHandler {
     documentsSearcherManager = getNewSearcherManager(documentsIndexWriter);
     projectsSearcherManager = getNewSearcherManager(projectsIndexWriter);
     documentsIndexReader = getDocumentsReader();
+    projectsIndexReader = getProjectsReader();
     taxonomyWriter = getTaxonomyWriter();
     taxonomyReader = getTaxonomyReader();
     xQueryEvaluator = new XQueryEvaluator();
@@ -187,7 +194,7 @@ public class IndexHandler {
   
   public void indexDocument(MetadataRecord mdRecord) throws ApplicationException {
     commitCounter++;
-    // first delete document in documentsIndex and nodesIndex
+    // first delete document in documentsIndex
     deleteDocumentLocal(mdRecord);
     indexDocumentLocal(mdRecord);
     // performance gain (each commit needs at least ca. 60 ms extra): a commit is only done if commitInterval (e.g. 500) is reached 
@@ -197,6 +204,97 @@ public class IndexHandler {
     }
   }
 
+  public void indexProjects(ArrayList<Project> projects) throws ApplicationException {
+    deleteAllProjectsLocal();
+    commit();
+    for (int i=0; i<projects.size(); i++) {
+      Project project = projects.get(i);
+      indexProjectLocal(project);
+    }
+    commit();
+  }
+
+  private void indexProjectLocal(Project project) throws ApplicationException {
+    try {
+      Document doc = new Document();
+      FieldType ftStoredAnalyzed = new FieldType();
+      ftStoredAnalyzed.setStored(true);
+      ftStoredAnalyzed.setIndexOptions(IndexOptions.DOCS_AND_FREQS_AND_POSITIONS_AND_OFFSETS);
+      ftStoredAnalyzed.setTokenized(true);
+      ftStoredAnalyzed.setStoreTermVectors(true);
+      ftStoredAnalyzed.setStoreTermVectorOffsets(true);
+      ftStoredAnalyzed.setStoreTermVectorPositions(true);
+      ftStoredAnalyzed.setStoreTermVectorPayloads(true);
+      String id = project.getId();
+      if (id != null) { 
+        Field field = new Field("id", id, ftStoredAnalyzed);
+        doc.add(field);
+      }
+      String rdfId = project.getRdfId();
+      if (rdfId != null) {
+        Field field = new Field("rdfId", rdfId, ftStoredAnalyzed); 
+        doc.add(field);
+      }
+      String label = project.getTitle();
+      if (label != null) {
+        Field field = new Field("label", label, ftStoredAnalyzed); 
+        doc.add(field);
+      }
+      String absstract = project.getAbstract();
+      if (absstract != null) {
+        Field field = new Field("abstract", absstract, ftStoredAnalyzed); 
+        doc.add(field);
+      }
+      ArrayList<Subject> subjects = project.getSubjects();
+      if (subjects != null) {
+        String subjectsStr = "";
+        for (int i=0; i<subjects.size(); i++) {
+          Subject subject = subjects.get(i);
+          String subjectName = subject.getName();
+          if (subjectName != null && ! subjectName.isEmpty())
+            subjectsStr = subjectsStr + " " + subjectName;
+        }
+        Field field = new Field("subjects", subjectsStr, ftStoredAnalyzed); 
+        doc.add(field);
+      }
+      ArrayList<Person> staff = project.getStaff();
+      if (staff != null) {
+        String staffNames = "";
+        for (int i=0; i<staff.size(); i++) {
+          Person person = staff.get(i);
+          String staffName = person.getName();
+          if (staffName != null && ! staffName.isEmpty())
+            staffNames = staffNames + " " + staffName;
+        }
+        Field field = new Field("staffNames", staffNames, ftStoredAnalyzed); 
+        doc.add(field);
+      }
+      ArrayList<ProjectCollection> collections = project.getAllCollections();
+      if (collections != null) {
+        String collectionLabels = "";
+        String collectionAbstracts = "";
+        for (int i=0; i<collections.size(); i++) {
+          ProjectCollection collection = collections.get(i);
+          String collectionLabel = collection.getTitle();
+          if (collectionLabel != null && ! collectionLabel.isEmpty())
+            collectionLabels = collectionLabels + " " + collectionLabel;
+          String collectionAbstract = collection.getAbsstract();
+          if (collectionAbstract != null && ! collectionAbstract.isEmpty())
+            collectionAbstracts = collectionAbstracts + " " + collectionAbstract;
+        }
+        Field field1 = new Field("collectionLabels", collectionLabels, ftStoredAnalyzed); 
+        doc.add(field1);
+        Field field2 = new Field("collectionAbstracts", collectionAbstracts, ftStoredAnalyzed); 
+        doc.add(field2);
+      }
+      projectsIndexWriter.addDocument(doc);
+    } catch (Exception e) {
+      LOGGER.error("indexProjectLocal: " + project.getRdfId());
+      e.printStackTrace();
+      throw new ApplicationException(e);
+    }
+  }
+      
   private void indexDocumentLocal(MetadataRecord mdRecord) throws ApplicationException {
     try {
       Document doc = new Document();
@@ -736,6 +834,14 @@ public class IndexHandler {
     }
   }
 
+  private void deleteAllProjectsLocal() throws ApplicationException {
+    try {
+      projectsIndexWriter.deleteAll();
+    } catch (Exception e) {
+      throw new ApplicationException(e);
+    }
+  }
+
   public int deleteProject(String projectId) throws ApplicationException {
     int countDeletedDocs = -1;
     try {
@@ -820,7 +926,7 @@ public class IndexHandler {
           queryStr = translateGoogleLikeQueryToLucene(queryStr);
         }
         facetConstraints = getFacetConstraints(queryStr);
-        query = buildFieldExpandedQuery(queryParser, queryStr, fieldExpansion);
+        query = buildFieldExpandedQuery("docs", queryParser, queryStr, fieldExpansion);
       }
       LanguageHandler languageHandler = new LanguageHandler();
       if (translate) {
@@ -833,7 +939,7 @@ public class IndexHandler {
       SortField scoreSortField = new SortField(null, Type.SCORE); // default sort
       sort.setSort(scoreSortField);
       if (sortFieldNames != null) {
-        sort = buildSort(sortFieldNames, "doc");  // build sort criteria
+        sort = buildSort(sortFieldNames);  // build sort criteria
       }
       FacetsCollector facetsCollector = new FacetsCollector(true);
       TopDocs resultDocs = FacetsCollector.search(searcher, morphQuery, to + 1, sort, true, true, facetsCollector);
@@ -886,31 +992,6 @@ public class IndexHandler {
             if (! hitFragments.isEmpty())
               doc.setHitFragments(hitFragments);
           }
-          /*
-           * only needed when indexing works also on xml document nodes 
-          // if xml document: try to add pageNumber to resulting doc
-          DocumentHandler docHandler = new DocumentHandler();
-          Fieldable docIdField = luceneDoc.getFieldable("docId");
-          if (docIdField != null) {
-            String docId = docIdField.stringValue();
-            boolean docIsXml = docHandler.isDocXml(docId);
-            if (docIsXml && ! queryStr.equals("*")) {
-              Hits firstHit = queryDocument(docId, queryStr, 0, 0);
-              if (firstHit != null && firstHit.getSize() > 0) {
-                ArrayList<org.bbaw.wsp.cms.document.Document> firstHitHits = firstHit.getHits();
-                if (firstHitHits != null && firstHitHits.size() > 0) {
-                  org.bbaw.wsp.cms.document.Document firstHitDoc = firstHitHits.get(0);
-                  Document firstHitLuceneDoc = firstHitDoc.getDocument();
-                  Fieldable pageNumberField = firstHitLuceneDoc.getFieldable("pageNumber");
-                  if (pageNumberField != null) {
-                    String pageNumber = pageNumberField.stringValue();
-                    doc.setFirstHitPageNumber(pageNumber);
-                  }
-                }
-              }
-            }
-          }
-          */
           docs.add(doc);
           scores.add(score);
         }
@@ -976,6 +1057,99 @@ public class IndexHandler {
       try {
         if (searcher != null)
           documentsSearcherManager.release(searcher);
+      } catch (IOException e) {
+        // nothing
+      }
+    }
+    // Do not use searcher after this!
+    searcher = null;
+    return hits;
+  }
+
+  public Hits queryProjects(String queryLanguage, String queryStr, String[] sortFieldNames, String fieldExpansion, String language, int from, int to, boolean translate) throws ApplicationException {
+    Hits hits = null;
+    IndexSearcher searcher = null;
+    try {
+      makeProjectsSearcherManagerUpToDate();
+      searcher = projectsSearcherManager.acquire();
+      String defaultQueryFieldName = "label";
+      QueryParser queryParser = new QueryParser(defaultQueryFieldName, projectsPerFieldAnalyzer);
+      queryParser.setAllowLeadingWildcard(true);
+      Query query = null;
+      if (queryStr.equals("*")) {
+        query = new MatchAllDocsQuery();
+      } else {
+        if (queryLanguage != null && queryLanguage.equals("gl")) {
+          queryStr = translateGoogleLikeQueryToLucene(queryStr);
+        }
+        query = buildFieldExpandedQuery("projects", queryParser, queryStr, fieldExpansion);
+      }
+      LanguageHandler languageHandler = new LanguageHandler();
+      if (translate) {
+        ArrayList<String> queryTerms = fetchTerms(query);
+        languageHandler.translate(queryTerms, language);
+      }
+      Query morphQuery = buildMorphQuery(query, language, false, translate, languageHandler);
+      Sort sort = new Sort();
+      SortField scoreSortField = new SortField(null, Type.SCORE); // default sort
+      sort.setSort(scoreSortField);
+      if (sortFieldNames != null) {
+        sort = buildSort(sortFieldNames);  // build sort criteria
+      }
+      FacetsCollector facetsCollector = new FacetsCollector(true);
+      TopDocs resultDocs = FacetsCollector.search(searcher, morphQuery, to + 1, sort, true, true, facetsCollector);
+      FacetsConfig facetsConfig = new FacetsConfig();
+      FastTaxonomyFacetCounts facetCounts = new FastTaxonomyFacetCounts(taxonomyReader, facetsConfig, facetsCollector);
+      List<FacetResult> tmpFacetResult = new ArrayList<FacetResult>();
+      String[] facetsStr = {"id", "rdfId"};
+      for (int f=0; f<facetsStr.length; f++) {
+        String facetStr = facetsStr[f];
+        Integer facetFieldCount = 1000;
+        Integer tmpFacetFieldCount = facetFieldCounts.get(facetStr);
+        if (tmpFacetFieldCount != null)
+          facetFieldCount = tmpFacetFieldCount;
+        FacetResult facetResult = facetCounts.getTopChildren(facetFieldCount, facetStr);
+        if (facetResult != null)
+          tmpFacetResult.add(facetResult);
+      }
+      Facets facets = null;
+      if (! tmpFacetResult.isEmpty()) {
+        facets = new Facets(tmpFacetResult, null);
+      }
+      int toTmp = to;
+      if (resultDocs.totalHits <= to)
+        toTmp = resultDocs.totalHits - 1;
+      HashSet<String> projectFields = getProjectFields();
+      if (resultDocs != null) {
+        ArrayList<org.bbaw.wsp.cms.document.Document> docs = new ArrayList<org.bbaw.wsp.cms.document.Document>();
+        ArrayList<Float> scores = new ArrayList<Float>();
+        for (int i=from; i<=toTmp; i++) { 
+          int docID = resultDocs.scoreDocs[i].doc;
+          float score = resultDocs.scoreDocs[i].score;
+          Document luceneDoc = searcher.doc(docID, projectFields);
+          org.bbaw.wsp.cms.document.Document doc = new org.bbaw.wsp.cms.document.Document(luceneDoc);
+          docs.add(doc);
+          scores.add(score);
+        }
+        int sizeTotalDocuments = projectsIndexReader.numDocs();
+        if (docs != null) {
+          hits = new Hits(docs, from, to);
+          hits.setMaxScore(resultDocs.getMaxScore());
+          hits.setScores(scores);
+          hits.setSize(resultDocs.totalHits);
+          hits.setSizeTotalDocuments(sizeTotalDocuments);
+          hits.setQuery(morphQuery);
+          hits.setFacets(facets);
+        }
+      }
+    } catch (Exception e) {
+      LOGGER.error("Lucene IndexHandler: queryProjects: " + e.getMessage());
+      e.printStackTrace();
+      throw new ApplicationException(e);
+    } finally {
+      try {
+        if (searcher != null)
+          projectsSearcherManager.release(searcher);
       } catch (IOException e) {
         // nothing
       }
@@ -1417,7 +1591,7 @@ public class IndexHandler {
     return luceneQueryStr;
   }
   
-  private Query buildFieldExpandedQuery(QueryParser queryParser, String queryStr, String fieldExpansion) throws ApplicationException {
+  private Query buildFieldExpandedQuery(String type, QueryParser queryParser, String queryStr, String fieldExpansion) throws ApplicationException {
     Query retQuery = null;
     if (fieldExpansion == null)
       fieldExpansion = "none";
@@ -1429,27 +1603,25 @@ public class IndexHandler {
       return query;
     */
     try {
-      if (fieldExpansion.equals("all")) {
-        BooleanQuery.Builder boolQueryBuilder = new BooleanQuery.Builder();
-        for (int i=0; i < QUERY_EXPANSION_FIELDS_ALL.length; i++) {
-          String expansionField = QUERY_EXPANSION_FIELDS_ALL[i];  // e.g. "author"
-          String expansionFieldQueryStr = expansionField + ":(" + queryStr + ")";
-          Query q = queryParser.parse(expansionFieldQueryStr);
-          boolQueryBuilder.add(q, BooleanClause.Occur.SHOULD);
-        }
-        retQuery = boolQueryBuilder.build();
-      } else if (fieldExpansion.equals("allMorph")) {
-        BooleanQuery.Builder boolQueryBuilder = new BooleanQuery.Builder();
-        for (int i=0; i < QUERY_EXPANSION_FIELDS_ALL_MORPH.length; i++) {
-          String expansionField = QUERY_EXPANSION_FIELDS_ALL_MORPH[i];  // e.g. "author"
-          String expansionFieldQueryStr = expansionField + ":(" + queryStr + ")";
-          Query q = queryParser.parse(expansionFieldQueryStr);
-          boolQueryBuilder.add(q, BooleanClause.Occur.SHOULD);
-        }
-        retQuery = boolQueryBuilder.build();
-      } else if (fieldExpansion.equals("none")) {
+      String[] queryExpansionFields = QUERY_EXPANSION_FIELDS_ALL;
+      if (type.equals("docs") && fieldExpansion.equals("allMorph"))
+        queryExpansionFields = QUERY_EXPANSION_FIELDS_ALL_MORPH;
+      else if (type.equals("projects") && fieldExpansion.equals("all"))
+        queryExpansionFields = QUERY_EXPANSION_FIELDS_PROJECTS_ALL;
+      else if (type.equals("projects") && fieldExpansion.equals("allMorph"))
+        queryExpansionFields = QUERY_EXPANSION_FIELDS_PROJECTS_ALL_MORPH;
+      if (fieldExpansion.equals("none")) {
         Query q = queryParser.parse(queryStr);
         retQuery = q;
+      } else {
+        BooleanQuery.Builder boolQueryBuilder = new BooleanQuery.Builder();
+        for (int i=0; i < queryExpansionFields.length; i++) {
+          String expansionField = queryExpansionFields[i];  // e.g. "author"
+          String expansionFieldQueryStr = expansionField + ":(" + queryStr + ")";
+          Query q = queryParser.parse(expansionFieldQueryStr);
+          boolQueryBuilder.add(q, BooleanClause.Occur.SHOULD);
+        }
+        retQuery = boolQueryBuilder.build();
       }
     } catch (ParseException e) {
       throw new ApplicationException(e);
@@ -2038,14 +2210,12 @@ public class IndexHandler {
     return writer;
   }
 
-  private Sort buildSort(String[] sortFieldNames, String type) {
+  private Sort buildSort(String[] sortFieldNames) {
     Sort sort = new Sort();
     ArrayList<SortField> sortFields = new ArrayList<SortField>();
     for (int i=0; i<sortFieldNames.length; i++) {
       String sortFieldName = sortFieldNames[i];
       Type sortFieldType = getDocSortFieldType(sortFieldName);
-      if (type.equals("node"))
-        sortFieldType = getNodeSortFieldType(sortFieldName);
       String realSortFieldName = getDocSortFieldName(sortFieldName);
       SortField sortField = new SortField(realSortFieldName, sortFieldType);
       sortFields.add(sortField);
@@ -2078,13 +2248,6 @@ public class IndexHandler {
     return type;
   }
   
-  private Type getNodeSortFieldType(String fieldName) {
-    Type type = Type.STRING;
-    if (fieldName.equals("pageNumber") || fieldName.equals("lineNumber") || fieldName.equals("elementDocPosition")) 
-      type = Type.INT;
-    return type;
-  }
-
   private HashSet<String> getDocFields() {
     HashSet<String> fields = new HashSet<String>();
     fields.add("id");
@@ -2162,6 +2325,19 @@ public class IndexHandler {
     Path luceneDocsDirectory = Paths.get(luceneDocsDirectoryStr);
     try {
       FSDirectory fsDirectory = FSDirectory.open(luceneDocsDirectory);
+      reader = DirectoryReader.open(fsDirectory);
+    } catch (IOException e) {
+      throw new ApplicationException(e);
+    }
+    return reader;
+  }
+
+  private DirectoryReader getProjectsReader() throws ApplicationException {
+    DirectoryReader reader = null;
+    String luceneProjectsDirectoryStr = Constants.getInstance().getLuceneProjectsDir();
+    Path luceneProjectsDirectory = Paths.get(luceneProjectsDirectoryStr);
+    try {
+      FSDirectory fsDirectory = FSDirectory.open(luceneProjectsDirectory);
       reader = DirectoryReader.open(fsDirectory);
     } catch (IOException e) {
       throw new ApplicationException(e);

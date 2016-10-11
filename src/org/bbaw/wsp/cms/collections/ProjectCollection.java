@@ -13,7 +13,6 @@ import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 
 public class ProjectCollection {
   private static Logger LOGGER = Logger.getLogger(ProjectReader.class);
-  private String id;
   private String rdfId;
   private String projectRdfId; // rdfId of project
   private String parentRdfId; // rdfId of parent collection
@@ -104,14 +103,6 @@ public class ProjectCollection {
     return collectionRdfPath;
   }
   
-  public String getId() {
-    return id;
-  }
-
-  public void setId(String id) {
-    this.id = id;
-  }
-  
   public String getRdfId() {
     return rdfId;
   }
@@ -200,8 +191,6 @@ public class ProjectCollection {
   
   public JSONObject toJsonObject() throws ApplicationException {
     JSONObject retJsonObject = new JSONObject();
-    if (id != null)
-      retJsonObject.put("id", id);
     if (rdfId != null)
       retJsonObject.put("rdfId", rdfId);
     if (homepageUrl != null)
