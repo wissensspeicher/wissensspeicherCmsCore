@@ -108,7 +108,7 @@ public class IndexHandler {
   private SearcherManager projectsSearcherManager;
   private DirectoryReader documentsIndexReader;
   private PerFieldAnalyzerWrapper documentsPerFieldAnalyzer;
-  private PerFieldAnalyzerWrapper nodesPerFieldAnalyzer;
+  private PerFieldAnalyzerWrapper projectsPerFieldAnalyzer;
   private ArrayList<Token> tokens; // all tokens in tokenOrig
   private TSTLookup suggester;
   private TaxonomyWriter taxonomyWriter;
@@ -689,7 +689,6 @@ public class IndexHandler {
         Field webUriField = new Field("webUri", webUri, ftStoredAnalyzed);
         doc.add(webUriField);
       }
-
       // facet creation
       FacetsConfig facetsConfig = new FacetsConfig();
       facetsConfig.setMultiValued("author", true);
@@ -705,94 +704,6 @@ public class IndexHandler {
 
       documentsIndexWriter.addDocument(docWithFacets);
       
-      // to save Lucene disk space and to gain performance the document nodes index is set off:
-      /* 
-      DocumentHandler docHandler = new DocumentHandler();
-      boolean docIsXml = docHandler.isDocXml(docId);
-      if (docIsXml) {
-        // add all elements with the specified names of the document to nodesIndex
-        ArrayList<XmlTokenizerContentHandler.Element> xmlElements = mdRecord.getXmlElements();
-        if (xmlElements != null) {
-          for (int i = 0; i < xmlElements.size(); i++) {
-            XmlTokenizerContentHandler.Element element = xmlElements.get(i);
-            Document nodeDoc = new Document();
-            nodeDoc.add(docIdField);
-            String nodeLanguage = element.lang;
-            if (nodeLanguage == null)
-              nodeLanguage = language;
-            String nodePageNumber = String.valueOf(element.pageNumber);
-            String nodeLineNumber = String.valueOf(element.lineNumber);
-            String nodeElementName = String.valueOf(element.name);
-            String nodeElementDocPosition = String.valueOf(element.docPosition);
-            String nodeElementAbsolutePosition = String.valueOf(element.position);
-            String nodeElementPagePosition = String.valueOf(element.pagePosition);
-            String nodeElementPosition = String.valueOf(element.elemPosition);
-            String nodeXmlId = element.xmlId;
-            String nodeXpath = element.xpath;
-            String nodeXmlContent = element.toXmlString();
-            String nodeTokensOrig = element.getTokensStr("orig");
-            String nodeTokensReg = element.getTokensStr("reg");
-            String nodeTokensNorm = element.getTokensStr("norm");
-            String nodeTokensMorph = element.getTokensStr("morph");
-            if (nodeLanguage != null) {
-              Field nodeLanguageField = new Field("language", nodeLanguage, Field.Store.YES, Field.Index.ANALYZED);
-              nodeDoc.add(nodeLanguageField);
-            }
-            Field nodePageNumberField = new Field("pageNumber", nodePageNumber, Field.Store.YES, Field.Index.ANALYZED);
-            nodeDoc.add(nodePageNumberField);
-            Field nodeLineNumberField = new Field("lineNumber", nodeLineNumber, Field.Store.YES, Field.Index.ANALYZED);
-            nodeDoc.add(nodeLineNumberField);
-            Field nodeElementNameField = new Field("elementName", nodeElementName, Field.Store.YES, Field.Index.ANALYZED);
-            nodeDoc.add(nodeElementNameField);
-            Field nodeElementDocPositionField = new Field("elementDocPosition", nodeElementDocPosition, Field.Store.YES, Field.Index.ANALYZED);
-            nodeDoc.add(nodeElementDocPositionField);
-            Field nodeElementDocPositionFieldSorted = new Field("elementDocPositionSorted", nodeElementDocPosition, Field.Store.YES, Field.Index.NOT_ANALYZED);
-            nodeDoc.add(nodeElementDocPositionFieldSorted);
-            Field nodeElementAbsolutePositionField = new Field("elementAbsolutePosition", nodeElementAbsolutePosition, Field.Store.YES, Field.Index.ANALYZED);
-            nodeDoc.add(nodeElementAbsolutePositionField);
-            Field nodeElementPagePositionField = new Field("elementPagePosition", nodeElementPagePosition, Field.Store.YES, Field.Index.ANALYZED);
-            nodeDoc.add(nodeElementPagePositionField);
-            Field nodeElementPositionField = new Field("elementPosition", nodeElementPosition, Field.Store.YES, Field.Index.ANALYZED);
-            nodeDoc.add(nodeElementPositionField);
-            if (nodeXmlId != null) {
-              Field nodeXmlIdField = new Field("xmlId", nodeXmlId, Field.Store.YES, Field.Index.ANALYZED);
-              nodeDoc.add(nodeXmlIdField);
-            }
-            if (nodeXpath != null) {
-              Field nodeXpathField = new Field("xpath", nodeXpath, Field.Store.YES, Field.Index.ANALYZED);
-              nodeDoc.add(nodeXpathField);
-            }
-            if (nodeXmlContent != null) {
-              Field nodeXmlContentField = new Field("xmlContent", nodeXmlContent, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
-              nodeDoc.add(nodeXmlContentField);
-            }
-            if (nodeXmlContent != null) {
-              String nodeXmlContentTokenized = toTokenizedXmlString(nodeXmlContent, nodeLanguage);
-              Field nodeXmlContentTokenizedField = new Field("xmlContentTokenized", nodeXmlContentTokenized, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
-              nodeDoc.add(nodeXmlContentTokenizedField);
-            }
-            if (nodeTokensOrig != null) {
-              Field nodeTokenOrigField = new Field("tokenOrig", nodeTokensOrig, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
-              nodeDoc.add(nodeTokenOrigField);
-            }
-            if (nodeTokensReg != null) {
-              Field nodeTokenRegField = new Field("tokenReg", nodeTokensReg, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
-              nodeDoc.add(nodeTokenRegField);
-            }
-            if (nodeTokensNorm != null) {
-              Field nodeTokenNormField = new Field("tokenNorm", nodeTokensNorm, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
-              nodeDoc.add(nodeTokenNormField);
-            }
-            if (nodeTokensMorph != null) {
-              Field nodeTokenMorphField = new Field("tokenMorph", nodeTokensMorph, Field.Store.YES, Field.Index.ANALYZED, Field.TermVector.WITH_POSITIONS_OFFSETS);
-              nodeDoc.add(nodeTokenMorphField);
-            }
-    
-            nodesIndexWriter.addDocument(nodeDoc);
-          }
-        }
-      }
-      */
     } catch (Exception e) {
       LOGGER.error("indexDocumentLocal: " + mdRecord.getDocId());
       e.printStackTrace();
@@ -1558,10 +1469,6 @@ public class IndexHandler {
     return retQuery;
   }
   
-  private Query buildMorphQuery(Query query, String language, LanguageHandler languageHandler) throws ApplicationException {
-    return buildMorphQuery(query, language, false, false, languageHandler);
-  }
-
   private Query removeNonFulltextFields(Query query) throws ApplicationException {
     Query retQuery = null;
     if (query instanceof TermQuery || query instanceof PhraseQuery || query instanceof WildcardQuery || query instanceof FuzzyQuery || query instanceof PrefixQuery) {
@@ -1786,18 +1693,6 @@ public class IndexHandler {
     return morphBooleanQuery;
   }
 
-  public ArrayList<String> fetchTerms(String queryStr) throws ApplicationException {
-    ArrayList<String> terms = null;
-    String defaultQueryFieldName = "tokenOrig";
-    try {
-      Query query = new QueryParser(defaultQueryFieldName, nodesPerFieldAnalyzer).parse(queryStr);
-      terms = fetchTerms(query);
-    } catch (Exception e) {
-      throw new ApplicationException(e);
-    }
-    return terms;
-  }
-
   /**
    * recursively fetch all terms of the query
    * 
@@ -1852,18 +1747,6 @@ public class IndexHandler {
             terms.add(qTerm);
         }
       }
-    }
-    return terms;
-  }
-
-  public ArrayList<String> fetchTerms(String queryStr, String language) throws ApplicationException {
-    ArrayList<String> terms = null;
-    String defaultQueryFieldName = "tokenOrig";
-    try {
-      Query query = new QueryParser(defaultQueryFieldName, nodesPerFieldAnalyzer).parse(queryStr);
-      terms = fetchTerms(query, language);
-    } catch (Exception e) {
-      throw new ApplicationException(e);
     }
     return terms;
   }
@@ -1963,11 +1846,6 @@ public class IndexHandler {
     // Do not use searcher after this!
     searcher = null;
     return doc;
-  }
-
-  private int generateId() throws ApplicationException {
-    int id = findMaxId() + 1;
-    return id;
   }
 
   /**
@@ -2137,29 +2015,21 @@ public class IndexHandler {
     IndexWriter writer = null;
     String luceneProjectsDirectoryStr = Constants.getInstance().getLuceneProjectsDir();
     try {
-      Map<String, Analyzer> nodesFieldAnalyzers = new HashMap<String, Analyzer>();
-      nodesFieldAnalyzers.put("docId", new KeywordAnalyzer());
-      nodesFieldAnalyzers.put("language", new StandardAnalyzer()); // language (through xml:id): e.g. "lat"
-      nodesFieldAnalyzers.put("pageNumber", new KeywordAnalyzer()); // page number (through element pb): e.g. "13"
-      nodesFieldAnalyzers.put("lineNumber", new KeywordAnalyzer()); // line number on the page (through element lb): e.g. "17"
-      nodesFieldAnalyzers.put("elementName", new KeywordAnalyzer()); // element name: e.g. "tei:s"
-      nodesFieldAnalyzers.put("elementDocPosition", new KeywordAnalyzer()); // absolute position of element in document: e.g. "4711"
-      nodesFieldAnalyzers.put("elementPosition", new KeywordAnalyzer()); // position in parent node (in relation to other nodes of the same name): e.g. "5"
-      nodesFieldAnalyzers.put("elementAbsolutePosition", new KeywordAnalyzer()); // absolute position in document (in relation to other nodes of the same name): e.g. "213"
-      nodesFieldAnalyzers.put("elementPagePosition", new KeywordAnalyzer()); // position in relation to other nodes of the same name: e.g. "213"
-      nodesFieldAnalyzers.put("xmlId", new KeywordAnalyzer()); // xml id: e.g. "4711bla"
-      nodesFieldAnalyzers.put("xpath", new KeywordAnalyzer()); // xpath: e.g. "/echo[1]/text[1]/p[1]/s[5]"
-      nodesFieldAnalyzers.put("tokenOrig", new StandardAnalyzer());
-      nodesFieldAnalyzers.put("tokenReg", new StandardAnalyzer());
-      nodesFieldAnalyzers.put("tokenNorm", new StandardAnalyzer());
-      nodesFieldAnalyzers.put("tokenMorph", new StandardAnalyzer());
-      nodesFieldAnalyzers.put("xmlContent", new StandardAnalyzer());
-      nodesPerFieldAnalyzer = new PerFieldAnalyzerWrapper(new StandardAnalyzer(), nodesFieldAnalyzers);
-      IndexWriterConfig conf = new IndexWriterConfig(nodesPerFieldAnalyzer);
+      Map<String, Analyzer> projectsFieldAnalyzers = new HashMap<String, Analyzer>();
+      projectsFieldAnalyzers.put("id", new StandardAnalyzer());
+      projectsFieldAnalyzers.put("rdfId", new KeywordAnalyzer()); 
+      projectsFieldAnalyzers.put("label", new StandardAnalyzer()); 
+      projectsFieldAnalyzers.put("abstract", new StandardAnalyzer()); 
+      projectsFieldAnalyzers.put("subjects", new StandardAnalyzer()); 
+      projectsFieldAnalyzers.put("staffNames", new StandardAnalyzer()); 
+      projectsFieldAnalyzers.put("collectionLabels", new StandardAnalyzer()); 
+      projectsFieldAnalyzers.put("collectionAbstracts", new StandardAnalyzer()); 
+      projectsPerFieldAnalyzer = new PerFieldAnalyzerWrapper(new StandardAnalyzer(), projectsFieldAnalyzers);
+      IndexWriterConfig conf = new IndexWriterConfig(projectsPerFieldAnalyzer);
       conf.setOpenMode(OpenMode.CREATE_OR_APPEND);
       conf.setRAMBufferSizeMB(300);  // 300 MB because some documents are big; 16 MB is default 
-      Path luceneNodesDirectory = Paths.get(luceneProjectsDirectoryStr);
-      FSDirectory fsDirectory = FSDirectory.open(luceneNodesDirectory);
+      Path luceneProjectsDirectory = Paths.get(luceneProjectsDirectoryStr);
+      FSDirectory fsDirectory = FSDirectory.open(luceneProjectsDirectory);
       writer = new IndexWriter(fsDirectory, conf);
       writer.commit();
     } catch (IOException e) {
@@ -2263,21 +2133,16 @@ public class IndexHandler {
     return fields;
   }
   
-  private HashSet<String> getNodeFields() {
+  private HashSet<String> getProjectFields() {
     HashSet<String> fields = new HashSet<String>();
-    fields.add("docId");
-    fields.add("language");
-    fields.add("pageNumber");
-    fields.add("lineNumber");
-    fields.add("elementName");
-    fields.add("elementDocPosition");
-    fields.add("elementPosition");
-    fields.add("elementAbsolutePosition");
-    fields.add("elementPagePosition");
-    fields.add("xmlId");
-    fields.add("xpath");
-    fields.add("xmlContent");
-    fields.add("xmlContentTokenized");
+    fields.add("id");
+    fields.add("rdfId");
+    fields.add("label");
+    fields.add("abstract");
+    fields.add("subjects");
+    fields.add("staffNames");
+    fields.add("collectionLabels");
+    fields.add("collectionAbstracts");
     return fields;
   }
   
