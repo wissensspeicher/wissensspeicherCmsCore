@@ -38,26 +38,56 @@ public class ProjectReader {
   private static ProjectReader projectReader;
   public static Comparator<Project> projectIdComparator = new Comparator<Project>() {
     public int compare(Project p1, Project p2) {
+      if (p1.getId() == null && p2.getId() != null)
+        return -1;
+      if (p1.getId() != null && p2.getId() == null)
+        return 1;
+      if (p1.getId() == null && p2.getId() == null)
+        return 0;
       return p1.getId().compareTo(p2.getId());
     }
   };
   public static Comparator<Project> projectTitleComparator = new Comparator<Project>() {
     public int compare(Project p1, Project p2) {
+      if (p1.getTitle() == null && p2.getTitle() != null)
+        return -1;
+      if (p1.getTitle() != null && p2.getTitle() == null)
+        return 1;
+      if (p1.getTitle() == null && p2.getTitle() == null)
+        return 0;
       return p1.getTitle().compareTo(p2.getTitle());
     }
   };
   public static Comparator<Subject> subjectNameComparator = new Comparator<Subject>() {
     public int compare(Subject s1, Subject s2) {
+      if (s1.getName() == null && s2.getName() != null)
+        return -1;
+      if (s1.getName() != null && s2.getName() == null)
+        return 1;
+      if (s1.getName() == null && s2.getName() == null)
+        return 0;
       return s1.getName().compareTo(s2.getName());
     }
   };
   public static Comparator<Person> personNameComparator = new Comparator<Person>() {
     public int compare(Person p1, Person p2) {
+      if (p1.getName() == null && p2.getName() != null)
+        return -1;
+      if (p1.getName() != null && p2.getName() == null)
+        return 1;
+      if (p1.getName() == null && p2.getName() == null)
+        return 0;
       return p1.getName().compareTo(p2.getName());
     }
   };
   public static Comparator<Organization> organizationNameComparator = new Comparator<Organization>() {
     public int compare(Organization o1, Organization o2) {
+      if (o1.getName() == null && o2.getName() != null)
+        return -1;
+      if (o1.getName() != null && o2.getName() == null)
+        return 1;
+      if (o1.getName() == null && o2.getName() == null)
+        return 0;
       return o1.getName().compareTo(o2.getName());
     }
   };

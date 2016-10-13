@@ -7,7 +7,6 @@ import org.apache.lucene.search.Query;
 public class Hits {
   private ArrayList<Document> hits;
   private float maxScore;  // maximum score of all hits 
-  private ArrayList<Float> scores;  // scores of the hits
   private Query query;
   private int from;
   private int to;
@@ -15,6 +14,7 @@ public class Hits {
   private int sizeTotalDocuments;
   private int sizeTotalTerms;
   private Facets facets;
+  private ArrayList<GroupDocuments> groupByHits;
   
   public Hits(ArrayList<Document> hits, int from, int to) {
     this.hits = hits;
@@ -28,14 +28,6 @@ public class Hits {
 
   public void setMaxScore(Float maxScore) {
     this.maxScore = maxScore;
-  }
-
-  public ArrayList<Float> getScores() {
-    return scores;
-  }
-
-  public void setScores(ArrayList<Float> scores) {
-    this.scores = scores;
   }
 
   public int getSize() {
@@ -102,5 +94,11 @@ public class Hits {
     this.facets = facets;
   }
 
+  public ArrayList<GroupDocuments> getGroupByHits() {
+    return groupByHits;
+  }
 
+  public void setGroupByHits(ArrayList<GroupDocuments> groupByHits) {
+    this.groupByHits = groupByHits;
+  }
 }

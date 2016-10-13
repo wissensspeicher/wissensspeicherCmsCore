@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -52,9 +53,11 @@ import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.Collector;
 import org.apache.lucene.search.FuzzyQuery;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.MatchAllDocsQuery;
+import org.apache.lucene.search.MultiCollector;
 import org.apache.lucene.search.NumericRangeQuery;
 import org.apache.lucene.search.PhraseQuery;
 import org.apache.lucene.search.PrefixQuery;
@@ -65,8 +68,12 @@ import org.apache.lucene.search.SortField;
 import org.apache.lucene.search.SortField.Type;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TopDocs;
-import org.apache.lucene.search.TopFieldCollector;
 import org.apache.lucene.search.WildcardQuery;
+import org.apache.lucene.search.grouping.GroupDocs;
+import org.apache.lucene.search.grouping.SearchGroup;
+import org.apache.lucene.search.grouping.TopGroups;
+import org.apache.lucene.search.grouping.term.TermFirstPassGroupingCollector;
+import org.apache.lucene.search.grouping.term.TermSecondPassGroupingCollector;
 import org.apache.lucene.queries.mlt.MoreLikeThis;
 import org.apache.lucene.search.suggest.tst.TSTLookup;
 import org.apache.lucene.search.vectorhighlight.FastVectorHighlighter;
@@ -80,6 +87,7 @@ import org.bbaw.wsp.cms.collections.ProjectReader;
 import org.bbaw.wsp.cms.collections.Subject;
 import org.bbaw.wsp.cms.document.DBpediaResource;
 import org.bbaw.wsp.cms.document.Facets;
+import org.bbaw.wsp.cms.document.GroupDocuments;
 import org.bbaw.wsp.cms.document.Hits;
 import org.bbaw.wsp.cms.document.MetadataRecord;
 import org.bbaw.wsp.cms.document.Person;
@@ -848,7 +856,7 @@ public class IndexHandler {
       String queryDocumentsByProjectId = "projectId:" + projectId;
       if (projectId.equals("edoc"))
         queryDocumentsByProjectId = "webUri:*edoc.bbaw.de*";
-      Hits projectDocHits = queryDocuments("lucene", queryDocumentsByProjectId, null, null, null, 0, 9, false, false); // TODO FastTaxonomyFacetCounts verursacht bei vielen deletes ArrayIndexOutOfBoundsException: 600000
+      Hits projectDocHits = queryDocuments("lucene", queryDocumentsByProjectId, null, null, null, null, 0, 9, false, false); // TODO FastTaxonomyFacetCounts verursacht bei vielen deletes ArrayIndexOutOfBoundsException: 600000
       ArrayList<org.bbaw.wsp.cms.document.Document> projectDocs = projectDocHits.getHits();
       if (projectDocs != null) {
         countDeletedDocs = projectDocHits.getSize();
@@ -873,7 +881,7 @@ public class IndexHandler {
 
   public int deleteProjectDBByRdfId(String databaseRdfId) throws ApplicationException {
     String queryDatabaseRdfId = "databaseRdfId:" + databaseRdfId;
-    Hits databaseDocHits = queryDocuments("lucene", queryDatabaseRdfId, null, null, null, 0, 9, false, false);
+    Hits databaseDocHits = queryDocuments("lucene", queryDatabaseRdfId, null, null, null, null, 0, 9, false, false);
     int countDeletedDocs = databaseDocHits.getSize();
     try {
       Term termDatabaseRdfId = new Term("databaseRdfId", databaseRdfId);
@@ -896,7 +904,7 @@ public class IndexHandler {
       deleteQueryTerms.add(termQueryProjectName);
       deleteQueryTerms.add(termQuerySystemType);      
       Query deleteQuery = buildBooleanShouldQuery(deleteQueryTerms);
-      Hits docHits = queryDocuments("lucene", deleteQuery.toString(), null, null, null, 0, 9, false, false);
+      Hits docHits = queryDocuments("lucene", deleteQuery.toString(), null, null, null, null, 0, 9, false, false);
       countDeletedDocs = docHits.getSize();
       documentsIndexWriter.deleteDocuments(deleteQuery);
       commit();
@@ -908,7 +916,7 @@ public class IndexHandler {
     return countDeletedDocs;
   }
 
-  public Hits queryDocuments(String queryLanguage, String queryStr, String[] sortFieldNames, String fieldExpansion, String language, int from, int to, boolean withHitFragments, boolean translate) throws ApplicationException {
+  public Hits queryDocuments(String queryLanguage, String queryStr, String[] sortFieldNames, String groupByField, String fieldExpansion, String language, int from, int to, boolean withHitFragments, boolean translate) throws ApplicationException {
     Hits hits = null;
     IndexSearcher searcher = null;
     try {
@@ -942,7 +950,27 @@ public class IndexHandler {
         sort = buildSort(sortFieldNames);  // build sort criteria
       }
       FacetsCollector facetsCollector = new FacetsCollector(true);
-      TopDocs resultDocs = FacetsCollector.search(searcher, morphQuery, to + 1, sort, true, true, facetsCollector);
+      Collector searchCollector = facetsCollector;
+      TermSecondPassGroupingCollector groupByCollector = null;
+      if (groupByField != null) {
+        Sort projectIdAlphSorted = Sort.INDEXORDER;
+        int maxDocsPerGroup = 5;  // default value
+        if (groupByField.endsWith(")")) {
+          int index1 = groupByField.indexOf("(");
+          int index2 = groupByField.indexOf(")");
+          String maxDocsPerGroupStr = groupByField.substring(index1 + 1, index2);
+          maxDocsPerGroup = Integer.parseInt(maxDocsPerGroupStr);
+          groupByField = groupByField.substring(0, index1);
+        }
+        String groupByFieldNameSorted = groupByField + "Sorted";
+        TermFirstPassGroupingCollector termFirstPassGroupCollector = new TermFirstPassGroupingCollector(groupByFieldNameSorted, projectIdAlphSorted, 1000);
+        Query matchAllDocsQuery = new MatchAllDocsQuery();
+        FacetsCollector.search(searcher, matchAllDocsQuery, 1, sort, true, true, termFirstPassGroupCollector);
+        Collection<SearchGroup<BytesRef>> projectIdGroups = termFirstPassGroupCollector.getTopGroups(0, true);
+        groupByCollector = new TermSecondPassGroupingCollector(groupByFieldNameSorted, projectIdGroups, projectIdAlphSorted, sort, maxDocsPerGroup, true, true, true);
+        searchCollector = MultiCollector.wrap(facetsCollector, groupByCollector);
+      }
+      TopDocs resultDocs = FacetsCollector.search(searcher, morphQuery, to + 1, sort, true, true, searchCollector);
       FacetsConfig facetsConfig = new FacetsConfig();
       FastTaxonomyFacetCounts facetCounts = new FastTaxonomyFacetCounts(taxonomyReader, facetsConfig, facetsCollector);
       List<FacetResult> tmpFacetResult = new ArrayList<FacetResult>();
@@ -974,6 +1002,7 @@ public class IndexHandler {
           float score = resultDocs.scoreDocs[i].score;
           Document luceneDoc = searcher.doc(docID, docFields);
           org.bbaw.wsp.cms.document.Document doc = new org.bbaw.wsp.cms.document.Document(luceneDoc);
+          doc.setScore(score);
           if (withHitFragments) {
             ArrayList<String> hitFragments = new ArrayList<String>();
             IndexableField docContentField = luceneDoc.getField("content");
@@ -993,43 +1022,31 @@ public class IndexHandler {
               doc.setHitFragments(hitFragments);
           }
           docs.add(doc);
-          scores.add(score);
         }
-        // fetch the "best" hits
-        boolean withBestHits = false;  // TODO
-        Hits bestHits = null;
-        if (withBestHits && resultDocs != null) {
-          int numberOfBestHits = 1000;
-          int maxDocsForEachProject = 5;
-          TopFieldCollector topFieldCollectorBestDocs = TopFieldCollector.create(sort, numberOfBestHits, true, true, true); 
-          searcher.search(morphQuery, topFieldCollectorBestDocs);
-          TopDocs resultBestDocs = topFieldCollectorBestDocs.topDocs();
-          ArrayList<org.bbaw.wsp.cms.document.Document> bestDocs = new ArrayList<org.bbaw.wsp.cms.document.Document>();
-          ArrayList<Float> bestScores = new ArrayList<Float>();
-          Hashtable<String, Integer> collCounters = new Hashtable<String, Integer>();
-          for (int i=0; i<numberOfBestHits; i++) { 
-            int docID = resultBestDocs.scoreDocs[i].doc;
-            float score = resultBestDocs.scoreDocs[i].score;
-            HashSet<String> docCollectionNameField = getDocFieldProjectId();
-            Document luceneDoc = searcher.doc(docID, docCollectionNameField);
-            String collName = luceneDoc.getField("projectId").stringValue();
-            Integer collCounter = collCounters.get(collName);
-            if (collCounter == null) {
-              collCounter = new Integer(0);
-            }
-            collCounter++;
-            collCounters.put(collName, collCounter);
-            if (collCounter <= maxDocsForEachProject) {
-              Document fullLuceneDoc = searcher.doc(docID, docFields);
-              org.bbaw.wsp.cms.document.Document fullDoc = new org.bbaw.wsp.cms.document.Document(fullLuceneDoc);
-              bestDocs.add(fullDoc);
-              bestScores.add(score);
+        ArrayList<GroupDocuments> groupByHits = null;
+        if (groupByField != null) {
+          TopGroups<BytesRef> projectIdTopGroups = groupByCollector.getTopGroups(0);
+          if (projectIdTopGroups != null) {
+            groupByHits = new ArrayList<GroupDocuments>();
+            HashSet<String> docFieldsToFill = getDocFields();
+            for (int i=0; i<projectIdTopGroups.groups.length; i++) {
+              GroupDocs<BytesRef> group = projectIdTopGroups.groups[i];
+              GroupDocuments groupDocuments = new GroupDocuments();
+              for (int j=0; j<group.scoreDocs.length; j++) {
+                int docId = group.scoreDocs[j].doc;
+                float score = group.scoreDocs[j].score;
+                Document luceneDoc = searcher.doc(docId, docFieldsToFill);
+                if (j==0) {
+                  String groupName = luceneDoc.getField(groupByField).stringValue();
+                  groupDocuments.setName(groupName);
+                }
+                org.bbaw.wsp.cms.document.Document doc = new org.bbaw.wsp.cms.document.Document(luceneDoc);
+                doc.setScore(score);
+                groupDocuments.addDocument(doc);
+              }
+              groupByHits.add(groupDocuments);
             }
           }
-          int bestTo = from + numberOfBestHits;
-          if (from == 0)
-            bestTo = numberOfBestHits - 1;
-          bestHits = new Hits(bestDocs, from, bestTo);
         }
         int sizeTotalDocuments = documentsIndexReader.numDocs();
         // terms.size() does not work: delivers -1
@@ -1040,13 +1057,12 @@ public class IndexHandler {
         if (docs != null) {
           hits = new Hits(docs, from, to);
           hits.setMaxScore(resultDocs.getMaxScore());
-          hits.setScores(scores);
           hits.setSize(resultDocs.totalHits);
           hits.setSizeTotalDocuments(sizeTotalDocuments);
           hits.setSizeTotalTerms(sizeTotalTerms);
           hits.setQuery(morphQuery);
           hits.setFacets(facets);
-          // hits.setBestHits(bestHits); // TODO
+          hits.setGroupByHits(groupByHits);
         }
       }
     } catch (Exception e) {
@@ -1122,20 +1138,18 @@ public class IndexHandler {
       HashSet<String> projectFields = getProjectFields();
       if (resultDocs != null) {
         ArrayList<org.bbaw.wsp.cms.document.Document> docs = new ArrayList<org.bbaw.wsp.cms.document.Document>();
-        ArrayList<Float> scores = new ArrayList<Float>();
         for (int i=from; i<=toTmp; i++) { 
           int docID = resultDocs.scoreDocs[i].doc;
           float score = resultDocs.scoreDocs[i].score;
           Document luceneDoc = searcher.doc(docID, projectFields);
           org.bbaw.wsp.cms.document.Document doc = new org.bbaw.wsp.cms.document.Document(luceneDoc);
+          doc.setScore(score);
           docs.add(doc);
-          scores.add(score);
         }
         int sizeTotalDocuments = projectsIndexReader.numDocs();
         if (docs != null) {
           hits = new Hits(docs, from, to);
           hits.setMaxScore(resultDocs.getMaxScore());
-          hits.setScores(scores);
           hits.setSize(resultDocs.totalHits);
           hits.setSizeTotalDocuments(sizeTotalDocuments);
           hits.setQuery(morphQuery);
@@ -2290,12 +2304,6 @@ public class IndexHandler {
     return fields;
   }
   
-  private HashSet<String> getDocFieldProjectId() {
-    HashSet<String> fields = new HashSet<String>();
-    fields.add("projectId");
-    return fields;
-  }
-  
   private HashSet<String> getProjectFields() {
     HashSet<String> fields = new HashSet<String>();
     fields.add("id");
@@ -2405,20 +2413,6 @@ public class IndexHandler {
     } catch (IOException e) {
       throw new ApplicationException(e);
     }
-  }
-
-  private String toTokenizedXmlString(String xmlStr, String language) throws ApplicationException {
-    String xmlPre = "<tokenized xmlns:xhtml=\"http://www.w3.org/1999/xhtml\" xmlns:m=\"http://www.w3.org/1998/Math/MathML\" xmlns:mml=\"http://www.w3.org/1998/Math/MathML\" xmlns:svg=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\">";
-    String xmlPost = "</tokenized>";
-    String xmlStrTmp = xmlPre + xmlStr + xmlPost;
-    StringReader xmlInputStringReader = new StringReader(xmlStrTmp);
-    XmlTokenizer xmlTokenizer = new XmlTokenizer(xmlInputStringReader);
-    xmlTokenizer.setLanguage(language);
-    String[] outputOptions = { "withLemmas" };
-    xmlTokenizer.setOutputOptions(outputOptions);
-    xmlTokenizer.tokenize();
-    String result = xmlTokenizer.getXmlResult();
-    return result;
   }
 
   private String escapeLuceneChars(String inputStr) {

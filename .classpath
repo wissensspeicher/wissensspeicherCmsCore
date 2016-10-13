@@ -45,6 +45,7 @@
 	<classpathentry kind="lib" path="lib/lucene-analyzers-common-5.4.0.jar"/>
 	<classpathentry kind="lib" path="lib/lucene-core-5.4.0.jar" sourcepath="lib/lucene-core-5.4.0-javadoc.jar"/>
 	<classpathentry kind="lib" path="lib/lucene-facet-5.4.0.jar"/>
+	<classpathentry kind="lib" path="lib/lucene-grouping-5.4.0.jar"/>
 	<classpathentry kind="lib" path="lib/lucene-highlighter-5.4.0.jar"/>
 	<classpathentry kind="lib" path="lib/lucene-memory-5.4.0.jar"/>
 	<classpathentry kind="lib" path="lib/lucene-queries-5.4.0.jar"/>
