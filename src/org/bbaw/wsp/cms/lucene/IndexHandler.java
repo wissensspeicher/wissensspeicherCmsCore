@@ -1040,8 +1040,11 @@ public class IndexHandler {
                 float score = group.scoreDocs[j].score;
                 Document luceneDoc = searcher.doc(docId, docFieldsToFill);
                 if (j==0) {
-                  String groupName = luceneDoc.getField(groupByField).stringValue();
-                  groupDocuments.setName(groupName);
+                  IndexableField luceneGroupByField = luceneDoc.getField(groupByField);
+                  if (luceneGroupByField != null) {
+                    String groupName = luceneGroupByField.stringValue();
+                    groupDocuments.setName(groupName);
+                  }
                 }
                 org.bbaw.wsp.cms.document.Document doc = new org.bbaw.wsp.cms.document.Document(luceneDoc);
                 doc.setScore(score);
