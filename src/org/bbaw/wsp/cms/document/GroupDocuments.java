@@ -9,6 +9,7 @@ import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 
 public class GroupDocuments {
   private String name;
+  private int size; // count of total hits 
   private ArrayList<Document> documents;
   private String baseUrl;
   
@@ -33,6 +34,14 @@ public class GroupDocuments {
     this.name = groupName;
   }
 
+  public int getSize() {
+    return size;
+  }
+
+  public void setSize(int size) {
+    this.size = size;
+  }
+
   public String getBaseUrl() {
     return baseUrl;
   }
@@ -44,6 +53,7 @@ public class GroupDocuments {
   public JSONObject toJsonObject() throws ApplicationException {
     JSONObject jsonObject = new JSONObject();
     jsonObject.put("groupName", name);
+    jsonObject.put("numberOfHits", size);
     JSONArray jsonHits = new JSONArray();
     for (int i=0; i<documents.size(); i++) {
       Document doc = documents.get(i);

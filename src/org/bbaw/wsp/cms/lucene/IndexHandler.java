@@ -45,6 +45,7 @@ import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.IndexWriterConfig.OpenMode;
 import org.apache.lucene.index.IndexableField;
 import org.apache.lucene.index.MultiFields;
+import org.apache.lucene.index.MultiTerms;
 import org.apache.lucene.index.PostingsEnum;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.index.Terms;
@@ -1032,6 +1033,8 @@ public class IndexHandler {
             for (int i=0; i<projectIdTopGroups.groups.length; i++) {
               GroupDocs<BytesRef> group = projectIdTopGroups.groups[i];
               GroupDocuments groupDocuments = new GroupDocuments();
+              int countGroupHits = group.totalHits;
+              groupDocuments.setSize(countGroupHits);
               for (int j=0; j<group.scoreDocs.length; j++) {
                 int docId = group.scoreDocs[j].doc;
                 float score = group.scoreDocs[j].score;
@@ -1050,9 +1053,8 @@ public class IndexHandler {
           }
         }
         int sizeTotalDocuments = documentsIndexReader.numDocs();
-        // terms.size() does not work: delivers -1
         // Terms terms = MultiFields.getTerms(documentsIndexReader, "tokenOrig");
-        // int sizeTotalTerms = (int) terms.size(); // TODO test performance
+        // int sizeTotalTerms = (int) terms.size(); // terms.size() does not work: delivers always -1 
         int sizeTotalTerms = tokens.size(); // term count over tokenOrig
         long sizeTotalTermsFreq = documentsIndexReader.getSumTotalTermFreq("tokenOrig");  // count of all words/terms in this field TODO
         if (docs != null) {
