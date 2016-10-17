@@ -1,7 +1,6 @@
 package org.bbaw.wsp.cms.lucene;
 
 import java.io.IOException;
-import java.io.StringReader;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -45,7 +44,6 @@ import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.IndexWriterConfig.OpenMode;
 import org.apache.lucene.index.IndexableField;
 import org.apache.lucene.index.MultiFields;
-import org.apache.lucene.index.MultiTerms;
 import org.apache.lucene.index.PostingsEnum;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.index.Terms;
@@ -103,7 +101,6 @@ import de.mpg.mpiwg.berlin.mpdl.lt.dict.db.LexHandler;
 import de.mpg.mpiwg.berlin.mpdl.lt.morph.app.Form;
 import de.mpg.mpiwg.berlin.mpdl.lt.morph.app.Lemma;
 import de.mpg.mpiwg.berlin.mpdl.lt.text.norm.Normalizer;
-import de.mpg.mpiwg.berlin.mpdl.lt.text.tokenize.XmlTokenizer;
 import de.mpg.mpiwg.berlin.mpdl.util.StringUtils;
 import de.mpg.mpiwg.berlin.mpdl.util.Util;
 import de.mpg.mpiwg.berlin.mpdl.xml.xquery.XQueryEvaluator;
