@@ -1044,7 +1044,8 @@ public class IndexHandler {
                 doc.setScore(score);
                 groupDocuments.addDocument(doc);
               }
-              groupByHits.add(groupDocuments);
+              if (groupDocuments.hasDocuments())
+                groupByHits.add(groupDocuments);
             }
           }
         }

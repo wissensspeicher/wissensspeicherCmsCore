@@ -18,6 +18,13 @@ public class GroupDocuments {
     documents.add(document);
   }
 
+  public boolean hasDocuments() {
+    if (documents == null || documents.isEmpty())
+      return false;
+    else 
+      return true;
+  }
+  
   public String getName() {
     return name;
   }
