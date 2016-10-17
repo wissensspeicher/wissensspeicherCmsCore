@@ -43,9 +43,17 @@
 	<classpathentry kind="lib" path="lib/tika-1.2-poi.jar"/>
 	<classpathentry kind="lib" path="lib/org.hamcrest.core_1.1.0.v20090501071000.jar"/>
 	<classpathentry kind="lib" path="lib/lucene-analyzers-common-5.4.0.jar"/>
-	<classpathentry kind="lib" path="lib/lucene-core-5.4.0.jar" sourcepath="lib/lucene-core-5.4.0-javadoc.jar"/>
+	<classpathentry kind="lib" path="lib/lucene-core-5.4.0.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/wspCmsCore/lib/lucene-core-5.4.0-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="lib/lucene-facet-5.4.0.jar"/>
-	<classpathentry kind="lib" path="lib/lucene-grouping-5.4.0.jar"/>
+	<classpathentry kind="lib" path="lib/lucene-grouping-5.4.0.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/wspCmsCore/lib/lucene-grouping-5.4.0-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="lib/lucene-highlighter-5.4.0.jar"/>
 	<classpathentry kind="lib" path="lib/lucene-memory-5.4.0.jar"/>
 	<classpathentry kind="lib" path="lib/lucene-queries-5.4.0.jar"/>
