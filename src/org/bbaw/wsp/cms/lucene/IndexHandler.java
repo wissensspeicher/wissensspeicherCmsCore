@@ -996,7 +996,6 @@ public class IndexHandler {
       HashSet<String> docFields = getDocFields();
       if (resultDocs != null) {
         ArrayList<org.bbaw.wsp.cms.document.Document> docs = new ArrayList<org.bbaw.wsp.cms.document.Document>();
-        ArrayList<Float> scores = new ArrayList<Float>();
         FastVectorHighlighter highlighter = new FastVectorHighlighter(true, false); // fieldMatch: false: cause any field to be highlighted regardless of whether the query matched specifically on them. The default behaviour is true, meaning that only fields that hold a query match will be highlighted.
         for (int i=from; i<=toTmp; i++) { 
           int docID = resultDocs.scoreDocs[i].doc;
