@@ -13,6 +13,7 @@ public class Hits {
   private int size = 0;
   private int sizeTotalDocuments;
   private int sizeTotalTerms;
+  private long elapsedTime;
   private Facets facets;
   private ArrayList<GroupDocuments> groupByHits;
   
@@ -52,6 +53,14 @@ public class Hits {
 
   public void setSizeTotalTerms(int sizeTotalTerms) {
     this.sizeTotalTerms = sizeTotalTerms;
+  }
+
+  public long getElapsedTime() {
+    return elapsedTime;
+  }
+
+  public void setElapsedTime(long elapsedTime) {
+    this.elapsedTime = elapsedTime;
   }
 
   public Query getQuery() {

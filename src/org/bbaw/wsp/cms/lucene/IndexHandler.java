@@ -917,6 +917,7 @@ public class IndexHandler {
   public Hits queryDocuments(String queryLanguage, String queryStr, String[] sortFieldNames, String groupByField, String fieldExpansion, String language, int from, int to, boolean withHitFragments, boolean translate) throws ApplicationException {
     Hits hits = null;
     IndexSearcher searcher = null;
+    Date begin = new Date();
     try {
       makeDocumentsSearcherManagerUpToDate();
       searcher = documentsSearcherManager.acquire();
@@ -1055,13 +1056,18 @@ public class IndexHandler {
         // Terms terms = MultiFields.getTerms(documentsIndexReader, "tokenOrig");
         // int sizeTotalTerms = (int) terms.size(); // terms.size() does not work: delivers always -1 
         int sizeTotalTerms = tokens.size(); // term count over tokenOrig
-        long sizeTotalTermsFreq = documentsIndexReader.getSumTotalTermFreq("tokenOrig");  // count of all words/terms in this field TODO
+        // DocFreqComparator cmp = new HighFreqTerms.DocFreqComparator();  // TODO
+        // TermStats[] termStats = HighFreqTerms.getHighFreqTerms(documentsIndexReader, 20, "tokenOrig", cmp); // TODO aus lucene-misc: um Stopworte bereinigen
+        // long sizeTotalTermsFreq = documentsIndexReader.getSumTotalTermFreq("tokenOrig");  // count of all words/terms in this field TODO
+        Date end = new Date();
+        long elapsedTime = end.getTime() - begin.getTime();
         if (docs != null) {
           hits = new Hits(docs, from, to);
           hits.setMaxScore(resultDocs.getMaxScore());
           hits.setSize(resultDocs.totalHits);
           hits.setSizeTotalDocuments(sizeTotalDocuments);
           hits.setSizeTotalTerms(sizeTotalTerms);
+          hits.setElapsedTime(elapsedTime);
           hits.setQuery(morphQuery);
           hits.setFacets(facets);
           hits.setGroupByHits(groupByHits);
