@@ -53,7 +53,6 @@ public class MetadataHandler {
   private Hashtable<String, ArrayList<MetadataRecord>> projectMdRecords;
   private XQueryEvaluator xQueryEvaluator;
   private HttpClient httpClient; 
-  private Hashtable<String, String> institutes2projectId;
 
   public static MetadataHandler getInstance() throws ApplicationException {
     if(mdHandler == null) {
@@ -72,8 +71,6 @@ public class MetadataHandler {
     httpClient.getParams().setParameter("http.connection.timeout", SOCKET_TIMEOUT);
     httpClient.getParams().setParameter("http.connection-manager.timeout", new Long(SOCKET_TIMEOUT));
     httpClient.getParams().setParameter("http.protocol.head-body-timeout", SOCKET_TIMEOUT);
-    institutes2projectId = new Hashtable<String, String>();
-    fillInstitutes2projectIds();
   }
   
   public void deleteConfigurationFiles(Project project) {
@@ -455,9 +452,10 @@ public class MetadataHandler {
           String edocMetadataHtmlStr = performGetRequest(edocMetadataUrl);
           edocMetadataHtmlStr = edocMetadataHtmlStr.replaceAll("<!DOCTYPE html .+>", "");
           String institutesStr = xQueryEvaluator.evaluateAsString(edocMetadataHtmlStr, "//*:th[text() = 'Institutes:']/following-sibling::*:td/*:a/text()");
+          // TODO das Mapping auf Sammlungen umstellen (statt Projekten)
           if (institutesStr != null && ! institutesStr.isEmpty()) {
             institutesStr = institutesStr.trim().replaceAll("BBAW / ", "");
-            String collRdfId = getProjectRdfId(institutesStr);
+            String collRdfId = db.getEdocCollectionRdfId(institutesStr);
             if (collRdfId != null)
               projectRdfId = collRdfId;
           } else {
@@ -1725,72 +1723,6 @@ public class MetadataHandler {
     return retStr;
   }
 
-  private String getProjectRdfId(String institutesStr) throws ApplicationException {
-    String retStr = null;
-    String projectId = institutes2projectId.get(institutesStr);
-    if (projectId == null)
-      projectId = "akademiepublikationen1"; // some institutes (e.g. ALLEA) have no projectId, they are mapped to "akademiepublikationen1"
-    Project p = ProjectReader.getInstance().getProject(projectId);
-    if (p != null)
-      retStr = p.getRdfId();
-    return retStr;
-  }
-  
-  private void fillInstitutes2projectIds() {
-    institutes2projectId.put("Berlin-Brandenburgische Akademie der Wissenschaften", "akademiepublikationen1");
-    institutes2projectId.put("Veröffentlichungen von Akademiemitgliedern", "akademiepublikationen2");
-    institutes2projectId.put("Veröffentlichungen von Akademiemitarbeitern", "akademiepublikationen3");
-    institutes2projectId.put("Veröffentlichungen der Vorgängerakademien", "akademiepublikationen4");
-    institutes2projectId.put("Veröffentlichungen externer Institutionen", "akademiepublikationen5");
-    institutes2projectId.put("Interdisziplinäre Arbeitsgruppe Psychologisches Denken und psychologische Praxis", "pd");
-    institutes2projectId.put("Akademienvorhaben Strukturen und Transformationen des Wortschatzes der ägyptischen Sprache. Text- und Wissenskultur im alten Ägypten", "aaew");
-    institutes2projectId.put("Akademienvorhaben Altägyptisches Wörterbuch", "aaew");
-    institutes2projectId.put("Interdisziplinäre Arbeitsgruppe Berliner Akademiegeschichte im 19. und 20. Jahrhundert", "bag");
-    institutes2projectId.put("Interdisziplinäre Arbeitsgruppe Wissenschaftliche Politikberatung in der Demokratie", "wpd");
-    institutes2projectId.put("Interdisziplinäre Arbeitsgruppe Die Herausforderung durch das Fremde", "fremde");
-    institutes2projectId.put("Initiative Wissen für Entscheidungsprozesse", "wfe");
-    institutes2projectId.put("Initiative Qualitätsbeurteilung in der Wissenschaft", "quali");
-    institutes2projectId.put("Interdisziplinäre Arbeitsgruppe Gentechnologiebericht", "gen");
-    institutes2projectId.put("Interdisziplinäre Arbeitsgruppe Wissenschaften und Wiedervereinigung", "ww");
-    institutes2projectId.put("Akademienvorhaben Leibniz-Edition Berlin", "leibber");
-    institutes2projectId.put("Akademienvorhaben Deutsches Wörterbuch von Jacob Grimm und Wilhelm Grimm", "dwb");
-    institutes2projectId.put("Akademienvorhaben Census of Antique Works of Art and Architecture Known in the Renaissance", "census");
-    institutes2projectId.put("Akademienvorhaben Protokolle des Preußischen Staatsministeriums Acta Borussica", "ab");
-    institutes2projectId.put("Akademienvorhaben Berliner Klassik", "bk");
-    institutes2projectId.put("Akademienvorhaben Alexander-von-Humboldt-Forschung", "avh");
-    institutes2projectId.put("Akademienvorhaben Leibniz-Edition Potsdam", "leibpots");
-    institutes2projectId.put("Interdisziplinäre Arbeitsgruppe Globaler Wandel", "globw");
-    institutes2projectId.put("Akademienvorhaben Jahresberichte für deutsche Geschichte", "jdg");
-    institutes2projectId.put("Interdisziplinäre Arbeitsgruppe Die Welt als Bild", "wab");
-    institutes2projectId.put("Interdisziplinäre Arbeitsgruppe Optionen zukünftiger industrieller Produktionssysteme", "ops");
-    institutes2projectId.put("Interdisziplinäre Arbeitsgruppe Frauen in Akademie und Wissenschaft", "frauen");
-    institutes2projectId.put("Akademienvorhaben Corpus Coranicum", "coranicum");
-    institutes2projectId.put("Initiative Telota", "telota");
-    institutes2projectId.put("Interdisziplinäre Arbeitsgruppe Gemeinwohl und Gemeinsinn", "gg");
-    institutes2projectId.put("Interdisziplinäre Arbeitsgruppe Bildkulturen", "bild");
-    institutes2projectId.put("Akademienvorhaben Monumenta Germaniae Historica", "mgh");
-    institutes2projectId.put("Interdisziplinäre Arbeitsgruppe LandInnovation", "li");
-    institutes2projectId.put("Akademienvorhaben Marx-Engels-Gesamtausgabe", "mega");
-    institutes2projectId.put("Interdisziplinäre Arbeitsgruppe Strukturbildung und Innovation", "sui");
-    institutes2projectId.put("Interdisziplinäre Arbeitsgruppe Sprache des Rechts, Vermitteln, Verstehen, Verwechseln", "srvvv");
-    institutes2projectId.put("Akademienvorhaben Die Griechischen Christlichen Schriftsteller", "gcs");
-    institutes2projectId.put("Interdisziplinäre Arbeitsgruppe Gesundheitsstandards", "gs");
-    institutes2projectId.put("Interdisziplinäre Arbeitsgruppe Humanprojekt", "hum");
-    institutes2projectId.put("Akademienvorhaben Turfanforschung", "turfan");
-    institutes2projectId.put("Interdisziplinäre Arbeitsgruppe Gegenworte - Hefte für den Disput über Wissen", "gw");
-    institutes2projectId.put("Interdisziplinäre Arbeitsgruppe Strategien zur Abfallenergieverwertung", "sza");
-    institutes2projectId.put("Interdisziplinäre Arbeitsgruppe Exzellenzinitiative", "exzellenz");
-    institutes2projectId.put("Interdisziplinäre Arbeitsgruppe Funktionen des Bewusstseins", "fb");
-    institutes2projectId.put("Drittmittelprojekt Ökosystemleistungen", "oeko");
-    institutes2projectId.put("Interdisziplinäre Arbeitsgruppe Zukunft des wissenschaftlichen Kommunikationssystems", "zwk");
-    institutes2projectId.put("Akademienvorhaben Preußen als Kulturstaat", "ab");
-    institutes2projectId.put("Interdisziplinäre Arbeitsgruppe EUTENA - Zur Zukunft technischer und naturwissenschaftlicher Bildung in Europa", "eutena");
-    institutes2projectId.put("Akademienvorhaben Digitales Wörterbuch der Deutschen Sprache", "dwds");
-    institutes2projectId.put("Akademienvorhaben Griechisches Münzwerk", "gmw");
-    institutes2projectId.put("Interdisziplinäre Arbeitsgruppe Klinische Forschung in vulnerablen Populationen", "kf");
-    institutes2projectId.put("Akademienvorhaben Die alexandrinische und antiochenische Bibelexegese in der Spätantike", "bibel");
-  }
-  
   private String performGetRequest(String urlStr) throws ApplicationException {
     String resultStr = null;
     int statusCode = -1;

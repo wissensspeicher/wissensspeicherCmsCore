@@ -26,6 +26,7 @@ public class Database {
   private int depth; // if crawl db: crawl depth
   private Hashtable<String, XQuery> xQueries;
   private Hashtable<String, String> dcField2dbField = new Hashtable<String, String>();
+  private Hashtable<String, String> edocInstituteName2collectionRdfId = new Hashtable<String, String>();
 
   public String getRdfId() {
     return rdfId;
@@ -160,6 +161,17 @@ public class Database {
     return dcField2dbField.get(dcField);
   }
   
+  public String getEdocCollectionRdfId(String instituteName) throws ApplicationException {
+    String retStr = null;
+    String projectId = edocInstituteName2collectionRdfId.get(instituteName);
+    if (projectId == null)
+      projectId = "akademiepublikationen1"; // some institutes (e.g. ALLEA) have no projectId, they are mapped to "akademiepublikationen1"
+    Project p = ProjectReader.getInstance().getProject(projectId);
+    if (p != null)
+      retStr = p.getRdfId();
+    return retStr;
+  }
+  
   public static Database fromDatabaseElement(Element databaseElem) {
     Database database = new Database();
     String databaseRdfId = databaseElem.select("db").attr("id");
@@ -226,6 +238,14 @@ public class Database {
         excludes.add(excludeStr);
       }
       database.setExcludes(excludes);
+    }
+    Elements edocInstitutesElems = databaseElem.select("db > institutes > institute");
+    for (int i=0; i< edocInstitutesElems.size(); i++) {
+      Element edocInstitutesElem = edocInstitutesElems.get(i);
+      String instituteName = edocInstitutesElem.text();
+      String collectionRdfId = edocInstitutesElem.attr("id");
+      if (instituteName != null && collectionRdfId != null)
+        database.edocInstituteName2collectionRdfId.put(instituteName, collectionRdfId);
     }
     return database;
   }
