@@ -7,6 +7,7 @@ import java.util.HashSet;
 
 import org.apache.commons.httpclient.util.URIUtil;
 import org.apache.lucene.index.IndexableField;
+import org.bbaw.wsp.cms.collections.OutputType;
 import org.bbaw.wsp.cms.collections.Project;
 import org.bbaw.wsp.cms.collections.ProjectCollection;
 import org.bbaw.wsp.cms.collections.ProjectReader;
@@ -103,9 +104,15 @@ public class Document {
         project = ProjectReader.getInstance().getProject(projectId);
         jsonProject.put("id", projectId);
         if (project != null) {
+          String projectRdfId = project.getRdfId();
+          if (projectRdfId != null) {
+            jsonProject.put("rdfId", projectRdfId);
+            String projectDetailsUrl = baseUrl + "/query/QueryMdSystem?query=" + URIUtil.encodeQuery(projectRdfId) + "&detailedSearch=true";
+            jsonProject.put("detailsUri", projectDetailsUrl);
+          }
           String projectTitle = project.getTitle();
           if (projectTitle != null) {
-            jsonProject.put("title", projectTitle);
+            jsonProject.put("label", projectTitle);
           }
           String projectUrl = project.getHomepageUrl();
           if (projectUrl != null) {
@@ -124,10 +131,15 @@ public class Document {
           ProjectCollection coll = project.getCollection(collectionRdfId);
           String collectionTitle = coll.getTitle();
           if (collectionTitle != null)
-            jsonCollection.put("title", collectionTitle);
+            jsonCollection.put("label", collectionTitle);
           String collectionHomepageUrl = coll.getHomepageUrl();
           if (collectionHomepageUrl != null)
-            jsonCollection.put("url", collectionHomepageUrl);
+            jsonCollection.put("homepageUrl", collectionHomepageUrl);
+          OutputType collectionType = coll.getType();
+          if (collectionType != null) {
+            jsonCollection.put("typeRdfId", collectionType.getRdfId());
+            jsonCollection.put("typeLabel", collectionType.getLabel());
+          }
           jsonObject.put("collection", jsonCollection);
         }
       }
@@ -167,19 +179,6 @@ public class Document {
           webUri = URIUtil.encodeQuery(webUri);
         webUri = webUri.replaceAll("%23", "#");
         jsonObject.put("webUri", webUri);
-      }
-      if (project != null) {
-        String homepageUrl = project.getHomepageUrl();
-        if (homepageUrl != null) {
-          String encoded = URIUtil.encodeQuery(homepageUrl);
-          jsonObject.put("webBaseUri", encoded);
-        }
-        String projectRdfId = project.getRdfId();
-        if (projectRdfId != null) {
-          String projectDetailsUrl = baseUrl + "/query/QueryMdSystem?query=" + URIUtil.encodeQuery(projectRdfId) + "&detailedSearch=true";
-          jsonObject.put("projectDetailsUri", projectDetailsUrl);
-          jsonObject.put("rdfUri", projectRdfId);
-        }
       }
       IndexableField docAuthorField = getField("author");
       if (docAuthorField != null) {
@@ -258,14 +257,12 @@ public class Document {
         }
       }
       jsonObject.put("fragments", jsonFragments);
-      
       IndexableField entitiesDetailsField = getField("entitiesDetails");
       if (entitiesDetailsField != null) {
         String entitiesDetailsXmlStr = entitiesDetailsField.stringValue();
         JSONArray jsonDocEntitiesDetails = docEntitiesDetailsXmlStrToJson(entitiesDetailsXmlStr, lang);
         jsonObject.put("entities", jsonDocEntitiesDetails);
       }
-      
       IndexableField personsField = getField("persons");
       IndexableField personsDetailsField = getField("personsDetails");
       JSONArray jsonDocPersonsDetails = new JSONArray();
@@ -291,7 +288,6 @@ public class Document {
       }
       if (! jsonDocPersonsDetails.isEmpty())
         jsonObject.put("persons", jsonDocPersonsDetails);
-  
       IndexableField placesField = getField("places");
       if (placesField != null) {
         JSONArray jsonPlaces = new JSONArray();

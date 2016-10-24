@@ -17,7 +17,7 @@ public class ProjectCollection {
   private String projectRdfId; // rdfId of project
   private String parentRdfId; // rdfId of parent collection
   private String rdfPath; // path from this collection to root (project or organization)
-  private String typeRdfId;  // e.g. http://wissensspeicher.bbaw.de/rdf/outputType#BibliographischeDatenbank
+  private OutputType type;  // type e.g. "Edition"
   private String homepageUrl;
   private String absstract; // abstract of project
   private String title;
@@ -57,13 +57,6 @@ public class ProjectCollection {
   
   public ArrayList<String> getLanguages() {
     return languages;  
-  }
-  
-  public boolean isResourceContainer() {
-    boolean isResourceContainer = false;
-    if (typeRdfId != null && (typeRdfId.endsWith("Edition") || typeRdfId.endsWith("Forschungsbericht") || typeRdfId.endsWith("Tagungsbericht")))   // TODO
-      isResourceContainer = true;
-    return isResourceContainer;
   }
   
   public void addStaffPerson(String personRdfId, Person person) {
@@ -127,12 +120,12 @@ public class ProjectCollection {
     this.parentRdfId = parentRdfId;
   }
   
-  public String getTypeRdfId() {
-    return typeRdfId;
+  public OutputType getType() {
+    return type;
   }
 
-  public void setTypeRdfId(String typeRdfId) {
-    this.typeRdfId = typeRdfId;
+  public void setType(OutputType type) {
+    this.type = type;
   }
 
   public String getHomepageUrl() {
@@ -193,6 +186,9 @@ public class ProjectCollection {
     JSONObject retJsonObject = new JSONObject();
     if (rdfId != null)
       retJsonObject.put("rdfId", rdfId);
+    if (type != null) {
+      retJsonObject.put("type", type.toJsonObject());
+    }
     if (homepageUrl != null)
       retJsonObject.put("homepageUrl", homepageUrl);
     if (title != null)

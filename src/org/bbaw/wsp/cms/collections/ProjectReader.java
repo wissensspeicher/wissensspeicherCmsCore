@@ -97,6 +97,7 @@ public class ProjectReader {
   private HashMap<String, Subject> normdataSubjects;
   private HashMap<String, Location> normdataLocations;
   private HashMap<String, PeriodOfTime> normdataPeriodOfTime;
+  private HashMap<String, OutputType> normdataOutputTypes;
   private HashMap<String, Project> projects;  // key is id string and value is project
   private HashMap<String, Project> projectsByRdfId;  // key is projectRdfId string and value is project
   private HashMap<String, ProjectCollection> collections = new HashMap<String, ProjectCollection>();  // all project collections: key is collectionRdfId and value is collection
@@ -346,6 +347,10 @@ public class ProjectReader {
     return normdataLocations.get(aboutId);
   }
   
+  public OutputType getType(String aboutId) {
+    return normdataOutputTypes.get(aboutId);
+  }
+  
   public ArrayList<String> getGlobalExcludes() {
     return globalExcludes;
   }
@@ -396,6 +401,7 @@ public class ProjectReader {
     readNormdataSubjects();
     readNormdataLocations();
     readNormdataPeriodOfTime();
+    readNormdataOutputTypes();
   }
   
   private void readNormdataPersons() {
@@ -571,6 +577,32 @@ public class ProjectReader {
           if (period != null && ! period.isEmpty())
             pot.setPeriod(period);
           normdataPeriodOfTime.put(aboutId, pot);
+        }
+      }
+    } catch (Exception e) {
+      LOGGER.error("Reading of: " + normdataFile + " failed");
+      e.printStackTrace();
+    }
+  }
+
+  private void readNormdataOutputTypes() {
+    normdataOutputTypes = new HashMap<String, OutputType>();
+    String normdataFileName = Constants.getInstance().getMetadataDir() + "/normdata/wsp.skos.outputType.rdf";
+    File normdataFile = new File(normdataFileName);
+    try {
+      Document normdataFileDoc = Jsoup.parse(normdataFile, "utf-8");
+      Elements typeElems = normdataFileDoc.select("rdf|RDF > rdf|Description");
+      if (! typeElems.isEmpty()) {
+        for (int i=0; i< typeElems.size(); i++) {
+          OutputType type = new OutputType();
+          Element typeElem = typeElems.get(i);
+          String aboutId = typeElem.select("rdf|Description").attr("rdf:about");
+          type.setRdfId(aboutId);
+          String label = typeElem.select("rdf|Description > skos|prefLabel[xml:lang=\"de\"]").text();
+          if (label != null && ! label.isEmpty()) {
+            type.setLabel(label);
+          }
+          normdataOutputTypes.put(aboutId, type);
         }
       }
     } catch (Exception e) {
@@ -759,8 +791,10 @@ public class ProjectReader {
           collection.setParentRdfId(collParentRdfId);
         } 
         String collTypeRdfId = collectionElem.select("dcterms|type").attr("rdf:resource");
-        if (collTypeRdfId != null && ! collTypeRdfId.isEmpty())
-          collection.setTypeRdfId(collTypeRdfId);
+        if (collTypeRdfId != null && ! collTypeRdfId.isEmpty()) {
+          OutputType collType = getType(collTypeRdfId);
+          collection.setType(collType);
+        }
         String collAbstract = collectionElem.select("dcterms|abstract[xml:lang=\"de\"]").text();
         if (collAbstract != null && ! collAbstract.isEmpty())
           collection.setAbsstract(collAbstract);

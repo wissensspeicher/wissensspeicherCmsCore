@@ -914,6 +914,21 @@ public class IndexHandler {
     return countDeletedDocs;
   }
 
+  /**
+   * Method is thread safe.
+   * @param queryLanguage
+   * @param queryStr
+   * @param sortFieldNames
+   * @param groupByField
+   * @param fieldExpansion
+   * @param language
+   * @param from
+   * @param to
+   * @param withHitFragments
+   * @param translate
+   * @return
+   * @throws ApplicationException
+   */
   public Hits queryDocuments(String queryLanguage, String queryStr, String[] sortFieldNames, String groupByField, String fieldExpansion, String language, int from, int to, boolean withHitFragments, boolean translate) throws ApplicationException {
     Hits hits = null;
     IndexSearcher searcher = null;
@@ -951,6 +966,7 @@ public class IndexHandler {
       FacetsCollector facetsCollector = new FacetsCollector(true);
       Collector searchCollector = facetsCollector;
       TermSecondPassGroupingCollector groupByCollector = null;
+      // groupBy query: first part: build query and collectors
       if (groupByField != null) {
         Sort projectIdAlphSorted = Sort.INDEXORDER;
         int maxDocsPerGroup = 5;  // default value
@@ -1022,6 +1038,7 @@ public class IndexHandler {
           docs.add(doc);
         }
         ArrayList<GroupDocuments> groupByHits = null;
+        // groupBy query: second part: build query result 
         if (groupByField != null) {
           TopGroups<BytesRef> projectIdTopGroups = groupByCollector.getTopGroups(0);
           if (projectIdTopGroups != null) {
