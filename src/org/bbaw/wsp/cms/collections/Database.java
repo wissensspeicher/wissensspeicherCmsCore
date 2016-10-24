@@ -162,14 +162,11 @@ public class Database {
   }
   
   public String getEdocCollectionRdfId(String instituteName) throws ApplicationException {
-    String retStr = null;
-    String projectId = edocInstituteName2collectionRdfId.get(instituteName);
-    if (projectId == null)
-      projectId = "akademiepublikationen1"; // some institutes (e.g. ALLEA) have no projectId, they are mapped to "akademiepublikationen1"
-    Project p = ProjectReader.getInstance().getProject(projectId);
-    if (p != null)
-      retStr = p.getRdfId();
-    return retStr;
+    String collectionRdfId = null;
+    String edocCollectionRdfId = edocInstituteName2collectionRdfId.get(instituteName);
+    if (edocCollectionRdfId == null)
+      collectionRdfId = "akademiepublikationen1"; // some institutes (e.g. ALLEA) have no projectId, they are mapped to "akademiepublikationen1"  // TODO auf collectionRdfId umstellen
+    return collectionRdfId;
   }
   
   public static Database fromDatabaseElement(Element databaseElem) {

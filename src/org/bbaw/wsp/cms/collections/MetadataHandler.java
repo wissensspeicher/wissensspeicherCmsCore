@@ -1055,6 +1055,7 @@ public class MetadataHandler {
     }
     // edoc
     if (project.getId().equals("edoc")) {
+      // TODO auf collectionRdfId umstellen (ore|isAggregatedBy)
       String projectRdfStr = resourceElem.select("dcterms|isPartOf").attr("rdf:resource");
       if (projectRdfStr != null) {
         Project p = ProjectReader.getInstance().getProjectByRdfId(projectRdfStr);
