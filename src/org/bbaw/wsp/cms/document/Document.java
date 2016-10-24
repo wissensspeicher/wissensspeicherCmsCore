@@ -108,7 +108,7 @@ public class Document {
           if (projectRdfId != null) {
             jsonProject.put("rdfId", projectRdfId);
             String projectDetailsUrl = baseUrl + "/query/QueryMdSystem?query=" + URIUtil.encodeQuery(projectRdfId) + "&detailedSearch=true";
-            jsonProject.put("detailsUri", projectDetailsUrl);
+            jsonProject.put("detailsUrl", projectDetailsUrl);
           }
           String projectTitle = project.getTitle();
           if (projectTitle != null) {
@@ -134,7 +134,7 @@ public class Document {
             jsonCollection.put("label", collectionTitle);
           String collectionHomepageUrl = coll.getHomepageUrl();
           if (collectionHomepageUrl != null)
-            jsonCollection.put("homepageUrl", collectionHomepageUrl);
+            jsonCollection.put("url", collectionHomepageUrl);
           OutputType collectionType = coll.getType();
           if (collectionType != null) {
             jsonCollection.put("typeRdfId", collectionType.getRdfId());

@@ -190,7 +190,7 @@ public class ProjectCollection {
       retJsonObject.put("type", type.toJsonObject());
     }
     if (homepageUrl != null)
-      retJsonObject.put("homepageUrl", homepageUrl);
+      retJsonObject.put("url", homepageUrl);
     if (title != null)
       retJsonObject.put("label", title);
     if (absstract != null)

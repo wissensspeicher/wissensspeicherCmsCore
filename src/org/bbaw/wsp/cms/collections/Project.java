@@ -316,7 +316,7 @@ public class Project {
     if (projectType != null)
       retJsonObject.put("projectType", projectType);
     if (homepageUrl != null)
-      retJsonObject.put("homepageUrl", homepageUrl);
+      retJsonObject.put("url", homepageUrl);
     if (title != null)
       retJsonObject.put("label", title);
     if (absstract != null)

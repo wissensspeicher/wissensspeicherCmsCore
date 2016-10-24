@@ -40,7 +40,7 @@ public class Organization {
     if (name != null)
       retJsonObject.put("label", name);
     if (homepageUrl != null)
-      retJsonObject.put("homepageUrl", homepageUrl);
+      retJsonObject.put("url", homepageUrl);
     return retJsonObject;
   }
 }
