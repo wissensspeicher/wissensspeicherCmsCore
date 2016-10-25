@@ -162,10 +162,7 @@ public class Database {
   }
   
   public String getEdocCollectionRdfId(String instituteName) throws ApplicationException {
-    String collectionRdfId = null;
-    String edocCollectionRdfId = edocInstituteName2collectionRdfId.get(instituteName);
-    if (edocCollectionRdfId == null)
-      collectionRdfId = "akademiepublikationen1"; // some institutes (e.g. ALLEA) have no projectId, they are mapped to "akademiepublikationen1"  // TODO auf collectionRdfId umstellen
+    String collectionRdfId = edocInstituteName2collectionRdfId.get(instituteName);
     return collectionRdfId;
   }
   
@@ -204,27 +201,27 @@ public class Database {
       database.setSql(sql);
     }
     String oaiSet = databaseElem.select("db > set").text();
-    if (oaiSet != null)
+    if (oaiSet != null && ! oaiSet.isEmpty())
       database.setOaiSet(oaiSet);
     String mainResourcesTable = databaseElem.select("db > mainResourcesTable > name").text();
-    if (mainResourcesTable != null)
+    if (mainResourcesTable != null && !mainResourcesTable.isEmpty())
       database.setMainResourcesTable(mainResourcesTable);
     String mainResourcesTableId = databaseElem.select("db > mainResourcesTable > idField").text();
-    if (mainResourcesTableId != null)
+    if (mainResourcesTableId != null && ! mainResourcesTableId.isEmpty())
       database.setMainResourcesTableId(mainResourcesTableId);
     Elements mainResourcesTableFieldsElems = databaseElem.select("db > mainResourcesTable > field");
     for (int i=0; i< mainResourcesTableFieldsElems.size(); i++) {
       Element mainResourcesTableFieldsElem = mainResourcesTableFieldsElems.get(i);  // e.g. <field><dc>title</dc><db>title</db></field>
       String dcField = mainResourcesTableFieldsElem.select("field > dc").text();
       String dbField = mainResourcesTableFieldsElem.select("field > db").text();
-      if (dcField != null && dbField != null)
+      if (dcField != null && dbField != null && !dcField.isEmpty() && !dbField.isEmpty())
         database.addField(dcField, dbField);
     }
     String webIdPreStr = databaseElem.select("db > webId > preStr").text();
-    if (webIdPreStr != null)
+    if (webIdPreStr != null && ! webIdPreStr.isEmpty())
       database.setWebIdPreStr(webIdPreStr);
     String webIdAfterStr = databaseElem.select("db > webId > afterStr").text();
-    if (webIdAfterStr != null)
+    if (webIdAfterStr != null && ! webIdAfterStr.isEmpty())
       database.setWebIdAfterStr(webIdAfterStr);
     // read excludes (e.g. used in crawl or eXist resources, to eliminate these sub directories)
     Elements excludeElems = databaseElem.select("db > excludes > exclude");
@@ -232,7 +229,8 @@ public class Database {
       ArrayList<String> excludes = new ArrayList<String>();
       for (int i=0; i< excludeElems.size(); i++) {
         String excludeStr = excludeElems.get(i).text();
-        excludes.add(excludeStr);
+        if (excludeStr != null && ! excludeStr.isEmpty())
+          excludes.add(excludeStr);
       }
       database.setExcludes(excludes);
     }
@@ -241,7 +239,7 @@ public class Database {
       Element edocInstitutesElem = edocInstitutesElems.get(i);
       String instituteName = edocInstitutesElem.text();
       String collectionRdfId = edocInstitutesElem.attr("id");
-      if (instituteName != null && collectionRdfId != null)
+      if (instituteName != null && collectionRdfId != null && ! instituteName.isEmpty() && ! collectionRdfId.isEmpty())
         database.edocInstituteName2collectionRdfId.put(instituteName, collectionRdfId);
     }
     return database;

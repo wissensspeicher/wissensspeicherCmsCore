@@ -271,9 +271,9 @@ public class MetadataHandler {
     String xmlOaiDbFileName = dirName + "/" + project.getId() + "-" + db.getName() + "-" + fileCounter + ".xml";
     xmlOaiStrBuilder.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
     if (oaiSet == null)
-      xmlOaiStrBuilder.append("<!-- Resources of OAI-PMH-Server: " + db.getName() + " (Url: " + db.getRdfId() + ") -->\n");
+      xmlOaiStrBuilder.append("<!-- Resources of OAI-PMH-Server: " + db.getRdfId() + " -->\n");
     else 
-      xmlOaiStrBuilder.append("<!-- Resources of OAI-PMH-Server: " + db.getName() + " (Url: " + db.getRdfId() + ", Set: " + oaiSet + ") -->\n");
+      xmlOaiStrBuilder.append("<!-- Resources of OAI-PMH-Server: " + db.getRdfId() + ", Set: " + oaiSet + " -->\n");
     xmlOaiStrBuilder.append("<OAI-PMH>\n");
     xmlOaiStrBuilder.append("<ListRecords>\n");
     xmlOaiStrBuilder.append(recordsStrBuilder.toString());
@@ -418,6 +418,7 @@ public class MetadataHandler {
   private void appendRow2rdf(StringBuilder rdfStrBuilder, Project project, Database db, Row row) throws ApplicationException {
     String projectId = project.getId();
     String projectRdfId = project.getRdfId();
+    String collectionRdfId = null; // special: for edoc
     String mainLanguage = db.getLanguage();
     String mainResourcesTableId = db.getMainResourcesTableId();
     String webIdPreStr = db.getWebIdPreStr();
@@ -451,17 +452,34 @@ public class MetadataHandler {
           }
           String edocMetadataHtmlStr = performGetRequest(edocMetadataUrl);
           edocMetadataHtmlStr = edocMetadataHtmlStr.replaceAll("<!DOCTYPE html .+>", "");
-          String institutesStr = xQueryEvaluator.evaluateAsString(edocMetadataHtmlStr, "//*:th[text() = 'Institutes:']/following-sibling::*:td/*:a/text()");
-          // TODO das Mapping auf Sammlungen umstellen (statt Projekten)
+          Document doc = Jsoup.parse(edocMetadataHtmlStr, edocMetadataUrl);
+          String institutesStr = doc.select("th:containsOwn(Institutes:) + td > a").text();
           if (institutesStr != null && ! institutesStr.isEmpty()) {
             institutesStr = institutesStr.trim().replaceAll("BBAW / ", "");
-            String collRdfId = db.getEdocCollectionRdfId(institutesStr);
-            if (collRdfId != null)
-              projectRdfId = collRdfId;
+            String edocId = db.getEdocCollectionRdfId(institutesStr);
+            if (edocId != null) {
+              if (edocId.startsWith("http")) { // a collection rdf id is given
+                ProjectCollection collection = ProjectReader.getInstance().getCollection(edocId);
+                if (collection != null) {
+                  collectionRdfId = edocId;
+                  projectRdfId = collection.getProjectRdfId();
+                }
+              } else {  // only a projectId is given
+                Project p = ProjectReader.getInstance().getProject(edocId);
+                if (p != null) {
+                  projectRdfId = p.getRdfId();
+                } else {
+                  Project edocProject = ProjectReader.getInstance().getProject("edoc");
+                  projectRdfId = edocProject.getRdfId();
+                }
+              }
+            } else {
+              Project edocProject = ProjectReader.getInstance().getProject("edoc");  // TODO some institutes (e.g. ALLEA) have no projectId: map it to a special edoc collection (e.g. "akademiepublikationen1")
+              projectRdfId = edocProject.getRdfId();
+            }
           } else {
-            // if no institutes string is given, then they are mapped to "akademiepublikationen1"
-            Project p = ProjectReader.getInstance().getProject("akademiepublikationen1");
-            projectRdfId = p.getRdfId();
+            Project edocProject = ProjectReader.getInstance().getProject("edoc");  // TODO if no institutes string is given: map it to a special edoc collection (e.g. "akademiepublikationen1")
+            projectRdfId = edocProject.getRdfId();
           }
         }
       }
@@ -469,6 +487,8 @@ public class MetadataHandler {
     rdfStrBuilder.append("<rdf:Description rdf:about=\"" + rdfWebId + "\">\n");
     rdfStrBuilder.append("  <rdf:type rdf:resource=\"http://purl.org/dc/terms/BibliographicResource\"/>\n");
     rdfStrBuilder.append("  <dcterms:isPartOf rdf:resource=\"" + projectRdfId + "\"/>\n");
+    if (collectionRdfId != null)
+      rdfStrBuilder.append("  <ore:isAggregatedBy rdf:resource=\"" + collectionRdfId + "\"/>\n");
     rdfStrBuilder.append("  <dc:identifier rdf:resource=\"" + rdfWebId + "\">" + id + "</dc:identifier>\n");
     if (dbType.equals("oai"))
       rdfStrBuilder.append("  <dc:type>oaiRecord</dc:type>\n");
@@ -593,7 +613,7 @@ public class MetadataHandler {
                       s = s.substring(indexLs + 3).trim();
                   }
                   s = StringUtils.deresolveXmlEntities(s);
-                  if (db.getName().equals("edoc"))
+                  if (projectId.equals("edoc"))
                     rdfStrBuilder.append("  <dc:subject xsi:type=\"SWD\">" + s + "</dc:subject>\n");
                   else 
                     rdfStrBuilder.append("  <dc:subject>" + s + "</dc:subject>\n");
@@ -1055,7 +1075,6 @@ public class MetadataHandler {
     }
     // edoc
     if (project.getId().equals("edoc")) {
-      // TODO auf collectionRdfId umstellen (ore|isAggregatedBy)
       String projectRdfStr = resourceElem.select("dcterms|isPartOf").attr("rdf:resource");
       if (projectRdfStr != null) {
         Project p = ProjectReader.getInstance().getProjectByRdfId(projectRdfStr);
@@ -1063,6 +1082,11 @@ public class MetadataHandler {
           String projectId = p.getId();
           mdRecord.setProjectId(projectId);
         }
+      }
+      // collectionRdfId of which this resource is part of
+      String collectionRdfId = resourceElem.select("ore|isAggregatedBy").attr("rdf:resource");
+      if (collectionRdfId != null && ! collectionRdfId.isEmpty()) {
+        mdRecord.setCollectionRdfId(collectionRdfId);
       }
     }
     // systemType
