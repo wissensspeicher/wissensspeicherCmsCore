@@ -92,6 +92,7 @@ public class ProjectReader {
     }
   };
   private ArrayList<String> globalExcludes;
+  private String globalContentCssSelector;
   private HashMap<String, Person> normdataPersons;
   private HashMap<String, Organization> normdataOrganizations;
   private HashMap<String, Subject> normdataSubjects;
@@ -353,6 +354,10 @@ public class ProjectReader {
   
   public ArrayList<String> getGlobalExcludes() {
     return globalExcludes;
+  }
+  
+  public String getGlobalContentCssSelector() {
+    return globalContentCssSelector;
   }
   
   public ArrayList<Project> getUpdateCycleProjects() throws ApplicationException {
@@ -624,6 +629,9 @@ public class ProjectReader {
           globalExcludes.add(excludeStr);
         }
       }
+      String globalContentCssSelector = mdsystemXmlDoc.select("mdsystem > crawler > contentCssSelector").text();
+      if (globalContentCssSelector != null && ! globalContentCssSelector.isEmpty())
+        this.globalContentCssSelector = globalContentCssSelector;
     } catch (Exception e) {
       LOGGER.error("Reading of: " + mdsystemXmlFileUrl + " failed");
       e.printStackTrace();

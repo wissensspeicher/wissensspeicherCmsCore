@@ -20,6 +20,9 @@ import org.bbaw.wsp.cms.dochandler.parser.text.parser.DocumentParser;
 import org.bbaw.wsp.cms.document.MetadataRecord;
 import org.bbaw.wsp.cms.general.Constants;
 import org.bbaw.wsp.cms.transform.XslResourceTransformer;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 import de.mpg.mpiwg.berlin.mpdl.lt.general.Language;
@@ -374,6 +377,14 @@ public class Harvester {
     return isXml;
   }
 
+  public boolean isHtml(MetadataRecord mdRecord) {
+    boolean isHtml = false;
+    String mimeType = mdRecord.getType();
+    if (mimeType != null && mimeType.contains("html"))
+      return true;;
+    return isHtml;
+  }
+
   public boolean isText(String mimeType) {
     boolean isText = true;
     if (mimeType != null && (mimeType.contains("image") || mimeType.contains("audio") || mimeType.contains("video") || mimeType.contains("gzip")))
@@ -529,6 +540,7 @@ public class Harvester {
       String docId = mdRecord.getDocId();
       String language = mdRecord.getLanguage();
       boolean docIsXml = isDocXml(docId);
+      boolean docIsHtml = isHtml(mdRecord);
       String docTokensOrig = null;
       String docTokensNorm = null;
       String docTokensMorph = null;
@@ -578,66 +590,91 @@ public class Harvester {
         mdRecord.setTokenOrig(docTokensOrig); // original content words (in small letters, without blanks and punctuation marks)
         mdRecord.setTokenNorm(docTokensNorm);
         mdRecord.setTokenMorph(docTokensMorph);
-      } else {
-        DocumentParser tikaParser = new DocumentParser();
-        try {
-          IDocument tikaDoc = tikaParser.parse(docFileName);
-          docTokensOrig = tikaDoc.getTextOrig();
-          MetadataRecord tikaMDRecord = tikaDoc.getMetadata();
-          if (tikaMDRecord != null) {
-            int pageCount = tikaMDRecord.getPageCount();
-            if (pageCount <= 0)
-              pageCount = 1;  // each document at least has one page
-            mdRecord.setPageCount(pageCount);
-            if (mdRecord.getIdentifier() == null)
-              mdRecord.setIdentifier(tikaMDRecord.getIdentifier());
-            if (mdRecord.getCreator() == null) {
-              String mimeType = mdRecord.getType();
-              if (mimeType != null && mimeType.equals("application/pdf")) {
-                // nothing: creator is not the creator of the document in mostly all pdf-documents, so it is not considered
-              } else {
-                String tikaCreator = tikaMDRecord.getCreator();
-                boolean isProper = metadataHandler.isProper("author", tikaCreator);
-                if (isProper)
-                  mdRecord.setCreator(tikaCreator);
-              }
-            }
-            if (mdRecord.getTitle() == null) {
-              String mimeType = mdRecord.getType();
-              if (mimeType != null && mimeType.equals("application/pdf")) {
-                // nothing: title is not the title of the document in mostly all pdf-documents, so it is not considered
-              } else {
-                mdRecord.setTitle(tikaMDRecord.getTitle());
-              }
-            }
-            if (mdRecord.getLanguage() == null) {
-              String tikaLang = tikaMDRecord.getLanguage();
-              if (tikaLang != null) {
-                String isoLang = Language.getInstance().getISO639Code(tikaLang);
-                mdRecord.setLanguage(isoLang);
-              }
-            }
-            if (mdRecord.getPublisher() == null)
-              mdRecord.setPublisher(tikaMDRecord.getPublisher());
-            if (mdRecord.getDate() == null)
-              mdRecord.setDate(tikaMDRecord.getDate());
-            if (mdRecord.getDescription() == null)
-              mdRecord.setDescription(tikaMDRecord.getDescription());
-            if (mdRecord.getContributor() == null)
-              mdRecord.setContributor(tikaMDRecord.getContributor());
-            if (mdRecord.getCoverage() == null)
-              mdRecord.setCoverage(tikaMDRecord.getCoverage());
-            if (mdRecord.getSubject() == null)
-              mdRecord.setSubject(tikaMDRecord.getSubject());
-            if (mdRecord.getSwd() == null)
-              mdRecord.setSwd(tikaMDRecord.getSwd());
-            if (mdRecord.getDdc() == null)
-              mdRecord.setDdc(tikaMDRecord.getDdc());
-            if (mdRecord.getEncoding() == null)
-              mdRecord.setEncoding(tikaMDRecord.getEncoding());
+      } else {  // mime types: html, pdf, ... 
+        if (docIsHtml) {
+          File docFile = new File(docFileName);
+          Document doc = Jsoup.parse(docFile, "utf-8");
+          mdRecord = metadataHandler.getMetadataRecordHtml(doc, mdRecord);
+          String docText = "";
+          String dbRdfId = mdRecord.getDatabaseRdfId();
+          String collRdfId = mdRecord.getCollectionRdfId();
+          String contentCssSelector = ProjectReader.getInstance().getGlobalContentCssSelector();
+          if (collRdfId != null && dbRdfId != null) {
+            ProjectCollection coll = ProjectReader.getInstance().getCollection(collRdfId);
+            Database db = coll.getDatabase(dbRdfId);
+            String dbContentCssSelector = db.getContentCssSelector();
+            if (dbContentCssSelector != null)
+              contentCssSelector = dbContentCssSelector;
           }
-        } catch (ApplicationException e) {
-          LOGGER.error(e.getLocalizedMessage());
+          if (contentCssSelector == null)
+            contentCssSelector = "html > body";  // default fallback selector
+          Elements contentElems = doc.select(contentCssSelector);
+          if (! contentElems.isEmpty())
+            docText = contentElems.text();
+          else 
+            docText = doc.text();
+          docTokensOrig = docText;
+        } else {
+          DocumentParser tikaParser = new DocumentParser();
+          try {
+            IDocument tikaDoc = tikaParser.parse(docFileName);
+            docTokensOrig = tikaDoc.getTextOrig();
+            MetadataRecord tikaMDRecord = tikaDoc.getMetadata();
+            if (tikaMDRecord != null) {
+              int pageCount = tikaMDRecord.getPageCount();
+              if (pageCount <= 0)
+                pageCount = 1;  // each document at least has one page
+              mdRecord.setPageCount(pageCount);
+              if (mdRecord.getIdentifier() == null)
+                mdRecord.setIdentifier(tikaMDRecord.getIdentifier());
+              if (mdRecord.getCreator() == null) {
+                String mimeType = mdRecord.getType();
+                if (mimeType != null && mimeType.equals("application/pdf")) {
+                  // nothing: creator is not the creator of the document in mostly all pdf-documents, so it is not considered
+                } else {
+                  String tikaCreator = tikaMDRecord.getCreator();
+                  boolean isProper = metadataHandler.isProper("author", tikaCreator);
+                  if (isProper)
+                    mdRecord.setCreator(tikaCreator);
+                }
+              }
+              if (mdRecord.getTitle() == null) {
+                String mimeType = mdRecord.getType();
+                if (mimeType != null && mimeType.equals("application/pdf")) {
+                  // nothing: title is not the title of the document in mostly all pdf-documents, so it is not considered
+                } else {
+                  mdRecord.setTitle(tikaMDRecord.getTitle());
+                }
+              }
+              if (mdRecord.getLanguage() == null) {
+                String tikaLang = tikaMDRecord.getLanguage();
+                if (tikaLang != null) {
+                  String isoLang = Language.getInstance().getISO639Code(tikaLang);
+                  mdRecord.setLanguage(isoLang);
+                }
+              }
+              if (mdRecord.getPublisher() == null)
+                mdRecord.setPublisher(tikaMDRecord.getPublisher());
+              if (mdRecord.getDate() == null)
+                mdRecord.setDate(tikaMDRecord.getDate());
+              if (mdRecord.getDescription() == null)
+                mdRecord.setDescription(tikaMDRecord.getDescription());
+              if (mdRecord.getContributor() == null)
+                mdRecord.setContributor(tikaMDRecord.getContributor());
+              if (mdRecord.getCoverage() == null)
+                mdRecord.setCoverage(tikaMDRecord.getCoverage());
+              if (mdRecord.getSubject() == null)
+                mdRecord.setSubject(tikaMDRecord.getSubject());
+              if (mdRecord.getSwd() == null)
+                mdRecord.setSwd(tikaMDRecord.getSwd());
+              if (mdRecord.getDdc() == null)
+                mdRecord.setDdc(tikaMDRecord.getDdc());
+              if (mdRecord.getEncoding() == null)
+                mdRecord.setEncoding(tikaMDRecord.getEncoding());
+            }
+          } catch (ApplicationException e) {
+            LOGGER.error(e.getLocalizedMessage());
+          }
         }
         String mdRecordLanguage = mdRecord.getLanguage();
         String mainLanguage = project.getMainLanguage();

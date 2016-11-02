@@ -1267,8 +1267,6 @@ public class MetadataHandler {
         mdRecord = getMetadataRecordTei(xQueryEvaluator, srcUrl, mdRecord);
       else if (schemaName.equals("mets"))
         mdRecord = getMetadataRecordMets(xQueryEvaluator, srcUrl, mdRecord);
-      else if (schemaName.equals("html"))
-        mdRecord = getMetadataRecordHtml(xQueryEvaluator, srcUrl, mdRecord);
       else
         mdRecord.setSchemaName(schemaName); // all other cases: set docType to schemaName
       evaluateXQueries(xQueryEvaluator, srcUrl, mdRecord);
@@ -1610,114 +1608,60 @@ public class MetadataHandler {
     return mdRecord;
   }
 
-  private MetadataRecord getMetadataRecordHtml(XQueryEvaluator xQueryEvaluator, URL srcUrl, MetadataRecord mdRecord) throws ApplicationException {
-    String metadataXmlStr = xQueryEvaluator.evaluateAsString(srcUrl, "/html/head");
-    if (metadataXmlStr != null) {
-      String identifier = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/head/meta[@name = 'DC.identifier']/@content)");
-      if (identifier != null && ! identifier.isEmpty())
-        identifier = StringUtils.deresolveXmlEntities(identifier.trim());
-      String creator = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/head/meta[@name = 'DC.creator']/@content)");
-      boolean isProper = isProper("author", creator);
-      if (! isProper)
-        creator = "";
-      if (creator != null) {
-        creator = StringUtils.deresolveXmlEntities(creator.trim());
-        if (creator.isEmpty())
-          creator = null;
-      }      
-      String title = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/head/meta[@name = 'DC.title']/@content)");
-      if (title == null || title.isEmpty()) {
-        title = xQueryEvaluator.evaluateAsString(metadataXmlStr, "string(/head/title)");
-      }
-      if (title != null) {
-        title = StringUtils.deresolveXmlEntities(title.trim());
-        if (title.isEmpty())
-          title = null;
-      }
-      String language = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/head/meta[@name = 'DC.language']/@content)");
-      if (language != null && language.isEmpty())
-        language = null;
-      if (language != null && ! language.isEmpty()) {
-        language = StringUtils.deresolveXmlEntities(language.trim());
-        language = Language.getInstance().getISO639Code(language);
-      }
-      String publisher = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/head/meta[@name = 'DC.publisher']/@content)");
-      if (publisher != null) {
-        publisher = StringUtils.deresolveXmlEntities(publisher.trim());
-        if (publisher.isEmpty())
-          publisher = null;
-      }
-      String yearStr = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/head/meta[@name = 'DC.date']/@content)");
-      Date date = null; 
-      if (yearStr != null) {
-        yearStr = StringUtils.deresolveXmlEntities(yearStr.trim());
-        yearStr = new Util().toYearStr(yearStr);  // test if possible etc
-        if (yearStr != null) {
-          try {
-            date = new Util().toDate(yearStr + "-01-01T00:00:00.000Z");
-          } catch (Exception e) {
-            // nothing
+  public MetadataRecord getMetadataRecordHtml(Document htmlDoc, MetadataRecord mdRecord) throws ApplicationException {
+    String title = htmlDoc.select("head > title").text();
+    if (! title.isEmpty())
+      mdRecord.setTitle(title);
+    Elements docMetaElems = htmlDoc.select("head > meta");
+    if (docMetaElems != null) {
+      for (int i=0; i< docMetaElems.size(); i++) {
+        Element docMetaElem = docMetaElems.get(i);
+        String docMetaName = docMetaElem.attr("name");
+        String docMetaValue = docMetaElem.attr("content");
+        if (docMetaName != null && ! docMetaName.isEmpty() && docMetaValue != null && ! docMetaValue.isEmpty()) {
+          docMetaName = docMetaName.trim().toLowerCase();
+          docMetaValue = docMetaValue.trim();
+          if (docMetaName.equals("keywords") || docMetaName.equals("dc.subject")) {
+            mdRecord.setSubject(docMetaValue);
+          } else if (docMetaName.equals("description") || docMetaName.equals("dc.description")) {
+            mdRecord.setDescription(docMetaValue);
+          } else if (docMetaName.equals("language") || docMetaName.equals("dc.language")) {
+            String isoLang = Language.getInstance().getISO639Code(docMetaValue.toLowerCase());
+            if (isoLang != null && mdRecord.getLanguage() != null)
+              mdRecord.setLanguage(isoLang);
+          } else if (docMetaName.equals("dc.creator")) {
+            String creator = docMetaValue;
+            boolean isProper = isProper("author", creator);
+            if (isProper)
+              mdRecord.setCreator(creator);
+          } else if (docMetaName.equals("dc.contributor")) {
+            mdRecord.setContributor(docMetaValue);
+          } else if (docMetaName.equals("dc.title")) {
+            mdRecord.setTitle(docMetaValue);
+          } else if (docMetaName.equals("dc.publisher")) {
+            mdRecord.setPublisher(docMetaValue);
+          } else if (docMetaName.equals("dc.coverage")) {
+            mdRecord.setCoverage(docMetaValue);
+          } else if (docMetaName.equals("dc.date") || docMetaName.equals("dc.date.created") || docMetaName.equals("dc.date.modified")) {
+            try {
+              Date date = new Util().toDate(docMetaValue);
+              mdRecord.setDate(date);
+            } catch (Exception e) {
+              // nothing
+            }
+          } else if (docMetaName.equals("dc.rights")) {
+            mdRecord.setRights(docMetaValue);
+          } else if (docMetaName.equals("dc.accessRights")) {
+            mdRecord.setAccessRights(docMetaValue);
+          } else if (docMetaName.equals("dc.license")) {
+            mdRecord.setLicense(docMetaValue);
           }
         }
       }
-      String subject = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/head/meta[@name = 'DC.subject']/@content)");
-      if (subject != null) {
-        subject = StringUtils.deresolveXmlEntities(subject.trim());
-        if (subject.isEmpty())
-          subject = null;
-      }
-      String description = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/head/meta[@name = 'DC.description']/@content)");
-      if (description != null) {
-        description = StringUtils.deresolveXmlEntities(description.trim());
-        if (description.isEmpty())
-          description = null;
-      }
-      String rights = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/head/meta[@name = 'DC.rights']/@content)");
-      if (rights != null) {
-        rights = StringUtils.deresolveXmlEntities(rights.trim());
-        if (rights.isEmpty())
-          rights = null;
-      }
-      String license = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/head/meta[@name = 'DC.license']/@content)");
-      if (license != null) {
-        license = StringUtils.deresolveXmlEntities(license.trim());
-        if (license.isEmpty())
-          license = null;
-      }
-      String accessRights = xQueryEvaluator.evaluateAsStringValueJoined(metadataXmlStr, "string(/head/meta[@name = 'DC.accessRights']/@content)");
-      if (accessRights != null) {
-        accessRights = StringUtils.deresolveXmlEntities(accessRights.trim());
-        if (accessRights.isEmpty())
-          accessRights = null;
-      }
-      mdRecord.setIdentifier(identifier);
-      mdRecord.setLanguage(language);
-      if (mdRecord.getCreator() == null)
-        mdRecord.setCreator(creator);
-      if (mdRecord.getTitle() == null)
-        mdRecord.setTitle(title);
-      if (mdRecord.getPublisher() == null)
-        mdRecord.setPublisher(publisher);
-      if (mdRecord.getRights() == null)
-        mdRecord.setRights(rights);
-      if (mdRecord.getDate() == null)
-        mdRecord.setDate(date);
-      if (mdRecord.getSubject() == null)
-        mdRecord.setSubject(subject);
-      if (mdRecord.getDescription() == null)
-        mdRecord.setDescription(description);
-      if (mdRecord.getLicense() == null)
-        mdRecord.setLicense(license);
-      if (mdRecord.getAccessRights() == null)
-        mdRecord.setAccessRights(accessRights);
     }
-    String pageCountStr = xQueryEvaluator.evaluateAsString(srcUrl, "count(//pb)");
-    int pageCount = Integer.valueOf(pageCountStr);
-    mdRecord.setPageCount(pageCount);
-    mdRecord.setSchemaName("html");
     return mdRecord;
   }
-
+  
   public boolean isProper(String fieldName, String fieldValue) {
     if (fieldValue == null)
       return true;

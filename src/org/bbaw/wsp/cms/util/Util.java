@@ -31,7 +31,12 @@ public class Util {
       DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
       retDate = dateFormat.parse(xsDateStr);
     } catch (ParseException e) {
-      throw new ApplicationException(e);
+      try {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        retDate = dateFormat.parse(xsDateStr);
+      } catch (ParseException e2) {
+        throw new ApplicationException(e2);
+      }
     }
     return retDate;
   }
