@@ -629,7 +629,7 @@ public class ProjectReader {
           globalExcludes.add(excludeStr);
         }
       }
-      String globalContentCssSelector = mdsystemXmlDoc.select("mdsystem > crawler > contentCssSelector").text();
+      String globalContentCssSelector = mdsystemXmlDoc.select("mdsystem > contentCssSelector").text();
       if (globalContentCssSelector != null && ! globalContentCssSelector.isEmpty())
         this.globalContentCssSelector = globalContentCssSelector;
     } catch (Exception e) {
