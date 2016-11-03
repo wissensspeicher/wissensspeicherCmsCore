@@ -600,6 +600,8 @@ public class Harvester {
           String dbRdfId = mdRecord.getDatabaseRdfId();
           String collRdfId = mdRecord.getCollectionRdfId();
           ArrayList<String> contentCssSelectors = ProjectReader.getInstance().getGlobalContentCssSelectors();
+          if (contentCssSelectors == null)
+            contentCssSelectors = new ArrayList<String>();
           if (collRdfId != null) {
             ProjectCollection coll = ProjectReader.getInstance().getCollection(collRdfId);
             ArrayList<String> collContentCssSelectors = coll.getContentCssSelectors();
@@ -614,7 +616,7 @@ public class Harvester {
               }
             }
           }
-          if (contentCssSelectors == null) {
+          if (contentCssSelectors.isEmpty()) {
             contentCssSelectors = new ArrayList<String>();
             contentCssSelectors.add("html > body");  // default fallback selector
           }
