@@ -92,7 +92,7 @@ public class ProjectReader {
     }
   };
   private ArrayList<String> globalExcludes;
-  private String globalContentCssSelector;
+  private ArrayList<String> globalContentCssSelectors;
   private HashMap<String, Person> normdataPersons;
   private HashMap<String, Organization> normdataOrganizations;
   private HashMap<String, Subject> normdataSubjects;
@@ -114,6 +114,7 @@ public class ProjectReader {
 	private void init() throws ApplicationException {
     projects = new HashMap<String, Project>();
     projectsByRdfId = new HashMap<String, Project>();
+    globalContentCssSelectors = new ArrayList<String>();
     globalExcludes = new ArrayList<String>();
     readNormdataFiles();
     readMdsystemXmlFile();
@@ -356,8 +357,8 @@ public class ProjectReader {
     return globalExcludes;
   }
   
-  public String getGlobalContentCssSelector() {
-    return globalContentCssSelector;
+  public ArrayList<String> getGlobalContentCssSelectors() {
+    return globalContentCssSelectors;
   }
   
   public ArrayList<Project> getUpdateCycleProjects() throws ApplicationException {
@@ -629,9 +630,13 @@ public class ProjectReader {
           globalExcludes.add(excludeStr);
         }
       }
-      String globalContentCssSelector = mdsystemXmlDoc.select("mdsystem > contentCssSelector").text();
-      if (globalContentCssSelector != null && ! globalContentCssSelector.isEmpty())
-        this.globalContentCssSelector = globalContentCssSelector;
+      Elements contentCssSelectors = mdsystemXmlDoc.select("mdsystem > contentCssSelectors > contentCssSelector");
+      if (contentCssSelectors != null && ! contentCssSelectors.isEmpty()) {
+        for (Element contentCssSelector : contentCssSelectors) {
+          String contentCssSelectorStr = contentCssSelector.text();
+          globalContentCssSelectors.add(contentCssSelectorStr);
+        }
+      }
     } catch (Exception e) {
       LOGGER.error("Reading of: " + mdsystemXmlFileUrl + " failed");
       e.printStackTrace();
@@ -870,6 +875,17 @@ public class ProjectReader {
           String databaseRdfId = database.getRdfId();
           collection.addDatabase(databaseRdfId, database);
           project.addDatabase(databaseRdfId, database);  // redundant also in project
+        }
+        // read contentCssSelectors
+        Elements contentCssSelectorElems = collectionElem.select("collection > contentCssSelectors > contentCssSelector");
+        if (contentCssSelectorElems != null && ! contentCssSelectorElems.isEmpty()) {
+          ArrayList<String> contentCssSelectors = new ArrayList<String>();
+          for (int j=0; j< contentCssSelectorElems.size(); j++) {
+            String contentCssSelectorStr = contentCssSelectorElems.get(j).text();
+            if (contentCssSelectorStr != null && ! contentCssSelectorStr.isEmpty())
+              contentCssSelectors.add(contentCssSelectorStr);
+          }
+          collection.setContentCssSelectors(contentCssSelectors);
         }
       }
       String updateCycle = projectXmlDoc.select("wsp > updateCycle").text();

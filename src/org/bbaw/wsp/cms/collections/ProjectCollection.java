@@ -21,6 +21,7 @@ public class ProjectCollection {
   private String homepageUrl;
   private String absstract; // abstract of project
   private String title;
+  private ArrayList<String> contentCssSelectors; // css selectors to find the content element in html pages e.g.: "#content"
   private ArrayList<ProjectCollection> collections = new ArrayList<ProjectCollection>(); // sub collections
   private ArrayList<String> languages = new ArrayList<String>(); // collection languages; first language is the main language
   private HashMap<String, Person> staff = new HashMap<String, Person>();  // collection staff: key is personRdfId and value is person
@@ -150,6 +151,14 @@ public class ProjectCollection {
 
   public void setTitle(String title) {
     this.title = title;
+  }
+
+  public ArrayList<String> getContentCssSelectors() {
+    return contentCssSelectors;
+  }
+
+  public void setContentCssSelectors(ArrayList<String> contentCssSelectors) {
+    this.contentCssSelectors = contentCssSelectors;
   }
 
   public String getRdfPath() {

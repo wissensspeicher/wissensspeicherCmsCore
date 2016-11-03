@@ -23,7 +23,7 @@ public class Database {
   private String webIdPreStr;
   private String webIdAfterStr;
   private ArrayList<String> excludes; // exclude urls e.g. for eXist directories or crawls
-  private String contentCssSelector; // css selector to find the content element in html pages e.g.: "#content"
+  private ArrayList<String> contentCssSelectors; // css selectors to find the content element in html pages e.g.: "#content"
   private int depth; // if crawl db: crawl depth
   private Hashtable<String, XQuery> xQueries;
   private Hashtable<String, String> dcField2dbField = new Hashtable<String, String>();
@@ -138,12 +138,12 @@ public class Database {
     this.excludes = excludes;
   }
 
-  public String getContentCssSelector() {
-    return contentCssSelector;
+  public ArrayList<String> getContentCssSelectors() {
+    return contentCssSelectors;
   }
 
-  public void setContentCssSelector(String contentCssSelector) {
-    this.contentCssSelector = contentCssSelector;
+  public void setContentCssSelectors(ArrayList<String> contentCssSelectors) {
+    this.contentCssSelectors = contentCssSelectors;
   }
 
   public int getDepth() {
@@ -243,10 +243,16 @@ public class Database {
       }
       database.setExcludes(excludes);
     }
-    // read contentCssSelector
-    String contentCssSelector = databaseElem.select("db > contentCssSelector").text();
-    if (contentCssSelector != null && ! contentCssSelector.isEmpty()) {
-      database.setContentCssSelector(contentCssSelector);
+    // read contentCssSelectors
+    Elements contentCssSelectorElems = databaseElem.select("db > contentCssSelectors > contentCssSelector");
+    if (contentCssSelectorElems != null && ! contentCssSelectorElems.isEmpty()) {
+      ArrayList<String> contentCssSelectors = new ArrayList<String>();
+      for (int i=0; i< contentCssSelectorElems.size(); i++) {
+        String contentCssSelectorStr = contentCssSelectorElems.get(i).text();
+        if (contentCssSelectorStr != null && ! contentCssSelectorStr.isEmpty())
+          contentCssSelectors.add(contentCssSelectorStr);
+      }
+      database.setContentCssSelectors(contentCssSelectors);
     }
     Elements edocInstitutesElems = databaseElem.select("db > institutes > institute");
     for (int i=0; i< edocInstitutesElems.size(); i++) {

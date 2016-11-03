@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.bbaw.wsp.cms.collections.DocumentTokenizer;
 import org.bbaw.wsp.cms.dochandler.parser.document.IDocument;
@@ -598,17 +599,27 @@ public class Harvester {
           String docText = "";
           String dbRdfId = mdRecord.getDatabaseRdfId();
           String collRdfId = mdRecord.getCollectionRdfId();
-          String contentCssSelector = ProjectReader.getInstance().getGlobalContentCssSelector();
-          if (collRdfId != null && dbRdfId != null) {
+          ArrayList<String> contentCssSelectors = ProjectReader.getInstance().getGlobalContentCssSelectors();
+          if (collRdfId != null) {
             ProjectCollection coll = ProjectReader.getInstance().getCollection(collRdfId);
-            Database db = coll.getDatabase(dbRdfId);
-            String dbContentCssSelector = db.getContentCssSelector();
-            if (dbContentCssSelector != null)
-              contentCssSelector = dbContentCssSelector;
+            ArrayList<String> collContentCssSelectors = coll.getContentCssSelectors();
+            if (collContentCssSelectors != null)
+              contentCssSelectors.addAll(collContentCssSelectors);
+            if (dbRdfId != null) {
+              Database db = coll.getDatabase(dbRdfId);
+              if (db != null) {
+                ArrayList<String> dbContentCssSelectors = db.getContentCssSelectors();
+                if (dbContentCssSelectors != null)
+                  contentCssSelectors.addAll(dbContentCssSelectors);
+              }
+            }
           }
-          if (contentCssSelector == null)
-            contentCssSelector = "html > body";  // default fallback selector
-          Elements contentElems = doc.select(contentCssSelector);
+          if (contentCssSelectors == null) {
+            contentCssSelectors = new ArrayList<String>();
+            contentCssSelectors.add("html > body");  // default fallback selector
+          }
+          String contentCssSelectorsSelect = StringUtils.join(contentCssSelectors, ", ");
+          Elements contentElems = doc.select(contentCssSelectorsSelect);
           if (! contentElems.isEmpty())
             docText = contentElems.text();
           else 
