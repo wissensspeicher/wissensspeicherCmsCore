@@ -58,13 +58,11 @@ public class MetadataRecord implements Cloneable, Serializable {
   private int pageCount; // number of pages
   private String extent; // extent string
   private String tokenOrig; // original fulltext tokens of resource
-  private String tokenReg; // regularized fulltext tokens of resource
   private String tokenNorm; // normalized fulltext tokens of resource
   private String tokenMorph; // morphological fulltext tokens of resource
   private String contentXml; // original xml content of the resources file
   private String content; // original text content of the resources file (without xml tags)
   private Hashtable<String, XQuery> xQueries; // dynamic xQueries of xml resources (with name, code, result)
-  private String realDocUrl; // e.g. the URL to the eDoc (not the index.html)
   private String system; // "crawl", "eXist" or "dbRecord" (for dbType: mysql, postgres and for dbName jdg) or "oaiRecord" (for oai databases: dta, edoc) 
   
   private static Hashtable<String, String> notOutputFields = new Hashtable<String, String>();
@@ -87,14 +85,6 @@ public class MetadataRecord implements Cloneable, Serializable {
 
   public void setId(int id) {
     this.id = id;
-  }
-
-  public String getRealDocUrl() {
-    return realDocUrl;
-  }
-
-  public void setRealDocUrl(String realDocUrl) {
-    this.realDocUrl = realDocUrl;
   }
 
   public String getSystem() {
@@ -385,14 +375,6 @@ public class MetadataRecord implements Cloneable, Serializable {
     this.tokenOrig = tokenOrig;
   }
 
-  public String getTokenReg() {
-    return tokenReg;
-  }
-
-  public void setTokenReg(String tokenReg) {
-    this.tokenReg = tokenReg;
-  }
-
   public String getTokenNorm() {
     return tokenNorm;
   }
@@ -498,7 +480,7 @@ public class MetadataRecord implements Cloneable, Serializable {
   }
 
   public String toString() {
-    return "MetadataRecord [docId=" + docId + ", identifier=" + identifier + ", uri=" + uri + ", webUri=" + webUri + ", projectId=" + projectId + ", schemaName=" + schemaName + ", language=" + language + ", creator=" + creator + ", title=" + title + ", publisher=" + publisher + ", date=" + date + ", description=" + description + ", subject=" + subject + ", contributor=" + contributor + ", coverage=" + coverage + ", ddc=" + ddc + ", swd=" + swd + ", persons=" + persons + ", places=" + places + ", type=" + type + ", rights=" + rights + ", license=" + license + ", accessRights=" + accessRights + ", lastModified=" + lastModified + ", encoding=" + encoding + ", pageCount=" + pageCount + ", tokenOrig=" + tokenOrig + ", tokenReg=" + tokenReg + ", tokenNorm=" + tokenNorm + ", tokenMorph=" + tokenMorph + ", contentXml=" + contentXml + ", content=" + content + ", xQueries=" + xQueries + ", realDocUrl=" + realDocUrl + "]";
+    return "MetadataRecord [docId=" + docId + ", identifier=" + identifier + ", uri=" + uri + ", webUri=" + webUri + ", projectId=" + projectId + ", schemaName=" + schemaName + ", language=" + language + ", creator=" + creator + ", title=" + title + ", publisher=" + publisher + ", date=" + date + ", description=" + description + ", subject=" + subject + ", contributor=" + contributor + ", coverage=" + coverage + ", ddc=" + ddc + ", swd=" + swd + ", persons=" + persons + ", places=" + places + ", type=" + type + ", rights=" + rights + ", license=" + license + ", accessRights=" + accessRights + ", lastModified=" + lastModified + ", encoding=" + encoding + ", pageCount=" + pageCount + ", tokenOrig=" + tokenOrig + ", tokenNorm=" + tokenNorm + ", tokenMorph=" + tokenMorph + ", contentXml=" + contentXml + ", content=" + content + ", xQueries=" + xQueries + "]";
   }
   
   public static MetadataRecord fromRecordElement(Element record) throws ApplicationException {
@@ -603,7 +585,6 @@ public class MetadataRecord implements Cloneable, Serializable {
   public void setAllNull() {
     entitiesDetails = null;
     tokenOrig = null; 
-    tokenReg = null; 
     tokenNorm = null; 
     tokenMorph = null; 
     contentXml = null; 

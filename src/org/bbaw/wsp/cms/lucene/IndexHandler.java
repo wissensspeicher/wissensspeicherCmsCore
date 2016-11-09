@@ -708,13 +708,6 @@ public class IndexHandler {
         if (projectId.equals("jdg"))
           tokenOrigField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
       }
-      String docTokensReg = mdRecord.getTokenReg();
-      if (docTokensReg != null) {
-        Field tokenRegField = new Field("tokenReg", docTokensReg, ftStoredAnalyzed);
-        doc.add(tokenRegField);
-        if (projectId.equals("jdg"))
-          tokenRegField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
-      }
       String docTokensNorm = mdRecord.getTokenNorm();
       if (docTokensNorm != null) {
         Field tokenNormField = new Field("tokenNorm", docTokensNorm, ftStoredAnalyzed);
