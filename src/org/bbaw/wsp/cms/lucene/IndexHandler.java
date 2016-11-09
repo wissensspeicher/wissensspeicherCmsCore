@@ -722,13 +722,6 @@ public class IndexHandler {
         if (projectId.equals("jdg"))
           tokenMorphField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
       }
-      String contentXml = mdRecord.getContentXml();
-      if (contentXml != null) {
-        Field contentXmlField = new Field("xmlContent", contentXml, ftStoredAnalyzed);
-        doc.add(contentXmlField);
-        if (projectId.equals("jdg"))
-          contentXmlField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
-      }
       String content = mdRecord.getContent();
       if (content != null) {
         Field contentField = new Field("content", content, ftStoredAnalyzed);
