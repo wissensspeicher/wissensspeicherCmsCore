@@ -86,12 +86,6 @@ public class TikaMetadataMapper implements IMetadataFields {
           mdRecord.setDate(insert);
         }
         break;
-      case IMetadataFields.DC_DATE_CREATED:
-        final Date insertCreated = mapDate(value);
-        if (insertCreated != null) {
-          mdRecord.setCreationDate(insertCreated);
-        }
-        break;
       case IMetadataFields.DC_TITLE:
         mdRecord.setTitle(value);
         break;

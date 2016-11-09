@@ -57,13 +57,6 @@ public class MetadataRecord implements Cloneable, Serializable {
   private String encoding; // charset such as "utf-8" or "iso-8859-1"
   private int pageCount; // number of pages
   private String extent; // extent string
-  private String urn; // uniform resource name, e.g. the KOBV urn, e.g. urn:nbn:de:kobv:b4360-10020
-  private String edocCollection;  // edoc collection. e.g. "BBAW / Schriftenreihen / Berichte und Abhandlungen / Berichte und Abhandlungen - Band 10", in case of multi values: separated by semicolon
-  private String documentType; // e.g. the KOBV "Dokumentenart"
-  private String isbn; // isbn, e.g. the KOBV ISBN
-  private Date creationDate; // e.g. the KOBV "Erstellungsjahr"
-  private Date publishingDate; // e.g. the KOBV "Publikationsdatum"
-  private String inPublication; // e.g. the KOBV publication (in: ...)
   private String tokenOrig; // original fulltext tokens of resource
   private String tokenReg; // regularized fulltext tokens of resource
   private String tokenNorm; // normalized fulltext tokens of resource
@@ -141,46 +134,6 @@ public class MetadataRecord implements Cloneable, Serializable {
       return false;
   }
 
-  public String getDocumentType() {
-    return documentType;
-  }
-
-  public void setDocumentType(String documentType) {
-    this.documentType = documentType;
-  }
-
-  public String getIsbn() {
-    return isbn;
-  }
-
-  public void setIsbn(String isbn) {
-    this.isbn = isbn;
-  }
-
-  public Date getCreationDate() {
-    return creationDate;
-  }
-
-  public void setCreationDate(Date creationDate) {
-    this.creationDate = creationDate;
-  }
-
-  public Date getPublishingDate() {
-    return publishingDate;
-  }
-
-  public void setPublishingDate(Date publishingDate) {
-    this.publishingDate = publishingDate;
-  }
-
-  public String getEdocCollection() {
-    return edocCollection;
-  }
-
-  public void setEdocCollection(String edocCollection) {
-    this.edocCollection = edocCollection;
-  }
-
   public String getSwd() {
     return swd;
   }
@@ -195,14 +148,6 @@ public class MetadataRecord implements Cloneable, Serializable {
 
   public void setDdc(String ddc) {
     this.ddc = ddc;
-  }
-
-  public String getUrn() {
-    return urn;
-  }
-
-  public void setUrn(String urn) {
-    this.urn = urn;
   }
 
   public String getDocId() {
@@ -552,16 +497,8 @@ public class MetadataRecord implements Cloneable, Serializable {
     this.xQueries = xQueries;
   }
 
-  public String getInPublication() {
-    return inPublication;
-  }
-
-  public void setInPublication(String inPublication) {
-    this.inPublication = inPublication;
-  }
-
   public String toString() {
-    return "MetadataRecord [docId=" + docId + ", identifier=" + identifier + ", uri=" + uri + ", webUri=" + webUri + ", projectId=" + projectId + ", schemaName=" + schemaName + ", language=" + language + ", creator=" + creator + ", title=" + title + ", publisher=" + publisher + ", date=" + date + ", description=" + description + ", subject=" + subject + ", contributor=" + contributor + ", coverage=" + coverage + ", ddc=" + ddc + ", swd=" + swd + ", persons=" + persons + ", places=" + places + ", type=" + type + ", rights=" + rights + ", license=" + license + ", accessRights=" + accessRights + ", lastModified=" + lastModified + ", encoding=" + encoding + ", pageCount=" + pageCount + ", urn=" + urn + ", documentType=" + documentType + ", isbn=" + isbn + ", creationDate=" + creationDate + ", publishingDate=" + publishingDate + ", inPublication=" + inPublication + ", tokenOrig=" + tokenOrig + ", tokenReg=" + tokenReg + ", tokenNorm=" + tokenNorm + ", tokenMorph=" + tokenMorph + ", contentXml=" + contentXml + ", content=" + content + ", xQueries=" + xQueries + ", realDocUrl=" + realDocUrl + "]";
+    return "MetadataRecord [docId=" + docId + ", identifier=" + identifier + ", uri=" + uri + ", webUri=" + webUri + ", projectId=" + projectId + ", schemaName=" + schemaName + ", language=" + language + ", creator=" + creator + ", title=" + title + ", publisher=" + publisher + ", date=" + date + ", description=" + description + ", subject=" + subject + ", contributor=" + contributor + ", coverage=" + coverage + ", ddc=" + ddc + ", swd=" + swd + ", persons=" + persons + ", places=" + places + ", type=" + type + ", rights=" + rights + ", license=" + license + ", accessRights=" + accessRights + ", lastModified=" + lastModified + ", encoding=" + encoding + ", pageCount=" + pageCount + ", tokenOrig=" + tokenOrig + ", tokenReg=" + tokenReg + ", tokenNorm=" + tokenNorm + ", tokenMorph=" + tokenMorph + ", contentXml=" + contentXml + ", content=" + content + ", xQueries=" + xQueries + ", realDocUrl=" + realDocUrl + "]";
   }
   
   public static MetadataRecord fromRecordElement(Element record) throws ApplicationException {

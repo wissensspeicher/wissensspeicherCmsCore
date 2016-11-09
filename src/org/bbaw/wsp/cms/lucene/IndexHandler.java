@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Enumeration;
@@ -376,6 +375,12 @@ public class IndexHandler {
         if (projectId.equals("jdg"))
           collectionRdfIdField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
         doc.add(collectionRdfIdField);
+        ProjectCollection coll = ProjectReader.getInstance().getCollection(collectionRdfId);
+        String collectionType = coll.getType().getLabel();
+        if (collectionType != null) {
+          Field collectionTypeField = new Field("collectionType", collectionType, ftStoredAnalyzed);
+          doc.add(collectionTypeField);
+        }
         Field collectionRdfIdFieldSorted = new SortedDocValuesField("collectionRdfIdSorted", new BytesRef(collectionRdfId));
         doc.add(collectionRdfIdFieldSorted);
         FacetField facetField = new FacetField("collectionRdfId", collectionRdfId);
@@ -462,15 +467,6 @@ public class IndexHandler {
         doc.add(facetField);
       }
       String yearStr = mdRecord.getYear();
-      if (yearStr == null) {
-        Date pubDate = mdRecord.getPublishingDate();
-        if (pubDate != null) {
-          Calendar cal = Calendar.getInstance();
-          cal.setTime(pubDate);
-          int year = cal.get(Calendar.YEAR);
-          yearStr = String.valueOf(year);
-        }
-      }
       if (yearStr != null) {
         Field dateField = new Field("date", yearStr, ftStoredAnalyzed);
         doc.add(dateField);
@@ -2179,6 +2175,7 @@ public class IndexHandler {
       documentsFieldAnalyzers.put("projectRdfId", new KeywordAnalyzer());
       documentsFieldAnalyzers.put("organizationRdfId", new KeywordAnalyzer());
       documentsFieldAnalyzers.put("collectionRdfId", new KeywordAnalyzer());
+      documentsFieldAnalyzers.put("collectionType", new StandardAnalyzer());
       documentsFieldAnalyzers.put("author", new StandardAnalyzer());
       documentsFieldAnalyzers.put("title", new StandardAnalyzer());
       documentsFieldAnalyzers.put("alternativeTitle", new StandardAnalyzer());
@@ -2298,6 +2295,7 @@ public class IndexHandler {
     fields.add("projectRdfId");
     fields.add("organizationRdfId");
     fields.add("collectionRdfId");
+    fields.add("collectionType");
     fields.add("databaseRdfId");
     fields.add("author");
     fields.add("authorDetails");
