@@ -34,21 +34,22 @@ public class Project {
   private String title;  // title of project
   private String absstract; // abstract of project
   private String homepageUrl; // homepage url
-  private String temporalRdfId; // temporal, e.g. "http://wissensspeicher.bbaw.de/rdf/normdata/Neuzeit"
   private String spatialRdfId; // spatial, e.g. "http://sws.geonames.org/2950157/"
+  private String temporalRdfId; // temporal, e.g. "http://wissensspeicher.bbaw.de/rdf/normdata/Neuzeit"
   private Date lastModified; // last modified
   private String status; // e.g. "aktiv" or "abgeschlossen" 
-  private String valid; // e.g. "start=1970; end=2014-12-31; name=Laufzeit"
+  private String duration; // e.g. "start=1970; end=2014-12-31; name=Laufzeit"
   private String updateCycle; // e.g. "monthly" or "halfyearly" 
   private String mainLanguage;
   private ArrayList<String> languages = new ArrayList<String>(); // all languages
+  private ArrayList<String> languageRdfIds = new ArrayList<String>(); // language rdf ids
   private HashMap<String, ProjectCollection> allProjectCollections = new HashMap<String, ProjectCollection>();  // all project collections: key is collectionRdfId and value is collection
   private ArrayList<ProjectCollection> collections = new ArrayList<ProjectCollection>();  // sub collections
   private HashMap<String, Database> databases = new HashMap<String, Database>();  // project databases (redundant to collection databases): key is databaseRdfId and value is database
-  private HashMap<String, Person> staff = new HashMap<String, Person>();  // project staff: key is personRdfId and value is person
   private HashMap<String, Subject> subjects = new HashMap<String, Subject>();  // project subjects: key is subjectRdfId and value is subject
-  private HashMap<String, String> projectRelations = new HashMap<String, String>();  // project relations: key is projectRdfId and value is the same projectRdfId
   private HashMap<String, Person> gndRelatedPersons = new HashMap<String, Person>();  // project gnd related persons: key is personRdfId and value is person
+  private HashMap<String, Person> staff = new HashMap<String, Person>();  // project staff: key is personRdfId and value is person
+  private HashMap<String, String> projectRelations = new HashMap<String, String>();  // project relations: key is projectRdfId and value is the same projectRdfId
 
   public ProjectCollection getCollection(String collRdfId) {
     return allProjectCollections.get(collRdfId);
@@ -90,6 +91,14 @@ public class Project {
     languages.add(language);
   }
   
+  public void addLanguageRdfId(String languageRdfId) {
+    languageRdfIds.add(languageRdfId);
+  }
+  
+  public ArrayList<String> getLanguageRdfIds() {
+    return languageRdfIds;
+  }
+  
   public void addProjectRelation(String projectRdfId) {
     projectRelations.put(projectRdfId, projectRdfId);
   }
@@ -111,29 +120,96 @@ public class Project {
   }
   
   public ArrayList<Person> getStaff() {
-    ArrayList<Person> staffPersons = new ArrayList<Person>();
+    ArrayList<Person> staffPersons = null;
     if (staff != null) {
+      staffPersons = new ArrayList<Person>();
       java.util.Collection<Person> values = this.staff.values();
       for (Person person : values) {
         staffPersons.add(person);
       }
+      Collections.sort(staffPersons, personNameComparator);
     }
-    Collections.sort(staffPersons, personNameComparator);
     return staffPersons;
   }
   
   public ArrayList<Subject> getSubjects() {
-    ArrayList<Subject> subjects = new ArrayList<Subject>();
-    if (staff != null) {
+    ArrayList<Subject> subjects = null;
+    if (this.subjects != null) {
+      subjects = new ArrayList<Subject>();
       java.util.Collection<Subject> values = this.subjects.values();
       for (Subject subject : values) {
         subjects.add(subject);
       }
+      Collections.sort(subjects, subjectNameComparator);
     }
-    Collections.sort(subjects, subjectNameComparator);
     return subjects;
   }
   
+  public ArrayList<String> getSubjectsStr() {
+    ArrayList<String> subjects = null;
+    if (this.subjects != null) {
+      subjects = new ArrayList<String>();
+      java.util.Collection<Subject> subjectValues = this.subjects.values();
+      for (Subject subject : subjectValues) {
+        String subjectStr = subject.getName();
+        if (subjectStr != null)
+          subjects.add(subjectStr);
+      }
+      Collections.sort(subjects);
+    }
+    return subjects;
+  }
+  
+  public String getPlace() throws ApplicationException {
+    String place = null;
+    if (spatialRdfId != null) {
+      Location location = ProjectReader.getInstance().getLocation(spatialRdfId);
+      if (location != null)
+        place = location.getLabel();
+    }
+    return place;
+  }
+  
+  public String getPeriodOfTime() throws ApplicationException {
+    String periodOfTimeStr = null;
+    if (temporalRdfId != null) {
+      PeriodOfTime periodOdTime = ProjectReader.getInstance().getPeriodOfTime(temporalRdfId);
+      if (periodOdTime != null)
+        periodOfTimeStr = periodOdTime.getLabel();
+    }
+    return periodOfTimeStr;
+  }
+  
+  public ArrayList<String> getGndRelatedPersonsStr() {
+    ArrayList<String> gndRelatedPersons = null;
+    if (this.gndRelatedPersons != null) {
+      gndRelatedPersons = new ArrayList<String>();
+      java.util.Collection<Person> personValues = this.gndRelatedPersons.values();
+      for (Person person : personValues) {
+        String personStr = person.getName();
+        if (personStr != null)
+          gndRelatedPersons.add(personStr);
+      }
+      Collections.sort(gndRelatedPersons);
+    }
+    return gndRelatedPersons;
+  }
+
+  public ArrayList<String> getStaffStr() {
+    ArrayList<String> staffPersons = null;
+    if (this.staff != null) {
+      staffPersons = new ArrayList<String>();
+      java.util.Collection<Person> personValues = this.staff.values();
+      for (Person person : personValues) {
+        String personStr = person.getName();
+        if (personStr != null)
+          staffPersons.add(personStr);
+      }
+      Collections.sort(staffPersons);
+    }
+    return staffPersons;
+  }
+
   public ArrayList<Database> getDatabases() {
     ArrayList<Database> retDBs = new ArrayList<Database>();
     if (databases != null) {
@@ -278,11 +354,11 @@ public class Project {
   public void setStatus(String status) {
     this.status = status;
   }
-  public String getValid() {
-    return valid;
+  public String getDuration() {
+    return duration;
   }
-  public void setValid(String valid) {
-    this.valid = valid;
+  public void setDuration(String duration) {
+    this.duration = duration;
   }
   public String getHomepageUrl() {
     return homepageUrl;

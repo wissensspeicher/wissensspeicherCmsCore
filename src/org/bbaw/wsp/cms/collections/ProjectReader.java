@@ -99,6 +99,7 @@ public class ProjectReader {
   private HashMap<String, Location> normdataLocations;
   private HashMap<String, PeriodOfTime> normdataPeriodOfTime;
   private HashMap<String, OutputType> normdataOutputTypes;
+  private HashMap<String, NormdataLanguage> normdataLanguages;
   private HashMap<String, Project> projects;  // key is id string and value is project
   private HashMap<String, Project> projectsByRdfId;  // key is projectRdfId string and value is project
   private HashMap<String, ProjectCollection> collections = new HashMap<String, ProjectCollection>();  // all project collections: key is collectionRdfId and value is collection
@@ -173,10 +174,10 @@ public class ProjectReader {
     ArrayList<Project> projects = new ArrayList<Project>();
     java.util.Collection<Project> projectValues = this.projects.values();
     for (Project project : projectValues) {
-      String validStr = project.getValid();
-      if (validStr != null) {
-        String startStr = validStr.replaceAll(".*start=(.*?);.*", "$1"); 
-        String endStr = validStr.replaceAll(".*end=(.*?);.*", "$1");
+      String durationStr = project.getDuration();
+      if (durationStr != null) {
+        String startStr = durationStr.replaceAll(".*start=(.*?);.*", "$1"); 
+        String endStr = durationStr.replaceAll(".*end=(.*?);.*", "$1");
         Util util = new Util();
         Date from = util.toDate(startStr);
         Date to = util.toDate(endStr);
@@ -353,6 +354,10 @@ public class ProjectReader {
     return normdataOutputTypes.get(aboutId);
   }
   
+  public NormdataLanguage getNormdataLanguage(String aboutId) {
+    return normdataLanguages.get(aboutId);
+  }
+  
   public ArrayList<String> getGlobalExcludes() {
     return globalExcludes;
   }
@@ -408,6 +413,7 @@ public class ProjectReader {
     readNormdataLocations();
     readNormdataPeriodOfTime();
     readNormdataOutputTypes();
+    readNormdataLanguages();
   }
   
   private void readNormdataPersons() {
@@ -617,6 +623,32 @@ public class ProjectReader {
     }
   }
 
+  private void readNormdataLanguages() {
+    normdataLanguages = new HashMap<String, NormdataLanguage>();
+    String normdataFileName = Constants.getInstance().getMetadataDir() + "/normdata/wsp.normdata.languages.rdf";
+    File normdataFile = new File(normdataFileName);
+    try {
+      Document normdataFileDoc = Jsoup.parse(normdataFile, "utf-8");
+      Elements langElems = normdataFileDoc.select("rdf|RDF > rdf|Description");
+      if (! langElems.isEmpty()) {
+        for (int i=0; i< langElems.size(); i++) {
+          NormdataLanguage lang = new NormdataLanguage();
+          Element langElem = langElems.get(i);
+          String aboutId = langElem.select("rdf|Description").attr("rdf:about");
+          lang.setRdfId(aboutId);
+          String label = langElem.select("rdf|Description > rdfs|label[xml:lang=\"de\"]").text();
+          if (label != null && ! label.isEmpty()) {
+            lang.setLabel(label);
+          }
+          normdataLanguages.put(aboutId, lang);
+        }
+      }
+    } catch (Exception e) {
+      LOGGER.error("Reading of: " + normdataFile + " failed");
+      e.printStackTrace();
+    }
+  }
+
   private void readMdsystemXmlFile() {
 	  URL mdsystemXmlFileUrl = null;
 	  try {
@@ -702,22 +734,18 @@ public class ProjectReader {
         return null;
       }
       project.setRdfId(projectRdfId);
+      String parentRdfId = projectElem.select("dcterms|isPartOf").attr("rdf:resource");
+      if (parentRdfId != null && ! parentRdfId.isEmpty())
+        project.setParentRdfId(parentRdfId);
+      String organizationRdfId = projectElem.select("gnd|hierarchicalSuperior").attr("rdf:resource");
+      if (organizationRdfId != null && ! organizationRdfId.isEmpty())
+        project.setOrganizationRdfId(organizationRdfId);
       String projectId = projectElem.select("foaf|nick").text();
       if (projectId == null || projectId.isEmpty()) {
         LOGGER.error("ProjectReader: " + projectRdfFile + ": no project \"<foaf:nick>\" defined");
         return null;
       }
       project.setId(projectId);
-      Elements projectTypeElems = projectElem.select("dcterms|type");
-      for (int i=0; i< projectTypeElems.size(); i++) {
-        Element projectTypeElem = projectTypeElems.get(i);
-        String projectTypeRdfId = projectTypeElem.attr("rdf:resource");
-        if (projectTypeRdfId != null && projectTypeRdfId.contains("projectType")) {
-          int index = projectTypeRdfId.lastIndexOf("#");
-          String projectType = projectTypeRdfId.substring(index + 1);
-          project.setProjectType(projectType);
-        }
-      }
       String title = projectElem.select("foaf|name[xml:lang=\"de\"]").text();
       if (title == null || title.isEmpty())
         title = projectElem.select("foaf|name").text();
@@ -726,24 +754,25 @@ public class ProjectReader {
       String absstract = projectElem.select("dcterms|abstract[xml:lang=\"de\"]").text();
       if (absstract != null && ! absstract.isEmpty())
         project.setAbstract(absstract);
-      String status = projectElem.select("foaf|status").text();
+      Elements projectTypeElems = projectElem.select("dcterms|type");
+      for (int i=0; i< projectTypeElems.size(); i++) {
+        Element projectTypeElem = projectTypeElems.get(i);
+        String projectTypeRdfId = projectTypeElem.attr("rdf:resource");
+        if (projectTypeRdfId != null && projectTypeRdfId.contains("projectType")) { 
+          int index = projectTypeRdfId.lastIndexOf("#");
+          String projectType = projectTypeRdfId.substring(index + 1);
+          project.setProjectType(projectType); // e.g. "Vorhaben"
+        }
+      }
+      String duration = projectElem.select("dcterms|valid").text(); // e.g. "start=1970; end=2014-12-31; name=Laufzeit"
+      if (duration != null && ! duration.isEmpty())
+        project.setDuration(duration);
+      String status = projectElem.select("foaf|status").text(); // e.g. "abgeschlossen"
       if (status != null && ! status.isEmpty())
         project.setStatus(status);
-      String valid = projectElem.select("dcterms|valid").text();
-      if (valid != null && ! valid.isEmpty())
-        project.setValid(valid);
       String homepageUrl = projectElem.select("foaf|homepage").attr("rdf:resource");
       if (homepageUrl != null && ! homepageUrl.isEmpty())
         project.setHomepageUrl(homepageUrl);
-      String temporalRdfId = projectElem.select("dcterms|temporal").attr("rdf:resource"); 
-      if (temporalRdfId != null && ! temporalRdfId.isEmpty())
-        project.setTemporalRdfId(temporalRdfId);
-      String parentRdfId = projectElem.select("dcterms|isPartOf").attr("rdf:resource");
-      if (parentRdfId != null && ! parentRdfId.isEmpty())
-        project.setParentRdfId(parentRdfId);
-      String organizationRdfId = projectElem.select("gnd|hierarchicalSuperior").attr("rdf:resource");
-      if (organizationRdfId != null && ! organizationRdfId.isEmpty())
-        project.setOrganizationRdfId(organizationRdfId);
       Elements languageElems = projectElem.select("dcterms|language");
       if (languageElems != null && ! languageElems.isEmpty()) {
         for (int i=0; i< languageElems.size(); i++) {
@@ -752,6 +781,7 @@ public class ProjectReader {
           if (languageRdfId != null && ! languageRdfId.isEmpty()) {
             String language = getIso639Language(languageRdfId); // international 3 character id (e.g. "ger")
             project.addLanguage(language);
+            project.addLanguageRdfId(languageRdfId);
             if (i == 0)
               project.setMainLanguage(language);
           }
@@ -759,14 +789,6 @@ public class ProjectReader {
       } else {
         project.setMainLanguage("ger");
         LOGGER.error("ProjectReader: " + projectRdfFile + ": no project \"<dcterms:language>\" defined. Project: \"" + projectId + "\" set to default language: ger");
-      }
-      Elements staffElems = projectElem.select("dcterms|contributor");
-      for (int i=0; i< staffElems.size(); i++) {
-        Element staffPersonElem = staffElems.get(i);
-        String personRdfId = staffPersonElem.attr("rdf:resource");
-        Person person = getPerson(personRdfId);
-        if (person != null)
-          project.addStaffPerson(personRdfId, person);
       }
       Elements subjectElems = projectElem.select("dcterms|subject");
       for (int i=0; i< subjectElems.size(); i++) {
@@ -778,20 +800,31 @@ public class ProjectReader {
       }
       String spatialRdfId = projectElem.select("dcterms|spatial").attr("rdf:resource");
       if (spatialRdfId != null && ! spatialRdfId.isEmpty())
-        project.setSpatialRdfId(spatialRdfId);
-      Elements relatedElems = projectElem.select("dcterms|relation");
-      for (int i=0; i< relatedElems.size(); i++) {
-        Element relatedElem = relatedElems.get(i);
-        String relatedRdfId = relatedElem.attr("rdf:resource");
-        project.addProjectRelation(relatedRdfId);
-      }
+        project.setSpatialRdfId(spatialRdfId);  // subject place, e.g. "http://sws.geonames.org/3631298/"
+      String temporalRdfId = projectElem.select("dcterms|temporal").attr("rdf:resource"); 
+      if (temporalRdfId != null && ! temporalRdfId.isEmpty())
+        project.setTemporalRdfId(temporalRdfId); // e.g. "http://wissensspeicher.bbaw.de/rdf/normdata/Neuzeit"
       Elements gndRelatedPersonsElems = projectElem.select("gnd|relatedPerson");
       for (int i=0; i< gndRelatedPersonsElems.size(); i++) {
         Element gndRelatedPersonsElem = gndRelatedPersonsElems.get(i);
         String personRdfId = gndRelatedPersonsElem.attr("rdf:resource");
         Person person = getPerson(personRdfId);
         if (person != null)
-          project.addGndRelatedPerson(personRdfId, person);
+          project.addGndRelatedPerson(personRdfId, person); // subject person, e.g. "http://wissensspeicher.bbaw.de/rdf/normdata/HumboldtAlexander"
+      }
+      Elements staffElems = projectElem.select("dcterms|contributor");
+      for (int i=0; i< staffElems.size(); i++) {
+        Element staffPersonElem = staffElems.get(i);
+        String personRdfId = staffPersonElem.attr("rdf:resource");
+        Person person = getPerson(personRdfId);
+        if (person != null)
+          project.addStaffPerson(personRdfId, person); // e.g. "http://wissensspeicher.bbaw.de/rdf/normdata/Leitner"
+      }
+      Elements relatedElems = projectElem.select("dcterms|relation");
+      for (int i=0; i< relatedElems.size(); i++) {
+        Element relatedElem = relatedElems.get(i);
+        String relatedRdfId = relatedElem.attr("rdf:resource");
+        project.addProjectRelation(relatedRdfId);
       }
       Elements collectionElems = projectRdfDoc.select("rdf|RDF > rdf|Description > rdf|type[rdf:resource*=Aggregation]");
       for (int i=0; i< collectionElems.size(); i++) {
@@ -803,21 +836,21 @@ public class ProjectReader {
         if (collParentRdfId != null && ! collParentRdfId.isEmpty()) {
           collection.setParentRdfId(collParentRdfId);
         } 
-        String collTypeRdfId = collectionElem.select("dcterms|type").attr("rdf:resource");
-        if (collTypeRdfId != null && ! collTypeRdfId.isEmpty()) {
-          OutputType collType = getType(collTypeRdfId);
-          collection.setType(collType);
+        String collectionTitle = collectionElem.select("dcterms|title").text();
+        if (collectionTitle != null && ! collectionTitle.isEmpty()) {
+          collection.setTitle(collectionTitle);
         }
         String collAbstract = collectionElem.select("dcterms|abstract[xml:lang=\"de\"]").text();
         if (collAbstract != null && ! collAbstract.isEmpty())
-          collection.setAbsstract(collAbstract);
-        Elements collectionStaffElems = collectionElem.select("dcterms|contributor");
-        for (int j=0; j< collectionStaffElems.size(); j++) {
-          Element staffPersonElem = collectionStaffElems.get(j);
-          String personRdfId = staffPersonElem.attr("rdf:resource");
-          Person person = getPerson(personRdfId);
-          if (person != null)
-            collection.addStaffPerson(personRdfId, person);
+          collection.setAbstract(collAbstract);
+        String collTypeRdfId = collectionElem.select("dcterms|type").attr("rdf:resource");
+        if (collTypeRdfId != null && ! collTypeRdfId.isEmpty()) {
+          OutputType collType = getType(collTypeRdfId);
+          collection.setType(collType); // e.g. "BibliographischeDatenbank"
+        }
+        String collectionHomepageUrl = collectionElem.select("foaf|homepage").attr("rdf:resource");
+        if (collectionHomepageUrl != null && ! collectionHomepageUrl.isEmpty()) {
+          collection.setHomepageUrl(collectionHomepageUrl);
         }
         Elements collectionLanguageElems = collectionElem.select("dcterms|language");
         for (int j=0; j< collectionLanguageElems.size(); j++) {
@@ -826,15 +859,38 @@ public class ProjectReader {
           if (collLanguageRdfId != null && ! collLanguageRdfId.isEmpty()) {
             String language = getIso639Language(collLanguageRdfId); // international 3 character id (e.g. "ger")
             collection.addLanguage(language);
+            collection.addLanguageRdfId(collLanguageRdfId);
           }
         }
-        String collectionHomepageUrl = collectionElem.select("foaf|homepage").attr("rdf:resource");
-        if (collectionHomepageUrl != null && ! collectionHomepageUrl.isEmpty()) {
-          collection.setHomepageUrl(collectionHomepageUrl);
+        Elements collectionSubjectElems = collectionElem.select("dcterms|subject");
+        for (int j=0; j<collectionSubjectElems.size(); j++) {
+          Element subjectElem = collectionSubjectElems.get(j);
+          String subjectRdfId = subjectElem.attr("rdf:resource");
+          Subject subject = getSubject(subjectRdfId);
+          if (subject != null)
+            collection.addSubject(subjectRdfId, subject);
         }
-        String collectionTitle = collectionElem.select("dcterms|title").text();
-        if (collectionTitle != null && ! collectionTitle.isEmpty()) {
-          collection.setTitle(collectionTitle);
+        String collectionSpatialRdfId = collectionElem.select("dcterms|spatial").attr("rdf:resource");
+        if (collectionSpatialRdfId != null && ! collectionSpatialRdfId.isEmpty())
+          collection.setSpatialRdfId(collectionSpatialRdfId);  // subject place, e.g. "http://sws.geonames.org/3631298/"
+        String collectionTemporalRdfId = collectionElem.select("dcterms|temporal").attr("rdf:resource"); 
+        if (collectionTemporalRdfId != null && ! collectionTemporalRdfId.isEmpty())
+          collection.setTemporalRdfId(collectionTemporalRdfId); // e.g. "http://wissensspeicher.bbaw.de/rdf/normdata/Neuzeit"
+        Elements collectionGndRelatedPersonsElems = collectionElem.select("gnd|relatedPerson");
+        for (int j=0; j<collectionGndRelatedPersonsElems.size(); j++) {
+          Element gndRelatedPersonsElem = collectionGndRelatedPersonsElems.get(j);
+          String personRdfId = gndRelatedPersonsElem.attr("rdf:resource");
+          Person person = getPerson(personRdfId);
+          if (person != null)
+            collection.addGndRelatedPerson(personRdfId, person); // subject person, e.g. "http://wissensspeicher.bbaw.de/rdf/normdata/HumboldtAlexander"
+        }
+        Elements collectionStaffElems = collectionElem.select("dcterms|contributor");
+        for (int j=0; j< collectionStaffElems.size(); j++) {
+          Element staffPersonElem = collectionStaffElems.get(j);
+          String personRdfId = staffPersonElem.attr("rdf:resource");
+          Person person = getPerson(personRdfId);
+          if (person != null)
+            collection.addStaffPerson(personRdfId, person);
         }
         project.addCollection(collRdfId, collection);
         collections.put(collRdfId, collection);

@@ -1,6 +1,7 @@
 package org.bbaw.wsp.cms.collections;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -21,10 +22,15 @@ public class ProjectCollection {
   private String homepageUrl;
   private String absstract; // abstract of project
   private String title;
+  private String spatialRdfId; // spatial, e.g. "http://sws.geonames.org/2950157/"
+  private String temporalRdfId; // temporal, e.g. "http://wissensspeicher.bbaw.de/rdf/normdata/Neuzeit"
+  private ArrayList<String> languages = new ArrayList<String>(); // collection languages; first language is the main language
+  private ArrayList<String> languageRdfIds = new ArrayList<String>(); // collection language rdf ids; first language is the main language
+  private HashMap<String, Subject> subjects = new HashMap<String, Subject>();  // project subjects: key is subjectRdfId and value is subject
+  private HashMap<String, Person> gndRelatedPersons = new HashMap<String, Person>();  // project gnd related persons: key is personRdfId and value is person
+  private HashMap<String, Person> staff = new HashMap<String, Person>();  // collection staff: key is personRdfId and value is person
   private ArrayList<String> contentCssSelectors; // css selectors to find the content element in html pages e.g.: "#content"
   private ArrayList<ProjectCollection> collections = new ArrayList<ProjectCollection>(); // sub collections
-  private ArrayList<String> languages = new ArrayList<String>(); // collection languages; first language is the main language
-  private HashMap<String, Person> staff = new HashMap<String, Person>();  // collection staff: key is personRdfId and value is person
   private HashMap<String, Database> databases = new HashMap<String, Database>();  // // collection databases: key is databaseRdfId and value is database
   
   public ProjectCollection(String projectRdfId) {
@@ -33,6 +39,14 @@ public class ProjectCollection {
   
   public void addLanguage(String language) {
     languages.add(language);
+  }
+  
+  public void addLanguageRdfId(String languageRdfId) {
+    languageRdfIds.add(languageRdfId);
+  }
+  
+  public ArrayList<String> getLanguageRdfIds() {
+    return languageRdfIds;
   }
   
   public void addSubCollection(ProjectCollection collection) {
@@ -60,6 +74,84 @@ public class ProjectCollection {
     return languages;  
   }
   
+  public String getSpatialRdfId() {
+    return spatialRdfId;
+  }
+
+  public void setSpatialRdfId(String spatialRdfId) {
+    this.spatialRdfId = spatialRdfId;
+  }
+
+  public String getPlace() throws ApplicationException {
+    String place = null;
+    if (spatialRdfId != null) {
+      Location location = ProjectReader.getInstance().getLocation(spatialRdfId);
+      if (location != null)
+        place = location.getLabel();
+    }
+    return place;
+  }
+  
+  public String getPeriodOfTime() throws ApplicationException {
+    String periodOfTimeStr = null;
+    if (temporalRdfId != null) {
+      PeriodOfTime periodOdTime = ProjectReader.getInstance().getPeriodOfTime(temporalRdfId);
+      if (periodOdTime != null)
+        periodOfTimeStr = periodOdTime.getLabel();
+    }
+    return periodOfTimeStr;
+  }
+  
+  public String getTemporalRdfId() {
+    return temporalRdfId;
+  }
+
+  public void setTemporalRdfId(String temporalRdfId) {
+    this.temporalRdfId = temporalRdfId;
+  }
+
+  public void addSubject(String subjectRdfId, Subject subject) {
+    subjects.put(subjectRdfId, subject);
+  }
+  
+  public Subject getSubject(String subjectRdfId) {
+    return subjects.get(subjectRdfId);
+  }
+
+  public ArrayList<String> getSubjectsStr() {
+    ArrayList<String> subjects = null;
+    if (this.subjects != null) {
+      subjects = new ArrayList<String>();
+      java.util.Collection<Subject> subjectValues = this.subjects.values();
+      for (Subject subject : subjectValues) {
+        String subjectStr = subject.getName();
+        if (subjectStr != null)
+          subjects.add(subjectStr);
+      }
+      Collections.sort(subjects);
+    }
+    return subjects;
+  }
+
+  public void addGndRelatedPerson(String personRdfId, Person person) {
+    gndRelatedPersons.put(personRdfId, person);
+  }
+  
+  public ArrayList<String> getGndRelatedPersonsStr() {
+    ArrayList<String> gndRelatedPersons = null;
+    if (this.gndRelatedPersons != null) {
+      gndRelatedPersons = new ArrayList<String>();
+      java.util.Collection<Person> personValues = this.gndRelatedPersons.values();
+      for (Person person : personValues) {
+        String personStr = person.getName();
+        if (personStr != null)
+          gndRelatedPersons.add(personStr);
+      }
+      Collections.sort(gndRelatedPersons);
+    }
+    return gndRelatedPersons;
+  }
+
   public void addStaffPerson(String personRdfId, Person person) {
     staff.put(personRdfId, person);
   }
@@ -68,6 +160,21 @@ public class ProjectCollection {
     return staff.get(personRdfId);
   }
   
+  public ArrayList<String> getStaffStr() {
+    ArrayList<String> staffPersons = null;
+    if (this.staff != null) {
+      staffPersons = new ArrayList<String>();
+      java.util.Collection<Person> personValues = this.staff.values();
+      for (Person person : personValues) {
+        String personStr = person.getName();
+        if (personStr != null)
+          staffPersons.add(personStr);
+      }
+      Collections.sort(staffPersons);
+    }
+    return staffPersons;
+  }
+
   public Database getDatabase(String databaseRdfId) {
     return databases.get(databaseRdfId);
   }
@@ -137,11 +244,11 @@ public class ProjectCollection {
     this.homepageUrl = homepageUrl;
   }
 
-  public String getAbsstract() {
+  public String getAbstract() {
     return absstract;
   }
 
-  public void setAbsstract(String absstract) {
+  public void setAbstract(String absstract) {
     this.absstract = absstract;
   }
 

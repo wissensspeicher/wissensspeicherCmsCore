@@ -79,6 +79,8 @@ import org.apache.lucene.search.vectorhighlight.FieldQuery;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.BytesRef;
+import org.bbaw.wsp.cms.collections.NormdataLanguage;
+import org.bbaw.wsp.cms.collections.OutputType;
 import org.bbaw.wsp.cms.collections.Project;
 import org.bbaw.wsp.cms.collections.ProjectCollection;
 import org.bbaw.wsp.cms.collections.ProjectReader;
@@ -283,7 +285,7 @@ public class IndexHandler {
           String collectionLabel = collection.getTitle();
           if (collectionLabel != null && ! collectionLabel.isEmpty())
             collectionLabels = collectionLabels + " " + collectionLabel;
-          String collectionAbstract = collection.getAbsstract();
+          String collectionAbstract = collection.getAbstract();
           if (collectionAbstract != null && ! collectionAbstract.isEmpty())
             collectionAbstracts = collectionAbstracts + " " + collectionAbstract;
         }
@@ -354,6 +356,7 @@ public class IndexHandler {
         doc.add(facetField);
       }
       String projectRdfId = mdRecord.getProjectRdfId();
+      ProjectReader projectReader = ProjectReader.getInstance();
       if (projectRdfId != null) {
         Field projectRdfIdField = new Field("projectRdfId", projectRdfId, ftStoredAnalyzed);
         if (projectId.equals("jdg"))
@@ -361,6 +364,70 @@ public class IndexHandler {
         doc.add(projectRdfIdField);
         FacetField facetField = new FacetField("projectRdfId", projectRdfId);
         doc.add(facetField);
+        Project project = projectReader.getProjectByRdfId(projectRdfId);
+        String projectLabel = project.getTitle();
+        if (projectLabel != null) {
+          Field projectLabelField = new Field("projectLabel", projectLabel, ftStoredAnalyzed);
+          doc.add(projectLabelField);
+        }
+        String projectAbstract = project.getAbstract();
+        if (projectAbstract != null) {
+          Field projectAbstractField = new Field("projectAbstract", projectAbstract, ftStoredAnalyzed);
+          doc.add(projectAbstractField);
+        }
+        String projectType = project.getProjectType();
+        if (projectType != null) {
+          Field projectTypeField = new Field("projectType", projectType, ftStoredAnalyzed);
+          doc.add(projectTypeField);
+        }
+        String projectDuration = project.getDuration();
+        if (projectDuration != null) {
+          Field projectDurationField = new Field("projectDuration", projectDuration, ftStoredAnalyzed);
+          doc.add(projectDurationField);
+        }
+        String projectStatus = project.getStatus();
+        if (projectStatus != null) {
+          Field projectStatusField = new Field("projectStatus", projectStatus, ftStoredAnalyzed);
+          doc.add(projectStatusField);
+        }
+        ArrayList<String> projectLanguageRdfIds = project.getLanguageRdfIds();
+        if (projectLanguageRdfIds != null && ! projectLanguageRdfIds.isEmpty()) {
+          String mainLanguageRdfId = projectLanguageRdfIds.get(0);
+          NormdataLanguage normdataLanguage = projectReader.getNormdataLanguage(mainLanguageRdfId);
+          if (normdataLanguage != null) {
+            String projectMainLanguage = normdataLanguage.getLabel();
+            Field projectMainLanguageField = new Field("projectMainLanguage", projectMainLanguage, ftStoredAnalyzed);
+            doc.add(projectMainLanguageField);
+          }
+        }
+        ArrayList<String> projectSubjects = project.getSubjectsStr();
+        if (projectSubjects != null) {
+          String projectSubjectsStr = org.apache.commons.lang3.StringUtils.join(projectSubjects, "###");
+          Field projectSubjectsField = new Field("projectSubjects", projectSubjectsStr, ftStoredAnalyzed);
+          doc.add(projectSubjectsField);
+        }
+        String projectPlace = project.getPlace();
+        if (projectPlace != null) {
+          Field projectPlaceField = new Field("projectPlace", projectPlace, ftStoredAnalyzed);
+          doc.add(projectPlaceField);
+        }
+        String projectPeriodOfTime = project.getPeriodOfTime();
+        if (projectPeriodOfTime != null) {
+          Field projectPeriodOfTimeField = new Field("projectPeriodOfTime", projectPeriodOfTime, ftStoredAnalyzed);
+          doc.add(projectPeriodOfTimeField);
+        }
+        ArrayList<String> projectGndRelatedPersons = project.getGndRelatedPersonsStr();
+        if (projectGndRelatedPersons != null) {
+          String projectGndRelatedPersonsStr = org.apache.commons.lang3.StringUtils.join(projectGndRelatedPersons, "###");
+          Field projectGndRelatedPersonsField = new Field("projectPersons", projectGndRelatedPersonsStr, ftStoredAnalyzed);
+          doc.add(projectGndRelatedPersonsField);
+        }
+        ArrayList<String> projectStaff = project.getStaffStr();
+        if (projectStaff != null) {
+          String projectStaffStr = org.apache.commons.lang3.StringUtils.join(projectStaff, "###");
+          Field projectStaffField = new Field("projectStaff", projectStaffStr, ftStoredAnalyzed);
+          doc.add(projectStaffField);
+        }
       }
       String organizationRdfId = mdRecord.getOrganizationRdfId();
       if (organizationRdfId != null) {
@@ -375,16 +442,71 @@ public class IndexHandler {
         if (projectId.equals("jdg"))
           collectionRdfIdField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
         doc.add(collectionRdfIdField);
-        ProjectCollection coll = ProjectReader.getInstance().getCollection(collectionRdfId);
-        String collectionType = coll.getType().getLabel();
-        if (collectionType != null) {
-          Field collectionTypeField = new Field("collectionType", collectionType, ftStoredAnalyzed);
-          doc.add(collectionTypeField);
-        }
         Field collectionRdfIdFieldSorted = new SortedDocValuesField("collectionRdfIdSorted", new BytesRef(collectionRdfId));
         doc.add(collectionRdfIdFieldSorted);
         FacetField facetField = new FacetField("collectionRdfId", collectionRdfId);
         doc.add(facetField);
+        ProjectCollection collection = projectReader.getCollection(collectionRdfId);
+        String collectionLabel = collection.getTitle();
+        if (collectionLabel != null) {
+          Field collectionLabelField = new Field("collectionLabel", collectionLabel, ftStoredAnalyzed);
+          doc.add(collectionLabelField);
+        }
+        String collectionAbstract = collection.getAbstract();
+        if (collectionAbstract != null) {
+          Field collectionAbstractField = new Field("collectionAbstract", collectionAbstract, ftStoredAnalyzed);
+          doc.add(collectionAbstractField);
+        }
+        OutputType collectionType = collection.getType();
+        if (collectionType != null) {
+          String collectionTypeLabel = collectionType.getLabel();
+          Field collectionTypeField = new Field("collectionType", collectionTypeLabel, ftStoredAnalyzed);
+          doc.add(collectionTypeField);
+        }
+        ArrayList<String> collectionLanguageRdfIds = collection.getLanguageRdfIds();
+        if (collectionLanguageRdfIds != null && ! collectionLanguageRdfIds.isEmpty()) {
+          String collectionLanguagesStr = "";
+          for (int i=0; i<collectionLanguageRdfIds.size(); i++) {
+            String languageRdfId = collectionLanguageRdfIds.get(i);
+            NormdataLanguage normdataLanguage = projectReader.getNormdataLanguage(languageRdfId);
+            if (normdataLanguage != null) {
+              String collectionLanguage = normdataLanguage.getLabel();
+              collectionLanguagesStr = collectionLanguagesStr + collectionLanguage + "###";
+            }
+          }
+          if (collectionLanguagesStr.endsWith("###"))
+            collectionLanguagesStr.substring(0, collectionLanguagesStr.length() - 3); // remove last "###"
+          Field collectionLanguagesField = new Field("collectionLanguages", collectionLanguagesStr, ftStoredAnalyzed);
+          doc.add(collectionLanguagesField);
+        }
+        ArrayList<String> collectionSubjects = collection.getSubjectsStr();
+        if (collectionSubjects != null) {
+          String collectionSubjectsStr = org.apache.commons.lang3.StringUtils.join(collectionSubjects, "###");
+          Field collectionSubjectsField = new Field("collectionSubjects", collectionSubjectsStr, ftStoredAnalyzed);
+          doc.add(collectionSubjectsField);
+        }
+        String collectionPlace = collection.getPlace();
+        if (collectionPlace != null) {
+          Field collectionPlacePlaceField = new Field("collectionPlace", collectionPlace, ftStoredAnalyzed);
+          doc.add(collectionPlacePlaceField);
+        }
+        String collectionPeriodOfTime = collection.getPeriodOfTime();
+        if (collectionPeriodOfTime != null) {
+          Field collectionPeriodOfTimeField = new Field("collectionPeriodOfTime", collectionPeriodOfTime, ftStoredAnalyzed);
+          doc.add(collectionPeriodOfTimeField);
+        }
+        ArrayList<String> collectionGndRelatedPersons = collection.getGndRelatedPersonsStr();
+        if (collectionGndRelatedPersons != null) {
+          String collectionGndRelatedPersonsStr = org.apache.commons.lang3.StringUtils.join(collectionGndRelatedPersons, "###");
+          Field collectiontGndRelatedPersonsField = new Field("collectionPersons", collectionGndRelatedPersonsStr, ftStoredAnalyzed);
+          doc.add(collectiontGndRelatedPersonsField);
+        }
+        ArrayList<String> collectionStaff = collection.getStaffStr();
+        if (collectionStaff != null) {
+          String collectionStaffStr = org.apache.commons.lang3.StringUtils.join(collectionStaff, "###");
+          Field collectionStaffField = new Field("collectionStaff", collectionStaffStr, ftStoredAnalyzed);
+          doc.add(collectionStaffField);
+        }
       }
       String dbRdfId = mdRecord.getDatabaseRdfId();
       if (dbRdfId != null) {
