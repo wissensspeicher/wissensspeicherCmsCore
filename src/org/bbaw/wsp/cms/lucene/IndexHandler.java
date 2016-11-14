@@ -390,15 +390,10 @@ public class IndexHandler {
           Field projectStatusField = new Field("projectStatus", projectStatus, ftStoredAnalyzed);
           doc.add(projectStatusField);
         }
-        ArrayList<String> projectLanguageRdfIds = project.getLanguageRdfIds();
-        if (projectLanguageRdfIds != null && ! projectLanguageRdfIds.isEmpty()) {
-          String mainLanguageRdfId = projectLanguageRdfIds.get(0);
-          NormdataLanguage normdataLanguage = projectReader.getNormdataLanguage(mainLanguageRdfId);
-          if (normdataLanguage != null) {
-            String projectMainLanguage = normdataLanguage.getLabel();
-            Field projectMainLanguageField = new Field("projectMainLanguage", projectMainLanguage, ftStoredAnalyzed);
-            doc.add(projectMainLanguageField);
-          }
+        String projectMainLanguage = project.getMainLanguageLabel();
+        if (projectMainLanguage != null) {
+          Field projectMainLanguageField = new Field("projectMainLanguage", projectMainLanguage, ftStoredAnalyzed);
+          doc.add(projectMainLanguageField);
         }
         ArrayList<String> projectSubjects = project.getSubjectsStr();
         if (projectSubjects != null) {
@@ -463,16 +458,12 @@ public class IndexHandler {
           Field collectionTypeField = new Field("collectionType", collectionTypeLabel, ftStoredAnalyzed);
           doc.add(collectionTypeField);
         }
-        ArrayList<String> collectionLanguageRdfIds = collection.getLanguageRdfIds();
-        if (collectionLanguageRdfIds != null && ! collectionLanguageRdfIds.isEmpty()) {
+        ArrayList<String> collectionLanguageLabels = collection.getLanguageLabels();
+        if (collectionLanguageLabels != null) {
           String collectionLanguagesStr = "";
-          for (int i=0; i<collectionLanguageRdfIds.size(); i++) {
-            String languageRdfId = collectionLanguageRdfIds.get(i);
-            NormdataLanguage normdataLanguage = projectReader.getNormdataLanguage(languageRdfId);
-            if (normdataLanguage != null) {
-              String collectionLanguage = normdataLanguage.getLabel();
-              collectionLanguagesStr = collectionLanguagesStr + collectionLanguage + "###";
-            }
+          for (int i=0; i<collectionLanguageLabels.size(); i++) {
+            String languageLabel = collectionLanguageLabels.get(i);
+            collectionLanguagesStr = collectionLanguagesStr + languageLabel + "###";
           }
           if (collectionLanguagesStr.endsWith("###"))
             collectionLanguagesStr.substring(0, collectionLanguagesStr.length() - 3); // remove last "###"

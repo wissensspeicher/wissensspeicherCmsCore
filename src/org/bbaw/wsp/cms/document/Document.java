@@ -137,8 +137,7 @@ public class Document {
             jsonCollection.put("url", collectionHomepageUrl);
           OutputType collectionType = coll.getType();
           if (collectionType != null) {
-            jsonCollection.put("typeRdfId", collectionType.getRdfId());
-            jsonCollection.put("typeLabel", collectionType.getLabel());
+            jsonCollection.put("type", collectionType.getLabel());
           }
           jsonObject.put("collection", jsonCollection);
         }

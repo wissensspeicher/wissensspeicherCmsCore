@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import org.apache.commons.httpclient.util.URIUtil;
 import org.bbaw.wsp.cms.document.Person;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -375,6 +376,17 @@ public class Project {
   public String getMainLanguage() {
     return mainLanguage;
   }
+  public String getMainLanguageLabel() throws ApplicationException {
+    String mainLanguageLabel = null;
+    ArrayList<String> languageRdfIds = getLanguageRdfIds();
+    if (languageRdfIds != null && ! languageRdfIds.isEmpty()) {
+      String mainLanguageRdfId = languageRdfIds.get(0);
+      NormdataLanguage normdataLanguage = ProjectReader.getInstance().getNormdataLanguage(mainLanguageRdfId);
+      if (normdataLanguage != null)
+        mainLanguageLabel = normdataLanguage.getLabel();
+    }
+    return mainLanguageLabel;
+  }
   public void setMainLanguage(String mainLanguage) {
     this.mainLanguage = mainLanguage;
   }
@@ -391,41 +403,48 @@ public class Project {
       retJsonObject.put("type", type);
     if (projectType != null)
       retJsonObject.put("projectType", projectType);
-    if (homepageUrl != null)
+    if (homepageUrl != null) {
+      try {
+        homepageUrl = URIUtil.encodeQuery(homepageUrl);
+      } catch (Exception e) {
+        // nothing
+      }
       retJsonObject.put("url", homepageUrl);
+    }
     if (title != null)
       retJsonObject.put("label", title);
     if (absstract != null)
       retJsonObject.put("abstract", absstract);
-    if (temporalRdfId != null) {
-      PeriodOfTime pot = ProjectReader.getInstance().getPeriodOfTime(temporalRdfId);
-      if (pot != null)
-        retJsonObject.put("periodOfTime", pot.toJsonObject());
-    }
-    if (spatialRdfId != null) {
-      Location location = ProjectReader.getInstance().getLocation(spatialRdfId);
-      if (location != null)
-        retJsonObject.put("location", location.toJsonObject());
-    }
+    if (duration != null)
+      retJsonObject.put("duration", duration);
     if (status != null)
       retJsonObject.put("status", status);
-    if (mainLanguage != null)
-      retJsonObject.put("mainLanguage", mainLanguage);
-    if (languages != null && ! languages.isEmpty()) {
-      JSONArray jsonLanguages = new JSONArray();
-      for (int i=0; i<languages.size(); i++) {
-        String lang = languages.get(i);
-        jsonLanguages.add(lang);
+    String mainLanguageLabel = getMainLanguageLabel();
+    if (mainLanguageLabel != null)
+      retJsonObject.put("mainLanguage", mainLanguageLabel);
+    if (subjects != null && ! subjects.isEmpty()) {
+      JSONArray jsonSubjects = new JSONArray();
+      for (Iterator<Subject> iterator = subjects.values().iterator(); iterator.hasNext();) {
+        Subject subject = iterator.next();
+        jsonSubjects.add(subject.toJsonObject());
       }
-      retJsonObject.put("languages", jsonLanguages);
+      retJsonObject.put("subjects", jsonSubjects);
     }
-    if (collections != null && ! collections.isEmpty()) {
-      JSONArray jsonCollections = new JSONArray();
-      for (Iterator<ProjectCollection> iterator = collections.iterator(); iterator.hasNext();) {
-        ProjectCollection collection = iterator.next();
-        jsonCollections.add(collection.toJsonObject());
+    String place = getPlace();
+    if (place != null) {
+      retJsonObject.put("place", place);
+    }
+    String periodOfTime = getPeriodOfTime();
+    if (periodOfTime != null) {
+      retJsonObject.put("periodOfTime", periodOfTime);
+    }
+    if (gndRelatedPersons != null && ! gndRelatedPersons.isEmpty()) {
+      JSONArray jsonGndRelatedPersons = new JSONArray();
+      for (Iterator<Person> iterator = gndRelatedPersons.values().iterator(); iterator.hasNext();) {
+        Person person = iterator.next();
+        jsonGndRelatedPersons.add(person.toJsonObject());
       }
-      retJsonObject.put("collections", jsonCollections);
+      retJsonObject.put("persons", jsonGndRelatedPersons);
     }
     if (staff != null && ! staff.isEmpty()) {
       JSONArray jsonStaff = new JSONArray();
@@ -435,13 +454,13 @@ public class Project {
       }
       retJsonObject.put("staff", jsonStaff);
     }
-    if (subjects != null && ! subjects.isEmpty()) {
-      JSONArray jsonSubjects = new JSONArray();
-      for (Iterator<Subject> iterator = subjects.values().iterator(); iterator.hasNext();) {
-        Subject subject = iterator.next();
-        jsonSubjects.add(subject.toJsonObject());
+    if (collections != null && ! collections.isEmpty()) {
+      JSONArray jsonCollections = new JSONArray();
+      for (Iterator<ProjectCollection> iterator = collections.iterator(); iterator.hasNext();) {
+        ProjectCollection collection = iterator.next();
+        jsonCollections.add(collection.toJsonObject());
       }
-      retJsonObject.put("subjects", jsonSubjects);
+      retJsonObject.put("collections", jsonCollections);
     }
     if (projectRelations != null && ! projectRelations.isEmpty()) {
       JSONArray jsonProjectRelations = new JSONArray();
@@ -450,14 +469,6 @@ public class Project {
         jsonProjectRelations.add(relatedProjectRdfId);
       }
       retJsonObject.put("projectRelations", jsonProjectRelations);
-    }
-    if (gndRelatedPersons != null && ! gndRelatedPersons.isEmpty()) {
-      JSONArray jsonGndRelatedPersons = new JSONArray();
-      for (Iterator<Person> iterator = gndRelatedPersons.values().iterator(); iterator.hasNext();) {
-        Person person = iterator.next();
-        jsonGndRelatedPersons.add(person.toJsonObject());
-      }
-      retJsonObject.put("gndRelatedPersons", jsonGndRelatedPersons);
     }
     return retJsonObject;
   }
