@@ -599,7 +599,7 @@ public class ProjectReader {
 
   private void readNormdataOutputTypes() {
     normdataOutputTypes = new HashMap<String, OutputType>();
-    String normdataFileName = Constants.getInstance().getMetadataDir() + "/normdata/wsp.skos.outputType.rdf";
+    String normdataFileName = Constants.getInstance().getMetadataDir() + "/normdata/wsp.skos.aggregationType.rdf";
     File normdataFile = new File(normdataFileName);
     try {
       Document normdataFileDoc = Jsoup.parse(normdataFile, "utf-8");

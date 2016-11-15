@@ -79,12 +79,10 @@ import org.apache.lucene.search.vectorhighlight.FieldQuery;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.BytesRef;
-import org.bbaw.wsp.cms.collections.NormdataLanguage;
 import org.bbaw.wsp.cms.collections.OutputType;
 import org.bbaw.wsp.cms.collections.Project;
 import org.bbaw.wsp.cms.collections.ProjectCollection;
 import org.bbaw.wsp.cms.collections.ProjectReader;
-import org.bbaw.wsp.cms.collections.Subject;
 import org.bbaw.wsp.cms.document.DBpediaResource;
 import org.bbaw.wsp.cms.document.Facets;
 import org.bbaw.wsp.cms.document.GroupDocuments;
@@ -252,28 +250,52 @@ public class IndexHandler {
         Field field = new Field("abstract", absstract, ftStoredAnalyzed); 
         doc.add(field);
       }
-      ArrayList<Subject> subjects = project.getSubjects();
+      String projectType = project.getProjectType();
+      if (projectType != null) {
+        Field projectTypeField = new Field("type", projectType, ftStoredAnalyzed);
+        doc.add(projectTypeField);
+      }
+      String duration = project.getDuration();
+      if (duration != null) {
+        Field durationField = new Field("duration", duration, ftStoredAnalyzed);
+        doc.add(durationField);
+      }
+      String status = project.getStatus();
+      if (status != null) {
+        Field statusField = new Field("status", status, ftStoredAnalyzed);
+        doc.add(statusField);
+      }
+      String mainLanguage = project.getMainLanguageLabel();
+      if (mainLanguage != null) {
+        Field mainLanguageField = new Field("mainLanguage", mainLanguage, ftStoredAnalyzed);
+        doc.add(mainLanguageField);
+      }
+      ArrayList<String> subjects = project.getSubjectsStr();
       if (subjects != null) {
-        String subjectsStr = "";
-        for (int i=0; i<subjects.size(); i++) {
-          Subject subject = subjects.get(i);
-          String subjectName = subject.getName();
-          if (subjectName != null && ! subjectName.isEmpty())
-            subjectsStr = subjectsStr + " " + subjectName;
-        }
+        String subjectsStr = org.apache.commons.lang3.StringUtils.join(subjects, "###");
         Field field = new Field("subjects", subjectsStr, ftStoredAnalyzed); 
         doc.add(field);
       }
-      ArrayList<Person> staff = project.getStaff();
+      String place = project.getPlace();
+      if (place != null) {
+        Field placeField = new Field("place", place, ftStoredAnalyzed);
+        doc.add(placeField);
+      }
+      String periodOfTime = project.getPeriodOfTime();
+      if (periodOfTime != null) {
+        Field periodOfTimeField = new Field("periodOfTime", periodOfTime, ftStoredAnalyzed);
+        doc.add(periodOfTimeField);
+      }
+      ArrayList<String> gndRelatedPersons = project.getGndRelatedPersonsStr();
+      if (gndRelatedPersons != null) {
+        String gndRelatedPersonsStr = org.apache.commons.lang3.StringUtils.join(gndRelatedPersons, "###");
+        Field gndRelatedPersonsField = new Field("persons", gndRelatedPersonsStr, ftStoredAnalyzed);
+        doc.add(gndRelatedPersonsField);
+      }
+      ArrayList<String> staff = project.getStaffStr();
       if (staff != null) {
-        String staffNames = "";
-        for (int i=0; i<staff.size(); i++) {
-          Person person = staff.get(i);
-          String staffName = person.getName();
-          if (staffName != null && ! staffName.isEmpty())
-            staffNames = staffNames + " " + staffName;
-        }
-        Field field = new Field("staffNames", staffNames, ftStoredAnalyzed); 
+        String staffStr = org.apache.commons.lang3.StringUtils.join(staff, "###");
+        Field field = new Field("staff", staffStr, ftStoredAnalyzed); 
         doc.add(field);
       }
       ArrayList<ProjectCollection> collections = project.getAllCollections();
@@ -284,15 +306,15 @@ public class IndexHandler {
           ProjectCollection collection = collections.get(i);
           String collectionLabel = collection.getTitle();
           if (collectionLabel != null && ! collectionLabel.isEmpty())
-            collectionLabels = collectionLabels + " " + collectionLabel;
+            collectionLabels = collectionLabels + "###" + collectionLabel;
           String collectionAbstract = collection.getAbstract();
           if (collectionAbstract != null && ! collectionAbstract.isEmpty())
-            collectionAbstracts = collectionAbstracts + " " + collectionAbstract;
+            collectionAbstracts = collectionAbstracts + "###" + collectionAbstract;
         }
-        Field field1 = new Field("collectionLabels", collectionLabels, ftStoredAnalyzed); 
-        doc.add(field1);
-        Field field2 = new Field("collectionAbstracts", collectionAbstracts, ftStoredAnalyzed); 
-        doc.add(field2);
+        Field collectionLabelsField = new Field("collectionLabels", collectionLabels, ftStoredAnalyzed); 
+        doc.add(collectionLabelsField);
+        Field collectionAbstractsField = new Field("collectionAbstracts", collectionAbstracts, ftStoredAnalyzed); 
+        doc.add(collectionAbstractsField);
       }
       projectsIndexWriter.addDocument(doc);
     } catch (Exception e) {
@@ -2298,10 +2320,8 @@ public class IndexHandler {
       documentsFieldAnalyzers.put("schemaName", new StandardAnalyzer());
       documentsFieldAnalyzers.put("lastModified", new KeywordAnalyzer());
       documentsFieldAnalyzers.put("tokenOrig", new StandardAnalyzer());
-      documentsFieldAnalyzers.put("tokenReg", new StandardAnalyzer());
       documentsFieldAnalyzers.put("tokenNorm", new StandardAnalyzer());
       documentsFieldAnalyzers.put("tokenMorph", new StandardAnalyzer());
-      documentsFieldAnalyzers.put("xmlContent", new StandardAnalyzer());
       documentsFieldAnalyzers.put("content", new StandardAnalyzer());
       documentsPerFieldAnalyzer = new PerFieldAnalyzerWrapper(new StandardAnalyzer(), documentsFieldAnalyzers);
       IndexWriterConfig conf = new IndexWriterConfig(documentsPerFieldAnalyzer);
@@ -2327,8 +2347,15 @@ public class IndexHandler {
       projectsFieldAnalyzers.put("rdfId", new KeywordAnalyzer()); 
       projectsFieldAnalyzers.put("label", new StandardAnalyzer()); 
       projectsFieldAnalyzers.put("abstract", new StandardAnalyzer()); 
+      projectsFieldAnalyzers.put("type", new StandardAnalyzer()); 
+      projectsFieldAnalyzers.put("duration", new StandardAnalyzer()); 
+      projectsFieldAnalyzers.put("status", new StandardAnalyzer()); 
+      projectsFieldAnalyzers.put("mainLanguage", new StandardAnalyzer());
       projectsFieldAnalyzers.put("subjects", new StandardAnalyzer()); 
-      projectsFieldAnalyzers.put("staffNames", new StandardAnalyzer()); 
+      projectsFieldAnalyzers.put("place", new StandardAnalyzer()); 
+      projectsFieldAnalyzers.put("periodOfTime", new StandardAnalyzer()); 
+      projectsFieldAnalyzers.put("persons", new StandardAnalyzer()); 
+      projectsFieldAnalyzers.put("staff", new StandardAnalyzer()); 
       projectsFieldAnalyzers.put("collectionLabels", new StandardAnalyzer()); 
       projectsFieldAnalyzers.put("collectionAbstracts", new StandardAnalyzer()); 
       projectsPerFieldAnalyzer = new PerFieldAnalyzerWrapper(new StandardAnalyzer(), projectsFieldAnalyzers);
@@ -2432,8 +2459,15 @@ public class IndexHandler {
     fields.add("rdfId");
     fields.add("label");
     fields.add("abstract");
+    fields.add("type");
+    fields.add("duration");
+    fields.add("status");
+    fields.add("mainLanguage");
     fields.add("subjects");
-    fields.add("staffNames");
+    fields.add("place");
+    fields.add("periodOfTime");
+    fields.add("persons");
+    fields.add("staff");
     fields.add("collectionLabels");
     fields.add("collectionAbstracts");
     return fields;
