@@ -617,7 +617,6 @@ public class Harvester {
             }
           }
           if (contentCssSelectors.isEmpty()) {
-            contentCssSelectors = new ArrayList<String>();
             contentCssSelectors.add("html > body");  // default fallback selector
           }
           String contentCssSelectorsSelect = StringUtils.join(contentCssSelectors, ", ");

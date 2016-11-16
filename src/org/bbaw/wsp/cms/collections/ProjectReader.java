@@ -140,7 +140,7 @@ public class ProjectReader {
       projects.add(project);
     }
     Comparator<Project> projectComparator = projectIdComparator;
-    if (sortBy.equals("title"))
+    if (sortBy.equals("label"))
       projectComparator = projectTitleComparator;
     Collections.sort(projects, projectComparator);
     return projects;
