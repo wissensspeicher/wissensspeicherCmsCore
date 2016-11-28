@@ -816,6 +816,15 @@ public class ProjectReader {
       for (int i=0; i< staffElems.size(); i++) {
         Element staffPersonElem = staffElems.get(i);
         String personRdfId = staffPersonElem.attr("rdf:resource");
+        if (personRdfId.isEmpty()) {
+          String personRdfNodeId = staffPersonElem.attr("rdf:nodeID");
+          if (! personRdfNodeId.isEmpty()) {
+            Element personRdfNode = projectRdfDoc.select("rdf|RDF > rdf|Description[rdf:nodeID*=" + personRdfNodeId + "]").first();
+            if (personRdfNode != null) {
+              personRdfId = personRdfNode.select("dcterms|identifier").text(); 
+            }
+          }
+        }
         Person person = getPerson(personRdfId);
         if (person != null)
           project.addStaffPerson(personRdfId, person); // e.g. "http://wissensspeicher.bbaw.de/rdf/normdata/Leitner"
