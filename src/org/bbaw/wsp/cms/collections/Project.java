@@ -391,7 +391,7 @@ public class Project {
     this.mainLanguage = mainLanguage;
   }
 
-  public JSONObject toJsonObject() throws ApplicationException {
+  public JSONObject toJsonObject(boolean withCollections) throws ApplicationException {
     JSONObject retJsonObject = new JSONObject();
     if (id != null)
       retJsonObject.put("id", id);
@@ -454,7 +454,7 @@ public class Project {
       }
       retJsonObject.put("staff", jsonStaff);
     }
-    if (collections != null && ! collections.isEmpty()) {
+    if (withCollections && collections != null && ! collections.isEmpty()) {
       JSONArray jsonCollections = new JSONArray();
       for (Iterator<ProjectCollection> iterator = collections.iterator(); iterator.hasNext();) {
         ProjectCollection collection = iterator.next();

@@ -236,6 +236,10 @@ public class ProjectCollection {
     this.projectRdfId = projectRdfId;
   }
 
+  public Project getProject() throws ApplicationException {
+    return ProjectReader.getInstance().getProjectByRdfId(projectRdfId);
+  }
+  
   public String getParentRdfId() {
     return parentRdfId;
   }
