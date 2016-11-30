@@ -1129,27 +1129,15 @@ public class IndexHandler {
         ArrayList<org.bbaw.wsp.cms.document.Document> docs = new ArrayList<org.bbaw.wsp.cms.document.Document>();
         FastVectorHighlighter highlighter = new FastVectorHighlighter(true, false); // fieldMatch: false: cause any field to be highlighted regardless of whether the query matched specifically on them. The default behaviour is true, meaning that only fields that hold a query match will be highlighted.
         for (int i=from; i<=toTmp; i++) { 
-          int docID = resultDocs.scoreDocs[i].doc;
+          int docId = resultDocs.scoreDocs[i].doc;
           float score = resultDocs.scoreDocs[i].score;
-          Document luceneDoc = searcher.doc(docID, docFields);
+          Document luceneDoc = searcher.doc(docId, docFields);
           org.bbaw.wsp.cms.document.Document doc = new org.bbaw.wsp.cms.document.Document(luceneDoc);
           doc.setScore(score);
-          if (withHitFragments) {
-            ArrayList<String> hitFragments = new ArrayList<String>();
-            IndexableField docContentField = luceneDoc.getField("content");
-            if (docContentField != null && highlighterQuery != null) {
-              FieldQuery highlighterFieldQuery = highlighter.getFieldQuery(highlighterQuery, documentsIndexReader);  // indexReader muss angegeben werden, damit die WildcardQuery etc. Ergebnisse liefert
-              String[] textfragments = highlighter.getBestFragments(highlighterFieldQuery, documentsIndexReader, docID, docContentField.name(), 100, 2);
-              if (textfragments.length > 0) {
-                for (int j=0; j<textfragments.length; j++) {
-                  String textFragment = textfragments[j];
-                  textFragment = textFragment.trim();  
-                  textFragment = checkHitFragment(textFragment);
-                  hitFragments.add(textFragment);
-                }
-              }
-            }
-            if (! hitFragments.isEmpty())
+          IndexableField docContentField = luceneDoc.getField("content");
+          if (withHitFragments && docContentField != null) {
+            ArrayList<String> hitFragments = getFragments(highlighter, highlighterQuery, docId, docContentField.name());
+            if (hitFragments != null)
               doc.setHitFragments(hitFragments);
           }
           docs.add(doc);
@@ -1175,10 +1163,17 @@ public class IndexHandler {
                   if (luceneGroupByField != null) {
                     String groupName = luceneGroupByField.stringValue();
                     groupDocuments.setName(groupName);
+                    groupDocuments.setQuery(groupByField);
                   }
                 }
                 org.bbaw.wsp.cms.document.Document doc = new org.bbaw.wsp.cms.document.Document(luceneDoc);
                 doc.setScore(score);
+                IndexableField docContentField = luceneDoc.getField("content");
+                if (withHitFragments && docContentField != null) {
+                  ArrayList<String> hitFragments = getFragments(highlighter, highlighterQuery, docId, docContentField.name());
+                  if (hitFragments != null)
+                    doc.setHitFragments(hitFragments);
+                }
                 groupDocuments.addDocument(doc);
               }
               if (groupDocuments.hasDocuments())
@@ -1224,6 +1219,28 @@ public class IndexHandler {
     return hits;
   }
 
+  private ArrayList<String> getFragments(FastVectorHighlighter highlighter, Query highlighterQuery, int luceneDocId, String fieldName) throws ApplicationException {
+    ArrayList<String> hitFragments = null;
+    try {
+      if (highlighterQuery != null) {
+        FieldQuery highlighterFieldQuery = highlighter.getFieldQuery(highlighterQuery, documentsIndexReader);  // indexReader muss angegeben werden, damit die WildcardQuery etc. Ergebnisse liefert
+        String[] textfragments = highlighter.getBestFragments(highlighterFieldQuery, documentsIndexReader, luceneDocId, fieldName, 100, 2);
+        if (textfragments.length > 0) {
+          hitFragments = new ArrayList<String>();
+          for (int j=0; j<textfragments.length; j++) {
+            String textFragment = textfragments[j];
+            textFragment = textFragment.trim();  
+            textFragment = checkHitFragment(textFragment);
+            hitFragments.add(textFragment);
+          }
+        }
+      }
+    } catch (IOException e) {
+      throw new ApplicationException(e);
+    }
+    return hitFragments;
+  }
+  
   public Hits queryProjects(String queryLanguage, String queryStr, String[] sortFieldNames, String fieldExpansion, String language, int from, int to, boolean translate) throws ApplicationException {
     Hits hits = null;
     IndexSearcher searcher = null;
