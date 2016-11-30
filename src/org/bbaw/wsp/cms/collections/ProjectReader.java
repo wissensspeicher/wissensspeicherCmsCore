@@ -454,11 +454,11 @@ public class ProjectReader {
           if (homepage != null && ! homepage.isEmpty()) {
             person.setHomepage(homepage);
           }
-          String gndId = personElem.select("rdf|Description > gnd|gndIdentifier").text();
+          String gndId = personElem.select("rdf|Description > gndo|gndIdentifier").text();
           if (gndId != null && ! gndId.isEmpty()) {
             person.setGndId(gndId);
           }
-          String functionOrRoleRdfId = personElem.select("rdf|Description > gnd|functionOrRole").text();
+          String functionOrRoleRdfId = personElem.select("rdf|Description > gndo|functionOrRole").text();
           if (functionOrRoleRdfId != null && ! functionOrRoleRdfId.isEmpty()) {
             person.setFunctionOrRoleRdfId(functionOrRoleRdfId);
           }
@@ -521,7 +521,7 @@ public class ProjectReader {
           if (name != null && ! name.isEmpty()) {
             subject.setName(name);
           }
-          String gndId = subjectElem.select("rdf|Description > gnd|gndIdentifier").text();
+          String gndId = subjectElem.select("rdf|Description > gndo|gndIdentifier").text();
           if (gndId != null && ! gndId.isEmpty())
             subject.setGndId(gndId);
           String aboutId = subjectElem.select("rdf|Description").attr("rdf:about");
@@ -737,7 +737,7 @@ public class ProjectReader {
       String parentRdfId = projectElem.select("dcterms|isPartOf").attr("rdf:resource");
       if (parentRdfId != null && ! parentRdfId.isEmpty())
         project.setParentRdfId(parentRdfId);
-      String organizationRdfId = projectElem.select("gnd|hierarchicalSuperior").attr("rdf:resource");
+      String organizationRdfId = projectElem.select("gndo|hierarchicalSuperior").attr("rdf:resource");
       if (organizationRdfId != null && ! organizationRdfId.isEmpty())
         project.setOrganizationRdfId(organizationRdfId);
       String projectId = projectElem.select("foaf|nick").text();
@@ -804,7 +804,7 @@ public class ProjectReader {
       String temporalRdfId = projectElem.select("dcterms|temporal").attr("rdf:resource"); 
       if (temporalRdfId != null && ! temporalRdfId.isEmpty())
         project.setTemporalRdfId(temporalRdfId); // e.g. "http://wissensspeicher.bbaw.de/rdf/normdata/Neuzeit"
-      Elements gndRelatedPersonsElems = projectElem.select("gnd|relatedPerson");
+      Elements gndRelatedPersonsElems = projectElem.select("gndo|relatedPerson");
       for (int i=0; i< gndRelatedPersonsElems.size(); i++) {
         Element gndRelatedPersonsElem = gndRelatedPersonsElems.get(i);
         String personRdfId = gndRelatedPersonsElem.attr("rdf:resource");
@@ -885,7 +885,7 @@ public class ProjectReader {
         String collectionTemporalRdfId = collectionElem.select("dcterms|temporal").attr("rdf:resource"); 
         if (collectionTemporalRdfId != null && ! collectionTemporalRdfId.isEmpty())
           collection.setTemporalRdfId(collectionTemporalRdfId); // e.g. "http://wissensspeicher.bbaw.de/rdf/normdata/Neuzeit"
-        Elements collectionGndRelatedPersonsElems = collectionElem.select("gnd|relatedPerson");
+        Elements collectionGndRelatedPersonsElems = collectionElem.select("gndo|relatedPerson");
         for (int j=0; j<collectionGndRelatedPersonsElems.size(); j++) {
           Element gndRelatedPersonsElem = collectionGndRelatedPersonsElems.get(j);
           String personRdfId = gndRelatedPersonsElem.attr("rdf:resource");
