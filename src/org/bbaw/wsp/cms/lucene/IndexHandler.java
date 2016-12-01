@@ -1085,7 +1085,7 @@ public class IndexHandler {
       TermSecondPassGroupingCollector groupByCollector = null;
       // groupBy query: first part: build query and collectors
       if (groupByField != null) {
-        Sort projectIdAlphSorted = Sort.INDEXORDER;
+        Sort indexOrder = Sort.INDEXORDER; // normally alphabetically sorted
         int maxDocsPerGroup = 5;  // default value
         if (groupByField.endsWith(")")) {
           int index1 = groupByField.indexOf("(");
@@ -1095,11 +1095,11 @@ public class IndexHandler {
           groupByField = groupByField.substring(0, index1);
         }
         String groupByFieldNameSorted = groupByField + "Sorted";
-        TermFirstPassGroupingCollector termFirstPassGroupCollector = new TermFirstPassGroupingCollector(groupByFieldNameSorted, projectIdAlphSorted, 1000);
+        TermFirstPassGroupingCollector termFirstPassGroupCollector = new TermFirstPassGroupingCollector(groupByFieldNameSorted, indexOrder, 1000);
         Query matchAllDocsQuery = new MatchAllDocsQuery();
         FacetsCollector.search(searcher, matchAllDocsQuery, 1, sort, true, true, termFirstPassGroupCollector);
-        Collection<SearchGroup<BytesRef>> projectIdGroups = termFirstPassGroupCollector.getTopGroups(0, true);
-        groupByCollector = new TermSecondPassGroupingCollector(groupByFieldNameSorted, projectIdGroups, projectIdAlphSorted, sort, maxDocsPerGroup, true, true, true);
+        Collection<SearchGroup<BytesRef>> fieldGroups = termFirstPassGroupCollector.getTopGroups(0, true);
+        groupByCollector = new TermSecondPassGroupingCollector(groupByFieldNameSorted, fieldGroups, indexOrder, sort, maxDocsPerGroup, true, true, true);
         searchCollector = MultiCollector.wrap(facetsCollector, groupByCollector);
       }
       TopDocs resultDocs = FacetsCollector.search(searcher, morphQuery, to + 1, sort, true, true, searchCollector);
@@ -1134,7 +1134,7 @@ public class IndexHandler {
           Document luceneDoc = searcher.doc(docId, docFields);
           org.bbaw.wsp.cms.document.Document doc = new org.bbaw.wsp.cms.document.Document(luceneDoc);
           doc.setScore(score);
-          IndexableField docContentField = luceneDoc.getField("content");
+          IndexableField docContentField = getHighlightContentField(luceneDoc);
           if (withHitFragments && docContentField != null) {
             ArrayList<String> hitFragments = getFragments(highlighter, highlighterQuery, docId, docContentField.name());
             if (hitFragments != null)
@@ -1145,12 +1145,12 @@ public class IndexHandler {
         ArrayList<GroupDocuments> groupByHits = null;
         // groupBy query: second part: build query result 
         if (groupByField != null) {
-          TopGroups<BytesRef> projectIdTopGroups = groupByCollector.getTopGroups(0);
-          if (projectIdTopGroups != null) {
+          TopGroups<BytesRef> topGroups = groupByCollector.getTopGroups(0);
+          if (topGroups != null) {
             groupByHits = new ArrayList<GroupDocuments>();
             HashSet<String> docFieldsToFill = getDocFields();
-            for (int i=0; i<projectIdTopGroups.groups.length; i++) {
-              GroupDocs<BytesRef> group = projectIdTopGroups.groups[i];
+            for (int i=0; i<topGroups.groups.length; i++) {
+              GroupDocs<BytesRef> group = topGroups.groups[i];
               GroupDocuments groupDocuments = new GroupDocuments();
               int countGroupHits = group.totalHits;
               groupDocuments.setSize(countGroupHits);
@@ -1168,7 +1168,7 @@ public class IndexHandler {
                 }
                 org.bbaw.wsp.cms.document.Document doc = new org.bbaw.wsp.cms.document.Document(luceneDoc);
                 doc.setScore(score);
-                IndexableField docContentField = luceneDoc.getField("content");
+                IndexableField docContentField = getHighlightContentField(luceneDoc);
                 if (withHitFragments && docContentField != null) {
                   ArrayList<String> hitFragments = getFragments(highlighter, highlighterQuery, docId, docContentField.name());
                   if (hitFragments != null)
@@ -1219,6 +1219,13 @@ public class IndexHandler {
     return hits;
   }
 
+  private IndexableField getHighlightContentField(Document luceneDoc) {
+    IndexableField docContentField = luceneDoc.getField("content");
+    if (docContentField == null)
+      docContentField = luceneDoc.getField("title");
+    return docContentField;
+  }
+  
   private ArrayList<String> getFragments(FastVectorHighlighter highlighter, Query highlighterQuery, int luceneDocId, String fieldName) throws ApplicationException {
     ArrayList<String> hitFragments = null;
     try {
