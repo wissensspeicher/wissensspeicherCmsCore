@@ -14,7 +14,6 @@ public class Database {
   private String collectionRdfId; // rdfId of collection which this database is part of
   private String type;
   private String name; // unique database name (converted from rdfId); e.g. telota.bbaw.de:8085##exist##rest##db##AvHBriefedition
-  private String language;  // language of db content
   private JdbcConnection jdbcConnection;
   private String sql;
   private String oaiSet; // if type is oai: a set could be defined 
@@ -63,15 +62,11 @@ public class Database {
   }
   
   public String getLanguage() throws ApplicationException {
-    String retLang = language;
+    String retLang = null;
     String collMainLang = ProjectReader.getInstance().getCollectionMainLanguage(collectionRdfId);
     if (collMainLang != null)
       retLang = collMainLang;
     return retLang;
-  }
-
-  public void setLanguage(String language) {
-    this.language = language;
   }
 
   public JdbcConnection getJdbcConnection() {
@@ -184,9 +179,6 @@ public class Database {
     String url = databaseElem.select("db > url").text(); // redundant field to id attribute
     if (databaseRdfId == null || databaseRdfId.isEmpty())
       database.setRdfId(url);
-    String language = databaseElem.select("db > language").text();
-    if (language != null && ! language.isEmpty())
-      database.setLanguage(language);
     String depthStr = databaseElem.select("db > depth").text();
     if (depthStr != null && ! depthStr.isEmpty()) {
       Integer depth = Integer.parseInt(depthStr);
