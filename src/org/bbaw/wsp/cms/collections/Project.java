@@ -258,6 +258,7 @@ public class Project {
         ProjectCollection parentCollection = getCollection(collParentRdfId);
         parentCollection.addSubCollection(collection);
         // subcollections with crawlDB's: add exclude
+        /*
         ArrayList<Database> parentCrawlDBs = parentCollection.getDatabasesByType("crawl");
         ArrayList<Database> subcollectionCrawlDBs = collection.getDatabasesByType("crawl");
         if (parentCrawlDBs != null && subcollectionCrawlDBs != null) {
@@ -270,6 +271,7 @@ public class Project {
             parentCrawlDB.addExclude(excludeStr);
           }
         }
+        */
       }
     }
   }
