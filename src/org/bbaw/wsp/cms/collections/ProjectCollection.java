@@ -293,13 +293,17 @@ public class ProjectCollection {
   }
 
   public ArrayList<Database> getDatabasesByType(String dbType) {
-    ArrayList<Database> retDBs = new ArrayList<Database>();
+    ArrayList<Database> retDBs = null;
     if (databases != null) {
       java.util.Collection<Database> databaseValues = this.databases.values();
       for (Database db : databaseValues) {
         String type = db.getType();
-        if (type != null && type.equals(dbType))
+        if (type != null && type.equals(dbType)) {
+          if (retDBs == null) {
+            retDBs = new ArrayList<Database>();
+          }
           retDBs.add(db);
+        }
       }
     }
     return retDBs;

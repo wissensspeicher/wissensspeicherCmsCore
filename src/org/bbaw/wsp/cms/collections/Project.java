@@ -253,11 +253,23 @@ public class Project {
     for (ProjectCollection collection : collectionValues) {
       String collParentRdfId = collection.getParentRdfId();
       if (collParentRdfId == null) { // parent is project
-      // if (collParentRdfId.equals(rdfId)) {  
         addSubCollection(collection);
       } else {  // parent is collection
         ProjectCollection parentCollection = getCollection(collParentRdfId);
         parentCollection.addSubCollection(collection);
+        // subcollections with crawlDB's: add exclude
+        ArrayList<Database> parentCrawlDBs = parentCollection.getDatabasesByType("crawl");
+        ArrayList<Database> subcollectionCrawlDBs = collection.getDatabasesByType("crawl");
+        if (parentCrawlDBs != null && subcollectionCrawlDBs != null) {
+          Database parentCrawlDB = parentCrawlDBs.get(0);
+          String parentCrawlDBRdfId = parentCrawlDB.getRdfId(); // only one db is supported
+          String subcollectionCrawlDBRdfId = subcollectionCrawlDBs.get(0).getRdfId(); // only one db is supported
+          if (subcollectionCrawlDBRdfId.startsWith(parentCrawlDBRdfId)) {
+            String excludeStr = subcollectionCrawlDBRdfId.substring(parentCrawlDBRdfId.length());
+            excludeStr = excludeStr + "/.*";
+            parentCrawlDB.addExclude(excludeStr);
+          }
+        }
       }
     }
   }

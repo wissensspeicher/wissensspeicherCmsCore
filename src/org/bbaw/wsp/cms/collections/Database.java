@@ -265,5 +265,10 @@ public class Database {
     fileNameId = fileNameId.replaceAll("/", "##");
     return fileNameId;
   }
-  
+
+  public void addExclude(String excludeStr) {
+    boolean excludeIsContained = excludes.contains(excludeStr);
+    if (! excludeIsContained)
+      excludes.add(excludeStr);
+  }
 }
