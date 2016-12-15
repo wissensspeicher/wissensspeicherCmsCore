@@ -127,7 +127,9 @@ public class MetadataHandler {
     String projectRdfId = project.getRdfId();
     mdRecord.setProjectRdfId(projectRdfId);
     String collectionRdfId = db.getCollectionRdfId();
-    mdRecord.setCollectionRdfId(collectionRdfId);
+    ProjectCollection rootCollection = ProjectReader.getInstance().getRootCollection(collectionRdfId); // hack: resources are set to root collection
+    String rootCollectionRdfId = rootCollection.getRdfId(); 
+    mdRecord.setCollectionRdfId(rootCollectionRdfId);
     String databaseRdfId = db.getRdfId();
     mdRecord.setDatabaseRdfId(databaseRdfId);
     if (generateId) {
@@ -199,7 +201,9 @@ public class MetadataHandler {
       String projectRdfId = project.getRdfId();
       newCrawledMdRecord.setProjectRdfId(projectRdfId);
       String collectionRdfId = db.getCollectionRdfId();
-      newCrawledMdRecord.setCollectionRdfId(collectionRdfId);
+      ProjectCollection rootCollection = ProjectReader.getInstance().getRootCollection(collectionRdfId); // hack: resources are set to root collection
+      String rootCollectionRdfId = rootCollection.getRdfId(); 
+      newCrawledMdRecord.setCollectionRdfId(rootCollectionRdfId);
       String databaseRdfId = db.getRdfId();
       newCrawledMdRecord.setDatabaseRdfId(databaseRdfId);
       newCrawledMdRecord.setType(crawledMdRecord.getType());
@@ -463,21 +467,26 @@ public class MetadataHandler {
                 if (collection != null) {
                   collectionRdfId = edocId;
                   projectRdfId = collection.getProjectRdfId();
+                } else {
+                  LOGGER.error("Edoc institutes to collection mapping (see edoc.xml): " + edocId + " (collection) is not defined in any project file");
                 }
               } else {  // only a projectId is given
                 Project p = ProjectReader.getInstance().getProject(edocId);
                 if (p != null) {
                   projectRdfId = p.getRdfId();
                 } else {
+                  LOGGER.error("Edoc institutes to collection mapping (see edoc.xml): " + edocId + " (projectId) is not defined in a project file");
                   Project edocProject = ProjectReader.getInstance().getProject("edoc");
                   projectRdfId = edocProject.getRdfId();
                 }
               }
             } else {
+              LOGGER.error("Edoc institutes to collection mapping (see edoc.xml): " + institutesStr + " has no collection mapping");
               Project edocProject = ProjectReader.getInstance().getProject("edoc");  // TODO some institutes (e.g. ALLEA) have no projectId: map it to a special edoc collection (e.g. "akademiepublikationen1")
               projectRdfId = edocProject.getRdfId();
             }
           } else {
+            LOGGER.error("Edoc institutes to collection mapping (see edoc.xml): " + edocMetadataUrl + " (" + rdfWebId + ") has no institutes value (CSS selector: th:containsOwn(Institutes:) + td > a)");
             Project edocProject = ProjectReader.getInstance().getProject("edoc");  // TODO if no institutes string is given: map it to a special edoc collection (e.g. "akademiepublikationen1")
             projectRdfId = edocProject.getRdfId();
           }
@@ -907,7 +916,9 @@ public class MetadataHandler {
     // collectionRdfId of which this resource is part of
     String collectionRdfId = resourceElem.select("ore|isAggregatedBy").attr("rdf:resource");
     if (collectionRdfId != null && ! collectionRdfId.isEmpty()) {
-      mdRecord.setCollectionRdfId(collectionRdfId);
+      ProjectCollection rootCollection = ProjectReader.getInstance().getRootCollection(collectionRdfId); // hack: resources are set to root collection
+      String rootCollectionRdfId = rootCollection.getRdfId(); 
+      mdRecord.setCollectionRdfId(rootCollectionRdfId);
     }
     // creators
     Elements authorElems = resourceElem.select("dcterms|creator");
@@ -1086,7 +1097,9 @@ public class MetadataHandler {
       // collectionRdfId of which this resource is part of
       String collectionRdfId = resourceElem.select("ore|isAggregatedBy").attr("rdf:resource");
       if (collectionRdfId != null && ! collectionRdfId.isEmpty()) {
-        mdRecord.setCollectionRdfId(collectionRdfId);
+        ProjectCollection rootCollection = ProjectReader.getInstance().getRootCollection(collectionRdfId); // hack: resources are set to root collection
+        String rootCollectionRdfId = rootCollection.getRdfId(); 
+        mdRecord.setCollectionRdfId(rootCollectionRdfId);
       }
     }
     // systemType
