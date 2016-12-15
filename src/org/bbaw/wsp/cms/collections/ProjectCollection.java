@@ -202,6 +202,16 @@ public class ProjectCollection {
   public void buildRdfPath() throws ApplicationException {
     this.rdfPath = calcRdfPath();
   }
+
+  public ProjectCollection getRootCollection() throws ApplicationException {
+    ProjectCollection rootColl = null;
+    if (parentRdfId == null)
+      return this;
+    Project project = ProjectReader.getInstance().getProjectByRdfId(projectRdfId);
+    ProjectCollection parentCollection = project.getCollection(parentRdfId);
+    rootColl = parentCollection.getRootCollection();  // recursive to rootCollection
+    return rootColl;
+  }
   
   private String calcRdfPath() throws ApplicationException {
     Project project = ProjectReader.getInstance().getProjectByRdfId(projectRdfId);
@@ -256,6 +266,16 @@ public class ProjectCollection {
     this.type = type;
   }
 
+  public boolean isHomepageType() {
+    boolean isHomepageType = false;
+    if (type != null) {
+      String typeRdfId = type.getRdfId();
+      if (typeRdfId.matches(".*#Homepage.*"))
+        isHomepageType = true;
+    }
+    return isHomepageType;
+  }
+  
   public String getHomepageUrl() {
     return homepageUrl;
   }
