@@ -113,7 +113,9 @@ public class Indexer {
       // set db rdf id of mdRecord
       if (db != null) {
         String collectionRdfId = db.getCollectionRdfId();
-        mdRecord.setCollectionRdfId(collectionRdfId);
+        ProjectCollection rootCollection = ProjectReader.getInstance().getRootCollection(collectionRdfId); // hack: resources are set to root collection
+        String rootCollectionRdfId = rootCollection.getRdfId(); 
+        mdRecord.setCollectionRdfId(rootCollectionRdfId);
         String databaseRdfId = db.getRdfId();
         mdRecord.setDatabaseRdfId(databaseRdfId);
       }
