@@ -204,6 +204,17 @@ public class ProjectReader {
     return collections.get(collectionRdfId);
   }
   
+  public ProjectCollection getRootCollection(String collectionRdfId) throws ApplicationException {
+    ProjectCollection retColl = null;
+    ProjectCollection coll = getCollection(collectionRdfId);
+    if (coll != null) {
+      retColl = coll.getRootCollection();
+    } else {
+      LOGGER.error("getRootCollection: " + collectionRdfId + " does not exist");
+    }
+    return retColl;
+  }
+  
   public String getCollectionMainLanguage(String collectionRdfId) throws ApplicationException {
     String mainLanguage = null;
     if (collectionRdfId == null)
@@ -845,18 +856,20 @@ public class ProjectReader {
         if (collParentRdfId != null && ! collParentRdfId.isEmpty()) {
           collection.setParentRdfId(collParentRdfId);
         } 
+        String collTypeRdfId = collectionElem.select("dcterms|type").attr("rdf:resource");
+        if (collTypeRdfId != null && ! collTypeRdfId.isEmpty()) {
+          OutputType collType = getType(collTypeRdfId);
+          collection.setType(collType); // e.g. "BibliographischeDatenbank" or "Homepage"
+        }
         String collectionTitle = collectionElem.select("dcterms|title").text();
         if (collectionTitle != null && ! collectionTitle.isEmpty()) {
+          if (collection.isHomepageType())
+            collectionTitle = title + ": " + collectionTitle;  // project title + collection title
           collection.setTitle(collectionTitle);
         }
         String collAbstract = collectionElem.select("dcterms|abstract[xml:lang=\"de\"]").text();
         if (collAbstract != null && ! collAbstract.isEmpty())
           collection.setAbstract(collAbstract);
-        String collTypeRdfId = collectionElem.select("dcterms|type").attr("rdf:resource");
-        if (collTypeRdfId != null && ! collTypeRdfId.isEmpty()) {
-          OutputType collType = getType(collTypeRdfId);
-          collection.setType(collType); // e.g. "BibliographischeDatenbank"
-        }
         String collectionHomepageUrl = collectionElem.select("foaf|homepage").attr("rdf:resource");
         if (collectionHomepageUrl != null && ! collectionHomepageUrl.isEmpty()) {
           collection.setHomepageUrl(collectionHomepageUrl);
