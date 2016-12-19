@@ -14,6 +14,7 @@ public class GroupDocuments {
   private String query; // groupBy query which lead to this GroupDocuments 
   private String name;  // groupBy value e.g. "avh" if query was "projectId"
   private int size; // count of total hits 
+  private float maxScore; // max score of this group
   private ArrayList<Document> documents;
   private String baseUrl;
   
@@ -54,6 +55,14 @@ public class GroupDocuments {
     this.size = size;
   }
 
+  public float getMaxScore() {
+    return maxScore;
+  }
+
+  public void setMaxScore(float maxScore) {
+    this.maxScore = maxScore;
+  }
+
   public String getBaseUrl() {
     return baseUrl;
   }
@@ -66,6 +75,7 @@ public class GroupDocuments {
     JSONObject jsonObject = new JSONObject();
     jsonObject.put("groupName", name);
     jsonObject.put("numberOfHits", size);
+    jsonObject.put("maxScore", maxScore);
     if (query != null && query.startsWith("projectId")) {
       Project project = ProjectReader.getInstance().getProject(name);
       if (project != null) {
