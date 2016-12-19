@@ -384,6 +384,8 @@ public class IndexHandler {
         if (projectId.equals("jdg"))
           projectRdfIdField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
         doc.add(projectRdfIdField);
+        Field projectRdfIdFieldSorted = new SortedDocValuesField("projectRdfIdSorted", new BytesRef(projectRdfId));
+        doc.add(projectRdfIdFieldSorted);
         FacetField facetField = new FacetField("projectRdfId", projectRdfId);
         doc.add(facetField);
         Project project = projectReader.getProjectByRdfId(projectRdfId);
@@ -391,6 +393,8 @@ public class IndexHandler {
         if (projectLabel != null) {
           Field projectLabelField = new Field("projectLabel", projectLabel, ftStoredAnalyzed);
           doc.add(projectLabelField);
+          Field projectLabelFieldSorted = new SortedDocValuesField("projectLabelSorted", new BytesRef(projectLabel));
+          doc.add(projectLabelFieldSorted);
         }
         String projectAbstract = project.getAbstract();
         if (projectAbstract != null) {
@@ -468,6 +472,8 @@ public class IndexHandler {
         if (collectionLabel != null) {
           Field collectionLabelField = new Field("collectionLabel", collectionLabel, ftStoredAnalyzed);
           doc.add(collectionLabelField);
+          Field collectionLabelFieldSorted = new SortedDocValuesField("collectionLabelSorted", new BytesRef(collectionLabel));
+          doc.add(collectionLabelFieldSorted);
         }
         String collectionAbstract = collection.getAbstract();
         if (collectionAbstract != null) {
@@ -971,7 +977,7 @@ public class IndexHandler {
       String queryDocumentsByProjectId = "projectId:" + projectId;
       if (projectId.equals("edoc"))
         queryDocumentsByProjectId = "webUri:*edoc.bbaw.de*";
-      Hits projectDocHits = queryDocuments("lucene", queryDocumentsByProjectId, null, null, null, null, 0, 9, false, false); // TODO FastTaxonomyFacetCounts verursacht bei vielen deletes ArrayIndexOutOfBoundsException: 600000
+      Hits projectDocHits = queryDocuments("lucene", queryDocumentsByProjectId, null, null, null, null, null, 0, 9, false, false); // TODO FastTaxonomyFacetCounts verursacht bei vielen deletes ArrayIndexOutOfBoundsException: 600000
       ArrayList<org.bbaw.wsp.cms.document.Document> projectDocs = projectDocHits.getHits();
       if (projectDocs != null) {
         countDeletedDocs = projectDocHits.getSize();
@@ -996,7 +1002,7 @@ public class IndexHandler {
 
   public int deleteProjectDBByRdfId(String databaseRdfId) throws ApplicationException {
     String queryDatabaseRdfId = "databaseRdfId:" + databaseRdfId;
-    Hits databaseDocHits = queryDocuments("lucene", queryDatabaseRdfId, null, null, null, null, 0, 9, false, false);
+    Hits databaseDocHits = queryDocuments("lucene", queryDatabaseRdfId, null, null, null, null, null, 0, 9, false, false);
     int countDeletedDocs = databaseDocHits.getSize();
     try {
       Term termDatabaseRdfId = new Term("databaseRdfId", databaseRdfId);
@@ -1019,7 +1025,7 @@ public class IndexHandler {
       deleteQueryTerms.add(termQueryProjectName);
       deleteQueryTerms.add(termQuerySystemType);      
       Query deleteQuery = buildBooleanShouldQuery(deleteQueryTerms);
-      Hits docHits = queryDocuments("lucene", deleteQuery.toString(), null, null, null, null, 0, 9, false, false);
+      Hits docHits = queryDocuments("lucene", deleteQuery.toString(), null, null, null, null, null, 0, 9, false, false);
       countDeletedDocs = docHits.getSize();
       documentsIndexWriter.deleteDocuments(deleteQuery);
       commit();
@@ -1046,7 +1052,7 @@ public class IndexHandler {
    * @return
    * @throws ApplicationException
    */
-  public Hits queryDocuments(String queryLanguage, String queryStr, String[] sortFieldNames, String groupByField, String fieldExpansion, String language, int from, int to, boolean withHitFragments, boolean translate) throws ApplicationException {
+  public Hits queryDocuments(String queryLanguage, String queryStr, String[] sortFieldNames, String groupByField, String[] groupBySortFieldNames, String fieldExpansion, String language, int from, int to, boolean withHitFragments, boolean translate) throws ApplicationException {
     Hits hits = null;
     IndexSearcher searcher = null;
     Date begin = new Date();
@@ -1085,7 +1091,10 @@ public class IndexHandler {
       TermSecondPassGroupingCollector groupByCollector = null;
       // groupBy query: first part: build query and collectors
       if (groupByField != null) {
-        Sort indexOrder = Sort.INDEXORDER; // normally alphabetically sorted
+        Sort groupBySort = Sort.RELEVANCE; // default sort: Lucene score
+        if (groupBySortFieldNames != null) {
+          groupBySort = buildSort(groupBySortFieldNames);  // build sort criteria
+        }
         int maxDocsPerGroup = 5;  // default value
         if (groupByField.endsWith(")")) {
           int index1 = groupByField.indexOf("(");
@@ -1095,11 +1104,11 @@ public class IndexHandler {
           groupByField = groupByField.substring(0, index1);
         }
         String groupByFieldNameSorted = groupByField + "Sorted";
-        TermFirstPassGroupingCollector termFirstPassGroupCollector = new TermFirstPassGroupingCollector(groupByFieldNameSorted, indexOrder, 1000);
+        TermFirstPassGroupingCollector termFirstPassGroupCollector = new TermFirstPassGroupingCollector(groupByFieldNameSorted, groupBySort, 1000);
         Query matchAllDocsQuery = new MatchAllDocsQuery();
         FacetsCollector.search(searcher, matchAllDocsQuery, 1, sort, true, true, termFirstPassGroupCollector);
         Collection<SearchGroup<BytesRef>> fieldGroups = termFirstPassGroupCollector.getTopGroups(0, true);
-        groupByCollector = new TermSecondPassGroupingCollector(groupByFieldNameSorted, fieldGroups, indexOrder, sort, maxDocsPerGroup, true, true, true);
+        groupByCollector = new TermSecondPassGroupingCollector(groupByFieldNameSorted, fieldGroups, groupBySort, sort, maxDocsPerGroup, true, true, true);
         searchCollector = MultiCollector.wrap(facetsCollector, groupByCollector);
       }
       TopDocs resultDocs = FacetsCollector.search(searcher, morphQuery, to + 1, sort, true, true, searchCollector);
@@ -1149,7 +1158,10 @@ public class IndexHandler {
           if (topGroups != null) {
             groupByHits = new ArrayList<GroupDocuments>();
             HashSet<String> docFieldsToFill = getDocFields();
-            for (int i=0; i<topGroups.groups.length; i++) {
+            int groupByTo = to;
+            if (topGroups.groups.length <= groupByTo)
+              groupByTo = topGroups.groups.length - 1;
+            for (int i=from; i<=groupByTo; i++) {
               GroupDocs<BytesRef> group = topGroups.groups[i];
               GroupDocuments groupDocuments = new GroupDocuments();
               int countGroupHits = group.totalHits;
