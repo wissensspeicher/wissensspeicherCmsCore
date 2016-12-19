@@ -1165,7 +1165,9 @@ public class IndexHandler {
               GroupDocs<BytesRef> group = topGroups.groups[i];
               GroupDocuments groupDocuments = new GroupDocuments();
               int countGroupHits = group.totalHits;
+              float groupMaxScore = group.maxScore;
               groupDocuments.setSize(countGroupHits);
+              groupDocuments.setMaxScore(groupMaxScore);
               for (int j=0; j<group.scoreDocs.length; j++) {
                 int docId = group.scoreDocs[j].doc;
                 float score = group.scoreDocs[j].score;
