@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import org.apache.commons.httpclient.util.URIUtil;
+import org.apache.log4j.Logger;
 import org.bbaw.wsp.cms.document.Person;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -15,6 +16,7 @@ import org.json.simple.JSONObject;
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 
 public class Project {
+  private static Logger LOGGER = Logger.getLogger(Project.class);
   public static Comparator<Person> personNameComparator = new Comparator<Person>() {
     public int compare(Person p1, Person p2) {
       return p1.getName().compareTo(p2.getName());
@@ -256,18 +258,22 @@ public class Project {
         addSubCollection(collection);
       } else {  // parent is collection
         ProjectCollection parentCollection = getCollection(collParentRdfId);
-        parentCollection.addSubCollection(collection);
-        // subcollections with crawlDB's: add exclude
-        ArrayList<Database> parentCrawlDBs = parentCollection.getDatabasesByType("crawl");
-        ArrayList<Database> subcollectionCrawlDBs = collection.getDatabasesByType("crawl");
-        if (parentCrawlDBs != null && subcollectionCrawlDBs != null) {
-          Database parentCrawlDB = parentCrawlDBs.get(0);
-          String parentCrawlDBRdfId = parentCrawlDB.getRdfId(); // only one db is supported
-          String subcollectionCrawlDBRdfId = subcollectionCrawlDBs.get(0).getRdfId(); // only one db is supported
-          if (subcollectionCrawlDBRdfId.startsWith(parentCrawlDBRdfId)) {
-            String excludeStr = subcollectionCrawlDBRdfId.substring(parentCrawlDBRdfId.length());
-            excludeStr = excludeStr + "/.*";
-            parentCrawlDB.addExclude(excludeStr);
+        if (parentCollection == null) {
+          LOGGER.error("Build subcollections: parent collection does not exist: " + collParentRdfId);
+        } else {
+          parentCollection.addSubCollection(collection);
+          // subcollections with crawlDB's: add exclude
+          ArrayList<Database> parentCrawlDBs = parentCollection.getDatabasesByType("crawl");
+          ArrayList<Database> subcollectionCrawlDBs = collection.getDatabasesByType("crawl");
+          if (parentCrawlDBs != null && subcollectionCrawlDBs != null) {
+            Database parentCrawlDB = parentCrawlDBs.get(0);
+            String parentCrawlDBRdfId = parentCrawlDB.getRdfId(); // only one db is supported
+            String subcollectionCrawlDBRdfId = subcollectionCrawlDBs.get(0).getRdfId(); // only one db is supported
+            if (subcollectionCrawlDBRdfId.startsWith(parentCrawlDBRdfId)) {
+              String excludeStr = subcollectionCrawlDBRdfId.substring(parentCrawlDBRdfId.length());
+              excludeStr = excludeStr + "/.*";
+              parentCrawlDB.addExclude(excludeStr);
+            }
           }
         }
       }

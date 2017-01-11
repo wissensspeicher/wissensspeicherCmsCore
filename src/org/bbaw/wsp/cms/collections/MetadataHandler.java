@@ -356,8 +356,10 @@ public class MetadataHandler {
           if (idCounter != null)
             idCounter++;
           Row row = xml2row(xdmItemMainResourceStr, db, idCounter);
-          appendRow2rdf(rdfRecordsStrBuilder, project, db, row);
-          counter++;
+          if (row != null) {
+            appendRow2rdf(rdfRecordsStrBuilder, project, db, row);
+            counter++;
+          }
         }
       }
       String rdfFileName = xmlDbFileName.replaceAll(".xml", ".rdf");
@@ -401,6 +403,9 @@ public class MetadataHandler {
         }
       }
     } else if (dbType.equals("oai") || dbType.equals("oai-dbrecord")) {
+      String recordHeaderStatus = xQueryEvaluator.evaluateAsString(rowXmlStr, "string(/*:record/*:header/@status)");
+      if (recordHeaderStatus != null && recordHeaderStatus.equals("deleted"))
+        return null;
       String recordId = xQueryEvaluator.evaluateAsString(rowXmlStr, "/*:record/*:header/*:identifier/text()");
       if (recordId != null && ! recordId.isEmpty())
         row.addField("identifier", recordId);
@@ -422,6 +427,7 @@ public class MetadataHandler {
   private void appendRow2rdf(StringBuilder rdfStrBuilder, Project project, Database db, Row row) throws ApplicationException {
     String projectId = project.getId();
     String projectRdfId = project.getRdfId();
+    String dbRdfId = db.getRdfId();
     String collectionRdfId = null; // special: for edoc
     String mainLanguage = db.getLanguage();
     String mainResourcesTableId = db.getMainResourcesTableId();
@@ -441,7 +447,7 @@ public class MetadataHandler {
       rdfWebId = rdfWebId + webIdAfterStr;
     }
     // special handling of edoc oai records
-    if (projectId.equals("edoc")) {
+    if (dbRdfId.endsWith("edoc.bbaw.de/oai")) {
       String dbFieldIdentifier = db.getDbField("identifier");
       if (dbFieldIdentifier != null) {
         ArrayList<String> identifiers = row.getFieldValues(dbFieldIdentifier);
@@ -458,6 +464,7 @@ public class MetadataHandler {
           edocMetadataHtmlStr = edocMetadataHtmlStr.replaceAll("<!DOCTYPE html .+>", "");
           Document doc = Jsoup.parse(edocMetadataHtmlStr, edocMetadataUrl);
           String institutesStr = doc.select("th:containsOwn(Institutes:) + td > a").text();
+          String edocPublicationWithoutMappingCollectionRdfId = "http://wissensspeicher.bbaw.de/rdf/projectdata/BBAWBibliothek/PublikationEdocServer/ohneZuordnung";
           if (institutesStr != null && ! institutesStr.isEmpty()) {
             institutesStr = institutesStr.trim().replaceAll("BBAW / ", "");
             String edocId = db.getEdocCollectionRdfId(institutesStr);
@@ -468,27 +475,25 @@ public class MetadataHandler {
                   collectionRdfId = edocId;
                   projectRdfId = collection.getProjectRdfId();
                 } else {
-                  LOGGER.error("Edoc institutes to collection mapping (see edoc.xml): " + edocId + " (collection) is not defined in any project file");
+                  LOGGER.error("Edoc institutes to collection mapping (see bbawbib.xml): " + edocId + " (collection) is not defined in any project file");
+                  collectionRdfId = edocPublicationWithoutMappingCollectionRdfId;
                 }
               } else {  // only a projectId is given
                 Project p = ProjectReader.getInstance().getProject(edocId);
                 if (p != null) {
                   projectRdfId = p.getRdfId();
                 } else {
-                  LOGGER.error("Edoc institutes to collection mapping (see edoc.xml): " + edocId + " (projectId) is not defined in a project file");
-                  Project edocProject = ProjectReader.getInstance().getProject("edoc");
-                  projectRdfId = edocProject.getRdfId();
+                  LOGGER.error("Edoc institutes to collection mapping (see bbawbib.xml): " + edocId + " (projectId) is not defined in a project file");
+                  collectionRdfId = edocPublicationWithoutMappingCollectionRdfId;
                 }
               }
             } else {
-              LOGGER.error("Edoc institutes to collection mapping (see edoc.xml): " + institutesStr + " has no collection mapping");
-              Project edocProject = ProjectReader.getInstance().getProject("edoc");  // TODO some institutes (e.g. ALLEA) have no projectId: map it to a special edoc collection (e.g. "akademiepublikationen1")
-              projectRdfId = edocProject.getRdfId();
+              LOGGER.error("Edoc institutes to collection mapping (see bbawbib.xml): " + institutesStr + " has no collection mapping");
+              collectionRdfId = edocPublicationWithoutMappingCollectionRdfId; // some institutes (e.g. ALLEA) have no projectId: map it to a special edoc collection
             }
           } else {
-            LOGGER.error("Edoc institutes to collection mapping (see edoc.xml): " + edocMetadataUrl + " (" + rdfWebId + ") has no institutes value (CSS selector: th:containsOwn(Institutes:) + td > a)");
-            Project edocProject = ProjectReader.getInstance().getProject("edoc");  // TODO if no institutes string is given: map it to a special edoc collection (e.g. "akademiepublikationen1")
-            projectRdfId = edocProject.getRdfId();
+            LOGGER.error("Edoc institutes to collection mapping (see bbawbib.xml): " + edocMetadataUrl + " (" + rdfWebId + ") has no institutes value (CSS selector: th:containsOwn(Institutes:) + td > a)");
+            collectionRdfId = edocPublicationWithoutMappingCollectionRdfId; // if no institutes string is given: map it to a special edoc collection
           }
         }
       }
@@ -693,7 +698,7 @@ public class MetadataHandler {
           if (resourceType.endsWith(resourceTypeName)) {
             MetadataRecord mdRecord = null;
             if (resourceTypeName.equals("BibliographicResource"))
-              mdRecord = getMdRecordFromBibliographicResource(project, resource);
+              mdRecord = getMdRecordFromBibliographicResource(project, db, resource);
             else
               mdRecord = getMdRecordFromDigitalResource(project, resource);
             if (mdRecord != null) {
@@ -1057,7 +1062,7 @@ public class MetadataHandler {
     return mdRecord;
   }
 
-  private MetadataRecord getMdRecordFromBibliographicResource(Project project, Element resourceElem) throws ApplicationException {
+  private MetadataRecord getMdRecordFromBibliographicResource(Project project, Database db, Element resourceElem) throws ApplicationException {
     // download url of resource
     Element identifierElem = resourceElem.select("dc|identifier").first();
     String resourceIdUrlStr = null;
@@ -1085,13 +1090,20 @@ public class MetadataHandler {
       }
     }
     // edoc
-    if (project.getId().equals("edoc")) {
-      String projectRdfStr = resourceElem.select("dcterms|isPartOf").attr("rdf:resource");
-      if (projectRdfStr != null) {
-        Project p = ProjectReader.getInstance().getProjectByRdfId(projectRdfStr);
+    boolean isEdocDB = false;
+    if (db != null) {
+      String dbRdfId = db.getRdfId();
+      if (dbRdfId.endsWith("edoc.bbaw.de/oai"))
+        isEdocDB = true;
+    }
+    if (isEdocDB) {
+      String projectRdfId = resourceElem.select("dcterms|isPartOf").attr("rdf:resource");
+      if (projectRdfId != null) {
+        Project p = ProjectReader.getInstance().getProjectByRdfId(projectRdfId);
         if (p != null) {
           String projectId = p.getId();
           mdRecord.setProjectId(projectId);
+          mdRecord.setProjectRdfId(projectRdfId);
         }
       }
       // collectionRdfId of which this resource is part of
