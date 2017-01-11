@@ -708,7 +708,8 @@ public class MetadataHandler {
               if (mdRecord.getProjectId() == null)
                 mdRecord.setProjectId(projectId);
               String projectRdfId = project.getRdfId();
-              mdRecord.setProjectRdfId(projectRdfId);
+              if (mdRecord.getProjectRdfId() == null)
+                mdRecord.setProjectRdfId(projectRdfId);
               maxIdcounter++;
               mdRecord.setId(maxIdcounter); // projects wide id
               mdRecord = createMainFieldsMetadataRecord(mdRecord, project, db);
