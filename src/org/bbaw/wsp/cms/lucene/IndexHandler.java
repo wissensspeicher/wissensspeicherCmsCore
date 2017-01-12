@@ -1001,7 +1001,7 @@ public class IndexHandler {
   }
 
   public int deleteProjectDBByRdfId(String databaseRdfId) throws ApplicationException {
-    String queryDatabaseRdfId = "databaseRdfId:" + databaseRdfId;
+    String queryDatabaseRdfId = "databaseRdfId:\"" + databaseRdfId + "\"";
     Hits databaseDocHits = queryDocuments("lucene", queryDatabaseRdfId, null, null, null, null, null, 0, 9, false, false);
     int countDeletedDocs = databaseDocHits.getSize();
     try {

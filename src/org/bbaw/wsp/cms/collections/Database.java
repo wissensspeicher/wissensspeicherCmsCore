@@ -251,7 +251,7 @@ public class Database {
       Element edocInstitutesElem = edocInstitutesElems.get(i);
       String instituteName = edocInstitutesElem.text();
       String collectionRdfId = edocInstitutesElem.attr("collection-id");
-      if (instituteName != null && collectionRdfId != null && ! instituteName.isEmpty() && ! collectionRdfId.isEmpty())
+      if (instituteName != null && collectionRdfId != null && ! collectionRdfId.isEmpty())
         database.edocInstituteName2collectionRdfId.put(instituteName, collectionRdfId);
     }
     return database;

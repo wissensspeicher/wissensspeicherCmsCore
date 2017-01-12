@@ -464,7 +464,7 @@ public class MetadataHandler {
           edocMetadataHtmlStr = edocMetadataHtmlStr.replaceAll("<!DOCTYPE html .+>", "");
           Document doc = Jsoup.parse(edocMetadataHtmlStr, edocMetadataUrl);
           String institutesStr = doc.select("th:containsOwn(Institutes:) + td > a").text();
-          String edocPublicationWithoutMappingCollectionRdfId = "http://wissensspeicher.bbaw.de/rdf/projectdata/BBAWBibliothek/PublikationEdocServer/ohneZuordnung";
+          String edocPublicationWithoutMappingCollectionRdfId = db.getEdocCollectionRdfId(""); // delivers normally "http://wissensspeicher.bbaw.de/rdf/projectdata/BBAWBibliothek/PublikationEdocServer/ohneZuordnung"
           if (institutesStr != null && ! institutesStr.isEmpty()) {
             institutesStr = institutesStr.trim().replaceAll("BBAW / ", "");
             String edocId = db.getEdocCollectionRdfId(institutesStr);
@@ -948,7 +948,7 @@ public class MetadataHandler {
           creator = creator + ". ";
         creatorDetails = creatorDetails + "\n" + author.toXmlStr();
       }
-      creator = StringUtils.deresolveXmlEntities(creator.trim());
+      creator = creator.trim();
       creatorDetails = creatorDetails + "\n</persons>";
       if (creator != null && ! creator.isEmpty())
         mdRecord.setCreator(creator);
@@ -1147,7 +1147,7 @@ public class MetadataHandler {
           creator = creator + ". ";
         creatorDetails = creatorDetails + "\n" + author.toXmlStr();
       }
-      creator = StringUtils.deresolveXmlEntities(creator.trim());
+      creator = creator.trim();
       creatorDetails = creatorDetails + "\n</persons>";
       if (creator != null && ! creator.isEmpty())
         mdRecord.setCreator(creator);

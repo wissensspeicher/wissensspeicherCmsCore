@@ -64,16 +64,22 @@ public class MetadataRecord implements Cloneable, Serializable {
   private Hashtable<String, XQuery> xQueries; // dynamic xQueries of xml resources (with name, code, result)
   private String system; // "crawl", "eXist" or "dbRecord" (for dbType: mysql, postgres and for dbName jdg) or "oaiRecord" (for oai databases: dta, edoc) 
   
-  private static Hashtable<String, String> notOutputFields = new Hashtable<String, String>();
+  private static Hashtable<String, String> NOT_OUTPUT_FIELDS = new Hashtable<String, String>();
+  private static Hashtable<String, String> XML_FIELDS = new Hashtable<String, String>();
   static {
-    notOutputFields.put("tokenOrig", "tokenOrig");
-    notOutputFields.put("tokenNorm", "tokenNorm");
-    notOutputFields.put("tokenMorph", "tokenMorph");
-    notOutputFields.put("content", "content");
-    notOutputFields.put("xQueries", "xQueries");
-    notOutputFields.put("notOutputFields", "notOutputFields");
-    notOutputFields.put("serialVersionUID", "serialVersionUID");
-    notOutputFields.put("US_DATE_FORMAT", "US_DATE_FORMAT");
+    NOT_OUTPUT_FIELDS.put("tokenOrig", "tokenOrig");
+    NOT_OUTPUT_FIELDS.put("tokenNorm", "tokenNorm");
+    NOT_OUTPUT_FIELDS.put("tokenMorph", "tokenMorph");
+    NOT_OUTPUT_FIELDS.put("content", "content");
+    NOT_OUTPUT_FIELDS.put("xQueries", "xQueries");
+    NOT_OUTPUT_FIELDS.put("NOT_OUTPUT_FIELDS", "NOT_OUTPUT_FIELDS");
+    NOT_OUTPUT_FIELDS.put("XML_FIELDS", "XML_FIELDS");
+    NOT_OUTPUT_FIELDS.put("serialVersionUID", "serialVersionUID");
+    NOT_OUTPUT_FIELDS.put("US_DATE_FORMAT", "US_DATE_FORMAT");
+    XML_FIELDS.put("creatorDetails", "creatorDetails");
+    XML_FIELDS.put("subjectControlledDetails", "subjectControlledDetails");
+    XML_FIELDS.put("entitiesDetails", "entitiesDetails");
+    XML_FIELDS.put("personsDetails", "personsDetails");
   }
 
   public int getId() {
@@ -479,13 +485,18 @@ public class MetadataRecord implements Cloneable, Serializable {
       for (int i=0; i<fields.length; i++) {
         Field field = fields[i];
         String fieldName = field.getName();
-        if (notOutputFields.get(fieldName) == null) {
+        if (NOT_OUTPUT_FIELDS.get(fieldName) == null) {
           Element fieldElem = record.select(fieldName).first();
           if (fieldElem != null) {
             Object fieldValue = fieldElem.text();
+            if (XML_FIELDS.get(fieldName) != null) { // if it's an xml field then the xml string is used
+              fieldValue = fieldElem.html();
+            }
             Class<? extends Object> typeClass = field.getType();
             if (typeClass.getName().equals("java.lang.String")) {
-              fieldValue = StringUtils.resolveXmlEntities((String) fieldValue);
+              if (XML_FIELDS.get(fieldName) == null) { // if it's not an xml field then resolve xml entities
+                fieldValue = StringUtils.resolveXmlEntities((String) fieldValue);
+              }
             } else if (typeClass.getName().equals("int")) {
               fieldValue = Integer.valueOf((String) fieldValue);
             } else if (typeClass.getName().equals("java.util.Date")) {
@@ -509,13 +520,14 @@ public class MetadataRecord implements Cloneable, Serializable {
       for (int i=0; i<fields.length; i++) {
         Field field = fields[i];
         String fieldName = field.getName();
-        if (notOutputFields.get(fieldName) == null) {
+        if (NOT_OUTPUT_FIELDS.get(fieldName) == null) {
           Object fieldValue = field.get(this);
           if (fieldValue != null) {
             String fieldValueStr = fieldValue.toString();
             if (! fieldValueStr.isEmpty()) {
-              String fieldValueStrEscaped = StringUtils.deresolveXmlEntities(fieldValueStr);
-              xmlStrBuilder.append("  <" + fieldName + ">" + fieldValueStrEscaped + "</" + fieldName + ">\n");
+              if (XML_FIELDS.get(fieldName) == null)  // if it's not an xml field then deresolve XML entities
+                fieldValueStr = StringUtils.deresolveXmlEntities(fieldValueStr);
+              xmlStrBuilder.append("  <" + fieldName + ">" + fieldValueStr + "</" + fieldName + ">\n");
             }
           }
         }
