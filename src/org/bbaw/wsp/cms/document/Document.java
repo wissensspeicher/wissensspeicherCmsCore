@@ -129,17 +129,19 @@ public class Document {
           JSONObject jsonCollection = new JSONObject();
           jsonCollection.put("rdfId", collectionRdfId);
           ProjectCollection coll = project.getCollection(collectionRdfId);
-          String collectionTitle = coll.getTitle();
-          if (collectionTitle != null)
-            jsonCollection.put("label", collectionTitle);
-          String collectionHomepageUrl = coll.getHomepageUrl();
-          if (collectionHomepageUrl != null)
-            jsonCollection.put("url", collectionHomepageUrl);
-          OutputType collectionType = coll.getType();
-          if (collectionType != null) {
-            jsonCollection.put("type", collectionType.getLabel());
+          if (coll != null) {
+            String collectionTitle = coll.getTitle();
+            if (collectionTitle != null)
+              jsonCollection.put("label", collectionTitle);
+            String collectionHomepageUrl = coll.getHomepageUrl();
+            if (collectionHomepageUrl != null)
+              jsonCollection.put("url", collectionHomepageUrl);
+            OutputType collectionType = coll.getType();
+            if (collectionType != null) {
+              jsonCollection.put("type", collectionType.getLabel());
+            }
+            jsonObject.put("collection", jsonCollection);
           }
-          jsonObject.put("collection", jsonCollection);
         }
       }
       IndexableField databaseRdfIdField = getField("databaseRdfId");
