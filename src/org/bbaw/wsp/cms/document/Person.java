@@ -32,7 +32,7 @@ public class Person implements Comparable<Person> {
   private String mbox; // e.g. mailto:boehme@bbaw.de
   private String homepage; // e.g. http://aaew.bbaw.de/projekt/mitarbeiter/mitarbeiter
   private String gndId; // e.g. http://d-nb.info/gnd/119493381
-  private String functionOrRoleRdfId; // e.g. http://wissensspeicher.bbaw.de/rdf/normdata/HeadOfDepartment
+  private String functionOrRole; // e.g. Koordinator, Herausgeber etc.
   private String ref;
   private String aboutLink;
   private String language;
@@ -172,12 +172,12 @@ public class Person implements Comparable<Person> {
     this.gndId = gndId;
   }
 
-  public String getFunctionOrRoleRdfId() {
-    return functionOrRoleRdfId;
+  public String getFunctionOrRole() {
+    return functionOrRole;
   }
 
-  public void setFunctionOrRoleRdfId(String functionOrRoleRdfId) {
-    this.functionOrRoleRdfId = functionOrRoleRdfId;
+  public void setFunctionOrRole(String functionOrRole) {
+    this.functionOrRole = functionOrRole;
   }
 
   public String getRef() {
@@ -317,8 +317,8 @@ public class Person implements Comparable<Person> {
       retJsonObject.put("homepage", homepage);
     if (gndId != null)
       retJsonObject.put("gndId", gndId);
-    if (functionOrRoleRdfId != null)
-      retJsonObject.put("functionOrRoleRdfId", functionOrRoleRdfId);
+    if (functionOrRole != null)
+      retJsonObject.put("functionOrRole", functionOrRole);
     return retJsonObject;
   }
 

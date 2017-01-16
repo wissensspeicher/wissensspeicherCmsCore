@@ -94,6 +94,7 @@ public class ProjectReader {
   private ArrayList<String> globalExcludes;
   private ArrayList<String> globalContentCssSelectors;
   private HashMap<String, Person> normdataPersons;
+  private HashMap<String, OutputType> normdataAgentClasses;
   private HashMap<String, Organization> normdataOrganizations;
   private HashMap<String, Subject> normdataSubjects;
   private HashMap<String, Location> normdataLocations;
@@ -344,7 +345,11 @@ public class ProjectReader {
   public Person getPerson(String aboutId) {
     return normdataPersons.get(aboutId);
   }
-  
+    
+  public OutputType getAgentClass(String aboutId) {
+    return normdataAgentClasses.get(aboutId);
+  }
+
   public Organization getOrganization(String organizationRdfId) {
     return normdataOrganizations.get(organizationRdfId);
   }
@@ -419,6 +424,7 @@ public class ProjectReader {
   
   private void readNormdataFiles() {
     readNormdataPersons();
+    readNormdataAgentClasses();
     readNormdataOrganizations();
     readNormdataSubjects();
     readNormdataLocations();
@@ -461,7 +467,7 @@ public class ProjectReader {
           if (mbox != null && ! mbox.isEmpty()) {
             person.setMbox(mbox);
           }
-          String homepage = personElem.select("rdf|Description > foaf|ho mepage").text();
+          String homepage = personElem.select("rdf|Description > foaf|homepage").text();
           if (homepage != null && ! homepage.isEmpty()) {
             person.setHomepage(homepage);
           }
@@ -471,7 +477,11 @@ public class ProjectReader {
           }
           String functionOrRoleRdfId = personElem.select("rdf|Description > gndo|functionOrRole").text();
           if (functionOrRoleRdfId != null && ! functionOrRoleRdfId.isEmpty()) {
-            person.setFunctionOrRoleRdfId(functionOrRoleRdfId);
+            OutputType agentClass = getAgentClass(functionOrRoleRdfId);
+            if (agentClass != null) {
+              String functionOrRole = agentClass.getLabel();
+              person.setFunctionOrRole(functionOrRole);
+            }
           }
           String rdfId = personElem.select("rdf|Description").attr("rdf:about");
           person.setRdfId(rdfId);          
@@ -484,6 +494,32 @@ public class ProjectReader {
     }
   }
   
+  private void readNormdataAgentClasses() {
+    normdataAgentClasses = new HashMap<String, OutputType>();
+    String normdataFileName = Constants.getInstance().getMetadataDir() + "/normdata/wsp.normdata.agentClass.rdf";
+    File normdataFile = new File(normdataFileName);
+    try {
+      Document normdataFileDoc = Jsoup.parse(normdataFile, "utf-8");
+      Elements agentClassElems = normdataFileDoc.select("rdf|RDF > rdf|Description");
+      if (! agentClassElems.isEmpty()) {
+        for (int i=0; i< agentClassElems.size(); i++) {
+          OutputType agentClass = new OutputType();
+          Element agentClassElem = agentClassElems.get(i);
+          String aboutId = agentClassElem.select("rdf|Description").attr("rdf:about");
+          agentClass.setRdfId(aboutId);
+          String label = agentClassElem.select("rdf|Description > rdfs|label[xml:lang=\"de\"]").text();
+          if (label != null && ! label.isEmpty()) {
+            agentClass.setLabel(label);
+          }
+          normdataAgentClasses.put(aboutId, agentClass);
+        }
+      }
+    } catch (Exception e) {
+      LOGGER.error("Reading of: " + normdataFile + " failed");
+      e.printStackTrace();
+    }
+  }
+
   private void readNormdataOrganizations() {
     normdataOrganizations = new HashMap<String, Organization>();
     String orgNormdataFileName = Constants.getInstance().getMetadataDir() + "/normdata/wsp.normdata.organizations.rdf";
@@ -827,18 +863,30 @@ public class ProjectReader {
       for (int i=0; i< staffElems.size(); i++) {
         Element staffPersonElem = staffElems.get(i);
         String personRdfId = staffPersonElem.attr("rdf:resource");
+        String functionOrRole = null;
         if (personRdfId.isEmpty()) {
           String personRdfNodeId = staffPersonElem.attr("rdf:nodeID");
           if (! personRdfNodeId.isEmpty()) {
             Element personRdfNode = projectRdfDoc.select("rdf|RDF > rdf|Description[rdf:nodeID*=" + personRdfNodeId + "]").first();
             if (personRdfNode != null) {
               personRdfId = personRdfNode.select("dcterms|identifier").text(); 
+              String functionOrRoleRdfId = personRdfNode.select("gndo|functionOrRole").attr("rdf:resource");
+              if (functionOrRoleRdfId != null) {
+                OutputType agentClass = getAgentClass(functionOrRoleRdfId);
+                if (agentClass != null) {
+                  functionOrRole = agentClass.getLabel();
+                }
+              }
             }
           }
         }
         Person person = getPerson(personRdfId);
-        if (person != null)
+        if (person != null) {
+          person.setFunctionOrRole(functionOrRole);
           project.addStaffPerson(personRdfId, person); // e.g. "http://wissensspeicher.bbaw.de/rdf/normdata/Leitner"
+        } else {
+          LOGGER.error(projectId + ",rdf : contributor: " + personRdfId + " is not defined in normdata file");
+        }
       }
       Elements relatedElems = projectElem.select("dcterms|relation");
       for (int i=0; i< relatedElems.size(); i++) {
@@ -911,8 +959,9 @@ public class ProjectReader {
           Element staffPersonElem = collectionStaffElems.get(j);
           String personRdfId = staffPersonElem.attr("rdf:resource");
           Person person = getPerson(personRdfId);
-          if (person != null)
+          if (person != null) {
             collection.addStaffPerson(personRdfId, person);
+          }
         }
         project.addCollection(collRdfId, collection);
         collections.put(collRdfId, collection);
