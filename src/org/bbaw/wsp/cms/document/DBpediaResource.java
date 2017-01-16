@@ -77,7 +77,7 @@ public class DBpediaResource implements Comparable<DBpediaResource> {
         DBpediaResource entity = new DBpediaResource();
         String uri = xQueryEvaluator.evaluateAsString(xdmItemStr, "string(/resource/uri)");
         if (uri != null)
-          entity.setUri(uri);
+          entity.setUri(uri.trim());
         String name = xQueryEvaluator.evaluateAsString(xdmItemStr, "string(/resource/name)");
         if (name == null || name.isEmpty()) {
           int begin = uri.lastIndexOf("resource/") + 9;
@@ -86,19 +86,19 @@ public class DBpediaResource implements Comparable<DBpediaResource> {
         entity.setName(name);
         String gnd = xQueryEvaluator.evaluateAsString(xdmItemStr, "string(/resource/gnd)");
         if (gnd != null && ! gnd.isEmpty())
-          entity.setGnd(gnd);
+          entity.setGnd(gnd.trim());
         String supportStr = xQueryEvaluator.evaluateAsString(xdmItemStr, "string(/resource/support)");
         if (supportStr != null)
-          entity.setSupport(new Integer(supportStr));
+          entity.setSupport(new Integer(supportStr.trim()));
         String similarityStr = xQueryEvaluator.evaluateAsString(xdmItemStr, "string(/resource/similarity)");
         if (similarityStr != null)
-          entity.setSimilarity(new Double(similarityStr));
+          entity.setSimilarity(new Double(similarityStr.trim()));
         String type = xQueryEvaluator.evaluateAsString(xdmItemStr, "string(/resource/type)");
         if (type != null)
-          entity.setType(type);
+          entity.setType(type.trim());
         String frequencyStr = xQueryEvaluator.evaluateAsString(xdmItemStr, "string(/resource/frequency)");
         if (frequencyStr != null)
-          entity.setFrequency(new Integer(frequencyStr));
+          entity.setFrequency(new Integer(frequencyStr.trim()));
         retEntities.add(entity);
       }
     }
