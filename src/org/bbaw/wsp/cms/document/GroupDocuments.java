@@ -90,11 +90,13 @@ public class GroupDocuments {
       }
     }
     JSONArray jsonHits = new JSONArray();
-    for (int i=0; i<documents.size(); i++) {
-      Document doc = documents.get(i);
-      doc.setBaseUrl(baseUrl);
-      JSONObject jsonHit = doc.toJsonObject();
-      jsonHits.add(jsonHit);
+    if (documents != null) {
+      for (int i=0; i<documents.size(); i++) {
+        Document doc = documents.get(i);
+        doc.setBaseUrl(baseUrl);
+        JSONObject jsonHit = doc.toJsonObject();
+        jsonHits.add(jsonHit);
+      }
     }
     jsonObject.put("hits", jsonHits);
     return jsonObject;

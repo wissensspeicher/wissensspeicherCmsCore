@@ -1156,6 +1156,11 @@ public class IndexHandler {
         if (groupByField != null) {
           TopGroups<BytesRef> topGroups = groupByCollector.getTopGroups(0);
           if (topGroups != null) {
+            GroupDocs<BytesRef>[] topGroupDocs = topGroups.groups;
+            // remove the empty groups
+            for (int i=from; i<=topGroupDocs.length; i++) {
+              GroupDocs<BytesRef> group = topGroupDocs[i];
+            }            
             groupByHits = new ArrayList<GroupDocuments>();
             HashSet<String> docFieldsToFill = getDocFields();
             int groupByTo = to;
@@ -1190,7 +1195,7 @@ public class IndexHandler {
                 }
                 groupDocuments.addDocument(doc);
               }
-              if (groupDocuments.hasDocuments())
+              // if (groupDocuments.hasDocuments())
                 groupByHits.add(groupDocuments);
             }
           }
