@@ -1156,22 +1156,26 @@ public class IndexHandler {
         if (groupByField != null) {
           TopGroups<BytesRef> topGroups = groupByCollector.getTopGroups(0);
           if (topGroups != null) {
-            // GroupDocs<BytesRef>[] topGroupDocs = topGroups.groups;
+            GroupDocs<BytesRef>[] topGroupDocsTmp = topGroups.groups;
             // remove the empty groups
-            // for (int i=from; i<=topGroupDocs.length; i++) {
-            //   GroupDocs<BytesRef> group = topGroupDocs[i];
-            // }            
+            ArrayList<GroupDocs<BytesRef>> topGroupDocs = new ArrayList<GroupDocs<BytesRef>>();
+            for (int i=from; i<topGroupDocsTmp.length; i++) {
+              GroupDocs<BytesRef> group = topGroupDocsTmp[i];
+              int totalGroupHitsSize = group.totalHits;
+              if (totalGroupHitsSize > 0)
+                topGroupDocs.add(group);
+            }            
             groupByHits = new ArrayList<GroupDocuments>();
             HashSet<String> docFieldsToFill = getDocFields();
             int groupByTo = to;
-            if (topGroups.groups.length <= groupByTo)
-              groupByTo = topGroups.groups.length - 1;
+            if (topGroupDocs.size() <= groupByTo)
+              groupByTo = topGroupDocs.size() - 1;
             for (int i=from; i<=groupByTo; i++) {
-              GroupDocs<BytesRef> group = topGroups.groups[i];
+              GroupDocs<BytesRef> group = topGroupDocs.get(i);
               GroupDocuments groupDocuments = new GroupDocuments();
-              int countGroupHits = group.totalHits;
+              int totalGroupHitsSize = group.totalHits;
               float groupMaxScore = group.maxScore;
-              groupDocuments.setSize(countGroupHits);
+              groupDocuments.setSize(totalGroupHitsSize);
               groupDocuments.setMaxScore(groupMaxScore);
               for (int j=0; j<group.scoreDocs.length; j++) {
                 int docId = group.scoreDocs[j].doc;
@@ -1195,7 +1199,6 @@ public class IndexHandler {
                 }
                 groupDocuments.addDocument(doc);
               }
-              // if (groupDocuments.hasDocuments())
               groupByHits.add(groupDocuments);
             }
           }
