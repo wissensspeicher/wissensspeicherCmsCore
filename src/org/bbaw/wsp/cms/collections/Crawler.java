@@ -1,9 +1,11 @@
 package org.bbaw.wsp.cms.collections;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -48,9 +50,11 @@ public class Crawler {
   public ArrayList<MetadataRecord> crawl() throws ApplicationException {
     getMdRecords(rootUrlStr, 1);
     ArrayList<MetadataRecord> mdRecords = new ArrayList<MetadataRecord>(urlsHashtable.values());
-    MetadataRecord rootMdRecord = getNewMdRecord(null, rootUrlStr);
-    if (rootMdRecord != null)
-      mdRecords.add(0, rootMdRecord);
+    if (! mdRecords.isEmpty()) {
+      MetadataRecord rootMdRecord = getNewMdRecord(null, rootUrlStr);
+      if (rootMdRecord != null)
+        mdRecords.add(0, rootMdRecord);
+    }
     Comparator<MetadataRecord> mdRecordComparator = new Comparator<MetadataRecord>() {
       public int compare(MetadataRecord m1, MetadataRecord m2) {
         return m1.getWebUri().compareTo(m2.getWebUri());
@@ -67,6 +71,7 @@ public class Crawler {
       try {
         doc = Jsoup.parse(startUrl, SOCKET_TIMEOUT);
       } catch (Exception e) {
+        LOGGER.error("Crawler: " + startUrl + "couldn't be crawled: " + e.getMessage());
         e.printStackTrace();
       }
       if (doc != null) {
@@ -192,6 +197,31 @@ public class Crawler {
   private String detect(String startUrlStr, URL url) throws ApplicationException {
     String mimeType = null;
     try {
+      URLConnection connection = url.openConnection();
+      connection.setConnectTimeout(SOCKET_TIMEOUT);
+      connection.setReadTimeout(SOCKET_TIMEOUT);
+      mimeType = connection.getContentType();
+      if (mimeType != null && mimeType.trim().isEmpty())
+        return null;
+      if (mimeType != null && mimeType.contains(";"))
+        mimeType = mimeType.substring(0, mimeType.indexOf(";"));
+    } catch (IOException e) {
+      LOGGER.error("Crawler: detection of link: " + url + " on page: " + startUrlStr + " is not possible");
+      return null; // e.g. if FileNotFoundException etc. is thrown by site
+    }
+    return mimeType;
+  }
+
+  /**
+   * has no timeout: so URLConnection is used instead
+   * @param startUrlStr
+   * @param url
+   * @return
+   * @throws ApplicationException
+   */
+  private String detectByTika(String startUrlStr, URL url) throws ApplicationException {
+    String mimeType = null;
+    try {
       mimeType = tika.detect(url);
       if (mimeType != null && mimeType.contains(";"))
         mimeType = mimeType.replaceAll(";.*", "");
@@ -203,7 +233,7 @@ public class Crawler {
   }
   
   /**
-   * is a little bit slower than tika: so tika is used instead
+   * is a little bit slower than tika and URLConnection: so URLConnection is used instead
    * @param startUrlStr
    * @param urlStr
    * @return mime type
