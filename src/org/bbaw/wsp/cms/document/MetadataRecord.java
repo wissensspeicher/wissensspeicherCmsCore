@@ -486,7 +486,7 @@ public class MetadataRecord implements Cloneable, Serializable {
         Field field = fields[i];
         String fieldName = field.getName();
         if (NOT_OUTPUT_FIELDS.get(fieldName) == null) {
-          Element fieldElem = record.select(fieldName).first();
+          Element fieldElem = record.select("record > " + fieldName).first();
           if (fieldElem != null) {
             Object fieldValue = fieldElem.text();
             if (XML_FIELDS.get(fieldName) != null) { // if it's an xml field then the xml string is used
