@@ -15,7 +15,7 @@ public class Hits {
   private int sizeTotalTerms;
   private long elapsedTime;
   private Facets facets;
-  private ArrayList<GroupDocuments> groupByHits;
+  private GroupHits groupByHits;
   
   public Hits(ArrayList<Document> hits, int from, int to) {
     this.hits = hits;
@@ -103,11 +103,11 @@ public class Hits {
     this.facets = facets;
   }
 
-  public ArrayList<GroupDocuments> getGroupByHits() {
+  public GroupHits getGroupByHits() {
     return groupByHits;
   }
 
-  public void setGroupByHits(ArrayList<GroupDocuments> groupByHits) {
+  public void setGroupByHits(GroupHits groupByHits) {
     this.groupByHits = groupByHits;
   }
 }

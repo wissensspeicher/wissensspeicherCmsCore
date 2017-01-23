@@ -86,6 +86,7 @@ import org.bbaw.wsp.cms.collections.ProjectReader;
 import org.bbaw.wsp.cms.document.DBpediaResource;
 import org.bbaw.wsp.cms.document.Facets;
 import org.bbaw.wsp.cms.document.GroupDocuments;
+import org.bbaw.wsp.cms.document.GroupHits;
 import org.bbaw.wsp.cms.document.Hits;
 import org.bbaw.wsp.cms.document.MetadataRecord;
 import org.bbaw.wsp.cms.document.Person;
@@ -1151,7 +1152,7 @@ public class IndexHandler {
           }
           docs.add(doc);
         }
-        ArrayList<GroupDocuments> groupByHits = null;
+        GroupHits groupByHits = null;
         // groupBy query: second part: build query result 
         if (groupByField != null) {
           TopGroups<BytesRef> topGroups = groupByCollector.getTopGroups(0);
@@ -1159,13 +1160,15 @@ public class IndexHandler {
             GroupDocs<BytesRef>[] topGroupDocsTmp = topGroups.groups;
             // remove the empty groups
             ArrayList<GroupDocs<BytesRef>> topGroupDocs = new ArrayList<GroupDocs<BytesRef>>();
-            for (int i=from; i<topGroupDocsTmp.length; i++) {
+            for (int i=0; i<topGroupDocsTmp.length; i++) {
               GroupDocs<BytesRef> group = topGroupDocsTmp[i];
               int totalGroupHitsSize = group.totalHits;
               if (totalGroupHitsSize > 0)
                 topGroupDocs.add(group);
             }            
-            groupByHits = new ArrayList<GroupDocuments>();
+            groupByHits = new GroupHits();
+            groupByHits.setSizeTotalGroups(topGroupDocs.size());
+            ArrayList<GroupDocuments> groupHitsArrayList = new ArrayList<GroupDocuments>();
             HashSet<String> docFieldsToFill = getDocFields();
             int groupByTo = to;
             if (topGroupDocs.size() <= groupByTo)
@@ -1199,8 +1202,11 @@ public class IndexHandler {
                 }
                 groupDocuments.addDocument(doc);
               }
-              groupByHits.add(groupDocuments);
+              groupHitsArrayList.add(groupDocuments);
             }
+            if (groupHitsArrayList.isEmpty())
+              groupHitsArrayList = null;
+            groupByHits.setGroupDocuments(groupHitsArrayList);
           }
         }
         int sizeTotalDocuments = documentsIndexReader.numDocs();
