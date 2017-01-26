@@ -397,7 +397,7 @@ public class Facets implements Iterable<Facet> {
           String facetValueUri = facetValue.getUri();
           String facetValueGnd = facetValue.getGnd();
           if (facetValueUri == null) {
-            jsonFacetValue.put("value", facetValueName);
+            jsonFacetValue.put("label", facetValueName);
           } else {
             if (facetId.contains("entity") || facetId.equals("mainEntities")) {
               DBpediaResource entity = new DBpediaResource();
@@ -418,6 +418,7 @@ public class Facets implements Iterable<Facet> {
                 type = "place";
               entity.setType(type);
               JSONObject jsonEntity = entity.toJsonObject();
+              jsonEntity.put("count", facetValueValue);
               jsonFacetValue = jsonEntity;
             }
           }
