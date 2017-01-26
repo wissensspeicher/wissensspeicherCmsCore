@@ -11,6 +11,7 @@ import org.apache.lucene.facet.FacetResult;
 import org.apache.lucene.facet.LabelAndValue;
 import org.bbaw.wsp.cms.collections.DBpediaSpotlightHandler;
 import org.bbaw.wsp.cms.collections.Project;
+import org.bbaw.wsp.cms.collections.ProjectCollection;
 import org.bbaw.wsp.cms.collections.ProjectReader;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -377,6 +378,7 @@ public class Facets implements Iterable<Facet> {
           facetValueValue = StringUtils.resolveXmlEntities(facetValueValue);
           float facetValueScore = facetValue.getScore();
           JSONObject jsonFacetValue = new JSONObject();
+          /*
           if (facetId != null && facetId.equals("projectId")) {
             try {
               Project project = ProjectReader.getInstance().getProject(facetValueName);
@@ -393,6 +395,7 @@ public class Facets implements Iterable<Facet> {
               jsonFacetValue.put("rdfUri", "none"); 
             }
           }
+          */
           jsonFacetValue.put("count", facetValueValue); 
           String facetValueUri = facetValue.getUri();
           String facetValueGnd = facetValue.getGnd();
@@ -422,9 +425,30 @@ public class Facets implements Iterable<Facet> {
               jsonFacetValue = jsonEntity;
             }
           }
+          if (facetId.equals("collectionRdfId")) {
+            try {
+              ProjectCollection collection = ProjectReader.getInstance().getCollection(facetValueName);
+              JSONObject jsonCollection = collection.toJsonObject();
+              jsonCollection.put("count", facetValueValue);
+              jsonFacetValue = jsonCollection;
+              facetId = "collection";
+            } catch (Exception e) {
+              // nothing 
+            }
+          } else if (facetId.equals("projectRdfId")) {
+            try {
+              Project project = ProjectReader.getInstance().getProjectByRdfId(facetValueName);
+              JSONObject jsonProject = project.toJsonObject(false);
+              jsonProject.put("count", facetValueValue);
+              jsonFacetValue = jsonProject;
+              facetId = "project";
+            } catch (Exception e) {
+              // nothing 
+            }
+          }
           jsonValuesFacets.add(jsonFacetValue);
         }
-        retJsonObject.put(facet.getId(), jsonValuesFacets);
+        retJsonObject.put(facetId, jsonValuesFacets);
       }
     }
     return retJsonObject;
