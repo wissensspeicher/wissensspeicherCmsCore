@@ -580,6 +580,39 @@ public class ProjectReader {
       LOGGER.error("Reading of: " + subjectNormdataFile + " failed");
       e.printStackTrace();
     }
+    String[] subjectGNDSubjectHeadingNormdataFileNames = {};
+    // TODO String[] subjectGNDSubjectHeadingNormdataFileNames = {"GND_SubjectHeadingSensoStricto001.rdf", "GND_SubjectHeadingSensoStricto002.rdf", "GND_SubjectHeadingSensoStricto003.rdf"};
+    for (int fn=0; fn<subjectGNDSubjectHeadingNormdataFileNames.length; fn++) {
+      String subjectGNDSubjectHeadingNormdataFileName = Constants.getInstance().getMetadataDir() + "/normdata/" + subjectGNDSubjectHeadingNormdataFileNames[fn];
+      File subjectGNDSubjectHeadingNormdataFile = new File(subjectGNDSubjectHeadingNormdataFileName);
+      try {
+        Document normdataFileDoc = Jsoup.parse(subjectGNDSubjectHeadingNormdataFile, "utf-8");
+        Elements subjectElems = normdataFileDoc.select("rdf|RDF > rdf|Description");
+        if (! subjectElems.isEmpty()) {
+          for (int i=0; i< subjectElems.size(); i++) {
+            Subject subject = new Subject();
+            Element subjectElem = subjectElems.get(i);
+            String type = subjectElem.select("rdf|Description > rdf|type").attr("rdf:resource");
+            if (type != null && ! type.isEmpty()) {
+              subject.setType(type);
+            }
+            String name = subjectElem.select("rdf|Description > gndo|preferredNameForTheSubjectHeading[xml:lang=\"de\"]").text();
+            if (name != null && ! name.isEmpty()) {
+              subject.setName(name);
+            }
+            String gndId = subjectElem.select("rdf|Description > gndo|gndIdentifier").text();
+            if (gndId != null && ! gndId.isEmpty())
+              subject.setGndId(gndId);
+            String aboutId = subjectElem.select("rdf|Description").attr("rdf:about");
+            subject.setRdfId(aboutId);
+            normdataSubjects.put(aboutId, subject);
+          }
+        }
+      } catch (Exception e) {
+        LOGGER.error("Reading of: " + subjectGNDSubjectHeadingNormdataFile + " failed");
+        e.printStackTrace();
+      }
+    }
   }
 
   private void readNormdataLocations() {
