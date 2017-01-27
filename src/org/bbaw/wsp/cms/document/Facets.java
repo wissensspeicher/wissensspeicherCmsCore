@@ -2,11 +2,11 @@ package org.bbaw.wsp.cms.document;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.apache.lucene.facet.FacetResult;
 import org.apache.lucene.facet.LabelAndValue;
 import org.bbaw.wsp.cms.collections.DBpediaSpotlightHandler;
@@ -18,9 +18,9 @@ import org.json.simple.JSONObject;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 import de.mpg.mpiwg.berlin.mpdl.util.StringUtils;
-import de.mpg.mpiwg.berlin.mpdl.util.Util;
 
 public class Facets implements Iterable<Facet> {
+  private static Logger LOGGER = Logger.getLogger(Facets.class);
   private static float FACET_COUNT_WEIGHT = new Float(0.5);
   private static float SUPPORT_WEIGHT = new Float(0.5);
   protected String baseUrl;
@@ -361,6 +361,12 @@ public class Facets implements Iterable<Facet> {
       return retJsonObject;
     ArrayList<Facet> facetList = new ArrayList<Facet>(facets.values());
     Collections.sort(facetList, Facet.ID_COMPARATOR);
+    ProjectReader projectReader = null;
+    try {
+      projectReader = ProjectReader.getInstance();
+    } catch (Exception e) {
+      // nothing 
+    }
     for (int i=0; i<facetList.size(); i++) {
       Facet facet = facetList.get(i);
       String facetId = facet.getId();
@@ -378,24 +384,6 @@ public class Facets implements Iterable<Facet> {
           facetValueValue = StringUtils.resolveXmlEntities(facetValueValue);
           float facetValueScore = facetValue.getScore();
           JSONObject jsonFacetValue = new JSONObject();
-          /*
-          if (facetId != null && facetId.equals("projectId")) {
-            try {
-              Project project = ProjectReader.getInstance().getProject(facetValueName);
-              String rdfId = project.getRdfId();
-              if (rdfId == null)
-                rdfId = "none";
-              jsonFacetValue.put("rdfUri", rdfId); 
-              Date lastModified = project.getLastModified();
-              if (lastModified != null) {
-                String xsDateStrLastModified = new Util().toXsDate(lastModified);
-                jsonFacetValue.put("lastModified", xsDateStrLastModified);
-              }
-            } catch (Exception e) {
-              jsonFacetValue.put("rdfUri", "none"); 
-            }
-          }
-          */
           jsonFacetValue.put("count", facetValueValue); 
           String facetValueUri = facetValue.getUri();
           String facetValueGnd = facetValue.getGnd();
@@ -425,25 +413,25 @@ public class Facets implements Iterable<Facet> {
               jsonFacetValue = jsonEntity;
             }
           }
-          if (facetId.equals("collectionRdfId")) {
+          if (facetId.equals("collectionRdfId") || facetId.equals("collection")) {
             try {
-              ProjectCollection collection = ProjectReader.getInstance().getCollection(facetValueName);
+              ProjectCollection collection = projectReader.getCollection(facetValueName);
               JSONObject jsonCollection = collection.toJsonObject();
               jsonCollection.put("count", facetValueValue);
               jsonFacetValue = jsonCollection;
               facetId = "collection";
             } catch (Exception e) {
-              // nothing 
+              LOGGER.error("Facets.toJson(): Collection: " + facetValueName + " not found by ProjectReader (" + e.getMessage() + ")");
             }
-          } else if (facetId.equals("projectRdfId")) {
+          } else if (facetId.equals("projectRdfId") || facetId.equals("project")) {
             try {
-              Project project = ProjectReader.getInstance().getProjectByRdfId(facetValueName);
+              Project project = projectReader.getProjectByRdfId(facetValueName);
               JSONObject jsonProject = project.toJsonObject(false);
               jsonProject.put("count", facetValueValue);
               jsonFacetValue = jsonProject;
               facetId = "project";
             } catch (Exception e) {
-              // nothing 
+              LOGGER.error("Facets.toJson(): Project: " + facetValueName + " not found by ProjectReader (" + e.getMessage() + ")");
             }
           }
           jsonValuesFacets.add(jsonFacetValue);

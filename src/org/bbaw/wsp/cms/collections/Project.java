@@ -14,6 +14,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
+import de.mpg.mpiwg.berlin.mpdl.util.Util;
 
 public class Project {
   private static Logger LOGGER = Logger.getLogger(Project.class);
@@ -487,6 +488,10 @@ public class Project {
         jsonProjectRelations.add(relatedProjectRdfId);
       }
       retJsonObject.put("projectRelations", jsonProjectRelations);
+    }
+    if (lastModified != null) {
+      String xsDateStrLastModified = new Util().toXsDate(lastModified);
+      retJsonObject.put("lastModified", xsDateStrLastModified);
     }
     return retJsonObject;
   }
