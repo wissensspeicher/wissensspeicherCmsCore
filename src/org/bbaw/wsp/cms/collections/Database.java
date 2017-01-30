@@ -22,6 +22,7 @@ public class Database {
   private String webIdPreStr;
   private String webIdAfterStr;
   private ArrayList<String> excludes; // exclude urls e.g. for eXist directories or crawls
+  private ArrayList<String> includes; // include urls e.g. for crawls
   private ArrayList<String> contentCssSelectors; // css selectors to find the content element in html pages e.g.: "#content"
   private int depth; // if crawl db: crawl depth
   private Hashtable<String, XQuery> xQueries;
@@ -133,6 +134,14 @@ public class Database {
     this.excludes = excludes;
   }
 
+  public ArrayList<String> getIncludes() {
+    return includes;
+  }
+
+  public void setIncludes(ArrayList<String> includes) {
+    this.includes = includes;
+  }
+
   public ArrayList<String> getContentCssSelectors() {
     return contentCssSelectors;
   }
@@ -224,7 +233,7 @@ public class Database {
     String webIdAfterStr = databaseElem.select("db > webId > afterStr").text();
     if (webIdAfterStr != null && ! webIdAfterStr.isEmpty())
       database.setWebIdAfterStr(webIdAfterStr);
-    // read excludes (e.g. used in crawl or eXist resources, to eliminate these sub directories)
+    // read excludes (e.g. used in crawl or eXist databases, to eliminate these sub directories)
     Elements excludeElems = databaseElem.select("db > excludes > exclude");
     if (excludeElems != null && ! excludeElems.isEmpty()) {
       ArrayList<String> excludes = new ArrayList<String>();
@@ -234,6 +243,17 @@ public class Database {
           excludes.add(excludeStr);
       }
       database.setExcludes(excludes);
+    }
+    // read includes (e.g. used in crawl databases, to include these urls)
+    Elements includeElems = databaseElem.select("db > includes > include");
+    if (includeElems != null && ! includeElems.isEmpty()) {
+      ArrayList<String> includes = new ArrayList<String>();
+      for (int i=0; i< includeElems.size(); i++) {
+        String includeStr = includeElems.get(i).text();
+        if (includeStr != null && ! includeStr.isEmpty())
+          includes.add(includeStr);
+      }
+      database.setIncludes(includes);
     }
     // read contentCssSelectors
     Elements contentCssSelectorElems = databaseElem.select("db > contentCssSelectors > contentCssSelector");

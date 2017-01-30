@@ -29,10 +29,11 @@ public class Crawler {
   private String rootUrlStr;
   private Integer maxDepth;
   private ArrayList<String> excludes;
+  private ArrayList<String> includes;
   private Hashtable<String, MetadataRecord> urlsHashtable;
   private Tika tika;
 
-  public Crawler(String rootUrlStr, Integer maxDepth, ArrayList<String> excludes) throws ApplicationException {
+  public Crawler(String rootUrlStr, Integer maxDepth, ArrayList<String> excludes, ArrayList<String> includes) throws ApplicationException {
     this.rootUrlStr = rootUrlStr;
     this.maxDepth = maxDepth;
     if (maxDepth == null || maxDepth == 0)
@@ -43,6 +44,7 @@ public class Crawler {
     else if (crawlerExcludes != null && excludes == null)
       excludes = crawlerExcludes;
     this.excludes = excludes;
+    this.includes = includes;
     this.tika = new Tika();
     this.urlsHashtable = new Hashtable<String, MetadataRecord>();
   }
@@ -71,7 +73,7 @@ public class Crawler {
       try {
         doc = Jsoup.parse(startUrl, SOCKET_TIMEOUT);
       } catch (Exception e) {
-        LOGGER.error("Crawler: " + startUrl + "couldn't be crawled: " + e.getMessage());
+        LOGGER.error("Crawler: " + startUrl + " couldn't be crawled: " + e.getMessage());
         e.printStackTrace();
       }
       if (doc != null) {
@@ -158,6 +160,14 @@ public class Crawler {
       String fragment = uri.getFragment();  // the "#" part of the uri
       if (fragment != null)
         return false;
+      // includes are stronger than excludes 
+      if (includes != null) {
+        for (int i=0;i<includes.size();i++) {
+          String include = includes.get(i);
+          if (urlStr.matches(include))
+            return true;
+        }
+      }
       String rootUrlStrWithoutProtocol = rootUrlStr.replaceAll("https*://", "");
       String urlStrWithoutProtocol = urlStr.replaceAll("https*://", "");
       if (! urlStrWithoutProtocol.startsWith(rootUrlStrWithoutProtocol))

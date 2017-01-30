@@ -186,8 +186,9 @@ public class MetadataHandler {
     Date lastModified = new Date();
     String startUrl = db.getRdfId();
     ArrayList<String> excludes = db.getExcludes();
+    ArrayList<String> includes = db.getIncludes();
     Integer depth = db.getDepth();
-    Crawler crawler = new Crawler(startUrl, depth, excludes);
+    Crawler crawler = new Crawler(startUrl, depth, excludes, includes);
     ArrayList<MetadataRecord> crawledMdRecords = crawler.crawl();
     ArrayList<MetadataRecord> mdRecords = new ArrayList<MetadataRecord>();
     for (int i=0; i<crawledMdRecords.size(); i++) {
