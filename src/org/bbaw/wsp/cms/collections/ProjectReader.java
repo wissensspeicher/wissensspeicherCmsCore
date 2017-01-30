@@ -918,7 +918,7 @@ public class ProjectReader {
           person.setFunctionOrRole(functionOrRole);
           project.addStaffPerson(personRdfId, person); // e.g. "http://wissensspeicher.bbaw.de/rdf/normdata/Leitner"
         } else {
-          LOGGER.error(projectId + ",rdf : contributor: " + personRdfId + " is not defined in normdata file");
+          LOGGER.error(projectId + ".rdf : contributor: " + personRdfId + " is not defined in normdata file");
         }
       }
       Elements relatedElems = projectElem.select("dcterms|relation");
