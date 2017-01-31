@@ -149,6 +149,10 @@ public class Project {
     return subjects;
   }
   
+  public HashMap<String, Subject> getSubjectsHashMap() {
+    return this.subjects;
+  }
+  
   public ArrayList<String> getSubjectsStr() {
     ArrayList<String> subjects = null;
     if (this.subjects != null) {

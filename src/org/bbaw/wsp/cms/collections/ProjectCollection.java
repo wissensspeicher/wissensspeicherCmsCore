@@ -2,6 +2,7 @@ package org.bbaw.wsp.cms.collections;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -15,6 +16,11 @@ import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 
 public class ProjectCollection {
   private static Logger LOGGER = Logger.getLogger(ProjectReader.class);
+  public static Comparator<Subject> subjectNameComparator = new Comparator<Subject>() {
+    public int compare(Subject s1, Subject s2) {
+      return s1.getName().compareTo(s2.getName());
+    }
+  };
   private String rdfId;
   private String projectRdfId; // rdfId of project
   private String parentRdfId; // rdfId of parent collection
@@ -132,6 +138,19 @@ public class ProjectCollection {
   
   public Subject getSubject(String subjectRdfId) {
     return subjects.get(subjectRdfId);
+  }
+
+  public ArrayList<Subject> getSubjects() {
+    ArrayList<Subject> subjects = null;
+    if (this.subjects != null) {
+      subjects = new ArrayList<Subject>();
+      java.util.Collection<Subject> values = this.subjects.values();
+      for (Subject subject : values) {
+        subjects.add(subject);
+      }
+      Collections.sort(subjects, subjectNameComparator);
+    }
+    return subjects;
   }
 
   public ArrayList<String> getSubjectsStr() {

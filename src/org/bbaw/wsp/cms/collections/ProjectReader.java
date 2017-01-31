@@ -9,19 +9,11 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.apache.log4j.Logger;
-import org.apache.lucene.index.Term;
-import org.apache.lucene.search.BooleanClause;
-import org.apache.lucene.search.BooleanClause.Occur;
-import org.apache.lucene.search.BooleanQuery;
-import org.apache.lucene.search.Query;
-import org.apache.lucene.search.TermQuery;
 import org.bbaw.wsp.cms.document.Person;
 import org.bbaw.wsp.cms.general.Constants;
 import org.bbaw.wsp.cms.util.Util;
@@ -133,7 +125,33 @@ public class ProjectReader {
     Collections.sort(projects, projectIdComparator);
 		return projects;
 	}
-
+	
+	private Date getLatestModifiedProjectDate() {
+    Date retDate = null;
+	  java.util.Collection<Project> projectValues = this.projects.values();
+    for (Project project : projectValues) {
+      Date lastModified = project.getLastModified();
+      if (lastModified != null) {
+        if (retDate == null || lastModified.after(retDate))
+          retDate = lastModified;
+      }
+    }
+    return retDate;
+	}
+	
+  private Date getLatestModified(ArrayList<File> files) {
+    Date retDate = null;
+    for (int i=0; i<files.size(); i++) {
+      File f = files.get(i);
+      if (f.exists()) {
+        Date lastModified = new Date(f.lastModified());
+        if (retDate == null || lastModified.after(retDate))
+          retDate = lastModified;
+      }
+    }
+    return retDate;
+  }
+  
   public ArrayList<Project> getProjectsSorted(String sortBy) {
     ArrayList<Project> projects = new ArrayList<Project>();
     java.util.Collection<Project> projectValues = this.projects.values();
@@ -427,6 +445,7 @@ public class ProjectReader {
     readNormdataAgentClasses();
     readNormdataOrganizations();
     readNormdataSubjects();
+    updateGNDSubjectHeadingsInUseNormdataFile();
     readNormdataLocations();
     readNormdataPeriodOfTime();
     readNormdataOutputTypes();
@@ -549,6 +568,93 @@ public class ProjectReader {
     }
   }
   
+  private void updateGNDSubjectHeadingsInUseNormdataFile() {
+    boolean updateGndSubjectHeadingsInUseNormdataFile = false;
+    File gndSubjectHeadingsInUseNormdataFile = new File(Constants.getInstance().getMetadataDir() + "/normdata/GND_SubjectHeadingSensoStrictoInUse.rdf");
+    ArrayList<File> projectRdfFiles = getProjectRdfFiles();
+    try {
+      if (! gndSubjectHeadingsInUseNormdataFile.exists()) {
+        updateGndSubjectHeadingsInUseNormdataFile = true;
+      } else {
+        Date lastModifiedGndSubjectHeadingsInUseNormdataFile = new Date(gndSubjectHeadingsInUseNormdataFile.lastModified());
+        Date lastModifiedProject = getLatestModified(projectRdfFiles);
+        if (lastModifiedGndSubjectHeadingsInUseNormdataFile.before(lastModifiedProject))
+          updateGndSubjectHeadingsInUseNormdataFile = true;
+      }
+      if (updateGndSubjectHeadingsInUseNormdataFile) {
+        // read all gnd subjects headings
+        HashMap<String, String> gndSubjectHeadings = new HashMap<String, String>();
+        File normdataDir = new File(Constants.getInstance().getMetadataDir() + "/normdata");
+        ArrayList<File> gndSubjectHeadingNormdataFiles = new ArrayList<File>(FileUtils.listFiles(normdataDir, new WildcardFileFilter("GND_SubjectHeadingSensoStricto*.rdf"), null));
+        for (File gndSubjectHeadingNormdataFile : gndSubjectHeadingNormdataFiles) {
+          if (gndSubjectHeadingNormdataFile.exists()) {
+            Document normdataFileDoc = Jsoup.parse(gndSubjectHeadingNormdataFile, "utf-8");
+            Elements subjectElems = normdataFileDoc.select("rdf|RDF > rdf|Description");
+            if (! subjectElems.isEmpty()) {
+              for (Element subjectElem : subjectElems) {
+                String aboutId = subjectElem.select("rdf|Description").attr("rdf:about");
+                gndSubjectHeadings.put(aboutId, subjectElem.outerHtml());
+              }
+            }
+          } else {
+            LOGGER.error("ProjectReader.updateGNDSubjectHeadingsInUseNormdataFile: File: " + gndSubjectHeadingNormdataFile + " does not exist");
+          }
+        }
+        // write the gnd subjects in use file
+        HashMap<String, String> subjectsInUseHashMap = new HashMap<String, String>();
+        for (File projectRdfFile : projectRdfFiles) {
+          Document projectRdfFileDoc = Jsoup.parse(projectRdfFile, "utf-8");
+          Elements subjectElems = projectRdfFileDoc.select("dcterms|subject");
+          if (! subjectElems.isEmpty()) {
+            for (Element subjectElem : subjectElems) {
+              String rdfId = subjectElem.attr("rdf:resource");
+              if (rdfId.contains("d-nb.info/gnd"))
+                subjectsInUseHashMap.put(rdfId, rdfId);
+            }
+          }
+        }
+        StringBuilder gndSubjectHeadingsInUseStrBuilder = new StringBuilder();
+        gndSubjectHeadingsInUseStrBuilder.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
+        gndSubjectHeadingsInUseStrBuilder.append("<rdf:RDF>\n");
+        java.util.Collection<String> subjectsInUse = subjectsInUseHashMap.values();
+        for (String subjectRdfId : subjectsInUse) {
+          String gndSubjectHeadingRdfXmlStr = gndSubjectHeadings.get(subjectRdfId);
+          if (gndSubjectHeadingRdfXmlStr != null)
+            gndSubjectHeadingsInUseStrBuilder.append(gndSubjectHeadingRdfXmlStr);
+          else
+            LOGGER.error("ProjectReader.updateGNDSubjectHeadingsInUseNormdataFile: " + subjectRdfId + " in one of your project rdf file is not contained in GND_SubjectHeadingSensoStricto*.rdf file");
+        }
+        gndSubjectHeadingsInUseStrBuilder.append("</rdf:RDF>\n");
+        FileUtils.writeStringToFile(gndSubjectHeadingsInUseNormdataFile, gndSubjectHeadingsInUseStrBuilder.toString());
+      }  
+      // read the gnd subjects in use file
+      Document normdataFileDoc = Jsoup.parse(gndSubjectHeadingsInUseNormdataFile, "utf-8");
+      Elements subjectElems = normdataFileDoc.select("rdf|RDF > rdf|Description");
+      if (! subjectElems.isEmpty()) {
+        for (Element subjectElem : subjectElems) {
+          Subject subject = new Subject();
+          String type = subjectElem.select("rdf|Description > rdf|type").attr("rdf:resource");
+          if (type != null && ! type.isEmpty()) {
+            subject.setType(type);
+          }
+          String name = subjectElem.select("rdf|Description > gndo|preferredNameForTheSubjectHeading[xml:lang=\"de\"]").text();
+          if (name != null && ! name.isEmpty()) {
+            subject.setName(name);
+          }
+          String gndId = subjectElem.select("rdf|Description > gndo|gndIdentifier").text();
+          if (gndId != null && ! gndId.isEmpty())
+            subject.setGndId(gndId);
+          String aboutId = subjectElem.select("rdf|Description").attr("rdf:about");
+          subject.setRdfId(aboutId);
+          normdataSubjects.put(aboutId, subject);
+        }
+      }
+    } catch (Exception e) {
+      LOGGER.error("ProjectReader.updateGNDSubjectHeadingsInUseNormdataFile: " + e.getMessage());
+      e.printStackTrace();
+    }
+  }
+  
   private void readNormdataSubjects() {
     normdataSubjects = new HashMap<String, Subject>();
     String subjectNormdataFileName = Constants.getInstance().getMetadataDir() + "/normdata/wsp.normdata.subjects.rdf";
@@ -579,39 +685,6 @@ public class ProjectReader {
     } catch (Exception e) {
       LOGGER.error("Reading of: " + subjectNormdataFile + " failed");
       e.printStackTrace();
-    }
-    String[] subjectGNDSubjectHeadingNormdataFileNames = {};
-    // TODO String[] subjectGNDSubjectHeadingNormdataFileNames = {"GND_SubjectHeadingSensoStricto001.rdf", "GND_SubjectHeadingSensoStricto002.rdf", "GND_SubjectHeadingSensoStricto003.rdf"};
-    for (int fn=0; fn<subjectGNDSubjectHeadingNormdataFileNames.length; fn++) {
-      String subjectGNDSubjectHeadingNormdataFileName = Constants.getInstance().getMetadataDir() + "/normdata/" + subjectGNDSubjectHeadingNormdataFileNames[fn];
-      File subjectGNDSubjectHeadingNormdataFile = new File(subjectGNDSubjectHeadingNormdataFileName);
-      try {
-        Document normdataFileDoc = Jsoup.parse(subjectGNDSubjectHeadingNormdataFile, "utf-8");
-        Elements subjectElems = normdataFileDoc.select("rdf|RDF > rdf|Description");
-        if (! subjectElems.isEmpty()) {
-          for (int i=0; i< subjectElems.size(); i++) {
-            Subject subject = new Subject();
-            Element subjectElem = subjectElems.get(i);
-            String type = subjectElem.select("rdf|Description > rdf|type").attr("rdf:resource");
-            if (type != null && ! type.isEmpty()) {
-              subject.setType(type);
-            }
-            String name = subjectElem.select("rdf|Description > gndo|preferredNameForTheSubjectHeading[xml:lang=\"de\"]").text();
-            if (name != null && ! name.isEmpty()) {
-              subject.setName(name);
-            }
-            String gndId = subjectElem.select("rdf|Description > gndo|gndIdentifier").text();
-            if (gndId != null && ! gndId.isEmpty())
-              subject.setGndId(gndId);
-            String aboutId = subjectElem.select("rdf|Description").attr("rdf:about");
-            subject.setRdfId(aboutId);
-            normdataSubjects.put(aboutId, subject);
-          }
-        }
-      } catch (Exception e) {
-        LOGGER.error("Reading of: " + subjectGNDSubjectHeadingNormdataFile + " failed");
-        e.printStackTrace();
-      }
     }
   }
 
@@ -757,11 +830,8 @@ public class ProjectReader {
 	
   private void readConfFiles() throws ApplicationException {
     try {
-      // read project/organization configuration files        
-      String metadataRdfDirStr = Constants.getInstance().getMetadataDir() + "/resources";
-      File metadataRdfDir = new File(metadataRdfDirStr);
-      ArrayList<File> projectRdfFiles = new ArrayList<File>(FileUtils.listFiles(metadataRdfDir, null, false));
-      Collections.sort(projectRdfFiles);
+      // read project/organization configuration files
+      ArrayList<File> projectRdfFiles = getProjectRdfFiles();
       Iterator<File> filesIter = projectRdfFiles.iterator();
       while (filesIter.hasNext()) {
         File projectRdfFile = filesIter.next();
@@ -786,6 +856,14 @@ public class ProjectReader {
     } catch (Exception e) {
       throw new ApplicationException(e);
     }
+  }
+  
+  private ArrayList<File> getProjectRdfFiles() {
+    String metadataRdfDirStr = Constants.getInstance().getMetadataDir() + "/resources";
+    File metadataRdfDir = new File(metadataRdfDirStr);
+    ArrayList<File> projectRdfFiles = new ArrayList<File>(FileUtils.listFiles(metadataRdfDir, null, false));
+    Collections.sort(projectRdfFiles);
+    return projectRdfFiles;
   }
   
   private Project readProjectRdfFile(File projectRdfFile) throws ApplicationException {
@@ -970,8 +1048,10 @@ public class ProjectReader {
           Element subjectElem = collectionSubjectElems.get(j);
           String subjectRdfId = subjectElem.attr("rdf:resource");
           Subject subject = getSubject(subjectRdfId);
-          if (subject != null)
+          if (subject != null) {
             collection.addSubject(subjectRdfId, subject);
+            project.addSubject(subjectRdfId, subject);
+          }
         }
         String collectionSpatialRdfId = collectionElem.select("dcterms|spatial").attr("rdf:resource");
         if (collectionSpatialRdfId != null && ! collectionSpatialRdfId.isEmpty())
@@ -1173,86 +1253,4 @@ public class ProjectReader {
     String projectFilePath = path + fileName;
     return projectFilePath;
   }
-
-  // TODO old hack code: delete if queryProjects in Servlet ProjectReader works
-  private ArrayList<Project> findProjects(String query) {
-    Occur occur = BooleanClause.Occur.MUST;
-    String[] queryTerms = {};
-    if (query.contains("\" ")) {
-      ArrayList<String> queryTermsArrayList = new ArrayList<String>();
-      occur = BooleanClause.Occur.MUST;
-      Matcher matchFields = Pattern.compile("(\\S*:\".+?\"|\\S*:\\S*)\\s*").matcher(query); // matches fields (e.g. "title:Humboldt" or "title:"Alexander von Humboldt"") 
-      while (matchFields.find())
-        queryTermsArrayList.add(matchFields.group(1));
-      queryTerms = queryTermsArrayList.toArray(new String[queryTermsArrayList.size()]);
-    } else if (query.contains("\"|")) {
-      ArrayList<String> queryTermsArrayList = new ArrayList<String>();
-      occur = BooleanClause.Occur.SHOULD;
-      Matcher matchFields = Pattern.compile("(\\S*:\".+?\"|\\S*:\\S*)\\|*").matcher(query); // matches fields (e.g. "title:Humboldt" or "title:"Alexander von Humboldt"") 
-      while (matchFields.find())
-        queryTermsArrayList.add(matchFields.group(1));
-      queryTerms = queryTermsArrayList.toArray(new String[queryTermsArrayList.size()]);
-    } else if (query.contains(" ")) {
-      occur = BooleanClause.Occur.MUST;
-      queryTerms = query.split(" ");
-    } else if (query.contains("|")) {
-      occur = BooleanClause.Occur.SHOULD;
-      queryTerms = query.split("\\|");
-    }
-    BooleanQuery.Builder boolQueryBuilder = new BooleanQuery.Builder();
-    for (int i = 0; i < queryTerms.length; i++) {
-      String[] fieldQuery = queryTerms[i].split(":");
-      String fieldName = fieldQuery[0];
-      String fieldValue = fieldQuery[1];
-      TermQuery termQuery = new TermQuery(new Term(fieldName, fieldValue));
-      boolQueryBuilder.add(termQuery, occur);
-    }
-    BooleanQuery booleanQuery = boolQueryBuilder.build();
-    return findProjects(booleanQuery);
-  }
-  
-  // TODO old hack code: delete if queryProjects in Servlet ProjectReader works
-  private ArrayList<Project> findProjects(BooleanQuery booleanQuery) {
-    ArrayList<Project> projects = new ArrayList<Project>();
-    java.util.Collection<Project> projectValues = this.projects.values();
-    for (Project project : projectValues) {
-      List<BooleanClause> clauses = booleanQuery.clauses();
-      boolean matchProject = false;
-      for (int i=0; i<clauses.size(); i++) {
-        BooleanClause clause = clauses.get(i);
-        Query clauseQuery = clause.getQuery();
-        Occur occurence = clause.getOccur(); // "should" or "must"
-        if (clauseQuery instanceof TermQuery) {
-          TermQuery termQuery = (TermQuery) clauseQuery;
-          String fieldName = termQuery.getTerm().field();
-          String projectFieldValue = "";
-          if (fieldName.equals("title")) 
-            projectFieldValue = project.getTitle();
-          else if (fieldName.equals("abstract"))
-            projectFieldValue = project.getAbstract();
-          String termQueryStr = termQuery.getTerm().text();
-          termQueryStr = termQueryStr.replaceAll("\\*", ".*");
-          termQueryStr = termQueryStr.replaceAll("\\?", ".");
-          termQueryStr = termQueryStr.replaceAll("\"", "");
-          String regExpr = ".*" + termQueryStr + ".*";
-          boolean match = projectFieldValue.matches(regExpr); 
-          if (! match && occurence == BooleanClause.Occur.MUST) {
-            matchProject = false;
-            break;
-          }
-          if (match && occurence == BooleanClause.Occur.SHOULD) {
-            matchProject = true;
-            break;
-          }
-          if (match && occurence == BooleanClause.Occur.MUST)
-            matchProject = true;
-        }
-      }
-      if (matchProject)
-        projects.add(project);
-    }
-    Collections.sort(projects, projectIdComparator);
-    return projects;
-  }
-
 }
