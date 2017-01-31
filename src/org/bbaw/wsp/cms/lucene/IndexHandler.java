@@ -486,6 +486,8 @@ public class IndexHandler {
           String collectionTypeLabel = collectionType.getLabel();
           Field collectionTypeField = new Field("collectionType", collectionTypeLabel, ftStoredAnalyzed);
           doc.add(collectionTypeField);
+          FacetField facetFieldCollectionType = new FacetField("collectionType", collectionTypeLabel);
+          doc.add(facetFieldCollectionType);
         }
         ArrayList<String> collectionLanguageLabels = collection.getLanguageLabels();
         if (collectionLanguageLabels != null) {
@@ -504,6 +506,13 @@ public class IndexHandler {
           String collectionSubjectsStr = org.apache.commons.lang3.StringUtils.join(collectionSubjects, "###");
           Field collectionSubjectsField = new Field("collectionSubjects", collectionSubjectsStr, ftStoredAnalyzed);
           doc.add(collectionSubjectsField);
+          for (int i=0; i<collectionSubjects.size(); i++) {
+            String s = collectionSubjects.get(i).trim();
+            if (! s.isEmpty()) {
+              FacetField facetFieldCollectionSubject = new FacetField("collectionSubject", s);
+              doc.add(facetFieldCollectionSubject);
+            }
+          }
         }
         String collectionPlace = collection.getPlace();
         if (collectionPlace != null) {
@@ -511,15 +520,29 @@ public class IndexHandler {
           doc.add(collectionPlacePlaceField);
         }
         String collectionPeriodOfTime = collection.getPeriodOfTime();
+        if (collectionPeriodOfTime == null) {
+          Project project = collection.getProject();
+          if (project != null)
+            collectionPeriodOfTime = project.getPeriodOfTime();
+        }
         if (collectionPeriodOfTime != null) {
           Field collectionPeriodOfTimeField = new Field("collectionPeriodOfTime", collectionPeriodOfTime, ftStoredAnalyzed);
           doc.add(collectionPeriodOfTimeField);
+          FacetField facetFieldCollectionPeriodOfTime = new FacetField("collectionPeriodOfTime", collectionPeriodOfTime);
+          doc.add(facetFieldCollectionPeriodOfTime);
         }
         ArrayList<String> collectionGndRelatedPersons = collection.getGndRelatedPersonsStr();
         if (collectionGndRelatedPersons != null) {
           String collectionGndRelatedPersonsStr = org.apache.commons.lang3.StringUtils.join(collectionGndRelatedPersons, "###");
           Field collectiontGndRelatedPersonsField = new Field("collectionPersons", collectionGndRelatedPersonsStr, ftStoredAnalyzed);
           doc.add(collectiontGndRelatedPersonsField);
+          for (int i=0; i<collectionGndRelatedPersons.size(); i++) {
+            String p = collectionGndRelatedPersons.get(i).trim();
+            if (! p.isEmpty()) {
+              FacetField facetFieldCollectionPerson = new FacetField("collectionPerson", p);
+              doc.add(facetFieldCollectionPerson);
+            }
+          }
         }
         ArrayList<String> collectionStaff = collection.getStaffStr();
         if (collectionStaff != null) {
@@ -1116,7 +1139,7 @@ public class IndexHandler {
       FacetsConfig facetsConfig = new FacetsConfig();
       FastTaxonomyFacetCounts facetCounts = new FastTaxonomyFacetCounts(taxonomyReader, facetsConfig, facetsCollector);
       List<FacetResult> tmpFacetResult = new ArrayList<FacetResult>();
-      String[] facetsStr = {"projectId", "projectRdfId", "collectionRdfId", "databaseRdfId", "language", "author", "publisher", "date", "subject", "subjectControlled", "swd", "ddc", "entityPerson", "entityOrganisation", "entityPlace", "entityConcept", "type"};
+      String[] facetsStr = {"projectId", "projectRdfId", "collectionRdfId", "collectionType", "collectionPeriodOfTime", "collectionSubject", "collectionPerson", "databaseRdfId", "language", "author", "publisher", "date", "subject", "subjectControlled", "swd", "ddc", "entityPerson", "entityOrganisation", "entityPlace", "entityConcept", "type"};
       for (int f=0; f<facetsStr.length; f++) {
         String facetStr = facetsStr[f];
         Integer facetFieldCount = 1000;
