@@ -10,6 +10,7 @@ import org.apache.log4j.Logger;
 import org.apache.lucene.facet.FacetResult;
 import org.apache.lucene.facet.LabelAndValue;
 import org.bbaw.wsp.cms.collections.DBpediaSpotlightHandler;
+import org.bbaw.wsp.cms.collections.Organization;
 import org.bbaw.wsp.cms.collections.Project;
 import org.bbaw.wsp.cms.collections.ProjectCollection;
 import org.bbaw.wsp.cms.collections.ProjectReader;
@@ -432,6 +433,16 @@ public class Facets implements Iterable<Facet> {
               facetId = "project";
             } catch (Exception e) {
               LOGGER.error("Facets.toJson(): Project: " + facetValueName + " not found by ProjectReader (" + e.getMessage() + ")");
+            }
+          } else if (facetId.equals("organizationRdfId") || facetId.equals("organization")) {
+            try {
+              Organization organization = projectReader.getOrganization(facetValueName);
+              JSONObject jsonOrganization = organization.toJsonObject();
+              jsonOrganization.put("count", facetValueValue);
+              jsonFacetValue = jsonOrganization;
+              facetId = "organization";
+            } catch (Exception e) {
+              LOGGER.error("Facets.toJson(): Organization: " + facetValueName + " not found by ProjectReader (" + e.getMessage() + ")");
             }
           }
           jsonValuesFacets.add(jsonFacetValue);

@@ -462,6 +462,8 @@ public class IndexHandler {
         if (projectId.equals("jdg"))
           organizationRdfIdField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
         doc.add(organizationRdfIdField);
+        FacetField facetField = new FacetField("organizationRdfId", organizationRdfId);
+        doc.add(facetField);
       }
       String collectionRdfId = mdRecord.getCollectionRdfId();
       if (collectionRdfId != null) {
@@ -1144,7 +1146,7 @@ public class IndexHandler {
       FacetsConfig facetsConfig = new FacetsConfig();
       FastTaxonomyFacetCounts facetCounts = new FastTaxonomyFacetCounts(taxonomyReader, facetsConfig, facetsCollector);
       List<FacetResult> tmpFacetResult = new ArrayList<FacetResult>();
-      String[] facetsStr = {"projectId", "projectRdfId", "collectionRdfId", "collectionType", "collectionPeriodOfTime", "collectionSubject", "collectionPerson", "databaseRdfId", "language", "author", "publisher", "date", "subject", "subjectControlled", "swd", "ddc", "entityPerson", "entityOrganisation", "entityPlace", "entityConcept", "type"};
+      String[] facetsStr = {"organizationRdfId", "projectId", "projectRdfId", "collectionRdfId", "collectionType", "collectionPeriodOfTime", "collectionSubject", "collectionPerson", "databaseRdfId", "language", "author", "publisher", "date", "subject", "subjectControlled", "swd", "ddc", "entityPerson", "entityOrganisation", "entityPlace", "entityConcept", "type"};
       for (int f=0; f<facetsStr.length; f++) {
         String facetStr = facetsStr[f];
         Integer facetFieldCount = 1000;
