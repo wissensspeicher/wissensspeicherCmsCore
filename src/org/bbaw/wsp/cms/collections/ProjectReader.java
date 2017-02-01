@@ -196,6 +196,18 @@ public class ProjectReader {
     return projects;
   }
 
+  public ArrayList<Project> getProjectsByOrganizationRdfId(String orgRdfId) {
+    ArrayList<Project> projects = new ArrayList<Project>();
+    java.util.Collection<Project> projectValues = this.projects.values();
+    for (Project project : projectValues) {
+      String projOrgRdfId = project.getOrganizationRdfId();
+      if (projOrgRdfId != null && projOrgRdfId.equals(orgRdfId))
+        projects.add(project);
+    }
+    Collections.sort(projects, projectIdComparator);
+    return projects;
+  }
+  
   public ArrayList<Organization> getOrganizations() {
     ArrayList<Organization> organizations = new ArrayList<Organization>();
     java.util.Collection<Organization> organizationValues = this.normdataOrganizations.values();

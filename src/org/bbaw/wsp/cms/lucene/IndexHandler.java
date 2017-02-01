@@ -241,6 +241,11 @@ public class IndexHandler {
         Field field = new Field("rdfId", rdfId, ftStoredAnalyzed); 
         doc.add(field);
       }
+      String organizationRdfId = project.getOrganizationRdfId();
+      if (organizationRdfId != null) {
+        Field field = new Field("organizationRdfId", organizationRdfId, ftStoredAnalyzed); 
+        doc.add(field);
+      }
       String label = project.getTitle();
       if (label != null) {
         Field field = new Field("label", label, ftStoredAnalyzed); 
