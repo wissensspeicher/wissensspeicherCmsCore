@@ -153,6 +153,8 @@ public class ProjectReader {
   }
 
   public ArrayList<Project> getProjectsByType(String type) {
+    if (type.equals("rootOrganization"))
+      return getRootOrganizationProjects();
     ArrayList<Project> projects = new ArrayList<Project>();
     java.util.Collection<Project> projectValues = this.projects.values();
     for (Project project : projectValues) {
@@ -164,6 +166,22 @@ public class ProjectReader {
     return projects;
   }
   
+  private ArrayList<Project> getRootOrganizationProjects() {
+    ArrayList<Project> projects = new ArrayList<Project>();
+    java.util.Collection<Project> projectValues = this.projects.values();
+    HashMap<String, Project> rootOrgs = new HashMap<String, Project>();
+    for (Project project : projectValues) {
+      String orgRdfId = project.getOrganizationRdfId();
+      if (orgRdfId != null) {
+        Project rootProject = projectsByRdfId.get(orgRdfId);
+        if (rootProject != null)
+          rootOrgs.put(orgRdfId, rootProject);
+      }
+    }
+    projects.addAll(rootOrgs.values());
+    return projects;
+  }
+
   public ArrayList<Project> getProjectsByProjectType(String projectType) {
     ArrayList<Project> projects = new ArrayList<Project>();
     java.util.Collection<Project> projectValues = this.projects.values();
