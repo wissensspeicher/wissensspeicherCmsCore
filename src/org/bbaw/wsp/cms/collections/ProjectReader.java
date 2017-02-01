@@ -152,6 +152,18 @@ public class ProjectReader {
     return projects;
   }
 
+  public ArrayList<Project> getProjectsByType(String type) {
+    ArrayList<Project> projects = new ArrayList<Project>();
+    java.util.Collection<Project> projectValues = this.projects.values();
+    for (Project project : projectValues) {
+      String t = project.getType();
+      if (t != null && t.equals(type))
+        projects.add(project);
+    }
+    Collections.sort(projects, projectIdComparator);
+    return projects;
+  }
+  
   public ArrayList<Project> getProjectsByProjectType(String projectType) {
     ArrayList<Project> projects = new ArrayList<Project>();
     java.util.Collection<Project> projectValues = this.projects.values();
