@@ -126,19 +126,6 @@ public class ProjectReader {
 		return projects;
 	}
 	
-	private Date getLatestModifiedProjectDate() {
-    Date retDate = null;
-	  java.util.Collection<Project> projectValues = this.projects.values();
-    for (Project project : projectValues) {
-      Date lastModified = project.getLastModified();
-      if (lastModified != null) {
-        if (retDate == null || lastModified.after(retDate))
-          retDate = lastModified;
-      }
-    }
-    return retDate;
-	}
-	
   private Date getLatestModified(ArrayList<File> files) {
     Date retDate = null;
     for (int i=0; i<files.size(); i++) {
@@ -570,7 +557,7 @@ public class ProjectReader {
   
   private void updateGNDSubjectHeadingsInUseNormdataFile() {
     boolean updateGndSubjectHeadingsInUseNormdataFile = false;
-    File gndSubjectHeadingsInUseNormdataFile = new File(Constants.getInstance().getMetadataDir() + "/normdata/GND_SubjectHeadingSensoStrictoInUse.rdf");
+    File gndSubjectHeadingsInUseNormdataFile = new File(Constants.getInstance().getMetadataDir() + "/normdata/GND_SubjectHeadingsUsed.rdf");
     ArrayList<File> projectRdfFiles = getProjectRdfFiles();
     try {
       if (! gndSubjectHeadingsInUseNormdataFile.exists()) {
