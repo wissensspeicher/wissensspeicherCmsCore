@@ -666,7 +666,37 @@ public class ProjectReader {
             subject.setGndId(gndId);
           String aboutId = subjectElem.select("rdf|Description").attr("rdf:about");
           subject.setRdfId(aboutId);
-          normdataSubjects.put(aboutId, subject);
+          if (name != null && ! name.isEmpty()) {
+            normdataSubjects.put(aboutId, subject);
+          }
+        }
+      }
+    } catch (Exception e) {
+      LOGGER.error("Reading of: " + subjectNormdataFile + " failed");
+      e.printStackTrace();
+    }
+    subjectNormdataFileName = Constants.getInstance().getMetadataDir() + "/normdata/wsp.skos.au-ps.rdf";
+    subjectNormdataFile = new File(subjectNormdataFileName);
+    try {
+      Document normdataFileDoc = Jsoup.parse(subjectNormdataFile, "utf-8");
+      Elements subjectElems = normdataFileDoc.select("rdf|RDF > rdf|Description");
+      if (! subjectElems.isEmpty()) {
+        for (int i=0; i< subjectElems.size(); i++) {
+          Subject subject = new Subject();
+          Element subjectElem = subjectElems.get(i);
+          String type = subjectElem.select("rdf|Description > rdf|type").attr("rdf:resource");
+          if (type != null && ! type.isEmpty()) {
+            subject.setType(type);
+          }
+          String name = subjectElem.select("rdf|Description > skos|prefLabel[xml:lang=\"de\"]").text();
+          if (name != null && ! name.isEmpty()) {
+            subject.setName(name);
+          }
+          String aboutId = subjectElem.select("rdf|Description").attr("rdf:about");
+          subject.setRdfId(aboutId);
+          if (name != null && ! name.isEmpty()) {
+            normdataSubjects.put(aboutId, subject);
+          }
         }
       }
     } catch (Exception e) {
