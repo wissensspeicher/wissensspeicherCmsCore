@@ -615,6 +615,8 @@ public class ProjectReader {
         HashMap<String, String> gndSubjectHeadings = new HashMap<String, String>();
         File normdataDir = new File(Constants.getInstance().getMetadataDir() + "/normdata");
         ArrayList<File> gndSubjectHeadingNormdataFiles = new ArrayList<File>(FileUtils.listFiles(normdataDir, new WildcardFileFilter("GND_SubjectHeadingSensoStricto*.rdf"), null));
+        File anotherFile = new File(normdataDir + "/GND_SubjectHeading001.rdf");
+        gndSubjectHeadingNormdataFiles.add(anotherFile);
         for (File gndSubjectHeadingNormdataFile : gndSubjectHeadingNormdataFiles) {
           if (gndSubjectHeadingNormdataFile.exists()) {
             Document normdataFileDoc = Jsoup.parse(gndSubjectHeadingNormdataFile, "utf-8");
