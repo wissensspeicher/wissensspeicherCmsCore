@@ -54,8 +54,12 @@ public class Crawler {
     ArrayList<MetadataRecord> mdRecords = new ArrayList<MetadataRecord>(urlsHashtable.values());
     if (! mdRecords.isEmpty()) {
       MetadataRecord rootMdRecord = getNewMdRecord(null, rootUrlStr);
-      if (rootMdRecord != null)
-        mdRecords.add(0, rootMdRecord);
+      if (rootMdRecord != null) {
+        MetadataRecord mdRecord = urlsHashtable.get(rootUrlStr);
+        if (mdRecord == null) {
+          mdRecords.add(0, rootMdRecord);
+        }
+      }
     }
     Comparator<MetadataRecord> mdRecordComparator = new Comparator<MetadataRecord>() {
       public int compare(MetadataRecord m1, MetadataRecord m2) {
