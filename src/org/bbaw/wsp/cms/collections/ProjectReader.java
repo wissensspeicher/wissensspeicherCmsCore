@@ -570,7 +570,7 @@ public class ProjectReader {
 
   private void readNormdataOrganizations() {
     normdataOrganizations = new HashMap<String, Organization>();
-    String orgNormdataFileName = Constants.getInstance().getMetadataDir() + "/normdata/wsp.normdata.organizations.rdf";
+    String orgNormdataFileName = Constants.getInstance().getMetadataDir() + "/normdata/wsp.normdata.organizationsProjects.rdf";
     File orgNormdataFile = new File(orgNormdataFileName);
     try {
       Document normdataFileDoc = Jsoup.parse(orgNormdataFile, "utf-8");
@@ -599,7 +599,7 @@ public class ProjectReader {
   
   private void updateGNDSubjectHeadingsInUseNormdataFile() {
     boolean updateGndSubjectHeadingsInUseNormdataFile = false;
-    File gndSubjectHeadingsInUseNormdataFile = new File(Constants.getInstance().getMetadataDir() + "/normdata/GND_SubjectHeadingsUsed.rdf");
+    File gndSubjectHeadingsInUseNormdataFile = new File(Constants.getInstance().getMetadataDir() + "/externalnormdata/GND_SubjectHeadingsUsed.rdf");
     ArrayList<File> projectRdfFiles = getProjectRdfFiles();
     try {
       if (! gndSubjectHeadingsInUseNormdataFile.exists()) {
@@ -613,7 +613,7 @@ public class ProjectReader {
       if (updateGndSubjectHeadingsInUseNormdataFile) {
         // read all gnd subjects headings
         HashMap<String, String> gndSubjectHeadings = new HashMap<String, String>();
-        File normdataDir = new File(Constants.getInstance().getMetadataDir() + "/normdata");
+        File normdataDir = new File(Constants.getInstance().getMetadataDir() + "/externalnormdata");
         ArrayList<File> gndSubjectHeadingNormdataFiles = new ArrayList<File>(FileUtils.listFiles(normdataDir, new WildcardFileFilter("GND_SubjectHeadingSensoStricto*.rdf"), null));
         File anotherFile = new File(normdataDir + "/GND_SubjectHeading001.rdf");
         gndSubjectHeadingNormdataFiles.add(anotherFile);
