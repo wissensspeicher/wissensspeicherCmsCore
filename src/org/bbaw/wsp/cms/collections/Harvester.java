@@ -133,6 +133,7 @@ public class Harvester {
       ArrayList<MetadataRecord> dbMdRecords = harvestDBResources(project, db);
       // download resources and save metadata and fulltext fields
       if (dbMdRecords != null) {
+        LOGGER.info("Harvest " + dbMdRecords.size() + " resources (" + project.getId() + ", " + db.getRdfId() + ", " + db.getType() + ") ...");
         ArrayList<MetadataRecord> harvestedResourcesRecords = harvestResources(project, db, dbMdRecords);
         countHarvest = countHarvest + harvestedResourcesRecords.size();
       }
