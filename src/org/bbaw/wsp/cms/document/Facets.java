@@ -1,7 +1,9 @@
 package org.bbaw.wsp.cms.document;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
@@ -150,6 +152,15 @@ public class Facets implements Iterable<Facet> {
     Facet mainEntityFacet = buildMainEntitiesFacet();
     if (mainEntityFacet != null)
       facets.put(mainEntityFacet.getId(), mainEntityFacet);
+    // add the virtual collectionFacet facets
+    /*  TODO
+    Collection<Facet> collectionFacets = buildCollectionFacets();
+    if (collectionFacets != null) {
+      for (Facet collectionFacet : collectionFacets) {
+        facets.put(collectionFacet.getId(), collectionFacet);
+      }
+    }
+    */
   }
 
   private Facet buildMainEntitiesFacet() {
@@ -193,6 +204,52 @@ public class Facets implements Iterable<Facet> {
     return mainEntityFacet;
   }
 
+  private Collection<Facet> buildCollectionFacets() {
+    if (facets == null)
+      return null;
+    ProjectReader projectReader = null;
+    try {
+      projectReader = ProjectReader.getInstance();
+    } catch (Exception e) {
+      // nothing 
+    }
+    String[] collectionFacetNames = {"collectionGroupType", "collectionGroupPeriofOfTime", "collectionGroupPerson", "collectionGroupSubject"};  // TODO
+    HashMap<String, Facet> collectionFacets = new HashMap<String, Facet>();
+    for (String collectionFacetName : collectionFacetNames) {
+      Facet collectionFacet = new Facet(collectionFacetName, new ArrayList<FacetValue>());
+      collectionFacets.put(collectionFacetName, collectionFacet);
+    }
+    Facet facetCollectionRdfId = facets.get("collectionRdfId");
+    if (facetCollectionRdfId != null) {
+      ArrayList<FacetValue> facetValuesCollectionRdfId = facetCollectionRdfId.getValues();
+      for (FacetValue facetValueCollectionRdfId : facetValuesCollectionRdfId) {
+        String collectionRdfId = facetValueCollectionRdfId.getValue();
+        ProjectCollection collection = projectReader.getCollection(collectionRdfId);
+        if (collection != null) {
+          String collectionType = collection.getType().getLabel();
+          ArrayList<FacetValue> facetValues = collectionFacets.get("collectionGroupType").getValues();
+          FacetValue facetValue = getFacetValue(collectionType, facetValues);
+          if (facetValue != null) {
+            Integer count = facetValue.getCount();
+            
+            // TODO
+          }
+        }
+      }
+    }
+    return collectionFacets.values();
+  }
+
+  private FacetValue getFacetValue(String facetValueValue, ArrayList<FacetValue> facetValues) {
+    FacetValue facetValue = null;
+    for (FacetValue fValue : facetValues) {
+      String fValueValue = fValue.getValue();
+      if (fValueValue != null && fValueValue.equals(facetValueValue))
+        return facetValue;
+    }
+    return facetValue;
+  }
+  
   private ArrayList<FacetValue> extractFacetValues(int count, ArrayList<FacetValue> facetValues) {
     int counter = 0;
     ArrayList<FacetValue> retFacetValues = new ArrayList<FacetValue>();
