@@ -224,15 +224,23 @@ public class Facets implements Iterable<Facet> {
       ArrayList<FacetValue> facetValuesCollectionRdfId = facetCollectionRdfId.getValues();
       for (FacetValue facetValueCollectionRdfId : facetValuesCollectionRdfId) {
         String collectionRdfId = facetValueCollectionRdfId.getValue();
+        Integer collectionCount = facetValueCollectionRdfId.getCount();
         ProjectCollection collection = projectReader.getCollection(collectionRdfId);
         if (collection != null) {
+          // TODO
           String collectionType = collection.getType().getLabel();
           ArrayList<FacetValue> facetValues = collectionFacets.get("collectionGroupType").getValues();
           FacetValue facetValue = getFacetValue(collectionType, facetValues);
           if (facetValue != null) {
             Integer count = facetValue.getCount();
-            
-            // TODO
+            if (count != null) {
+              Integer newCount = count + collectionCount;
+              facetValue.setCount(newCount);
+            }
+          } else {
+            facetValue = new FacetValue();
+            facetValue.setValue(collectionType);
+            facetValue.setCount(collectionCount);
           }
         }
       }
