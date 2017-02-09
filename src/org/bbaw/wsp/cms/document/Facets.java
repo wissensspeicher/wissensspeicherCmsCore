@@ -283,9 +283,23 @@ public class Facets implements Iterable<Facet> {
         return null;
       }
     } else if (fieldName.equals("groupedCollectionPerson")) {
-      return collection.getGndRelatedPersonsStr();
+      try {
+        ArrayList<String> personsStr = collection.getGndRelatedPersonsStr();
+        if (personsStr == null)
+          personsStr = collection.getProject().getGndRelatedPersonsStr();
+        return personsStr;
+      } catch (ApplicationException e) {
+        return null;
+      }
     } else if (fieldName.equals("groupedCollectionSubject")) {
-      return collection.getSubjectsStr();
+      try {
+        ArrayList<String> subjectsStr = collection.getSubjectsStr();
+        if (subjectsStr == null)
+          subjectsStr = collection.getProject().getSubjectsStr();
+        return subjectsStr;
+      } catch (ApplicationException e) {
+        return null;
+      }
     } else if (fieldName.equals("groupedCollectionLanguage")) {
       try {
         retValues = collection.getLanguageLabels();
