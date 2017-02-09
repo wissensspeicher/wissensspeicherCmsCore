@@ -13,6 +13,7 @@ import org.apache.lucene.facet.FacetResult;
 import org.apache.lucene.facet.LabelAndValue;
 import org.bbaw.wsp.cms.collections.DBpediaSpotlightHandler;
 import org.bbaw.wsp.cms.collections.Organization;
+import org.bbaw.wsp.cms.collections.OutputType;
 import org.bbaw.wsp.cms.collections.Project;
 import org.bbaw.wsp.cms.collections.ProjectCollection;
 import org.bbaw.wsp.cms.collections.ProjectReader;
@@ -26,6 +27,7 @@ public class Facets implements Iterable<Facet> {
   private static Logger LOGGER = Logger.getLogger(Facets.class);
   private static float FACET_COUNT_WEIGHT = new Float(0.5);
   private static float SUPPORT_WEIGHT = new Float(0.5);
+  private static ProjectReader projectReader;
   protected String baseUrl;
   protected String outputOptions = "showAllFacets";
   protected Hashtable<String, Facet> facets;
@@ -152,15 +154,14 @@ public class Facets implements Iterable<Facet> {
     Facet mainEntityFacet = buildMainEntitiesFacet();
     if (mainEntityFacet != null)
       facets.put(mainEntityFacet.getId(), mainEntityFacet);
-    // add the virtual collectionFacet facets
-    /*  TODO
-    Collection<Facet> collectionFacets = buildCollectionFacets();
-    if (collectionFacets != null) {
-      for (Facet collectionFacet : collectionFacets) {
-        facets.put(collectionFacet.getId(), collectionFacet);
+    // add the virtual collectionGroup facets
+    Collection<Facet> collectionGroupFacets = buildCollectionGroupFacets();
+    if (collectionGroupFacets != null) {
+      for (Facet collectionFacet : collectionGroupFacets) {
+        if (collectionFacet.getValues() != null && ! collectionFacet.getValues().isEmpty())
+          facets.put(collectionFacet.getId(), collectionFacet);
       }
     }
-    */
   }
 
   private Facet buildMainEntitiesFacet() {
@@ -204,16 +205,12 @@ public class Facets implements Iterable<Facet> {
     return mainEntityFacet;
   }
 
-  private Collection<Facet> buildCollectionFacets() {
+  private Collection<Facet> buildCollectionGroupFacets() {
     if (facets == null)
       return null;
-    ProjectReader projectReader = null;
-    try {
-      projectReader = ProjectReader.getInstance();
-    } catch (Exception e) {
-      // nothing 
-    }
-    String[] collectionFacetNames = {"collectionGroupType", "collectionGroupPeriofOfTime", "collectionGroupPerson", "collectionGroupSubject"};  // TODO
+    initProjectReader();
+    String[] collectionFacetNames = 
+      {"groupedCollectionType", "groupedCollectionPeriodOfTime", "groupedCollectionPerson", "groupedCollectionSubject", "groupedCollectionLanguage", "groupedCollectionOrganization", "groupedCollectionProject"};
     HashMap<String, Facet> collectionFacets = new HashMap<String, Facet>();
     for (String collectionFacetName : collectionFacetNames) {
       Facet collectionFacet = new Facet(collectionFacetName, new ArrayList<FacetValue>());
@@ -223,24 +220,31 @@ public class Facets implements Iterable<Facet> {
     if (facetCollectionRdfId != null) {
       ArrayList<FacetValue> facetValuesCollectionRdfId = facetCollectionRdfId.getValues();
       for (FacetValue facetValueCollectionRdfId : facetValuesCollectionRdfId) {
-        String collectionRdfId = facetValueCollectionRdfId.getValue();
-        Integer collectionCount = facetValueCollectionRdfId.getCount();
+        String collectionRdfId = facetValueCollectionRdfId.getName();
         ProjectCollection collection = projectReader.getCollection(collectionRdfId);
         if (collection != null) {
-          // TODO
-          String collectionType = collection.getType().getLabel();
-          ArrayList<FacetValue> facetValues = collectionFacets.get("collectionGroupType").getValues();
-          FacetValue facetValue = getFacetValue(collectionType, facetValues);
-          if (facetValue != null) {
-            Integer count = facetValue.getCount();
-            if (count != null) {
-              Integer newCount = count + collectionCount;
-              facetValue.setCount(newCount);
+          for (String collectionFacetName : collectionFacetNames) {
+            ArrayList<FacetValue> facetValues = collectionFacets.get(collectionFacetName).getValues();
+            ArrayList<String> fieldValues = getFieldValues(collectionFacetName, collection);
+            if (fieldValues != null) {
+              for (String fieldValue : fieldValues) {
+                FacetValue facetValue = getFacetValue(fieldValue, facetValues);
+                if (facetValue != null) {
+                  Integer count = facetValue.getCount();
+                  if (count != null) {
+                    Integer newCount = count + 1;
+                    facetValue.setCount(newCount);
+                    facetValue.setValue(newCount.toString());
+                  }
+                } else {
+                  facetValue = new FacetValue();
+                  facetValue.setName(fieldValue);
+                  facetValue.setCount(1);
+                  facetValue.setValue("1");
+                  facetValues.add(facetValue);
+                }
+              }
             }
-          } else {
-            facetValue = new FacetValue();
-            facetValue.setValue(collectionType);
-            facetValue.setCount(collectionCount);
           }
         }
       }
@@ -248,12 +252,73 @@ public class Facets implements Iterable<Facet> {
     return collectionFacets.values();
   }
 
+  private void initProjectReader() {
+    try {
+      projectReader = ProjectReader.getInstance();
+    } catch (Exception e) {
+      // nothing 
+    }
+  }
+  
+  private ArrayList<String> getFieldValues(String fieldName, ProjectCollection collection) {
+    ArrayList<String> retValues = null;
+    if (fieldName.equals("groupedCollectionType")) {
+      OutputType type = collection.getType();
+      if (type != null) {
+        retValues = new ArrayList<String>();
+        retValues.add(type.getLabel());
+        return retValues;
+      }
+    } else if (fieldName.equals("groupedCollectionPeriodOfTime")) {
+      try {
+        String periodOfTime = collection.getPeriodOfTime();
+        if (periodOfTime != null) {
+          retValues = new ArrayList<String>();
+          retValues.add(periodOfTime);
+        }
+        return retValues;
+      } catch (ApplicationException e) {
+        return null;
+      }
+    } else if (fieldName.equals("groupedCollectionPerson")) {
+      return collection.getGndRelatedPersonsStr();
+    } else if (fieldName.equals("groupedCollectionSubject")) {
+      return collection.getSubjectsStr();
+    } else if (fieldName.equals("groupedCollectionLanguage")) {
+      return collection.getLanguages();
+    } else if (fieldName.equals("groupedCollectionProject")) {
+      try {
+        Project project = collection.getProject();
+        retValues = new ArrayList<String>();
+        retValues.add(project.getTitle());
+        return retValues;
+      } catch (ApplicationException e) {
+        return null;
+      }
+    } else if (fieldName.equals("groupedCollectionOrganization")) {
+      try {
+        String orgRdfId = collection.getProject().getOrganizationRdfId();
+        if (orgRdfId != null) {
+          Project rootProject = projectReader.getProjectByRdfId(orgRdfId);
+          if (rootProject != null) {
+            retValues = new ArrayList<String>();
+            retValues.add(rootProject.getTitle());
+          }
+        }
+        return retValues;
+      } catch (ApplicationException e) {
+        return null;
+      }
+    }
+    return retValues;
+  }
+  
   private FacetValue getFacetValue(String facetValueValue, ArrayList<FacetValue> facetValues) {
     FacetValue facetValue = null;
     for (FacetValue fValue : facetValues) {
-      String fValueValue = fValue.getValue();
+      String fValueValue = fValue.getName();
       if (fValueValue != null && fValueValue.equals(facetValueValue))
-        return facetValue;
+        return fValue;
     }
     return facetValue;
   }
@@ -448,7 +513,7 @@ public class Facets implements Iterable<Facet> {
           String facetValueName = facetValue.getName();
           String facetValueValue = facetValue.getValue();
           facetValueValue = StringUtils.resolveXmlEntities(facetValueValue);
-          float facetValueScore = facetValue.getScore();
+          Float facetValueScore = facetValue.getScore();
           JSONObject jsonFacetValue = new JSONObject();
           jsonFacetValue.put("count", facetValueValue); 
           String facetValueUri = facetValue.getUri();
