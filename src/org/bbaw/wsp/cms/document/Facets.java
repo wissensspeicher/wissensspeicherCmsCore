@@ -465,7 +465,7 @@ public class Facets implements Iterable<Facet> {
           FacetValue facetValue = facetValues.get(j);
           String facetValueName = facetValue.getName();
           String facetValueValue = facetValue.getValue();
-          float facetValueScore = facetValue.getScore();
+          Float facetValueScore = facetValue.getScore();
           String facetValueUri = facetValue.getUri();
           String gnd = facetValue.getGnd();
           String facetValueNameHtml = facetValueName;
