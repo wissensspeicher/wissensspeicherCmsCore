@@ -272,6 +272,8 @@ public class Facets implements Iterable<Facet> {
     } else if (fieldName.equals("groupedCollectionPeriodOfTime")) {
       try {
         String periodOfTime = collection.getPeriodOfTime();
+        if (periodOfTime == null)
+          periodOfTime = collection.getProject().getPeriodOfTime();
         if (periodOfTime != null) {
           retValues = new ArrayList<String>();
           retValues.add(periodOfTime);
@@ -285,7 +287,12 @@ public class Facets implements Iterable<Facet> {
     } else if (fieldName.equals("groupedCollectionSubject")) {
       return collection.getSubjectsStr();
     } else if (fieldName.equals("groupedCollectionLanguage")) {
-      return collection.getLanguages();
+      try {
+        retValues = collection.getLanguageLabels();
+        return retValues;
+      } catch (ApplicationException e) {
+        return null;
+      }
     } else if (fieldName.equals("groupedCollectionProject")) {
       try {
         Project project = collection.getProject();
