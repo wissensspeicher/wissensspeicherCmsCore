@@ -285,7 +285,7 @@ public class Facets implements Iterable<Facet> {
     } else if (fieldName.equals("groupedCollectionPerson")) {
       try {
         ArrayList<String> personsStr = collection.getGndRelatedPersonsStr();
-        if (personsStr == null)
+        if (personsStr == null || personsStr.isEmpty())
           personsStr = collection.getProject().getGndRelatedPersonsStr();
         return personsStr;
       } catch (ApplicationException e) {
@@ -294,7 +294,7 @@ public class Facets implements Iterable<Facet> {
     } else if (fieldName.equals("groupedCollectionSubject")) {
       try {
         ArrayList<String> subjectsStr = collection.getSubjectsStr();
-        if (subjectsStr == null)
+        if (subjectsStr == null || subjectsStr.isEmpty())
           subjectsStr = collection.getProject().getSubjectsStr();
         return subjectsStr;
       } catch (ApplicationException e) {
