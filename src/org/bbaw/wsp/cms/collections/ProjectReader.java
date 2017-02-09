@@ -861,6 +861,29 @@ public class ProjectReader {
       LOGGER.error("Reading of: " + normdataFile + " failed");
       e.printStackTrace();
     }
+    // read LEXVO_Languages.rdf
+    normdataFileName = Constants.getInstance().getMetadataDir() + "/externalnormdata/LEXVO_Languages.rdf";
+    normdataFile = new File(normdataFileName);
+    try {
+      Document normdataFileDoc = Jsoup.parse(normdataFile, "utf-8");
+      Elements langElems = normdataFileDoc.select("rdf|RDF > rdf|Description");
+      if (! langElems.isEmpty()) {
+        for (int i=0; i< langElems.size(); i++) {
+          NormdataLanguage lang = new NormdataLanguage();
+          Element langElem = langElems.get(i);
+          String aboutId = langElem.select("rdf|Description").attr("rdf:about");
+          lang.setRdfId(aboutId);
+          String label = langElem.select("rdf|Description > rdfs|label[xml:lang=\"de\"]").text();
+          if (label != null && ! label.isEmpty()) {
+            lang.setLabel(label);
+          }
+          normdataLanguages.put(aboutId, lang);
+        }
+      }
+    } catch (Exception e) {
+      LOGGER.error("Reading of: " + normdataFile + " failed");
+      e.printStackTrace();
+    }
   }
 
   private void readMdsystemXmlFile() {
