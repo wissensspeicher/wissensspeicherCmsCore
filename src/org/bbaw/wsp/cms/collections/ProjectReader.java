@@ -813,8 +813,30 @@ public class ProjectReader {
 
   private void readNormdataOutputTypes() {
     normdataOutputTypes = new HashMap<String, OutputType>();
-    String normdataFileName = Constants.getInstance().getMetadataDir() + "/normdata/wsp.skos.aggregationType.rdf";
+    String normdataFileName = Constants.getInstance().getMetadataDir() + "/normdata/wsp.skos.aggregationTypeContent.rdf";
     File normdataFile = new File(normdataFileName);
+    try {
+      Document normdataFileDoc = Jsoup.parse(normdataFile, "utf-8");
+      Elements typeElems = normdataFileDoc.select("rdf|RDF > rdf|Description");
+      if (! typeElems.isEmpty()) {
+        for (int i=0; i< typeElems.size(); i++) {
+          OutputType type = new OutputType();
+          Element typeElem = typeElems.get(i);
+          String aboutId = typeElem.select("rdf|Description").attr("rdf:about");
+          type.setRdfId(aboutId);
+          String label = typeElem.select("rdf|Description > skos|prefLabel[xml:lang=\"de\"]").text();
+          if (label != null && ! label.isEmpty()) {
+            type.setLabel(label);
+          }
+          normdataOutputTypes.put(aboutId, type);
+        }
+      }
+    } catch (Exception e) {
+      LOGGER.error("Reading of: " + normdataFile + " failed");
+      e.printStackTrace();
+    }
+    normdataFileName = Constants.getInstance().getMetadataDir() + "/normdata/wsp.skos.aggregationTypeFormal.rdf";
+    normdataFile = new File(normdataFileName);
     try {
       Document normdataFileDoc = Jsoup.parse(normdataFile, "utf-8");
       Elements typeElems = normdataFileDoc.select("rdf|RDF > rdf|Description");
