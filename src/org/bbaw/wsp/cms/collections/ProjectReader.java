@@ -61,6 +61,17 @@ public class ProjectReader {
       return s1.getName().compareTo(s2.getName());
     }
   };
+  public static Comparator<PeriodOfTime> periodOfTimeLabelComparator = new Comparator<PeriodOfTime>() {
+    public int compare(PeriodOfTime p1, PeriodOfTime p2) {
+      if (p1.getLabel() == null && p2.getLabel() != null)
+        return -1;
+      if (p1.getLabel() != null && p2.getLabel() == null)
+        return 1;
+      if (p1.getLabel() == null && p2.getLabel() == null)
+        return 0;
+      return p1.getLabel().compareTo(p2.getLabel());
+    }
+  };
   public static Comparator<Person> personNameComparator = new Comparator<Person>() {
     public int compare(Person p1, Person p2) {
       if (p1.getName() == null && p2.getName() != null)
@@ -238,6 +249,23 @@ public class ProjectReader {
     return projects;
   }
   
+  /**
+   * 
+   * @param labelStartStr
+   * @return e.g. all "A-Projects" if labelStartStr = "A"
+   */
+  public ArrayList<Project> getProjectsByLabelStartStr(String labelStartStr) { 
+    ArrayList<Project> projects = new ArrayList<Project>();
+    java.util.Collection<Project> projectValues = this.projects.values();
+    for (Project project : projectValues) {
+      String l = project.getTitle();
+      if (l != null && l.startsWith(labelStartStr))
+        projects.add(project);
+    }
+    Collections.sort(projects, projectTitleComparator);
+    return projects;
+  }
+  
   public ArrayList<Organization> getOrganizations() {
     ArrayList<Organization> organizations = new ArrayList<Organization>();
     java.util.Collection<Organization> organizationValues = this.normdataOrganizations.values();
@@ -304,6 +332,28 @@ public class ProjectReader {
     }
   }
   
+  public ArrayList<PeriodOfTime> getAllPeriodOfTime() {
+    ArrayList<PeriodOfTime> pots = new ArrayList<PeriodOfTime>();
+    java.util.Collection<PeriodOfTime> values = this.normdataPeriodOfTime.values();
+    for (PeriodOfTime pot : values) {
+      pots.add(pot);
+    }
+    Collections.sort(pots, periodOfTimeLabelComparator);
+    return pots;
+  }
+
+  public ArrayList<String> getProjectTypes() {
+    ArrayList<String> projectTypes = new ArrayList<String>();
+    java.util.Collection<Project> projectValues = this.projects.values();
+    for (Project project : projectValues) {
+      String projectType = project.getProjectType();
+      if (projectType != null && ! projectTypes.contains(projectType))
+        projectTypes.add(projectType);
+    }
+    Collections.sort(projectTypes);
+    return projectTypes;
+  }
+
   public ArrayList<Person> getStaff() {
     ArrayList<Person> persons = new ArrayList<Person>();
     java.util.Collection<Person> values = this.normdataPersons.values();
@@ -802,7 +852,8 @@ public class ProjectReader {
           String period = potElem.select("rdf|Description > dcterms|temporal").text();
           if (period != null && ! period.isEmpty())
             pot.setPeriod(period);
-          normdataPeriodOfTime.put(aboutId, pot);
+          if (aboutId != null && ! aboutId.isEmpty() && label != null && ! label.isEmpty())
+            normdataPeriodOfTime.put(aboutId, pot);
         }
       }
     } catch (Exception e) {
