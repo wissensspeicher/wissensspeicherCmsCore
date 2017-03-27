@@ -182,6 +182,10 @@ public class Constants {
     return getIndexDir() + "/taxonomy";
   }
 
+  public String getLuceneProjectsTaxonomyDir() {
+    return getIndexDir() + "/projectsTaxonomy";
+  }
+
   public String getMetadataDir() {
     if (properties != null) {
       return properties.getProperty("metadataDir");
