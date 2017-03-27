@@ -234,8 +234,14 @@ public class ProjectCollection {
   
   private String calcRdfPath() throws ApplicationException {
     Project project = ProjectReader.getInstance().getProjectByRdfId(projectRdfId);
-    if (parentRdfId == null)
-      return project.getRdfPath() + "###" + rdfId;
+    if (parentRdfId == null) {
+      if (project == null) {
+        LOGGER.error("Collection: " + rdfId + " calcRdfPath: projectRdfId: " + projectRdfId + " not found");
+        return "null";
+      } else {
+        return project.getRdfPath() + "###" + rdfId;
+      }
+    }
     ProjectCollection parentCollection = project.getCollection(parentRdfId);
     if (parentCollection == null) {
       Project parentProject = ProjectReader.getInstance().getProjectByRdfId(projectRdfId);
