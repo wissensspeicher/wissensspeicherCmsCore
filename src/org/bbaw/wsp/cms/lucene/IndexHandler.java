@@ -125,6 +125,8 @@ public class IndexHandler {
   private TSTLookup suggester;
   private TaxonomyWriter taxonomyWriter;
   private TaxonomyReader taxonomyReader;
+  private TaxonomyWriter projectsTaxonomyWriter;
+  private TaxonomyReader projectsTaxonomyReader;
   private XQueryEvaluator xQueryEvaluator;
   private int commitInterval = 10;  // default: commit after each 10th document
   private int commitCounter = 0;
@@ -146,6 +148,8 @@ public class IndexHandler {
     projectsIndexReader = getProjectsReader();
     taxonomyWriter = getTaxonomyWriter();
     taxonomyReader = getTaxonomyReader();
+    projectsTaxonomyWriter = getProjectsTaxonomyWriter();
+    projectsTaxonomyReader = getProjectsTaxonomyReader();
     xQueryEvaluator = new XQueryEvaluator();
     facetFieldCounts.put("projectId", 1000);
     facetFieldCounts.put("language", 1000);
@@ -184,11 +188,13 @@ public class IndexHandler {
   public void commit() throws ApplicationException {
     try {
       taxonomyWriter.commit();
+      projectsTaxonomyWriter.commit();
       documentsIndexWriter.commit();
       projectsIndexWriter.commit();
     } catch (Exception e) {
       try {
         taxonomyWriter.rollback();
+        projectsTaxonomyWriter.rollback();
         documentsIndexWriter.rollback();
         projectsIndexWriter.rollback();
       } catch (Exception ex) {
@@ -235,11 +241,15 @@ public class IndexHandler {
       if (id != null) { 
         Field field = new Field("id", id, ftStoredAnalyzed);
         doc.add(field);
+        FacetField facetFieldId = new FacetField("id", id);
+        doc.add(facetFieldId);
       }
       String rdfId = project.getRdfId();
       if (rdfId != null) {
         Field field = new Field("rdfId", rdfId, ftStoredAnalyzed); 
         doc.add(field);
+        FacetField facetFieldRdfId = new FacetField("rdfId", rdfId);
+        doc.add(facetFieldRdfId);
       }
       String organizationRdfId = project.getOrganizationRdfId();
       if (organizationRdfId != null) {
@@ -260,6 +270,8 @@ public class IndexHandler {
       if (projectType != null) {
         Field projectTypeField = new Field("type", projectType, ftStoredAnalyzed);
         doc.add(projectTypeField);
+        FacetField facetFieldProjectType = new FacetField("type", projectType);
+        doc.add(facetFieldProjectType);
       }
       String duration = project.getDuration();
       if (duration != null) {
@@ -270,17 +282,28 @@ public class IndexHandler {
       if (status != null) {
         Field statusField = new Field("status", status, ftStoredAnalyzed);
         doc.add(statusField);
+        FacetField facetFieldStatus = new FacetField("status", status);
+        doc.add(facetFieldStatus);
       }
       String mainLanguage = project.getMainLanguageLabel();
       if (mainLanguage != null) {
         Field mainLanguageField = new Field("mainLanguage", mainLanguage, ftStoredAnalyzed);
         doc.add(mainLanguageField);
+        FacetField facetFieldMainLanguage = new FacetField("mainLanguage", mainLanguage);
+        doc.add(facetFieldMainLanguage);
       }
       ArrayList<String> subjects = project.getSubjectsStr();
       if (subjects != null) {
         String subjectsStr = org.apache.commons.lang3.StringUtils.join(subjects, "###");
         Field field = new Field("subjects", subjectsStr, ftStoredAnalyzed); 
         doc.add(field);
+        for (int i=0; i<subjects.size(); i++) {
+          String s = subjects.get(i).trim();
+          if (! s.isEmpty()) {
+            FacetField facetField = new FacetField("subject", s);
+            doc.add(facetField);
+          }
+        }
       }
       String place = project.getPlace();
       if (place != null) {
@@ -291,6 +314,8 @@ public class IndexHandler {
       if (periodOfTime != null) {
         Field periodOfTimeField = new Field("periodOfTime", periodOfTime, ftStoredAnalyzed);
         doc.add(periodOfTimeField);
+        FacetField facetFieldPeriodOfTime = new FacetField("periodOfTime", periodOfTime);
+        doc.add(facetFieldPeriodOfTime);
       }
       ArrayList<String> gndRelatedPersons = project.getGndRelatedPersonsStr();
       if (gndRelatedPersons != null) {
@@ -322,7 +347,11 @@ public class IndexHandler {
         Field collectionAbstractsField = new Field("collectionAbstracts", collectionAbstracts, ftStoredAnalyzed); 
         doc.add(collectionAbstractsField);
       }
-      projectsIndexWriter.addDocument(doc);
+      // facet creation
+      FacetsConfig facetsConfig = new FacetsConfig();
+      facetsConfig.setMultiValued("subject", true);
+      Document docWithFacets = facetsConfig.build(projectsTaxonomyWriter, doc);
+      projectsIndexWriter.addDocument(docWithFacets);
     } catch (Exception e) {
       LOGGER.error("indexProjectLocal: " + project.getRdfId());
       e.printStackTrace();
@@ -1339,9 +1368,9 @@ public class IndexHandler {
       FacetsCollector facetsCollector = new FacetsCollector(true);
       TopDocs resultDocs = FacetsCollector.search(searcher, morphQuery, to + 1, sort, true, true, facetsCollector);
       FacetsConfig facetsConfig = new FacetsConfig();
-      FastTaxonomyFacetCounts facetCounts = new FastTaxonomyFacetCounts(taxonomyReader, facetsConfig, facetsCollector);
+      FastTaxonomyFacetCounts facetCounts = new FastTaxonomyFacetCounts(projectsTaxonomyReader, facetsConfig, facetsCollector);
       List<FacetResult> tmpFacetResult = new ArrayList<FacetResult>();
-      String[] facetsStr = {"id", "rdfId"};
+      String[] facetsStr = {"id", "rdfId", "mainLanguage", "periodOfTime", "status", "type", "subject"};
       for (int f=0; f<facetsStr.length; f++) {
         String facetStr = facetsStr[f];
         Integer facetFieldCount = 1000;
@@ -1773,6 +1802,8 @@ public class IndexHandler {
     try {
       if (taxonomyWriter != null)
         taxonomyWriter.close();
+      if (projectsTaxonomyWriter != null)
+        projectsTaxonomyWriter.close();
       if (documentsIndexWriter != null)
         documentsIndexWriter.close();
       if (projectsIndexWriter != null)
@@ -2608,6 +2639,33 @@ public class IndexHandler {
   private TaxonomyReader getTaxonomyReader() throws ApplicationException {
     TaxonomyReader taxonomyReader = null;
     String taxonomyDirStr = Constants.getInstance().getLuceneTaxonomyDir();
+    Path taxonomyDirF = Paths.get(taxonomyDirStr);
+    try {
+      Directory taxonomyDir = FSDirectory.open(taxonomyDirF);
+      taxonomyReader = new DirectoryTaxonomyReader(taxonomyDir);
+    } catch (IOException e) {
+      throw new ApplicationException(e);
+    }
+    return taxonomyReader;
+  }
+
+  private TaxonomyWriter getProjectsTaxonomyWriter() throws ApplicationException {
+    TaxonomyWriter taxonomyWriter = null;
+    String taxonomyDirStr = Constants.getInstance().getLuceneProjectsTaxonomyDir();
+    Path taxonomyDirF = Paths.get(taxonomyDirStr);
+    try {
+      Directory taxonomyDir = FSDirectory.open(taxonomyDirF);
+      taxonomyWriter = new DirectoryTaxonomyWriter(taxonomyDir, OpenMode.CREATE_OR_APPEND);
+      taxonomyWriter.commit();
+    } catch (IOException e) {
+      throw new ApplicationException(e);
+    }
+    return taxonomyWriter;
+  }
+  
+  private TaxonomyReader getProjectsTaxonomyReader() throws ApplicationException {
+    TaxonomyReader taxonomyReader = null;
+    String taxonomyDirStr = Constants.getInstance().getLuceneProjectsTaxonomyDir();
     Path taxonomyDirF = Paths.get(taxonomyDirStr);
     try {
       Directory taxonomyDir = FSDirectory.open(taxonomyDirF);
