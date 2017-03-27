@@ -923,6 +923,7 @@ public class MetadataHandler {
     // collectionRdfId of which this resource is part of
     String collectionRdfId = resourceElem.select("ore|isAggregatedBy").attr("rdf:resource");
     if (collectionRdfId != null && ! collectionRdfId.isEmpty()) {
+      collectionRdfId = collectionRdfId.trim();
       ProjectCollection rootCollection = ProjectReader.getInstance().getRootCollection(collectionRdfId); // hack: resources are set to root collection
       String rootCollectionRdfId = rootCollection.getRdfId(); 
       mdRecord.setCollectionRdfId(rootCollectionRdfId);
