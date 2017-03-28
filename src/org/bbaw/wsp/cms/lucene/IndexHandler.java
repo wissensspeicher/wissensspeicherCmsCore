@@ -987,6 +987,8 @@ public class IndexHandler {
       facetsConfig.setMultiValued("entityOrganisation", true);
       facetsConfig.setMultiValued("entityPlace", true);
       facetsConfig.setMultiValued("entityConcept", true);
+      facetsConfig.setMultiValued("collectionPerson", true);
+      facetsConfig.setMultiValued("collectionSubject", true);
       Document docWithFacets = facetsConfig.build(taxonomyWriter, doc);
 
       documentsIndexWriter.addDocument(docWithFacets);
