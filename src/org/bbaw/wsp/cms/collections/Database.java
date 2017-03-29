@@ -213,7 +213,8 @@ public class Database {
     String oaiSet = databaseElem.select("db > set").text();
     if (oaiSet != null && ! oaiSet.isEmpty()) {
       database.setOaiSet(oaiSet);
-      database.buildUniqueName(database.rdfId); // rebuild it so that the oai set name is appended to the db name
+      String databaseName = database.buildUniqueName(database.rdfId); // rebuild it so that the oai set name is appended to the db name
+      database.setName(databaseName);
     }
     String mainResourcesTable = databaseElem.select("db > mainResourcesTable > name").text();
     if (mainResourcesTable != null && !mainResourcesTable.isEmpty())
