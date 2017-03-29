@@ -1376,9 +1376,6 @@ public class IndexHandler {
       for (int f=0; f<facetsStr.length; f++) {
         String facetStr = facetsStr[f];
         Integer facetFieldCount = 1000;
-        Integer tmpFacetFieldCount = facetFieldCounts.get(facetStr);
-        if (tmpFacetFieldCount != null)
-          facetFieldCount = tmpFacetFieldCount;
         FacetResult facetResult = facetCounts.getTopChildren(facetFieldCount, facetStr);
         if (facetResult != null)
           tmpFacetResult.add(facetResult);
