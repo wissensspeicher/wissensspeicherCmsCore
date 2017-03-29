@@ -1270,6 +1270,11 @@ public class ProjectReader {
           Database database = Database.fromDatabaseElement(databaseElem);
           database.setCollectionRdfId(collectionRdfId);
           String databaseRdfId = database.getRdfId();
+          if (database.getType() != null && database.getType().equals("oai")) {
+            String oaiSet = database.getOaiSet();
+            if (oaiSet != null)
+              databaseRdfId = databaseRdfId + "/" + oaiSet;
+          }
           collection.addDatabase(databaseRdfId, database);
           project.addDatabase(databaseRdfId, database);  // redundant also in project
         }

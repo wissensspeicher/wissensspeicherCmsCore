@@ -211,8 +211,10 @@ public class Database {
       database.setSql(sql);
     }
     String oaiSet = databaseElem.select("db > set").text();
-    if (oaiSet != null && ! oaiSet.isEmpty())
+    if (oaiSet != null && ! oaiSet.isEmpty()) {
       database.setOaiSet(oaiSet);
+      database.buildUniqueName(database.rdfId); // rebuild it so that the oai set name is appended to the db name
+    }
     String mainResourcesTable = databaseElem.select("db > mainResourcesTable > name").text();
     if (mainResourcesTable != null && !mainResourcesTable.isEmpty())
       database.setMainResourcesTable(mainResourcesTable);
@@ -283,6 +285,10 @@ public class Database {
     // e.g. "http://telota.bbaw.de:8085/exist/rest/db/AvHBriefedition" is converted to "telota.bbaw.de:8085##exist##rest##db##AvHBriefedition"
     String fileNameId = rdfId.replaceFirst("https*://", "");
     fileNameId = fileNameId.replaceAll("/", "##");
+    if (type != null && type.equals("oai")) {
+      if (oaiSet != null)
+        fileNameId = fileNameId + "##" + oaiSet;
+    }
     return fileNameId;
   }
 
