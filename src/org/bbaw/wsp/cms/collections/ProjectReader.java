@@ -103,6 +103,7 @@ public class ProjectReader {
   private HashMap<String, Location> normdataLocations;
   private HashMap<String, PeriodOfTime> normdataPeriodOfTime;
   private HashMap<String, OutputType> normdataOutputTypes;
+  private HashMap<String, OutputType> normdataProjectOutputTypes;
   private HashMap<String, NormdataLanguage> normdataLanguages;
   private HashMap<String, Project> projects;  // key is id string and value is project
   private HashMap<String, Project> projectsByRdfId;  // key is projectRdfId string and value is project
@@ -528,6 +529,7 @@ public class ProjectReader {
     readNormdataLocations();
     readNormdataPeriodOfTime();
     readNormdataOutputTypes();
+    readNormdataProjectTypes();
     readNormdataLanguages();
   }
   
@@ -910,6 +912,54 @@ public class ProjectReader {
     }
   }
 
+  private void readNormdataProjectTypes() {
+    normdataProjectOutputTypes = new HashMap<String, OutputType>();
+    String normdataFileName = Constants.getInstance().getMetadataDir() + "/normdata/wsp.skos.projectTypeContent.rdf";
+    File normdataFile = new File(normdataFileName);
+    try {
+      Document normdataFileDoc = Jsoup.parse(normdataFile, "utf-8");
+      Elements typeElems = normdataFileDoc.select("rdf|RDF > rdf|Description");
+      if (! typeElems.isEmpty()) {
+        for (int i=0; i< typeElems.size(); i++) {
+          OutputType type = new OutputType();
+          Element typeElem = typeElems.get(i);
+          String aboutId = typeElem.select("rdf|Description").attr("rdf:about");
+          type.setRdfId(aboutId);
+          String label = typeElem.select("rdf|Description > skos|prefLabel[xml:lang=\"de\"]").text();
+          if (label != null && ! label.isEmpty()) {
+            type.setLabel(label);
+          }
+          normdataProjectOutputTypes.put(aboutId, type);
+        }
+      }
+    } catch (Exception e) {
+      LOGGER.error("Reading of: " + normdataFile + " failed");
+      e.printStackTrace();
+    }
+    normdataFileName = Constants.getInstance().getMetadataDir() + "/normdata/wsp.skos.projectTypeFormal.rdf";
+    normdataFile = new File(normdataFileName);
+    try {
+      Document normdataFileDoc = Jsoup.parse(normdataFile, "utf-8");
+      Elements typeElems = normdataFileDoc.select("rdf|RDF > rdf|Description");
+      if (! typeElems.isEmpty()) {
+        for (int i=0; i< typeElems.size(); i++) {
+          OutputType type = new OutputType();
+          Element typeElem = typeElems.get(i);
+          String aboutId = typeElem.select("rdf|Description").attr("rdf:about");
+          type.setRdfId(aboutId);
+          String label = typeElem.select("rdf|Description > skos|prefLabel[xml:lang=\"de\"]").text();
+          if (label != null && ! label.isEmpty()) {
+            type.setLabel(label);
+          }
+          normdataProjectOutputTypes.put(aboutId, type);
+        }
+      }
+    } catch (Exception e) {
+      LOGGER.error("Reading of: " + normdataFile + " failed");
+      e.printStackTrace();
+    }
+  }
+
   private void readNormdataLanguages() {
     normdataLanguages = new HashMap<String, NormdataLanguage>();
     String normdataFileName = Constants.getInstance().getMetadataDir() + "/normdata/wsp.normdata.languages.rdf";
@@ -1074,9 +1124,11 @@ public class ProjectReader {
         Element projectTypeElem = projectTypeElems.get(i);
         String projectTypeRdfId = projectTypeElem.attr("rdf:resource");
         if (projectTypeRdfId != null && projectTypeRdfId.contains("projectType")) { 
-          int index = projectTypeRdfId.lastIndexOf("#");
-          String projectType = projectTypeRdfId.substring(index + 1);
-          project.setProjectType(projectType); // e.g. "Vorhaben"
+          // int index = projectTypeRdfId.lastIndexOf("#");
+          // String projectType = projectTypeRdfId.substring(index + 1);
+          OutputType projectType = normdataProjectOutputTypes.get(projectTypeRdfId);
+          if (projectType != null)
+            project.setProjectType(projectType.getLabel()); // e.g. "Vorhaben"
         }
       }
       String duration = projectElem.select("dcterms|valid").text(); // e.g. "start=1970; end=2014-12-31; name=Laufzeit"
