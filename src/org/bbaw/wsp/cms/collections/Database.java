@@ -258,6 +258,27 @@ public class Database {
       }
       database.setIncludes(includes);
     }
+    // read xqueries (used for building dynamically a webUri of a record; only used in xml records
+    Elements xqueryElems = databaseElem.select("db > xqueries > xquery");
+    if (xqueryElems != null && ! xqueryElems.isEmpty()) {
+      Hashtable<String, XQuery> xqueriesHashtable = new Hashtable<String, XQuery>();
+      for (int i=0; i< xqueryElems.size(); i++) {
+        Element xqueryElem = xqueryElems.get(i);
+        String xQueryName = xqueryElem.select("name").text();
+        String xQueryCode = xqueryElem.select("code").text();
+        String xQueryPreStr = xqueryElem.select("preStr").text();
+        String xQueryAfterStr = xqueryElem.select("afterStr").text();
+        if (xQueryName != null && ! xQueryName.isEmpty() && xQueryCode != null && ! xQueryCode.isEmpty()) {
+          XQuery xQuery = new XQuery(xQueryName, xQueryCode);
+          if (xQueryPreStr != null && ! xQueryPreStr.isEmpty())
+            xQuery.setPreStr(xQueryPreStr);
+          if (xQueryAfterStr != null && ! xQueryAfterStr.isEmpty())
+            xQuery.setAfterStr(xQueryAfterStr);
+          xqueriesHashtable.put(xQueryName, xQuery);
+        }
+      }
+      database.setxQueries(xqueriesHashtable);
+    }
     // read contentCssSelectors
     Elements contentCssSelectorElems = databaseElem.select("db > contentCssSelectors > contentCssSelector");
     if (contentCssSelectorElems != null && ! contentCssSelectorElems.isEmpty()) {
