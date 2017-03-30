@@ -129,11 +129,14 @@ public class Harvester {
     String dbType = db.getType();
     if (dbType != null && (dbType.equals("eXist") || dbType.equals("crawl") || dbType.equals("oai"))) {
       // download records and save them in RDF-file as records
-      LOGGER.info("Harvest metadata records (" + project.getId() + ", " + db.getRdfId() + ", " + db.getType() + ") ...");
+      String oaiSet = "";
+      if (db.getOaiSet() != null && ! db.getOaiSet().isEmpty())
+        oaiSet = ", " + db.getOaiSet();
+      LOGGER.info("Harvest metadata records (" + project.getId() + ", " + db.getRdfId() + ", " + oaiSet + db.getType() + ") ...");
       ArrayList<MetadataRecord> dbMdRecords = harvestDBResources(project, db);
       // download resources and save metadata and fulltext fields
       if (dbMdRecords != null) {
-        LOGGER.info("Harvest " + dbMdRecords.size() + " resources (" + project.getId() + ", " + db.getRdfId() + ", " + db.getType() + ") ...");
+        LOGGER.info("Harvest " + dbMdRecords.size() + " resources (" + project.getId() + ", " + db.getRdfId() + ", " + oaiSet + db.getType() + ") ...");
         ArrayList<MetadataRecord> harvestedResourcesRecords = harvestResources(project, db, dbMdRecords);
         countHarvest = countHarvest + harvestedResourcesRecords.size();
       }
@@ -197,7 +200,10 @@ public class Harvester {
       String dbResourcesDirName = harvestDir + "/" + project.getId() + "/metadata/dbResources";
       metadataHandler.fetchMetadataRecordsOai(dbResourcesDirName, project, db);
       String rdfDbFileName = project.getId() + "/metadata/dbResources/" + project.getId() + "-" + db.getName() + "-1.rdf";
-      LOGGER.info("Harvest of metadata records (" + project.getId() + ", " + db.getRdfId() + ", " + dbType + ") finished (/harvest/" + rdfDbFileName  + ")");
+      String oaiSet = "";
+      if (db.getOaiSet() != null && ! db.getOaiSet().isEmpty())
+        oaiSet = ", " + db.getOaiSet();
+      LOGGER.info("Harvest of metadata records (" + project.getId() + ", " + db.getRdfId() + ", " + oaiSet + dbType + ") finished (/harvest/" + rdfDbFileName  + ")");
       String rdfDbFullFileName = harvestDir + "/" + project.getId() + "/metadata/dbResources/" + project.getId() + "-" + db.getName() + "-1.rdf";
       File rdfDbFile = new File(rdfDbFullFileName);
       dbMdRecords = metadataHandler.getMetadataRecordsByRdfFile(project, rdfDbFile, db, true);
