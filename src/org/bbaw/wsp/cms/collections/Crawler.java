@@ -158,8 +158,8 @@ public class Crawler {
       } catch (URISyntaxException e) {
         return false;
       }
-      boolean isMultimedia = isMultimedia(urlStr);
-      if (isMultimedia)
+      boolean isBinary = isBinary(urlStr);
+      if (isBinary)
         return false;
       String fragment = uri.getFragment();  // the "#" part of the uri
       if (fragment != null)
@@ -194,8 +194,13 @@ public class Crawler {
     return isAllowed;
   }
   
-  private boolean isMultimedia(String urlStr) throws ApplicationException {
-    if (urlStr.toLowerCase().endsWith(".zip") || urlStr.endsWith(".gz") || urlStr.endsWith(".jpg") || urlStr.endsWith(".jpeg") || urlStr.endsWith(".png") || urlStr.endsWith(".gif") || urlStr.endsWith(".mp3") || urlStr.endsWith(".mov") || urlStr.endsWith(".mp4") || urlStr.endsWith(".ogg"))
+  private boolean isBinary(String urlStr) throws ApplicationException {
+    String urlS = urlStr.toLowerCase();
+    if (urlS.endsWith(".bin") || urlS.endsWith(".bmp") || urlS.endsWith(".cdr") || urlS.endsWith(".com") || urlS.endsWith(".dat") || urlS.endsWith(".eps") 
+        || urlS.endsWith(".exe") || urlS.endsWith(".gif") || urlS.endsWith(".gz") || urlS.endsWith(".jpg") || urlS.endsWith(".jpeg") || urlS.endsWith(".mdb") 
+        || urlS.endsWith(".mid") || urlS.endsWith(".mp3") || urlS.endsWith(".mp4") || urlS.endsWith(".mov") || urlS.endsWith(".mpg") || urlS.endsWith(".ogg") 
+        || urlS.endsWith(".png") || urlS.endsWith(".swf") || urlS.endsWith(".sys") || urlS.endsWith(".tif") || urlS.endsWith(".wav") || urlS.endsWith(".wmf") 
+        || urlS.endsWith(".zip"))
       return true;
     else 
       return false;
