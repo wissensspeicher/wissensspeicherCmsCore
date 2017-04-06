@@ -1123,9 +1123,7 @@ public class ProjectReader {
       for (int i=0; i< projectTypeElems.size(); i++) {
         Element projectTypeElem = projectTypeElems.get(i);
         String projectTypeRdfId = projectTypeElem.attr("rdf:resource");
-        if (projectTypeRdfId != null && projectTypeRdfId.contains("projectType")) { 
-          // int index = projectTypeRdfId.lastIndexOf("#");
-          // String projectType = projectTypeRdfId.substring(index + 1);
+        if (projectTypeRdfId != null && projectTypeRdfId.contains("projectType/formal")) { 
           OutputType projectType = normdataProjectOutputTypes.get(projectTypeRdfId);
           if (projectType != null)
             project.setProjectType(projectType.getLabel()); // e.g. "Vorhaben"
