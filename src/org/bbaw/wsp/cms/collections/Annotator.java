@@ -133,7 +133,7 @@ public class Annotator {
     recordsXmlStrBuilder.append("<records>\n");
     for (int i=0; i<mdRecords.size(); i++) {
       MetadataRecord mdRecord = mdRecords.get(i);
-      annotate(project, mdRecord, rdfStrBuilder);
+      annotate(project, db, mdRecord, rdfStrBuilder);
       recordsXmlStrBuilder.append(mdRecord.toXmlStr());
       int iplus1 = i + 1;
       int annotateInterval = iplus1 % 100; // after each 100 annotations do Logging
@@ -164,13 +164,13 @@ public class Annotator {
     }
   }
   
-  private void annotate(Project project, MetadataRecord mdRecord, StringBuilder projectRdfStrBuilder) throws ApplicationException {
+  private void annotate(Project project, Database db, MetadataRecord mdRecord, StringBuilder projectRdfStrBuilder) throws ApplicationException {
     Annotation docContentAnnotation = null;
     Annotation docTitleAnnotation = null;
     String docId = mdRecord.getDocId();
     try {
       DBpediaSpotlightHandler dbPediaSpotlightHandler = DBpediaSpotlightHandler.getInstance();
-      String docContent = harvester.getFulltext("content", mdRecord);
+      String docContent = harvester.getFulltext("content", mdRecord, db);
       if (docContent == null && mdRecord.getDescription() != null && ! mdRecord.getDescription().isEmpty())
         docContent = mdRecord.getDescription();
       if (docContent != null) {
@@ -195,6 +195,10 @@ public class Annotator {
         }
       }
       String projectRdfId = project.getRdfId();
+      // edoc: mdRecord.projectRdfId could be another project
+      String mdRecordProjectRdfId = mdRecord.getProjectRdfId();
+      if (mdRecordProjectRdfId != null && ! mdRecordProjectRdfId.isEmpty() && ! mdRecordProjectRdfId.equals(projectRdfId))
+        projectRdfId = mdRecordProjectRdfId;
       if (resources != null) {
         StringBuilder resourceNamesStrBuilder = new StringBuilder();
         StringBuilder resourcesXmlStrBuilder = new StringBuilder();

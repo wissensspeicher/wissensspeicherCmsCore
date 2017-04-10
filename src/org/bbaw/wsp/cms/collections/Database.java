@@ -179,6 +179,13 @@ public class Database {
     return collectionRdfId;
   }
   
+  public boolean isEdocDB() {
+    boolean isEdoc = false;
+    if (edocInstituteName2collectionRdfId != null && ! edocInstituteName2collectionRdfId.isEmpty())
+      isEdoc = true;
+    return isEdoc;
+  }
+  
   public static Database fromDatabaseElement(Element databaseElem) {
     Database database = new Database();
     String databaseRdfId = databaseElem.select("db").attr("id");

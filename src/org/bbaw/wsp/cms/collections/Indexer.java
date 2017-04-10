@@ -109,10 +109,18 @@ public class Indexer {
       if (organizationRdfId != null)
         mdRecord.setOrganizationRdfId(organizationRdfId);
       String projectRdfId = project.getRdfId();
+      // edoc: mdRecord.projectRdfId could be another project
+      String mdRecordProjectRdfId = mdRecord.getProjectRdfId();
+      if (mdRecordProjectRdfId != null && ! mdRecordProjectRdfId.isEmpty() && ! mdRecordProjectRdfId.equals(projectRdfId))
+        projectRdfId = mdRecordProjectRdfId;
       mdRecord.setProjectRdfId(projectRdfId);
       // set db rdf id of mdRecord
       if (db != null) {
         String collectionRdfId = db.getCollectionRdfId();
+        // edoc: mdRecord.projectRdfId could be another project
+        String mdRecordCollectionRdfId = mdRecord.getCollectionRdfId();
+        if (mdRecordCollectionRdfId != null && ! mdRecordCollectionRdfId.isEmpty() && ! mdRecordCollectionRdfId.equals(collectionRdfId))
+          collectionRdfId = mdRecordCollectionRdfId;
         ProjectCollection rootCollection = ProjectReader.getInstance().getRootCollection(collectionRdfId); // hack: resources are set to root collection
         String rootCollectionRdfId = rootCollection.getRdfId(); 
         mdRecord.setCollectionRdfId(rootCollectionRdfId);
@@ -120,11 +128,11 @@ public class Indexer {
         mdRecord.setDatabaseRdfId(databaseRdfId);
       }
       // fetch fulltextFields
-      String content = harvester.getFulltext("content", mdRecord);
+      String content = harvester.getFulltext("content", mdRecord, db);
       mdRecord.setContent(content); // is used in query highlighting function
-      String tokensOrig = harvester.getFulltext("tokensOrig", mdRecord);
+      String tokensOrig = harvester.getFulltext("tokensOrig", mdRecord, db);
       mdRecord.setTokenOrig(tokensOrig);
-      String tokensMorph = harvester.getFulltext("tokensMorph", mdRecord);
+      String tokensMorph = harvester.getFulltext("tokensMorph", mdRecord, db);
       mdRecord.setTokenMorph(tokensMorph);
       String docId = mdRecord.getDocId();
       String docUri = mdRecord.getUri();

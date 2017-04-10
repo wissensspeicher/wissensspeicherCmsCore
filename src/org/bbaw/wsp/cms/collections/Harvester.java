@@ -225,10 +225,12 @@ public class Harvester {
     return count;
   }
 
-  public String getFulltext(String type, MetadataRecord mdRecord) throws ApplicationException {
+  public String getFulltext(String type, MetadataRecord mdRecord, Database db) throws ApplicationException {
     String fulltext = null;
     String docId = mdRecord.getDocId();
     String projectId = mdRecord.getProjectId();
+    if (db != null && db.isEdocDB())
+      projectId = "bbawbib";
     String baseDir = harvestDir + "/" + projectId + "/data";
     String docDirName = getDocDir(docId, baseDir);
     try {
