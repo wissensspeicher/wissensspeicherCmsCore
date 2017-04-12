@@ -10,6 +10,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 import org.apache.commons.io.FileUtils;
@@ -493,6 +494,10 @@ public class Harvester {
   
   private String getPersons(String tocString, XQueryEvaluator xQueryEvaluator) throws ApplicationException {
     String persons = xQueryEvaluator.evaluateAsStringValueJoined(tocString, "/list/list[@type='persons']/item/person/name[not(. = preceding::person/name)]", "###"); // [not(. = preceding::person/name)] removes duplicates
+    // for more performance in querying: only the first 50 persons
+    if (persons != null) { 
+      persons = getFirst(persons, "###", 50);
+    }
     return persons;
   }
   
@@ -502,10 +507,13 @@ public class Harvester {
     if (xmdValuePersons != null && xmdValuePersons.size() > 0) {
       XdmSequenceIterator xmdValuePersonsIterator = xmdValuePersons.iterator();
       personsDetails = "<persons>\n";
-      while (xmdValuePersonsIterator.hasNext()) {
+      int counter = 0;
+      // for more performance in querying: only the first 50 persons
+      while (xmdValuePersonsIterator.hasNext() && counter < 50) {
         XdmItem xdmItemPerson = xmdValuePersonsIterator.next();
         String xdmItemPersonStr = xdmItemPerson.toString();
         personsDetails = personsDetails + xdmItemPersonStr + "\n";
+        counter++;
       }
       personsDetails = personsDetails + "</persons>";
     }
@@ -514,9 +522,29 @@ public class Harvester {
   
   private String getPlaces(String tocString, XQueryEvaluator xQueryEvaluator) throws ApplicationException {
     String places = xQueryEvaluator.evaluateAsStringValueJoined(tocString, "/list/list[@type='places']/item[not(. = preceding::item)]", "###"); 
+    // for more performance in querying: only the first 50 places
+    if (places != null) { 
+      places = getFirst(places, "###", 50);
+    }
     return places;
   }
 
+  private String getFirst(String inputStr, String delim, int count) {
+    String retStr = inputStr;
+    String[] splitStr = inputStr.split("###");
+    if (splitStr.length > count) {
+      splitStr = Arrays.copyOfRange(splitStr, 0, count);
+      retStr = "";
+      for (int i=0; i<splitStr.length; i++) {
+        if (i == splitStr.length - 1)
+          retStr = retStr + splitStr[i];
+        else 
+          retStr = retStr + splitStr[i] + "###";
+      }
+    }
+    return retStr;
+  }
+  
   private ArrayList<MetadataRecord> removeDoubleRecords(ArrayList<MetadataRecord> projectMdRecords, ArrayList<MetadataRecord> dbMdRecords) {
     ArrayList<MetadataRecord> mdRecords = new ArrayList<MetadataRecord>();
     for (int i=0; i<dbMdRecords.size(); i++) {
