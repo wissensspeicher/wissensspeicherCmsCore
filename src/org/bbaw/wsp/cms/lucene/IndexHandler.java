@@ -1141,6 +1141,7 @@ public class IndexHandler {
         languageHandler.translate(queryTerms, language);
       }
       Query morphQuery = buildMorphQuery(query, language, false, translate, languageHandler);
+      ArrayList<String> germanQueryLemmas = fetchTerms(morphQuery, "deu", true);
       Query highlighterQuery = buildHighlighterQuery(query, language, translate, languageHandler);
       Sort sort = new Sort();
       SortField scoreSortField = new SortField(null, Type.SCORE); // default sort
@@ -1289,6 +1290,7 @@ public class IndexHandler {
           hits.setQuery(morphQuery);
           hits.setFacets(facets);
           hits.setGroupByHits(groupByHits);
+          hits.setQueryLemmas(germanQueryLemmas);
         }
       }
     } catch (Exception e) {
@@ -2197,14 +2199,32 @@ public class IndexHandler {
    * @param query
    * @return
    */
-  private ArrayList<String> fetchTerms(Query query, String language) throws ApplicationException {
+  private ArrayList<String> fetchTerms(Query query, String language, boolean onlyLemmas) throws ApplicationException {
     ArrayList<String> terms = new ArrayList<String>();
     if (query instanceof TermQuery) {
       TermQuery termQuery = (TermQuery) query;
-      terms = fetchTerms(termQuery, language);
+      terms = fetchTerms(termQuery, language, onlyLemmas);
     } else if (query instanceof BooleanQuery) {
       BooleanQuery booleanQuery = (BooleanQuery) query;
-      terms = fetchTerms(booleanQuery, language);
+      terms = fetchTerms(booleanQuery, language, onlyLemmas);
+    } else if (query instanceof PrefixQuery) {
+      PrefixQuery prefixQuery = (PrefixQuery) query;
+      String prefix = prefixQuery.getPrefix().text();
+      if (! prefix.isEmpty())
+        terms.add(prefix);
+    } else if (query instanceof PhraseQuery) {
+      PhraseQuery phraseQuery = (PhraseQuery) query;
+      Term[] termsArray = phraseQuery.getTerms();
+      if (termsArray != null) {
+        for (int i=0; i<termsArray.length; i++) {
+          Term t = termsArray[i];
+          String termText = t.text();
+          if (! terms.contains(termText))
+            terms.add(t.text());
+        }
+      }
+    } else if (query instanceof MatchAllDocsQuery) {
+      // nothing
     } else {
       String queryStr = query.toString();
       terms.add(queryStr); 
@@ -2213,13 +2233,29 @@ public class IndexHandler {
     return terms;
   }
 
-  private ArrayList<String> fetchTerms(TermQuery termQuery, String language) throws ApplicationException {
+  private ArrayList<String> fetchTerms(TermQuery termQuery, String language, boolean onlyLemmas) throws ApplicationException {
     if (language == null)
       language = "eng";
     ArrayList<String> terms = new ArrayList<String>();
     Term termQueryTerm = termQuery.getTerm();
     String term = termQuery.getTerm().text();
     String fieldName = termQueryTerm.field();
+    if (onlyLemmas) {
+      LexHandler lexHandler = LexHandler.getInstance();
+      ArrayList<Lemma> lemmas = lexHandler.getLemmas(term, "form", language, Normalizer.DICTIONARY, true); 
+      if (lemmas == null) {
+        if (! terms.contains(term))
+          terms.add(term);
+      } else {
+        for (int i = 0; i < lemmas.size(); i++) {
+          Lemma lemma = lemmas.get(i);
+          String lemmaName = lemma.getLemmaName();
+          if (! terms.contains(term))
+            terms.add(lemmaName);
+        }
+      }
+      return terms;
+    }
     if (fieldName != null && fieldName.equals("tokenMorph")) {
       LexHandler lexHandler = LexHandler.getInstance();
       ArrayList<Lemma> lemmas = lexHandler.getLemmas(term, "form", language, Normalizer.DICTIONARY, true); 
@@ -2243,16 +2279,21 @@ public class IndexHandler {
     return terms;
   }
 
-  private ArrayList<String> fetchTerms(BooleanQuery query, String language) throws ApplicationException {
+  private ArrayList<String> fetchTerms(BooleanQuery query, String language, boolean onlyLemmas) throws ApplicationException {
     ArrayList<String> terms = new ArrayList<String>();
     List<BooleanClause> booleanClauses = query.clauses();
     for (int i = 0; i < booleanClauses.size(); i++) {
       BooleanClause boolClause = booleanClauses.get(i);
       Query q = boolClause.getQuery();
-      ArrayList<String> qTerms = fetchTerms(q, language);
+      ArrayList<String> qTerms = fetchTerms(q, language, onlyLemmas);
       BooleanClause.Occur occur = boolClause.getOccur();
-      if (occur == BooleanClause.Occur.SHOULD || occur == BooleanClause.Occur.MUST)
-        terms.addAll(qTerms);
+      if (occur == BooleanClause.Occur.SHOULD || occur == BooleanClause.Occur.MUST) {
+        for (int j=0; j<qTerms.size(); j++) {
+          String qTerm = qTerms.get(j);
+          if (! terms.contains(qTerm))
+            terms.add(qTerm);
+        }
+      }
     }
     return terms;
   }

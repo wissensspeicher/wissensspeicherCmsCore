@@ -8,6 +8,7 @@ public class Hits {
   private ArrayList<Document> hits;
   private float maxScore;  // maximum score of all hits 
   private Query query;
+  private ArrayList<String> queryLemmas; // all query lemmas of original query
   private int from;
   private int to;
   private int size = 0;
@@ -37,6 +38,14 @@ public class Hits {
 
   public void setSize(int size) {
     this.size = size;
+  }
+
+  public ArrayList<String> getQueryLemmas() {
+    return queryLemmas;
+  }
+
+  public void setQueryLemmas(ArrayList<String> queryLemmas) {
+    this.queryLemmas = queryLemmas;
   }
 
   public int getSizeTotalDocuments() {
