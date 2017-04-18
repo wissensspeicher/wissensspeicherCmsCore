@@ -347,6 +347,12 @@ public class Person implements Comparable<Person> {
   @Override
   public int compareTo(Person p) {  
     if (role == p.role) {
+      if (name == null && p.name != null)
+        return -1;
+      if (name != null && p.name == null)
+        return 1;
+      if (name == null && p.name == null)
+        return 0;
       return name.compareToIgnoreCase(p.name);
     } else {
       Integer thisRole = new Integer(role);
