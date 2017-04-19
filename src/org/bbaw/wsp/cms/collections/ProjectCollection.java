@@ -376,7 +376,7 @@ public class ProjectCollection {
       retJsonObject.put("type", typeLabel);
     }
     if (homepageUrl != null) {
-      String encodedHomepageUrl = null;
+      String encodedHomepageUrl = homepageUrl;
       try {
         if (! homepageUrl.contains("%"))
           encodedHomepageUrl = URIUtil.encodeQuery(homepageUrl);

@@ -427,7 +427,7 @@ public class Project {
     if (projectType != null)
       retJsonObject.put("projectType", projectType);
     if (homepageUrl != null) {
-      String encodedHomepageUrl = null;
+      String encodedHomepageUrl = homepageUrl;
       try {
         if (! homepageUrl.contains("%"))
           encodedHomepageUrl = URIUtil.encodeQuery(homepageUrl);
