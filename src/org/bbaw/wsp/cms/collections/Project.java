@@ -427,12 +427,13 @@ public class Project {
     if (projectType != null)
       retJsonObject.put("projectType", projectType);
     if (homepageUrl != null) {
+      String encodedHomepageUrl = null;
       try {
-        homepageUrl = URIUtil.encodeQuery(homepageUrl);
+        encodedHomepageUrl = URIUtil.encodeQuery(homepageUrl);
       } catch (Exception e) {
         // nothing
       }
-      retJsonObject.put("url", homepageUrl);
+      retJsonObject.put("url", encodedHomepageUrl);
     }
     if (title != null)
       retJsonObject.put("label", title);

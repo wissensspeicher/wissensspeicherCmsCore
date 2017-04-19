@@ -376,12 +376,13 @@ public class ProjectCollection {
       retJsonObject.put("type", typeLabel);
     }
     if (homepageUrl != null) {
+      String encodedHomepageUrl = null;
       try {
-        homepageUrl = URIUtil.encodeQuery(homepageUrl);
+        encodedHomepageUrl = URIUtil.encodeQuery(homepageUrl);
       } catch (Exception e) {
         // nothing
       }
-      retJsonObject.put("url", homepageUrl);
+      retJsonObject.put("url", encodedHomepageUrl);
     }
     if (title != null)
       retJsonObject.put("label", title);
