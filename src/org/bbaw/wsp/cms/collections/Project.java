@@ -429,7 +429,8 @@ public class Project {
     if (homepageUrl != null) {
       String encodedHomepageUrl = null;
       try {
-        encodedHomepageUrl = URIUtil.encodeQuery(homepageUrl);
+        if (! homepageUrl.contains("%"))
+          encodedHomepageUrl = URIUtil.encodeQuery(homepageUrl);
       } catch (Exception e) {
         // nothing
       }
