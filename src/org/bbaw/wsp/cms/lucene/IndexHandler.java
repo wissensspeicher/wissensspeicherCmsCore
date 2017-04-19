@@ -1118,7 +1118,6 @@ public class IndexHandler {
     Hits hits = null;
     IndexSearcher searcher = null;
     Date begin = new Date();
-    LOGGER.info("queryDocuments: start: " + begin.getTime());
     try {
       makeDocumentsSearcherManagerUpToDate();
       searcher = documentsSearcherManager.acquire();
@@ -1142,7 +1141,6 @@ public class IndexHandler {
         languageHandler.translate(queryTerms, language);
       }
       Query morphQuery = buildMorphQuery(query, language, false, translate, languageHandler);
-      LOGGER.info("queryDocuments: after buildMorphQuery: " + new Date().getTime());
       ArrayList<String> germanQueryLemmas = fetchTerms(morphQuery, "deu", true);
       Query highlighterQuery = buildHighlighterQuery(query, language, translate, languageHandler);
       Sort sort = new Sort();
@@ -1172,13 +1170,11 @@ public class IndexHandler {
         TermFirstPassGroupingCollector termFirstPassGroupCollector = new TermFirstPassGroupingCollector(groupByFieldNameSorted, groupBySort, 1000);
         Query matchAllDocsQuery = new MatchAllDocsQuery();
         FacetsCollector.search(searcher, matchAllDocsQuery, 1, sort, true, true, termFirstPassGroupCollector);
-        LOGGER.info("queryDocuments: after first group by search: " + new Date().getTime());
         Collection<SearchGroup<BytesRef>> fieldGroups = termFirstPassGroupCollector.getTopGroups(0, true);
         groupByCollector = new TermSecondPassGroupingCollector(groupByFieldNameSorted, fieldGroups, groupBySort, sort, maxDocsPerGroup, true, true, true);
         searchCollector = MultiCollector.wrap(facetsCollector, groupByCollector);
       }
       TopDocs resultDocs = FacetsCollector.search(searcher, morphQuery, to + 1, sort, true, true, searchCollector);
-      LOGGER.info("queryDocuments: after second group by search: " + new Date().getTime());
       FacetsConfig facetsConfig = new FacetsConfig();
       FastTaxonomyFacetCounts facetCounts = new FastTaxonomyFacetCounts(taxonomyReader, facetsConfig, facetsCollector);
       List<FacetResult> tmpFacetResult = new ArrayList<FacetResult>();
@@ -1218,7 +1214,6 @@ public class IndexHandler {
           }
           docs.add(doc);
         }
-        LOGGER.info("queryDocuments: after building resultHitsDocs: " + new Date().getTime());
         GroupHits groupByHits = null;
         // groupBy query: second part: build query result 
         if (groupByField != null) {
@@ -1276,7 +1271,6 @@ public class IndexHandler {
             groupByHits.setGroupDocuments(groupHitsArrayList);
           }
         }
-        LOGGER.info("queryDocuments: after building groupByHits: " + new Date().getTime());
         int sizeTotalDocuments = documentsIndexReader.numDocs();
         // Terms terms = MultiFields.getTerms(documentsIndexReader, "tokenOrig");
         // int sizeTotalTerms = (int) terms.size(); // terms.size() does not work: delivers always -1 
