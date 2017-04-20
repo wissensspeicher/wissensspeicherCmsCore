@@ -1219,6 +1219,7 @@ public class IndexHandler {
         if (groupByField != null) {
           TopGroups<BytesRef> topGroups = groupByCollector.getTopGroups(0);
           if (topGroups != null) {
+            LOGGER.info("queryDocuments: start result grouping: " + new Date().getTime());
             GroupDocs<BytesRef>[] topGroupDocsTmp = topGroups.groups;
             // remove the empty groups
             ArrayList<GroupDocs<BytesRef>> topGroupDocs = new ArrayList<GroupDocs<BytesRef>>();
@@ -1228,6 +1229,7 @@ public class IndexHandler {
               if (totalGroupHitsSize > 0)
                 topGroupDocs.add(group);
             }            
+            LOGGER.info("queryDocuments: result grouping after remove empty groups: " + new Date().getTime());
             groupByHits = new GroupHits();
             groupByHits.setSizeTotalGroups(topGroupDocs.size());
             ArrayList<GroupDocuments> groupHitsArrayList = new ArrayList<GroupDocuments>();
@@ -1271,6 +1273,7 @@ public class IndexHandler {
             groupByHits.setGroupDocuments(groupHitsArrayList);
           }
         }
+        LOGGER.info("queryDocuments: end result grouping: " + new Date().getTime());
         int sizeTotalDocuments = documentsIndexReader.numDocs();
         // Terms terms = MultiFields.getTerms(documentsIndexReader, "tokenOrig");
         // int sizeTotalTerms = (int) terms.size(); // terms.size() does not work: delivers always -1 
