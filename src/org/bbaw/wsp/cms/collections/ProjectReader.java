@@ -1043,6 +1043,8 @@ public class ProjectReader {
       while (filesIter.hasNext()) {
         File projectRdfFile = filesIter.next();
         // read project/organization rdf file
+        if (projectRdfFile.getName().endsWith("hsp.rdf"))
+          System.out.print("");
         Project project = readProjectRdfFile(projectRdfFile);
         if (project != null) {
           String projectId = project.getId();
@@ -1309,6 +1311,7 @@ public class ProjectReader {
       for (int i=0; i< collectionElems.size(); i++) {
         Element collectionElem = collectionElems.get(i);
         String collectionRdfId = collectionElem.select("collection").attr("id");
+        collectionRdfId = collectionRdfId.trim();
         ProjectCollection collection = project.getCollection(collectionRdfId);
         if (collection == null) {
           collection = new ProjectCollection(collectionRdfId);
