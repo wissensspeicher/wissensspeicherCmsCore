@@ -1247,7 +1247,9 @@ public class IndexHandler {
               for (int j=0; j<group.scoreDocs.length; j++) {
                 int docId = group.scoreDocs[j].doc;
                 float score = group.scoreDocs[j].score;
+                LOGGER.info("queryDocuments: start get lucene doc: " + new Date().getTime());
                 Document luceneDoc = searcher.doc(docId, docFieldsToFill);
+                LOGGER.info("queryDocuments: end get lucene doc: " + luceneDoc.get("docId") + new Date().getTime());
                 if (j==0) {
                   IndexableField luceneGroupByField = luceneDoc.getField(groupByField);
                   if (luceneGroupByField != null) {
@@ -1265,6 +1267,7 @@ public class IndexHandler {
                     doc.setHitFragments(hitFragments);
                 }
                 groupDocuments.addDocument(doc);
+                LOGGER.info("queryDocuments: end get content field: " + new Date().getTime());
               }
               groupHitsArrayList.add(groupDocuments);
             }
