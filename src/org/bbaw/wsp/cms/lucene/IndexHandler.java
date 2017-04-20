@@ -1233,7 +1233,7 @@ public class IndexHandler {
             groupByHits = new GroupHits();
             groupByHits.setSizeTotalGroups(topGroupDocs.size());
             ArrayList<GroupDocuments> groupHitsArrayList = new ArrayList<GroupDocuments>();
-            HashSet<String> docFieldsToFill = getDocFields();
+            HashSet<String> docFieldsToFill = getDocFieldsWithoutContent();
             int groupByTo = to;
             if (topGroupDocs.size() <= groupByTo)
               groupByTo = topGroupDocs.size() - 1;
@@ -1260,12 +1260,14 @@ public class IndexHandler {
                 }
                 org.bbaw.wsp.cms.document.Document doc = new org.bbaw.wsp.cms.document.Document(luceneDoc);
                 doc.setScore(score);
+                /*
                 IndexableField docContentField = getHighlightContentField(luceneDoc);
                 if (withHitFragments && docContentField != null) {
                   ArrayList<String> hitFragments = getFragments(highlighter, highlighterQuery, docId, docContentField.name());
                   if (hitFragments != null)
                     doc.setHitFragments(hitFragments);
                 }
+                */
                 groupDocuments.addDocument(doc);
                 LOGGER.info("queryDocuments: end get content field: " + new Date().getTime());
               }
@@ -2612,6 +2614,48 @@ public class IndexHandler {
     return fields;
   }
   
+  private HashSet<String> getDocFieldsWithoutContent() {
+    HashSet<String> fields = new HashSet<String>();
+    fields.add("id");
+    fields.add("docId");
+    fields.add("identifier");
+    fields.add("uri");
+    fields.add("webUri");
+    fields.add("projectId");
+    fields.add("projectRdfId");
+    fields.add("organizationRdfId");
+    fields.add("collectionRdfId");
+    fields.add("collectionType");
+    fields.add("databaseRdfId");
+    fields.add("author");
+    fields.add("authorDetails");
+    fields.add("title");
+    fields.add("alternativeTitle");
+    fields.add("language");
+    fields.add("publisher");
+    fields.add("date");
+    fields.add("description");
+    fields.add("subject");
+    fields.add("subjectControlled");
+    fields.add("subjectControlledDetails");
+    fields.add("swd");
+    fields.add("ddc");
+    fields.add("rights");
+    fields.add("license");
+    fields.add("type");
+    fields.add("systemType");
+    fields.add("pageCount");
+    fields.add("extent");
+    fields.add("schemaName");
+    fields.add("lastModified");
+    fields.add("entities");
+    fields.add("entitiesDetails");
+    fields.add("persons");
+    fields.add("personsDetails");
+    fields.add("places");
+    return fields;
+  }
+
   private HashSet<String> getProjectFields() {
     HashSet<String> fields = new HashSet<String>();
     fields.add("id");
