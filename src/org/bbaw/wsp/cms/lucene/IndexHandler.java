@@ -1219,7 +1219,6 @@ public class IndexHandler {
         if (groupByField != null) {
           TopGroups<BytesRef> topGroups = groupByCollector.getTopGroups(0);
           if (topGroups != null) {
-            LOGGER.info("queryDocuments: start result grouping: " + new Date().getTime());
             GroupDocs<BytesRef>[] topGroupDocsTmp = topGroups.groups;
             // remove the empty groups
             ArrayList<GroupDocs<BytesRef>> topGroupDocs = new ArrayList<GroupDocs<BytesRef>>();
@@ -1229,7 +1228,6 @@ public class IndexHandler {
               if (totalGroupHitsSize > 0)
                 topGroupDocs.add(group);
             }            
-            LOGGER.info("queryDocuments: result grouping after remove empty groups: " + new Date().getTime());
             groupByHits = new GroupHits();
             groupByHits.setSizeTotalGroups(topGroupDocs.size());
             ArrayList<GroupDocuments> groupHitsArrayList = new ArrayList<GroupDocuments>();
@@ -1247,9 +1245,7 @@ public class IndexHandler {
               for (int j=0; j<group.scoreDocs.length; j++) {
                 int docId = group.scoreDocs[j].doc;
                 float score = group.scoreDocs[j].score;
-                LOGGER.info("queryDocuments: start get lucene doc: " + new Date().getTime());
-                Document luceneDoc = searcher.doc(docId, docFieldsToFill);
-                LOGGER.info("queryDocuments: end get lucene doc: " + luceneDoc.get("docId") + new Date().getTime());
+                Document luceneDoc = searcher.doc(docId, docFieldsToFill);  // Performance: for bigger docs (field "content") this needs ca. 250 ms
                 if (j==0) {
                   IndexableField luceneGroupByField = luceneDoc.getField(groupByField);
                   if (luceneGroupByField != null) {
@@ -1260,16 +1256,13 @@ public class IndexHandler {
                 }
                 org.bbaw.wsp.cms.document.Document doc = new org.bbaw.wsp.cms.document.Document(luceneDoc);
                 doc.setScore(score);
-                /*
                 IndexableField docContentField = getHighlightContentField(luceneDoc);
                 if (withHitFragments && docContentField != null) {
-                  ArrayList<String> hitFragments = getFragments(highlighter, highlighterQuery, docId, docContentField.name());
+                  ArrayList<String> hitFragments = getFragments(highlighter, highlighterQuery, docId, docContentField.name()); // Performance: for bigger docs (field "content") this needs ca. 500 ms
                   if (hitFragments != null)
                     doc.setHitFragments(hitFragments);
                 }
-                */
                 groupDocuments.addDocument(doc);
-                LOGGER.info("queryDocuments: end get content field: " + new Date().getTime());
               }
               groupHitsArrayList.add(groupDocuments);
             }
@@ -1278,7 +1271,6 @@ public class IndexHandler {
             groupByHits.setGroupDocuments(groupHitsArrayList);
           }
         }
-        LOGGER.info("queryDocuments: end result grouping: " + new Date().getTime());
         int sizeTotalDocuments = documentsIndexReader.numDocs();
         // Terms terms = MultiFields.getTerms(documentsIndexReader, "tokenOrig");
         // int sizeTotalTerms = (int) terms.size(); // terms.size() does not work: delivers always -1 
