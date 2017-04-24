@@ -1043,8 +1043,6 @@ public class ProjectReader {
       while (filesIter.hasNext()) {
         File projectRdfFile = filesIter.next();
         // read project/organization rdf file
-        if (projectRdfFile.getName().endsWith("hsp.rdf"))
-          System.out.print("");
         Project project = readProjectRdfFile(projectRdfFile);
         if (project != null) {
           String projectId = project.getId();
