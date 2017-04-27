@@ -907,6 +907,7 @@ public class MetadataHandler {
     String resourceIdUrlStr = resourceElem.attr("rdf:about");
     if (resourceIdUrlStr == null) {
       LOGGER.error("No identifier given in resource: \"" + resourceElem + "\"");
+      return null;
     }
     MetadataRecord mdRecord = getNewMdRecord(resourceIdUrlStr);
     // web url of resource
@@ -925,8 +926,13 @@ public class MetadataHandler {
     if (collectionRdfId != null && ! collectionRdfId.isEmpty()) {
       collectionRdfId = collectionRdfId.trim();
       ProjectCollection rootCollection = ProjectReader.getInstance().getRootCollection(collectionRdfId); // hack: resources are set to root collection
-      String rootCollectionRdfId = rootCollection.getRdfId(); 
-      mdRecord.setCollectionRdfId(rootCollectionRdfId);
+      if (rootCollection != null) {
+        String rootCollectionRdfId = rootCollection.getRdfId(); 
+        mdRecord.setCollectionRdfId(rootCollectionRdfId);
+      } else {
+        LOGGER.error("Resource: \"" + resourceElem + "\": could not find rootCollection of: " + collectionRdfId + ". Please proof your resource.");
+        return null;
+      }
     }
     // creators
     Elements authorElems = resourceElem.select("dcterms|creator");
