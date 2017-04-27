@@ -128,6 +128,8 @@ public class Crawler {
       String mimeType = detect(startUrlStr, url);
       if (mimeType == null)
         return null;
+      if (isBinaryMimeType(mimeType))
+        return null;
       newMdRecord = new MetadataRecord();
       newMdRecord.setWebUri(urlStr);
       newMdRecord.setType(mimeType);
@@ -199,13 +201,22 @@ public class Crawler {
     if (urlS.endsWith(".bin") || urlS.endsWith(".bmp") || urlS.endsWith(".cdr") || urlS.endsWith(".com") || urlS.endsWith(".dat") || urlS.endsWith(".eps") 
         || urlS.endsWith(".exe") || urlS.endsWith(".gif") || urlS.endsWith(".gz") || urlS.endsWith(".jpg") || urlS.endsWith(".jpeg") || urlS.endsWith(".mdb") 
         || urlS.endsWith(".mid") || urlS.endsWith(".mp3") || urlS.endsWith(".mp4") || urlS.endsWith(".mov") || urlS.endsWith(".mpg") || urlS.endsWith(".ogg") 
-        || urlS.endsWith(".png") || urlS.endsWith(".swf") || urlS.endsWith(".sys") || urlS.endsWith(".tif") || urlS.endsWith(".wav") || urlS.endsWith(".wmf") 
-        || urlS.endsWith(".zip"))
+        || urlS.endsWith(".png") || urlS.endsWith(".ppt") || urlS.endsWith(".swf") || urlS.endsWith(".sys") || urlS.endsWith(".tif") || urlS.endsWith(".wav") 
+        || urlS.endsWith(".wmf") || urlS.endsWith(".zip"))
       return true;
     else 
       return false;
   }
   
+  private boolean isBinaryMimeType(String mimeTypeStr) throws ApplicationException {
+    String mimeTypeStrL = mimeTypeStr.toLowerCase();
+    if (mimeTypeStrL.contains("application/ogg") || mimeTypeStrL.contains("jpeg") || mimeTypeStrL.contains("mp3") || mimeTypeStrL.contains("mpeg") 
+        || mimeTypeStrL.contains("png") || mimeTypeStrL.contains("powerpoint") || mimeTypeStrL.contains("zip"))
+      return true;
+    else 
+      return false;
+  }
+
   private boolean isHtml(String mimeType) throws ApplicationException {
     if (mimeType != null && mimeType.contains("html"))
       return true;

@@ -1231,7 +1231,7 @@ public class IndexHandler {
             groupByHits = new GroupHits();
             groupByHits.setSizeTotalGroups(topGroupDocs.size());
             ArrayList<GroupDocuments> groupHitsArrayList = new ArrayList<GroupDocuments>();
-            HashSet<String> docFieldsToFill = getDocFieldsWithoutContent();
+            HashSet<String> docFieldsToFill = getDocFields();
             int groupByTo = to;
             if (topGroupDocs.size() <= groupByTo)
               groupByTo = topGroupDocs.size() - 1;
