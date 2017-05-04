@@ -27,6 +27,7 @@ public class Crawler {
   private static Integer DEFAULT_MAX_DEPTH = 3;
   private static Logger LOGGER = Logger.getLogger(Crawler.class);
   private String rootUrlStr;
+  private String redirectRootUrlStr;
   private Integer maxDepth;
   private ArrayList<String> excludes;
   private ArrayList<String> includes;
@@ -50,6 +51,9 @@ public class Crawler {
   }
   
   public ArrayList<MetadataRecord> crawl() throws ApplicationException {
+    redirectRootUrlStr = getRedirectUrl(rootUrlStr);  // e.g. redirects from "http://kant.bbaw.de/die-drei-kritiken" to "http://kant.bbaw.de/abteilung-i/die-drei-kritiken" or from "http://iffland.bbaw.de" to "http://iffland.bbaw.de/index.xql"
+    if (redirectRootUrlStr == null)
+      redirectRootUrlStr = rootUrlStr;
     getMdRecords(rootUrlStr, 1);
     ArrayList<MetadataRecord> mdRecords = new ArrayList<MetadataRecord>(urlsHashtable.values());
     if (! mdRecords.isEmpty()) {
@@ -70,6 +74,18 @@ public class Crawler {
     return mdRecords;
   }
 
+  private String getRedirectUrl(String url) throws ApplicationException {
+    String redirectUrlStr = null;
+    try {
+      Response response = Jsoup.connect(url).timeout(SOCKET_TIMEOUT).followRedirects(true).execute();
+      URL redirectUrl = response.url();
+      redirectUrlStr = redirectUrl.toString();
+    } catch (Exception e) {
+      // nothing
+    }
+    return redirectUrlStr;
+  }
+  
   private void getMdRecords(String startUrlStr, Integer depth) throws ApplicationException {
     try {
       URL startUrl = new URL(startUrlStr);
@@ -175,8 +191,9 @@ public class Crawler {
         }
       }
       String rootUrlStrWithoutProtocol = rootUrlStr.replaceAll("https*://", "");
+      String redirectRootUrlStrWithoutProtocol = redirectRootUrlStr.replaceAll("https*://", "");
       String urlStrWithoutProtocol = urlStr.replaceAll("https*://", "");
-      if (! urlStrWithoutProtocol.startsWith(rootUrlStrWithoutProtocol))
+      if (! urlStrWithoutProtocol.startsWith(rootUrlStrWithoutProtocol) && ! urlStrWithoutProtocol.startsWith(redirectRootUrlStrWithoutProtocol))
         return false;
       if (urlStr.contains(".."))
         return false;
@@ -210,7 +227,7 @@ public class Crawler {
   
   private boolean isBinaryMimeType(String mimeTypeStr) throws ApplicationException {
     String mimeTypeStrL = mimeTypeStr.toLowerCase();
-    if (mimeTypeStrL.contains("application/ogg") || mimeTypeStrL.contains("jpeg") || mimeTypeStrL.contains("mp3") || mimeTypeStrL.contains("mpeg") 
+    if (mimeTypeStrL.contains("application/ogg") || mimeTypeStrL.contains("gif") || mimeTypeStrL.contains("jpeg") ||  mimeTypeStrL.contains("mp3") || mimeTypeStrL.contains("mpeg") 
         || mimeTypeStrL.contains("png") || mimeTypeStrL.contains("powerpoint") || mimeTypeStrL.contains("zip"))
       return true;
     else 
