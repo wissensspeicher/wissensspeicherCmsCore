@@ -112,6 +112,7 @@ public class IndexHandler {
   private static final String[] QUERY_EXPANSION_FIELDS_ALL_MORPH = {"author", "title", "description", "subject", "subjectControlled", "swd", "ddc", "entities", "persons", "places", "tokenMorph"};
   private static final String[] QUERY_EXPANSION_FIELDS_PROJECTS_ALL = {"label", "abstract", "subjects", "staffNames", "collectionLabels", "collectionAbstracts"};
   private static final String[] QUERY_EXPANSION_FIELDS_PROJECTS_ALL_MORPH = {"label", "abstract", "subjects", "staffNames", "collectionLabels", "collectionAbstracts"};
+  private static final int HIGHLIGHT_BIG_DOCUMENT_CHAR_SIZE = 500000;
   private HashMap<String, Integer> facetFieldCounts = new HashMap<String, Integer>();
   private IndexWriter documentsIndexWriter;
   private IndexWriter projectsIndexWriter;
@@ -927,6 +928,12 @@ public class IndexHandler {
       if (content != null) {
         Field contentField = new Field("content", content, ftStoredAnalyzed);
         doc.add(contentField);
+        // performance issue: in queries the lucene highlighter has too bad performance for bigger documents, so we save only the first 500.000 chars for highlighting
+        if (content.length() > HIGHLIGHT_BIG_DOCUMENT_CHAR_SIZE) {
+          String highlightContent = content.substring(0, 500000);
+          Field highlightContentField = new Field("highlightContent", highlightContent, ftStoredAnalyzed);
+          doc.add(highlightContentField);
+        }
         if (projectId.equals("jdg"))
           contentField.setBoost(0.1f);  // jdg records should be ranked lower (because there are too much of them)
       }
@@ -1206,9 +1213,9 @@ public class IndexHandler {
           Document luceneDoc = searcher.doc(docId, docFields);
           org.bbaw.wsp.cms.document.Document doc = new org.bbaw.wsp.cms.document.Document(luceneDoc);
           doc.setScore(score);
-          IndexableField docContentField = getHighlightContentField(luceneDoc);
-          if (withHitFragments && docContentField != null) {
-            ArrayList<String> hitFragments = getFragments(highlighter, highlighterQuery, docId, docContentField.name());
+          IndexableField highlightContentField = getHighlightContentField(luceneDoc);
+          if (withHitFragments && highlightContentField != null) {
+            ArrayList<String> hitFragments = getFragments(highlighter, highlighterQuery, docId, highlightContentField.name());
             if (hitFragments != null)
               doc.setHitFragments(hitFragments);
           }
@@ -1256,9 +1263,9 @@ public class IndexHandler {
                 }
                 org.bbaw.wsp.cms.document.Document doc = new org.bbaw.wsp.cms.document.Document(luceneDoc);
                 doc.setScore(score);
-                IndexableField docContentField = getHighlightContentField(luceneDoc);
-                if (withHitFragments && docContentField != null) {
-                  ArrayList<String> hitFragments = getFragments(highlighter, highlighterQuery, docId, docContentField.name()); // Performance: for bigger docs (field "content") this needs ca. 500 ms
+                IndexableField highlightContentField = getHighlightContentField(luceneDoc);
+                if (withHitFragments && highlightContentField != null) {
+                  ArrayList<String> hitFragments = getFragments(highlighter, highlighterQuery, docId, highlightContentField.name()); // Performance: for bigger docs (field "content") this needs ca. 500 ms
                   if (hitFragments != null)
                     doc.setHitFragments(hitFragments);
                 }
@@ -1311,10 +1318,15 @@ public class IndexHandler {
   }
 
   private IndexableField getHighlightContentField(Document luceneDoc) {
-    IndexableField docContentField = luceneDoc.getField("content");
-    if (docContentField == null)
-      docContentField = luceneDoc.getField("title");
-    return docContentField;
+    IndexableField highlightContentField = luceneDoc.getField("content");
+    if (highlightContentField != null) {
+      // lucene highlighting performance is bad for bigger documents so for bigger documents the smaller field highlightContent is used
+      if (highlightContentField.stringValue().length() > HIGHLIGHT_BIG_DOCUMENT_CHAR_SIZE)
+        highlightContentField = luceneDoc.getField("highlightContent");
+    }
+    if (highlightContentField == null)
+      highlightContentField = luceneDoc.getField("title");
+    return highlightContentField;
   }
   
   private ArrayList<String> getFragments(FastVectorHighlighter highlighter, Query highlighterQuery, int luceneDocId, String fieldName) throws ApplicationException {
