@@ -587,8 +587,8 @@ public class Facets implements Iterable<Facet> {
             }
           } else if (facetId.equals("organizationRdfId") || facetId.equals("organization")) {
             try {
-              Organization organization = projectReader.getOrganization(facetValueName);
-              JSONObject jsonOrganization = organization.toJsonObject();
+              Project organization = projectReader.getProject(facetValueName);
+              JSONObject jsonOrganization = organization.toJsonObject(false);
               jsonOrganization.put("count", facetValueValue);
               jsonFacetValue = jsonOrganization;
               facetId = "organization";
