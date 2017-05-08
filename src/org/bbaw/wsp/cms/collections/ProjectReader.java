@@ -1224,8 +1224,11 @@ public class ProjectReader {
         } 
         String collTypeRdfId = collectionElem.select("dcterms|type").attr("rdf:resource");
         if (collTypeRdfId != null && ! collTypeRdfId.isEmpty()) {
-          OutputType collType = getType(collTypeRdfId);
-          collection.setType(collType); // e.g. "BibliographischeDatenbank" or "Homepage"
+          if (collTypeRdfId.contains("aggregationType/formal")) { 
+            OutputType collType = getType(collTypeRdfId);
+            if (collType != null)
+              collection.setType(collType); // e.g. "Datenbank" or "Webseite"
+          }
         }
         String collectionTitle = collectionElem.select("dcterms|title").text();
         if (collectionTitle != null && ! collectionTitle.isEmpty()) {
