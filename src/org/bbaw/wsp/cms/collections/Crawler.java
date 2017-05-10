@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Hashtable;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
 import org.apache.tika.Tika;
 import org.bbaw.wsp.cms.document.MetadataRecord;
@@ -26,7 +27,8 @@ public class Crawler {
   private static int SOCKET_TIMEOUT = 10 * 1000;
   private static Integer DEFAULT_MAX_DEPTH = 3;
   private static Logger LOGGER = Logger.getLogger(Crawler.class);
-  private String rootUrlStr;
+  private String rootUrlStr;  // e.g. http://schleiermacher-in-berlin.bbaw.de
+  private String rootUrlPathStr; // if rootUrl has a fileName part (e.g. http://schleiermacher-in-berlin.bbaw.de/index.html) then rootUrlPathStr is the path without the filename (e.g. http://schleiermacher-in-berlin.bbaw.de) 
   private String redirectRootUrlStr;
   private Integer maxDepth;
   private ArrayList<String> excludes;
@@ -51,18 +53,18 @@ public class Crawler {
   }
   
   public ArrayList<MetadataRecord> crawl() throws ApplicationException {
+    rootUrlPathStr = getUrlPath(rootUrlStr); // e.g. "http://www.bbaw.de/forschung/moritz/biblio/index.html" delivers "http://www.bbaw.de/forschung/moritz/biblio/"
     redirectRootUrlStr = getRedirectUrl(rootUrlStr);  // e.g. redirects from "http://kant.bbaw.de/die-drei-kritiken" to "http://kant.bbaw.de/abteilung-i/die-drei-kritiken" or from "http://iffland.bbaw.de" to "http://iffland.bbaw.de/index.xql"
     if (redirectRootUrlStr == null)
       redirectRootUrlStr = rootUrlStr;
-    getMdRecords(rootUrlStr, 1);
+    getMdRecords(redirectRootUrlStr, 1);
     ArrayList<MetadataRecord> mdRecords = new ArrayList<MetadataRecord>(urlsHashtable.values());
-    if (! mdRecords.isEmpty()) {
-      MetadataRecord rootMdRecord = getNewMdRecord(null, rootUrlStr);
-      if (rootMdRecord != null) {
-        MetadataRecord mdRecord = urlsHashtable.get(rootUrlStr);
-        if (mdRecord == null) {
-          mdRecords.add(0, rootMdRecord);
-        }
+    MetadataRecord rootMdRecord = getNewMdRecord(null, redirectRootUrlStr);
+    if (rootMdRecord != null) {
+      MetadataRecord mdRecord = urlsHashtable.get(redirectRootUrlStr);
+      if (mdRecord == null) {
+        urlsHashtable.put(redirectRootUrlStr, rootMdRecord);
+        mdRecords.add(0, rootMdRecord);
       }
     }
     Comparator<MetadataRecord> mdRecordComparator = new Comparator<MetadataRecord>() {
@@ -79,7 +81,9 @@ public class Crawler {
     try {
       Response response = Jsoup.connect(url).timeout(SOCKET_TIMEOUT).followRedirects(true).execute();
       URL redirectUrl = response.url();
-      redirectUrlStr = redirectUrl.toString();
+      String redirectUrlStrTmp = redirectUrl.toString();
+      if (! redirectUrlStrTmp.equals(url))
+        redirectUrlStr = redirectUrlStrTmp;
     } catch (Exception e) {
       // nothing
     }
@@ -156,6 +160,22 @@ public class Crawler {
     return newMdRecord;
   }
   
+  static public String getUrlPath(String urlStr) throws ApplicationException {
+    String urlPath = urlStr;
+    try {
+      URL url = new URL(urlStr);
+      String urlFile = url.getPath(); // only path (without query part)
+      String urlQuery = url.getQuery();
+      String fileExtension = FilenameUtils.getExtension(urlFile);
+      if (! fileExtension.isEmpty() || urlQuery != null)
+        urlPath = url.getProtocol() + "://" + url.getHost() + FilenameUtils.getFullPath(urlFile);
+    } catch (MalformedURLException e) {
+      LOGGER.error("Crawler: Crawl Database Id: " + urlStr + " is malformed");
+      return null;
+    }
+    return urlPath;
+  }
+  
   private boolean isAllowed(String urlStr) throws ApplicationException {
     boolean isAllowed = true;
     if (urlStr == null || urlStr.isEmpty())
@@ -191,9 +211,10 @@ public class Crawler {
         }
       }
       String rootUrlStrWithoutProtocol = rootUrlStr.replaceAll("https*://", "");
+      String rootUrlPathStrWithoutProtocol = rootUrlPathStr.replaceAll("https*://", "");
       String redirectRootUrlStrWithoutProtocol = redirectRootUrlStr.replaceAll("https*://", "");
       String urlStrWithoutProtocol = urlStr.replaceAll("https*://", "");
-      if (! urlStrWithoutProtocol.startsWith(rootUrlStrWithoutProtocol) && ! urlStrWithoutProtocol.startsWith(redirectRootUrlStrWithoutProtocol))
+      if (! urlStrWithoutProtocol.startsWith(rootUrlStrWithoutProtocol) && ! urlStrWithoutProtocol.startsWith(redirectRootUrlStrWithoutProtocol) && ! urlStrWithoutProtocol.startsWith(rootUrlPathStrWithoutProtocol))
         return false;
       if (urlStr.contains(".."))
         return false;
