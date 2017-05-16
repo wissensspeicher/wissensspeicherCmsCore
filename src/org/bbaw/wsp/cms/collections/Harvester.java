@@ -146,7 +146,19 @@ public class Harvester {
       int countDbResources = harvestOaiDBResources(project, db);
       countHarvest = countHarvest + countDbResources;
     } else if (dbType != null && (dbType.equals("mysql") || dbType.equals("postgres"))) {
-      // nothing, data remains in /dataExtern/dbDumps/
+      // normally nothing, data remains in /dataExtern/dbDumps/
+      // but if no rdf dump file exists then convert it from xml dump file
+      String dbDumpsDir = Constants.getInstance().getExternalDataDbDumpsDir();
+      File dbXmlDumpFile = new File(dbDumpsDir + "/" + project.getId() + "-" + db.getName() + "-1.xml");
+      if (! dbXmlDumpFile.exists()) {
+        LOGGER.error(dbXmlDumpFile.getPath() + " does not exist. Please provide this dbDumpFile");
+      } else { 
+        File dbRdfDumpFile = new File(dbDumpsDir + "/" + project.getId() + "-" + db.getName() + "-1.rdf");
+        if (! dbRdfDumpFile.exists()) {
+          LOGGER.info("Harvest metadata records (" + project.getId() + ", " + db.getRdfId() + ", " + db.getType() + ", " + dbRdfDumpFile.getPath() + "): Convert XML Dump file to RDF dump file ...");
+          metadataHandler.convertDbXmlFiles(dbDumpsDir, project, db);
+        }
+      }
     } else {
       // nothing
     }

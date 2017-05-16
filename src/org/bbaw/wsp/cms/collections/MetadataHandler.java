@@ -293,7 +293,7 @@ public class MetadataHandler {
     }
   }
   
-  private int convertDbXmlFiles(String dbFilesDirName, Project project, Database db) throws ApplicationException {
+  public int convertDbXmlFiles(String dbFilesDirName, Project project, Database db) throws ApplicationException {
     int counter = 0;
     File dbFilesDir = new File(dbFilesDirName);
     String xmlDbFileFilterName = project.getId() + "-" + db.getName() + "*.xml"; 
@@ -388,7 +388,8 @@ public class MetadataHandler {
           String fieldStr = xdmItemField.toString();
           String fieldName = xQueryEvaluator.evaluateAsString(fieldStr, "*/name()");
           String fieldValue = xdmItemField.getStringValue();
-          row.addField(fieldName, fieldValue);
+          if (! fieldValue.trim().isEmpty())
+            row.addField(fieldName, fieldValue);
         }
       }
     } else if (dbType.equals("postgres")) {
@@ -400,7 +401,8 @@ public class MetadataHandler {
           String fieldStr = xdmItemField.toString();
           String fieldName = xQueryEvaluator.evaluateAsString(fieldStr, "string(*/@name)");
           String fieldValue = xdmItemField.getStringValue();
-          row.addField(fieldName, fieldValue);
+          if (! fieldValue.trim().isEmpty())
+            row.addField(fieldName, fieldValue);
         }
       }
     } else if (dbType.equals("oai") || dbType.equals("oai-dbrecord")) {
@@ -418,7 +420,8 @@ public class MetadataHandler {
           String fieldStr = xdmItemField.toString();
           String fieldName = xQueryEvaluator.evaluateAsString(fieldStr, "*/name()");
           String fieldValue = xdmItemField.getStringValue();
-          row.addField(fieldName, fieldValue);
+          if (! fieldValue.trim().isEmpty())
+            row.addField(fieldName, fieldValue);
         }
       }
     }
@@ -436,6 +439,8 @@ public class MetadataHandler {
     String webIdAfterStr = db.getWebIdAfterStr();
     String dbType = db.getType();
     String id = row.getFirstFieldValue(mainResourcesTableId);
+    if (id == null)
+      id = "";
     id = StringUtils.deresolveXmlEntities(id);
     String rdfId = "http://" + projectId + ".bbaw.de/id/" + id;
     if (id.startsWith("http://"))
