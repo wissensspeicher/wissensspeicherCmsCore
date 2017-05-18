@@ -83,8 +83,8 @@ public class GroupDocuments {
       }
     } else if (query != null && query.startsWith("collectionRdfId")) {
       ProjectCollection collection = ProjectReader.getInstance().getCollection(name);
-      Project project = collection.getProject();
       if (collection != null) {
+        Project project = collection.getProject();
         jsonObject.put("project", project.toJsonObject(false));
         jsonObject.put("collection", collection.toJsonObject());
       }
