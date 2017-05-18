@@ -11,6 +11,11 @@ import java.net.MalformedURLException;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -18,6 +23,7 @@ import java.util.Date;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Properties;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
@@ -293,6 +299,59 @@ public class MetadataHandler {
     }
   }
   
+  public void generateDbXmlDumpFileByJdbc(String dbFilesDirName, Project project, Database db) throws ApplicationException {
+    String xmlDumpFileName = dbFilesDirName + "/" + project.getId() + "-" + db.getName() + "-1" + ".xml";
+    StringBuilder xmlDumpStrBuilder = new StringBuilder();
+    xmlDumpStrBuilder.append("<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n");
+    xmlDumpStrBuilder.append("<!-- Resources of database: " + db.getName() + " (Database file name: " + xmlDumpFileName + ") -->\n");
+    JdbcConnection jdbcConn = db.getJdbcConnection();
+    xmlDumpStrBuilder.append("<" + jdbcConn.getDb() + ">\n");
+    Properties connectionProps = new Properties();
+    connectionProps.put("user", jdbcConn.getUser());
+    connectionProps.put("password", jdbcConn.getPw());
+    Connection conn = null;
+    String jdbcUrl = null;
+    try {
+      String dbType = db.getType();
+      if (dbType.equals("mysql")) {
+        Class.forName("com.mysql.jdbc.Driver");
+      } else {
+        return;  // TODO postgres etc.
+      }
+      jdbcUrl = "jdbc:" + dbType + "://" + jdbcConn.getHost() + ":" + jdbcConn.getPort() + "/" + jdbcConn.getDb();  // + "?useUnicode=true&characterEncoding=utf8&connectionCollation=utf8_general_ci&characterSetResults=utf8"
+      conn = DriverManager.getConnection(jdbcUrl, connectionProps);
+      PreparedStatement initPS = conn.prepareStatement("SET group_concat_max_len = 999999");
+      initPS.execute();
+      initPS.close();
+      String select = db.getSql();
+      PreparedStatement preparedStatement = conn.prepareStatement(select);
+      ResultSet rs = preparedStatement.executeQuery();
+      ResultSetMetaData rsMetaData = rs.getMetaData();
+      while (rs.next()) {
+        xmlDumpStrBuilder.append("  <" + db.getMainResourcesTable() + ">\n");
+        int colCount = rsMetaData.getColumnCount();
+        for (int i=1; i<=colCount; i++) {
+          String colName = rsMetaData.getColumnName(i).toLowerCase();
+          String colValue = rs.getString(colName);
+          xmlDumpStrBuilder.append("    <" + colName + ">" + colValue + "</" + colName + ">\n");
+        }
+        xmlDumpStrBuilder.append("  </" + db.getMainResourcesTable() + ">\n");
+      }
+      rs.close();
+      conn.close();
+      xmlDumpStrBuilder.append("</" + jdbcConn.getDb() + ">\n");
+      File dumpFile = new File(xmlDumpFileName);
+      FileUtils.writeStringToFile(dumpFile, xmlDumpStrBuilder.toString(), "utf-8");
+    } catch (Exception e) {
+      try {
+        conn.close();
+      } catch (Exception e2) {
+        // nothing
+      };
+      LOGGER.error("Generate XML dump file by JDBC (" + jdbcUrl + ") failed: " + e.getMessage());
+    }
+  }
+
   public int convertDbXmlFiles(String dbFilesDirName, Project project, Database db) throws ApplicationException {
     int counter = 0;
     File dbFilesDir = new File(dbFilesDirName);
