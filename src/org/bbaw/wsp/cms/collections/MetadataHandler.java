@@ -319,11 +319,14 @@ public class MetadataHandler {
         return;  // TODO postgres etc.
       }
       jdbcUrl = "jdbc:" + dbType + "://" + jdbcConn.getHost() + ":" + jdbcConn.getPort() + "/" + jdbcConn.getDb();  // + "?useUnicode=true&characterEncoding=utf8&connectionCollation=utf8_general_ci&characterSetResults=utf8"
+      LOGGER.info("Generate XML dump file by JDBC: Try to get a connection to: " + jdbcUrl + " ... ");
       conn = DriverManager.getConnection(jdbcUrl, connectionProps);
+      LOGGER.info("Generate XML dump file by JDBC: Connection to: " + jdbcUrl + " established");
       PreparedStatement initPS = conn.prepareStatement("SET group_concat_max_len = 999999");
       initPS.execute();
       initPS.close();
       String select = db.getSql();
+      LOGGER.info("Generate XML dump file by JDBC: Prepare Statement: \n" + select);
       PreparedStatement preparedStatement = conn.prepareStatement(select);
       ResultSet rs = preparedStatement.executeQuery();
       ResultSetMetaData rsMetaData = rs.getMetaData();
