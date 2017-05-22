@@ -162,7 +162,8 @@ public class Harvester {
       File dbRdfDumpFile = new File(dbDumpsDir + "/" + project.getId() + "-" + db.getName() + "-1.rdf");
       if (! dbRdfDumpFile.exists()) {
         LOGGER.info("Harvest metadata records (" + project.getId() + ", " + db.getRdfId() + ", " + db.getType() + ", " + dbRdfDumpFile.getPath() + "): Convert XML dump file to RDF dump file ...");
-        metadataHandler.convertDbXmlFiles(dbDumpsDir, project, db);
+        int countDbResources = metadataHandler.convertDbXmlFiles(dbDumpsDir, project, db);
+        countHarvest = countHarvest + countDbResources;
       }
     } else {
       // nothing
