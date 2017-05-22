@@ -214,7 +214,7 @@ public class Database {
       String jdbcPw = databaseElem.select("db > jdbc > pw").text();
       jdbcConn.setPw(jdbcPw);
       database.setJdbcConnection(jdbcConn);
-      String sql = databaseElem.select("db > sql").text();
+      String sql = databaseElem.select("db > xmlDump > sql").text();
       database.setSql(sql);
     }
     String oaiSet = databaseElem.select("db > set").text();
