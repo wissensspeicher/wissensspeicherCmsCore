@@ -79,6 +79,7 @@ import org.apache.lucene.search.vectorhighlight.FieldQuery;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.BytesRef;
+import org.bbaw.wsp.cms.collections.Organization;
 import org.bbaw.wsp.cms.collections.OutputType;
 import org.bbaw.wsp.cms.collections.Project;
 import org.bbaw.wsp.cms.collections.ProjectCollection;
@@ -256,6 +257,12 @@ public class IndexHandler {
       if (organizationRdfId != null) {
         Field field = new Field("organizationRdfId", organizationRdfId, ftStoredAnalyzed); 
         doc.add(field);
+        Project organization = ProjectReader.getInstance().getProjectByRdfId(organizationRdfId);
+        if (organization != null) {
+          String organizationLabel = organization.getTitle();
+          Field orgField = new Field("organizationLabel", organizationLabel, ftStoredAnalyzed); 
+          doc.add(orgField);
+        }
       }
       String label = project.getTitle();
       if (label != null) {
