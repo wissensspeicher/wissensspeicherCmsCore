@@ -329,6 +329,7 @@ public class MetadataHandler {
       LOGGER.info("Generate XML dump file by JDBC: Prepare Statement: \n" + select);
       PreparedStatement preparedStatement = conn.prepareStatement(select);
       ResultSet rs = preparedStatement.executeQuery();
+      LOGGER.info("Generate XML dump file by JDBC: Statement execution sucessful");
       ResultSetMetaData rsMetaData = rs.getMetaData();
       while (rs.next()) {
         xmlDumpStrBuilder.append("  <" + db.getMainResourcesTable() + ">\n");
