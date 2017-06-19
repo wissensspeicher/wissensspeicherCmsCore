@@ -506,7 +506,7 @@ public class MetadataHandler {
       id = "";
     id = StringUtils.deresolveXmlEntities(id);
     String rdfId = "http://" + projectId + ".bbaw.de/id/" + id;
-    if (id.startsWith("http://"))
+    if (id.startsWith("http"))
       rdfId = id;  // id is already a url
     String rdfWebId = rdfId;
     if (webIdPreStr != null) {

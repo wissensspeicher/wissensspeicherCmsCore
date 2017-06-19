@@ -133,11 +133,11 @@ public class Harvester {
       String oaiSet = "";
       if (db.getOaiSet() != null && ! db.getOaiSet().isEmpty())
         oaiSet = ", " + db.getOaiSet();
-      LOGGER.info("Harvest metadata records (" + project.getId() + ", " + db.getRdfId() + ", " + oaiSet + db.getType() + ") ...");
+      LOGGER.info("Harvest metadata records (" + project.getId() + ", " + db.getRdfId() + oaiSet + ", " + db.getType() + ") ...");
       ArrayList<MetadataRecord> dbMdRecords = harvestDBResources(project, db);
       // download resources and save metadata and fulltext fields
       if (dbMdRecords != null) {
-        LOGGER.info("Harvest " + dbMdRecords.size() + " resources (" + project.getId() + ", " + db.getRdfId() + ", " + oaiSet + db.getType() + ") ...");
+        LOGGER.info("Harvest " + dbMdRecords.size() + " resources (" + project.getId() + ", " + db.getRdfId() + oaiSet + ", " + db.getType() + ") ...");
         ArrayList<MetadataRecord> harvestedResourcesRecords = harvestResources(project, db, dbMdRecords);
         countHarvest = countHarvest + harvestedResourcesRecords.size();
       }
@@ -222,7 +222,7 @@ public class Harvester {
       String oaiSet = "";
       if (db.getOaiSet() != null && ! db.getOaiSet().isEmpty())
         oaiSet = ", " + db.getOaiSet();
-      LOGGER.info("Harvest of metadata records (" + project.getId() + ", " + db.getRdfId() + ", " + oaiSet + dbType + ") finished (/harvest/" + rdfDbFileName  + ")");
+      LOGGER.info("Harvest of metadata records (" + project.getId() + ", " + db.getRdfId() + oaiSet + ", " + dbType + ") finished (/harvest/" + rdfDbFileName  + ")");
       String rdfDbFullFileName = harvestDir + "/" + project.getId() + "/metadata/dbResources/" + project.getId() + "-" + db.getName() + "-1.rdf";
       File rdfDbFile = new File(rdfDbFullFileName);
       dbMdRecords = metadataHandler.getMetadataRecordsByRdfFile(project, rdfDbFile, db, true);
