@@ -101,7 +101,6 @@ public class Indexer {
   }
   
   private void index(Project project, Database db, ArrayList<MetadataRecord> mdRecords, boolean dbRecords) throws ApplicationException {
-    String projectId = project.getId();
     // performance gain for database records: a commit is only done if commitInterval (e.g. 1000) is reached 
     if (dbRecords)
       indexHandler.setCommitInterval(COMMIT_INTERVAL_DB);
@@ -139,9 +138,10 @@ public class Indexer {
       String docId = mdRecord.getDocId();
       String docUri = mdRecord.getUri();
       int count = i+1;
-      String logCreationStr = count + ". " + "Project: " + projectId + ": Index resource: " + docUri + " (" + docId + ")";
+      LOGGER.info("Index database (" + project.getId() + ", " + db.getRdfId() + ", " + db.getType() + ") ...");
+      String logCreationStr = count + ". " + "Index database (" + project.getId() + ", " + db.getRdfId() + ", " + db.getType() + ")" + ": resource: " + docUri + " (" + docId + ")";
       if (dbRecords)
-        logCreationStr = count + ". " + "Project: " + projectId + ": Index database record: " + docId;
+        logCreationStr = count + ". " + "Index database (" + project.getId() + ", " + db.getRdfId() + ", " + db.getType() + ")" + ": record: " + docId;
       // if isDbRecord then log only after each commit interval 
       if (! dbRecords) {
         LOGGER.info(logCreationStr);
