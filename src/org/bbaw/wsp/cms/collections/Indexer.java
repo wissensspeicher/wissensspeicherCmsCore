@@ -73,6 +73,7 @@ public class Indexer {
         Database db = projectDBs.get(i);
         String dbType = db.getType();
         if (dbType != null && (dbType.equals("crawl") || dbType.equals("eXist") || dbType.equals("oai"))) {
+          LOGGER.info("Index database (" + project.getId() + ", " + db.getRdfId() + ", " + db.getType() + ") ...");
           ArrayList<MetadataRecord> dbMdRecords = annotator.getMetadataRecordsByRecordsFile(project, db);
           if (dbMdRecords != null) {
             counter = counter + dbMdRecords.size();
@@ -82,9 +83,10 @@ public class Indexer {
           File[] rdfDbResourcesFiles = metadataHandler.getRdfDbResourcesFiles(project, db);
           if (rdfDbResourcesFiles != null && rdfDbResourcesFiles.length > 0) {
             // add the database records of each database of each database file
+            LOGGER.info("Index database (" + project.getId() + ", " + db.getRdfId() + ", " + db.getType() + ") ...");
             for (int j = 0; j < rdfDbResourcesFiles.length; j++) {
               File rdfDbResourcesFile = rdfDbResourcesFiles[j];
-              LOGGER.info("Index database records from file: " + rdfDbResourcesFile);
+              LOGGER.info("Index database records of: " + rdfDbResourcesFile + " ...");
               ArrayList<MetadataRecord> dbMdRecords = metadataHandler.getMetadataRecordsByRdfFile(project, rdfDbResourcesFile, db, false);
               if (dbMdRecords != null) {
                 counter = counter + dbMdRecords.size();
