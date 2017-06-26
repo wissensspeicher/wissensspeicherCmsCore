@@ -138,10 +138,13 @@ public class Indexer {
       String docId = mdRecord.getDocId();
       String docUri = mdRecord.getUri();
       int count = i+1;
-      LOGGER.info("Index database (" + project.getId() + ", " + db.getRdfId() + ", " + db.getType() + ") ...");
-      String logCreationStr = count + ". " + "Index database (" + project.getId() + ", " + db.getRdfId() + ", " + db.getType() + ")" + ": resource: " + docUri + " (" + docId + ")";
+      String dbIdStr = "";
+      if (db != null) 
+        dbIdStr = ", " + db.getRdfId() + ", " + db.getType(); 
+      LOGGER.info("Index database (" + project.getId() + dbIdStr + ") ...");
+      String logCreationStr = count + ". " + "Index database (" + project.getId() + dbIdStr + ")" + ": resource: " + docUri + " (" + docId + ")";
       if (dbRecords)
-        logCreationStr = count + ". " + "Index database (" + project.getId() + ", " + db.getRdfId() + ", " + db.getType() + ")" + ": record: " + docId;
+        logCreationStr = count + ". " + "Index database (" + project.getId() + dbIdStr + ")" + ": record: " + docId;
       // if isDbRecord then log only after each commit interval 
       if (! dbRecords) {
         LOGGER.info(logCreationStr);
