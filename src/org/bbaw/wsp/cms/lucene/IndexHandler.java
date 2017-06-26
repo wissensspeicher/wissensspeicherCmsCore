@@ -79,7 +79,6 @@ import org.apache.lucene.search.vectorhighlight.FieldQuery;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.util.BytesRef;
-import org.bbaw.wsp.cms.collections.Organization;
 import org.bbaw.wsp.cms.collections.OutputType;
 import org.bbaw.wsp.cms.collections.Project;
 import org.bbaw.wsp.cms.collections.ProjectCollection;
@@ -1155,7 +1154,7 @@ public class IndexHandler {
         languageHandler.translate(queryTerms, language);
       }
       Query morphQuery = buildMorphQuery(query, language, false, translate, languageHandler);
-      ArrayList<String> germanQueryLemmas = fetchTerms(morphQuery, "deu", true);
+      ArrayList<String> germanQueryLemmas = fetchTerms(morphQuery, "deu", true, true);
       Query highlighterQuery = buildHighlighterQuery(query, language, translate, languageHandler);
       Sort sort = new Sort();
       SortField scoreSortField = new SortField(null, Type.SCORE); // default sort
@@ -2218,14 +2217,14 @@ public class IndexHandler {
    * @param query
    * @return
    */
-  private ArrayList<String> fetchTerms(Query query, String language, boolean onlyLemmas) throws ApplicationException {
+  private ArrayList<String> fetchTerms(Query query, String language, boolean onlyLemmas, boolean onlyFulltextFields) throws ApplicationException {
     ArrayList<String> terms = new ArrayList<String>();
     if (query instanceof TermQuery) {
       TermQuery termQuery = (TermQuery) query;
-      terms = fetchTerms(termQuery, language, onlyLemmas);
+      terms = fetchTerms(termQuery, language, onlyLemmas, onlyFulltextFields);
     } else if (query instanceof BooleanQuery) {
       BooleanQuery booleanQuery = (BooleanQuery) query;
-      terms = fetchTerms(booleanQuery, language, onlyLemmas);
+      terms = fetchTerms(booleanQuery, language, onlyLemmas, onlyFulltextFields);
     } else if (query instanceof PrefixQuery) {
       PrefixQuery prefixQuery = (PrefixQuery) query;
       String prefix = prefixQuery.getPrefix().text();
@@ -2252,25 +2251,34 @@ public class IndexHandler {
     return terms;
   }
 
-  private ArrayList<String> fetchTerms(TermQuery termQuery, String language, boolean onlyLemmas) throws ApplicationException {
+  private ArrayList<String> fetchTerms(TermQuery termQuery, String language, boolean onlyLemmas, boolean onlyFulltextFields) throws ApplicationException {
     if (language == null)
       language = "eng";
     ArrayList<String> terms = new ArrayList<String>();
     Term termQueryTerm = termQuery.getTerm();
     String term = termQuery.getTerm().text();
     String fieldName = termQueryTerm.field();
+    boolean termIsValidFulltextField = false;
+    if (onlyFulltextFields) {
+      if (fieldName != null && (fieldName.equals("tokenOrig") || fieldName.equals("tokenMorph")))
+        termIsValidFulltextField = true;
+    }
     if (onlyLemmas) {
-      LexHandler lexHandler = LexHandler.getInstance();
-      ArrayList<Lemma> lemmas = lexHandler.getLemmas(term, "form", language, Normalizer.DICTIONARY, true); 
-      if (lemmas == null) {
-        if (! terms.contains(term))
-          terms.add(term);
-      } else {
-        for (int i = 0; i < lemmas.size(); i++) {
-          Lemma lemma = lemmas.get(i);
-          String lemmaName = lemma.getLemmaName();
-          if (! terms.contains(term))
-            terms.add(lemmaName);
+      if (termIsValidFulltextField) {
+        LexHandler lexHandler = LexHandler.getInstance();
+        ArrayList<Lemma> lemmas = lexHandler.getLemmas(term, "form", language, Normalizer.DICTIONARY, true); 
+        if (lemmas == null) {
+          if (! terms.contains(term)) {
+            terms.add(term);
+          }
+        } else {
+          for (int i = 0; i < lemmas.size(); i++) {
+            Lemma lemma = lemmas.get(i);
+            String lemmaName = lemma.getLemmaName();
+            if (! terms.contains(term)) {
+              terms.add(lemmaName);
+            }
+          }
         }
       }
       return terms;
@@ -2298,13 +2306,13 @@ public class IndexHandler {
     return terms;
   }
 
-  private ArrayList<String> fetchTerms(BooleanQuery query, String language, boolean onlyLemmas) throws ApplicationException {
+  private ArrayList<String> fetchTerms(BooleanQuery query, String language, boolean onlyLemmas, boolean onlyFulltextFields) throws ApplicationException {
     ArrayList<String> terms = new ArrayList<String>();
     List<BooleanClause> booleanClauses = query.clauses();
     for (int i = 0; i < booleanClauses.size(); i++) {
       BooleanClause boolClause = booleanClauses.get(i);
       Query q = boolClause.getQuery();
-      ArrayList<String> qTerms = fetchTerms(q, language, onlyLemmas);
+      ArrayList<String> qTerms = fetchTerms(q, language, onlyLemmas, onlyFulltextFields);
       BooleanClause.Occur occur = boolClause.getOccur();
       if (occur == BooleanClause.Occur.SHOULD || occur == BooleanClause.Occur.MUST) {
         for (int j=0; j<qTerms.size(); j++) {
