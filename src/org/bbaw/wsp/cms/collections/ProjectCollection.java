@@ -291,16 +291,6 @@ public class ProjectCollection {
     this.type = type;
   }
 
-  public boolean isHomepageType() {
-    boolean isHomepageType = false;
-    if (type != null) {
-      String typeRdfId = type.getRdfId();
-      if (typeRdfId.matches(".*#Homepage.*"))
-        isHomepageType = true;
-    }
-    return isHomepageType;
-  }
-  
   public String getHomepageUrl() {
     return homepageUrl;
   }
