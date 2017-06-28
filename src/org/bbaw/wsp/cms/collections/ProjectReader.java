@@ -1232,8 +1232,6 @@ public class ProjectReader {
         }
         String collectionTitle = collectionElem.select("dcterms|title").text();
         if (collectionTitle != null && ! collectionTitle.isEmpty()) {
-          if (collection.isHomepageType())
-            collectionTitle = title + ": " + collectionTitle;  // project title + collection title
           collection.setTitle(collectionTitle);
         }
         String collAbstract = collectionElem.select("dcterms|abstract[xml:lang=\"de\"]").text();
