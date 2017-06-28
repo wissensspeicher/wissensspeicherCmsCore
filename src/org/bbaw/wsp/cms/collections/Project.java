@@ -53,7 +53,7 @@ public class Project {
   private HashMap<String, Subject> subjects = new HashMap<String, Subject>();  // project subjects: key is subjectRdfId and value is subject
   private HashMap<String, Person> gndRelatedPersons = new HashMap<String, Person>();  // project gnd related persons: key is personRdfId and value is person
   private HashMap<String, Person> staff = new HashMap<String, Person>();  // project staff: key is personRdfId and value is person
-  private HashMap<String, String> projectRelations = new HashMap<String, String>();  // project relations: key is projectRdfId and value is the same projectRdfId
+  private HashMap<String, Organization> projectRelations = new HashMap<String, Organization>();  // project relations: key is projectRdfId and value is organization
 
   public ProjectCollection getCollection(String collRdfId) {
     return allProjectCollections.get(collRdfId);
@@ -103,8 +103,8 @@ public class Project {
     return languageRdfIds;
   }
   
-  public void addProjectRelation(String projectRdfId) {
-    projectRelations.put(projectRdfId, projectRdfId);
+  public void addProjectRelation(String orgRdfId, Organization organization) {
+    projectRelations.put(orgRdfId, organization);
   }
   
   public ArrayList<ProjectCollection> getCollections() {
@@ -489,11 +489,18 @@ public class Project {
     }
     if (projectRelations != null && ! projectRelations.isEmpty()) {
       JSONArray jsonProjectRelations = new JSONArray();
-      for (Iterator<String> iterator = projectRelations.values().iterator(); iterator.hasNext();) {
-        String relatedProjectRdfId = iterator.next();
-        jsonProjectRelations.add(relatedProjectRdfId);
+      for (Iterator<Organization> iterator = projectRelations.values().iterator(); iterator.hasNext();) {
+        Organization relatedOrganization = iterator.next();
+        String relOrgName = relatedOrganization.getName();
+        jsonProjectRelations.add(relOrgName);
       }
       retJsonObject.put("projectRelations", jsonProjectRelations);
+    }
+    if (parentRdfId != null) {
+      Project parentProject = ProjectReader.getInstance().getProjectByRdfId(parentRdfId);
+      if (parentProject != null) {
+        retJsonObject.put("parentProject", parentProject.getTitle());
+      }
     }
     if (lastModified != null) {
       String xsDateStrLastModified = new Util().toXsDate(lastModified);

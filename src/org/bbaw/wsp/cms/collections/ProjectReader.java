@@ -1210,7 +1210,9 @@ public class ProjectReader {
       for (int i=0; i< relatedElems.size(); i++) {
         Element relatedElem = relatedElems.get(i);
         String relatedRdfId = relatedElem.attr("rdf:resource");
-        project.addProjectRelation(relatedRdfId);
+        Organization relatedOrganization = normdataOrganizations.get(relatedRdfId);
+        if (relatedOrganization != null)
+          project.addProjectRelation(relatedRdfId, relatedOrganization);
       }
       Elements collectionElems = projectRdfDoc.select("rdf|RDF > rdf|Description > rdf|type[rdf:resource*=Aggregation]");
       for (int i=0; i< collectionElems.size(); i++) {
