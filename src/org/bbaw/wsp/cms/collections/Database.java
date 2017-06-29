@@ -14,6 +14,7 @@ public class Database {
   private String collectionRdfId; // rdfId of collection which this database is part of
   private String type;
   private String name; // unique database name (converted from rdfId); e.g. telota.bbaw.de:8085##exist##rest##db##AvHBriefedition
+  private String xmlDumpUrl;
   private JdbcConnection jdbcConnection;
   private String sql;
   private String oaiSet; // if type is oai: a set could be defined 
@@ -62,6 +63,14 @@ public class Database {
     this.name = name;
   }
   
+  public String getXmlDumpUrl() {
+    return xmlDumpUrl;
+  }
+
+  public void setXmlDumpUrl(String xmlDumpUrl) {
+    this.xmlDumpUrl = xmlDumpUrl;
+  }
+
   public String getLanguage() throws ApplicationException {
     String retLang = null;
     String collMainLang = ProjectReader.getInstance().getCollectionMainLanguage(collectionRdfId);
@@ -190,11 +199,13 @@ public class Database {
     Database database = new Database();
     String databaseRdfId = databaseElem.select("db").attr("id");
     database.setRdfId(databaseRdfId);
-    String type = databaseElem.select("db > type").text();  // e.g. "crawl", "eXist", "oai", "mysql" or "postgres"
+    String type = databaseElem.select("db > type").text();  // e.g. "crawl", "eXist", "oai", "mysql", "postgres" or "xmldump"
     database.setType(type);
     String url = databaseElem.select("db > url").text(); // redundant field to id attribute
     if (databaseRdfId == null || databaseRdfId.isEmpty())
       database.setRdfId(url);
+    String xmlDumpUrl = databaseElem.select("db > xmlDump > url").text();
+    database.setXmlDumpUrl(xmlDumpUrl);
     String depthStr = databaseElem.select("db > depth").text();
     if (depthStr != null && ! depthStr.isEmpty()) {
       Integer depth = Integer.parseInt(depthStr);
