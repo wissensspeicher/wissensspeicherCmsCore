@@ -864,7 +864,7 @@ public class MetadataHandler {
   public File[] getRdfDbResourcesFiles(Project project, Database db) throws ApplicationException {
     String dbDumpsDirName = Constants.getInstance().getExternalDataDbDumpsDir();
     String dbType = db.getType();
-    if (dbType != null && (dbType.equals("oai-dbrecord"))) { // these are stored in harvest dir
+    if (dbType != null && (dbType.equals("oai-dbrecord") || dbType.equals("xmldump"))) { // these are stored in harvest dir
       String harvestDir = Constants.getInstance().getHarvestDir();
       dbDumpsDirName = harvestDir + "/" + project.getId() + "/metadata/dbResources";
     }
