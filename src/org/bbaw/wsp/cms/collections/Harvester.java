@@ -165,6 +165,19 @@ public class Harvester {
         int countDbResources = metadataHandler.convertDbXmlFiles(dbDumpsDir, project, db);
         countHarvest = countHarvest + countDbResources;
       }
+    } else if (dbType != null && (dbType.equals("xmldump"))) {
+      LOGGER.info("Harvest metadata records (" + project.getId() + ", " + db.getRdfId() + ", " + db.getType() + ") ...");
+      String dbResourcesDir = harvestDir + "/" + project.getId() + "/metadata/dbResources";
+      File xmlDbFile = new File(dbResourcesDir + "/" + project.getId() + "-" + db.getName() + "-1.xml");
+      try {
+        URL xmlDumpUrl = new URL(db.getXmlDumpUrl());
+        copyUrlToFile(xmlDumpUrl, xmlDbFile);
+      } catch (Exception e) {
+        LOGGER.error("Download of: " + db.getRdfId() + " failed: " + e.getMessage());
+        return 0;
+      }
+      int countDbResources = metadataHandler.convertDbXmlFiles(dbResourcesDir, project, db);
+      countHarvest = countHarvest + countDbResources;
     } else {
       // nothing
     }

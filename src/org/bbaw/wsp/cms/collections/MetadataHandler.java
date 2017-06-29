@@ -409,6 +409,8 @@ public class MetadataHandler {
           idCounter = new Integer(0);
       } else if (dbType.equals("postgres")) {
         xmdValueMainResources = xQueryEvaluator.evaluate(xmlDumpFileUrl, "/data/records/row");
+      } else if (dbType.equals("xmldump")) {
+        xmdValueMainResources = xQueryEvaluator.evaluate(xmlDumpFileUrl, "/records/record");
       } else if (dbType.equals("oai") || dbType.equals("oai-dbrecord")) {
         xmdValueMainResources = xQueryEvaluator.evaluate(xmlDumpFileUrl, "/*:OAI-PMH/*:ListRecords/*:record");
       }
@@ -468,6 +470,19 @@ public class MetadataHandler {
             row.addField(fieldName, fieldValue);
         }
       }
+    } else if (dbType.equals("xmldump")) {
+      XdmValue xmdValueFields = xQueryEvaluator.evaluate(rowXmlStr, "/*/*"); // e.g. <record><title>
+      XdmSequenceIterator xmdValueFieldsIterator = xmdValueFields.iterator();
+      if (xmdValueFields != null && xmdValueFields.size() > 0) {
+        while (xmdValueFieldsIterator.hasNext()) {
+          XdmItem xdmItemField = xmdValueFieldsIterator.next();
+          String fieldStr = xdmItemField.toString();
+          String fieldName = xQueryEvaluator.evaluateAsString(fieldStr, "*/name()");
+          String fieldValue = xdmItemField.getStringValue();
+          if (! fieldValue.trim().isEmpty())
+            row.addField(fieldName, fieldValue);
+        }
+      }
     } else if (dbType.equals("oai") || dbType.equals("oai-dbrecord")) {
       String recordHeaderStatus = xQueryEvaluator.evaluateAsString(rowXmlStr, "string(/*:record/*:header/@status)");
       if (recordHeaderStatus != null && recordHeaderStatus.equals("deleted"))
@@ -498,6 +513,8 @@ public class MetadataHandler {
     String collectionRdfId = null; // special: for edoc
     String mainLanguage = db.getLanguage();
     String mainResourcesTableId = db.getMainResourcesTableId();
+    if (mainResourcesTableId == null)
+      mainResourcesTableId = "id";
     String webIdPreStr = db.getWebIdPreStr();
     String webIdAfterStr = db.getWebIdAfterStr();
     String dbType = db.getType();
