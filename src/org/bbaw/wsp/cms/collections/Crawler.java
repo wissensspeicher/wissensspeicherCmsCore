@@ -202,25 +202,25 @@ public class Crawler {
       String fragment = uri.getFragment();  // the "#" part of the uri
       if (fragment != null)
         return false;
-      // includes are stronger than excludes 
-      if (includes != null) {
-        for (int i=0;i<includes.size();i++) {
-          String include = includes.get(i);
-          if (urlStr.matches(include))
-            return true;
-        }
-      }
       String rootUrlStrWithoutProtocol = rootUrlStr.replaceAll("https*://", "");
       String rootUrlPathStrWithoutProtocol = rootUrlPathStr.replaceAll("https*://", "");
       String redirectRootUrlStrWithoutProtocol = redirectRootUrlStr.replaceAll("https*://", "");
       String urlStrWithoutProtocol = urlStr.replaceAll("https*://", "");
+      String urlStrRelative = urlStrWithoutProtocol.replaceFirst(rootUrlStrWithoutProtocol, "");
+      // includes are stronger than excludes 
+      if (includes != null) {
+        for (int i=0;i<includes.size();i++) {
+          String include = includes.get(i);
+          if (urlStr.matches(include) || urlStrRelative.matches(include)) // full (in other url domains) and relative matches
+            return true;
+        }
+      }
       if (! urlStrWithoutProtocol.startsWith(rootUrlStrWithoutProtocol) && ! urlStrWithoutProtocol.startsWith(redirectRootUrlStrWithoutProtocol) && ! urlStrWithoutProtocol.startsWith(rootUrlPathStrWithoutProtocol))
         return false;
       if (urlStr.contains(".."))
         return false;
       if (rootUrlStrWithoutProtocol.endsWith("/"))
         rootUrlStrWithoutProtocol = rootUrlStrWithoutProtocol.substring(0, rootUrlStrWithoutProtocol.length() - 1);
-      String urlStrRelative = urlStrWithoutProtocol.replaceFirst(rootUrlStrWithoutProtocol, "");
       if (excludes == null)
         return true;
       for (int i=0;i<excludes.size();i++) {
