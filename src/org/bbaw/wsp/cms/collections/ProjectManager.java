@@ -151,17 +151,20 @@ public class ProjectManager {
   
   public void updateCycle() throws ApplicationException {
     ArrayList<Project> projects = projectReader.getUpdateCycleProjects();
-    String[] options = {"dbType:crawl"};
-    update(projects, options);
+    update(projects, null);
   }
   
   public void update(String projectIds) throws ApplicationException {
     ArrayList<Project> projects = getProjects(projectIds);
+    projectReader.updateProjectMetadata(projects);  // make project config files (rdf + xml) up to date (copy them from userMetadataDir if changed there) 
+    projects = getProjects(projectIds);  // read them again from projectReader
     update(projects, null);
   }
   
   public void update(String projectId1, String projectId2) throws ApplicationException {
     ArrayList<Project> projects = projectReader.getProjects(projectId1, projectId2);
+    projectReader.updateProjectMetadata(projects);  // make project config files (rdf + xml) up to date (copy them from userMetadataDir if changed there) 
+    projects = projectReader.getProjects(projectId1, projectId2);  // read them again from projectReader
     update(projects, null);
   }
   
@@ -200,7 +203,6 @@ public class ProjectManager {
     harvester = Harvester.getInstance();
     harvester.setOptions(options);
     harvester.harvest(project);
-    projectReader.updateProject(project);  // make config files up to date 
     Date now = new Date();
     String projectId = project.getId();
     setStatusModified(projectId, "harvest", now);  

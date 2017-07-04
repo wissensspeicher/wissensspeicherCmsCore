@@ -47,6 +47,8 @@ public class CmsJob implements Job, InterruptableJob {
           pm.delete(projectIds);
         } else if (operationName.equals("updateCycle")) {
           pm.updateCycle();
+        } else if (operationName.equals("indexProjects")) {
+          pm.indexProjects();
         }
       }
       Date startingTime = operation.getStart();

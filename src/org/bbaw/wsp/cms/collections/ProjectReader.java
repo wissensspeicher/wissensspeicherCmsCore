@@ -486,8 +486,7 @@ public class ProjectReader {
     for (int i=0; i<projects.size(); i++) {
       Project project = projects.get(i);
       boolean isBaseProject = isBaseProject(project);
-      boolean isAkademiepublikationsProject = isAkademiepublikationsProject(project);
-      if (! isBaseProject && ! isAkademiepublikationsProject) {
+      if (! isBaseProject) {
         if (projectFileChangedByChecksum(project, "rdf") || projectFileChangedByChecksum(project, "xml")) {  
           updateCycleProjects.add(project);
         } else if (updateCycleReached(project)) { 
@@ -501,23 +500,28 @@ public class ProjectReader {
       return updateCycleProjects;
   }
   
-  public void updateProject(Project project) throws ApplicationException {
-    boolean isBaseProject = isBaseProject(project);
-    boolean isAkademiepublikationsProject = isAkademiepublikationsProject(project);
-    if (! isBaseProject && ! isAkademiepublikationsProject) {
-      boolean projectFileRdfChanged = projectFileChangedByChecksum(project, "rdf");
-      boolean projectFileXmlChanged = projectFileChangedByChecksum(project, "xml");
-      if (projectFileRdfChanged || projectFileXmlChanged) {
-        if (projectFileRdfChanged) {
-          updateUserMetadata(project, "rdf");
-        }
-        if (projectFileXmlChanged) {
-          updateUserMetadata(project, "xml");
-        }
+  public void updateProjectMetadata(ArrayList<Project> projects) throws ApplicationException {
+    if (projects != null) {
+      for (int i=0; i<projects.size(); i++) {
+        Project project = projects.get(i);
+        updateProjectMetadata(project);
       }
-      Date now = new Date();
-      projectReader.setConfigFilesLastModified(project, now);
     }
+  }
+  
+  private void updateProjectMetadata(Project project) throws ApplicationException {
+    boolean projectFileRdfChanged = projectFileChangedByChecksum(project, "rdf");
+    boolean projectFileXmlChanged = projectFileChangedByChecksum(project, "xml");
+    if (projectFileRdfChanged || projectFileXmlChanged) {
+      if (projectFileRdfChanged) {
+        updateUserMetadata(project, "rdf");
+      }
+      if (projectFileXmlChanged) {
+        updateUserMetadata(project, "xml");
+      }
+    }
+    Date now = new Date();
+    projectReader.setConfigFilesLastModified(project, now);
   }
   
   private void readNormdataFiles() {
@@ -1378,14 +1382,6 @@ public class ProjectReader {
     if (updateCycle != null && updateCycle.equals("never"))
       isBaseProject = true;
     return isBaseProject;
-  }
-  
-  private boolean isAkademiepublikationsProject(Project project) {
-    boolean isAkademiepublikationsProject = false;
-    String projectName = project.getId();
-    if (projectName != null && projectName.startsWith("akademiepublikationen"))
-      isAkademiepublikationsProject = true;
-    return isAkademiepublikationsProject;
   }
   
 	private void updateUserMetadata(Project project, String type) throws ApplicationException {
