@@ -141,7 +141,6 @@ public class Indexer {
       String dbIdStr = "";
       if (db != null) 
         dbIdStr = ", " + db.getRdfId() + ", " + db.getType(); 
-      LOGGER.info("Index database (" + project.getId() + dbIdStr + ") ...");
       String logCreationStr = count + ". " + "Index database (" + project.getId() + dbIdStr + ")" + ": resource: " + docUri + " (" + docId + ")";
       if (dbRecords)
         logCreationStr = count + ". " + "Index database (" + project.getId() + dbIdStr + ")" + ": record: " + docId;
