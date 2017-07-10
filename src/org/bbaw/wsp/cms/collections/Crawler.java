@@ -203,6 +203,8 @@ public class Crawler {
       if (fragment != null)
         return false;
       String rootUrlStrWithoutProtocol = rootUrlStr.replaceAll("https*://", "");
+      if (rootUrlStrWithoutProtocol.endsWith("/"))
+        rootUrlStrWithoutProtocol = rootUrlStrWithoutProtocol.substring(0, rootUrlStrWithoutProtocol.length() - 1);
       String rootUrlPathStrWithoutProtocol = rootUrlPathStr.replaceAll("https*://", "");
       String redirectRootUrlStrWithoutProtocol = redirectRootUrlStr.replaceAll("https*://", "");
       String urlStrWithoutProtocol = urlStr.replaceAll("https*://", "");
@@ -219,8 +221,6 @@ public class Crawler {
         return false;
       if (urlStr.contains(".."))
         return false;
-      if (rootUrlStrWithoutProtocol.endsWith("/"))
-        rootUrlStrWithoutProtocol = rootUrlStrWithoutProtocol.substring(0, rootUrlStrWithoutProtocol.length() - 1);
       if (excludes == null)
         return true;
       for (int i=0;i<excludes.size();i++) {
