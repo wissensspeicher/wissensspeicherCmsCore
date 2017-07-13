@@ -122,7 +122,7 @@ public class IndexHandler {
   private DirectoryReader projectsIndexReader;
   private PerFieldAnalyzerWrapper documentsPerFieldAnalyzer;
   private PerFieldAnalyzerWrapper projectsPerFieldAnalyzer;
-  private ArrayList<Token> tokens; // all tokens in tokenOrig
+  private HashMap<String, Token> tokens; // all tokens of all query expansion fields
   private TSTLookup suggester;
   private TaxonomyWriter taxonomyWriter;
   private TaxonomyReader taxonomyReader;
@@ -167,7 +167,11 @@ public class IndexHandler {
     facetFieldCounts.put("entityConcept", 100);
     facetFieldCounts.put("type", 1000);
     Date before = new Date();
-    tokens = getToken("tokenOrig", "", 10000000); // get all token: needs ca. 4 sec. for 3 Mio tokens
+    tokens = new HashMap<String, Token>();
+    for (int i=0; i<QUERY_EXPANSION_FIELDS_ALL.length; i++) {
+      String fieldName = QUERY_EXPANSION_FIELDS_ALL[i];
+      addToken(fieldName, "", 10000000); // get all token in all query expansion fields: needs ca. 4 sec. for 3 Mio tokens
+    }
     Date after = new Date();
     LOGGER.info("Reading of all tokens in Lucene index successfully with: " + tokens.size() + " tokens (" + "elapsed time: " + (after.getTime() - before.getTime()) + " ms)");
   }
@@ -1014,11 +1018,12 @@ public class IndexHandler {
   }
 
   public TSTLookup getSuggester() throws ApplicationException {
-    // one time init of the suggester, if it is null (needs ca. 2 sec. for 3 Mio. token)
+    // one time init of the suggester, if it is null (needs ca. 4 sec. for 3 Mio. token)
     if (suggester == null) {
       suggester = new TSTLookup();
       try {
-        suggester.build(new TokenArrayListIterator(tokens));  // put all tokens into the suggester
+        ArrayList<Token> tokensArrayList = (ArrayList<Token>) tokens.values();
+        suggester.build(new TokenArrayListIterator(tokensArrayList));  // put all tokens into the suggester
         LOGGER.info("Suggester successfully started with: " + tokens.size() + " tokens");
       } catch (IOException e) {
         throw new ApplicationException(e);
@@ -1661,6 +1666,50 @@ public class IndexHandler {
     return mdRecord;
   }
 
+  private void addToken(String fieldName, String value, int count) throws ApplicationException {
+    int counter = 0;
+    try {
+      if (value == null)
+        value = "";
+      makeIndexReaderUpToDate();
+      Terms terms = MultiFields.getTerms(documentsIndexReader, fieldName);
+      TermsEnum termsEnum = null;
+      if (terms != null) {
+        termsEnum = terms.iterator();
+        termsEnum.seekCeil(new BytesRef(value)); // jumps to the value or if not exactly found jumps to the next ceiling term 
+        BytesRef termBytes = termsEnum.term();
+        while (termBytes != null && counter < count) {
+          termBytes = termsEnum.term();
+          if (termBytes == null)
+            break;
+          String termContentStr = termBytes.utf8ToString();
+          if (termContentStr.startsWith(value)) {
+            Term termContent = new Term(fieldName, termBytes);
+            int docFreq = termsEnum.docFreq();
+            // long totalTermFreq = termsEnum.totalTermFreq(); // TODO
+            // token.setDocFreq(docFreq);
+            // token.setFreq(totalTermFreq);
+            Token token = tokens.get(termContentStr);
+            if (token == null) {
+              token = new Token(termContent);
+              token.setFreq(docFreq);
+              tokens.put(termContentStr, token);
+            } else {
+              int tokenFreq = token.getFreq() + docFreq;
+              token.setFreq(tokenFreq);
+            }
+            counter++;
+          } else {
+            break;
+          }
+          termBytes = termsEnum.next();
+        }
+      }
+    } catch (Exception e) {
+      throw new ApplicationException(e);
+    }
+  }
+
   public ArrayList<Token> getToken(String fieldName, String value, int count) throws ApplicationException {
     ArrayList<Token> retToken = new ArrayList<Token>();
     int counter = 0;
@@ -1872,7 +1921,11 @@ public class IndexHandler {
       luceneQueryStr = "";
       for (int i=0; i<logicalAndQueryTerms.size(); i++) {
         String queryTerm = logicalAndQueryTerms.get(i);
-        luceneQueryStr = luceneQueryStr + "+" + queryTerm + " "; 
+        boolean addQueryTerm = true;
+        if (logicalAndQueryTerms.size() > 1 && queryTerm.equals("*"))
+          addQueryTerm = false; // special case: if we have the "*" + another query terms, then the "*" is nonsense, so delete him because of performance reasons (e.g. query = "* collectionType:Webseite" is semantically the same as "collectionType:Webseite")
+        if (addQueryTerm)
+          luceneQueryStr = luceneQueryStr + "+" + queryTerm + " "; 
       }
       luceneQueryStr = luceneQueryStr.substring(0, luceneQueryStr.length() - 1);
     }
@@ -1903,11 +1956,16 @@ public class IndexHandler {
         retQuery = q;
       } else {
         BooleanQuery.Builder boolQueryBuilder = new BooleanQuery.Builder();
+        HashMap<String, Query> booleanClauses = new HashMap<String, Query>();
         for (int i=0; i < queryExpansionFields.length; i++) {
           String expansionField = queryExpansionFields[i];  // e.g. "author"
           String expansionFieldQueryStr = expansionField + ":(" + queryStr + ")";
           Query q = queryParser.parse(expansionFieldQueryStr);
-          boolQueryBuilder.add(q, BooleanClause.Occur.SHOULD);
+          Query qTmp = booleanClauses.get(q.toString());
+          if (qTmp == null) { // if query is not already contained in boolean clauses
+            booleanClauses.put(q.toString(), q);
+            boolQueryBuilder.add(q, BooleanClause.Occur.SHOULD);
+          }
         }
         retQuery = boolQueryBuilder.build();
       }
