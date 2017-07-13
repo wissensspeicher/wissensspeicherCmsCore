@@ -1022,7 +1022,7 @@ public class IndexHandler {
     if (suggester == null) {
       suggester = new TSTLookup();
       try {
-        ArrayList<Token> tokensArrayList = (ArrayList<Token>) tokens.values();
+        ArrayList<Token> tokensArrayList = new ArrayList<Token>(tokens.values());
         suggester.build(new TokenArrayListIterator(tokensArrayList));  // put all tokens into the suggester
         LOGGER.info("Suggester successfully started with: " + tokens.size() + " tokens");
       } catch (IOException e) {
