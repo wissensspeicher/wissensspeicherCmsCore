@@ -64,5 +64,6 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/wspCmsCore/lib/jsoup-1.9.1-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="lib/jing.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

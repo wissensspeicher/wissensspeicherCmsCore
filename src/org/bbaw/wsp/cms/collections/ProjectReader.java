@@ -10,17 +10,34 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.sax.SAXResult;
+import javax.xml.transform.stream.StreamSource;
+
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.filefilter.WildcardFileFilter;
 import org.apache.log4j.Logger;
 import org.bbaw.wsp.cms.document.Person;
 import org.bbaw.wsp.cms.general.Constants;
+import org.bbaw.wsp.cms.util.LoggingErrorHandler;
 import org.bbaw.wsp.cms.util.Util;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.xml.sax.ErrorHandler;
+
+import com.thaiopensource.util.PropertyMap;
+import com.thaiopensource.util.PropertyMapBuilder;
+import com.thaiopensource.validate.Schema;
+import com.thaiopensource.validate.SchemaReader;
+import com.thaiopensource.validate.ValidateProperty;
+import com.thaiopensource.validate.ValidationDriver;
+import com.thaiopensource.validate.Validator;
+import com.thaiopensource.validate.rng.CompactSchemaReader;
 
 import de.mpg.mpiwg.berlin.mpdl.exception.ApplicationException;
 import de.mpg.mpiwg.berlin.mpdl.lt.general.Language;
@@ -94,6 +111,9 @@ public class ProjectReader {
       return o1.getName().compareTo(o2.getName());
     }
   };
+  private Validator xmlProjectConfigurationValidator;
+  private Validator rdfProjectConfigurationValidator;
+  private Transformer validatorTransformer;
   private ArrayList<String> globalExcludes;
   private ArrayList<String> globalContentCssSelectors;
   private HashMap<String, Person> normdataPersons;
@@ -122,12 +142,32 @@ public class ProjectReader {
     projectsByRdfId = new HashMap<String, Project>();
     globalContentCssSelectors = new ArrayList<String>();
     globalExcludes = new ArrayList<String>();
+    initSchemaValidators();
     readNormdataFiles();
     readMdsystemXmlFile();
     readConfFiles();
     LOGGER.info("Project reader initialized with " + projects.size() + " projects");
 	}
 	
+	private void initSchemaValidators() throws ApplicationException {
+    try {
+      ErrorHandler logErrorHandler = new LoggingErrorHandler(LOGGER);
+      PropertyMapBuilder propertyMapBuilder = new PropertyMapBuilder();  
+      propertyMapBuilder.put(ValidateProperty.ERROR_HANDLER, logErrorHandler);  
+      PropertyMap propertyMap = propertyMapBuilder.toPropertyMap();
+      SchemaReader schemaReader = CompactSchemaReader.getInstance(); // Relax NG compact format reader  
+      File xmlProjectConfigurationSchemaFile = new File(Constants.getInstance().getMetadataDir() + "/schema/xmlProjectConfiguration.rnc");
+      Schema xmlProjectConfigurationSchema = schemaReader.createSchema(ValidationDriver.fileInputSource(xmlProjectConfigurationSchemaFile), PropertyMap.EMPTY);  
+      xmlProjectConfigurationValidator = xmlProjectConfigurationSchema.createValidator(propertyMap);  // Validator is not thread safe  
+      File rdfProjectConfigurationSchemaFile = new File(Constants.getInstance().getMetadataDir() + "/schema/rdfWspMetadata.rnc");
+      Schema rdfProjectConfigurationSchema = schemaReader.createSchema(ValidationDriver.fileInputSource(rdfProjectConfigurationSchemaFile), PropertyMap.EMPTY);  
+      rdfProjectConfigurationValidator = rdfProjectConfigurationSchema.createValidator(propertyMap);  // Validator is not thread safe  
+      validatorTransformer = TransformerFactory.newInstance().newTransformer();
+    } catch (Exception e) {
+      throw new ApplicationException(e);
+    }
+	}
+
 	public ArrayList<Project> getProjects() {
 		ArrayList<Project> projects = new ArrayList<Project>();
 		java.util.Collection<Project> projectValues = this.projects.values();
@@ -1069,6 +1109,21 @@ public class ProjectReader {
     }
   }
   
+  private void validate(String type, File file) throws ApplicationException {
+    try {
+      Source source = new StreamSource(file); // source file  
+      if (type.equals("xml")) {
+        xmlProjectConfigurationValidator.reset();
+        validatorTransformer.transform(source, new SAXResult(xmlProjectConfigurationValidator.getContentHandler()));
+      } else if (type.equals("rdf")) {
+        rdfProjectConfigurationValidator.reset();
+        validatorTransformer.transform(source, new SAXResult(rdfProjectConfigurationValidator.getContentHandler()));
+      }
+    } catch (Exception e) {
+      // nothing
+    }
+  }
+  
   private ArrayList<File> getProjectRdfFiles() {
     String metadataRdfDirStr = Constants.getInstance().getMetadataDir() + "/resources";
     File metadataRdfDir = new File(metadataRdfDirStr);
@@ -1080,6 +1135,7 @@ public class ProjectReader {
   private Project readProjectRdfFile(File projectRdfFile) throws ApplicationException {
     Project project = null;
     try {
+      validate("rdf", projectRdfFile); // validate file against rnc-Schema
       Document projectRdfDoc = Jsoup.parse(projectRdfFile, "utf-8");
       project = new Project();
       Date metadataRdfFileLastModified = new Date(projectRdfFile.lastModified());
@@ -1311,6 +1367,7 @@ public class ProjectReader {
   
 	private void readProjectXmlFile(Project project, File xmlConfigFile) throws ApplicationException {
     try {
+      validate("xml", xmlConfigFile); // validate file against rnc-Schema
   	  Document projectXmlDoc = Jsoup.parse(xmlConfigFile, "utf-8");
       Elements collectionElems = projectXmlDoc.select("wsp > collection");
       for (int i=0; i< collectionElems.size(); i++) {
