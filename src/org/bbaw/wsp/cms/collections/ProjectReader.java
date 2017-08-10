@@ -163,6 +163,7 @@ public class ProjectReader {
       Schema rdfProjectConfigurationSchema = schemaReader.createSchema(ValidationDriver.fileInputSource(rdfProjectConfigurationSchemaFile), PropertyMap.EMPTY);  
       rdfProjectConfigurationValidator = rdfProjectConfigurationSchema.createValidator(propertyMap);  // Validator is not thread safe  
       validatorTransformer = TransformerFactory.newInstance().newTransformer();
+      validatorTransformer.setErrorListener(new LoggingErrorHandler(LOGGER));
     } catch (Exception e) {
       throw new ApplicationException(e);
     }
