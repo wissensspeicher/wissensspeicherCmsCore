@@ -81,12 +81,20 @@ public class MetadataHandler {
   
   public void deleteConfigurationFiles(Project project) {
     String projectId = project.getId();
-    String rdfRessourcesFileStr = Constants.getInstance().getMetadataDir() + "/resources" + "/" + projectId + ".rdf";
-    File rdfRessourcesFile = new File(rdfRessourcesFileStr);
-    FileUtils.deleteQuietly(rdfRessourcesFile);
-    LOGGER.info("Project configuration file: " + rdfRessourcesFileStr + " successfully deleted");
+    String rdfResourcesFileStr = Constants.getInstance().getMetadataDir() + "/resources" + "/" + projectId + ".rdf";
+    File rdfResourcesFile = new File(rdfResourcesFileStr);
+    FileUtils.deleteQuietly(rdfResourcesFile);
+    LOGGER.info("Project configuration file: " + rdfResourcesFileStr + " successfully deleted");
+    rdfResourcesFileStr = Constants.getInstance().getUserMetadataDir() + "/resources" + "/" + projectId + ".rdf";
+    rdfResourcesFile = new File(rdfResourcesFileStr);
+    FileUtils.deleteQuietly(rdfResourcesFile);
+    LOGGER.info("Project configuration file: " + rdfResourcesFileStr + " successfully deleted");
     String xmlConfFileStr = Constants.getInstance().getMetadataDir() + "/resources-addinfo" + "/" + projectId + ".xml";
-    File xmlConfFile = new File(rdfRessourcesFileStr);
+    File xmlConfFile = new File(xmlConfFileStr);
+    FileUtils.deleteQuietly(xmlConfFile);
+    LOGGER.info("Project configuration file: " + xmlConfFileStr + " successfully deleted");
+    xmlConfFileStr = Constants.getInstance().getUserMetadataDir() + "/resources-addinfo" + "/" + projectId + ".xml";
+    xmlConfFile = new File(xmlConfFileStr);
     FileUtils.deleteQuietly(xmlConfFile);
     LOGGER.info("Project configuration file: " + xmlConfFileStr + " successfully deleted");
   }
