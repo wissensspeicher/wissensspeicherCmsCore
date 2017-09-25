@@ -1285,15 +1285,19 @@ public class ProjectReader {
         if (collParentRdfId != null && ! collParentRdfId.isEmpty()) {
           collection.setParentRdfId(collParentRdfId);
         } 
-        String collTypeRdfId = collectionElem.select("dcterms|type").attr("rdf:resource");
-        if (collTypeRdfId != null && ! collTypeRdfId.isEmpty()) {
-          if (collTypeRdfId.contains("aggregationType/formal")) { 
-            OutputType collType = getType(collTypeRdfId);
-            if (collType != null)
-              collection.setType(collType); // e.g. "Datenbank" or "Webseite"
+        Elements collTypeRdfIds = collectionElem.select("dcterms|type");
+        if (! collTypeRdfIds.isEmpty()) {
+          for (int t=0; t<collTypeRdfIds.size(); t++) {
+            Element collTypeElem = collTypeRdfIds.get(t);
+            String collTypeRdfId = collTypeElem.attr("rdf:resource");
+            if (collTypeRdfId.contains("aggregationType/formal")) { 
+              OutputType collType = getType(collTypeRdfId);
+              if (collType != null)
+                collection.setType(collType); // e.g. "Datenbank" or "Webseite"
+            }
           }
         }
-        String collectionTitle = collectionElem.select("dcterms|title").text();
+        String collectionTitle = collectionElem.select("dcterms|title[xml:lang=\"de\"]").text();
         if (collectionTitle != null && ! collectionTitle.isEmpty()) {
           collection.setTitle(collectionTitle);
         }
