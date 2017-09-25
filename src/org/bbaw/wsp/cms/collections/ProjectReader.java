@@ -1451,6 +1451,8 @@ public class ProjectReader {
       if (type.equals("rdf")) {
         readProjectRdfFile(metadataProjectFile);
       } else if (type.equals("xml")) {
+        String projectId = project.getId();
+        project = projects.get(projectId);
         readProjectXmlFile(project, metadataProjectFile);
       }
       project.buildSubCollections();
