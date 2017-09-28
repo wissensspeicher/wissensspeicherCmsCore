@@ -1292,8 +1292,11 @@ public class ProjectReader {
             String collTypeRdfId = collTypeElem.attr("rdf:resource");
             if (collTypeRdfId.contains("aggregationType/formal")) { 
               OutputType collType = getType(collTypeRdfId);
-              if (collType != null)
+              if (collType != null) {
                 collection.setType(collType); // e.g. "Datenbank" or "Webseite"
+              } else {
+                LOGGER.error("Project collection: " + project.getId() + " (" + collRdfId + ") contains no proper <dcterms:type>: " + collTypeRdfId);
+              }
             }
           }
         }
