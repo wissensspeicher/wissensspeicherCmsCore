@@ -1153,7 +1153,8 @@ public class MetadataHandler {
       int index = language.lastIndexOf("/");
       if (index > 0) 
         language = language.substring(index + 1);
-      mdRecord.setLanguage(language);
+      String isoLanguage = Language.getInstance().getISO639Code(language);
+      mdRecord.setLanguage(isoLanguage);
     }
     // abstract
     String abstractt = resourceElem.select("dcterms|abstract").text();
